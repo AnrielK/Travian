@@ -814,6 +814,8 @@ class GameView
         }
         $data['villageName'] = Village::getInstance()->getName();
         $data['loyalty'] = Village::getInstance()->getLoyalty();
+        $data['playerName'] = $this->session->getName();
+        $data['population'] = Village::getInstance()->getPop();
         $title = T("inGame", "changeVillageName");
         if ($this->session->isSitter()) {
             $title .= '<span class="warning">' . T("inGame", "sitterChangeNameDesc") . '</span>';

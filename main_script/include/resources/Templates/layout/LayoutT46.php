@@ -121,14 +121,16 @@ $t46Indicator = static function ($count) {
                 <div id="contentOuterContainer" class="contentPage">
                     <div class="contentTitle">
                         <?php if ($vars['showCloseButton']): ?>
-                            <a id="closeContentButton" class="contentTitleButton"
+                            <a id="closeContentButton" class="contentTitleButton buttonFramed withIcon rectangle green"
                                href="<?=$vars['bodyCssClass'] == 'perspectiveResources' ? 'dorf1.php' : 'dorf2.php'; ?>"
-                               title="<?=T("Global", "General.closeWindow"); ?>">&nbsp;</a>
+                               title="<?=T("Global", "General.closeWindow"); ?>">
+                                <svg viewBox="0 0 16 16"><path class="outline" d="M3.2 1.5 8 6.3l4.8-4.8 1.7 1.7L9.7 8l4.8 4.8-1.7 1.7L8 9.7l-4.8 4.8-1.7-1.7L6.3 8 1.5 3.2z"/></svg>
+                            </a>
                         <?php endif; ?>
                         <?php if ($vars['answerId']): ?>
-                            <a id="answersButton" class="contentTitleButton"
+                            <a id="answersButton" class="contentTitleButton buttonFramed withIcon rectangle green"
                                href="<?=getAnswersUrl(); ?>aid=<?=$vars['answerId']; ?>#go2answer" target="_blank"
-                               title="<?=T("Global", "FAQ"); ?>">&nbsp;</a>
+                               title="<?=T("Global", "FAQ"); ?>"></a>
                         <?php endif; ?>
                     </div>
                     <div class="contentContainer">

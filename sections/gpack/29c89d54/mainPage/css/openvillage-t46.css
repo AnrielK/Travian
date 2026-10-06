@@ -118,13 +118,15 @@ body.t46Layout div.village1 #resourceFieldContainer .level span { line-height: 2
 body.t46Layout div.village1 #resourceFieldContainer svg.resourceField { top: 0; left: 0; }
 body.t46Layout div.village1 #resourceFieldContainer svg.villageCenter { top: 0; left: 0; }
 body.t46Layout div.village1 #resourceFieldContainer svg.resourceField > path:hover { fill: rgba(255, 255, 255, .2); }
-body.t46Layout div.village1 #resourceFieldContainer { left: calc(50% - 236px); }
-body.t46Layout div.village1 .villageInfoWrapper { padding-top: 400px; }
-body.t46Layout div.village1 .villageInfoWrapper .buildingList { grid-column: 1; grid-row: 1 / span 3; }
-body.t46Layout div.village1 .villageInfoWrapper .villageInfobox { grid-column: 2; }
-body.t46Layout div.village1 .villageInfoWrapper .movements .boxes-contents,
+/* Legends layout: field on the left, movements / production / troops on the right, construction list under the field. */
+body.t46Layout div.village1 .villageInfoWrapper { grid-template-rows: minmax(130px, auto) auto auto 1fr; }
+body.t46Layout div.village1 .villageInfoWrapper .villageInfobox.movements { grid-column: 2; grid-row: 1; align-self: end; }
+body.t46Layout div.village1 .villageInfoWrapper .villageInfobox.production { grid-column: 2; grid-row: 2; }
+body.t46Layout div.village1 .villageInfoWrapper .villageInfobox.units { grid-column: 2; grid-row: 3; }
+body.t46Layout div.village1 .villageInfoWrapper .buildingList { grid-column: 1; grid-row: 4; margin-top: 0; justify-self: start; }
 body.t46Layout div.village1 .villageInfoWrapper .villageInfobox .boxes-contents { padding: 0; }
-body.t46Layout div.village1 .villageInfoWrapper .villageInfobox.movements:not(:has(td)) { display: none; }
+body.t46Layout div.village1 .villageInfoWrapper .villageInfobox.movements:not(:has(td)) { visibility: hidden; }
+body.t46Layout div.village1 .villageInfoWrapper .boxes > div[class^="boxes-"]:not(.boxes-contents) { display: none; }
 
 /* ---- Individual sidebar boxes ------------------------------------------------------------------------------ */
 body.t46Layout .sidebar #sidebarBoxVillagelist .expansionSlotInfo { position: relative; padding-bottom: 10px; margin-bottom: 5px; }
@@ -154,3 +156,67 @@ body.t46Layout .sidebar .sidebarBox .innerBox.header .buttonsWrapper button.layo
 body.t46Layout .sidebar #sidebarBoxVillagelist .innerBox.header .buttonsWrapper button.layoutButton.toggle { display: none; }
 body.t46Layout.logout #center #contentOuterContainer, body.t46Layout.login #center #contentOuterContainer { width: 600px; }
 body.t46Layout .sidebar #sidebarBoxActiveVillage .innerBox.footer { top: 30px; }
+
+/* ---- Content frame: title buttons and tabs (game markup: .contentNavi > .container > .content > a.tabItem) ---- */
+body.t46Layout #center #contentOuterContainer.contentPage .contentTitle { position: static; }
+body.t46Layout #center a.contentTitleButton { position: absolute; float: none; top: 26px; width: 34px; height: 34px; margin: 0;
+    border-radius: 2px; background-image: linear-gradient(to bottom, #cba467 5%, #f3e2ae 13%, #efbf7b 32%, #aa8050 48%, #835e35 72%, #ad8a54 93%, #d7b672 100%); }
+body.t46Layout #center a.contentTitleButton:before { content: ""; position: absolute; top: 3px; right: 3px; bottom: 3px; left: 3px; z-index: 1;
+    background-color: #546e39; border: 2px solid; border-color: #cfdcbe #578b11 #63a90b; }
+body.t46Layout #center a.contentTitleButton:hover:before { background-color: #699128; border-color: #d4e2c1 #6da71d #71bb13; }
+body.t46Layout #center a.contentTitleButton#closeContentButton { right: 40px; }
+body.t46Layout #center a.contentTitleButton#closeContentButton svg { position: absolute; z-index: 2; width: 15px; height: 15px; left: 50%; top: 50%; transform: translate(-50%, -50%); }
+body.t46Layout #center a.contentTitleButton#closeContentButton svg .outline { fill: #f2e1d0; stroke: #283c08; stroke-width: 1; }
+body.t46Layout #center a.contentTitleButton#answersButton { right: 82px; }
+body.t46Layout #center a.contentTitleButton#answersButton:after { content: ""; position: absolute; z-index: 2; left: 13px; top: 8px; width: 7px; height: 18px;
+    background-image: url('../img_ltr/hud/content/info_small.png'); }
+body.t46Layout.village1 #center a.contentTitleButton, body.t46Layout.village2 #center a.contentTitleButton { display: none; }
+body.t46Layout #content .contentNavi.subNavi { position: relative; display: flex; gap: 0; width: calc(100% + 15px); height: 50px; left: -7px; top: -9px;
+    padding: 4px; box-sizing: border-box; margin-bottom: 10px; border: solid 1px #34220d; background: #a58b6d;
+    background-image: linear-gradient(to top, #caa065 0, #876338 20%, #ba8f5b 54%, #f3ce8b 74%, #ecd9a5 92%); }
+body.t46Layout #content .contentNavi.subNavi > .container { position: relative; flex: 1 1 0; float: none; width: auto; max-width: none; min-width: 0; height: 42px; margin: 0; padding: 0; background: none; }
+body.t46Layout #content .contentNavi.subNavi > .container .background-start,
+body.t46Layout #content .contentNavi.subNavi > .container .background-end,
+body.t46Layout #content .contentNavi.subNavi > .clear { display: none; }
+body.t46Layout #content .contentNavi.subNavi > .container > .content { position: relative; height: 42px; margin: 0; padding: 0; background: none; }
+body.t46Layout #content .contentNavi.subNavi > .container a.tabItem { position: relative; display: block; width: 100%; height: 42px; box-sizing: border-box;
+    padding: 0 8px; margin: 0; line-height: 42px; text-align: center; font-weight: 700; font-size: 13px; color: #eccd8e; text-decoration: none;
+    background: #5f473b; border: 0; border-top: solid 1px #2d1408; border-bottom: solid 1px #d7b672; border-radius: 0;
+    box-shadow: 0 -10px 2px -5px rgba(0, 0, 0, .45) inset, 0 20px 10px -5px rgba(0, 0, 0, .2) inset;
+    white-space: nowrap; overflow: hidden; text-overflow: ellipsis; transition-duration: 150ms; }
+body.t46Layout #content .contentNavi.subNavi > .container + .container a.tabItem { border-left: 1px solid #2d1408; }
+body.t46Layout #content .contentNavi.subNavi > .container.active a.tabItem { background-color: #85664a; color: #f2e1d0; cursor: default; }
+body.t46Layout #content .contentNavi.subNavi > .container:not(.active) a.tabItem:hover { background-color: #a27e57; color: #f2e1d0; }
+body.t46Layout #content .contentNavi.subNavi > .container.disabled a.tabItem { color: #9a8577; }
+body.t46Layout #content .contentNavi.subNavi > .container.favor .content:after,
+body.t46Layout #content .contentNavi.subNavi > .container.favorActive .content:after { display: none; }
+body.t46Layout #content .contentNavi.subNavi > .container a.tabItem img,
+body.t46Layout #content .contentNavi.subNavi > .container a.tabItem .tabFavor { display: none; }
+
+/* ---- Active village box: player name, village name field with pen, population + loyalty ---- */
+body.t46Layout .sidebar #sidebarBoxActiveVillage .playerName { font-size: 12px; font-weight: 700; margin-bottom: 2px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+body.t46Layout .sidebar #sidebarBoxActiveVillage #villageNameField.boxTitle { border: 1px solid rgba(94, 70, 58, .4); border-radius: 2px; padding: 3px 26px 3px 4px;
+    margin-bottom: 4px; line-height: 20px; }
+body.t46Layout .sidebar #sidebarBoxActiveVillage #villageNameField.boxTitle:after { display: none; }
+body.t46Layout .sidebar #sidebarBoxActiveVillage .innerBox.content { display: flex; justify-content: space-between; font-size: 11px; }
+body.t46Layout .sidebar #sidebarBoxActiveVillage .population { font-size: 11px; }
+body.t46Layout .sidebar #sidebarBoxActiveVillage .innerBox.footer { top: 56px; right: 30px; }
+body.t46Layout .sidebar #sidebarBoxActiveVillage .innerBox.footer button.layoutButton { transform: scale(.6); transform-origin: top right; }
+body.t46Layout #center a.contentTitleButton#tabFavorButton { right: 124px; }
+body.t46Layout #center a.contentTitleButton#tabFavorButton:after { content: ""; position: absolute; z-index: 2; left: 8px; top: 10px; width: 18px; height: 14px;
+    background-image: url('../img_ltr/hud/content/favor_small.png'); }
+body.t46Layout #center a.contentTitleButton img { display: none; }
+
+/* ---- Questmaster: mentor stands on top of the box frame (Legends) ---- */
+body.t46Layout .sidebar #sidebarBoxQuestmaster .sidebarBoxInnerBox { padding-top: 0; }
+body.t46Layout .sidebar #sidebarBoxQuestmaster .sidebarBoxInnerBox:before { top: 121px; }
+body.t46Layout .sidebar #sidebarBoxQuestmaster .header #questmasterButton { position: relative; display: block; margin: 0 0 21px calc(50% - 102px);
+    padding: 0; border: 0; background: none; cursor: pointer; }
+body.t46Layout .sidebar #sidebarBoxQuestmaster .innerBox.header .buttonsWrapper { top: 104px; }
+
+/* ---- Infobox: envelope next to the message count ---- */
+body.t46Layout .sidebar #sidebarBoxInfobox .messageShortInfo img { display: inline-block; vertical-align: -2px; width: 18px; height: 14px; margin-left: 3px;
+    background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 18 14'%3E%3Crect x='.5' y='.5' width='17' height='13' rx='1.5' fill='%23989897' stroke='%23574a3f'/%3E%3Cpath d='M1 1.5 9 8l8-6.5' fill='none' stroke='%23574a3f'/%3E%3C/svg%3E") no-repeat; }
+body.t46Layout .sidebar #sidebarBoxInfobox .messageShortInfo img.messages.unreaded,
+body.t46Layout .sidebar #sidebarBoxInfobox .messageShortInfo img.messages[class*="unread"] {
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 18 14'%3E%3Crect x='.5' y='.5' width='17' height='13' rx='1.5' fill='%23e69043' stroke='%237a3f12'/%3E%3Cpath d='M1 1.5 9 8l8-6.5' fill='none' stroke='%237a3f12'/%3E%3C/svg%3E"); }

@@ -109,10 +109,16 @@
                 <?php endif; ?>
             </div>
             <div class="clear"></div>
+            <?php if (is_t46_layout()): ?>
+                <div class="playerName"><?=htmlspecialchars((string)($vars['playerName'] ?? '')); ?></div>
+            <?php endif; ?>
             <div id="villageNameField"
                  class="boxTitle"><?=filter_var($vars['villageName'], FILTER_SANITIZE_STRING); ?></div>
         </div>
         <div class="innerBox content">
+            <?php if (is_t46_layout()): ?>
+                <div class="population"><?=T("Statistics", "population"); ?>: <?=(int)($vars['population'] ?? 0); ?></div>
+            <?php endif; ?>
             <div
                     class="loyalty <?=$vars['loyalty'] > 100 ? "high" : (($vars['loyalty'] >= 50 || $vars['loyalty'] == 100) ? "medium" : "low"); ?>">
                 <?=T("inGame", "loyalty"); ?>:

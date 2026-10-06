@@ -19,9 +19,9 @@ $tribe = (int)($vars['t46Race'] ?? 1);
            class="level <?=$vars['showColored'] ? 'colorLayer ' : ''; ?><?=$map['color']; ?> gid<?=$map['item_id']; ?> level<?=$map['level']; ?> buildingSlot<?=$index; ?> aid<?=$index; ?><?=$map['upgradeState'] ? ' underConstruction' : ''; ?>"
            title="<?=htmlspecialchars($area['title']); ?>">
             <?php if ($vars['showColored']): ?>
-                <div class="labelLayer"><?=(int)$map['level']; ?></div>
+                <div class="labelLayer"><?=$map['level'] > 0 ? (int)$map['level'] : ''; ?></div>
             <?php else: ?>
-                <span><?=(int)$map['level']; ?></span>
+                <span><?=$map['level'] > 0 ? (int)$map['level'] : ''; ?></span>
             <?php endif; ?>
         </a>
     <?php endforeach; ?>
