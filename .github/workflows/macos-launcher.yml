@@ -1,0 +1,26 @@
+name: macOS launcher
+
+on:
+  push:
+    paths: ["macos/**", ".github/workflows/macos-launcher.yml"]
+  pull_request:
+    paths: ["macos/**"]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  build:
+    runs-on: macos-14
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v6
+      - name: Build OpenVillage Local.app
+        run: ./macos/build-app.sh
+      - name: Package
+        run: cd macos/build && ditto -c -k --keepParent "OpenVillage Local.app" OpenVillageLocal.zip
+      - uses: actions/upload-artifact@v4
+        with:
+          name: OpenVillageLocal
+          path: macos/build/OpenVillageLocal.zip
