@@ -1,0 +1,156 @@
+@charset "UTF-8";
+/*
+ * OpenVillage adapter for graphic pack 29c89d54 (Travian Legends look).
+ * The pack's own CSS (default_compressed*.css) is the 2020+ Travian Legends stylesheet; the game's
+ * templates render that markup through layout/LayoutT46.php. This file covers what the pack does not
+ * ship (fonts, logo, generic layout buttons) and adapts the older sidebar box markup the game still uses.
+ */
+
+/* ---- Fonts (Noto Serif, SIL OFL – see ../fonts/NotoSerif-LICENSE.txt) ---------------------------------- */
+@font-face {
+    font-family: "Noto Serif"; font-style: normal; font-weight: 700; font-display: swap;
+    src: url(../fonts/noto-serif-latin-700-normal.woff2) format("woff2");
+    unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
+@font-face {
+    font-family: "Noto Serif"; font-style: normal; font-weight: 700; font-display: swap;
+    src: url(../fonts/noto-serif-latin-ext-700-normal.woff2) format("woff2");
+    unicode-range: U+0100-02BA, U+02BD-02C5, U+02C7-02CC, U+02CE-02D7, U+02DD-02FF, U+1D00-1DBF, U+1E00-1E9F, U+1EF2-1EFF, U+2020, U+20A0-20AB, U+20AD-20C0, U+2113, U+2C60-2C7F, U+A720-A7FF;
+}
+@font-face {
+    font-family: "Noto Serif"; font-style: normal; font-weight: 700; font-display: swap;
+    src: url(../fonts/noto-serif-greek-700-normal.woff2) format("woff2");
+    unicode-range: U+0370-0377, U+037A-037F, U+0384-038A, U+038C, U+038E-03A1, U+03A3-03FF;
+}
+@font-face {
+    font-family: "Noto Serif"; font-style: normal; font-weight: 700; font-display: swap;
+    src: url(../fonts/noto-serif-cyrillic-700-normal.woff2) format("woff2");
+    unicode-range: U+0301, U+0400-045F, U+0490-0491, U+04B0-04B1, U+2116;
+}
+
+/* ---- Page frame ----------------------------------------------------------------------------------------- */
+body.t46Layout { background-color: #73655a; }
+body.t46Layout #background { background-color: #3f5a1f; background-position: center top; background-repeat: no-repeat;
+    position: relative; z-index: 1; width: 100%; min-height: 100%; overflow: hidden; }
+body.t46Layout #background:before { content: ""; width: 100%; height: 32px; position: absolute; top: 0; left: 0; background-color: #73655a; }
+body.t46Layout #msfilter { display: none; }
+body.t46Layout #topBar #logo { text-decoration: none; overflow: hidden; }
+body.t46Layout #topBar #logo span { display: block; line-height: 38px; font-family: "Noto Serif", Georgia, serif; font-weight: 700;
+    font-size: 15px; letter-spacing: .06em; text-transform: uppercase; color: #5e463a; }
+body.t46Layout #center { position: relative; }
+body.t46Layout #servertime { position: absolute; top: -129px; left: 5px; z-index: 40; padding: 1px 8px; color: #f2f2f2;
+    font-size: 11px; line-height: 16px; white-space: nowrap; }
+body.t46Layout #outOfGame { margin-top: 6px; }
+body.t46Layout #outOfGame li { position: relative; }
+body.t46Layout #outOfGame li a, body.t46Layout #outOfGame li div.a { position: relative; }
+body.t46Layout #header .currency i.goldCoin_medium, body.t46Layout #header .currency i.silverCoin_medium { display: inline-block; }
+body.t46Layout #topBarHero .heroImageButton .heroImage { width: 82px; }
+body.t46Layout #topBarHero .heroStatus svg { width: 16px; height: 16px; }
+body.t46Layout #topBarHero .heroStatus svg .outline { stroke: #1b120e; }
+body.t46Layout #topBarHero .layoutButton svg .outline,
+body.t46Layout .layoutButton.buttonFramed svg .outline { fill: #fff; stroke: #1b120e; stroke-width: 1; }
+body.t46Layout #topBarHero .layoutButton.adventure.attention .content { line-height: 26px; font-size: 12px; }
+body.t46Layout .buttonFramed.round { border-radius: 50%; }
+body.t46Layout .buttonFramed.round:before { border-radius: 50%; }
+body.t46Layout #topBarHero .health, body.t46Layout #topBarHero .experience { pointer-events: auto; }
+body.t46Layout #topBarHero .health svg, body.t46Layout #topBarHero .experience svg { display: block; }
+body.t46Layout #stockBar .stockBarButton { text-decoration: none; }
+body.t46Layout #stockBar .stockBarButton .value { align-self: start; padding-top: 1px; }
+body.t46Layout #stockBar .stockBarButton svg.productionBoost path { fill: #62b1dc; stroke: #000; stroke-width: .6; }
+body.t46Layout #stockBar #stockBarFreeCropWrapper .value { align-self: center; justify-self: center; }
+body.t46Layout div#footer { margin-top: 20px; }
+
+/* ---- Sidebar boxes: the game's markup (baseBox + innerBox header/content/footer) in the Legends frame ---- */
+body.t46Layout .sidebar .sidebarBox .sidebarBoxBaseBox { display: none; }
+body.t46Layout .sidebar .sidebarBox .sidebarBoxInnerBox { position: relative; z-index: 0; min-height: 78px; padding: 35px 25px 30px; }
+body.t46Layout .sidebar .sidebarBox .sidebarBoxInnerBox:before { content: ""; z-index: -1; position: absolute; top: 0; right: 0; bottom: 0; left: 0;
+    border-style: solid; border-width: 38px 53px 38px 53px; border-image: url('../img_ltr/hud/sidebar/sidebarBox.png') 38 53 38 53 fill stretch; }
+body.t46Layout .sidebar .sidebarBox .innerBox.header { position: static; }
+body.t46Layout .sidebar .sidebarBox .innerBox.content { position: static; min-height: 0; padding: 0; }
+body.t46Layout .sidebar .sidebarBox .innerBox.content:before { display: none; }
+body.t46Layout .sidebar .sidebarBox .innerBox.header .buttonsWrapper { position: absolute; top: -17px; right: 25px; margin: 0; z-index: 3;
+    display: flex; flex-direction: row; justify-content: flex-end; }
+body.t46Layout .sidebar .sidebarBox .innerBox.header .buttonsWrapper > button,
+body.t46Layout .sidebar .sidebarBox .innerBox.header .buttonsWrapper > a { margin-left: 8px; }
+body.t46Layout .sidebar .sidebarBox .boxTitle { position: relative; display: block; font-size: 16px; font-family: "Noto Serif", Georgia, serif;
+    text-transform: uppercase; font-weight: 700; color: #5e463a; letter-spacing: .1em; padding-bottom: 10px; margin-bottom: 5px;
+    white-space: nowrap; text-overflow: ellipsis; overflow: hidden; }
+body.t46Layout .sidebar .sidebarBox .boxTitle:after { content: ""; position: absolute; bottom: 0; left: -8px; right: -8px; opacity: .5;
+    border-style: solid; border-width: 0 38px 2px 70px; border-image: url('../img_ltr/hud/sidebar/separator.png') 0 38 2 70 round; }
+body.t46Layout .sidebar .sidebarBox .innerBox.footer { position: absolute; left: 0; right: 0; bottom: -14px; height: 0; z-index: 2; }
+body.t46Layout .sidebar .sidebarBox .innerBox.footer:empty { display: none; }
+body.t46Layout .sidebar .sidebarBox.toggleable .innerBox.footer button.toggle { position: absolute; left: 50%; top: 0; margin-left: -50px;
+    width: 100px; height: 30px; padding: 0; border: 0; background: url('../img_ltr/hud/sidebar/toggle.png') no-repeat; cursor: pointer; }
+body.t46Layout .sidebar .sidebarBox.toggleable .innerBox.footer button.toggle .button-container { position: absolute; top: 5px; left: 38px;
+    width: 24px; height: 21px; box-sizing: border-box; background-color: #546e39; border: 2px solid; border-color: #dceaca #5b950f #63a90b;
+    box-shadow: 0 0 1px 1px #5a4035; border-radius: 1px; }
+body.t46Layout .sidebar .sidebarBox.toggleable .innerBox.footer button.toggle:hover .button-container { background-color: #699128; }
+body.t46Layout .sidebar .sidebarBox.toggleable .innerBox.footer button.toggle svg.toggle-caret { position: absolute; top: 2px; left: 1px; width: 18px; height: 13px; }
+body.t46Layout .sidebar .sidebarBox.toggleable.collapsed .innerBox.footer button.toggle svg.toggle-caret { transform: scaleY(-1); }
+body.t46Layout .sidebar .sidebarBox .innerBox.content ul { margin: 0; padding: 0; list-style: none; }
+body.t46Layout .sidebar .sidebarBox .innerBox.content ul li { position: relative; }
+body.t46Layout .sidebar .sidebarBox .innerBox.content ul li:not(:last-child) { border-bottom: 1px solid rgba(191, 179, 155, .6); }
+body.t46Layout .sidebar .sidebarBox .innerBox.content ul li a { color: #333; }
+body.t46Layout .sidebar .sidebarBox .innerBox.content ul li.active { background-color: #ddc6a2; }
+body.t46Layout .sidebar .sidebarBox .innerBox.content ul li.active a { font-weight: 700; }
+body.t46Layout .sidebar #sidebarBoxDailyquests { display: none; }
+
+/* ---- Village views ----------------------------------------------------------------------------------------- */
+body.t46Layout #contentOuterContainer:not(.contentPage) #content { background: none; padding: 0; min-height: 0; width: auto; }
+/* dorf2: building outlines come in summer/winter variants – show the one for the current season. */
+body.t46Layout #villageContent svg.buildingShape g.clickShapeWinter,
+body.t46Layout #villageContent svg.buildingShape g.hoverShapeWinter { display: none; }
+body.t46Layout.season-winter #villageContent svg.buildingShape g.clickShapeWinter,
+body.t46Layout.season-winter #villageContent svg.buildingShape g.hoverShapeWinter { display: inline; }
+body.t46Layout.season-winter #villageContent svg.buildingShape g.clickShapeWinter ~ g.clickShape,
+body.t46Layout.season-winter #villageContent svg.buildingShape g.hoverShapeWinter ~ g.hoverShape { display: none; }
+body.t46Layout #villageContent svg.buildingShape g.hoverShape:hover path { fill: rgba(255, 255, 255, .2); }
+body.t46Layout #villageContent svg.buildingShape g.hoverShape:active path { fill: rgba(255, 255, 255, .35); }
+body.t46Layout #villageContent .buildingSlot.g0 svg.buildingShape.iso path { fill: rgba(101, 115, 13, .57); transition: fill 150ms ease-in; }
+body.t46Layout #villageContent .buildingSlot.g0 svg.buildingShape.iso path:hover { fill: rgba(206, 223, 100, .57); }
+body.t46Layout #villageContent .buildingSlot.a40.g0 svg.buildingShape path { fill: transparent; }
+body.t46Layout #villageContent .buildingSlot.a40.g0 svg.buildingShape path:hover { fill: rgba(255, 255, 255, .15); }
+body.t46Layout #villageContent img.building.iso, body.t46Layout #villageContent .buildingSlot:empty { display: none; }
+body.t46Layout #villageContent #lswitch { position: absolute; right: 250px; bottom: 30px; z-index: 50; }
+/* dorf1 */
+body.t46Layout div.village1 { min-height: 640px; }
+body.t46Layout div.village1 #resourceFieldContainer .level span { line-height: 23px; }
+body.t46Layout div.village1 #resourceFieldContainer svg.resourceField { top: 0; left: 0; }
+body.t46Layout div.village1 #resourceFieldContainer svg.villageCenter { top: 0; left: 0; }
+body.t46Layout div.village1 #resourceFieldContainer svg.resourceField > path:hover { fill: rgba(255, 255, 255, .2); }
+body.t46Layout div.village1 #resourceFieldContainer { left: calc(50% - 236px); }
+body.t46Layout div.village1 .villageInfoWrapper { padding-top: 400px; }
+body.t46Layout div.village1 .villageInfoWrapper .buildingList { grid-column: 1; grid-row: 1 / span 3; }
+body.t46Layout div.village1 .villageInfoWrapper .villageInfobox { grid-column: 2; }
+body.t46Layout div.village1 .villageInfoWrapper .movements .boxes-contents,
+body.t46Layout div.village1 .villageInfoWrapper .villageInfobox .boxes-contents { padding: 0; }
+body.t46Layout div.village1 .villageInfoWrapper .villageInfobox.movements:not(:has(td)) { display: none; }
+
+/* ---- Individual sidebar boxes ------------------------------------------------------------------------------ */
+body.t46Layout .sidebar #sidebarBoxVillagelist .expansionSlotInfo { position: relative; padding-bottom: 10px; margin-bottom: 5px; }
+body.t46Layout .sidebar #sidebarBoxVillagelist .expansionSlotInfo:after { content: ""; position: absolute; bottom: 0; left: -8px; right: -8px; opacity: .5;
+    border-style: solid; border-width: 0 38px 2px 70px; border-image: url('../img_ltr/hud/sidebar/separator.png') 0 38 2 70 round; }
+body.t46Layout .sidebar #sidebarBoxVillagelist .expansionSlotInfo .boxTitle { padding-bottom: 0; margin-bottom: 5px; }
+body.t46Layout .sidebar #sidebarBoxVillagelist .expansionSlotInfo .boxTitle:after { display: none; }
+body.t46Layout .sidebar #sidebarBoxVillagelist .expansionSlotInfo .boxTitleAdditional { position: absolute; top: 2px; right: 0;
+    font-family: "Noto Serif", Georgia, serif; font-weight: 700; font-size: 16px; letter-spacing: .1em; color: #5e463a; }
+body.t46Layout .sidebar #sidebarBoxVillagelist .villageListBarBox { height: 9px; background-color: #52372a; padding: 1px; border-radius: 2px; box-sizing: border-box; }
+body.t46Layout .sidebar #sidebarBoxVillagelist .villageListBarBox .bar { height: 7px; background-color: #546e39; border: 2px solid; border-color: #699e32 #6db024 #71c117;
+    border-radius: 1px; box-sizing: border-box; max-width: 100%; }
+body.t46Layout .sidebar #sidebarBoxVillagelist .innerBox.content ul li a { display: flex; align-items: center; font-size: 0; padding: 2px 4px; text-decoration: none; }
+body.t46Layout .sidebar #sidebarBoxVillagelist .innerBox.content ul li a > * { font-size: 13px; }
+body.t46Layout .sidebar #sidebarBoxVillagelist .innerBox.content ul li a > img { display: none; }
+body.t46Layout .sidebar #sidebarBoxVillagelist .innerBox.content ul li a .name { flex: 1 1 auto; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+body.t46Layout .sidebar #sidebarBoxVillagelist .innerBox.content ul li a .coordinatesWrapper { flex: 0 0 auto; margin-left: 6px; font-size: 11px; direction: ltr; }
+body.t46Layout .sidebar #sidebarBoxActiveVillage .innerBox.footer { top: 38px; right: 22px; left: auto; bottom: auto; height: auto; }
+body.t46Layout .sidebar #sidebarBoxActiveVillage .boxTitle { padding-right: 30px; }
+body.t46Layout .sidebar #sidebarBoxActiveVillage .loyalty { font-size: 11px; text-align: right; }
+body.t46Layout .sidebar #sidebarBoxInfobox .messageShortInfo { position: absolute; right: 25px; top: 37px; font-weight: 700; }
+body.t46Layout .sidebar #sidebarBoxInfobox .innerBox.content ul li { padding: 5px 0; }
+body.t46Layout .sidebar #sidebarBoxInfobox .innerBox.content a { color: #99c01a; font-weight: 700; }
+body.t46Layout .sidebar #sidebarBoxLinklist .innerBox.content ul li a { display: block; padding: 2px 0; }
+body.t46Layout .sidebar #sidebarBoxAlliance .innerBox.content ul li a { color: #99c01a; font-weight: 700; }
+body.t46Layout .sidebar .sidebarBox .innerBox.header .buttonsWrapper button.layoutButton.toggle { background-image: none; margin: 0 0 0 8px; }
+body.t46Layout .sidebar #sidebarBoxVillagelist .innerBox.header .buttonsWrapper button.layoutButton.toggle { display: none; }
+body.t46Layout.logout #center #contentOuterContainer, body.t46Layout.login #center #contentOuterContainer { width: 600px; }
+body.t46Layout .sidebar #sidebarBoxActiveVillage .innerBox.footer { top: 30px; }
