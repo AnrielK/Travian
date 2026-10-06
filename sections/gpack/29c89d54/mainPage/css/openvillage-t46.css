@@ -70,7 +70,7 @@ body.t46Layout .sidebar .sidebarBox .sidebarBoxInnerBox:before { content: ""; z-
 body.t46Layout .sidebar .sidebarBox .innerBox.header { position: static; }
 body.t46Layout .sidebar .sidebarBox .innerBox.content { position: static; min-height: 0; padding: 0; }
 body.t46Layout .sidebar .sidebarBox .innerBox.content:before { display: none; }
-body.t46Layout .sidebar .sidebarBox .innerBox.header .buttonsWrapper { position: absolute; top: -17px; right: 25px; margin: 0; z-index: 3;
+body.t46Layout .sidebar .sidebarBox .innerBox.header .buttonsWrapper { position: absolute; top: -8px; right: 20px; margin: 0; z-index: 3;
     display: flex; flex-direction: row; justify-content: flex-end; }
 body.t46Layout .sidebar .sidebarBox .innerBox.header .buttonsWrapper > button,
 body.t46Layout .sidebar .sidebarBox .innerBox.header .buttonsWrapper > a { margin-left: 8px; }
@@ -214,7 +214,7 @@ body.t46Layout .sidebar #sidebarBoxQuestmaster .sidebarBoxInnerBox { padding-top
 body.t46Layout .sidebar #sidebarBoxQuestmaster .sidebarBoxInnerBox:before { top: 121px; }
 body.t46Layout .sidebar #sidebarBoxQuestmaster .header #questmasterButton { position: relative; display: block; margin: 0 0 21px calc(50% - 102px);
     padding: 0; border: 0; background: none; cursor: pointer; }
-body.t46Layout .sidebar #sidebarBoxQuestmaster .innerBox.header .buttonsWrapper { top: 104px; }
+body.t46Layout .sidebar #sidebarBoxQuestmaster .innerBox.header .buttonsWrapper { top: 113px; }
 
 /* ---- Infobox: envelope next to the message count ---- */
 body.t46Layout .sidebar #sidebarBoxInfobox .messageShortInfo img { display: inline-block; vertical-align: -2px; width: 18px; height: 14px; margin-left: 3px;

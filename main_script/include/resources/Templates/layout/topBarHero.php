@@ -24,8 +24,8 @@ $t46Arc = static function (float $percent, bool $clockwise, float $span): string
     $large = ($span * $percent / 100) > 180 ? 1 : 0;
     return 'M' . $point($start) . ' A50 50 0 ' . $large . ' ' . ($clockwise ? 1 : 0) . ' ' . $point($end);
 };
-$healthArc = $t46Arc($health, false, 170);
-$xpArc = $t46Arc($xp, true, 160);
+$healthArc = $t46Arc($health, false, 105); // ends at the auction (hammer) button
+$xpArc = $t46Arc($xp, true, 105);   // ends at the hero status button
 $statusIcon = [
     SessionHero::STATUS_HOME => 'heroHome',
     SessionHero::STATUS_DEAD => 'heroDead',
