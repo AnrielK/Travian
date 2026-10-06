@@ -1,0 +1,30 @@
+.env
+.DS_Store
+*.log
+*.pid
+*.sqlite
+*.sqlite3
+*.bak
+*.swp
+
+main_script/copyable/backups/
+main_script/copyable/include/runtime/
+main_script/copyable/include/error_log.log
+main_script/copyable/include/automation.log
+test-results/
+backups/
+openvillage-account*.json
+
+# macOS launcher build output
+macos/OpenVillageLocal/.build/
+macos/build/
+
+# iOS build output
+ios/php/build/
+ios/mariadb/build/
+ios/app/build/
+ios/app/build-device/
+ios/app/Generated/
+ios/app/Payload/
+ios/app/*.xcodeproj/
+*.ipa

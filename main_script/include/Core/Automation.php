@@ -1,0 +1,1423 @@
+<?php
+
+namespace Core;
+
+use Core\Database\DB;
+use Core\Database\GlobalDB;
+use Core\Helper\Mailer;
+use Core\Helper\Notification;
+use Core\Jobs\QuarantineTaskException;
+use Core\Jobs\TransactionalTask;
+use Exception;
+use Game\AllianceBonus\AllianceBonus;
+use Game\Buildings\BuildingAction;
+use Game\Formulas;
+use Game\NoticeHelper;
+use function logError;
+use function microtime;
+use Model\AccountDeleter;
+use Model\AllianceBonusModel;
+use Model\ArtefactsModel;
+use Model\AutomationModel;
+use Model\BattleModel;
+use Model\ClubApi;
+use Model\FarmListModel;
+use Model\InfoBoxModel;
+use Model\MarketModel;
+use Model\MarketPlaceProcessor;
+use Model\MasterBuilder;
+use Model\MessageModel;
+use Model\Movements\AdventureProcessor;
+use Model\Movements\EvasionProcessor;
+use Model\Movements\ReinforcementProcessor;
+use Model\Movements\ReturnProcessor;
+use Model\Movements\SettlersProcessor;
+use Model\MovementsModel;
+use Model\MultiAccount;
+use Model\NatarsModel;
+use Model\OasesModel;
+use Model\PublicMsgModel;
+use Model\RegisterModel;
+use Model\TaskQueue;
+use Model\TrainingModel;
+use Model\VillageModel;
+use resources\View\PHPBatchView;
+use SQLite3;
+use function getCustom;
+use function getGameElapsedSeconds;
+use function getGameSpeed;
+use function getWorldId;
+use function getWorldUniqueId;
+use function miliseconds;
+use function nanoseconds;
+use function strtolower;
+use const INCLUDE_PATH;
+use const MAP_SIZE;
+
+class Automation
+{
+
+    private static $_self;
+
+    public static function getInstance()
+    {
+        if (!(self::$_self instanceof self)) {
+            self::$_self = new self();
+        }
+        return self::$_self;
+    }
+
+    public function autoFarmlist()
+    {
+        $m = new FarmListModel();
+        $m->processAutoRaid();
+    }
+
+    public function buildComplete()
+    {
+        $db = DB::getInstance();
+        $m = new MasterBuilder();
+        $result = $db->query("SELECT * FROM building_upgrade WHERE commence<=" . (time()) . " ORDER BY commence ASC, id ASC LIMIT 100");
+        while ($row = $result->fetch_assoc()) {
+            if ($row['isMaster']) {
+                $this->processMasterBuilderTask((int)$row['id'], $m);
+            } else {
+                $this->processBuildingTask((int)$row['id']);
+            }
+        }
+        $db = DB::getInstance();
+        $result = $db->query("SELECT * FROM demolition WHERE end_time <= " . (time()) . " ORDER BY end_time ASC, id ASC LIMIT 50");
+        while ($row = $result->fetch_assoc()) {
+            $this->processDemolitionTask((int)$row['id']);
+        }
+    }
+
+    public function processBuildingTask(int $taskId): bool
+    {
+        return TransactionalTask::consume('building_upgrade', $taskId, function (array $row): void {
+            if (!$this->isBuildingTaskAllowed($row)) {
+                return;
+            }
+            BuildingAction::upgrade((int)$row['kid'], (int)$row['building_field']);
+        }, function () use ($taskId): void {
+            $this->lockVillageOwnerBeforeTask('building_upgrade', $taskId);
+        });
+    }
+
+    public function processMasterBuilderTask(int $taskId, ?MasterBuilder $masterBuilder = null): bool
+    {
+        $masterBuilder = $masterBuilder ?? new MasterBuilder();
+
+        return TransactionalTask::mutate('building_upgrade', $taskId, function (array $row) use ($masterBuilder): void {
+            $masterBuilder->process($row);
+        }, function () use ($taskId): void {
+            $this->lockVillageOwnerBeforeTask('building_upgrade', $taskId);
+        });
+    }
+
+    public function processDemolitionTask(int $taskId): bool
+    {
+        return TransactionalTask::consume('demolition', $taskId, function (array $row): void {
+            BuildingAction::downgrade(
+                (int)$row['kid'],
+                (int)$row['building_field'],
+                1,
+                (bool)$row['complete'],
+                false
+            );
+        }, function () use ($taskId): void {
+            $this->lockVillageOwnerBeforeTask('demolition', $taskId);
+        });
+    }
+
+    private function lockVillageOwnerBeforeTask(string $table, int $taskId): void
+    {
+        if (!in_array($table, ['building_upgrade', 'demolition'], true)) {
+            throw new \InvalidArgumentException("Unsupported village task table $table.");
+        }
+        $db = DB::getInstance();
+        $ownerResult = $db->query(
+            "SELECT v.owner FROM `$table` task
+             JOIN vdata v ON v.kid=task.kid WHERE task.id=$taskId"
+        );
+        if (!$ownerResult) {
+            throw new \RuntimeException("Unable to inspect $table task $taskId before locking it.");
+        }
+        if (!$ownerResult->num_rows) {
+            return;
+        }
+        $owner = (int)$ownerResult->fetch_assoc()['owner'];
+        $lockedOwner = $db->query("SELECT id FROM users WHERE id=$owner FOR UPDATE");
+        if (!$lockedOwner) {
+            throw new \RuntimeException("Unable to lock player $owner before $table task $taskId.");
+        }
+    }
+
+    private function isBuildingTaskAllowed(array $row): bool
+    {
+        $db = DB::getInstance();
+        $kid = (int)$row['kid'];
+        $field = (int)$row['building_field'];
+        $taskId = (int)$row['id'];
+        if ($field < 1 || ($field > 40 && $field !== 99)) {
+            return false;
+        }
+        $levelColumn = "f{$field}";
+        $typeColumn = "f{$field}t";
+        $stateResult = $db->query(
+            "SELECT v.capital, f.$levelColumn AS level, f.$typeColumn AS item_id
+             FROM vdata v JOIN fdata f ON f.kid=v.kid
+             WHERE v.kid=$kid FOR UPDATE"
+        );
+        if (!$stateResult) {
+            throw new \RuntimeException("Unable to lock building state for task $taskId.");
+        }
+        if (!$stateResult->num_rows) {
+            return false;
+        }
+        $state = $stateResult->fetch_assoc();
+        $itemId = (int)$state['item_id'];
+        $level = (int)$state['level'];
+        $capital = (int)$state['capital'] === 1;
+        $allowed = $itemId > 0
+            && VillageModel::isBuildingAllowedInCapitalState($itemId, $capital)
+            && $level < Formulas::buildingMaxLvl($itemId, $capital);
+        if ($allowed) {
+            return true;
+        }
+
+        $db->query(
+            "DELETE FROM building_upgrade
+             WHERE kid=$kid AND building_field=$field AND id<>$taskId"
+        );
+        $db->query("DELETE FROM demolition WHERE kid=$kid AND building_field=$field");
+        if ($field > 18 && $field < 99 && $level <= 0) {
+            $db->query("UPDATE fdata SET $typeColumn=0 WHERE kid=$kid");
+        }
+
+        return false;
+    }
+
+
+    public function attackMovementComplete()
+    {
+        $db = DB::getInstance();
+        $movements = $db->query("SELECT id FROM movement WHERE mode=0 AND end_time <= " . miliseconds() . " ORDER BY end_time ASC, id ASC LIMIT 250");
+        $this->processMovementComplete($movements);
+    }
+
+    public function otherMovementComplete()
+    {
+        $db = DB::getInstance();
+        $movements = $db->query("SELECT id FROM movement WHERE mode=1 AND end_time <= " . miliseconds() . " ORDER BY end_time ASC, id ASC LIMIT 250");
+        $this->processMovementComplete($movements);
+    }
+
+    public function processMovementComplete(\mysqli_result $movements)
+    {
+        mt_srand(make_seed());
+        while ($row = $movements->fetch_assoc()) {
+            $this->processMovementTask((int)$row['id']);
+        }
+    }
+
+    public function processMovementTask(int $taskId): bool
+    {
+        return TransactionalTask::consume('movement', $taskId, function (array $row): void {
+            if ($row['mode'] == 1) {
+                new ReturnProcessor($row);
+
+                return;
+            }
+            switch ($row['attack_type']) {
+                case MovementsModel::ATTACKTYPE_EVASION:
+                    new EvasionProcessor($row);
+                    break;
+                case MovementsModel::ATTACKTYPE_REINFORCEMENT:
+                    new ReinforcementProcessor($row);
+                    break;
+                case MovementsModel::ATTACKTYPE_NORMAL:
+                case MovementsModel::ATTACKTYPE_RAID:
+                case MovementsModel::ATTACKTYPE_SPY:
+                    new BattleModel($row);
+                    break;
+                case MovementsModel::ATTACKTYPE_ADVENTURE:
+                    new AdventureProcessor($row);
+                    break;
+                case MovementsModel::ATTACKTYPE_SETTLERS:
+                    new SettlersProcessor($row);
+                    break;
+            }
+        }, function () use ($taskId): void {
+            $db = DB::getInstance();
+            $taskResult = $db->query(
+                "SELECT mode, attack_type, u7, u8, to_kid FROM movement WHERE id=$taskId"
+            );
+            if (!$taskResult) {
+                throw new \RuntimeException("Unable to inspect movement $taskId before locking it.");
+            }
+            if (!$taskResult->num_rows) {
+                return;
+            }
+            $task = $taskResult->fetch_assoc();
+            if (
+                (int)$task['mode'] !== 0
+                || (int)$task['attack_type'] !== MovementsModel::ATTACKTYPE_NORMAL
+                || (empty($task['u7']) && empty($task['u8']))
+            ) {
+                return;
+            }
+
+            $targetKid = (int)$task['to_kid'];
+            $owner = (int)$db->fetchScalar("SELECT owner FROM vdata WHERE kid=$targetKid");
+            if ($owner <= 0) {
+                return;
+            }
+            $ownerResult = $db->query("SELECT id FROM users WHERE id=$owner FOR UPDATE");
+            if (!$ownerResult) {
+                throw new \RuntimeException(
+                    "Unable to lock player $owner before destructive movement $taskId."
+                );
+            }
+        });
+    }
+
+    public function handleAllianceBonusTasks()
+    {
+        $db = DB::getInstance();
+        $config = Config::getInstance();
+        $donate_reset_interval = $config->allianceBonus->donate_reset_interval;
+        $lastDonateReset = $db->fetchScalar("SELECT lastAllianceContributeReset FROM config");
+        if ($lastDonateReset < $config->game->start_time) {
+            $lastDonateReset = $config->game->start_time;
+            $db->query("UPDATE config SET lastAllianceContributeReset=$lastDonateReset");
+        }
+        if (!(($lastDonateReset + $donate_reset_interval) > time())) {
+            $lastDonateReset = $lastDonateReset + $donate_reset_interval;
+            $db->query("UPDATE config SET lastAllianceContributeReset=" . $lastDonateReset);
+            $db->query("UPDATE users SET alliance_contributions=0");
+        }
+        $m = new AllianceBonusModel();
+        $stmt = $db->query("SELECT * FROM alliance_bonus_upgrade_queue WHERE time < " . time() . " LIMIT 100");
+        while ($row = $stmt->fetch_assoc()) {
+            $this->processAllianceBonusTask((int)$row['id'], $m);
+        }
+    }
+
+    public function processAllianceBonusTask(int $taskId, ?AllianceBonusModel $allianceBonus = null): bool
+    {
+        $allianceBonus = $allianceBonus ?? new AllianceBonusModel();
+
+        return TransactionalTask::consume('alliance_bonus_upgrade_queue', $taskId, function (array $row) use ($allianceBonus): void {
+            $allianceBonus->levelUpBonus((int)$row['aid'], (int)$row['type']);
+        });
+    }
+
+    public function marketComplete()
+    {
+        $db = DB::getInstance();
+        $time = (time());
+        $result = $db->query("SELECT id FROM send WHERE end_time < $time ORDER BY end_time ASC, id ASC");
+        $processor = new MarketPlaceProcessor();
+        while ($row = $result->fetch_assoc()) {
+            $processor->processRow($row);
+        }
+    }
+
+    public function researchComplete()
+    {
+        $db = DB::getInstance();
+        $result = $db->query("SELECT id FROM research WHERE end_time <= " . (time()) . " ORDER BY end_time ASC, id ASC LIMIT 100");
+        while ($row = $result->fetch_assoc()) {
+            $this->processResearchTask((int)$row['id']);
+        }
+    }
+
+    public function processResearchTask(int $taskId): bool
+    {
+        return TransactionalTask::consume('research', $taskId, function (array $row) use ($taskId): void {
+            $db = DB::getInstance();
+            $kid = (int)$row['kid'];
+            $nr = (int)$row['nr'];
+            $mode = (int)$row['mode'];
+            if ($mode === 1) {
+                if ($nr < 2 || $nr > 9) {
+                    throw new QuarantineTaskException("Malformed research task $taskId: invalid academy unit index $nr.");
+                }
+                $table = 'tdata';
+            } else {
+                if ($mode !== 0) {
+                    throw new QuarantineTaskException("Malformed research task $taskId: invalid mode $mode.");
+                }
+                if ($nr < 1 || $nr > 8) {
+                    throw new QuarantineTaskException("Malformed research task $taskId: invalid smithy unit index $nr.");
+                }
+                $table = 'smithy';
+            }
+
+            $target = $db->query("SELECT kid FROM $table WHERE kid=$kid FOR UPDATE");
+            if (!$target) {
+                throw new \RuntimeException("Unable to lock research target $table row for village $kid.");
+            }
+            if (!$target->num_rows) {
+                throw new \RuntimeException("Research task $taskId target $table row for village $kid does not exist.");
+            }
+
+            if ($mode === 1) {
+                $updated = $db->query("UPDATE tdata SET u$nr=1 WHERE kid=$kid");
+            } else {
+                $updated = $db->query("UPDATE smithy SET u$nr=IF(u$nr+1>20, 20, u$nr+1) WHERE kid=$kid");
+            }
+            if (!$updated) {
+                throw new \RuntimeException("Unable to apply research task $taskId for village $kid.");
+            }
+        });
+    }
+
+    public function trainingComplete()
+    {
+        $db = DB::getInstance();
+        $training = new TrainingModel();
+        $delay = 0;
+        $time = getGame("useNanoseconds") ? (nanoseconds() - $delay * 1e9) : (getGame("useMilSeconds") ? (miliseconds() - $delay * 1000) : (time() - $delay));
+        $immediate_train = implode(",", [9, 10, 11]);
+        $result = $db->query("SELECT id FROM training WHERE nr IN($immediate_train) AND commence < $time LIMIT 100");
+        while ($row = $result->fetch_assoc()) {
+            $this->processTrainingTask((int)$row['id'], $training);
+        }
+        if (getGameSpeed() > 20) {
+            $delay = min(max(0, floor(getGameSpeed() / 1000) * 5), 30);
+        }
+        $time = getGame("useNanoseconds") ? (nanoseconds() - $delay * 1e9) : (getGame("useMilSeconds") ? (miliseconds() - $delay * 1000) : (time() - $delay));
+        $result = $db->query("SELECT id FROM training WHERE nr NOT IN($immediate_train) AND commence < $time LIMIT 100");
+        while ($row = $result->fetch_assoc()) {
+            $this->processTrainingTask((int)$row['id'], $training);
+        }
+    }
+
+    public function processTrainingTask(int $taskId, ?TrainingModel $training = null): bool
+    {
+        $training = $training ?? new TrainingModel();
+
+        return TransactionalTask::mutate('training', $taskId, function (array $row) use ($training): void {
+            $training->handleTrainingCompleteResult($row);
+        });
+    }
+
+    public function zeroPopVillages()
+    {
+        $db = DB::getInstance();
+        $result = $db->query("SELECT kid, owner FROM vdata WHERE pop<=0 AND isWW=0 LIMIT 50");
+        $accountDeleter = new AccountDeleter();
+        while ($row = $result->fetch_assoc()) {
+            if (true === $accountDeleter->isVillageDestroyAble(0, $row['kid'], $row['owner'])) {
+                $accountDeleter->deleteVillage($row['kid']);
+            }
+        }
+    }
+
+    public function checkForArtifactActivation()
+    {
+        $db = DB::getInstance();
+        $interval = ArtefactsModel::getArtifactActivationTime();
+        $time = time() - $interval;
+        $result = $db->query("SELECT * FROM artefacts WHERE active=0 AND IF(uid=1, FALSE, conquered < $time) ORDER BY conquered ASC, id ASC");
+        $art = new ArtefactsModel();
+        while ($row = $result->fetch_assoc()) {
+            $art->activateArtifact($row);
+        }
+    }
+
+    public function updateFoolArtifact()
+    {
+        $artifact = new ArtefactsModel();
+        $artifact->updateFoolArtes();
+    }
+
+    public function boughtGoldMessage()
+    {
+        $db = DB::getInstance();
+        $message = new MessageModel();
+        $result = $db->query("SELECT id FROM voting_reward_queue LIMIT 50");
+        while ($row = $result->fetch_assoc()) {
+            $this->processVotingRewardTask((int)$row['id'], $message);
+        }
+        $result = $db->query("SELECT id FROM buyGoldMessages LIMIT 50");
+        while ($row = $result->fetch_assoc()) {
+            $this->processBuyGoldMessageTask((int)$row['id'], $message);
+        }
+    }
+
+    public function processVotingRewardTask(int $taskId, ?MessageModel $message = null): bool
+    {
+        $message = $message ?? new MessageModel();
+
+        return TransactionalTask::consume('voting_reward_queue', $taskId, function (array $row) use ($message): void {
+            $arr = ['TopG', 'ArenaTop100', 'GTop100'];
+            if (in_array($row['votingName'], $arr, true) && !empty(Config::getProperty("Voting", $row['votingName'], "link"))) {
+                $gift_gold = Config::getProperty("Voting", $row['votingName'], "gold");
+                $db = DB::getInstance();
+                $db->query("UPDATE users SET gift_gold=gift_gold+$gift_gold WHERE id={$row['uid']}");
+                $message->sendMessage(0, $row['uid'], null, $gift_gold, 4);
+            }
+        });
+    }
+
+    public function processBuyGoldMessageTask(int $taskId, ?MessageModel $message = null): bool
+    {
+        $message = $message ?? new MessageModel();
+
+        return TransactionalTask::consume('buyGoldMessages', $taskId, function (array $row) use ($message): void {
+            if ($row['type'] == 1) {
+                $title = T("Global", "BuyGoldSubject");
+                $msg = sprintf(T("Global", "BuyGoldText"), $row['gold'], $row['trackingCode']);
+            } else {
+                $title = T("Global", "voucherTitle");
+                $msg = sprintf(T("Global", "voucherText"), $row['gold'], $row['trackingCode']);
+            }
+            $message->sendMessage(0, $row['uid'], $title, $msg);
+        });
+    }
+
+    public function banProgress()
+    {
+        (new MultiAccount())->runProgress();
+        $db = DB::getInstance();
+        $result = $db->query("SELECT id FROM banQueue WHERE end>0 AND end < " . time() . " LIMIT 10");
+        $infoBox = new InfoBoxModel();
+        while ($row = $result->fetch_assoc()) {
+            $this->processBanTask((int)$row['id'], $infoBox);
+        }
+    }
+
+    public function processBanTask(int $taskId, ?InfoBoxModel $infoBox = null): bool
+    {
+        $infoBox = $infoBox ?? new InfoBoxModel();
+
+        return TransactionalTask::consume('banQueue', $taskId, function (array $row) use ($infoBox): void {
+            $db = DB::getInstance();
+            $db->query("UPDATE users SET access=1 WHERE id={$row['uid']}");
+            $infoBox->deleteInfoByType($row['uid'], 14);
+        });
+    }
+
+    public function referenceCheck()
+    {
+        $db = DB::getInstance();
+        $result = $db->query("SELECT id FROM player_references WHERE rewardGiven=0 ORDER BY id ASC LIMIT 100");
+        while ($row = $result->fetch_assoc()) {
+            $this->processReferenceTask((int)$row['id']);
+        }
+    }
+
+    public function processReferenceTask(int $taskId): bool
+    {
+        $inviteGold = (int)Config::getProperty("gold", "invitePlayerGold");
+        $refLimit = (int)Config::getAdvancedProperty("refLimit");
+
+        return TransactionalTask::mutate(
+            'player_references',
+            $taskId,
+            function (array $row) use ($inviteGold, $refLimit, $taskId): void {
+                if ((int)$row['rewardGiven'] !== 0) {
+                    return;
+                }
+                $db = DB::getInstance();
+                $userIds = array_unique([(int)$row['uid'], (int)$row['ref_uid']]);
+                sort($userIds, SORT_NUMERIC);
+                $lockedUsers = implode(',', $userIds);
+                $users = $db->query(
+                    "SELECT id, total_villages FROM users WHERE id IN ($lockedUsers) ORDER BY id FOR UPDATE"
+                );
+                if (!$users) {
+                    throw new \RuntimeException("Unable to lock users for referral task $taskId.");
+                }
+                $existingUsers = [];
+                while ($user = $users->fetch_assoc()) {
+                    $existingUsers[(int)$user['id']] = (int)$user['total_villages'];
+                }
+                $inviteeId = (int)$row['uid'];
+                $referrerId = (int)$row['ref_uid'];
+                if (!isset($existingUsers[$inviteeId])) {
+                    $deleted = $db->query("DELETE FROM player_references WHERE id={$row['id']}");
+                    if (!$deleted || $db->affectedRows() !== 1) {
+                        throw new \RuntimeException("Unable to remove orphaned referral task $taskId.");
+                    }
+                    return;
+                }
+                if (!isset($existingUsers[$referrerId])) {
+                    throw new \RuntimeException("Referral task $taskId target user $referrerId does not exist.");
+                }
+
+                $totalVillagesCount = $existingUsers[$inviteeId];
+                if (!$totalVillagesCount) {
+                    $deleted = $db->query("DELETE FROM player_references WHERE id={$row['id']}");
+                    if (!$deleted || $db->affectedRows() !== 1) {
+                        throw new \RuntimeException("Unable to remove ineligible referral task $taskId.");
+                    }
+                    return;
+                }
+                $countResult = $db->query(
+                    "SELECT COUNT(id) FROM player_references WHERE rewardGiven=1 AND ref_uid=$referrerId"
+                );
+                if (!$countResult) {
+                    throw new \RuntimeException("Unable to count completed rewards for referral task $taskId.");
+                }
+                $countTotal = (int)$countResult->fetch_row()[0];
+                if ($countTotal >= $refLimit) {
+                    $limited = $db->query(
+                        "UPDATE player_references SET rewardGiven=2 WHERE id={$row['id']} AND rewardGiven=0"
+                    );
+                    if (!$limited || $db->affectedRows() !== 1) {
+                        throw new \RuntimeException("Unable to mark referral task $taskId as limited.");
+                    }
+                    return;
+                }
+                if ($totalVillagesCount >= 2) {
+                    $granted = $db->query("UPDATE users SET gift_gold=gift_gold+$inviteGold WHERE id=$referrerId");
+                    if (!$granted || ($inviteGold !== 0 && $db->affectedRows() !== 1)) {
+                        throw new \RuntimeException("Unable to grant referral task $taskId reward to user $referrerId.");
+                    }
+                    $completed = $db->query(
+                        "UPDATE player_references SET rewardGiven=1 WHERE id={$row['id']} AND rewardGiven=0"
+                    );
+                    if (!$completed || $db->affectedRows() !== 1) {
+                        throw new \RuntimeException("Unable to mark referral task $taskId as rewarded.");
+                    }
+                }
+            }
+        );
+    }
+
+    public function deleteOasisComplete()
+    {
+        $db = DB::getInstance();
+        $result = $db->query("SELECT id FROM odelete WHERE end_time <= " . (time()) . " ORDER BY end_time ASC, id ASC LIMIT 10");
+        while ($row = $result->fetch_assoc()) {
+            $this->processOasisDeletionTask((int)$row['id']);
+        }
+    }
+
+    public function processOasisDeletionTask(int $taskId): bool
+    {
+        return TransactionalTask::consume('odelete', $taskId, function (array $row): void {
+            $db = DB::getInstance();
+            $accountDeleter = new AccountDeleter();
+            if (!OasesModel::releaseOasis($row['oid'], $row['kid'], $row['end_time'], true)) {
+                return;
+            }
+            $enforces = $db->query("SELECT * FROM enforcement WHERE to_kid={$row['oid']}");
+            while ($enforce = $enforces->fetch_assoc()) {
+                $accountDeleter->returnTrappedOrEnforcementRow($enforce, true);
+            }
+            $find = $db->query("SELECT * FROM movement WHERE to_kid={$row['oid']} AND mode=0");
+            while ($movement = $find->fetch_assoc()) {
+                $accountDeleter->cancelMovement($movement['id'], $movement['to_kid'], $movement['kid']);
+            }
+        });
+    }
+
+    public function tradeRoutes()
+    {
+        $usePeriodicTradeRoutes = getGame("usePeriodicTradeRoutes");
+        $db = DB::getInstance();
+        $result = $db->query("SELECT id FROM traderoutes WHERE enabled=1 AND time <= " . (time()) . " ORDER BY time ASC, id ASC LIMIT 100");
+        while ($row = $result->fetch_assoc()) {
+            $this->processTradeRouteTask((int)$row['id'], (bool)$usePeriodicTradeRoutes);
+        }
+    }
+
+    public function processTradeRouteTask(
+        int $taskId,
+        bool $usePeriodicTradeRoutes = false,
+        ?MarketModel $marketModel = null
+    ): bool
+    {
+        $marketModel = $marketModel ?? new MarketModel();
+
+        return TransactionalTask::mutate('traderoutes', $taskId, function (array $row) use ($usePeriodicTradeRoutes, $marketModel): void {
+            if ((int)$row['enabled'] !== 1 || (int)$row['time'] > time()) {
+                return;
+            }
+            $db = DB::getInstance();
+            $nextTime = (int)$row['time'] + ($usePeriodicTradeRoutes ? (int)$row['start_hour'] : 86400);
+            $advance = static function () use ($db, $row, $nextTime): void {
+                $advanced = $db->query("UPDATE traderoutes SET time=$nextTime WHERE id={$row['id']}");
+                if (!$advanced || $db->affectedRows() !== 1) {
+                    throw new \RuntimeException("Unable to advance trade route {$row['id']}.");
+                }
+            };
+            $ownerResult = $db->query("SELECT owner FROM vdata WHERE kid={$row['kid']} FOR UPDATE");
+            if (!$ownerResult) {
+                throw new \RuntimeException("Unable to lock trade route {$row['id']} source village.");
+            }
+            $uid = $ownerResult->num_rows ? (int)$ownerResult->fetch_assoc()['owner'] : 0;
+            if ($uid === 0) {
+                if (!$db->query("DELETE FROM traderoutes WHERE kid={$row['kid']} OR to_kid={$row['kid']}")) {
+                    throw new \RuntimeException("Unable to remove orphaned trade route {$row['id']}.");
+                }
+                return;
+            }
+            $race = $marketModel->getPlayerRace($uid);
+            $market = $marketModel->getMarketAndTradeOfficeLevel($row['kid']);
+            if (!$market[17]) {
+                $advance();
+                return;
+            }
+            $curResources = array_map("floor", $marketModel->getVillageResources($row['kid']));
+            $resourcesToSend = array_map("floor", [
+                1 => $row['r1'],
+                2 => $row['r2'],
+                3 => $row['r3'],
+                4 => $row['r4'],
+            ]);
+            foreach ($resourcesToSend as $key => $value) {
+                if ($value > $curResources[$key]) {
+                    $resourcesToSend[$key] = $curResources[$key];
+                }
+            }
+            if (!array_sum($resourcesToSend)) {
+                $advance();
+                return;
+            }
+            $allianceBonus = 1;
+            $alliance = $db->query("SELECT aid, alliance_join_time FROM users WHERE id=$uid FOR UPDATE")->fetch_assoc();
+            if ($alliance && $alliance['aid'] > 0) {
+                $allianceBonus = AllianceBonus::getTradersBonus($alliance['aid'], $alliance['alliance_join_time']);
+            }
+            $merchantCap = Formulas::merchantCAP($race, $market[28], $allianceBonus);
+            $totalResources = array_sum($resourcesToSend);
+            $totalAvailableMerchants = $market[17]
+                - $marketModel->getOfferingMerchantsCount($row['kid'], $merchantCap)
+                - $marketModel->getOnTheWayMerchantsCount($row['kid'], $merchantCap);
+            if ($totalAvailableMerchants <= 0) {
+                $advance();
+                return;
+            }
+            $totalNeedMerchants = ceil($totalResources / $merchantCap);
+            if ($totalNeedMerchants > $totalAvailableMerchants) {
+                $resourcesToGo = [1 => 0, 2 => 0, 3 => 0, 4 => 0];
+                $remainingCapacity = $totalAvailableMerchants * $merchantCap;
+                for ($i = 1; $i <= 4; ++$i) {
+                    $resourcesToGo[$i] = max(min($remainingCapacity, $resourcesToSend[$i]), 0);
+                    $remainingCapacity -= $resourcesToGo[$i];
+                }
+                $resourcesToSend = $resourcesToGo;
+            }
+            if (!$marketModel->sendResources(
+                $row['kid'],
+                $row['to_kid'],
+                $race,
+                $resourcesToSend[1],
+                $resourcesToSend[2],
+                $resourcesToSend[3],
+                $resourcesToSend[4],
+                $row['times'],
+                $row['time']
+            )) {
+                throw new \RuntimeException("Unable to dispatch trade route {$row['id']}.");
+            }
+            $debited = $db->query(
+                "UPDATE vdata SET wood=wood-{$resourcesToSend[1]}, clay=clay-{$resourcesToSend[2]},
+                    iron=iron-{$resourcesToSend[3]}, crop=crop-{$resourcesToSend[4]} WHERE kid={$row['kid']}"
+            );
+            if (!$debited || $db->affectedRows() !== 1) {
+                throw new \RuntimeException("Unable to debit resources for trade route {$row['id']}.");
+            }
+            $advance();
+        });
+    }
+
+    public function cleanupServer()
+    {
+        $halfDay = time() - 86400 / 2;
+        $oneHour = time() - 3600;
+        $tenMin = time() - 600;
+        $db = DB::getInstance();
+        $db->query("DELETE FROM login_handshake WHERE time < $tenMin");
+        $db->query("DELETE FROM newproc WHERE time < $halfDay");
+        $db->query("DELETE FROM adventure WHERE end=1");
+        $db->query("DELETE FROM auction WHERE finish=1 AND uid=0 AND time < " . (time() - 2 * 86400));
+        $db->query("DELETE FROM a2b WHERE timestamp < $oneHour");
+        $db->query("DELETE FROM infobox WHERE showTo<>0 AND showTo < $tenMin AND (type < 7 OR type > 10)");
+        $db->query("DELETE FROM casualties WHERE time < " . (time() - 5 * 86400));
+        $db->query("DELETE FROM surrounding WHERE time < " . (time() - 3 * 86400));
+        $db->query("DELETE FROM log_ip WHERE time < " . (time() - 15 * 86400));
+        $db->query("DELETE FROM ndata WHERE non_deletable=0 AND (uid=1 OR (deleted=1 AND time < ($halfDay))) LIMIT 20000");
+        if (getCustom("removeReports")) {
+            $XY = time() - getCustom("removeReports");
+            $db->query("DELETE FROM ndata WHERE non_deletable=0 AND (uid=1 OR (archive=0 AND time < $XY)) LIMIT 20000");
+        }
+        $types = implode(",", [
+            NoticeHelper::TYPE_WON_AS_ATTACK_WITHOUT_CASUALTIES,
+            NoticeHelper::TYPE_WON_DEFENSE_WITHOUT_LOSSES,
+        ]);
+        if (getCustom("removeReportsBelow30Percent")) {
+            $db->query("DELETE FROM ndata WHERE non_deletable=0 AND type IN($types) AND time < $tenMin AND losses <= 30 AND archive=0 LIMIT 20000");
+        }
+        $db->query("DELETE FROM mdata WHERE viewed=1 AND time < " . (time() - 2 * 86400));
+        //if(filesize(INCLUDE_PATH . "error_log.log")) {
+        //    Notification::notify("Error log", "There are some errors in error_log.");
+        //}
+    }
+
+    private function addFakeUsers()
+    {
+        $fakeUsersCount = Config::getProperty("fakeUsersCount");
+        if ($fakeUsersCount <= 0) return;
+        $sqlite = new SQLite3(INCLUDE_PATH . "schema/users.sqlite");
+        $stmt = $sqlite->query("SELECT username FROM users ORDER BY RANDOM() LIMIT $fakeUsersCount");
+        $users = [];
+        while ($row = $stmt->fetchArray(SQLITE3_ASSOC)) {
+            $users[] = $row['username'];
+        }
+        $sqlite->close();
+        $register = new RegisterModel();
+        $count = $register->addFakeUser($users);
+        Notification::notify("StartEmail", "$count fake users were added.");
+    }
+
+    public function setUpNewServer()
+    {
+        $db = DB::getInstance();
+        $installationTime = (int)$db->fetchScalar("SELECT installationTime FROM config");
+        if ($installationTime == 0 || (time() - $installationTime) < 120) {
+            return;
+        }
+        $conf = Config::getInstance();
+        $startEmailsSent = $db->fetchScalar("SELECT startEmailsSent FROM config");
+        if (!$startEmailsSent && time() >= ($conf->game->start_time - 3600)) {
+            $db = DB::getInstance();
+            $db->query("UPDATE config SET startEmailsSent=1");
+            $conf->dynamic->startEmailsSent = 1;
+            $totalCount = 0;
+            //server emails
+            $order = ['[PLAYERNAME]', '[SERVER_NAME]', '[SERVER_URL]', '[SERVER_START_TIME]'];
+            $result = $db->query("SELECT * FROM activation");
+            while ($row = $result->fetch_assoc()) {
+                $replace = [
+                    $row['name'],
+                    $conf->settings->serverName,
+                    $conf->settings->gameWorldUrl,
+                    date("Y-m-d H:i", $conf->game->start_time) . ' (GMT ' . getTimeZone() . ')',
+                ];
+                $emailHTML = str_replace($order, $replace, T("Email", "serverStartEmail"));
+                Mailer::sendEmail($row['email'], T("Email", "serverStartEmailSubject"), $emailHTML);
+            }
+            $totalCount += $result->num_rows;
+            //non-activated emails
+            $globalDbConnection = GlobalDB::getAConnection();
+            $result = $globalDbConnection->query("SELECT * FROM activation WHERE used=0 AND worldId={$conf->settings->worldUniqueId}");
+            while ($row = $result->fetch_assoc()) {
+                //$row['name']
+                $replace = [
+                    $row['name'],
+                    $conf->settings->serverName,
+                    $conf->settings->gameWorldUrl,
+                    date("Y-m-d H:i", $conf->game->start_time) . ' (GMT ' . getTimeZone() . ')',
+                ];
+                $emailHTML = str_replace($order, $replace, T("Email", "serverStartEmail"));
+                Mailer::sendEmail($row['email'], T("Email", "serverStartEmailSubject"), $emailHTML);
+            }
+            $totalCount += $result->num_rows;
+            $globalDbConnection->close();
+            (new NatarsModel())->createFarmVillages();
+            $this->addFakeUsers();
+            Notification::notify("StartEmail", "Start emails were sent to $totalCount emails.");
+        }
+        $startConfigurationDone = $db->fetchScalar("SELECT startConfigurationDone FROM config");
+        if (!$startConfigurationDone && time() > $conf->game->start_time) {
+            $db->query("UPDATE config SET startConfigurationDone=1");
+            $conf->dynamic->startConfigurationDone = 1;
+            $m = new InfoBoxModel();
+            $m->addInfo(0, 1, 8, '', 0, 0);
+            $m->addInfo(0, 1, 9, '', 0, 0);
+            if ($conf->game->catapultAvailableTime > $conf->game->start_time) {
+                $m->addInfo(0, 1, 15, '', 0, 0);
+            }
+            if ($conf->timers->AutoFinishTime > 0) {
+                //$m->addInfo(0, 1, 10, '', $conf->timers->AutoFinishTime - 3 * 86400, $conf->timers->AutoFinishTime);
+            }
+            //(new NatarsModel())->createLotsOfNatarsVillages(max(min(2*$conf->game->speed, 600), 300));
+            Notification::notify("System notification",
+                sprintf("Game server %s started.", Config::getProperty("settings", "serverName")));
+            Log::addLog(0, "Server started", "Game server is now started.");
+        }
+    }
+
+    public function refreshCountryFlag()
+    {
+        $db = DB::getInstance();
+        $time = time() - 7200;
+        $result = $db->query("SELECT id, access, countryFlag FROM users WHERE (access!=3 OR lastCountryFlagCheck=0) AND (lastCountryFlagCheck <= $time) LIMIT 100");
+        while ($row = $result->fetch_assoc()) {
+            if ($row['access'] == 3) {
+                $countryFlag = AutomationModel::getRandomCountryFlag();
+            } else {
+                $countryFlag = $this->getCountryFlag($row['id']);
+                if (getDisplay("suppressIranFlag") && $countryFlag == 'ir') {
+                    if (!in_array($row['countryFlag'], ['', ' ', '-'])) {
+                        $countryFlag = $row['countryFlag'];
+                    } else {
+                        $countryFlag = AutomationModel::getRandomCountryFlag();
+                    }
+                }
+            }
+            $db->query("UPDATE users SET countryFlag='$countryFlag', lastCountryFlagCheck=" . time() . " WHERE id={$row['id']}");
+        }
+    }
+
+    private function getCountryFlag($uid)
+    {
+        $db = DB::getInstance();
+        $ip = $db->query("SELECT ip, COUNT(*) AS `repeatCount` FROM log_ip WHERE uid=$uid GROUP BY ip ORDER BY repeatCount DESC LIMIT 1");
+        $countryFlag = '-';
+        if ($ip->num_rows) {
+            if (function_exists("geoip_country_code_by_name")) {
+                try {
+                    $countryFlag = strtolower(geoip_country_code_by_name(long2ip($ip->fetch_assoc()['ip'])));
+                } catch (Exception $e) {
+
+                }
+            }
+        }
+        return $countryFlag;
+    }
+
+    public function checkAutoFinish()
+    {
+        if (Config::getProperty("timers", "WWConstructStartTime") < 10 || Config::getProperty("timers", "AutoFinishTime") <= 10) {
+            return;
+        }
+        $db = DB::getInstance();
+        $stmt = $db->query("SELECT serverFinished, WWAlertSent FROM config");
+        if (!$stmt->num_rows) return;
+        $stmt = $stmt->fetch_assoc();
+        if (!$stmt['WWAlertSent'] && time() > Config::getProperty("timers", "WWConstructStartTime")) {
+            $db->query("UPDATE config SET WWAlertSent=1");
+            $m = new PublicMsgModel();
+            $m->haveNewMessage('[NatarsAreBuildingWW]');
+        }
+        $config = Config::getInstance();
+        if (!$stmt['serverFinished']) {
+            $wwLevel = floor(max(time() - $config->timers->WWConstructStartTime, 0) / $config->timers->WWUpLvlInterval);
+            if ($wwLevel > 0) {
+                $db->query("UPDATE fdata SET f99=IF($wwLevel>100, 100, $wwLevel) WHERE kid=" . Formulas::xy2kid(0, 0));
+            }
+            if ($wwLevel >= 100) {
+                (new AutomationModel())->finishTheGame(2);
+            } else if (time() >= Config::getProperty("timers", "AutoFinishTime")) {
+                (new AutomationModel())->finishTheGame(2);
+            }
+        }
+    }
+
+    public function resetDailyGold()
+    {
+        $db = DB::getInstance();
+        $dailyGold = Config::getProperty("gold", "dailyGold");
+        if ($dailyGold <= 0) return;
+        $lastDailyGold = $db->fetchScalar("SELECT lastDailyGold FROM config");
+        if ($lastDailyGold == 0) {
+            $lastDailyGold = Config::getProperty("game", "start_time");
+            $db->query("UPDATE config SET lastDailyGold=" . ($lastDailyGold));
+        }
+        if ($dailyGold && (time() - $lastDailyGold) >= 86400) {
+            $count = floor((time() - $lastDailyGold) / 86400);
+            for ($i = 1; $i <= $count; ++$i) {
+                $db->query("UPDATE config SET lastDailyGold=" . time());
+                $m = new MessageModel();
+                $db->query("UPDATE users SET gift_gold=gift_gold+$dailyGold WHERE id>2 AND access<>2");
+                $users = $db->query("SELECT id FROM users WHERE id > 2 AND access<>2");
+                while ($row = $users->fetch_assoc()) {
+                    $m->sendMessage(0, $row['id'], null, $dailyGold, 4);
+                }
+            }
+            Log::addLog(0, "DailyGold Reset", "Daily gold has been gifted to all players.");
+        }
+    }
+
+    public function checkGameFinish()
+    {
+        $db = DB::getInstance();
+        $configDB = $db->query("SELECT serverFinished, finishStatusSet FROM config LIMIT 1");
+        if (!$configDB->num_rows) return;
+        $configDB = $configDB->fetch_assoc();
+        if (!$configDB['serverFinished'] || $configDB['finishStatusSet']) return;
+        $db->query("UPDATE config SET finishStatusSet=1");
+        $resultCode = $configDB['serverFinished'];
+        $config = Config::getInstance();
+        $worldId = Config::getProperty("settings", "worldUniqueId");
+        $globalDB = GlobalDB::getInstance();
+        $globalDB->query("DELETE FROM preregistration_keys WHERE worldId='{$worldId}'");
+        $globalDB->query("DELETE FROM activation WHERE worldId='{$worldId}' AND used=1");
+        $globalDB->query("UPDATE gameServers SET finished=1, registerClosed=1 WHERE id='{$worldId}'");
+        $automationModel = new AutomationModel();
+        $gameWorldDetails = $globalDB->query("SELECT * FROM gameServers WHERE id=$worldId")->fetch_assoc();
+        if (Config::getAdvancedProperty("voucherEnabled")) {
+            $users = $db->query("SELECT id, name, email, bought_gold FROM users WHERE email_verified=1 AND id>2 AND bought_gold>0 AND access=1 AND hidden=0");
+            while ($row = $users->fetch_assoc()) {
+                if ($row['bought_gold'] <= 0) continue;
+                $automationModel->addVoucher($row['email'], floor($row['bought_gold'] * (100 - Config::getProperty("gold", "voucherTaxPercent")) / 100), "remaining", sprintf('%s-%s', $row['id'], $row['name']));
+            }
+            $db->query("UPDATE users SET bought_gold=0");
+        }
+        if (($config->bonus->bonusGoldWinner || $config->bonus->bonusGoldTopAlliance) && $resultCode == 1) {
+            //has winner
+            $kid = $db->fetchScalar("SELECT kid FROM fdata WHERE f99=100");
+            $wData = $db->query("SELECT name, owner FROM vdata WHERE kid=$kid")->fetch_assoc();
+            $uData = $db->query("SELECT id, name, access, email, aid, email_verified FROM users WHERE id={$wData['owner']}")->fetch_assoc();
+            if ($config->bonus->bonusGoldWinner && $uData['access'] == 1 && $uData['email_verified'] == 1) {
+                $automationModel->addVoucher($uData['email'], $config->bonus->bonusGoldWinner, 'winner', sprintf('[%s] %s', $uData['id'], $uData['name']));
+            }
+            if ($uData['aid'] && $config->bonus->bonusGoldTopAlliance) {
+                $count = $config->bonus->bonusGoldTopAllianceCount;
+                $minPop = $config->bonus->bonusGoldTopAllianceMinPop;
+                $result = $db->query("SELECT id, name, email, email_verified FROM users WHERE aid={$uData['aid']} AND id!={$uData['id']} AND total_pop >= $minPop AND access=1 ORDER BY total_pop DESC LIMIT $count");
+                while ($row = $result->fetch_assoc()) {
+                    if ($row['email_verified'] == 1) {
+                        $automationModel->addVoucher($row['email'],
+                            $config->bonus->bonusGoldTopAlliance,
+                            'winnerAlliance',
+                            sprintf('%s-%s', $row['id'], $row['name']));
+                    }
+                }
+            }
+        }
+        if ($config->bonus->bonusGoldSecondWinner || $config->bonus->bonusGoldThirdWinner) {
+            $stmt = $db->query("SELECT kid FROM fdata WHERE f99 > 50 && f99 < 100 ORDER BY f99 DESC, lastWWUpgrade ASC");
+            $rank = 2;
+            while ($a = $stmt->fetch_assoc()) {
+                $wData = $db->query("SELECT name, owner FROM vdata WHERE kid={$a['kid']}");
+                if ($wData->num_rows) {
+                    $wData = $wData->fetch_assoc();
+                    $uData = $db->query("SELECT id, name, email, aid, email_verified FROM users WHERE id={$wData['owner']} AND access=1");
+                    if ($uData->num_rows) {
+                        $uData = $uData->fetch_assoc();
+                        if ($uData['email_verified'] == 1) {
+                            if ($rank == 2 && $config->bonus->bonusGoldSecondWinner) {
+                                $automationModel->addVoucher($uData['email'],
+                                    $config->bonus->bonusGoldSecondWinner,
+                                    '2ndWinner',
+                                    sprintf('[%s] %s', $uData['id'], $uData['name']));
+                            } else if ($rank == 3 && $config->bonus->bonusGoldThirdWinner) {
+                                $automationModel->addVoucher($uData['email'],
+                                    $config->bonus->bonusGoldThirdWinner,
+                                    '3rdWinner',
+                                    sprintf('[%s] %s', $uData['id'], $uData['name']));
+                            }
+                        }
+                    }
+                }
+                $rank++;
+            }
+        }
+        if ($config->bonus->bonusGoldTopOff) {
+            $topAttacker = $db->query("SELECT id, name, email, email_verified FROM users WHERE id>2 AND hidden=0 AND access=1 ORDER BY total_attack_points DESC LIMIT 1");
+            if ($topAttacker->num_rows) {
+                $topAttacker = $topAttacker->fetch_assoc();
+                if ($topAttacker['email_verified'] == 1) {
+                    $automationModel->addVoucher($topAttacker['email'],
+                        $config->bonus->bonusGoldTopOff,
+                        'topOff',
+                        sprintf('[%s] %s', $topAttacker['id'], $topAttacker['name']));
+                }
+            }
+        }
+        if ($config->bonus->bonusGoldTopDef) {
+            $topDefender = $db->query("SELECT id, name, email, email_verified FROM users WHERE id>2 AND hidden=0 AND access=1 ORDER BY total_defense_points DESC LIMIT 1");
+            if ($topDefender->num_rows) {
+                $topDefender = $topDefender->fetch_assoc();
+                if ($topDefender['email_verified'] == 1) {
+                    $automationModel->addVoucher($topDefender['email'],
+                        $config->bonus->bonusGoldTopDef,
+                        'topDef',
+                        sprintf('[%s] %s', $topDefender['id'], $topDefender['name']));
+                }
+            }
+        }
+        if ($config->bonus->bonusGoldTopClimber) {
+            $topClimber = $db->query("SELECT id, name, email, email_verified FROM users WHERE id>2 AND hidden=0 AND access=1 ORDER BY total_pop DESC LIMIT 1");
+            if ($topClimber->num_rows) {
+                $topClimber = $topClimber->fetch_assoc();
+                if ($topClimber['email_verified'] == 1) {
+                    $automationModel->addVoucher($topClimber['email'],
+                        $config->bonus->bonusGoldTopClimber,
+                        'topClimber',
+                        sprintf('[%s] %s', $topClimber['id'], $topClimber['name']));
+                }
+            }
+        }
+        if ($config->bonus->bonusGoldTopOffHammer) {
+            $topClimber = $db->query("SELECT id, name, email, email_verified FROM users WHERE id>2 AND hidden=0 AND access=1 ORDER BY max_off_point DESC LIMIT 1");
+            if ($topClimber->num_rows) {
+                $topClimber = $topClimber->fetch_assoc();
+                if ($topClimber['email_verified'] == 1) {
+                    $automationModel->addVoucher($topClimber['email'],
+                        $config->bonus->bonusGoldTopOffHammer,
+                        'topOffHammer',
+                        sprintf('[%s] %s', $topClimber['id'], $topClimber['name']));
+                }
+            }
+        }
+        if ($config->bonus->bonusGoldTopDefHammer) {
+            $topClimber = $db->query("SELECT id, name, email, email_verified FROM users WHERE id>2 AND hidden=0 AND access=1 ORDER BY max_def_point DESC LIMIT 1");
+            if ($topClimber->num_rows) {
+                $topClimber = $topClimber->fetch_assoc();
+                if ($topClimber['email_verified'] == 1) {
+                    $automationModel->addVoucher($topClimber['email'],
+                        $config->bonus->bonusGoldTopDefHammer,
+                        'topDefHammer',
+                        sprintf('[%s] %s', $topClimber['id'], $topClimber['name']));
+                }
+
+            }
+        }
+        $hidden = !$gameWorldDetails['promoted'];
+        $x = 1;
+        if ($resultCode == 1) {
+            $result = $db->query("SELECT kid, f99 FROM fdata WHERE f99>0 ORDER BY f99 DESC, lastWWUpgrade ASC LIMIT 3");
+            while ($row = $result->fetch_assoc()) {
+                $owner = $db->fetchScalar("SELECT owner FROM vdata WHERE kid={$row['kid']}");
+                $info = $db->query("SELECT id, aid, name, email, email_verified, race, countryFlag FROM users WHERE id={$owner}")->fetch_assoc();
+                if ($info['aid']) {
+                    $alliance = $db->query("SELECT name, tag FROM alidata WHERE id={$info['aid']}");
+                    if ($alliance->num_rows) {
+                        $alliance = $alliance->fetch_assoc();
+                        $alliance['name'] = $db->real_escape_string($alliance['name']);
+                        $alliance['tag'] = $db->real_escape_string($alliance['tag']);
+                    } else {
+                        $alliance['tag'] = $alliance['name'] = '';
+                    }
+                } else {
+                    $alliance['tag'] = $alliance['name'] = '';
+                }
+                if ($info['email_verified'] == 1) {
+                    ClubApi::addMedal($info['name'],
+                        $info['race'],
+                        $info['email'],
+                        [$info['countryFlag'], $row['f99'], $alliance['name'], $alliance['tag']],
+                        $x,
+                        $hidden);
+                }
+                ++$x;
+            }
+        }
+        $x = 4 - 1;
+        $result = $db->query("SELECT id, name, email, email_verified, race, total_attack_points, countryFlag FROM users WHERE id>2 AND hidden=0 AND access=1 ORDER BY total_attack_points DESC LIMIT 3");
+        while ($row = $result->fetch_assoc()) {
+            if ($row['email_verified'] == 1) {
+                ClubApi::addMedal($row['name'],
+                    $row['race'],
+                    $row['email'],
+                    [$row['countryFlag'], $row['total_attack_points']],
+                    ++$x,
+                    $hidden);
+            }
+        }
+        $x = 8 - 1;
+        $result = $db->query("SELECT id, name, email, email_verified, race, total_defense_points, countryFlag FROM users WHERE id>2 AND hidden=0 AND access=1 ORDER BY total_defense_points DESC LIMIT 3");
+        while ($row = $result->fetch_assoc()) {
+            if ($row['email_verified'] == 1) {
+
+                ClubApi::addMedal($row['name'],
+                    $row['race'],
+                    $row['email'],
+                    [$row['countryFlag'], $row['total_defense_points']],
+                    ++$x,
+                    $hidden);
+            }
+        }
+        $x = 12 - 1;
+        $result = $db->query("SELECT id, name, email, email_verified, race, total_pop, countryFlag FROM users WHERE id>2 AND hidden=0 AND access=1 ORDER BY total_pop DESC LIMIT 3");
+        while ($row = $result->fetch_assoc()) {
+            if ($row['email_verified'] == 1) {
+                ClubApi::addMedal($row['name'],
+                    $row['race'],
+                    $row['email'],
+                    [$row['countryFlag'], $row['total_pop']],
+                    ++$x,
+                    $hidden);
+            }
+        }
+        //big off hammer 16
+        //big def hammer 17
+        //winner alliance 18
+        $result = $db->query("SELECT id, name, email, email_verified, race, max_off_point, countryFlag FROM users WHERE id>2 AND hidden=0 AND access=1 AND max_off_point > 0 ORDER BY max_off_point DESC LIMIT 1");
+        while ($row = $result->fetch_assoc()) {
+            if ($row['email_verified'] == 1) {
+                ClubApi::addMedal($row['name'],
+                    $row['race'],
+                    $row['email'],
+                    [$row['countryFlag'], $row['max_off_point']],
+                    16,
+                    $hidden);
+            }
+        }
+        $result = $db->query("SELECT id, name, email, email_verified, race, max_def_point, countryFlag FROM users WHERE id>2 AND hidden=0 AND access=1 AND max_def_point > 0 ORDER BY max_def_point DESC LIMIT 1");
+        while ($row = $result->fetch_assoc()) {
+            if ($row['email_verified'] == 1) {
+                ClubApi::addMedal($row['name'],
+                    $row['race'],
+                    $row['email'],
+                    [$row['countryFlag'], $row['max_def_point']],
+                    17,
+                    $hidden);
+            }
+        }
+        if ($resultCode == 1) {
+            $kid = $db->fetchScalar("SELECT kid FROM fdata WHERE f99=100");
+            $wData = $db->query("SELECT name, owner FROM vdata WHERE kid=$kid")->fetch_assoc();
+            $uData = $db->query("SELECT id, name, access, email, email_verified, aid FROM users WHERE id={$wData['owner']}");
+            if ($uData->num_rows) {
+                $uData = $uData->fetch_assoc();
+                if ($uData['aid']) {
+                    $alliance = $db->query("SELECT name, tag FROM alidata WHERE id={$uData['aid']}");
+                    if ($alliance->num_rows) {
+                        $alliance = $alliance->fetch_assoc();
+                        $alliance['name'] = $db->real_escape_string($alliance['name']);
+                        $alliance['tag'] = $db->real_escape_string($alliance['tag']);
+                        $result = $db->query("SELECT id, name, email, email_verified, race, total_pop, countryFlag FROM users WHERE aid={$uData['aid']} AND id!={$uData['id']}");
+                        while ($row = $result->fetch_assoc()) {
+                            if ($row['email_verified'] == 1) {
+                                ClubApi::addMedal($row['name'],
+                                    $row['race'],
+                                    $row['email'],
+                                    [$row['countryFlag'], $alliance['name'], $alliance['tag']],
+                                    18,
+                                    $hidden);
+                            }
+                        }
+                    }
+                }
+            }
+        }
+        $db->query("UPDATE config SET serverFinishTime=" . time());
+    }
+
+    public function cleanupIndex()
+    {
+        $config = Config::getInstance();
+        $registrationCloseTime = $config->game->start_time + (round($config->game->round_length * 0.75, 1) * 86400);
+        $registrationCloseTime = min($registrationCloseTime, $config->timers->wwPlansReleaseTime);
+        if (getWorldId() == 'dev') {
+            $registrationCloseTime = 0;
+        }
+        $globalDB = GlobalDB::getInstance();
+        /**
+         * Payment Status:
+         * 0 => Nothing
+         * 1 => Success
+         * 2 => Success but not given
+         * 3 => Cancelled
+         * 4 => Loaded provider
+         */
+        $globalDB->query("DELETE FROM paymentLog WHERE status IN(0, 3, 4) AND time < " . (time() - 2.5 * 86400));
+        $globalDB->query("DELETE FROM infobox WHERE showTo < " . time());
+        $globalDB->query("DELETE FROM news WHERE expire < " . time());
+        $globalDB->query("DELETE FROM banIP WHERE blockTill > 0 AND blockTill < " . time());
+        $time = time() - Config::getProperty("gold", "voucherExpireDays") * 86400;
+        $globalDB->query("UPDATE paymentVoucher SET used=1, usedWorldId='system', usedPlayer='system', usedEmail='system', usedTime=" . time() . " WHERE used=0 AND time < $time");
+        if ($registrationCloseTime > 0 && time() > $registrationCloseTime && Config::getAdvancedProperty("registerAutoClose")) {
+            $globalDB->query("UPDATE gameServers SET registerClosed=1 WHERE id=" . getWorldUniqueId());
+        }
+        $db = DB::getInstance();
+        $result = $db->query("SELECT id FROM notificationQueue ORDER BY id ASC LIMIT 100");
+        while ($row = $result->fetch_assoc()) {
+            $this->processNotificationTask((int)$row['id']);
+        }
+        if (time() > $config->game->start_time) {
+            $interval = getCustom("activationReminderInterval");
+            $startTime = $config->game->start_time;
+            if ($interval > 0) {
+                $result = $globalDB->query("SELECT * FROM activation WHERE used=0 AND time>0 AND reminded=0 AND " . time() . "-IF(time <= $startTime, $startTime, time) >= $interval AND worldId=" . Config::getProperty("settings",
+                        "worldUniqueId") . "  LIMIT 20");
+                $view = new PHPBatchView("mail/activationReminder");
+                while ($row = $result->fetch_assoc()) {
+                    if (!$globalDB->begin_transaction()) {
+                        throw new \RuntimeException('Unable to begin activation reminder transaction.');
+                    }
+                    try {
+                        $view->vars['name'] = $row['name'];
+                        $view->vars['activationCode'] = $row['activationCode'];
+                        if (!Mailer::sendEmail(
+                            $row['email'],
+                            T("Mail", "Email verification reminder"),
+                            $view->output(),
+                            0,
+                            'activation-reminder:' . getWorldUniqueId() . ':' . $row['id']
+                        )) {
+                            throw new \RuntimeException('Unable to queue activation reminder.');
+                        }
+                        $globalDB->query("UPDATE activation SET reminded=1 WHERE id={$row['id']}");
+                        if (!$globalDB->commit()) {
+                            throw new \RuntimeException('Unable to commit activation reminder.');
+                        }
+                    } catch (\Throwable $e) {
+                        $globalDB->rollback();
+                        throw $e;
+                    }
+                }
+            }
+            $interval = getCustom("activationProgressReminderInterval");
+            if ($interval > 0) {
+                $result = $db->query("SELECT * FROM activation WHERE time>0 AND reminded=0 AND (" . time() . "-IF(time <= $startTime, $startTime, time) >= $interval) LIMIT 20");
+                $view = new PHPBatchView("mail/activationProgressReminder");
+                while ($row = $result->fetch_assoc()) {
+                    $view->vars['name'] = $row['name'];
+                    $view->vars['token'] = $row['token'];
+                    if (!Mailer::sendEmail(
+                        $row['email'],
+                        T("Mail", "Activation progress reminder"),
+                        $view->output(),
+                        0,
+                        'activation-progress-reminder:' . getWorldUniqueId() . ':' . $row['id']
+                    )) {
+                        throw new \RuntimeException('Unable to queue activation progress reminder.');
+                    }
+                    if (!$db->query("UPDATE activation SET reminded=1 WHERE id={$row['id']}")) {
+                        throw new \RuntimeException('Unable to mark activation progress reminder.');
+                    }
+                }
+            }
+        }
+    }
+
+    public function processNotificationTask(int $taskId): bool
+    {
+        return TransactionalTask::consume('notificationQueue', $taskId, function (array $row): void {
+            Notification::notifyReal($row['message'], Notification::deliveryKey((int)$row['id']));
+        });
+    }
+
+    public function postService()
+    {
+        $config = Config::getInstance();
+        if ($config->dynamic->postServiceDone == 1 || $config->dynamic->serverFinishTime <= 0) return;
+        $pause = 3 * 86400;
+        if ($config->timers->auto_reinstall > 0) {
+            $pause = $config->timers->auto_reinstall;
+        }
+        if ((time() - $config->dynamic->serverFinishTime) < $pause) {
+            return;
+        }
+        $db = DB::getInstance();
+        $db->query("UPDATE config SET postServiceDone=1");
+        $db->backup_tables();
+        if ($config->timers->auto_reinstall > 0) {
+            $this->handleAutoReinstall();
+            return;
+        }
+        $db->query("TRUNCATE TABLE a2b");
+        $db->query("TRUNCATE TABLE accounting");
+        $db->query("TRUNCATE TABLE activation");
+        $db->query("TRUNCATE TABLE admin_log");
+        $db->query("TRUNCATE TABLE adventure");
+        $db->query("TRUNCATE TABLE alistats");
+        $db->query("TRUNCATE TABLE ali_invite");
+        $db->query("TRUNCATE TABLE ali_log");
+        $db->query("TRUNCATE TABLE alliance_notification");
+        $db->query("TRUNCATE TABLE allimedal");
+        $db->query("TRUNCATE TABLE auction");
+        $db->query("TRUNCATE TABLE autoExtend");
+        $db->query("TRUNCATE TABLE alliance_bonus_upgrade_queue");
+        $db->query("TRUNCATE TABLE banQueue");
+        $db->query("TRUNCATE TABLE bids");
+        $db->query("TRUNCATE TABLE blocks");
+        $db->query("TRUNCATE TABLE building_upgrade");
+        $db->query("TRUNCATE TABLE buyGoldMessages");
+        $db->query("TRUNCATE TABLE voting_reward_queue");
+        $db->query("TRUNCATE TABLE casualties");
+        $db->query("TRUNCATE TABLE changeEmail");
+        $db->query("TRUNCATE TABLE deleting");
+        $db->query("TRUNCATE TABLE demolition");
+        $db->query("TRUNCATE TABLE farmlist");
+        $db->query("TRUNCATE TABLE forum_edit");
+        $db->query("TRUNCATE TABLE forum_forums");
+        $db->query("TRUNCATE TABLE forum_open_alliances");
+        $db->query("TRUNCATE TABLE forum_open_players");
+        $db->query("TRUNCATE TABLE forum_options");
+        $db->query("TRUNCATE TABLE forum_post");
+        $db->query("TRUNCATE TABLE forum_topic");
+        $db->query("TRUNCATE TABLE forum_vote");
+        $db->query("TRUNCATE TABLE friendlist");
+        $db->query("TRUNCATE TABLE ignoreList");
+        $db->query("TRUNCATE TABLE infobox");
+        $db->query("TRUNCATE TABLE infobox_delete");
+        $db->query("TRUNCATE TABLE infobox_read");
+        $db->query("TRUNCATE TABLE links");
+        $db->query("TRUNCATE TABLE mapflag");
+        $db->query("TRUNCATE TABLE map_block");
+        $db->query("TRUNCATE TABLE map_mark");
+        $db->query("TRUNCATE TABLE market");
+        $db->query("TRUNCATE TABLE marks");
+        $db->query("DELETE FROM mdata WHERE uid > 2 AND to_uid > 2");
+        $db->query("TRUNCATE TABLE medal");
+        $db->query("TRUNCATE TABLE messages_report");
+        $db->query("TRUNCATE TABLE movement");
+        $db->query("TRUNCATE TABLE multiaccount_log");
+        $db->query("TRUNCATE TABLE multiaccount_users");
+        $db->query("TRUNCATE TABLE ndata");
+        $db->query("TRUNCATE TABLE newproc");
+        $db->query("TRUNCATE TABLE notificationQueue");
+        $db->query("TRUNCATE TABLE odelete");
+        $db->query("TRUNCATE TABLE player_references");
+        $db->query("TRUNCATE TABLE raidlist");
+        $db->query("TRUNCATE TABLE research");
+        $db->query("TRUNCATE TABLE send");
+        $db->query("TRUNCATE TABLE surrounding");
+        $db->query("TRUNCATE TABLE traderoutes");
+        $db->query("TRUNCATE TABLE training");
+        $db->query("TRUNCATE TABLE general_log");
+        Notification::RealTimeNotify("Server shutdown", "Server has been cleared and shut down.");
+    }
+
+    public function handleAutoReinstall()
+    {
+        $worldId = getWorldId();
+        $config = Config::getInstance();
+        TaskQueue::addTask(TaskQueue::TASK_UNINSTALL, ['id' => getWorldUniqueId()], "Uninstalling server $worldId");
+        $installationTime = $config->dynamic->serverFinishTime + $config->timers->auto_reinstall;
+        if ($installationTime < time()) {
+            $installationTime = time();
+        }
+        $newStartTime = strtotime("today " . date("H:i:s", $config->game->start_time), $installationTime);
+        $newStartTime += $config->timers->auto_reinstall_start_after;
+        $data = [
+            'speed' => $config->game->speed,
+            'serverName' => $config->settings->serverName,
+            'worldId' => $worldId,
+            'roundLength' => $config->game->round_length_orig,
+            'mapSize' => MAP_SIZE,
+            'isPromoted' => false,
+            'startGold' => $config->gold->startGold,
+            'buyTroops' => $config->extraSettings->buyTroops['enabled'],
+            'buyTroopsInterval' => $config->extraSettings->buyTroops['buyInterval'],
+            'buyResources' => $config->extraSettings->buyResources['enabled'],
+            'buyResourcesInterval' => $config->extraSettings->buyResources['buyInterval'],
+            'buyAnimals' => $config->extraSettings->buyAnimal['enabled'],
+            'buyAnimalsInterval' => $config->extraSettings->buyAnimal['buyInterval'],
+            'protectionHours' => ceil($config->game->protection_time / 3600),
+            'needPreregistrationCode' => 0,
+            'serverHidden' => false,
+            'instantFinishTraining' => $config->extraSettings->generalOptions->finishTraining->enabled,
+            'buyAdventure' => $config->extraSettings->generalOptions->buyAdventure->enabled,
+            'activation' => true,
+            'auto_reinstall' => $config->timers->auto_reinstall,
+            'auto_reinstall_start_after' => $config->timers->auto_reinstall_start_after,
+            'startTime' => $newStartTime,
+        ];
+        TaskQueue::addTask(TaskQueue::TASK_INSTALL, $data, "Installing server $worldId");
+        Notification::RealTimeNotify("Installation", "Server " . getWorldId() . " was auto reinstalled.");
+    }
+
+    public function backup()
+    {
+        if (getGameElapsedSeconds() <= 1800) return;
+        $db = DB::getInstance();
+        $lastBackup = $db->fetchScalar("SELECT lastBackup FROM config");
+        if ((time() - $lastBackup) > 6 * 3600) {
+            $db->backup_tables();
+        }
+    }
+}

@@ -1,0 +1,70 @@
+name: OpenVillage
+options:
+  bundleIdPrefix: local.openvillage
+  deploymentTarget:
+    iOS: "16.0"
+  createIntermediateGroups: true
+settings:
+  base:
+    SWIFT_VERSION: "5.0"
+    MARKETING_VERSION: "1.0"
+    CURRENT_PROJECT_VERSION: "1"
+    ENABLE_USER_SCRIPT_SANDBOXING: NO
+    DEAD_CODE_STRIPPING: YES
+    TARGETED_DEVICE_FAMILY: "1,2"
+targets:
+  OpenVillage:
+    type: application
+    platform: iOS
+    sources:
+      - path: Sources
+    dependencies:
+      - framework: ../php/build/PHPCore.xcframework
+        embed: false
+        link: true
+      - framework: ../mariadb/build/MariaDBCore.xcframework
+        embed: false
+        link: true
+      - sdk: libz.tbd
+      - sdk: libiconv.tbd
+      - sdk: libresolv.tbd
+      - sdk: libc++.tbd
+    info:
+      path: Generated/Info.plist
+      properties:
+        CFBundleDisplayName: OpenVillage
+        CFBundleShortVersionString: $(MARKETING_VERSION)
+        CFBundleVersion: $(CURRENT_PROJECT_VERSION)
+        UILaunchScreen: {}
+        UIApplicationSupportsIndirectInputEvents: true
+        UISupportedInterfaceOrientations: [UIInterfaceOrientationPortrait, UIInterfaceOrientationLandscapeLeft, UIInterfaceOrientationLandscapeRight]
+        UISupportedInterfaceOrientations~ipad: [UIInterfaceOrientationPortrait, UIInterfaceOrientationPortraitUpsideDown, UIInterfaceOrientationLandscapeLeft, UIInterfaceOrientationLandscapeRight]
+        UIFileSharingEnabled: true
+        LSSupportsOpeningDocumentsInPlace: true
+        NSAppTransportSecurity:
+          NSAllowsLocalNetworking: true
+    settings:
+      base:
+        PRODUCT_BUNDLE_IDENTIFIER: local.openvillage.OpenVillage
+        PRODUCT_NAME: OpenVillage
+        OTHER_LDFLAGS: ["-ObjC", "-lc++"]
+    postCompileScripts:
+      - name: Bundle game files, MariaDB share and data template
+        basedOnDependencyAnalysis: false
+        shell: /bin/bash
+        script: |
+          set -euo pipefail
+          SRC="${SRCROOT}/../.."
+          RES="${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}"
+          DEST="$RES/game"
+          mkdir -p "$DEST/scripts/native"
+          for d in main_script web sections filtering; do
+            rsync -a --delete --exclude '.DS_Store' --exclude 'main_script/copyable/include/runtime' \
+                  --exclude 'runtime/' "$SRC/$d" "$DEST/"
+          done
+          rsync -a --delete "$SRC/scripts/native/router.php" "$SRC/scripts/native/runtime" "$DEST/scripts/native/"
+          cp "$SRC/main.sql" "$DEST/main.sql"
+          (cd "$SRC" && git rev-parse --short HEAD 2>/dev/null || date +%s) > "$DEST/.build-id"
+          date +%s >> "$DEST/.build-id"
+          rsync -a --delete "${SRCROOT}/../mariadb/build/share/" "$RES/mariadb-share/"
+          rsync -a --delete "${SRCROOT}/../mariadb/build/template/data/" "$RES/mariadb-template/"
