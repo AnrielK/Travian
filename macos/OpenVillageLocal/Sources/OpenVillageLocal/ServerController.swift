@@ -184,7 +184,7 @@ final class ServerController: ObservableObject {
 
     private func startPolling() {
         pollTimer = Timer.scheduledTimer(withTimeInterval: 4, repeats: true) { [weak self] _ in
-            Task { @MainActor in
+            Task { @MainActor [weak self] in
                 guard let self, self.busyAction == nil else { return }
                 await self.refreshStatus()
             }

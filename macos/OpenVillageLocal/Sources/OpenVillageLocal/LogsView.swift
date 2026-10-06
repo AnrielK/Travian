@@ -26,7 +26,7 @@ final class LogFollower: ObservableObject {
             }
             readFile()
             timer = Timer.scheduledTimer(withTimeInterval: 0.8, repeats: true) { [weak self] _ in
-                Task { @MainActor in self?.readFile() }
+                Task { @MainActor [weak self] in self?.readFile() }
             }
         case .command:
             guard let spec = backend.logCommand(source) else { return }

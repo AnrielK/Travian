@@ -28,13 +28,14 @@ final class GameBrowser: NSObject, ObservableObject, WKNavigationDelegate, WKUID
         super.init()
         webView.navigationDelegate = self
         webView.uiDelegate = self
+        // WKWebView reports KVO changes on the main thread.
         observers = [
-            webView.observe(\.title) { [weak self] wv, _ in Task { @MainActor in self?.title = wv.title ?? "" } },
-            webView.observe(\.url) { [weak self] wv, _ in Task { @MainActor in self?.urlText = wv.url?.absoluteString ?? "" } },
-            webView.observe(\.canGoBack) { [weak self] wv, _ in Task { @MainActor in self?.canGoBack = wv.canGoBack } },
-            webView.observe(\.canGoForward) { [weak self] wv, _ in Task { @MainActor in self?.canGoForward = wv.canGoForward } },
-            webView.observe(\.isLoading) { [weak self] wv, _ in Task { @MainActor in self?.isLoading = wv.isLoading } },
-            webView.observe(\.estimatedProgress) { [weak self] wv, _ in Task { @MainActor in self?.progress = wv.estimatedProgress } },
+            webView.observe(\.title) { [weak self] wv, _ in MainActor.assumeIsolated { self?.title = wv.title ?? "" } },
+            webView.observe(\.url) { [weak self] wv, _ in MainActor.assumeIsolated { self?.urlText = wv.url?.absoluteString ?? "" } },
+            webView.observe(\.canGoBack) { [weak self] wv, _ in MainActor.assumeIsolated { self?.canGoBack = wv.canGoBack } },
+            webView.observe(\.canGoForward) { [weak self] wv, _ in MainActor.assumeIsolated { self?.canGoForward = wv.canGoForward } },
+            webView.observe(\.isLoading) { [weak self] wv, _ in MainActor.assumeIsolated { self?.isLoading = wv.isLoading } },
+            webView.observe(\.estimatedProgress) { [weak self] wv, _ in MainActor.assumeIsolated { self?.progress = wv.estimatedProgress } },
         ]
     }
 
