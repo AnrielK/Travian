@@ -44,7 +44,9 @@ body.t46Layout #outOfGame { margin-top: 6px; }
 body.t46Layout #outOfGame li { position: relative; }
 body.t46Layout #outOfGame li a, body.t46Layout #outOfGame li div.a { position: relative; }
 body.t46Layout #header .currency i.goldCoin_medium, body.t46Layout #header .currency i.silverCoin_medium { display: inline-block; }
-body.t46Layout #topBarHero .heroImageButton .heroImage { width: 82px; }
+/* Hero portrait: the square 81×81 head, a bit smaller than the frame and centred like in Legends. */
+body.t46Layout #topBarHero .heroImageButton .heroImageHover { background-color: #e8dccb; }
+body.t46Layout #topBarHero .heroImageButton .heroImageHover .heroImage { width: 70px; height: 70px; left: 6px; top: 8px; }
 body.t46Layout #topBarHero .heroStatus svg { width: 16px; height: 16px; }
 body.t46Layout #topBarHero .heroStatus svg .outline { stroke: #1b120e; }
 body.t46Layout #topBarHero .layoutButton svg .outline,
@@ -220,3 +222,24 @@ body.t46Layout .sidebar #sidebarBoxInfobox .messageShortInfo img { display: inli
 body.t46Layout .sidebar #sidebarBoxInfobox .messageShortInfo img.messages.unreaded,
 body.t46Layout .sidebar #sidebarBoxInfobox .messageShortInfo img.messages[class*="unread"] {
     background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 18 14'%3E%3Crect x='.5' y='.5' width='17' height='13' rx='1.5' fill='%23e69043' stroke='%237a3f12'/%3E%3Cpath d='M1 1.5 9 8l8-6.5' fill='none' stroke='%237a3f12'/%3E%3C/svg%3E"); }
+
+/* ---- Round layout buttons (sidebar headers): Legends look – gold rim, green/gold face, white sprite icon ---- */
+body.t46Layout button.layoutButton { width: 36px; height: 36px; padding: 0; border-radius: 50%; border: 1px solid #34220d; overflow: visible;
+    background-image: linear-gradient(to bottom, #cba467 5%, #f3e2ae 13%, #efbf7b 32%, #aa8050 48%, #835e35 72%, #ad8a54 93%, #d7b672 100%);
+    box-shadow: 0 2px 3px rgba(0, 0, 0, .35); }
+body.t46Layout button.layoutButton:before { content: ""; position: absolute; top: 2px; right: 2px; bottom: 2px; left: 2px; width: auto; height: auto; z-index: 1;
+    border-radius: 50%; border: 1px solid #34220d; background-image: none; background-color: #546e39;
+    box-shadow: inset 0 -2px 1px 1px #63a90b, inset 2px -1px 1px 0 #578b11, inset -2px -1px 1px 0 #578b11, inset 0 2px 1px 1px #cfdcbe; }
+body.t46Layout button.layoutButton:hover:not(.disabled):before { background-color: #699128;
+    box-shadow: inset 0 -2px 1px 1px #71bb13, inset 2px -1px 1px 0 #6da71d, inset -2px -1px 1px 0 #6da71d, inset 0 2px 1px 1px #d4e2c1; }
+body.t46Layout button.layoutButton:after { display: none; }
+body.t46Layout button.layoutButton.gold:before { background-color: #ffd55e; background-image: linear-gradient(to bottom, #ffeaae, #ffd55e);
+    box-shadow: inset 0 -2px 1px 1px #ffe94c, inset 2px -1px 1px 0 #ffe464, inset -2px -1px 1px 0 #ffe464, inset 0 2px 1px 1px #ffeaae; }
+body.t46Layout button.layoutButton.disabled:before { background-color: #8a8a7a; box-shadow: inset 0 -1px 1px 1px #a3a690, inset 0 1px 1px 1px #c4c7b3; }
+body.t46Layout button.layoutButton.gold.disabled:before { background-color: #cda862; background-image: none; box-shadow: inset 0 -1px 1px 1px #daba4a, inset 0 1px 1px 1px #f4dc6a; }
+body.t46Layout button.layoutButton .button-container { position: absolute; top: 0; left: 0; right: 0; bottom: 0; }
+body.t46Layout button.layoutButton i { top: 1px; left: 1px; width: 32px; height: 32px; z-index: 3; }
+body.t46Layout button.layoutButton.disabled i { opacity: .75; }
+
+/* ---- Stock bar: Legends uses the normal (bold 11px) numbers ---- */
+body.t46Layout #stockBar .value { font-size: 11px !important; font-weight: 700; }

@@ -8,8 +8,24 @@ use Game\Hero\SessionHero;
 $health = (int)round($vars['regenerating'] ? $vars['regeneratedHealth'] : $vars['health']);
 $health = max(0, min(100, $health));
 $xp = max(0, min(100, (int)round($vars['expPercent'])));
-// Both bars are arcs on the left and right half of the portrait ring (r = 50, half circumference ≈ 157).
-$half = 157.08;
+/*
+ * Health and experience are arcs of the pack's ring images (hud/topBar/header/hero/health.png, experience.png),
+ * cut out with an SVG mask. Both start at the separator at the bottom (≈191° clockwise from 12 o'clock):
+ * health runs counter-clockwise over the right side, experience clockwise over the left side.
+ */
+$heroImg = get_gpack_cdn_mainPage_url() . 'img_ltr/hud/topBar/header/hero/';
+$t46Arc = static function (float $percent, bool $clockwise, float $span): string {
+    if ($percent <= 0) {
+        return '';
+    }
+    $start = 191.0;
+    $end = $clockwise ? $start + $span * $percent / 100 : $start - $span * $percent / 100;
+    $point = static fn(float $deg) => sprintf('%.2f %.2f', 55 + 50 * sin(deg2rad($deg)), 55 - 50 * cos(deg2rad($deg)));
+    $large = ($span * $percent / 100) > 180 ? 1 : 0;
+    return 'M' . $point($start) . ' A50 50 0 ' . $large . ' ' . ($clockwise ? 1 : 0) . ' ' . $point($end);
+};
+$healthArc = $t46Arc($health, false, 170);
+$xpArc = $t46Arc($xp, true, 160);
 $statusIcon = [
     SessionHero::STATUS_HOME => 'heroHome',
     SessionHero::STATUS_DEAD => 'heroDead',
@@ -23,23 +39,25 @@ $statusIcon = [
     <div id="topBarHero">
         <div class="health" title="<?=T("HeroGlobal", "health"); ?>: <?=$health; ?>%">
             <svg width="110" height="110" viewBox="0 0 110 110">
-                <path d="M55 105 A50 50 0 0 1 55 5" fill="none" stroke="#3b2a1e" stroke-width="7"/>
-                <path d="M55 105 A50 50 0 0 1 55 5" fill="none" stroke="<?=$vars['regenerating'] ? '#d9a13a' : '#76b82a'; ?>" stroke-width="5"
-                      stroke-dasharray="<?=round($half * $health / 100, 2); ?> 400"/>
+                <mask id="t46HealthMask"><path d="<?=$healthArc; ?>" fill="none" stroke="#fff" stroke-width="16"/></mask>
+                <?php if ($healthArc !== ''): ?>
+                    <image href="<?=$heroImg; ?>health.png" width="110" height="110" mask="url(#t46HealthMask)"<?=$vars['regenerating'] ? ' style="filter:hue-rotate(-60deg)"' : ''; ?>/>
+                <?php endif; ?>
             </svg>
         </div>
         <div class="experience" title="<?=T("HeroGlobal", "Experience"); ?>: <?=$vars['exp']; ?>">
             <svg width="110" height="110" viewBox="0 0 110 110">
-                <path d="M55 105 A50 50 0 0 0 55 5" fill="none" stroke="#3b2a1e" stroke-width="7"/>
-                <path d="M55 105 A50 50 0 0 0 55 5" fill="none" stroke="#5aa6d6" stroke-width="5"
-                      stroke-dasharray="<?=round($half * $xp / 100, 2); ?> 400"/>
+                <mask id="t46XpMask"><path d="<?=$xpArc; ?>" fill="none" stroke="#fff" stroke-width="16"/></mask>
+                <?php if ($xpArc !== ''): ?>
+                    <image href="<?=$heroImg; ?>experience.png" width="110" height="110" mask="url(#t46XpMask)"/>
+                <?php endif; ?>
             </svg>
         </div>
         <a id="heroImageButton" class="heroImageButton"
            href="hero.php<?=$vars['hasNewPoints'] ? "?flagAttributesBoxOpen" : ''; ?>"
            title="<?=T("HeroGlobal", "HeroOverview"); ?>||<?=htmlspecialchars($vars['longStatus']); ?>">
             <div class="heroImageHover">
-                <img class="heroImage heroImageMale"
+                <img class="heroImage"
                      src="hero_head.php?uid=<?=$vars['uid']; ?>&amp;size=sideinfo&amp;<?=$vars['heroImageHash']; ?>"
                      alt="Hero"/>
             </div>
