@@ -243,3 +243,29 @@ body.t46Layout button.layoutButton.disabled i { opacity: .75; }
 
 /* ---- Stock bar: Legends uses the normal (bold 11px) numbers ---- */
 body.t46Layout #stockBar .value { font-size: 11px !important; font-weight: 700; }
+
+/* ---- Task list (tasks.php): extras around the pack's #tasks styles ---- */
+body.t46Layout #content.tasks #tasks .contentNavi.subNavi { margin-bottom: 14px; }
+body.t46Layout #tasks .task .progress { position: relative; padding-right: 8px; }
+body.t46Layout #tasks .task .progress button.textButtonV1 { width: 130px; height: 30px; text-align: center; }
+body.t46Layout #tasks .task .progress .stepCounter { position: absolute; right: 10px; bottom: 2px; font-size: 10px; color: #8a7562; }
+body.t46Layout #tasks .task.achieved .progress .stepCounter { display: none; }
+body.t46Layout #tasks .task .progress .allDone { width: 130px; text-align: center; font-weight: 700; padding-left: 20px; min-height: 22px;
+    background: url('../img_ltr/quests/achievement/haken_gruen.png') no-repeat left center; background-size: 18px; }
+body.t46Layout #tasks .taskPager { display: flex; justify-content: center; align-items: center; gap: 18px; margin: 14px 0 4px; }
+body.t46Layout #tasks .taskPager a { display: block; text-decoration: none; }
+body.t46Layout #tasks .taskPager a.dot { width: 18px; height: 18px; border-radius: 50%; position: relative; background: #4a3529; border: 2px solid #8d755f;
+    box-shadow: inset 0 2px 3px rgba(0, 0, 0, .6); }
+body.t46Layout #tasks .taskPager a.dot.active { background: radial-gradient(circle at 40% 35%, #a6dd57, #4f8a13 70%); }
+body.t46Layout #tasks .taskPager a.dot span { position: absolute; top: 22px; left: 0; right: 0; text-align: center; font-size: 10px; color: #5e463a; }
+body.t46Layout #tasks .taskPager a.arrow { width: 30px; height: 36px; background: linear-gradient(to bottom, #8fcf3a, #4f8a13); }
+body.t46Layout #tasks .taskPager a.arrow.previous { clip-path: polygon(100% 0, 0 50%, 100% 100%); }
+body.t46Layout #tasks .taskPager a.arrow.next { clip-path: polygon(0 0, 100% 50%, 0 100%); }
+body.t46Layout #tasks .taskPager a.arrow.disabled { opacity: .35; pointer-events: none; filter: grayscale(1); }
+body.t46Layout .sidebar #sidebarBoxQuestmaster .taskOverview { margin-top: 6px; }
+body.t46Layout .sidebar #sidebarBoxQuestmaster .taskOverview li a { display: block; padding: 2px 0; color: #333; }
+body.t46Layout .sidebar #sidebarBoxQuestmaster .taskOverview li.achieved a { font-weight: 700; color: #4f8a13; }
+body.t46Layout .sidebar #sidebarBoxQuestmaster .taskOverview .boxTitle { display: block; margin-top: 8px; text-decoration: none; }
+body.t46Layout .sidebar #sidebarBoxQuestmaster .taskOverview ul { margin: 0; padding: 0; list-style: none; }
+body.t46Layout .sidebar #sidebarBoxQuestmaster .taskOverview li:not(:last-child) { border-bottom: 1px solid rgba(191, 179, 155, .6); }
+body.t46Layout #tasks .taskImage img { background-position: 0 0; background-size: auto; }

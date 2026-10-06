@@ -309,7 +309,7 @@ class Map_blockCtrl extends AnyCtrl
         if ($block !== FALSE) {
             $version = $block[1];
         }
-        $filename = "map_block_{$tx0}_{$ty0}_{$tx1}_{$ty1}_{$zoomLevel}_{$version}";
+        $filename = "map_block2_{$tx0}_{$ty0}_{$tx1}_{$ty1}_{$zoomLevel}_{$version}";
         if($this->cacheEnabled)
             ImageMapCache::checkCache($filename, 'jpeg');
         return [$block, $filename];
@@ -346,7 +346,7 @@ class Map_blockCtrl extends AnyCtrl
 
     private function getImgResource()
     {
-        if (!is_resource($this->imgResource)) {
+        if (!$this->imgResource) { // PHP 8: GD images are GdImage objects, not resources
             $this->imgResource = imagecreatetransparent(600, 600);
         }
         return $this->imgResource;
@@ -375,7 +375,7 @@ class Map_blockCtrl extends AnyCtrl
 
     private function getDarkColorResource()
     {
-        if (!is_resource($this->darkColor)) {
+        if (!$this->darkColor) {
             $this->darkColor = imagecreate($this->getTileSize(), $this->getTileSize());
             imagefill($this->darkColor, 0, 0, imagecolorallocate($this->darkColor, 155, 165, 157));
         }

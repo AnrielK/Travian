@@ -155,6 +155,12 @@ if (str_starts_with($path, '/gpack/')) {
     return is_file($file) ? ov_static($file) : ov_deny(404);
 }
 
+// ---- /img/map/… : the map script asks for its grid overlay at the site root ------
+if (str_starts_with($path, '/img/map/')) {
+    $file = ov_resolve($root . '/main_script/copyable/public', ltrim($path, '/'));
+    return ($file !== null && is_file($file)) ? ov_static($file) : ov_deny(404);
+}
+
 // ---- / (web/public) -------------------------------------------------------
 $base = $root . '/web/public';
 $file = ov_resolve($base, $path);

@@ -163,6 +163,17 @@
                     Travian.Game.Quest.initializeQuests();
                 });
             </script>
+            <?php if (is_t46_layout()): ?>
+                <?php $t46Tasks = array_slice((new \Model\TaskListModel())->getTasks('village'), 0, 4); ?>
+                <div class="taskOverview">
+                    <a class="boxTitle" href="tasks.php"><?=T('Tasks', 'overview', 'Task overview'); ?></a>
+                    <ul>
+                        <?php foreach ($t46Tasks as $t46Task): ?>
+                            <li class="<?=$t46Task['state']; ?>"><a href="tasks.php"><?=$t46Task['state'] === 'achieved' ? '&#10003; ' : ''; ?><?=htmlspecialchars($t46Task['title']); ?></a></li>
+                        <?php endforeach; ?>
+                    </ul>
+                </div>
+            <?php endif; ?>
 
         </div>
         <div class="innerBox footer">

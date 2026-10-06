@@ -141,6 +141,7 @@ $pages = [
     'spieler.php' => 'SpielerCtrl',
     'start_adventure.php' => 'StartAdventure',
     'statistiken.php' => 'StatistikenCtrl',
+    'tasks.php' => 'TasksCtrl',
     'stats.php' => 'StatsCtrl',
     'credits.php' => 'CreditsCtrl',
     'verify.php' => 'EmailVerificationCtrl',
