@@ -165,6 +165,22 @@
             </script>
             <?php if (is_t46_layout()): ?>
                 <?php $t46Tasks = array_slice((new \Model\TaskListModel())->getTasks('village'), 0, 4); ?>
+                <script type="text/javascript">
+                    // Legends: the mentor opens the task list (tasks.php) instead of the old quest dialog.
+                    (function () {
+                        var mentor = document.getElementById('questmasterButton');
+                        if (mentor) {
+                            mentor.addEventListener('click', function (e) {
+                                e.preventDefault();
+                                e.stopImmediatePropagation();
+                                window.location.href = 'tasks.php';
+                            }, true);
+                        }
+                    })();
+                </script>
+                <?php if (!$vars['isTutorial']): ?>
+                    <script type="text/javascript">jQuery('#sidebarBoxQuestmaster').addClass('t46TasksOnly');</script>
+                <?php endif; ?>
                 <div class="taskOverview">
                     <a class="boxTitle" href="tasks.php"><?=T('Tasks', 'overview', 'Task overview'); ?></a>
                     <ul>

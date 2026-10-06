@@ -157,7 +157,7 @@ use Game\Hero\SessionHero;
         <div class="clear"></div>
     </div>
     <div class="roundedCornersBox">
-        <h4><?php $hide = !(isset($_GET['flagAttributesBoxOpen']) || SessionHero::getInstance()->hasNewPoints()); ?>
+        <h4><?php $hide = !(isset($_GET['flagAttributesBoxOpen']) || ($_GET['view'] ?? '') === 'attributes' || SessionHero::getInstance()->hasNewPoints()); ?>
             <div class="openCloseSwitchBar">
                 <img alt="<?= T("Hero", "Attributes"); ?>" src="img/x.gif"
                      class="openedClosedSwitch switch<?= $hide ? 'Closed' : 'Opened'; ?>"/>

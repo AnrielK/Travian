@@ -247,7 +247,6 @@ body.t46Layout #stockBar .value { font-size: 11px !important; font-weight: 700; 
 /* ---- Task list (tasks.php): extras around the pack's #tasks styles ---- */
 body.t46Layout #content.tasks #tasks .contentNavi.subNavi { margin-bottom: 14px; }
 body.t46Layout #tasks .task .progress { position: relative; padding-right: 8px; }
-body.t46Layout #tasks .task .progress button.textButtonV1 { width: 130px; height: 30px; text-align: center; }
 body.t46Layout #tasks .task .progress .stepCounter { position: absolute; right: 10px; bottom: 2px; font-size: 10px; color: #8a7562; }
 body.t46Layout #tasks .task.achieved .progress .stepCounter { display: none; }
 body.t46Layout #tasks .task .progress .allDone { width: 130px; text-align: center; font-weight: 700; padding-left: 20px; min-height: 22px;
@@ -258,9 +257,6 @@ body.t46Layout #tasks .taskPager a.dot { width: 18px; height: 18px; border-radiu
     box-shadow: inset 0 2px 3px rgba(0, 0, 0, .6); }
 body.t46Layout #tasks .taskPager a.dot.active { background: radial-gradient(circle at 40% 35%, #a6dd57, #4f8a13 70%); }
 body.t46Layout #tasks .taskPager a.dot span { position: absolute; top: 22px; left: 0; right: 0; text-align: center; font-size: 10px; color: #5e463a; }
-body.t46Layout #tasks .taskPager a.arrow { width: 30px; height: 36px; background: linear-gradient(to bottom, #8fcf3a, #4f8a13); }
-body.t46Layout #tasks .taskPager a.arrow.previous { clip-path: polygon(100% 0, 0 50%, 100% 100%); }
-body.t46Layout #tasks .taskPager a.arrow.next { clip-path: polygon(0 0, 100% 50%, 0 100%); }
 body.t46Layout #tasks .taskPager a.arrow.disabled { opacity: .35; pointer-events: none; filter: grayscale(1); }
 body.t46Layout .sidebar #sidebarBoxQuestmaster .taskOverview { margin-top: 6px; }
 body.t46Layout .sidebar #sidebarBoxQuestmaster .taskOverview li a { display: block; padding: 2px 0; color: #333; }
@@ -269,3 +265,122 @@ body.t46Layout .sidebar #sidebarBoxQuestmaster .taskOverview .boxTitle { display
 body.t46Layout .sidebar #sidebarBoxQuestmaster .taskOverview ul { margin: 0; padding: 0; list-style: none; }
 body.t46Layout .sidebar #sidebarBoxQuestmaster .taskOverview li:not(:last-child) { border-bottom: 1px solid rgba(191, 179, 155, .6); }
 body.t46Layout #tasks .taskImage img { background-position: 0 0; background-size: auto; }
+
+/* Task list: framed green Collect button and 3D pager arrows (Legends). */
+body.t46Layout #tasks .task .progress button.collect { width: 150px; height: 40px; padding: 0; margin-left: -10px; font-size: 14px; }
+body.t46Layout #tasks .task .progress button.collect > div { padding: 0; line-height: 34px; color: #f2f2f2;
+    text-shadow: 0 1px 1px #2c4a0c, 0 0 2px #2c4a0c; }
+body.t46Layout #tasks .task.achieved .progress { align-self: center; }
+body.t46Layout #tasks .taskPager a.arrow { width: 34px; height: 40px; filter: drop-shadow(1px 2px 1px rgba(0, 0, 0, .35)); }
+body.t46Layout #tasks .taskPager a.arrow svg { width: 34px; height: 40px; display: block; }
+body.t46Layout #tasks .taskPager a.arrow.previous svg { transform: scaleX(-1); }
+body.t46Layout #tasks .taskPager a.arrow:hover { filter: drop-shadow(1px 2px 1px rgba(0, 0, 0, .35)) brightness(1.12); }
+body.t46Layout #tasks .taskPager a.arrow.disabled { opacity: 1; filter: grayscale(1) brightness(1.25) opacity(.55); }
+body.t46Layout #tasks .taskPager a.dot { width: 20px; height: 20px; border: 2px solid #34220d;
+    background: radial-gradient(circle at 45% 40%, #6b5244, #2e1f17 75%); box-shadow: inset 0 2px 2px rgba(0,0,0,.6), 0 1px 0 #d8c7a8; }
+body.t46Layout #tasks .taskPager a.dot.active { background: radial-gradient(circle at 40% 35%, #c8f07d, #5d9e17 55%, #2f5c09 100%); }
+
+/* Questmaster: outside the tutorial the box is the Legends "Task overview" only. */
+body.t46Layout .sidebar #sidebarBoxQuestmaster.t46TasksOnly .header > .boxTitle,
+body.t46Layout .sidebar #sidebarBoxQuestmaster.t46TasksOnly #mentorTaskList { display: none; }
+body.t46Layout .sidebar #sidebarBoxQuestmaster.t46TasksOnly .taskOverview .boxTitle { margin-top: 0; }
+
+/* ---- Hero window (hero.php): Inventory / Attributes / Appearance like Legends ---- */
+body.t46Layout #content.hero .contentNavi.subNavi .container a.tabItem { font-size: 14px; }
+/* Inventory view: hero figure on an illustrated scene, equipment slots, dark bag. */
+body.t46Layout #content.heroView-inventory > #attributes,
+body.t46Layout #content.heroView-inventory > .roundedCornersBox,
+body.t46Layout #content.heroView-inventory form > #attributes,
+body.t46Layout #content.heroView-inventory .heroPropertiesContent { display: none; }
+body.t46Layout #content.heroView-attributes #bodyOptions,
+body.t46Layout #content.heroView-attributes #hero_inventory,
+body.t46Layout #content.heroView-attributes #placeHolder { display: none; }
+body.t46Layout #content.hero #bodyOptions { float: none; width: auto; height: 420px; position: relative; margin: 0 -6px; border: 2px solid #4b3a2c;
+    background: url('../img_ltr/layout/background2019/bgResources.jpg') center 30% / 260% auto; overflow: hidden; }
+body.t46Layout #content.hero #bodyOptions:before { content: ""; position: absolute; left: 0; right: 0; bottom: 0; height: 70px;
+    background: linear-gradient(to bottom, rgba(64, 70, 58, 0), rgba(64, 70, 58, .85)); }
+body.t46Layout #content.hero #bodyOptions #hero_body_container { position: absolute; left: 110px; right: 0; top: 0; bottom: 0; width: auto; height: auto; margin: 0; }
+body.t46Layout #content.hero #bodyOptions #hero_body { left: 50%; margin-left: -110px; top: 30px; transform: scale(1.12); transform-origin: top center; }
+body.t46Layout #content.hero #bodyOptions #hero_body_content { position: absolute; left: -110px; top: 0; bottom: 0; width: 104px; height: auto; margin: 0;
+    background: linear-gradient(to bottom, #3d5c47, #2d473a); border-right: 2px solid #8c7a55; }
+body.t46Layout #content.hero #bodyOptions #hero_body_content .content { position: static; width: auto; height: auto; background: none; }
+body.t46Layout #content.hero #bodyOptions #hero_body_content .content > div { position: relative !important; left: auto !important; top: auto !important;
+    width: 84px !important; height: 52px !important; margin: 6px auto 0; border: 1px solid #8c7a55; border-radius: 2px;
+    background-color: #2b4234; box-shadow: inset 0 0 6px rgba(0, 0, 0, .6); }
+body.t46Layout #content.hero #hero_inventory { float: none; width: auto; margin: 0 -6px; padding: 8px; background: #2c2622; border: 2px solid #4b3a2c; border-top: 0; }
+body.t46Layout #content.hero #hero_inventory .boxes > div[class^="boxes-"]:not(.boxes-contents) { display: none; }
+body.t46Layout #content.hero #hero_inventory .boxes-contents { padding: 0; background: none; }
+body.t46Layout #content.hero #hero_inventory .inventory { width: 62px; height: 62px; margin: 1px; border: 1px solid #8c7a55; border-radius: 2px;
+    background-color: #1f2a25; box-shadow: inset 0 0 8px rgba(0, 0, 0, .8); }
+body.t46Layout #content.hero #hero_inventory .market a { color: #a8d86a; font-weight: 700; }
+/* Attributes view: Legends panels with ornamented bars. */
+body.t46Layout #content.heroView-attributes > #attributes,
+body.t46Layout #content.heroView-attributes .roundedCornersBox { background: #f6f0e3; border: 2px solid #c9b48c; border-radius: 4px;
+    box-shadow: inset 0 0 0 1px #fff8e8; padding: 10px 14px; margin-bottom: 10px; }
+body.t46Layout #content.hero .attribute .bar-bg, body.t46Layout #content.hero td.progress .bar-bg,
+body.t46Layout #content.hero .attribute td.progress > div { position: relative; height: 14px; padding: 2px; border-radius: 9px; box-sizing: border-box;
+    background: #5b4335; border: 1px solid #34220d; box-shadow: inset 0 1px 2px rgba(0, 0, 0, .6); }
+body.t46Layout #content.hero .attribute .bar-bg:before, body.t46Layout #content.hero .attribute .bar-bg:after {
+    content: ""; position: absolute; top: -3px; width: 10px; height: 18px; z-index: 2; background: url('../img_ltr/scenes/Tasks/progressBarDecoration.png'); }
+body.t46Layout #content.hero .attribute .bar-bg:before { left: -2px; }
+body.t46Layout #content.hero .attribute .bar-bg:after { right: -2px; transform: scaleX(-1); }
+body.t46Layout #content.hero .attribute .bar { height: 8px; border-radius: 4px; background: linear-gradient(to top, #5c831e, #7f9f32 70%, #a0ae56); border: 0; }
+body.t46Layout #content.hero tr.experience .bar { background: linear-gradient(to top, #1d63a8, #3c8fd8 70%, #8cc4f2); }
+
+/* ---- Auctions (hero.php?t=4): Buy / Sell / Overview tabs, lock box, dark filter bar, item table ---- */
+body.t46Layout #content.hero_auction .contentNavi.tabNavi.subNavi { display: flex; }
+body.t46Layout #content.hero_auction .auctionLocked { display: flex; align-items: center; gap: 14px; margin: 4px 0 12px; }
+body.t46Layout #content.hero_auction .auctionLocked .lockIcon { flex: 0 0 76px; height: 76px; border-radius: 50%; border: 2px solid #34220d;
+    background: radial-gradient(circle at 50% 40%, #f6c44e, #c47a12 60%, #6d3b06 100%); box-shadow: inset 0 0 0 4px #4a3020, 0 2px 4px rgba(0,0,0,.4); position: relative; }
+body.t46Layout #content.hero_auction .auctionLocked .lockIcon:after { content: ""; position: absolute; left: 22px; top: 16px; width: 32px; height: 40px;
+    background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 40'%3E%3Cpath d='M8 17v-6a8 8 0 0 1 16 0v6' fill='none' stroke='%233a2208' stroke-width='4'/%3E%3Crect x='2' y='16' width='28' height='22' rx='3' fill='%23ffd76a' stroke='%233a2208' stroke-width='2.5'/%3E%3Ccircle cx='16' cy='25' r='3' fill='%233a2208'/%3E%3Cpath d='M16 26v6' stroke='%233a2208' stroke-width='3'/%3E%3C/svg%3E") no-repeat; }
+body.t46Layout #content.hero_auction .auctionLocked .lockInfo { flex: 1; }
+body.t46Layout #content.hero_auction .auctionLocked .lockTitle { font-size: 18px; font-weight: 700; color: #3f2e22; margin-bottom: 6px; }
+body.t46Layout #content.hero_auction .auctionLocked .auctionAdventureBar { height: 10px; padding: 1px; border-radius: 5px; background: #4a3529; border: 1px solid #2d1f16; }
+body.t46Layout #content.hero_auction .auctionLocked .auctionAdventureBar .bar { height: 8px; border-radius: 4px; background: linear-gradient(to top, #3f7d16, #77c13a); }
+body.t46Layout #content.hero_auction .auctionLocked .lockText { display: flex; justify-content: space-between; margin-top: 8px; color: #4b3a2c; }
+body.t46Layout #content.hero_auction #filter .boxes > div[class^="boxes-"]:not(.boxes-contents) { display: none; }
+body.t46Layout #content.hero_auction #filter .boxes-contents { padding: 6px 8px; border-radius: 3px; border: 2px solid #34220d;
+    background: linear-gradient(to bottom, #5f473b, #4a362c); box-shadow: inset 0 1px 0 #8a6d58; }
+body.t46Layout #content.hero_auction #filter .wrapper { display: flex; flex-direction: row-reverse; align-items: center; justify-content: space-between; }
+body.t46Layout #content.hero_auction #filter .silver { float: none; color: #f2e1d0; font-weight: 700; padding: 4px 10px; border-radius: 14px;
+    background: #2f241e; border: 1px solid #8c7a55; }
+body.t46Layout #content.hero_auction #filter .filterContainer { float: none; display: flex; flex-wrap: wrap; gap: 2px; }
+body.t46Layout #content.hero_auction #filter button.iconFilter { width: 34px; height: 34px; border-radius: 50%; border: 1px solid transparent; background: none; }
+body.t46Layout #content.hero_auction #filter button.iconFilter.iconFilterActive { border-color: #d7b672; background: radial-gradient(circle, #8a6d58, #4a362c); }
+body.t46Layout #content.hero_auction #auction table { border-collapse: separate; border-spacing: 0 3px; background: none; }
+body.t46Layout #content.hero_auction #auction table thead th, body.t46Layout #content.hero_auction #auction table thead td {
+    background: #d8c9ac; color: #3f2e22; font-weight: 700; border: 0; padding: 6px 4px; }
+body.t46Layout #content.hero_auction #auction table tbody td { background: #eef0f1; border-top: 1px solid #c6c0b4; border-bottom: 1px solid #c6c0b4; padding: 6px 4px; }
+body.t46Layout #content.hero_auction #auction table tbody td.icon { width: 44px; background: linear-gradient(to bottom, #2f6d5c, #1c4a3e); text-align: center; }
+body.t46Layout #content.hero_auction #auction table tbody td.name { font-weight: 700; color: #3f2e22; }
+body.t46Layout #content.hero_auction #auction table tbody tr:hover td:not(.icon) { background: #fbf6ea; }
+body.t46Layout #content.hero > #attributes { box-sizing: border-box; width: auto; }
+body.t46Layout #content.heroView-attributes #attributes .roundedCornersBox { width: auto; box-sizing: border-box; margin: 0 0 10px; }
+body.t46Layout #content.heroView-attributes #attributes .roundedCornersBox > div[class^="boxes-"]:not(.boxes-contents) { display: none; }
+body.t46Layout #content.heroView-attributes .openCloseSwitchBar { background: none; cursor: default; pointer-events: none; }
+body.t46Layout #content.heroView-attributes .openCloseSwitchBar img.openedClosedSwitch { display: none; }
+body.t46Layout #content.heroView-attributes .openCloseSwitchBar .title { font-size: 15px; color: #3f2e22; }
+body.t46Layout #content.hero .contentNavi.subNavi + * { margin-top: 0; }
+body.t46Layout #content.heroView-inventory > .clear:first-of-type, body.t46Layout #content.heroView-inventory .titleInHeader + .clear { display: none; }
+body.t46Layout #content.hero #hero_inventory .market { background: none; border: 0; }
+body.t46Layout #content.heroView-attributes > #attributes { background: none; border: 0; box-shadow: none; padding: 0; }
+body.t46Layout #content.heroView-attributes #attributes .roundedCornersBox h4 .openCloseSwitchBar { background: #e9dfc8; padding: 6px 10px; border-radius: 3px; }
+body.t46Layout #content.hero_auction #filter .wrapper { background: none; border-radius: 0; padding: 0; }
+body.t46Layout #content.hero_auction #filter .silver img.silver { width: 20px; height: 20px; vertical-align: -5px; margin-right: 4px;
+    background: url('../img_ltr/general/units/silverCoin_medium.png') no-repeat center / contain; }
+body.t46Layout #content.hero_auction #filter button.iconFilter img { transform: scale(1.35); }
+body.t46Layout #content.hero_auction .contentNavi .tabItem { text-transform: capitalize; }
+body.t46Layout #tasks .task .progress button.collect { width: 140px; margin-left: 0; text-align: center; }
+body.t46Layout #tasks .task .progress button.collect > div { text-align: center; width: 100%; position: relative; z-index: 3; }
+body.t46Layout #tasks .taskPager a.arrow { border: 0 !important; background: none !important; }
+body.t46Layout #tasks .taskPager a.arrow:before, body.t46Layout #tasks .taskPager a.arrow:after { display: none !important; content: none !important; }
+
+/* Appearance: Legends dark-green editor panel. */
+body.t46Layout #content.hero_editor #heroEditor { background: linear-gradient(to bottom, #3d5c47, #24392d);
+    box-shadow: inset 0 0 0 2px #8c7a55; border-radius: 1px; }
+body.t46Layout #content.hero_editor #heroEditor .head { background: #e8e4dc; border: 2px solid #c9b48c; border-radius: 2px; }
+body.t46Layout #content.hero_editor #heroEditor .head > div[class] :not(.image) { background: none; }
+body.t46Layout #content.hero_editor #heroEditor .attributes .container { background: #f1ece0; border: 2px solid #c9b48c; border-radius: 2px; }
+body.t46Layout #content.hero_editor #heroEditor .attributes .options a,
+body.t46Layout #content.hero_editor #heroEditor .attributes .options li { color: #3f2e22; }

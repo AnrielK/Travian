@@ -195,15 +195,29 @@ class HeroAuctionCtrl extends GameCtrl
         }
     }
 
+    /** "Finish 10 adventures" notice; the Travian Legends style (29c89d54) shows it as a lock box. */
+    private function adventureLock($done)
+    {
+        $done = min(10, (int)$done);
+        $text = T("Auction", "Finish 10 adventures to unlock the auctions!");
+        if (is_t46_layout()) {
+            return '<div class="auctionLocked"><div class="lockIcon"></div><div class="lockInfo">'
+                . '<div class="lockTitle">' . T("Auction", "auctionsLocked", "Auctions locked") . '</div>'
+                . '<div class="auctionAdventureBar"><div class="bar" style="width:' . ($done * 10) . '%;"></div></div>'
+                . '<div class="lockText"><span>' . $text . '</span><span class="lockCount">' . $done . '/10</span></div>'
+                . '</div></div>';
+        }
+        return '<div class="auctionAdventureBarText">' . $text . '</div>'
+            . '<div class="auctionAdventureBarNumbers">(' . $done . '/10)</div>'
+            . '<div class="clear"></div>'
+            . '<div class="auctionAdventureBar"><div class="bar" style="width:' . ($done * 10) . '%;"></div></div>';
+    }
+
     private function showFilters($canTakePlaceInAuction, $action)
     {
         $session = Session::getInstance();
         if (!$canTakePlaceInAuction) {
-            $this->view->vars['content'] .= '<div class="auctionAdventureBarText">' . T("Auction",
-                    "Finish 10 adventures to unlock the auctions!") . '</div>';
-            $this->view->vars['content'] .= '<div class="auctionAdventureBarNumbers">(' . $session->getSuccessAdventuresCount() . '/10)</div>';
-            $this->view->vars['content'] .= '<div class="clear"></div>';
-            $this->view->vars['content'] .= '<div class="auctionAdventureBar"><div class="bar" style="width:' . ($session->getSuccessAdventuresCount() * 10) . '%;"></div></div>';
+            $this->view->vars['content'] .= $this->adventureLock($session->getSuccessAdventuresCount());
         }
         $filter = 0;
         if (isset($_REQUEST['filter']) && $_REQUEST['filter'] >= 1 && $_REQUEST['filter'] <= 15) {
@@ -360,11 +374,7 @@ class HeroAuctionCtrl extends GameCtrl
     {
         $session = Session::getInstance();
         if (!$canTakePlaceInAuction) {
-            $this->view->vars['content'] .= '<div class="auctionAdventureBarText">' . T("Auction",
-                    "Finish 10 adventures to unlock the auctions!") . '</div>';
-            $this->view->vars['content'] .= '<div class="auctionAdventureBarNumbers">(' . $session->getSuccessAdventuresCount() . '/10)</div>';
-            $this->view->vars['content'] .= '<div class="clear"></div>';
-            $this->view->vars['content'] .= '<div class="auctionAdventureBar"><div class="bar" style="width:' . ($session->getSuccessAdventuresCount() * 10) . '%;"></div></div>';
+            $this->view->vars['content'] .= $this->adventureLock($session->getSuccessAdventuresCount());
         }
         $maxAuctions = 5;
         $m = new AuctionModel();

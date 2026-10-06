@@ -4868,4 +4868,27 @@ $Definition['TransferGold'] = [
     'SenderEmailAddress' => 'ایمیل ارسال اکانت مبدا',
     'InvalidAccountEmail' => 'ایمیل وارد شده برای اکانت صحیح نیست.',
 ];
+// Travian Legends style (graphic pack 29c89d54): task list, auction lock box, hero inventory tab.
+$Definition['Tasks']['title'] = 'Your tasks';
+$Definition['Tasks']['villageTasks'] = 'Tasks for village %s';
+$Definition['Tasks']['generalTasks'] = 'General tasks';
+$Definition['Tasks']['collect'] = 'Collect';
+$Definition['Tasks']['allDone'] = 'All steps completed';
+$Definition['Tasks']['toLevel'] = 'to level %d';
+$Definition['Tasks']['heroLevel'] = 'Hero level';
+$Definition['Tasks']['bonusRewards'] = 'Bonus rewards = %d%%';
+$Definition['Tasks']['bonusDescription'] = 'Your hero gives you bonus rewards depending on his level.';
+$Definition['Tasks']['nextLevel'] = 'Next level = %d%%';
+$Definition['Tasks']['rewardResources'] = 'Resources of each type';
+$Definition['Tasks']['rewardExperience'] = 'Hero experience';
+$Definition['Tasks']['overview'] = 'Task overview';
+$Definition['Tasks']['population'] = 'Population';
+$Definition['Tasks']['culturePoints'] = 'Culture points production';
+$Definition['Tasks']['villages'] = 'Villages';
+$Definition['Tasks']['populationTotal'] = 'Population of all villages';
+$Definition['Tasks']['culturePointsTotal'] = 'Culture points production of all villages';
+$Definition['Auction']['auctionsLocked'] = 'Auctions locked';
+$Definition['HeroGlobal']['Inventory'] = 'Inventory';
+
 return $Definition;
+

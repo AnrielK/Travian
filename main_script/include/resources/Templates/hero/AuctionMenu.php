@@ -1,4 +1,4 @@
-<div class="contentNavi tabNavi ">
+<div class="contentNavi tabNavi <?=is_t46_layout() ? 'subNavi' : '';?>">
     <div title="" class="container <?=$vars['action'] == 'buy' ? 'active' : 'normal';?>">
         <div class="background-start">&nbsp;</div>
         <div class="background-end">&nbsp;</div>
