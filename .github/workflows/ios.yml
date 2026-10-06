@@ -3,7 +3,7 @@ name: iOS – OpenVillage offline app
 on:
   workflow_dispatch:
   push:
-    branches: [t46-ios]
+    branches: [main, t46-ios]
     paths-ignore: ["macos/**", "*.md", "docs/**"]
 
 permissions:
