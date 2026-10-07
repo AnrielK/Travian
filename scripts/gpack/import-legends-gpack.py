@@ -166,7 +166,8 @@ def main():
                     missing += 1
     # 6. Pictures the PHP templates load directly from the pack (not through CSS).
     for rel in ('img_ltr/hud/topBar/header/hero', 'img_ltr/report/reportAction.png',
-                'img_ltr/f/edit.gif', 'img_ltr/misc/flags/country_sprite.png'):
+                'img_ltr/f/edit.gif', 'img_ltr/misc/flags/country_sprite.png',
+                'img_ltr/round/button/content/goldInner-ltr.png'):
         for base in (tpl, old):
             src = os.path.join(base, rel)
             target = os.path.join(dst, rel)

@@ -653,3 +653,28 @@ body.t46Layout .sidebar .sidebarBox.toggleable .innerBox.footer > .toggle { top:
 body.t46Layout .sidebar #sidebarBoxInfobox.collapsed ul { height: auto; }
 body.t46Layout .sidebar #sidebarBoxInfobox.collapsed ul li:not(:first-child) { display: none; }
 body.t46Layout .sidebar #sidebarBoxInfobox.collapsed ul li:first-child { border-bottom: 0; }
+/* gold amount inside the classic game buttons stays on the button line */
+body.t46Layout button .button-content { white-space: nowrap; }
+body.t46Layout button .button-content img.goldIcon { display: inline-block; float: none; position: static; width: 14px; height: 14px; margin: 0 3px 0 6px;
+    vertical-align: -2px; background: url('../img_ltr/round/button/content/goldInner-ltr.png') no-repeat center / contain; }
+body.t46Layout button .button-content .goldValue { display: inline; position: static; float: none; }
+/* hero window tabs inside the frame */
+body.t46Layout.legendsV2 #center #contentOuterContainer .contentContainer #content.heroV2 .contentNavi.subNavi { margin-inline: 0; inset-inline: 0; }
+/* dorf1: outgoing troops at the top of the right column */
+body.t46Layout div.village1 .villageInfoWrapper { grid-template-rows: auto auto auto 1fr; }
+body.t46Layout div.village1 .villageInfoWrapper .villageInfobox.movements { align-self: start; }
+body.t46Layout div.village1 .villageInfoWrapper .villageInfobox.movements:not(:has(td)) { display: none; }
+/* task list: picture over the full height of the task */
+body.t46Layout #tasks .task.group .taskImage { align-self: stretch; overflow: hidden; }
+body.t46Layout #tasks .task.group .taskImage { height: 100%; width: 73px; }
+body.t46Layout #tasks .task.group .taskImage img { display: block; position: absolute; inset: 0; width: 100%; height: 100%; background-size: cover; background-position: center; }
+body.t46Layout #tasks .task.group .taskImage:before { background-size: cover; }
+/* Legends mentor: figure with a thin green outline, clickable, exclamation bubble next to it */
+body.t46Layout .sidebar #sidebarBoxQuestmaster.legendsMentor .header #questmasterButton { display: grid; width: max-content; margin: 0 auto 2px;
+    pointer-events: auto; position: relative; overflow: visible; }
+body.t46Layout .sidebar #sidebarBoxQuestmaster.legendsMentor .header #questmasterButton .mentor { background-repeat: no-repeat; cursor: pointer;
+    filter: drop-shadow(1px 0 0 #a5d64a) drop-shadow(-1px 0 0 #a5d64a) drop-shadow(0 -1px 0 #a5d64a) drop-shadow(0 1px 0 #a5d64a); }
+body.t46Layout .sidebar #sidebarBoxQuestmaster.legendsMentor .header #questmasterButton:hover .mentor { filter: brightness(1.1) drop-shadow(1px 0 0 #c8ef7a)
+    drop-shadow(-1px 0 0 #c8ef7a) drop-shadow(0 -1px 0 #c8ef7a) drop-shadow(0 1px 0 #c8ef7a); }
+body.t46Layout .sidebar #sidebarBoxQuestmaster.legendsMentor .sidebarBoxInnerBox, body.t46Layout .sidebar #sidebarBoxQuestmaster.legendsMentor .innerBox.header { overflow: visible; }
+body.t46Layout button .button-content img.gold { display: inline-block; float: none; position: static; vertical-align: -3px; margin: 0 3px 0 6px; }

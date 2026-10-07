@@ -1,4 +1,4 @@
-<div id="sidebarBoxQuestmaster" class="sidebarBox   ">
+<div id="sidebarBoxQuestmaster" class="sidebarBox<?=is_t46_layout() ? ' t46TasksOnly' : ''; ?><?=is_hero_v2() ? ' legendsMentor' : ''; ?>">
     <div class="sidebarBoxBaseBox">
         <div class="baseBox baseBoxTop">
             <div class="baseBox baseBoxBottom">
@@ -14,9 +14,13 @@
 
                     echo Session::getInstance()->getRace(); ?><?=!is_t46_layout() || $vars['hasNewReward'] ? ' highlighted' : ''; ?> on "
                     type="button">
+                <?php if (is_hero_v2()): ?>
+                    <div class="mentor"></div>
+                <?php else: ?>
                 <img class="border" alt="" src="img/x.gif">
                 <img class="animation" alt="" src="img/x.gif">
                 <img class="mentor" alt="" src="img/x.gif">
+                <?php endif; ?>
                 <?php if ($vars['hasNewReward']): ?>
                     <div class="bigSpeechBubble newQuestSpeechBubble" title="">
                         <img src="img/x.gif" alt="">
@@ -179,9 +183,6 @@
                         }
                     })();
                 </script>
-                <?php if (!$vars['isTutorial']): ?>
-                    <script type="text/javascript">jQuery('#sidebarBoxQuestmaster').addClass('t46TasksOnly');</script>
-                <?php endif; ?>
                 <div class="taskOverview">
                     <a class="boxTitle" href="tasks.php"><?=T('Tasks', 'overview', 'Task overview'); ?></a>
                     <ul>
