@@ -60,11 +60,11 @@ $label = static function (array $task) use ($h) {
 
     <?php if ($vars['pages'] > 1): ?>
         <div class="taskPager">
-            <a class="arrow previous<?=$vars['page'] <= 1 ? ' disabled' : ''; ?>" href="<?=$h($base . '&p=' . max(1, $vars['page'] - 1)); ?>"><svg viewBox="0 0 34 40"><defs><linearGradient id="t46PagerGreen" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#b6e05a"/><stop offset=".45" stop-color="#6fae1f"/><stop offset="1" stop-color="#3f7410"/></linearGradient></defs><path d="M4 3 31 20 4 37z" fill="url(#t46PagerGreen)" stroke="#2c4a0c" stroke-width="2" stroke-linejoin="round"/><path d="M8 9 24 19" stroke="#e4f6b8" stroke-width="2" stroke-linecap="round" opacity=".7"/></svg></a>
+            <a class="arrow previous<?=$vars['page'] <= 1 ? ' disabled' : ''; ?>" href="<?=$h($base . '&p=' . max(1, $vars['page'] - 1)); ?>"></a>
             <?php for ($p = 1; $p <= $vars['pages']; ++$p): ?>
                 <a class="dot<?=$p === $vars['page'] ? ' active' : ''; ?>" href="<?=$h($base . '&p=' . $p); ?>"><span><?=$p; ?></span></a>
             <?php endfor; ?>
-            <a class="arrow next<?=$vars['page'] >= $vars['pages'] ? ' disabled' : ''; ?>" href="<?=$h($base . '&p=' . min($vars['pages'], $vars['page'] + 1)); ?>"><svg viewBox="0 0 34 40"><defs><linearGradient id="t46PagerGreen" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#b6e05a"/><stop offset=".45" stop-color="#6fae1f"/><stop offset="1" stop-color="#3f7410"/></linearGradient></defs><path d="M4 3 31 20 4 37z" fill="url(#t46PagerGreen)" stroke="#2c4a0c" stroke-width="2" stroke-linejoin="round"/><path d="M8 9 24 19" stroke="#e4f6b8" stroke-width="2" stroke-linecap="round" opacity=".7"/></svg></a>
+            <a class="arrow next<?=$vars['page'] >= $vars['pages'] ? ' disabled' : ''; ?>" href="<?=$h($base . '&p=' . min($vars['pages'], $vars['page'] + 1)); ?>"></a>
         </div>
     <?php endif; ?>
 

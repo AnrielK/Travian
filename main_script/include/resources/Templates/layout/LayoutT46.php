@@ -38,20 +38,18 @@ $t46Indicator = static function ($count) {
                            title="<?=T("inGame", "Navigation.Reports"); ?>||<?=T("inGame", "Navigation.newReports"); ?>: <?=$vars['newReportsCount']; ?>"><?=$t46Indicator($vars['newReportsCount']); ?></a>
                         <a class="messages" href="messages.php" accesskey="6"
                            title="<?=T("inGame", "Navigation.Messages"); ?>||<?=T("inGame", "Navigation.newMessages"); ?>: <?=$vars['newMessagesCount']; ?>"><?=$t46Indicator($vars['newMessagesCount']); ?></a>
-                        <a class="dailyQuests" href="#" accesskey="7" title="<?=T("DailyQuest", "Daily Quests"); ?>"
-                           onclick="var b = jQuery('.questButtonOverviewAchievements').first(); if (b.length) { b.click(); } return false;"></a>
+                        <a class="dailyQuests" href="dailyquests.php" accesskey="7" title="<?=T("DailyQuest", "Daily Quests"); ?>"></a>
                     </div>
                     <?php if (isset($vars['stockBar']) && $vars['showStockbar']): ?>
                         <?php require __DIR__ . '/stockBarT46.php'; ?>
                     <?php endif; ?>
-                    <a class="shop" href="#" title="<?=T("inGame", "Navigation.Buy gold"); ?>"
-                       onclick="jQuery(window).trigger('startPaymentWizard', {}); this.blur(); return false;"></a>
-                    <div class="currency">
+                    <a class="shop" href="gold.php" title="<?=T("inGame", "Navigation.Buy gold"); ?>"></a>
+                    <a class="currency" href="gold.php">
                         <i class="goldCoin_medium" title="<?=T("inGame", "gold"); ?>"></i>
                         <div class="ajaxReplaceableGoldAmount"><?=getCustom("serverIsFreeGold") ? '<b>' . T("Global", "Unlimited") . '</b>' : $vars['goldCount']; ?></div>
                         <i class="silverCoin_medium" title="<?=T("inGame", "silver"); ?>"></i>
                         <div class="ajaxReplaceableSilverAmount"><?=$vars['silverCount']; ?></div>
-                    </div>
+                    </a>
                 <?php endif; ?>
             </div>
             <?php if ($vars['showNavBar'] || $vars['headerBar']): ?>

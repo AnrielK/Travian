@@ -251,13 +251,6 @@ body.t46Layout #tasks .task .progress .stepCounter { position: absolute; right: 
 body.t46Layout #tasks .task.achieved .progress .stepCounter { display: none; }
 body.t46Layout #tasks .task .progress .allDone { width: 130px; text-align: center; font-weight: 700; padding-left: 20px; min-height: 22px;
     background: url('../img_ltr/quests/achievement/haken_gruen.png') no-repeat left center; background-size: 18px; }
-body.t46Layout #tasks .taskPager { display: flex; justify-content: center; align-items: center; gap: 18px; margin: 14px 0 4px; }
-body.t46Layout #tasks .taskPager a { display: block; text-decoration: none; }
-body.t46Layout #tasks .taskPager a.dot { width: 18px; height: 18px; border-radius: 50%; position: relative; background: #4a3529; border: 2px solid #8d755f;
-    box-shadow: inset 0 2px 3px rgba(0, 0, 0, .6); }
-body.t46Layout #tasks .taskPager a.dot.active { background: radial-gradient(circle at 40% 35%, #a6dd57, #4f8a13 70%); }
-body.t46Layout #tasks .taskPager a.dot span { position: absolute; top: 22px; left: 0; right: 0; text-align: center; font-size: 10px; color: #5e463a; }
-body.t46Layout #tasks .taskPager a.arrow.disabled { opacity: .35; pointer-events: none; filter: grayscale(1); }
 body.t46Layout .sidebar #sidebarBoxQuestmaster .taskOverview { margin-top: 6px; }
 body.t46Layout .sidebar #sidebarBoxQuestmaster .taskOverview li a { display: block; padding: 2px 0; color: #333; }
 body.t46Layout .sidebar #sidebarBoxQuestmaster .taskOverview li.achieved a { font-weight: 700; color: #4f8a13; }
@@ -271,14 +264,6 @@ body.t46Layout #tasks .task .progress button.collect { width: 150px; height: 40p
 body.t46Layout #tasks .task .progress button.collect > div { padding: 0; line-height: 34px; color: #f2f2f2;
     text-shadow: 0 1px 1px #2c4a0c, 0 0 2px #2c4a0c; }
 body.t46Layout #tasks .task.achieved .progress { align-self: center; }
-body.t46Layout #tasks .taskPager a.arrow { width: 34px; height: 40px; filter: drop-shadow(1px 2px 1px rgba(0, 0, 0, .35)); }
-body.t46Layout #tasks .taskPager a.arrow svg { width: 34px; height: 40px; display: block; }
-body.t46Layout #tasks .taskPager a.arrow.previous svg { transform: scaleX(-1); }
-body.t46Layout #tasks .taskPager a.arrow:hover { filter: drop-shadow(1px 2px 1px rgba(0, 0, 0, .35)) brightness(1.12); }
-body.t46Layout #tasks .taskPager a.arrow.disabled { opacity: 1; filter: grayscale(1) brightness(1.25) opacity(.55); }
-body.t46Layout #tasks .taskPager a.dot { width: 20px; height: 20px; border: 2px solid #34220d;
-    background: radial-gradient(circle at 45% 40%, #6b5244, #2e1f17 75%); box-shadow: inset 0 2px 2px rgba(0,0,0,.6), 0 1px 0 #d8c7a8; }
-body.t46Layout #tasks .taskPager a.dot.active { background: radial-gradient(circle at 40% 35%, #c8f07d, #5d9e17 55%, #2f5c09 100%); }
 
 /* Questmaster: outside the tutorial the box is the Legends "Task overview" only. */
 body.t46Layout .sidebar #sidebarBoxQuestmaster.t46TasksOnly .header > .boxTitle,
@@ -373,8 +358,6 @@ body.t46Layout #content.hero_auction #filter button.iconFilter img { transform: 
 body.t46Layout #content.hero_auction .contentNavi .tabItem { text-transform: capitalize; }
 body.t46Layout #tasks .task .progress button.collect { width: 140px; margin-left: 0; text-align: center; }
 body.t46Layout #tasks .task .progress button.collect > div { text-align: center; width: 100%; position: relative; z-index: 3; }
-body.t46Layout #tasks .taskPager a.arrow { border: 0 !important; background: none !important; }
-body.t46Layout #tasks .taskPager a.arrow:before, body.t46Layout #tasks .taskPager a.arrow:after { display: none !important; content: none !important; }
 
 /* Appearance: Legends dark-green editor panel. */
 body.t46Layout #content.hero_editor #heroEditor { background: linear-gradient(to bottom, #3d5c47, #24392d);
@@ -384,3 +367,133 @@ body.t46Layout #content.hero_editor #heroEditor .head > div[class] :not(.image) 
 body.t46Layout #content.hero_editor #heroEditor .attributes .container { background: #f1ece0; border: 2px solid #c9b48c; border-radius: 2px; }
 body.t46Layout #content.hero_editor #heroEditor .attributes .options a,
 body.t46Layout #content.hero_editor #heroEditor .attributes .options li { color: #3f2e22; }
+
+/* Task pager: the pack's scroll arrows and page dots (hud/content), 3-state sprites. */
+body.t46Layout #tasks .taskPager { display: flex; justify-content: center; align-items: flex-start; gap: 14px; margin: 14px 0 6px; }
+body.t46Layout #tasks .taskPager a { display: block; text-decoration: none; position: relative; }
+body.t46Layout #tasks .taskPager a.arrow { width: 34px; height: 41px; background-position: 0 0; background-repeat: no-repeat; }
+body.t46Layout #tasks .taskPager a.arrow.previous { background-image: url('../img_ltr/hud/content/scrollFrom.png'); }
+body.t46Layout #tasks .taskPager a.arrow.next { background-image: url('../img_ltr/hud/content/scrollTo.png'); }
+body.t46Layout #tasks .taskPager a.arrow:hover { background-position: 0 -41px; }
+body.t46Layout #tasks .taskPager a.arrow:active { background-position: 0 -82px; }
+body.t46Layout #tasks .taskPager a.arrow.disabled { filter: grayscale(1); opacity: .45; pointer-events: none; }
+body.t46Layout #tasks .taskPager a.dot { width: 29px; height: 29px; margin-top: 6px; background: url('../img_ltr/hud/content/selectPage_unselected.png') no-repeat 0 0; }
+body.t46Layout #tasks .taskPager a.dot:hover { background-position: 0 -29px; }
+body.t46Layout #tasks .taskPager a.dot.active { background-image: url('../img_ltr/hud/content/selectPage_selected.png'); }
+body.t46Layout #tasks .taskPager a.dot span { position: absolute; top: 28px; left: 0; right: 0; text-align: center; font-size: 10px; color: #5e463a; }
+
+/* ---- Daily quests (dailyquests.php) ---- */
+body.t46Layout #content.dailyQuestsT46 { background: #f4efe4; }
+#dailyQuestsT46 { color: #3f2e22; text-align: center; }
+#dailyQuestsT46 .dqTitle { font-size: 18px; font-weight: 700; margin: 6px 0 4px; }
+#dailyQuestsT46 .dqReset { font-size: 14px; margin-bottom: 14px; }
+#dailyQuestsT46 .dqRewardBar { position: relative; height: 112px; margin: 0 4px 14px; border: 2px solid #34220d; border-radius: 4px;
+    background: linear-gradient(to bottom, #6f7f8c, #4e5c69); box-shadow: inset 0 0 0 2px #9aa6b0; }
+#dailyQuestsT46 .dqTrack { position: absolute; left: 18px; right: 120px; top: 50px; height: 12px; border-radius: 6px; background: #4a3529; border: 1px solid #2d1f16; }
+#dailyQuestsT46 .dqTrackFill { height: 100%; border-radius: 6px; background: linear-gradient(to top, #3f7d16, #8fd04a); }
+#dailyQuestsT46 .dqStart { position: absolute; left: 6px; top: 42px; width: 26px; height: 26px; border-radius: 50%; border: 2px solid #c9a95f;
+    background: radial-gradient(circle at 40% 35%, #c8f07d, #5d9e17 55%, #2f5c09); }
+#dailyQuestsT46 .dqMilestone { position: absolute; top: 6px; width: 84px; margin-left: -42px; }
+#dailyQuestsT46 .dqChest { width: 74px; height: 74px; margin: 0 auto; border-radius: 50%; border: 3px solid #c9a95f; background-color: #3d4a54;
+    background-size: 108%; background-position: center 40%; background-repeat: no-repeat; filter: grayscale(.6) brightness(.85);
+    box-shadow: 0 2px 4px rgba(0, 0, 0, .5); }
+#dailyQuestsT46 .reward25 .dqChest { background-image: url('../img_ltr/quests/achievement/reward25.png'); }
+#dailyQuestsT46 .reward50 .dqChest { background-image: url('../img_ltr/quests/achievement/reward50.png'); }
+#dailyQuestsT46 .reward75 .dqChest { background-image: url('../img_ltr/quests/achievement/reward75.png'); }
+#dailyQuestsT46 .reward100 .dqChest { background-image: url('../img_ltr/quests/achievement/reward100.png'); }
+#dailyQuestsT46 .dqMilestone.reached .dqChest { filter: none; background-color: #5a8a2a; border-color: #e6c66a; }
+#dailyQuestsT46 .dqMilestone.done .dqChest { filter: grayscale(1) brightness(1.1); opacity: .7; }
+#dailyQuestsT46 .dqMilestonePoints { width: 58px; margin: -12px auto 0; position: relative; color: #f2f2f2; font-weight: 700; font-size: 13px;
+    background: #3a2a20; border: 1px solid #c9a95f; border-radius: 10px; }
+#dailyQuestsT46 .dqPoints { position: absolute; right: 6px; top: 2px; width: 100px; height: 104px; color: #2f2116;
+    background: url('../img_ltr/quests/achievement/kranz.png') no-repeat center / 100px auto; }
+#dailyQuestsT46 .dqPoints span { display: block; font-size: 34px; font-weight: 700; line-height: 34px; padding-top: 26px; }
+#dailyQuestsT46 .dqPoints small { display: block; font-size: 12px; font-weight: 700; margin-top: 8px; }
+#dailyQuestsT46 .dqList { text-align: left; }
+#dailyQuestsT46 .dqQuest { display: grid; grid-template-columns: 1fr 260px 58px; align-items: center; min-height: 54px; margin: 0 0 8px; padding: 2px 4px 2px 14px;
+    border: 2px solid #5e4a3a; border-radius: 3px; background: #f7f0de url('../img_ltr/scenes/Tasks/taskBackground.jpg') center / cover;
+    box-shadow: inset 0 0 0 2px #e8d9b6; }
+#dailyQuestsT46 .dqName { font-weight: 700; font-size: 14px; padding-right: 8px; }
+#dailyQuestsT46 .dqSteps { display: flex; gap: 4px; }
+#dailyQuestsT46 .dqStep { flex: 1; height: 24px; line-height: 24px; text-align: center; font-weight: 700; color: #5e5e5e; border-radius: 6px;
+    background: #c9c4b8; border: 1px solid #a9a397; }
+#dailyQuestsT46 .dqStep.done { color: #fff; background: linear-gradient(to bottom, #4fae38, #2d7f1f); border-color: #1f5a14; }
+#dailyQuestsT46 .dqStep i.laurel { display: inline-block; width: 18px; height: 16px; vertical-align: -3px; margin-right: 4px; opacity: .75;
+    background: url('../img_ltr/quests/achievement/kranz.png') no-repeat center / 18px auto; filter: grayscale(1); }
+#dailyQuestsT46 .dqStep.done i.laurel { filter: brightness(2) grayscale(1); opacity: 1; }
+#dailyQuestsT46 .dqWreath { width: 52px; height: 48px; line-height: 52px; text-align: center; font-size: 12px; font-weight: 700; color: #5e463a;
+    background: url('../img_ltr/quests/achievement/kranz.png') no-repeat center / 52px auto; filter: sepia(.4); }
+#dailyQuestsT46 .dqQuest.completed .dqWreath { filter: none; color: #2d7f1f; }
+#dailyQuestsT46 .dqCollect { margin: 10px 0 4px; }
+#dailyQuestsT46 .dqCollect button { width: 260px; height: 40px; }
+#dailyQuestsT46 .dqCollect button > div { padding: 0; line-height: 34px; color: #f2f2f2; position: relative; z-index: 3; }
+#dailyQuestsT46 .dqCollect button.disabled { filter: grayscale(.6); opacity: .85; cursor: not-allowed; }
+#dailyQuestsT46 .dqCollect button.disabled > div { color: #e8e8e8; }
+
+/* ---- Gold & Plus (gold.php) ---- */
+body.t46Layout #header a.currency { text-decoration: none; color: #fff9eb; }
+#goldShopT46 { position: relative; color: #3f2e22; }
+#goldShopT46 .goldBalance { float: right; margin: 0 0 8px; padding: 3px 12px 3px 6px; font-size: 16px; font-weight: 700; color: #f2f2f2;
+    background: #3a2a20; border: 1px solid #c9a95f; border-radius: 14px; display: flex; align-items: center; gap: 6px; }
+#goldShopT46 .goldBalance + .contentNavi { clear: both; }
+#goldShopT46 .shopNotice { margin: 4px 0 10px; padding: 8px 12px; border-radius: 3px; background: #e7f2d8; border: 1px solid #8fb25a; }
+#goldShopT46 .shopNotice.offline { background: #f3ecd9; border-color: #c9b48c; font-size: 12px; }
+#goldShopT46 .packages { display: grid; grid-template-columns: repeat(3, 1fr); gap: 14px 10px; margin: 18px 0 6px; }
+#goldShopT46 .package { position: relative; display: block; height: 232px; text-decoration: none; border: 2px solid #c9a95f; border-radius: 3px;
+    box-shadow: inset 0 0 0 2px #2c3d3d, 0 2px 3px rgba(0, 0, 0, .35); background: radial-gradient(circle at 50% 55%, #4fb0bc 0, #1f6670 45%, #163f45 100%); }
+#goldShopT46 .package.bestPackage { background: radial-gradient(circle at 50% 55%, #ffe08a 0, #d79a2a 45%, #8a5a12 100%); }
+#goldShopT46 .package:hover { filter: brightness(1.1); }
+#goldShopT46 .package .amount { position: absolute; top: 30px; left: 0; right: 0; text-align: center; font-size: 28px; font-weight: 700; color: #fff;
+    text-shadow: 0 2px 2px rgba(0, 0, 0, .7); display: flex; align-items: center; justify-content: center; gap: 6px; }
+#goldShopT46 .package .amount i { transform: scale(1.3); }
+#goldShopT46 .package .packageImage { position: absolute; left: 0; right: 0; top: 66px; height: 118px;
+    background: url('../img_ltr/views/shop/package3.png') no-repeat center, url('../img_ltr/views/shop/glare.png') no-repeat center / 100% 100%; }
+#goldShopT46 .package.bestPackage .packageImage { background-image: url('../img_ltr/views/shop/package3.png'), url('../img_ltr/views/shop/glareHighlight.png'); }
+#goldShopT46 .package .packageImage.size0 { background-size: 60px auto, 100% 100%; }
+#goldShopT46 .package .packageImage.size1 { background-size: 76px auto, 100% 100%; }
+#goldShopT46 .package .packageImage.size2 { background-size: 92px auto, 100% 100%; }
+#goldShopT46 .package .packageImage.size3 { background-size: 106px auto, 100% 100%; }
+#goldShopT46 .package .packageImage.size4 { background-size: 118px auto, 100% 100%; }
+#goldShopT46 .package .packageImage.size5 { background-size: 128px auto, 100% 100%; }
+#goldShopT46 .package .price { position: absolute; left: 2px; right: 2px; bottom: 2px; height: 38px; line-height: 38px; text-align: center; font-size: 18px; font-weight: 700;
+    color: #f2f2f2; background: rgba(20, 45, 48, .85); }
+#goldShopT46 .package.bestPackage .price { background: rgba(92, 62, 18, .85); }
+#goldShopT46 .package .ribbon { position: absolute; top: -14px; left: 8px; right: 8px; z-index: 2; padding: 4px 2px; text-align: center; font-size: 12px; font-weight: 700;
+    color: #fff; text-transform: uppercase; border: 1px solid #5a1a10; background: linear-gradient(to bottom, #c8473a, #8f2318); box-shadow: 0 2px 2px rgba(0,0,0,.4); }
+#goldShopT46 .package .ribbon.bestValue { background: linear-gradient(to bottom, #4f9a3a, #2d6a1f); border-color: #1f4a14; }
+#goldShopT46 .features { display: grid; grid-template-columns: repeat(2, 1fr); gap: 10px; margin-top: 12px; }
+#goldShopT46 .feature { display: grid; grid-template-columns: 74px 1fr; grid-template-rows: auto auto; align-items: center; column-gap: 10px; padding: 8px;
+    border: 2px solid #c9b48c; border-radius: 3px; background: #f6f0e3; }
+#goldShopT46 .feature.active { border-color: #8fb25a; background: #eef5e2; }
+#goldShopT46 .feature .featureImage { grid-row: 1 / 3; width: 74px; height: 72px; background: no-repeat center / contain; }
+#goldShopT46 .feature.plus .featureImage { background-image: url('../img_ltr/paymentWizard/prosPlusImage.png'); }
+#goldShopT46 .feature.goldclub .featureImage { background-image: url('../img_ltr/paymentWizard/prosGoldclubimage.png'); }
+#goldShopT46 .feature.productionBoostWood .featureImage { background-image: url('../img_ltr/paymentWizard/prosProductionboostWoodImage.png'); }
+#goldShopT46 .feature.productionBoostClay .featureImage { background-image: url('../img_ltr/paymentWizard/prosProductionboostClayImage.png'); }
+#goldShopT46 .feature.productionBoostIron .featureImage { background-image: url('../img_ltr/paymentWizard/prosProductionboostIronImage.png'); }
+#goldShopT46 .feature.productionBoostCrop .featureImage { background-image: url('../img_ltr/paymentWizard/prosProductionboostCropImage.png'); }
+#goldShopT46 .feature .featureTitle { font-weight: 700; font-size: 14px; align-self: end; }
+#goldShopT46 .feature .featureButton { align-self: start; padding-top: 6px; }
+
+/* ---- Construct new building (build.php on an empty slot): Legends cards ---- */
+body.t46Layout #build .buildingWrapper { padding: 6px 4px 14px; border: 0; margin: 0; }
+body.t46Layout #build .buildingWrapper > h2 { font-size: 17px; font-weight: 700; color: #2f2116; margin: 4px 0 4px; }
+body.t46Layout #build .buildingWrapper .build_desc { position: relative; min-height: 120px; padding-right: 205px; font-size: 13px; line-height: 17px; color: #333; }
+body.t46Layout #build .buildingWrapper .build_desc a.build_logo { position: absolute; right: 0; top: -26px; float: none; margin: 0; }
+body.t46Layout #build .buildingWrapper .contract.contractNew { margin: 10px 0 0; padding: 10px 14px 12px; border: 2px solid #d6c8a2; border-radius: 5px;
+    background: #fbf8ef; box-shadow: inset 0 0 0 1px #fff; text-align: center; float: none; width: auto; }
+body.t46Layout #build .buildingWrapper .contract > .contractText { display: none; }
+body.t46Layout #build .buildingWrapper .contract .resourceWrapper { display: flex; justify-content: center; flex-wrap: wrap; gap: 4px 16px; float: none; }
+body.t46Layout #build .buildingWrapper .contract .resourceWrapper .inlineIcon { float: none; margin: 0; font-size: 14px; }
+body.t46Layout #build .buildingWrapper .contract .lineWrapper { display: flex; justify-content: center; gap: 18px; margin: 8px 0; padding: 7px 0;
+    border-top: 1px dashed #cbbd99; border-bottom: 1px dashed #cbbd99; float: none; }
+body.t46Layout #build .buildingWrapper .contract .lineWrapper .inlineIcon { float: none; font-size: 14px; }
+body.t46Layout #build .buildingWrapper .contract .contractLink { float: none; text-align: center; margin: 2px 0 0; }
+body.t46Layout #build .buildingWrapper .contract .contractLink > .contractText { display: none; }
+body.t46Layout #build .buildingWrapper .contract .contractLink .buildingCondition { font-size: 19px; line-height: 26px; font-weight: 400; }
+body.t46Layout #build .buildingWrapper .contract .contractLink .buildingCondition a { font-weight: 700; color: #6a9e18; }
+body.t46Layout #build .buildingWrapper .contract .contractLink .buildingCondition span { color: #c0281d; }
+body.t46Layout #build .buildingWrapper .contract .contractLink .buildingCondition.done span { color: #6a9e18; }
+body.t46Layout #build .buildingWrapper .contract .contractLink button.green { min-width: 170px; }
+body.t46Layout #build h4.round, body.t46Layout #build .switch, body.t46Layout #build > h4 { margin: 18px 0 8px; padding: 6px 10px; border-radius: 3px;
+    background: #e9dfc8; color: #3f2e22; font-weight: 700; }

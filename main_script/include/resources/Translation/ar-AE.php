@@ -4916,5 +4916,14 @@ $Definition['Tasks']['culturePointsTotal'] = 'Culture points production of all v
 $Definition['Auction']['auctionsLocked'] = 'Auctions locked';
 $Definition['HeroGlobal']['Inventory'] = 'Inventory';
 
+$Definition['Tasks']['dailyReset'] = 'Next reset: %s. Collect your rewards before then!';
+$Definition['Tasks']['collectRewards'] = 'Collect rewards';
+$Definition['Tasks']['goldShopTitle'] = 'Gold & Plus';
+$Definition['Tasks']['goldCredited'] = '%d gold has been credited to your account.';
+$Definition['Tasks']['offlineGold'] = 'Offline world: no payment is set up, the packages are credited for free.';
+$Definition['Tasks']['bestSeller'] = 'Best seller';
+$Definition['Tasks']['bestValue'] = 'Best value';
+$Definition['Tasks']['free'] = 'Free';
+
 return $Definition;
 
