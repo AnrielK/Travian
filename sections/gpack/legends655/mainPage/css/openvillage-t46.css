@@ -639,3 +639,13 @@ body.t46Layout #auctions .sell .inventoryWrapper .heroItems .heroItem { width: a
 body.t46Layout div.village1 .villageInfoWrapper .villageInfobox { display: flow-root; }
 /* gold balance on its own line above the tabs */
 body.t46Layout #goldShopT46 .goldBalance { position: static; float: none; display: flex; width: max-content; margin: 0 0 8px auto; }
+body.t46Layout.legendsV2 #background:before { height: 40px; background-color: transparent; background-image: linear-gradient(180deg,#453932 0,#856a59 4%,#635143 85%,#4d3c30 98%,#33281b 100%); }
+body.t46Layout.legendsV2 #topBar #logo.legendsLogo { top: 4px; height: 32px; width: 166px; }
+body.t46Layout.legendsV2 #topBar #logo.legendsLogo svg { width: 166px; height: 32px; }
+body.t46Layout.legendsV2 nav#outOfGame { top: 6px; }
+body.t46Layout.legendsV2 nav#outOfGame .layoutButton { width: 28px; height: 28px; }
+body.t46Layout.legendsV2 nav#outOfGame .layoutButton svg { width: 14px; height: 14px; }
+body.t46Layout #tasks .task.group .titleDecoration:before { background-repeat: no-repeat; }
+body.t46Layout #tasks .task.group:active .titleDecoration:before, body.t46Layout #tasks .task.group:focus-within .titleDecoration:before { right: -323px; }
+body.t46Layout #tasks .task.group:active .titleDecoration:after, body.t46Layout #tasks .task.group:focus-within .titleDecoration:after { right: -375px; }
+body.t46Layout #tasks .task .progress button.collect { width: 124px; margin: 0 14px 0 0; justify-self: end; }
