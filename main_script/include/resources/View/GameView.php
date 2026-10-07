@@ -203,7 +203,8 @@ class GameView
             $view->vars = $vars;
         } else {
             if (!($heroImageHash = $memcached->get("heroImageHash" . $this->session->getPlayerId()))) {
-                $heroImageHash = sha1($db->fetchScalar("SELECT lastupdate FROM face WHERE uid={$this->session->getPlayerId()} LIMIT 1"));
+                $heroImageHash = sha1($db->fetchScalar("SELECT lastupdate FROM face WHERE uid={$this->session->getPlayerId()} LIMIT 1")
+                    . (is_hero_v2() ? 'r' . \Game\Hero\HeroAppearanceV2::RENDER_VERSION : ''));
                 $memcached->add("heroImageHash", $heroImageHash, 86400);
             }
             $result = $m->getAdventureCountAndFirstExpire($this->session->getPlayerId());

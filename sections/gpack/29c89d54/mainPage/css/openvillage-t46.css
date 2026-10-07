@@ -679,5 +679,5 @@ body.t46Layout .sidebar #sidebarBoxQuestmaster.legendsMentor .header #questmaste
 body.t46Layout .sidebar #sidebarBoxQuestmaster.legendsMentor .sidebarBoxInnerBox, body.t46Layout .sidebar #sidebarBoxQuestmaster.legendsMentor .innerBox.header { overflow: visible; }
 body.t46Layout button .button-content img.gold { display: inline-block; float: none; position: static; vertical-align: -3px; margin: 0 3px 0 6px; }
 /* Legends mentor stands on the top edge of the task frame; title sits lower below the frame ornament. */
-body.t46Layout .sidebar #sidebarBoxQuestmaster.legendsMentor .header #questmasterButton { top: -14px; }
+body.t46Layout .sidebar #sidebarBoxQuestmaster.legendsMentor .header #questmasterButton { top: -7px; }
 body.t46Layout .sidebar #sidebarBoxQuestmaster.legendsMentor .taskOverview .boxTitle { margin-top: 0; padding-top: 18px; }

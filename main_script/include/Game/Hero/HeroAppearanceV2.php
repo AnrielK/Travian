@@ -16,6 +16,8 @@ use Core\Database\DB;
 class HeroAppearanceV2
 {
     public const TABLE = 'ov_hero_appearance';
+    /** Bumped whenever the composition changes, so cached images are drawn again. */
+    public const RENDER_VERSION = 2;
 
     /** Drawing order: layer => [category it shows (null = always), colour group it is tinted with]. */
     public const LAYERS = [
@@ -29,8 +31,9 @@ class HeroAppearanceV2
         'eyes' => ['eyes', 'eyeColor'],
         'browsBase' => ['brows', 'skinColor'],
         'brows' => ['brows', 'hairColor'],
-        'nose' => ['nose', 'skinColor'],
+        // The mouth parts carry the skin of the upper lip, so the nose is drawn over them.
         'mouth' => ['mouth', 'skinColor'],
+        'nose' => ['nose', 'skinColor'],
         'scar' => ['scar', 'skinColor'],
         'tattoo' => ['tattoo', null],
         'beard' => ['beard', 'hairColor'],
@@ -247,7 +250,7 @@ class HeroAppearanceV2
     {
         $cache = Caching::getInstance();
         foreach (['head_81', 'portrait', 'head_79x91', 'body_inventory', 'body_profile'] as $size) {
-            $cache->delete("hero_v2_{$size}_{$uid}");
+            $cache->delete("hero_v2_r" . self::RENDER_VERSION . "_{$size}_{$uid}");
         }
         foreach (['hero_image_%d_79x91', 'hero_image_%d_81x81', 'hero_body_%d_330x422', 'hero_body_%d_330x422_nohorse',
                      'hero_body_%d_160x205', 'heroImageHash%d', 'hero_sidebar_%d'] as $key) {
@@ -353,7 +356,7 @@ class HeroAppearanceV2
             'body_profile' => ['bust', 160, 205],
         ];
         [$mode, $w, $h] = $sizes[$size] ?? $sizes['head_81'];
-        $cacheKey = "hero_v2_{$size}_{$uid}";
+        $cacheKey = "hero_v2_r" . self::RENDER_VERSION . "_{$size}_{$uid}";
         $cache = Caching::getInstance();
         $png = $cache->get($cacheKey);
         if (!$png) {
