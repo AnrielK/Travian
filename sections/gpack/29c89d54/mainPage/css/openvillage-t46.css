@@ -616,3 +616,26 @@ body.t46Layout.legendsV2 #tasks .divider { margin: 14px 0 4px; height: 10px; bac
 body.t46Layout.legendsV2 #tasks .task.group { overflow: hidden; }
 body.t46Layout.legendsV2 #tasks .task .title { font-size: 14px; line-height: 16px; }
 body.t46Layout.legendsV2 #tasks .task.achieved { box-shadow: 0 0 0 2px #6a9e18; }
+/* iOS: no automatic text inflation in landscape (it made titles, tabs and boxes overlap) */
+html, body.t46Layout { -webkit-text-size-adjust: 100%; text-size-adjust: 100%; }
+/* logo and header buttons inside the dark top band (31px) */
+body.t46Layout.legendsV2 #topBar #logo.legendsLogo { top: 1px; height: 29px; width: 150px; }
+body.t46Layout.legendsV2 #topBar #logo.legendsLogo svg { width: 150px; height: 29px; }
+body.t46Layout.legendsV2 #servertime { top: -80px; }
+body.t46Layout.legendsV2 nav#outOfGame { top: 3px; gap: 5px; }
+body.t46Layout.legendsV2 nav#outOfGame .layoutButton { width: 25px; height: 25px; }
+body.t46Layout.legendsV2 nav#outOfGame .layoutButton svg { width: 13px; height: 13px; }
+/* sidebar box toggle sits on the bottom edge of the frame */
+body.t46Layout .sidebar .sidebarBox.toggleable .innerBox.footer > .toggle { top: -22px; }
+body.t46Layout .sidebar #sidebarBoxInfobox.collapsed .innerBox.content { overflow: hidden; }
+/* building conditions wrap inside the cost box */
+body.t46Layout.legendsV2 div#build .buildingWrapper .contract .contractLink .buildingCondition { display: inline; white-space: normal; }
+body.t46Layout.legendsV2 div#build .buildingWrapper .contract .contractLink .buildingCondition a,
+body.t46Layout.legendsV2 div#build .buildingWrapper .contract .contractLink .buildingCondition span { white-space: nowrap; }
+/* sell page: 8 bag places per row over the full width */
+body.t46Layout #auctions .sell .inventoryWrapper .heroItems { display: grid; grid-template-columns: repeat(8, 1fr); gap: 0; width: auto; }
+body.t46Layout #auctions .sell .inventoryWrapper .heroItems .heroItem { width: auto; height: auto; aspect-ratio: 1; }
+/* dorf1: boxes on the right grow with their content */
+body.t46Layout div.village1 .villageInfoWrapper .villageInfobox { display: flow-root; }
+/* gold balance on its own line above the tabs */
+body.t46Layout #goldShopT46 .goldBalance { position: static; float: none; display: flex; width: max-content; margin: 0 0 8px auto; }

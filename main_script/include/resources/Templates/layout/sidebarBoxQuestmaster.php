@@ -150,7 +150,8 @@
                         <?php
                         if ($vars['isTutorial']) {
                             $highlightsToggle = PreferencesHelper::getPreference("highlightsToggle") == true ? 'true' : true;
-                            echo '{tipsTurnoffAjaxTrigger: ' . ((bool)$highlightsToggle) . ',tutorialData: ' . json_encode($vars['data']['tutorialData']) . ',highlightSelectors: ' . json_encode($vars['data']['highlightSelectors']) . '}';
+                            echo '{tipsTurnoffAjaxTrigger: ' . ((bool)$highlightsToggle) . ',tutorialData: ' . json_encode($vars['data']['tutorialData']) . ',highlightSelectors: ' . json_encode(is_t46_layout() ? new \stdClass() : $vars['data']['highlightSelectors']) . '}';
+                            // Legends layout: the mentor opens the task list, the old tutorial's red highlight frames would point nowhere.
                         } else {
                             echo '{tipsTurnoffAjaxTrigger: false, tutorialData: {}, highlightSelectors: {}}';
                         }
