@@ -23,7 +23,28 @@
             </ul>
         </div>
         <div class="innerBox footer">
-            <?php if ($vars['total'] > 1): ?>
+            <?php if ($vars['total'] > 1 && is_t46_layout()): ?>
+                <?php /* Travian Legends: green arrow button between the box wings, pointing up while expanded. */ ?>
+                <div class="toggle">
+                    <button type="button" title="<?=T("inGame", $vars['toggle'] == 'expanded' ? "hideMoreMessages" : "showMoreMessages"); ?>">
+                        <svg class="toggleArrow" viewBox="0 0 18 11"><path class="caret" d="M9 1.5 16.5 9.5h-15z"/></svg>
+                    </button>
+                </div>
+                <script type="text/javascript">
+                    jQuery(function () {
+                        Travian.Translation.add({
+                            'infobox_collapsed': '<?=T("inGame", "showMoreMessages");?>',
+                            'infobox_expanded': '<?=T("inGame", "hideMoreMessages");?>'
+                        });
+                        var box = jQuery('#sidebarBoxInfobox');
+                        box.find('.toggle button').click(function () {
+                            Travian.Game.Layout.toggleBox(box, 'travian_toggle', 'infobox');
+                            jQuery(this).attr('title', Travian.Translation.get(box.hasClass('collapsed') ? 'infobox_collapsed' : 'infobox_expanded'));
+                            Travian.Tip.refresh();
+                        });
+                    });
+                </script>
+            <?php elseif ($vars['total'] > 1): ?>
                 <button type="button" class="toggle"
                         title="<?=T("inGame",
                             $vars['toggle'] == 'expanded' ? "showMoreMessages" : "hideMoreMessages"); ?>"

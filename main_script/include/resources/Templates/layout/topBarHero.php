@@ -62,6 +62,11 @@ $statusIcon = [
                      alt="Hero"/>
             </div>
         </a>
+        <?php if (is_hero_v2()): ?>
+        <div class="heroStatus" title="<?=htmlspecialchars($vars['longStatus']); ?>">
+            <a href="hero.php"><i class="<?=$statusIcon; ?>"></i></a>
+        </div>
+        <?php else: ?>
         <div class="heroStatus" title="<?=htmlspecialchars($vars['longStatus']); ?>">
             <a href="hero.php"></a>
             <svg class="<?=$statusIcon; ?>" viewBox="0 0 20 20">
@@ -78,6 +83,7 @@ $statusIcon = [
                 <?php endif; ?>
             </svg>
         </div>
+        <?php endif; ?>
         <?php if ($vars['lvlUp'] || $vars['hasNewPoints']): ?>
             <a class="levelUp show" href="hero.php?flagAttributesBoxOpen" title="<?=T("HeroGlobal", "HeroOverview"); ?>"></a>
         <?php endif; ?>

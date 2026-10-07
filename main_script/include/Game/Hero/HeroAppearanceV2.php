@@ -246,7 +246,7 @@ class HeroAppearanceV2
     public static function invalidate(int $uid): void
     {
         $cache = Caching::getInstance();
-        foreach (['head_81', 'head_79x91', 'body_inventory', 'body_profile'] as $size) {
+        foreach (['head_81', 'portrait', 'head_79x91', 'body_inventory', 'body_profile'] as $size) {
             $cache->delete("hero_v2_{$size}_{$uid}");
         }
         foreach (['hero_image_%d_79x91', 'hero_image_%d_81x81', 'hero_body_%d_330x422', 'hero_body_%d_330x422_nohorse',
@@ -289,7 +289,7 @@ class HeroAppearanceV2
     }
 
     /** Square around the head on the hero canvas: [x, y, size]. */
-    public static function headBox(array $config): array
+    public static function headBox(array $config, int $size = 280, float $jawAt = 0.78): array
     {
         $parts = self::index()['parts'];
         $jaw = null;
@@ -299,15 +299,18 @@ class HeroAppearanceV2
             }
         }
         [$x, $y, $w, $h] = $jaw ?: [387, 226, 122, 106];
-        $size = 280;
-        return [(int)round($x + $w / 2 - $size / 2), (int)round($y + $h - $size * 0.78), $size];
+        return [(int)round($x + $w / 2 - $size / 2), (int)round($y + $h - $size * $jawAt), $size];
     }
 
     /** Composes the hero (GD, true colour with alpha) and cuts / scales it to the wanted image. */
     public static function render(array $config, string $mode, int $width, int $height)
     {
         [$canvasW, $canvasH] = self::index()['size'];
-        if ($mode === 'head') {
+        if ($mode === 'portrait') {
+            // Head and shoulders, the way the Legends top bar shows the hero.
+            [$sx, $sy, $size] = self::headBox($config, 400, 0.6);
+            $source = [$sx, $sy, $size, $size];
+        } elseif ($mode === 'head') {
             [$sx, $sy, $size] = self::headBox($config);
             $source = [$sx, $sy, $size, (int)round($size * $height / $width)];
         } elseif ($mode === 'bust') {
@@ -344,6 +347,7 @@ class HeroAppearanceV2
     {
         $sizes = [
             'head_81' => ['head', 81, 81],
+            'portrait' => ['portrait', 160, 160],
             'head_79x91' => ['head', 79, 91],
             'body_inventory' => ['body', 438, 788],
             'body_profile' => ['bust', 160, 205],

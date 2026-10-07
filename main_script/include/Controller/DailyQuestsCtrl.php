@@ -81,7 +81,7 @@ class DailyQuestsCtrl extends GameCtrl
         $this->view->vars['bodyCssClass'] = 'perspectiveResources';
         $this->view->vars['contentCssClass'] = 'dailyQuestsT46';
         $this->view->vars['showCloseButton'] = TRUE;
-        $this->view->vars['content'] = PHPBatchView::render('dailyQuestT46/main', [
+        $this->view->vars['content'] = PHPBatchView::render(is_hero_v2() ? 'dailyQuestT46/legends' : 'dailyQuestT46/main', [
             'points' => $points,
             'quests' => $quests,
             'milestones' => $milestones,

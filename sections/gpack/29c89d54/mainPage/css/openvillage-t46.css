@@ -533,3 +533,86 @@ body.t46Layout #content.heroV2Appearance .heroLegendsEditor .selectionWrapper > 
 body.t46Layout #content.heroV2Appearance .heroLegendsEditor .pages > .page { visibility: visible; pointer-events: auto; }
 body.t46Layout #content.heroV2Appearance .heroLegendsEditor .pages .pagination { align-self: end; color: #f2f2f2; }
 body.t46Layout #content.heroV2Appearance .heroLegendsEditor.isLoading { cursor: progress; opacity: .85; }
+/* Legends 655 header (body.legendsV2): logo with the server time below, round header buttons */
+body.t46Layout.legendsV2 #topBar #logo.legendsLogo { position: absolute; top: 2px; left: 14px; width: 172px; height: 40px; margin: 0; padding: 0;
+    background: none; border: 0; box-shadow: none; transform: none; z-index: 33; overflow: visible; }
+body.t46Layout.legendsV2 #topBar #logo.legendsLogo svg { width: 172px; height: 40px; display: block; overflow: visible; }
+body.t46Layout.legendsV2 #topBar #logo.legendsLogo .emblem { fill: #b5302b; stroke: #f2f2f2; stroke-width: 1.4; }
+body.t46Layout.legendsV2 #topBar #logo.legendsLogo .coin { fill: #e5b75b; stroke: #6d4a1d; stroke-width: 1; }
+body.t46Layout.legendsV2 #topBar #logo.legendsLogo .coinMark { fill: #6d4a1d; }
+body.t46Layout.legendsV2 #topBar #logo.legendsLogo .title { fill: #f2f2f2; font: 700 16.5px "Noto Serif", Georgia, serif; letter-spacing: .5px;
+    paint-order: stroke; stroke: rgba(40, 25, 15, .55); stroke-width: 2px; }
+body.t46Layout.legendsV2 #topBar #logo.legendsLogo .subtitle { fill: #f2f2f2; font: 600 7.5px Arial, sans-serif; letter-spacing: 1.2px; }
+body.t46Layout.legendsV2 #topBar #logo.legendsLogo:hover .title { fill: #fff; }
+body.t46Layout.legendsV2 #servertime { top: -72px; left: 14px; padding: 4px 22px; color: #5e463a; font-size: 11px; background: rgba(244, 239, 228, .9);
+    border: 1px solid #4b4230; border-radius: 4px; box-shadow: 0 4px 5px 0 rgba(0, 0, 0, .25); text-shadow: none; font-weight: 400; white-space: nowrap; height: auto; line-height: 16px; }
+body.t46Layout.legendsV2 #servertime * { color: #5e463a; }
+body.t46Layout.legendsV2 nav#outOfGame { position: absolute; top: 6px; right: 14px; display: flex; gap: 6px; margin: 0; z-index: 33; }
+body.t46Layout.legendsV2 nav#outOfGame .layoutButton { position: relative; display: grid; place-items: center; width: 30px; height: 30px; margin: 0;
+    border-radius: 50%; border: 1px solid #5c4134; background: linear-gradient(to bottom, #faf6ea, #c8bdaa); box-shadow: 0 1px 2px rgba(0, 0, 0, .45); }
+body.t46Layout.legendsV2 nav#outOfGame .layoutButton:hover { background: linear-gradient(to bottom, #ffffff, #ddd3c1); }
+body.t46Layout.legendsV2 nav#outOfGame .layoutButton:active { background: #c8bdaa; box-shadow: inset 0 1px 2px rgba(0, 0, 0, .4); }
+body.t46Layout.legendsV2 nav#outOfGame .layoutButton:before { display: none; }
+body.t46Layout.legendsV2 nav#outOfGame .layoutButton svg { position: static; inset: auto; transform: none; margin: 0; width: 16px; height: 16px; overflow: visible; }
+body.t46Layout.legendsV2 nav#outOfGame .layoutButton svg .outline { display: none; }
+body.t46Layout.legendsV2 nav#outOfGame .layoutButton svg .icon { fill: #6f5f52; }
+body.t46Layout.legendsV2 nav#outOfGame .layoutButton:hover svg .icon { fill: #4b3a2c; }
+body.t46Layout.legendsV2 nav#outOfGame .layoutButton.disabled { opacity: .6; cursor: default; }
+/* hero ring: status icon of the pack, portrait head and shoulders */
+body.t46Layout.legendsV2 #topBarHero .heroImageButton .heroImageHover .heroImage { width: 120px; height: 120px; left: -19px; top: -7px; right: auto; }
+body.t46Layout.legendsV2 #topBarHero .heroStatus i { background-repeat: no-repeat; }
+/* sidebar box toggle (Legends markup: div.toggle > button > svg.toggleArrow) */
+body.t46Layout .sidebar .sidebarBox.toggleable .innerBox.footer > .toggle { position: absolute; left: 50%; top: -2px; margin: 0 0 0 -50px; }
+body.t46Layout .sidebar .sidebarBox.toggleable .innerBox.footer > .toggle button { padding: 0; border: 0; background: none; cursor: pointer; }
+body.t46Layout .sidebar .sidebarBox.toggleable .innerBox.footer > .toggle button svg.toggleArrow .caret { fill: #ddf1bd; stroke: #445c2b; stroke-width: 1.5; }
+/* building list (Legends 655): name, description with the picture on the right, framed cost box below */
+body.t46Layout.legendsV2 div#build .buildingWrapper { display: block; padding: 8px 0 14px; }
+body.t46Layout.legendsV2 div#build .buildingWrapper + .buildingWrapper { margin-top: 10px; }
+body.t46Layout.legendsV2 div#build .buildingWrapper > h2 { font-size: 16px; margin: 0 0 4px; }
+body.t46Layout.legendsV2 div#build .buildingWrapper .build_desc { display: flow-root; position: static; min-height: 0; padding: 0; margin: 0 0 8px;
+    font-size: 13px; line-height: 17px; color: #333; }
+body.t46Layout.legendsV2 div#build .buildingWrapper .build_desc a.build_logo { position: relative; top: auto; right: auto; float: right; margin: -22px 0 0 14px; }
+body.t46Layout.legendsV2 div#build .buildingWrapper .build_desc img.build_logo { float: none; width: 184px; height: 179px; }
+body.t46Layout.legendsV2 div#build .buildingWrapper .contract.contractNew { clear: both; width: auto; margin: 0; padding: 10px 14px 12px; border: 2px solid #d6c8a2;
+    border-radius: 6px; background: #faf6ea; box-shadow: inset 0 0 0 1px #fff; }
+body.t46Layout.legendsV2 div#build .buildingWrapper .contract .resourceWrapper { width: auto; }
+body.t46Layout.legendsV2 div#build .buildingWrapper .contract .resourceWrapper .inlineIcon.resource.notEnough .value { color: #b8231b; }
+body.t46Layout.legendsV2 div#build .buildingWrapper .contract .resourceWrapper .inlineIcon.resource.notEnough { background: #f3c3b5; border: 1px solid #c0281d;
+    border-radius: 3px; padding: 1px 6px; }
+body.t46Layout.legendsV2 div#build .buildingWrapper .contract .lineWrapper { border-top: 1px dashed #d6c8a2; border-bottom: 1px dashed #d6c8a2; }
+body.t46Layout.legendsV2 div#build h4.round, body.t46Layout.legendsV2 div#build > h4 { clear: both; }
+body.t46Layout.legendsV2 div#build .buildingWrapper .build_desc img.build_logo { width: 160px; height: 156px; background-size: contain; background-position: center bottom; }
+body.t46Layout.legendsV2 div#build .buildingWrapper .build_desc a.build_logo { margin: -24px 0 -10px 14px; }
+body.t46Layout.legendsV2 div#build .buildingWrapper .contract .contractLink { white-space: normal; overflow-wrap: anywhere; }
+body.t46Layout.legendsV2 div#build .buildingWrapper .contract .contractLink .buildingCondition { font-size: 17px; line-height: 24px; }
+body.t46Layout.legendsV2 #dailyQuests { width: auto; }
+body.t46Layout.legendsV2 #dailyQuests .screen.active > div { padding: 0 0 10px; }
+body.t46Layout.legendsV2 #dailyQuests h1 { padding-top: 6px; min-height: 0; margin-bottom: 4px; }
+/* gold packages (Legends payment shop cards on the page) */
+body.t46Layout .ovGoldShop.dialog.paymentShopV5 { position: static; width: auto; margin: 0; padding: 0; background: none; border: 0; box-shadow: none; }
+body.t46Layout .ovGoldShop #paymentWizard.buyGold .shopWrapper.selectPackage .purchaseStepWrapper .packages { display: grid;
+    grid-template-columns: repeat(3, 1fr); grid-template-rows: none; grid-auto-flow: row; gap: 34px 12px; padding: 30px 6px 6px;
+    width: auto; max-width: 100%; box-sizing: border-box; height: auto; overflow: visible; transform: none; }
+body.t46Layout .ovGoldShop .purchaseStepWrapper, body.t46Layout .ovGoldShop .horizontalScrollWrapper { overflow: visible; height: auto; }
+body.t46Layout .ovGoldShop #paymentWizard, body.t46Layout .ovGoldShop .shopWrapper, body.t46Layout .ovGoldShop .shopWrapper .purchaseStepWrapper { display: block !important; width: auto !important; max-width: 100%; }
+body.t46Layout .ovGoldShop .packages input { display: none; }
+body.t46Layout .ovGoldShop .package { width: 160px; height: 270px; }
+body.t46Layout .ovGoldShop .package .packageImage { width: 100%; height: 150px; background-size: 100% 100%; display: grid; place-items: center; }
+body.t46Layout .ovGoldShop .package .packageImage img { width: 90px; }
+body.t46Layout .ovGoldShop .package .packageImage.size0 img { width: 66px; }
+body.t46Layout .ovGoldShop .package .packageImage.size1 img { width: 80px; }
+body.t46Layout .ovGoldShop .package .packageImage.size2 img { width: 96px; }
+body.t46Layout .ovGoldShop .package .packageImage.size3 img { width: 108px; }
+body.t46Layout .ovGoldShop .package .packageImage.size4 img { width: 120px; }
+body.t46Layout .ovGoldShop .package .packageImage.size5 img { width: 134px; }
+body.t46Layout .ovGoldShop .packages input:not(:checked) + label.package { filter: sepia(.35) brightness(.92); }
+body.t46Layout .ovGoldShop .packages input:checked + label.package { outline: 3px solid #f2d36b; outline-offset: 2px; }
+body.t46Layout .ovGoldShop .paymentWrapper { display: grid; grid-template-columns: 1fr auto; align-items: center; gap: 10px; margin: 18px 6px 4px; }
+body.t46Layout .ovGoldShop .paymentWrapper .goldShopNext { min-width: 220px; width: auto; justify-self: end; }
+body.t46Layout .ovGoldShop .package.bestPackage .best { top: -34px !important; left: 50% !important; margin-left: -62px; z-index: 4; }
+body.t46Layout .ovGoldShop .package.bestPackage .best .text { font-size: 11px; }
+body.t46Layout.legendsV2 #tasks .task .title { word-break: normal; overflow-wrap: normal; hyphens: auto; }
+body.t46Layout.legendsV2 #tasks .divider { margin: 14px 0 4px; height: 10px; background-repeat: no-repeat; }
+body.t46Layout.legendsV2 #tasks .task.group { overflow: hidden; }
+body.t46Layout.legendsV2 #tasks .task .title { font-size: 14px; line-height: 16px; }
+body.t46Layout.legendsV2 #tasks .task.achieved { box-shadow: 0 0 0 2px #6a9e18; }

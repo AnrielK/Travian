@@ -992,6 +992,10 @@ class GameView
         $view->vars['data'] = $quest->getQuestData();
         $view->vars['isTutorial'] = $quest->isTutorial();
         $view->vars['hasNewReward'] = $quest->hasNewReward();
+        if (is_t46_layout()) {
+            // Legends: the mentor shows "!" when a task of the task list can be collected.
+            $view->vars['hasNewReward'] = (new \Model\TaskListModel())->hasCollectable();
+        }
         if ($quest->isTutorial()) {
             $view->vars['tutorialSection'] = $view->vars['data']['tutorialData']['id'];
         } else {

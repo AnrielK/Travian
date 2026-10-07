@@ -12,7 +12,7 @@
                     class="forceDisplayElement vid_<?php use Core\Helper\PreferencesHelper;
                     use Core\Session;
 
-                    echo Session::getInstance()->getRace(); ?> highlighted on "
+                    echo Session::getInstance()->getRace(); ?><?=!is_t46_layout() || $vars['hasNewReward'] ? ' highlighted' : ''; ?> on "
                     type="button">
                 <img class="border" alt="" src="img/x.gif">
                 <img class="animation" alt="" src="img/x.gif">

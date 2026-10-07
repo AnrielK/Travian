@@ -13,7 +13,7 @@ class Hero_imageCtrl extends AnyCtrl
             goto finished;
         }
         if (\Game\Hero\HeroAppearanceV2::available()) {
-            \Game\Hero\HeroAppearanceV2::output($uid, ($_GET['size'] ?? '') === 'forum' ? 'head_79x91' : 'head_81');
+            \Game\Hero\HeroAppearanceV2::output($uid, ($_GET['size'] ?? '') === 'forum' ? 'head_79x91' : 'portrait');
             return;
         }
         if(isset($_GET['size']) && $_GET['size'] == 'forum') {

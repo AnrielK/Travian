@@ -2,6 +2,8 @@
 /* "Your tasks" (TasksCtrl) – markup of the Travian Legends task list, styled by the #tasks rules of 29c89d54. */
 $h = static fn($s) => htmlspecialchars((string)$s, ENT_QUOTES);
 $base = 'tasks.php?s=' . $vars['scope'];
+$v2 = is_hero_v2(); // Travian Legends 655: iconValueBox rewards, Legends progress bar and buttons, divider
+$valueBox = static fn(string $icon, $value, string $title) => '<div class="iconValueBoxWrapper" title="' . $h($title) . '"><div class="iconValueBox ' . $icon . '"><i class="' . $icon . '"></i><span>' . number_format((int)$value) . '</span></div></div>';
 $label = static function (array $task) use ($h) {
     if ($task['type'] === 'level') {
         return $h(T('Buildings', 'level')) . ' <span>' . $task['value'] . '</span>/<span>' . $task['goal'] . '</span>';
@@ -33,7 +35,10 @@ $label = static function (array $task) use ($h) {
             <div class="titleDecoration"></div>
             <div class="title"><?=$h($task['title']); ?></div>
             <div class="rewards">
-                <?php if ($task['state'] !== 'collected'): ?>
+                <?php if ($task['state'] !== 'collected' && $v2): ?>
+                    <?=$valueBox('allResources', $task['rewardResources'], T('Tasks', 'rewardResources', 'Resources of each type')); ?>
+                    <?=$valueBox('xp', $task['rewardExperience'], T('Tasks', 'rewardExperience', 'Hero experience')); ?>
+                <?php elseif ($task['state'] !== 'collected'): ?>
                     <div class="reward resources" title="<?=$h(T('Tasks', 'rewardResources', 'Resources of each type')); ?>"><i class="resources_large"></i><?=number_format($task['rewardResources']); ?></div>
                     <div class="reward experience" title="<?=$h(T('Tasks', 'rewardExperience', 'Hero experience')); ?>"><i class="heroExperience_medium"></i><?=number_format($task['rewardExperience']); ?></div>
                 <?php endif; ?>
@@ -41,6 +46,19 @@ $label = static function (array $task) use ($h) {
             <div class="progress">
                 <?php if ($task['state'] === 'collected'): ?>
                     <div class="allDone"><?=$h(T('Tasks', 'allDone', 'All steps completed')); ?></div>
+                <?php elseif ($v2): ?>
+                    <?php if ($task['state'] === 'open'): ?>
+                        <div class="progressBar">
+                            <div class="bar">
+                                <div class="filling" style="width:<?=round(min(1, $task['ratio']) * 100); ?>%"></div>
+                                <div class="decoration"></div>
+                            </div>
+                            <div class="label"><?=$label($task); ?></div>
+                        </div>
+                    <?php else: ?>
+                        <?=\resources\View\LegendsUi::button($h(T('Tasks', 'collect', 'Collect')) . '<i class="collectedCheckmark"></i>', ['class' => 'collect',
+                            'onclick' => "window.location.href='" . $base . '&p=' . $vars['page'] . '&collect=' . rawurlencode($task['key']) . '&c=' . rawurlencode($vars['checker']) . "'; this.disabled = true;"]); ?>
+                    <?php endif; ?>
                 <?php else: ?>
                     <div class="progressBar">
                         <div class="bar">
@@ -53,12 +71,14 @@ $label = static function (array $task) use ($h) {
                             onclick="window.location.href='<?=$h($base . '&p=' . $vars['page'] . '&collect=' . rawurlencode($task['key']) . '&c=' . rawurlencode($vars['checker'])); ?>'; this.disabled = true;">
                         <div><?=$h(T('Tasks', 'collect', 'Collect')); ?></div></button>
                 <?php endif; ?>
-                <div class="stepCounter"><?=min($task['step'] + 1, $task['steps']); ?>/<?=$task['steps']; ?></div>
+                <?php if (!$v2): ?><div class="stepCounter"><?=min($task['step'] + 1, $task['steps']); ?>/<?=$task['steps']; ?></div><?php endif; ?>
             </div>
         </div>
     <?php endforeach; ?>
 
-    <?php if ($vars['pages'] > 1): ?>
+    <?php if ($v2): ?>
+        <?=$vars['pages'] > 1 ? \resources\View\LegendsUi::pagination($vars['page'], $vars['pages'], $base . '&p=') : '<div class="divider"></div>'; ?>
+    <?php elseif ($vars['pages'] > 1): ?>
         <div class="taskPager">
             <a class="arrow previous<?=$vars['page'] <= 1 ? ' disabled' : ''; ?>" href="<?=$h($base . '&p=' . max(1, $vars['page'] - 1)); ?>"></a>
             <?php for ($p = 1; $p <= $vars['pages']; ++$p): ?>

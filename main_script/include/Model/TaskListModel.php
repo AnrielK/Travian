@@ -115,6 +115,19 @@ class TaskListModel
         return $tasks;
     }
 
+    /** Whether any village or general task waits to be collected. */
+    public function hasCollectable(): bool
+    {
+        foreach (['village', 'general'] as $scope) {
+            foreach ($this->definitions($scope) as $key => $definition) {
+                if ($this->describe($scope, $key, $definition)['state'] === 'achieved') {
+                    return true;
+                }
+            }
+        }
+        return false;
+    }
+
     /** Collects the current step of a task when its goal is reached. Returns the granted reward or null. */
     public function collect(string $scope, string $key): ?array
     {

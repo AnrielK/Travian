@@ -285,6 +285,19 @@ class LegendsUi
         return self::icon('0 0 17 13', '<path d="m4.581 12.184.17.157.17-.158 1.05-.98.197-.184-.2-.183L4.512 9.5H9.5V7.625H4.511L5.97 6.289l.2-.183-.198-.184-1.05-.98-.17-.158-.17.157-3.75 3.437-.201.184.201.185 3.75 3.437Zm7.498-4.126.17.158.17-.157 3.75-3.437.201-.184-.201-.185-3.75-3.437-.17-.157-.17.158-1.05.98-.197.184.2.183L12.488 3.5H7.5v1.875h4.989L11.03 6.711l-.2.183.199.184 1.05.98Z"/>');
     }
 
+    /**
+     * Vector art of the Legends client (laurel, reward frame, laurel icon, check) from legendsSvg.json, with a class.
+     */
+    public static function svg(string $name, string $class = ''): string
+    {
+        static $svgs = null;
+        if ($svgs === null) {
+            $svgs = json_decode((string)file_get_contents(__DIR__ . '/legendsSvg.json'), true) ?: [];
+        }
+        $svg = $svgs[$name] ?? '';
+        return $class === '' || $svg === '' ? $svg : preg_replace('/^<svg/', '<svg class="' . self::e($class) . '"', $svg, 1);
+    }
+
     /** Switch (formV2 label.switch with checkbox). */
     public static function toggleSwitch(string $name, bool $checked, string $label, string $wrapperClass = ''): string
     {
