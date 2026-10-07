@@ -42,10 +42,17 @@ Logy jsou v aplikaci Soubory → Na iPhonu → OpenVillage → `logs` (`mariadb.
 
 ## Grafika (gpack)
 
-Nastavení světa → Vzhled → Grafika: Travian T4.6 (29c89d54, výchozí), OpenVillage 4.6 (a17a8f72),
+Nastavení světa → Vzhled → Grafika: Travian T4.6 (29c89d54, výchozí), Travian Legends 655.3 (legends655),
+OpenVillage 4.6 (a17a8f72),
 Travian T4.4 Seasonized v2, T4.4 Seasonized a T4.4 Classic. Volí se balíček „mainPage“ (CSS a obrázky
 rozhraní), změna platí hned. Na Macu/Linuxu stejně: `GAME_GPACK=TravianOld scripts/native/openvillage-native.sh start`.
 29c89d54 má vzhled Travian Legends: vlastní rozložení stránky (`layout/LayoutT46.php` – horní lišta s hrdinou,
 kulatá navigace, sklad pod navigací, rámované boční panely, celoplošné dorf1/dorf2 ve stylu buildingsV3),
 jeho CSS + styly a17a8f72 pro dialogy, tlačítka a obsah stránek. Soubory, které balíčku chybí, server
 (router i Apache) doplní z a17a8f72. Font Noto Serif (SIL OFL) je přibalený v `29c89d54/mainPage/fonts`.
+
+legends655 je grafika Travian Legends 655.3 (obrázky + CSS) se stejným rozložením jako 29c89d54 (v `gpack.php`
+`'layout' => 'legends'`). Vzniká skriptem `scripts/gpack/import-legends-gpack.py <rozbalený gpack/655.3> legends655`:
+základní CSS 29c89d54 zůstává pod CSS Legends (pokrývá starší názvy tříd), budovy podle kmene řeší vygenerované
+`css/openvillage-t46-tribes.css` a chybějící obrázky se zkopírují z 29c89d54/a17a8f72. JavaScript Legends
+(webpack/React klient) se nepoužívá – hra má vlastní skripty.

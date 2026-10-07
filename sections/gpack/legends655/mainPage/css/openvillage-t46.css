@@ -1,0 +1,499 @@
+@charset "UTF-8";
+/*
+ * OpenVillage adapter for graphic pack legends655 (generated from 29c89d54) (Travian Legends look).
+ * The pack's own CSS (default_compressed*.css) is the 2020+ Travian Legends stylesheet; the game's
+ * templates render that markup through layout/LayoutT46.php. This file covers what the pack does not
+ * ship (fonts, logo, generic layout buttons) and adapts the older sidebar box markup the game still uses.
+ */
+
+/* ---- Fonts (Noto Serif, SIL OFL – see ../fonts/NotoSerif-LICENSE.txt) ---------------------------------- */
+@font-face {
+    font-family: "Noto Serif"; font-style: normal; font-weight: 700; font-display: swap;
+    src: url(../fonts/noto-serif-latin-700-normal.woff2) format("woff2");
+    unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
+@font-face {
+    font-family: "Noto Serif"; font-style: normal; font-weight: 700; font-display: swap;
+    src: url(../fonts/noto-serif-latin-ext-700-normal.woff2) format("woff2");
+    unicode-range: U+0100-02BA, U+02BD-02C5, U+02C7-02CC, U+02CE-02D7, U+02DD-02FF, U+1D00-1DBF, U+1E00-1E9F, U+1EF2-1EFF, U+2020, U+20A0-20AB, U+20AD-20C0, U+2113, U+2C60-2C7F, U+A720-A7FF;
+}
+@font-face {
+    font-family: "Noto Serif"; font-style: normal; font-weight: 700; font-display: swap;
+    src: url(../fonts/noto-serif-greek-700-normal.woff2) format("woff2");
+    unicode-range: U+0370-0377, U+037A-037F, U+0384-038A, U+038C, U+038E-03A1, U+03A3-03FF;
+}
+@font-face {
+    font-family: "Noto Serif"; font-style: normal; font-weight: 700; font-display: swap;
+    src: url(../fonts/noto-serif-cyrillic-700-normal.woff2) format("woff2");
+    unicode-range: U+0301, U+0400-045F, U+0490-0491, U+04B0-04B1, U+2116;
+}
+
+/* ---- Page frame ----------------------------------------------------------------------------------------- */
+body.t46Layout { background-color: #73655a; }
+body.t46Layout #background { background-color: #3f5a1f; background-position: center top; background-repeat: no-repeat;
+    position: relative; z-index: 1; width: 100%; min-height: 100%; overflow: hidden; }
+body.t46Layout #background:before { content: ""; width: 100%; height: 32px; position: absolute; top: 0; left: 0; background-color: #73655a; }
+body.t46Layout #msfilter { display: none; }
+body.t46Layout #topBar #logo { text-decoration: none; overflow: hidden; }
+body.t46Layout #topBar #logo span { display: block; line-height: 38px; font-family: "Noto Serif", Georgia, serif; font-weight: 700;
+    font-size: 15px; letter-spacing: .06em; text-transform: uppercase; color: #5e463a; }
+body.t46Layout #center { position: relative; }
+body.t46Layout #servertime { position: absolute; top: -129px; left: 5px; z-index: 40; padding: 1px 8px; color: #f2f2f2;
+    font-size: 11px; line-height: 16px; white-space: nowrap; }
+body.t46Layout #outOfGame { margin-top: 6px; }
+body.t46Layout #outOfGame li { position: relative; }
+body.t46Layout #outOfGame li a, body.t46Layout #outOfGame li div.a { position: relative; }
+body.t46Layout #header .currency i.goldCoin_medium, body.t46Layout #header .currency i.silverCoin_medium { display: inline-block; }
+/* Hero portrait: the square 81×81 head, a bit smaller than the frame and centred like in Legends. */
+body.t46Layout #topBarHero .heroImageButton .heroImageHover { background-color: #e8dccb; }
+body.t46Layout #topBarHero .heroImageButton .heroImageHover .heroImage { width: 70px; height: 70px; left: 6px; top: 8px; }
+body.t46Layout #topBarHero .heroStatus svg { width: 16px; height: 16px; }
+body.t46Layout #topBarHero .heroStatus svg .outline { stroke: #1b120e; }
+body.t46Layout #topBarHero .layoutButton svg .outline,
+body.t46Layout .layoutButton.buttonFramed svg .outline { fill: #fff; stroke: #1b120e; stroke-width: 1; }
+body.t46Layout #topBarHero .layoutButton.adventure.attention .content { line-height: 26px; font-size: 12px; }
+body.t46Layout .buttonFramed.round { border-radius: 50%; }
+body.t46Layout .buttonFramed.round:before { border-radius: 50%; }
+body.t46Layout #topBarHero .health, body.t46Layout #topBarHero .experience { pointer-events: auto; }
+body.t46Layout #topBarHero .health svg, body.t46Layout #topBarHero .experience svg { display: block; }
+body.t46Layout #stockBar .stockBarButton { text-decoration: none; }
+body.t46Layout #stockBar .stockBarButton .value { align-self: start; padding-top: 1px; }
+body.t46Layout #stockBar .stockBarButton svg.productionBoost path { fill: #62b1dc; stroke: #000; stroke-width: .6; }
+body.t46Layout #stockBar #stockBarFreeCropWrapper .value { align-self: center; justify-self: center; }
+body.t46Layout div#footer { margin-top: 20px; }
+
+/* ---- Sidebar boxes: the game's markup (baseBox + innerBox header/content/footer) in the Legends frame ---- */
+body.t46Layout .sidebar .sidebarBox .sidebarBoxBaseBox { display: none; }
+body.t46Layout .sidebar .sidebarBox .sidebarBoxInnerBox { position: relative; z-index: 0; min-height: 78px; padding: 35px 25px 30px; }
+body.t46Layout .sidebar .sidebarBox .sidebarBoxInnerBox:before { content: ""; z-index: -1; position: absolute; top: 0; right: 0; bottom: 0; left: 0;
+    border-style: solid; border-width: 38px 53px 38px 53px; border-image: url('../img_ltr/hud/sidebar/sidebarBox.png') 38 53 38 53 fill stretch; }
+body.t46Layout .sidebar .sidebarBox .innerBox.header { position: static; }
+body.t46Layout .sidebar .sidebarBox .innerBox.content { position: static; min-height: 0; padding: 0; }
+body.t46Layout .sidebar .sidebarBox .innerBox.content:before { display: none; }
+body.t46Layout .sidebar .sidebarBox .innerBox.header .buttonsWrapper { position: absolute; top: -8px; right: 20px; margin: 0; z-index: 3;
+    display: flex; flex-direction: row; justify-content: flex-end; }
+body.t46Layout .sidebar .sidebarBox .innerBox.header .buttonsWrapper > button,
+body.t46Layout .sidebar .sidebarBox .innerBox.header .buttonsWrapper > a { margin-left: 8px; }
+body.t46Layout .sidebar .sidebarBox .boxTitle { position: relative; display: block; font-size: 16px; font-family: "Noto Serif", Georgia, serif;
+    text-transform: uppercase; font-weight: 700; color: #5e463a; letter-spacing: .1em; padding-bottom: 10px; margin-bottom: 5px;
+    white-space: nowrap; text-overflow: ellipsis; overflow: hidden; }
+body.t46Layout .sidebar .sidebarBox .boxTitle:after { content: ""; position: absolute; bottom: 0; left: -8px; right: -8px; opacity: .5;
+    border-style: solid; border-width: 0 38px 2px 70px; border-image: url('../img_ltr/hud/sidebar/separator.png') 0 38 2 70 round; }
+body.t46Layout .sidebar .sidebarBox .innerBox.footer { position: absolute; left: 0; right: 0; bottom: -14px; height: 0; z-index: 2; }
+body.t46Layout .sidebar .sidebarBox .innerBox.footer:empty { display: none; }
+body.t46Layout .sidebar .sidebarBox.toggleable .innerBox.footer button.toggle { position: absolute; left: 50%; top: 0; margin-left: -50px;
+    width: 100px; height: 30px; padding: 0; border: 0; background: url('../img_ltr/hud/sidebar/toggle.png') no-repeat; cursor: pointer; }
+body.t46Layout .sidebar .sidebarBox.toggleable .innerBox.footer button.toggle .button-container { position: absolute; top: 5px; left: 38px;
+    width: 24px; height: 21px; box-sizing: border-box; background-color: #546e39; border: 2px solid; border-color: #dceaca #5b950f #63a90b;
+    box-shadow: 0 0 1px 1px #5a4035; border-radius: 1px; }
+body.t46Layout .sidebar .sidebarBox.toggleable .innerBox.footer button.toggle:hover .button-container { background-color: #699128; }
+body.t46Layout .sidebar .sidebarBox.toggleable .innerBox.footer button.toggle svg.toggle-caret { position: absolute; top: 2px; left: 1px; width: 18px; height: 13px; }
+body.t46Layout .sidebar .sidebarBox.toggleable.collapsed .innerBox.footer button.toggle svg.toggle-caret { transform: scaleY(-1); }
+body.t46Layout .sidebar .sidebarBox .innerBox.content ul { margin: 0; padding: 0; list-style: none; }
+body.t46Layout .sidebar .sidebarBox .innerBox.content ul li { position: relative; }
+body.t46Layout .sidebar .sidebarBox .innerBox.content ul li:not(:last-child) { border-bottom: 1px solid rgba(191, 179, 155, .6); }
+body.t46Layout .sidebar .sidebarBox .innerBox.content ul li a { color: #333; }
+body.t46Layout .sidebar .sidebarBox .innerBox.content ul li.active { background-color: #ddc6a2; }
+body.t46Layout .sidebar .sidebarBox .innerBox.content ul li.active a { font-weight: 700; }
+body.t46Layout .sidebar #sidebarBoxDailyquests { display: none; }
+
+/* ---- Village views ----------------------------------------------------------------------------------------- */
+body.t46Layout #contentOuterContainer:not(.contentPage) #content { background: none; padding: 0; min-height: 0; width: auto; }
+/* dorf2: building outlines come in summer/winter variants – show the one for the current season. */
+body.t46Layout #villageContent svg.buildingShape g.clickShapeWinter,
+body.t46Layout #villageContent svg.buildingShape g.hoverShapeWinter { display: none; }
+body.t46Layout.season-winter #villageContent svg.buildingShape g.clickShapeWinter,
+body.t46Layout.season-winter #villageContent svg.buildingShape g.hoverShapeWinter { display: inline; }
+body.t46Layout.season-winter #villageContent svg.buildingShape g.clickShapeWinter ~ g.clickShape,
+body.t46Layout.season-winter #villageContent svg.buildingShape g.hoverShapeWinter ~ g.hoverShape { display: none; }
+body.t46Layout #villageContent svg.buildingShape g.hoverShape:hover path { fill: rgba(255, 255, 255, .2); }
+body.t46Layout #villageContent svg.buildingShape g.hoverShape:active path { fill: rgba(255, 255, 255, .35); }
+body.t46Layout #villageContent .buildingSlot.g0 svg.buildingShape.iso path { fill: rgba(101, 115, 13, .57); transition: fill 150ms ease-in; }
+body.t46Layout #villageContent .buildingSlot.g0 svg.buildingShape.iso path:hover { fill: rgba(206, 223, 100, .57); }
+body.t46Layout #villageContent .buildingSlot.a40.g0 svg.buildingShape path { fill: transparent; }
+body.t46Layout #villageContent .buildingSlot.a40.g0 svg.buildingShape path:hover { fill: rgba(255, 255, 255, .15); }
+body.t46Layout #villageContent img.building.iso, body.t46Layout #villageContent .buildingSlot:empty { display: none; }
+body.t46Layout #villageContent #lswitch { position: absolute; right: 250px; bottom: 30px; z-index: 50; }
+/* dorf1 */
+body.t46Layout div.village1 { min-height: 640px; }
+body.t46Layout div.village1 #resourceFieldContainer .level span { line-height: 23px; }
+body.t46Layout div.village1 #resourceFieldContainer svg.resourceField { top: 0; left: 0; }
+body.t46Layout div.village1 #resourceFieldContainer svg.villageCenter { top: 0; left: 0; }
+body.t46Layout div.village1 #resourceFieldContainer svg.resourceField > path:hover { fill: rgba(255, 255, 255, .2); }
+/* Legends layout: field on the left, movements / production / troops on the right, construction list under the field. */
+body.t46Layout div.village1 .villageInfoWrapper { grid-template-rows: minmax(130px, auto) auto auto 1fr; }
+body.t46Layout div.village1 .villageInfoWrapper .villageInfobox.movements { grid-column: 2; grid-row: 1; align-self: end; }
+body.t46Layout div.village1 .villageInfoWrapper .villageInfobox.production { grid-column: 2; grid-row: 2; }
+body.t46Layout div.village1 .villageInfoWrapper .villageInfobox.units { grid-column: 2; grid-row: 3; }
+body.t46Layout div.village1 .villageInfoWrapper .buildingList { grid-column: 1; grid-row: 4; margin-top: 0; justify-self: start; }
+body.t46Layout div.village1 .villageInfoWrapper .villageInfobox .boxes-contents { padding: 0; }
+body.t46Layout div.village1 .villageInfoWrapper .villageInfobox.movements:not(:has(td)) { visibility: hidden; }
+body.t46Layout div.village1 .villageInfoWrapper .boxes > div[class^="boxes-"]:not(.boxes-contents) { display: none; }
+
+/* ---- Individual sidebar boxes ------------------------------------------------------------------------------ */
+body.t46Layout .sidebar #sidebarBoxVillagelist .expansionSlotInfo { position: relative; padding-bottom: 10px; margin-bottom: 5px; }
+body.t46Layout .sidebar #sidebarBoxVillagelist .expansionSlotInfo:after { content: ""; position: absolute; bottom: 0; left: -8px; right: -8px; opacity: .5;
+    border-style: solid; border-width: 0 38px 2px 70px; border-image: url('../img_ltr/hud/sidebar/separator.png') 0 38 2 70 round; }
+body.t46Layout .sidebar #sidebarBoxVillagelist .expansionSlotInfo .boxTitle { padding-bottom: 0; margin-bottom: 5px; }
+body.t46Layout .sidebar #sidebarBoxVillagelist .expansionSlotInfo .boxTitle:after { display: none; }
+body.t46Layout .sidebar #sidebarBoxVillagelist .expansionSlotInfo .boxTitleAdditional { position: absolute; top: 2px; right: 0;
+    font-family: "Noto Serif", Georgia, serif; font-weight: 700; font-size: 16px; letter-spacing: .1em; color: #5e463a; }
+body.t46Layout .sidebar #sidebarBoxVillagelist .villageListBarBox { height: 9px; background-color: #52372a; padding: 1px; border-radius: 2px; box-sizing: border-box; }
+body.t46Layout .sidebar #sidebarBoxVillagelist .villageListBarBox .bar { height: 7px; background-color: #546e39; border: 2px solid; border-color: #699e32 #6db024 #71c117;
+    border-radius: 1px; box-sizing: border-box; max-width: 100%; }
+body.t46Layout .sidebar #sidebarBoxVillagelist .innerBox.content ul li a { display: flex; align-items: center; font-size: 0; padding: 2px 4px; text-decoration: none; }
+body.t46Layout .sidebar #sidebarBoxVillagelist .innerBox.content ul li a > * { font-size: 13px; }
+body.t46Layout .sidebar #sidebarBoxVillagelist .innerBox.content ul li a > img { display: none; }
+body.t46Layout .sidebar #sidebarBoxVillagelist .innerBox.content ul li a .name { flex: 1 1 auto; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+body.t46Layout .sidebar #sidebarBoxVillagelist .innerBox.content ul li a .coordinatesWrapper { flex: 0 0 auto; margin-left: 6px; font-size: 11px; direction: ltr; }
+body.t46Layout .sidebar #sidebarBoxActiveVillage .innerBox.footer { top: 38px; right: 22px; left: auto; bottom: auto; height: auto; }
+body.t46Layout .sidebar #sidebarBoxActiveVillage .boxTitle { padding-right: 30px; }
+body.t46Layout .sidebar #sidebarBoxActiveVillage .loyalty { font-size: 11px; text-align: right; }
+body.t46Layout .sidebar #sidebarBoxInfobox .messageShortInfo { position: absolute; right: 25px; top: 37px; font-weight: 700; }
+body.t46Layout .sidebar #sidebarBoxInfobox .innerBox.content ul li { padding: 5px 0; }
+body.t46Layout .sidebar #sidebarBoxInfobox .innerBox.content a { color: #99c01a; font-weight: 700; }
+body.t46Layout .sidebar #sidebarBoxLinklist .innerBox.content ul li a { display: block; padding: 2px 0; }
+body.t46Layout .sidebar #sidebarBoxAlliance .innerBox.content ul li a { color: #99c01a; font-weight: 700; }
+body.t46Layout .sidebar .sidebarBox .innerBox.header .buttonsWrapper button.layoutButton.toggle { background-image: none; margin: 0 0 0 8px; }
+body.t46Layout .sidebar #sidebarBoxVillagelist .innerBox.header .buttonsWrapper button.layoutButton.toggle { display: none; }
+body.t46Layout.logout #center #contentOuterContainer, body.t46Layout.login #center #contentOuterContainer { width: 600px; }
+body.t46Layout .sidebar #sidebarBoxActiveVillage .innerBox.footer { top: 30px; }
+
+/* ---- Content frame: title buttons and tabs (game markup: .contentNavi > .container > .content > a.tabItem) ---- */
+body.t46Layout #center #contentOuterContainer.contentPage .contentTitle { position: static; }
+body.t46Layout #center a.contentTitleButton { position: absolute; float: none; top: 26px; width: 34px; height: 34px; margin: 0;
+    border-radius: 2px; background-image: linear-gradient(to bottom, #cba467 5%, #f3e2ae 13%, #efbf7b 32%, #aa8050 48%, #835e35 72%, #ad8a54 93%, #d7b672 100%); }
+body.t46Layout #center a.contentTitleButton:before { content: ""; position: absolute; top: 3px; right: 3px; bottom: 3px; left: 3px; z-index: 1;
+    background-color: #546e39; border: 2px solid; border-color: #cfdcbe #578b11 #63a90b; }
+body.t46Layout #center a.contentTitleButton:hover:before { background-color: #699128; border-color: #d4e2c1 #6da71d #71bb13; }
+body.t46Layout #center a.contentTitleButton#closeContentButton { right: 40px; }
+body.t46Layout #center a.contentTitleButton#closeContentButton svg { position: absolute; z-index: 2; width: 15px; height: 15px; left: 50%; top: 50%; transform: translate(-50%, -50%); }
+body.t46Layout #center a.contentTitleButton#closeContentButton svg .outline { fill: #f2e1d0; stroke: #283c08; stroke-width: 1; }
+body.t46Layout #center a.contentTitleButton#answersButton { right: 82px; }
+body.t46Layout #center a.contentTitleButton#answersButton:after { content: ""; position: absolute; z-index: 2; left: 13px; top: 8px; width: 7px; height: 18px;
+    background-image: url('../img_ltr/hud/content/info_small.png'); }
+body.t46Layout.village1 #center a.contentTitleButton, body.t46Layout.village2 #center a.contentTitleButton { display: none; }
+body.t46Layout #content .contentNavi.subNavi { position: relative; display: flex; gap: 0; width: calc(100% + 15px); height: 50px; left: -7px; top: -9px;
+    padding: 4px; box-sizing: border-box; margin-bottom: 10px; border: solid 1px #34220d; background: #a58b6d;
+    background-image: linear-gradient(to top, #caa065 0, #876338 20%, #ba8f5b 54%, #f3ce8b 74%, #ecd9a5 92%); }
+body.t46Layout #content .contentNavi.subNavi > .container { position: relative; flex: 1 1 0; float: none; width: auto; max-width: none; min-width: 0; height: 42px; margin: 0; padding: 0; background: none; }
+body.t46Layout #content .contentNavi.subNavi > .container .background-start,
+body.t46Layout #content .contentNavi.subNavi > .container .background-end,
+body.t46Layout #content .contentNavi.subNavi > .clear { display: none; }
+body.t46Layout #content .contentNavi.subNavi > .container > .content { position: relative; height: 42px; margin: 0; padding: 0; background: none; }
+body.t46Layout #content .contentNavi.subNavi > .container a.tabItem { position: relative; display: block; width: 100%; height: 42px; box-sizing: border-box;
+    padding: 0 8px; margin: 0; line-height: 42px; text-align: center; font-weight: 700; font-size: 13px; color: #eccd8e; text-decoration: none;
+    background: #5f473b; border: 0; border-top: solid 1px #2d1408; border-bottom: solid 1px #d7b672; border-radius: 0;
+    box-shadow: 0 -10px 2px -5px rgba(0, 0, 0, .45) inset, 0 20px 10px -5px rgba(0, 0, 0, .2) inset;
+    white-space: nowrap; overflow: hidden; text-overflow: ellipsis; transition-duration: 150ms; }
+body.t46Layout #content .contentNavi.subNavi > .container + .container a.tabItem { border-left: 1px solid #2d1408; }
+body.t46Layout #content .contentNavi.subNavi > .container.active a.tabItem { background-color: #85664a; color: #f2e1d0; cursor: default; }
+body.t46Layout #content .contentNavi.subNavi > .container:not(.active) a.tabItem:hover { background-color: #a27e57; color: #f2e1d0; }
+body.t46Layout #content .contentNavi.subNavi > .container.disabled a.tabItem { color: #9a8577; }
+body.t46Layout #content .contentNavi.subNavi > .container.favor .content:after,
+body.t46Layout #content .contentNavi.subNavi > .container.favorActive .content:after { display: none; }
+body.t46Layout #content .contentNavi.subNavi > .container a.tabItem img,
+body.t46Layout #content .contentNavi.subNavi > .container a.tabItem .tabFavor { display: none; }
+
+/* ---- Active village box: player name, village name field with pen, population + loyalty ---- */
+body.t46Layout .sidebar #sidebarBoxActiveVillage .playerName { font-size: 12px; font-weight: 700; margin-bottom: 2px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+body.t46Layout .sidebar #sidebarBoxActiveVillage #villageNameField.boxTitle { border: 1px solid rgba(94, 70, 58, .4); border-radius: 2px; padding: 3px 26px 3px 4px;
+    margin-bottom: 4px; line-height: 20px; }
+body.t46Layout .sidebar #sidebarBoxActiveVillage #villageNameField.boxTitle:after { display: none; }
+body.t46Layout .sidebar #sidebarBoxActiveVillage .innerBox.content { display: flex; justify-content: space-between; font-size: 11px; }
+body.t46Layout .sidebar #sidebarBoxActiveVillage .population { font-size: 11px; }
+body.t46Layout .sidebar #sidebarBoxActiveVillage .innerBox.footer { top: 56px; right: 30px; }
+body.t46Layout .sidebar #sidebarBoxActiveVillage .innerBox.footer button.layoutButton { transform: scale(.6); transform-origin: top right; }
+body.t46Layout #center a.contentTitleButton#tabFavorButton { right: 124px; }
+body.t46Layout #center a.contentTitleButton#tabFavorButton:after { content: ""; position: absolute; z-index: 2; left: 8px; top: 10px; width: 18px; height: 14px;
+    background-image: url('../img_ltr/hud/content/favor_small.png'); }
+body.t46Layout #center a.contentTitleButton img { display: none; }
+
+/* ---- Questmaster: mentor stands on top of the box frame (Legends) ---- */
+body.t46Layout .sidebar #sidebarBoxQuestmaster .sidebarBoxInnerBox { padding-top: 0; }
+body.t46Layout .sidebar #sidebarBoxQuestmaster .sidebarBoxInnerBox:before { top: 121px; }
+body.t46Layout .sidebar #sidebarBoxQuestmaster .header #questmasterButton { position: relative; display: block; margin: 0 0 21px calc(50% - 102px);
+    padding: 0; border: 0; background: none; cursor: pointer; }
+body.t46Layout .sidebar #sidebarBoxQuestmaster .innerBox.header .buttonsWrapper { top: 113px; }
+
+/* ---- Infobox: envelope next to the message count ---- */
+body.t46Layout .sidebar #sidebarBoxInfobox .messageShortInfo img { display: inline-block; vertical-align: -2px; width: 18px; height: 14px; margin-left: 3px;
+    background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 18 14'%3E%3Crect x='.5' y='.5' width='17' height='13' rx='1.5' fill='%23989897' stroke='%23574a3f'/%3E%3Cpath d='M1 1.5 9 8l8-6.5' fill='none' stroke='%23574a3f'/%3E%3C/svg%3E") no-repeat; }
+body.t46Layout .sidebar #sidebarBoxInfobox .messageShortInfo img.messages.unreaded,
+body.t46Layout .sidebar #sidebarBoxInfobox .messageShortInfo img.messages[class*="unread"] {
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 18 14'%3E%3Crect x='.5' y='.5' width='17' height='13' rx='1.5' fill='%23e69043' stroke='%237a3f12'/%3E%3Cpath d='M1 1.5 9 8l8-6.5' fill='none' stroke='%237a3f12'/%3E%3C/svg%3E"); }
+
+/* ---- Round layout buttons (sidebar headers): Legends look – gold rim, green/gold face, white sprite icon ---- */
+body.t46Layout button.layoutButton { width: 36px; height: 36px; padding: 0; border-radius: 50%; border: 1px solid #34220d; overflow: visible;
+    background-image: linear-gradient(to bottom, #cba467 5%, #f3e2ae 13%, #efbf7b 32%, #aa8050 48%, #835e35 72%, #ad8a54 93%, #d7b672 100%);
+    box-shadow: 0 2px 3px rgba(0, 0, 0, .35); }
+body.t46Layout button.layoutButton:before { content: ""; position: absolute; top: 2px; right: 2px; bottom: 2px; left: 2px; width: auto; height: auto; z-index: 1;
+    border-radius: 50%; border: 1px solid #34220d; background-image: none; background-color: #546e39;
+    box-shadow: inset 0 -2px 1px 1px #63a90b, inset 2px -1px 1px 0 #578b11, inset -2px -1px 1px 0 #578b11, inset 0 2px 1px 1px #cfdcbe; }
+body.t46Layout button.layoutButton:hover:not(.disabled):before { background-color: #699128;
+    box-shadow: inset 0 -2px 1px 1px #71bb13, inset 2px -1px 1px 0 #6da71d, inset -2px -1px 1px 0 #6da71d, inset 0 2px 1px 1px #d4e2c1; }
+body.t46Layout button.layoutButton:after { display: none; }
+body.t46Layout button.layoutButton.gold:before { background-color: #ffd55e; background-image: linear-gradient(to bottom, #ffeaae, #ffd55e);
+    box-shadow: inset 0 -2px 1px 1px #ffe94c, inset 2px -1px 1px 0 #ffe464, inset -2px -1px 1px 0 #ffe464, inset 0 2px 1px 1px #ffeaae; }
+body.t46Layout button.layoutButton.disabled:before { background-color: #8a8a7a; box-shadow: inset 0 -1px 1px 1px #a3a690, inset 0 1px 1px 1px #c4c7b3; }
+body.t46Layout button.layoutButton.gold.disabled:before { background-color: #cda862; background-image: none; box-shadow: inset 0 -1px 1px 1px #daba4a, inset 0 1px 1px 1px #f4dc6a; }
+body.t46Layout button.layoutButton .button-container { position: absolute; top: 0; left: 0; right: 0; bottom: 0; }
+body.t46Layout button.layoutButton i { top: 1px; left: 1px; width: 32px; height: 32px; z-index: 3; }
+body.t46Layout button.layoutButton.disabled i { opacity: .75; }
+
+/* ---- Stock bar: Legends uses the normal (bold 11px) numbers ---- */
+body.t46Layout #stockBar .value { font-size: 11px !important; font-weight: 700; }
+
+/* ---- Task list (tasks.php): extras around the pack's #tasks styles ---- */
+body.t46Layout #content.tasks #tasks .contentNavi.subNavi { margin-bottom: 14px; }
+body.t46Layout #tasks .task .progress { position: relative; padding-right: 8px; }
+body.t46Layout #tasks .task .progress .stepCounter { position: absolute; right: 10px; bottom: 2px; font-size: 10px; color: #8a7562; }
+body.t46Layout #tasks .task.achieved .progress .stepCounter { display: none; }
+body.t46Layout #tasks .task .progress .allDone { width: 130px; text-align: center; font-weight: 700; padding-left: 20px; min-height: 22px;
+    background: url('../img_ltr/quests/achievement/haken_gruen.png') no-repeat left center; background-size: 18px; }
+body.t46Layout .sidebar #sidebarBoxQuestmaster .taskOverview { margin-top: 6px; }
+body.t46Layout .sidebar #sidebarBoxQuestmaster .taskOverview li a { display: block; padding: 2px 0; color: #333; }
+body.t46Layout .sidebar #sidebarBoxQuestmaster .taskOverview li.achieved a { font-weight: 700; color: #4f8a13; }
+body.t46Layout .sidebar #sidebarBoxQuestmaster .taskOverview .boxTitle { display: block; margin-top: 8px; text-decoration: none; }
+body.t46Layout .sidebar #sidebarBoxQuestmaster .taskOverview ul { margin: 0; padding: 0; list-style: none; }
+body.t46Layout .sidebar #sidebarBoxQuestmaster .taskOverview li:not(:last-child) { border-bottom: 1px solid rgba(191, 179, 155, .6); }
+body.t46Layout #tasks .taskImage img { background-position: 0 0; background-size: auto; }
+
+/* Task list: framed green Collect button and 3D pager arrows (Legends). */
+body.t46Layout #tasks .task .progress button.collect { width: 150px; height: 40px; padding: 0; margin-left: -10px; font-size: 14px; }
+body.t46Layout #tasks .task .progress button.collect > div { padding: 0; line-height: 34px; color: #f2f2f2;
+    text-shadow: 0 1px 1px #2c4a0c, 0 0 2px #2c4a0c; }
+body.t46Layout #tasks .task.achieved .progress { align-self: center; }
+
+/* Questmaster: outside the tutorial the box is the Legends "Task overview" only. */
+body.t46Layout .sidebar #sidebarBoxQuestmaster.t46TasksOnly .header > .boxTitle,
+body.t46Layout .sidebar #sidebarBoxQuestmaster.t46TasksOnly #mentorTaskList { display: none; }
+body.t46Layout .sidebar #sidebarBoxQuestmaster.t46TasksOnly .taskOverview .boxTitle { margin-top: 0; }
+
+/* ---- Hero window (hero.php): Inventory / Attributes / Appearance like Legends ---- */
+body.t46Layout #content.hero .contentNavi.subNavi .container a.tabItem { font-size: 14px; }
+/* Inventory view: hero figure on an illustrated scene, equipment slots, dark bag. */
+body.t46Layout #content.heroView-inventory > #attributes,
+body.t46Layout #content.heroView-inventory > .roundedCornersBox,
+body.t46Layout #content.heroView-inventory form > #attributes,
+body.t46Layout #content.heroView-inventory .heroPropertiesContent { display: none; }
+body.t46Layout #content.heroView-attributes #bodyOptions,
+body.t46Layout #content.heroView-attributes #hero_inventory,
+body.t46Layout #content.heroView-attributes #placeHolder { display: none; }
+body.t46Layout #content.hero #bodyOptions { float: none; width: auto; height: 420px; position: relative; margin: 0 -6px; border: 2px solid #4b3a2c;
+    background: url('../img_ltr/layout/background2019/bgResources.jpg') center 30% / 260% auto; overflow: hidden; }
+body.t46Layout #content.hero #bodyOptions:before { content: ""; position: absolute; left: 0; right: 0; bottom: 0; height: 70px;
+    background: linear-gradient(to bottom, rgba(64, 70, 58, 0), rgba(64, 70, 58, .85)); }
+body.t46Layout #content.hero #bodyOptions #hero_body_container { position: absolute; left: 110px; right: 0; top: 0; bottom: 0; width: auto; height: auto; margin: 0; }
+body.t46Layout #content.hero #bodyOptions #hero_body { left: 50%; margin-left: -110px; top: 30px; transform: scale(1.12); transform-origin: top center; }
+body.t46Layout #content.hero #bodyOptions #hero_body_content { position: absolute; left: -110px; top: 0; bottom: 0; width: 104px; height: auto; margin: 0;
+    background: linear-gradient(to bottom, #3d5c47, #2d473a); border-right: 2px solid #8c7a55; }
+body.t46Layout #content.hero #bodyOptions #hero_body_content .content { position: static; width: auto; height: auto; background: none; }
+body.t46Layout #content.hero #bodyOptions #hero_body_content .content > div { position: relative !important; left: auto !important; top: auto !important;
+    width: 84px !important; height: 52px !important; margin: 6px auto 0; border: 1px solid #8c7a55; border-radius: 2px;
+    background-color: #2b4234; box-shadow: inset 0 0 6px rgba(0, 0, 0, .6); }
+body.t46Layout #content.hero #hero_inventory { float: none; width: auto; margin: 0 -6px; padding: 8px; background: #2c2622; border: 2px solid #4b3a2c; border-top: 0; }
+body.t46Layout #content.hero #hero_inventory .boxes > div[class^="boxes-"]:not(.boxes-contents) { display: none; }
+body.t46Layout #content.hero #hero_inventory .boxes-contents { padding: 0; background: none; }
+body.t46Layout #content.hero #hero_inventory .inventory { width: 62px; height: 62px; margin: 1px; border: 1px solid #8c7a55; border-radius: 2px;
+    background-color: #1f2a25; box-shadow: inset 0 0 8px rgba(0, 0, 0, .8); }
+body.t46Layout #content.hero #hero_inventory .market a { color: #a8d86a; font-weight: 700; }
+/* Attributes view: Legends panels with ornamented bars. */
+body.t46Layout #content.heroView-attributes > #attributes,
+body.t46Layout #content.heroView-attributes .roundedCornersBox { background: #f6f0e3; border: 2px solid #c9b48c; border-radius: 4px;
+    box-shadow: inset 0 0 0 1px #fff8e8; padding: 10px 14px; margin-bottom: 10px; }
+body.t46Layout #content.hero .attribute .bar-bg, body.t46Layout #content.hero td.progress .bar-bg,
+body.t46Layout #content.hero .attribute td.progress > div { position: relative; height: 14px; padding: 2px; border-radius: 9px; box-sizing: border-box;
+    background: #5b4335; border: 1px solid #34220d; box-shadow: inset 0 1px 2px rgba(0, 0, 0, .6); }
+body.t46Layout #content.hero .attribute .bar-bg:before, body.t46Layout #content.hero .attribute .bar-bg:after {
+    content: ""; position: absolute; top: -3px; width: 10px; height: 18px; z-index: 2; background: url('../img_ltr/scenes/Tasks/progressBarDecoration.png'); }
+body.t46Layout #content.hero .attribute .bar-bg:before { left: -2px; }
+body.t46Layout #content.hero .attribute .bar-bg:after { right: -2px; transform: scaleX(-1); }
+body.t46Layout #content.hero .attribute .bar { height: 8px; border-radius: 4px; background: linear-gradient(to top, #5c831e, #7f9f32 70%, #a0ae56); border: 0; }
+body.t46Layout #content.hero tr.experience .bar { background: linear-gradient(to top, #1d63a8, #3c8fd8 70%, #8cc4f2); }
+
+/* ---- Auctions (hero.php?t=4): Buy / Sell / Overview tabs, lock box, dark filter bar, item table ---- */
+body.t46Layout #content.hero_auction .contentNavi.tabNavi.subNavi { display: flex; }
+body.t46Layout #content.hero_auction .auctionLocked { display: flex; align-items: center; gap: 14px; margin: 4px 0 12px; }
+body.t46Layout #content.hero_auction .auctionLocked .lockIcon { flex: 0 0 76px; height: 76px; border-radius: 50%; border: 2px solid #34220d;
+    background: radial-gradient(circle at 50% 40%, #f6c44e, #c47a12 60%, #6d3b06 100%); box-shadow: inset 0 0 0 4px #4a3020, 0 2px 4px rgba(0,0,0,.4); position: relative; }
+body.t46Layout #content.hero_auction .auctionLocked .lockIcon:after { content: ""; position: absolute; left: 22px; top: 16px; width: 32px; height: 40px;
+    background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 40'%3E%3Cpath d='M8 17v-6a8 8 0 0 1 16 0v6' fill='none' stroke='%233a2208' stroke-width='4'/%3E%3Crect x='2' y='16' width='28' height='22' rx='3' fill='%23ffd76a' stroke='%233a2208' stroke-width='2.5'/%3E%3Ccircle cx='16' cy='25' r='3' fill='%233a2208'/%3E%3Cpath d='M16 26v6' stroke='%233a2208' stroke-width='3'/%3E%3C/svg%3E") no-repeat; }
+body.t46Layout #content.hero_auction .auctionLocked .lockInfo { flex: 1; }
+body.t46Layout #content.hero_auction .auctionLocked .lockTitle { font-size: 18px; font-weight: 700; color: #3f2e22; margin-bottom: 6px; }
+body.t46Layout #content.hero_auction .auctionLocked .auctionAdventureBar { height: 10px; padding: 1px; border-radius: 5px; background: #4a3529; border: 1px solid #2d1f16; }
+body.t46Layout #content.hero_auction .auctionLocked .auctionAdventureBar .bar { height: 8px; border-radius: 4px; background: linear-gradient(to top, #3f7d16, #77c13a); }
+body.t46Layout #content.hero_auction .auctionLocked .lockText { display: flex; justify-content: space-between; margin-top: 8px; color: #4b3a2c; }
+body.t46Layout #content.hero_auction #filter .boxes > div[class^="boxes-"]:not(.boxes-contents) { display: none; }
+body.t46Layout #content.hero_auction #filter .boxes-contents { padding: 6px 8px; border-radius: 3px; border: 2px solid #34220d;
+    background: linear-gradient(to bottom, #5f473b, #4a362c); box-shadow: inset 0 1px 0 #8a6d58; }
+body.t46Layout #content.hero_auction #filter .wrapper { display: flex; flex-direction: row-reverse; align-items: center; justify-content: space-between; }
+body.t46Layout #content.hero_auction #filter .silver { float: none; color: #f2e1d0; font-weight: 700; padding: 4px 10px; border-radius: 14px;
+    background: #2f241e; border: 1px solid #8c7a55; }
+body.t46Layout #content.hero_auction #filter .filterContainer { float: none; display: flex; flex-wrap: wrap; gap: 2px; }
+body.t46Layout #content.hero_auction #filter button.iconFilter { width: 34px; height: 34px; border-radius: 50%; border: 1px solid transparent; background: none; }
+body.t46Layout #content.hero_auction #filter button.iconFilter.iconFilterActive { border-color: #d7b672; background: radial-gradient(circle, #8a6d58, #4a362c); }
+body.t46Layout #content.hero_auction #auction table { border-collapse: separate; border-spacing: 0 3px; background: none; }
+body.t46Layout #content.hero_auction #auction table thead th, body.t46Layout #content.hero_auction #auction table thead td {
+    background: #d8c9ac; color: #3f2e22; font-weight: 700; border: 0; padding: 6px 4px; }
+body.t46Layout #content.hero_auction #auction table tbody td { background: #eef0f1; border-top: 1px solid #c6c0b4; border-bottom: 1px solid #c6c0b4; padding: 6px 4px; }
+body.t46Layout #content.hero_auction #auction table tbody td.icon { width: 44px; background: linear-gradient(to bottom, #2f6d5c, #1c4a3e); text-align: center; }
+body.t46Layout #content.hero_auction #auction table tbody td.name { font-weight: 700; color: #3f2e22; }
+body.t46Layout #content.hero_auction #auction table tbody tr:hover td:not(.icon) { background: #fbf6ea; }
+body.t46Layout #content.hero > #attributes { box-sizing: border-box; width: auto; }
+body.t46Layout #content.heroView-attributes #attributes .roundedCornersBox { width: auto; box-sizing: border-box; margin: 0 0 10px; }
+body.t46Layout #content.heroView-attributes #attributes .roundedCornersBox > div[class^="boxes-"]:not(.boxes-contents) { display: none; }
+body.t46Layout #content.heroView-attributes .openCloseSwitchBar { background: none; cursor: default; pointer-events: none; }
+body.t46Layout #content.heroView-attributes .openCloseSwitchBar img.openedClosedSwitch { display: none; }
+body.t46Layout #content.heroView-attributes .openCloseSwitchBar .title { font-size: 15px; color: #3f2e22; }
+body.t46Layout #content.hero .contentNavi.subNavi + * { margin-top: 0; }
+body.t46Layout #content.heroView-inventory > .clear:first-of-type, body.t46Layout #content.heroView-inventory .titleInHeader + .clear { display: none; }
+body.t46Layout #content.hero #hero_inventory .market { background: none; border: 0; }
+body.t46Layout #content.heroView-attributes > #attributes { background: none; border: 0; box-shadow: none; padding: 0; }
+body.t46Layout #content.heroView-attributes #attributes .roundedCornersBox h4 .openCloseSwitchBar { background: #e9dfc8; padding: 6px 10px; border-radius: 3px; }
+body.t46Layout #content.hero_auction #filter .wrapper { background: none; border-radius: 0; padding: 0; }
+body.t46Layout #content.hero_auction #filter .silver img.silver { width: 20px; height: 20px; vertical-align: -5px; margin-right: 4px;
+    background: url('../img_ltr/general/units/silverCoin_medium.png') no-repeat center / contain; }
+body.t46Layout #content.hero_auction #filter button.iconFilter img { transform: scale(1.35); }
+body.t46Layout #content.hero_auction .contentNavi .tabItem { text-transform: capitalize; }
+body.t46Layout #tasks .task .progress button.collect { width: 140px; margin-left: 0; text-align: center; }
+body.t46Layout #tasks .task .progress button.collect > div { text-align: center; width: 100%; position: relative; z-index: 3; }
+
+/* Appearance: Legends dark-green editor panel. */
+body.t46Layout #content.hero_editor #heroEditor { background: linear-gradient(to bottom, #3d5c47, #24392d);
+    box-shadow: inset 0 0 0 2px #8c7a55; border-radius: 1px; }
+body.t46Layout #content.hero_editor #heroEditor .head { background: #e8e4dc; border: 2px solid #c9b48c; border-radius: 2px; }
+body.t46Layout #content.hero_editor #heroEditor .head > div[class] :not(.image) { background: none; }
+body.t46Layout #content.hero_editor #heroEditor .attributes .container { background: #f1ece0; border: 2px solid #c9b48c; border-radius: 2px; }
+body.t46Layout #content.hero_editor #heroEditor .attributes .options a,
+body.t46Layout #content.hero_editor #heroEditor .attributes .options li { color: #3f2e22; }
+
+/* Task pager: the pack's scroll arrows and page dots (hud/content), 3-state sprites. */
+body.t46Layout #tasks .taskPager { display: flex; justify-content: center; align-items: flex-start; gap: 14px; margin: 14px 0 6px; }
+body.t46Layout #tasks .taskPager a { display: block; text-decoration: none; position: relative; }
+body.t46Layout #tasks .taskPager a.arrow { width: 34px; height: 41px; background-position: 0 0; background-repeat: no-repeat; }
+body.t46Layout #tasks .taskPager a.arrow.previous { background-image: url('../img_ltr/hud/content/scrollFrom.png'); }
+body.t46Layout #tasks .taskPager a.arrow.next { background-image: url('../img_ltr/hud/content/scrollTo.png'); }
+body.t46Layout #tasks .taskPager a.arrow:hover { background-position: 0 -41px; }
+body.t46Layout #tasks .taskPager a.arrow:active { background-position: 0 -82px; }
+body.t46Layout #tasks .taskPager a.arrow.disabled { filter: grayscale(1); opacity: .45; pointer-events: none; }
+body.t46Layout #tasks .taskPager a.dot { width: 29px; height: 29px; margin-top: 6px; background: url('../img_ltr/hud/content/selectPage_unselected.png') no-repeat 0 0; }
+body.t46Layout #tasks .taskPager a.dot:hover { background-position: 0 -29px; }
+body.t46Layout #tasks .taskPager a.dot.active { background-image: url('../img_ltr/hud/content/selectPage_selected.png'); }
+body.t46Layout #tasks .taskPager a.dot span { position: absolute; top: 28px; left: 0; right: 0; text-align: center; font-size: 10px; color: #5e463a; }
+
+/* ---- Daily quests (dailyquests.php) ---- */
+body.t46Layout #content.dailyQuestsT46 { background: #f4efe4; }
+#dailyQuestsT46 { color: #3f2e22; text-align: center; }
+#dailyQuestsT46 .dqTitle { font-size: 18px; font-weight: 700; margin: 6px 0 4px; }
+#dailyQuestsT46 .dqReset { font-size: 14px; margin-bottom: 14px; }
+#dailyQuestsT46 .dqRewardBar { position: relative; height: 112px; margin: 0 4px 14px; border: 2px solid #34220d; border-radius: 4px;
+    background: linear-gradient(to bottom, #6f7f8c, #4e5c69); box-shadow: inset 0 0 0 2px #9aa6b0; }
+#dailyQuestsT46 .dqTrack { position: absolute; left: 18px; right: 120px; top: 50px; height: 12px; border-radius: 6px; background: #4a3529; border: 1px solid #2d1f16; }
+#dailyQuestsT46 .dqTrackFill { height: 100%; border-radius: 6px; background: linear-gradient(to top, #3f7d16, #8fd04a); }
+#dailyQuestsT46 .dqStart { position: absolute; left: 6px; top: 42px; width: 26px; height: 26px; border-radius: 50%; border: 2px solid #c9a95f;
+    background: radial-gradient(circle at 40% 35%, #c8f07d, #5d9e17 55%, #2f5c09); }
+#dailyQuestsT46 .dqMilestone { position: absolute; top: 6px; width: 84px; margin-left: -42px; }
+#dailyQuestsT46 .dqChest { width: 74px; height: 74px; margin: 0 auto; border-radius: 50%; border: 3px solid #c9a95f; background-color: #3d4a54;
+    background-size: 108%; background-position: center 40%; background-repeat: no-repeat; filter: grayscale(.6) brightness(.85);
+    box-shadow: 0 2px 4px rgba(0, 0, 0, .5); }
+#dailyQuestsT46 .reward25 .dqChest { background-image: url('../img_ltr/views/DailyQuests/reward25.png'); }
+#dailyQuestsT46 .reward50 .dqChest { background-image: url('../img_ltr/views/DailyQuests/reward50.png'); }
+#dailyQuestsT46 .reward75 .dqChest { background-image: url('../img_ltr/views/DailyQuests/reward75.png'); }
+#dailyQuestsT46 .reward100 .dqChest { background-image: url('../img_ltr/views/DailyQuests/reward100.png'); }
+#dailyQuestsT46 .dqMilestone.reached .dqChest { filter: none; background-color: #5a8a2a; border-color: #e6c66a; }
+#dailyQuestsT46 .dqMilestone.done .dqChest { filter: grayscale(1) brightness(1.1); opacity: .7; }
+#dailyQuestsT46 .dqMilestonePoints { width: 58px; margin: -12px auto 0; position: relative; color: #f2f2f2; font-weight: 700; font-size: 13px;
+    background: #3a2a20; border: 1px solid #c9a95f; border-radius: 10px; }
+#dailyQuestsT46 .dqPoints { position: absolute; right: 6px; top: 2px; width: 100px; height: 104px; color: #2f2116;
+    background: url('../img_ltr/quests/achievement/kranz.png') no-repeat center / 100px auto; }
+#dailyQuestsT46 .dqPoints span { display: block; font-size: 34px; font-weight: 700; line-height: 34px; padding-top: 26px; }
+#dailyQuestsT46 .dqPoints small { display: block; font-size: 12px; font-weight: 700; margin-top: 8px; }
+#dailyQuestsT46 .dqList { text-align: left; }
+#dailyQuestsT46 .dqQuest { display: grid; grid-template-columns: 1fr 260px 58px; align-items: center; min-height: 54px; margin: 0 0 8px; padding: 2px 4px 2px 14px;
+    border: 2px solid #5e4a3a; border-radius: 3px; background: #f7f0de url('../img_ltr/views/Tasks/taskBackground.jpg') center / cover;
+    box-shadow: inset 0 0 0 2px #e8d9b6; }
+#dailyQuestsT46 .dqName { font-weight: 700; font-size: 14px; padding-right: 8px; }
+#dailyQuestsT46 .dqSteps { display: flex; gap: 4px; }
+#dailyQuestsT46 .dqStep { flex: 1; height: 24px; line-height: 24px; text-align: center; font-weight: 700; color: #5e5e5e; border-radius: 6px;
+    background: #c9c4b8; border: 1px solid #a9a397; }
+#dailyQuestsT46 .dqStep.done { color: #fff; background: linear-gradient(to bottom, #4fae38, #2d7f1f); border-color: #1f5a14; }
+#dailyQuestsT46 .dqStep i.laurel { display: inline-block; width: 18px; height: 16px; vertical-align: -3px; margin-right: 4px; opacity: .75;
+    background: url('../img_ltr/quests/achievement/kranz.png') no-repeat center / 18px auto; filter: grayscale(1); }
+#dailyQuestsT46 .dqStep.done i.laurel { filter: brightness(2) grayscale(1); opacity: 1; }
+#dailyQuestsT46 .dqWreath { width: 52px; height: 48px; line-height: 52px; text-align: center; font-size: 12px; font-weight: 700; color: #5e463a;
+    background: url('../img_ltr/quests/achievement/kranz.png') no-repeat center / 52px auto; filter: sepia(.4); }
+#dailyQuestsT46 .dqQuest.completed .dqWreath { filter: none; color: #2d7f1f; }
+#dailyQuestsT46 .dqCollect { margin: 10px 0 4px; }
+#dailyQuestsT46 .dqCollect button { width: 260px; height: 40px; }
+#dailyQuestsT46 .dqCollect button > div { padding: 0; line-height: 34px; color: #f2f2f2; position: relative; z-index: 3; }
+#dailyQuestsT46 .dqCollect button.disabled { filter: grayscale(.6); opacity: .85; cursor: not-allowed; }
+#dailyQuestsT46 .dqCollect button.disabled > div { color: #e8e8e8; }
+
+/* ---- Gold & Plus (gold.php) ---- */
+body.t46Layout #header a.currency { text-decoration: none; color: #fff9eb; }
+#goldShopT46 { position: relative; color: #3f2e22; }
+#goldShopT46 .goldBalance { float: right; margin: 0 0 8px; padding: 3px 12px 3px 6px; font-size: 16px; font-weight: 700; color: #f2f2f2;
+    background: #3a2a20; border: 1px solid #c9a95f; border-radius: 14px; display: flex; align-items: center; gap: 6px; }
+#goldShopT46 .goldBalance + .contentNavi { clear: both; }
+#goldShopT46 .shopNotice { margin: 4px 0 10px; padding: 8px 12px; border-radius: 3px; background: #e7f2d8; border: 1px solid #8fb25a; }
+#goldShopT46 .shopNotice.offline { background: #f3ecd9; border-color: #c9b48c; font-size: 12px; }
+#goldShopT46 .packages { display: grid; grid-template-columns: repeat(3, 1fr); gap: 14px 10px; margin: 18px 0 6px; }
+#goldShopT46 .package { position: relative; display: block; height: 232px; text-decoration: none; border: 2px solid #c9a95f; border-radius: 3px;
+    box-shadow: inset 0 0 0 2px #2c3d3d, 0 2px 3px rgba(0, 0, 0, .35); background: radial-gradient(circle at 50% 55%, #4fb0bc 0, #1f6670 45%, #163f45 100%); }
+#goldShopT46 .package.bestPackage { background: radial-gradient(circle at 50% 55%, #ffe08a 0, #d79a2a 45%, #8a5a12 100%); }
+#goldShopT46 .package:hover { filter: brightness(1.1); }
+#goldShopT46 .package .amount { position: absolute; top: 30px; left: 0; right: 0; text-align: center; font-size: 28px; font-weight: 700; color: #fff;
+    text-shadow: 0 2px 2px rgba(0, 0, 0, .7); display: flex; align-items: center; justify-content: center; gap: 6px; }
+#goldShopT46 .package .amount i { transform: scale(1.3); }
+#goldShopT46 .package .packageImage { position: absolute; left: 0; right: 0; top: 66px; height: 118px;
+    background: url('../img_ltr/legacy/views/shop/package3.png') no-repeat center, url('../img_ltr/legacy/views/shop/glare.png') no-repeat center / 100% 100%; }
+#goldShopT46 .package.bestPackage .packageImage { background-image: url('../img_ltr/legacy/views/shop/package3.png'), url('../img_ltr/legacy/views/shop/glareHighlight.png'); }
+#goldShopT46 .package .packageImage.size0 { background-size: 60px auto, 100% 100%; }
+#goldShopT46 .package .packageImage.size1 { background-size: 76px auto, 100% 100%; }
+#goldShopT46 .package .packageImage.size2 { background-size: 92px auto, 100% 100%; }
+#goldShopT46 .package .packageImage.size3 { background-size: 106px auto, 100% 100%; }
+#goldShopT46 .package .packageImage.size4 { background-size: 118px auto, 100% 100%; }
+#goldShopT46 .package .packageImage.size5 { background-size: 128px auto, 100% 100%; }
+#goldShopT46 .package .price { position: absolute; left: 2px; right: 2px; bottom: 2px; height: 38px; line-height: 38px; text-align: center; font-size: 18px; font-weight: 700;
+    color: #f2f2f2; background: rgba(20, 45, 48, .85); }
+#goldShopT46 .package.bestPackage .price { background: rgba(92, 62, 18, .85); }
+#goldShopT46 .package .ribbon { position: absolute; top: -14px; left: 8px; right: 8px; z-index: 2; padding: 4px 2px; text-align: center; font-size: 12px; font-weight: 700;
+    color: #fff; text-transform: uppercase; border: 1px solid #5a1a10; background: linear-gradient(to bottom, #c8473a, #8f2318); box-shadow: 0 2px 2px rgba(0,0,0,.4); }
+#goldShopT46 .package .ribbon.bestValue { background: linear-gradient(to bottom, #4f9a3a, #2d6a1f); border-color: #1f4a14; }
+#goldShopT46 .features { display: grid; grid-template-columns: repeat(2, 1fr); gap: 10px; margin-top: 12px; }
+#goldShopT46 .feature { display: grid; grid-template-columns: 74px 1fr; grid-template-rows: auto auto; align-items: center; column-gap: 10px; padding: 8px;
+    border: 2px solid #c9b48c; border-radius: 3px; background: #f6f0e3; }
+#goldShopT46 .feature.active { border-color: #8fb25a; background: #eef5e2; }
+#goldShopT46 .feature .featureImage { grid-row: 1 / 3; width: 74px; height: 72px; background: no-repeat center / contain; }
+#goldShopT46 .feature.plus .featureImage { background-image: url('../img_ltr/paymentWizard/prosPlusImage.png'); }
+#goldShopT46 .feature.goldclub .featureImage { background-image: url('../img_ltr/paymentWizard/prosGoldclubimage.png'); }
+#goldShopT46 .feature.productionBoostWood .featureImage { background-image: url('../img_ltr/paymentWizard/prosProductionboostWoodImage.png'); }
+#goldShopT46 .feature.productionBoostClay .featureImage { background-image: url('../img_ltr/paymentWizard/prosProductionboostClayImage.png'); }
+#goldShopT46 .feature.productionBoostIron .featureImage { background-image: url('../img_ltr/paymentWizard/prosProductionboostIronImage.png'); }
+#goldShopT46 .feature.productionBoostCrop .featureImage { background-image: url('../img_ltr/paymentWizard/prosProductionboostCropImage.png'); }
+#goldShopT46 .feature .featureTitle { font-weight: 700; font-size: 14px; align-self: end; }
+#goldShopT46 .feature .featureButton { align-self: start; padding-top: 6px; }
+
+/* ---- Construct new building (build.php on an empty slot): Legends cards ---- */
+body.t46Layout #build .buildingWrapper { padding: 6px 4px 14px; border: 0; margin: 0; }
+body.t46Layout #build .buildingWrapper > h2 { font-size: 17px; font-weight: 700; color: #2f2116; margin: 4px 0 4px; }
+body.t46Layout #build .buildingWrapper .build_desc { position: relative; min-height: 120px; padding-right: 205px; font-size: 13px; line-height: 17px; color: #333; }
+body.t46Layout #build .buildingWrapper .build_desc a.build_logo { position: absolute; right: 0; top: -26px; float: none; margin: 0; }
+body.t46Layout #build .buildingWrapper .contract.contractNew { margin: 10px 0 0; padding: 10px 14px 12px; border: 2px solid #d6c8a2; border-radius: 5px;
+    background: #fbf8ef; box-shadow: inset 0 0 0 1px #fff; text-align: center; float: none; width: auto; }
+body.t46Layout #build .buildingWrapper .contract > .contractText { display: none; }
+body.t46Layout #build .buildingWrapper .contract .resourceWrapper { display: flex; justify-content: center; flex-wrap: wrap; gap: 4px 16px; float: none; }
+body.t46Layout #build .buildingWrapper .contract .resourceWrapper .inlineIcon { float: none; margin: 0; font-size: 14px; }
+body.t46Layout #build .buildingWrapper .contract .lineWrapper { display: flex; justify-content: center; gap: 18px; margin: 8px 0; padding: 7px 0;
+    border-top: 1px dashed #cbbd99; border-bottom: 1px dashed #cbbd99; float: none; }
+body.t46Layout #build .buildingWrapper .contract .lineWrapper .inlineIcon { float: none; font-size: 14px; }
+body.t46Layout #build .buildingWrapper .contract .contractLink { float: none; text-align: center; margin: 2px 0 0; }
+body.t46Layout #build .buildingWrapper .contract .contractLink > .contractText { display: none; }
+body.t46Layout #build .buildingWrapper .contract .contractLink .buildingCondition { font-size: 19px; line-height: 26px; font-weight: 400; }
+body.t46Layout #build .buildingWrapper .contract .contractLink .buildingCondition a { font-weight: 700; color: #6a9e18; }
+body.t46Layout #build .buildingWrapper .contract .contractLink .buildingCondition span { color: #c0281d; }
+body.t46Layout #build .buildingWrapper .contract .contractLink .buildingCondition.done span { color: #6a9e18; }
+body.t46Layout #build .buildingWrapper .contract .contractLink button.green { min-width: 170px; }
+body.t46Layout #build h4.round, body.t46Layout #build .switch, body.t46Layout #build > h4 { margin: 18px 0 8px; padding: 6px 10px; border-radius: 3px;
+    background: #e9dfc8; color: #3f2e22; font-weight: 700; }

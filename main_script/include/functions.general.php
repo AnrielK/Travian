@@ -788,11 +788,13 @@ function array_filter_units($row)
     return $units;
 }
 
-/** Graphic pack 29c89d54 (Travian Legends look) uses its own page layout (topBar, buildingsV3). */
+/** Travian Legends graphic packs ('layout' => 'legends' in sections/gpack/gpack.php) use their own page layout. */
 function is_t46_layout()
 {
     global $globalConfig;
-    return ($globalConfig['staticParameters']['gpacks']['mainPage'] ?? '') === '29c89d54';
+    $gpacks = $globalConfig['staticParameters']['gpacks'] ?? [];
+    $mainPage = $gpacks['mainPage'] ?? '';
+    return ($gpacks['styles'][$mainPage]['layout'] ?? ($mainPage === '29c89d54' ? 'legends' : '')) === 'legends';
 }
 
 function is_new_gpack()
