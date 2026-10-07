@@ -18,6 +18,11 @@ class HeroBodyCtrl extends AnyCtrl
         if (!isset($_GET['size'])) {
             $_GET['size'] = '320x422';
         }
+        if (\Game\Hero\HeroAppearanceV2::available()) {
+            // Travian Legends hero (the horse is drawn by the hero window itself).
+            \Game\Hero\HeroAppearanceV2::output($uid, $_GET['size'] === 'profile' ? 'body_profile' : 'body_inventory');
+            return;
+        }
         $size = $_GET['size'] == 'profile' ? '160x205' : ($_GET['size'] == 'inventory' ? '330x422' : "330x422");
         $faceSize = $_GET['size'] == 'profile' ? '31x40' : ($_GET['size'] == 'inventory' ? '64x82' : "64x82");
         // nohorse: the Travian Legends hero window draws the horse itself next to the hero.

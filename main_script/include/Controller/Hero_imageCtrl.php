@@ -12,6 +12,10 @@ class Hero_imageCtrl extends AnyCtrl
             imagegif(imagecreate(1, 1));
             goto finished;
         }
+        if (\Game\Hero\HeroAppearanceV2::available()) {
+            \Game\Hero\HeroAppearanceV2::output($uid, ($_GET['size'] ?? '') === 'forum' ? 'head_79x91' : 'head_81');
+            return;
+        }
         if(isset($_GET['size']) && $_GET['size'] == 'forum') {
             $size = '79x91';
         } else {

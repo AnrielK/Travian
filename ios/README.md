@@ -52,11 +52,15 @@ jeho CSS + styly a17a8f72 pro dialogy, tlačítka a obsah stránek. Soubory, kte
 (router i Apache) doplní z a17a8f72. Font Noto Serif (SIL OFL) je přibalený v `29c89d54/mainPage/fonts`.
 
 legends655 je grafika Travian Legends 655.3 (obrázky + CSS) se stejným rozložením jako 29c89d54 (v `gpack.php`
-`'layout' => 'legends'`). Vzniká skriptem `scripts/gpack/import-legends-gpack.py <rozbalený gpack/655.3> legends655 --no-rtl`
-(`--no-rtl` vynechá obrázky a styly pro arabštinu/perštinu, balíček má pak ~124 MB):
+`'layout' => 'legends'`). Vzniká skriptem `scripts/gpack/import-legends-gpack.py <rozbalený gpack/655.3> legends655 --no-rtl --hero-appearance <rozbalený doplněk Hero Appearance>`
+(`--no-rtl` vynechá obrázky a styly pro arabštinu/perštinu; `--hero-appearance` přidá díly hrdiny, balíček má ~142 MB):
 základní CSS 29c89d54 zůstává pod CSS Legends (pokrývá starší názvy tříd), budovy podle kmene řeší vygenerované
 `css/openvillage-t46-tribes.css` a chybějící obrázky se zkopírují z 29c89d54/a17a8f72. JavaScript Legends
 (webpack/React klient) se nepoužívá – hra má vlastní skripty.
 legends655 má navíc v `gpack.php` `'heroV2' => true` (`is_hero_v2()`): okno hrdiny (Inventář, Vlastnosti, Vzhled)
 a aukce (Koupit, Prodat, Přehled aukcí) se vykreslí v nové podobě Legends (`Templates/hero/v2/*`,
 `Controller/HeroAuctionV2.php`, komponenty v `resources/View/LegendsUi.php`); ostatní balíčky mají původní stránky.
+S díly hrdiny (`heroAppearance/index.json` v balíčku) je vzhled hrdiny nový systém Legends (`Game/Hero/HeroAppearanceV2.php`):
+pleť, barva očí a vlasů, čelist, oči, obočí, nos, ústa, uši, vlasy, vousy, jizva, tetování; uloženo v tabulce
+`ov_hero_appearance` (vzniká sama, první vzhled se odvodí z původní tváře). Editor skládá náhledy v prohlížeči,
+`hero_head.php` / `hero_body.php` skládají obrázky na serveru (GD). Pořadí vrstev je v `HeroAppearanceV2::LAYERS`.

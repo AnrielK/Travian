@@ -22,6 +22,7 @@ $mainPage = ($wanted !== false && isset($styles[$wanted])) ? $wanted
 return [
     'default' => '29c89d54',
     'mainPage' => $mainPage,
+    'path' => __DIR__,
     'list' => [
         '29c89d54' => ['hash' => '29c89d54', 'name' => 'OpenVillage 4.6', 'isNew' => true],
     ],

@@ -27,6 +27,12 @@ def md5(path):
         return hashlib.md5(f.read()).hexdigest()
 
 
+def png_size(path):
+    with open(path, 'rb') as f:
+        head = f.read(24)
+    return int.from_bytes(head[16:20], 'big'), int.from_bytes(head[20:24], 'big')
+
+
 def copytree(src, dst):
     if os.path.isdir(src):
         shutil.copytree(src, dst, dirs_exist_ok=True)
@@ -37,6 +43,8 @@ def main():
     ap.add_argument('source')
     ap.add_argument('name')
     ap.add_argument('--template', default='29c89d54')
+    ap.add_argument('--hero-appearance', metavar='DIR',
+                    help='extracted "Hero Appearance" add-on (parts/, parts-index.json): enables the Legends hero editor')
     ap.add_argument('--no-rtl', action='store_true',
                     help='leave out right-to-left assets and locales (Arabic, Persian) – about half the size')
     a = ap.parse_args()
@@ -175,6 +183,31 @@ def main():
                     shutil.copy2(src, target)
                     copied += 1
                 break
+    # 7. Hero appearance parts (Legends hero editor): one PNG per part + heroAppearance/index.json with the
+    #    position of every part on the 875x1574 hero canvas (the game composes heroes from it, see
+    #    Game/Hero/HeroAppearanceV2.php).
+    if a.hero_appearance:
+        import json
+        app = os.path.abspath(a.hero_appearance)
+        index = json.load(open(os.path.join(app, 'parts-index.json')))
+        parts = {}
+        size = None
+        for entry in index:
+            key = entry['key']
+            if not re.fullmatch(r'[A-Za-z0-9/_-]+', key):
+                continue
+            src_png = os.path.join(app, entry['file'])
+            if not os.path.isfile(src_png):
+                continue
+            target = os.path.join(dst, 'heroAppearance', 'parts', key + '.png')
+            os.makedirs(os.path.dirname(target), exist_ok=True)
+            shutil.copy2(src_png, target)
+            w, h = png_size(target)
+            parts[key] = [entry['offset']['x'], entry['offset']['y'], w, h]
+            size = [entry['sourceSize']['w'], entry['sourceSize']['h']]
+        with open(os.path.join(dst, 'heroAppearance', 'index.json'), 'w') as f:
+            json.dump({'size': size, 'parts': parts}, f, separators=(',', ':'), sort_keys=True)
+        print(f'{a.name}: hero appearance {len(parts)} parts')
     print(f'{a.name}: tribes {len(seen)} rules, adapter remapped {remapped} / kept {kept}, '
           f'copied {copied} images from {a.template}/a17a8f72, unresolved {missing}')
 
