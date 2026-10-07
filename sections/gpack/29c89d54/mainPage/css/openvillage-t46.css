@@ -649,4 +649,4 @@ body.t46Layout #tasks .task.group .titleDecoration:before { background-repeat: n
 body.t46Layout #tasks .task.group:active .titleDecoration:before, body.t46Layout #tasks .task.group:focus-within .titleDecoration:before { right: -323px; }
 body.t46Layout #tasks .task.group:active .titleDecoration:after, body.t46Layout #tasks .task.group:focus-within .titleDecoration:after { right: -375px; }
 body.t46Layout #tasks .task .progress button.collect { width: 124px; margin: 0 14px 0 0; justify-self: end; }
-body.t46Layout .sidebar .sidebarBox.toggleable .innerBox.footer > .toggle { top: -36px; z-index: 3; }
+body.t46Layout .sidebar .sidebarBox.toggleable .innerBox.footer > .toggle { top: -29px; z-index: 3; }
