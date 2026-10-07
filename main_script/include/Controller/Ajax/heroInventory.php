@@ -193,6 +193,7 @@ class heroInventory extends AjaxBase
         $uid = Session::getInstance()->getPlayerId();
         $memcache = Caching::getInstance();
         $memcache->delete("hero_body_{$uid}_330x422");
+        $memcache->delete("hero_body_{$uid}_330x422_nohorse");
         $memcache->delete("hero_body_{$uid}_160x205");
     }
 

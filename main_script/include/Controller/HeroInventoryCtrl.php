@@ -9,6 +9,7 @@ use Core\Village;
 use Game\Formulas;
 use Game\GoldHelper;
 use Game\Hero\HeroHelper;
+use Game\Hero\HeroItems;
 use Game\Hero\SessionHero;
 use Model\AuctionModel;
 use Model\Quest;
@@ -136,6 +137,56 @@ class HeroInventoryCtrl extends GameCtrl
         $view->vars['production_tooltip'] = $hero->getHeroProductionTitle(FALSE);
         $view->vars['HeroItems'] = json_encode($hero->getHeroItems(), JSON_PRETTY_PRINT);
         $view->vars['useOneDialogTitleCallbacks'] = $hero->useOneDialogTitleCallbacks($inventory);
+        if (is_hero_v2()) {
+            $this->renderHeroV2($view->vars, $inventory, $gender, $rate);
+            return;
+        }
         $this->view->vars['content'] .= $view->output();
+    }
+
+    /** Travian Legends 655 hero window (graphic packs with 'heroV2'): inventory or attributes view. */
+    private function renderHeroV2(array $vars, array $inventory, $gender, $rate)
+    {
+        $attributesView = ($_GET['view'] ?? '') === 'attributes';
+        $this->view->vars['contentCssClass'] = 'heroV2 ' . ($attributesView ? 'heroV2Attributes' : 'heroV2Inventory');
+        $hero = $this->session->hero;
+        $heroItems = new HeroItems();
+        $items = [];
+        $benefits = [];
+        $result = DB::getInstance()->query("SELECT * FROM items WHERE uid=" . (int)Session::getInstance()->getPlayerId() . " ORDER BY placeId, id");
+        while ($row = $result->fetch_assoc()) {
+            $properties = $heroItems->getHeroItemProperties($row['btype'], $row['type']);
+            $row['instant'] = $properties['instant'];
+            $row['isUsableIfDead'] = $properties['isUsableIfDead'];
+            $items[] = $row;
+            if ($row['proc'] && in_array((int)$row['id'], array_map('intval', array_intersect_key($inventory,
+                    array_flip(['helmet', 'body', 'leftHand', 'rightHand', 'shoes', 'horse', 'bag']))), true)) {
+                foreach ((array)$properties['attributes'] as $benefit) {
+                    if (trim(strip_tags($benefit)) !== '') {
+                        $benefits[] = $benefit;
+                    }
+                }
+            }
+        }
+        if ($attributesView) {
+            $vars['hero']['allPerPoint'] = 6 * $rate;
+            $vars['hero']['eachPerPoint'] = 20 * $rate;
+            $vars['hero']['baseCrop'] = 6;
+            $vars['equipmentBenefits'] = $benefits;
+            $this->view->vars['content'] .= PHPBatchView::render('hero/v2/attributes', $vars);
+            return;
+        }
+        $this->view->vars['content'] .= PHPBatchView::render('hero/v2/inventory', [
+            'items' => $items,
+            'inventory' => $inventory,
+            'inventorySize' => max(16, (int)ceil($vars['inventorySize'] / 8) * 8),
+            'uid' => Session::getInstance()->getPlayerId(),
+            'kid' => $hero->hero['kid'],
+            'checker' => Session::getInstance()->getChecker(),
+            'gender' => $gender ?: 'male',
+            'heroBodyHash' => $vars['hero']['heroBodyHash'],
+            'dead' => $hero->getHeroStatus() == SessionHero::STATUS_DEAD,
+            'inVillage' => $hero->getHeroStatus() == 100,
+        ]);
     }
 } 

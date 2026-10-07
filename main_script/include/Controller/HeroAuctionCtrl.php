@@ -52,6 +52,10 @@ class HeroAuctionCtrl extends GameCtrl
         $this->view->vars['titleInHeader'] = Session::getInstance()->getName() . ' - ' . T("Buildings", "level") . ' ';
         $this->view->vars['titleInHeader'] .= $this->session->hero->getLevel();
         $canTakePlaceInAuction = Session::getInstance()->getSuccessAdventuresCount() >= 10;
+        if (!$this->justContent && is_hero_v2()) {
+            $this->renderV2($canTakePlaceInAuction);
+            return;
+        }
         if (!$this->justContent) {
             $view = new PHPBatchView("hero/menus");
             $view->vars['selectedTab'] = 4;
@@ -89,6 +93,50 @@ class HeroAuctionCtrl extends GameCtrl
         if (!$this->justContent) {
             $this->view->vars['content'] .= '</div>';
         }
+    }
+
+    /** Travian Legends 655 auctions (graphic packs with 'heroV2'); actions are processed as on the classic pages. */
+    private function renderV2($canTakePlaceInAuction)
+    {
+        $action = in_array($_REQUEST['action'] ?? '', ['buy', 'sell', 'bids', 'accounting'], true) ? $_REQUEST['action'] : 'buy';
+        $session = Session::getInstance();
+        $this->view->vars['contentCssClass'] = HeroAuctionV2::contentClass($action);
+        $this->view->vars['titleInHeader'] = '';
+        $this->view->vars['content'] = '';
+        // Bids, sales and cancellations: run the classic handlers, keep their messages, drop their markup.
+        if ($action === 'buy') {
+            $this->processBuy($canTakePlaceInAuction);
+        } elseif ($action === 'bids' || $action === 'accounting') {
+            if (isset($_GET['deleteRunning']) && is_numeric($_GET['deleteRunning'])) {
+                DB::getInstance()->query("DELETE FROM bids WHERE auctionId=" . (int)$_GET['deleteRunning'] . " AND outbid=1 AND uid=" . (int)$session->getPlayerId());
+            }
+            $_REQUEST['action'] = 'bids';
+            $this->processBuy($canTakePlaceInAuction);
+        } else {
+            $messages = $this->view->vars['content'];
+            $this->sell($canTakePlaceInAuction);
+            $this->view->vars['content'] = $messages;
+        }
+        $messages = $this->view->vars['content'];
+        $v2 = new HeroAuctionV2($canTakePlaceInAuction, (string)$session->getChecker());
+        $content = $v2->tabs($action) . '<div id="auctions">' . $messages;
+        if ($action === 'buy') {
+            $content .= $v2->buy();
+        } elseif ($action === 'sell') {
+            $content .= $v2->sell(5);
+        } else {
+            $content .= $v2->overview();
+        }
+        if ($canTakePlaceInAuction) {
+            $view = new PHPBatchView("hero/silverExchange");
+            $view->vars['gold'] = $session->getAvailableGold();
+            $view->vars['silver'] = $session->getAvailableSilver();
+            $view->vars['SilverToGold'] = get_button_id();
+            $view->vars['GoldToSilver'] = get_button_id();
+            $view->vars['GoldToSilver2'] = get_button_id();
+            $content .= '<div id="auctionsExchangeOffice" style="display:none">' . $view->output() . '</div>';
+        }
+        $this->view->vars['content'] = $content . '</div>' . HeroAuctionV2::script();
     }
 
     private function buy($canTakePlaceInAuction)

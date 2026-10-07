@@ -29,6 +29,15 @@ class HeroFaceCtrl extends GameCtrl
         $view->vars['heroFace'] = $heroFace;
         $view->vars['heroFaceData'] = $f->getAllHeroFaceAttributes($heroFace['gender']);
         $view->vars['heroImage'] = $f->getHeroImageAsHTML($heroFace);
+        if (is_hero_v2()) {
+            $this->view->vars['contentCssClass'] = 'heroV2 heroV2Appearance';
+            $this->view->vars['content'] .= PHPBatchView::render('hero/v2/appearance', [
+                'faceData' => $f->faceData,
+                'attributes' => $f->encodeAttribute($heroFace),
+                'heroImage' => $view->vars['heroImage'],
+            ]);
+            return;
+        }
         $view->vars['HeroFaceJson'] = ["element" => "heroEditor", "command" => "heroEditor", "urlHeroImage" => "hero_head.php?uid=" . Session::getInstance()->getPlayerId() . "&amp;size=sideinfo&amp;{time}", "attributes" => $f->encodeAttribute($heroFace), "elementHeroImage" => "heroImage",];
         $this->view->vars['content'] .= $view->output();
     }

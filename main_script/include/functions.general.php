@@ -797,6 +797,15 @@ function is_t46_layout()
     return ($gpacks['styles'][$mainPage]['layout'] ?? ($mainPage === '29c89d54' ? 'legends' : '')) === 'legends';
 }
 
+/** The graphic pack styles the new Travian Legends hero window and auctions (gpack.php 'heroV2'). */
+function is_hero_v2()
+{
+    global $globalConfig;
+    $gpacks = $globalConfig['staticParameters']['gpacks'] ?? [];
+    $mainPage = $gpacks['mainPage'] ?? '';
+    return is_t46_layout() && !empty($gpacks['styles'][$mainPage]['heroV2']);
+}
+
 function is_new_gpack()
 {
     global $globalConfig;

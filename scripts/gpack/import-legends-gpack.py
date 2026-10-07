@@ -3,7 +3,7 @@
 Builds an OpenVillage graphic pack from a Travian Legends gpack folder (img_ltr, img_rtl, css_ltr/css_rtl
 imports_compressed.css, flags) – e.g. the extracted "gpack/655.3".
 
-    scripts/gpack/import-legends-gpack.py <legends gpack dir> <pack name> [--template 29c89d54]
+    scripts/gpack/import-legends-gpack.py <legends gpack dir> <pack name> [--template 29c89d54] [--no-rtl]
 
 The result (sections/gpack/<pack name>/mainPage) uses the Legends page layout (layout/LayoutT46.php):
   css/default_compressed*.css, custom_…     base styles of the template pack (old class names), loaded first
@@ -37,6 +37,8 @@ def main():
     ap.add_argument('source')
     ap.add_argument('name')
     ap.add_argument('--template', default='29c89d54')
+    ap.add_argument('--no-rtl', action='store_true',
+                    help='leave out right-to-left assets and locales (Arabic, Persian) – about half the size')
     a = ap.parse_args()
     if not re.fullmatch(r'[A-Za-z0-9]+', a.name):
         sys.exit('pack name must be alphanumeric (it is a URL path segment)')
@@ -44,18 +46,22 @@ def main():
     tpl = os.path.join(GPACK, a.template, 'mainPage')
     old = os.path.join(GPACK, 'a17a8f72', 'mainPage')
     dst = os.path.join(GPACK, a.name, 'mainPage')
-    os.makedirs(os.path.join(dst, 'css'), exist_ok=True)
+    # Always build from scratch: the adapter remap below depends on which pictures the pack has itself.
+    if os.path.isdir(dst):
+        shutil.rmtree(dst)
+    os.makedirs(os.path.join(dst, 'css'))
 
     # 1. Legends assets and stylesheets.
-    for d in ('img_ltr', 'img_rtl', 'flags'):
+    sides = ('ltr',) if a.no_rtl else ('ltr', 'rtl')
+    for d in tuple(f'img_{side}' for side in sides) + ('flags',):
         copytree(os.path.join(src, d), os.path.join(dst, d))
-    for d in ('ltr', 'rtl'):
+    for d in sides:
         shutil.copy2(os.path.join(src, f'css_{d}', 'imports_compressed.css'), os.path.join(dst, 'css', f'legends_{d}.css'))
 
     # 2. T4.4 widget styles, fonts and entry points from the template pack. The template's own base styles
     #    stay underneath the Legends stylesheet: they cover the markup of this game that the newer Legends
     #    release no longer styles (old class names), the Legends rules win wherever both match.
-    for d in ('css_ltr', 'css_rtl', 'fonts'):
+    for d in tuple(f'css_{side}' for side in sides) + ('fonts',):
         copytree(os.path.join(tpl, d), os.path.join(dst, d))
     for fn in os.listdir(os.path.join(tpl, 'css')):
         if fn.startswith(('default_compressed', 'custom_compressed')):
@@ -67,6 +73,9 @@ def main():
             continue
         s = open(f).read()
         rtl = '@import url("../../css_rtl/' in s
+        if rtl and a.no_rtl:
+            shutil.rmtree(os.path.dirname(f))
+            continue
         s = re.sub(r'(@import url\("\.\./\.\./css/custom_compressed\.css"\);)(?!@import url\("\.\./\.\./css/legends_)',
                    lambda m: m.group(1) + f'@import url("../../css/legends_{"rtl" if rtl else "ltr"}.css");', s)
         open(f, 'w').write(s)

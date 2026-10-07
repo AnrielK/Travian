@@ -20,7 +20,9 @@ class HeroBodyCtrl extends AnyCtrl
         }
         $size = $_GET['size'] == 'profile' ? '160x205' : ($_GET['size'] == 'inventory' ? '330x422' : "330x422");
         $faceSize = $_GET['size'] == 'profile' ? '31x40' : ($_GET['size'] == 'inventory' ? '64x82' : "64x82");
-        $filename = "hero_body_{$uid}_{$size}";
+        // nohorse: the Travian Legends hero window draws the horse itself next to the hero.
+        $noHorse = !empty($_GET['nohorse']);
+        $filename = "hero_body_{$uid}_{$size}" . ($noHorse ? '_nohorse' : '');
         ImageMapCache::checkCache($filename, 'png');
         $db = DB::getInstance();
         $heroFace = $db->query("SELECT * FROM face WHERE uid=$uid");
@@ -59,7 +61,7 @@ class HeroBodyCtrl extends AnyCtrl
         $facePath = PUBLIC_PATH . 'img/hero/' . $heroFace['gender'] . '/head/' . $faceSize . '/%s';
         list($width, $height) = explode("x", $size);
         $body = imagecreatetransparent($width, $height);
-        if ($heroInventory['horse']) {
+        if ($heroInventory['horse'] && !$noHorse) {
             $horse = imagecreatefrompng(sprintf($imgPath, "horse0.png"));
             imagecopy($body, $horse, 0, 0, 0, 0, imagesx($horse), imagesy($horse));
         }

@@ -20,6 +20,7 @@ class HeroFaceModel
 		$memcache->delete("hero_image_{$uid}_79x91");
 		$memcache->delete("hero_image_{$uid}_81x81");
 		$memcache->delete("hero_body_{$uid}_330x422");
+		$memcache->delete("hero_body_{$uid}_330x422_nohorse");
 		$memcache->delete("hero_body_{$uid}_160x205");
 		$memcache->delete("heroImageHash{$uid}");
 		$memcache->delete("hero_sidebar_{$uid}");
