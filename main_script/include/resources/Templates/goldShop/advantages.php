@@ -3,6 +3,7 @@
 
 use resources\View\LegendsUi as UI;
 
+$h = static fn($s) => htmlspecialchars((string)$s, ENT_QUOTES);
 $adv = $vars['advantages'];
 $canSpend = $vars['canSpendGold'];
 $duration = static function (int $seconds): string {
