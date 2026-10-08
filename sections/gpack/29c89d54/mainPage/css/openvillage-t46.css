@@ -638,7 +638,6 @@ body.t46Layout #auctions .sell .inventoryWrapper .heroItems .heroItem { width: a
 /* dorf1: boxes on the right grow with their content */
 body.t46Layout div.village1 .villageInfoWrapper .villageInfobox { display: flow-root; }
 /* gold balance on its own line above the tabs */
-body.t46Layout #goldShopT46 .goldBalance { position: static; float: none; display: flex; width: max-content; margin: 0 0 8px auto; }
 body.t46Layout.legendsV2 #background:before { height: 40px; background-color: transparent; background-image: linear-gradient(180deg,#453932 0,#856a59 4%,#635143 85%,#4d3c30 98%,#33281b 100%); }
 body.t46Layout.legendsV2 #topBar #logo.legendsLogo { top: 4px; height: 32px; width: 166px; }
 body.t46Layout.legendsV2 #topBar #logo.legendsLogo svg { width: 166px; height: 32px; }
@@ -659,7 +658,7 @@ body.t46Layout button .button-content img.goldIcon { display: inline-block; floa
     vertical-align: -2px; background: url('../img_ltr/round/button/content/goldInner-ltr.png') no-repeat center / contain; }
 body.t46Layout button .button-content .goldValue { display: inline; position: static; float: none; }
 /* hero window tabs inside the frame */
-body.t46Layout.legendsV2 #center #contentOuterContainer .contentContainer #content.heroV2 .contentNavi.subNavi { top: 0; margin: 0 -5px; inset-inline: 0; }
+body.t46Layout.legendsV2 #center #contentOuterContainer .contentContainer #content.heroV2 .contentNavi.subNavi { top: 0; margin: 0; inset-inline: 0; }
 /* dorf1: outgoing troops at the top of the right column */
 body.t46Layout div.village1 .villageInfoWrapper { grid-template-rows: minmax(130px, auto) auto auto 1fr; }
 body.t46Layout div.village1 .villageInfoWrapper .villageInfobox.movements { align-self: start; }
@@ -762,15 +761,29 @@ body.t46Layout #content .resourceWrapper .resource.notEnough, body.t46Layout #co
     padding: 2px 6px; border: 1px solid #c4614f; border-radius: 4px; background-color: #ffcec2; box-shadow: inset 0 0 0 1px rgba(255, 255, 255, .45); }
 body.t46Layout #content .resourceWrapper .resource.notEnough .value, body.t46Layout #content .resourceWrapper .resources.notEnough .value { color: #3f2e22; }
 
-/* Legends hero window: the gold frame of the tab bar continues around the hero panel (sides and bottom). */
-body.t46Layout.legendsV2 #content.heroV2 { padding-bottom: 8px; }
-body.t46Layout.legendsV2 #content.heroV2 > .contentV2 { position: relative; }
-body.t46Layout.legendsV2 #content.heroV2 > .contentV2::after { content: ""; position: absolute; inset: -5px -5px -5px; z-index: 6; pointer-events: none;
-    border: solid transparent; border-width: 0 4px 4px; box-shadow: 0 0 0 1px #34220d, inset 0 0 0 1px #34220d;
-    border-image: linear-gradient(to bottom, #f3ce8b 0, #ba8f5b 40%, #876338 75%, #caa065 100%) 4; }
 
 /* Task list: the green Collect button sits in the golden Legends frame. */
 body.t46Layout #tasks .task .progress button.collect.buttonFramed, body.t46Layout #tasks .task .progress button.collect.buttonFramed:hover {
     border: 1px solid #34220d; box-shadow: 0 1px 2px rgba(0, 0, 0, .35);
     background-image: linear-gradient(to bottom, #cba467 5%, #f3e2ae 13%, #efbf7b 32%, #aa8050 48%, #835e35 72%, #ad8a54 93%, #d7b672 100%); }
 body.t46Layout #tasks .task .progress button.collect.buttonFramed:hover::before { filter: brightness(1.12); }
+
+/* Gold shop: gold balance sits in the window header, left of the header buttons (Legends). */
+#goldShopT46 .goldBalance { position: absolute; top: -50px; right: 100px; z-index: 5; float: none; margin: 0; height: 34px; padding: 0 12px 0 0;
+    display: flex; align-items: center; gap: 6px; background: none; border: 0; box-shadow: none; border-right: 1px solid rgba(255, 255, 255, .55);
+    font-size: 20px; font-weight: 700; color: #fff; text-shadow: 0 1px 2px #2b1d12, 0 0 2px #2b1d12; }
+#goldShopT46 .goldBalance i.goldCoin_medium { transform: scale(1.15); }
+#goldShopT46 .goldBalance { border-radius: 0; }
+#goldShopT46 .goldBalance + .contentNavi { margin-top: 0; }
+
+/* Legends tabs: the active tab is the lighter brown one, without the white outline. */
+body.t46Layout.legendsV2 #content .contentNavi.subNavi > .container.active { border-color: transparent; border-width: 0; }
+body.t46Layout.legendsV2 #content .contentNavi.subNavi > .container.active a.tabItem { background-image: linear-gradient(to bottom, #8d6d50, #6f5440); color: #f6ead8; }
+/* Hero window (Legends): tab bar right under the title, green marker on the active tab, hero panel framed only by its own edges. */
+body.t46Layout.legendsV2 #content.heroV2 .contentNavi.subNavi { overflow: visible; }
+body.t46Layout.legendsV2 #content.heroV2 .contentNavi.subNavi > .container.active { position: relative; overflow: visible; }
+body.t46Layout.legendsV2 #content.heroV2 .contentNavi.subNavi > .container.active::after { content: ""; position: absolute; top: -9px; left: 50%; z-index: 4;
+    width: 18px; height: 11px; transform: translateX(-50%); pointer-events: none;
+    background: linear-gradient(to bottom, #b8e07a, #5f9a22); clip-path: polygon(0 0, 100% 0, 50% 100%);
+    filter: drop-shadow(0 1px 0 #2d4a0c); }
+body.t46Layout.legendsV2 #content.heroV2 > .contentV2 { margin-top: 2px; }
