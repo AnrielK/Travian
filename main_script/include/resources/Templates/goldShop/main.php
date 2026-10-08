@@ -6,7 +6,6 @@ $h = static fn($s) => htmlspecialchars((string)$s, ENT_QUOTES);
     <div class="goldBalance"><i class="goldCoin_medium"></i><?=number_format((int)$vars['gold']); ?></div>
     <div class="contentNavi subNavi">
         <div class="container <?=$vars['tab'] === 'gold' ? 'active' : 'normal'; ?>"><div class="content"><a class="tabItem" href="gold.php"><?=$h(T('PaymentWizard', 'Buy gold')); ?></a></div></div>
-        <div class="container normal"><div class="content"><a class="tabItem" href="voucher.php"><?=$h(T('PaymentWizard', 'Vouchers')); ?></a></div></div>
         <div class="container <?=$vars['tab'] === 'pros' ? 'active' : 'normal'; ?>"><div class="content"><a class="tabItem" href="gold.php?t=pros"><?=$h(T('PaymentWizard', 'Advantages')); ?></a></div></div>
     </div>
 
@@ -64,6 +63,8 @@ $h = static fn($s) => htmlspecialchars((string)$s, ENT_QUOTES);
                 <?php endforeach; ?>
             </div>
         <?php endif; ?>
+    <?php elseif (!empty($vars['advantages'])): ?>
+        <?php include __DIR__ . '/advantages.php'; ?>
     <?php else: ?>
         <div class="features">
             <?php foreach ($vars['features'] as $f): ?>

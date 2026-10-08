@@ -659,9 +659,9 @@ body.t46Layout button .button-content img.goldIcon { display: inline-block; floa
     vertical-align: -2px; background: url('../img_ltr/round/button/content/goldInner-ltr.png') no-repeat center / contain; }
 body.t46Layout button .button-content .goldValue { display: inline; position: static; float: none; }
 /* hero window tabs inside the frame */
-body.t46Layout.legendsV2 #center #contentOuterContainer .contentContainer #content.heroV2 .contentNavi.subNavi { margin-inline: 0; inset-inline: 0; }
+body.t46Layout.legendsV2 #center #contentOuterContainer .contentContainer #content.heroV2 .contentNavi.subNavi { top: 0; margin: 0 -5px; inset-inline: 0; }
 /* dorf1: outgoing troops at the top of the right column */
-body.t46Layout div.village1 .villageInfoWrapper { grid-template-rows: auto auto auto 1fr; }
+body.t46Layout div.village1 .villageInfoWrapper { grid-template-rows: minmax(130px, auto) auto auto 1fr; }
 body.t46Layout div.village1 .villageInfoWrapper .villageInfobox.movements { align-self: start; }
 body.t46Layout div.village1 .villageInfoWrapper .villageInfobox.movements:not(:has(td)) { display: none; }
 /* task list: picture over the full height of the task */
@@ -681,3 +681,96 @@ body.t46Layout button .button-content img.gold { display: inline-block; float: n
 /* Legends mentor stands on the top edge of the task frame; title sits lower below the frame ornament. */
 body.t46Layout .sidebar #sidebarBoxQuestmaster.legendsMentor .header #questmasterButton { top: -7px; }
 body.t46Layout .sidebar #sidebarBoxQuestmaster.legendsMentor .taskOverview .boxTitle { margin-top: 0; padding-top: 18px; }
+
+/* Gold shop "Advantages" (Legends): gold club + Plus wide cards, four production bonus cards. */
+#goldShopT46 .ovAdvantages { margin: 12px 0 4px; }
+#goldShopT46 .ovAdvantages .advRow { display: grid; gap: 10px; margin-bottom: 10px; }
+#goldShopT46 .ovAdvantages .advPremium { grid-template-columns: 1fr 1fr; }
+#goldShopT46 .ovAdvantages .advBoosts { grid-template-columns: repeat(4, 1fr); }
+#goldShopT46 .ovAdvantages .advCard { position: relative; box-sizing: border-box; border: 2px solid #beae9a; border-radius: 2px; color: #3f2e22;
+    background: linear-gradient(115deg, rgba(255, 255, 255, 0) 0 34%, rgba(255, 255, 255, .55) 34% 62%, rgba(255, 255, 255, 0) 62%), #f6efdf;
+    box-shadow: inset 0 0 0 1px #fffaf0, 0 2px 2px rgba(120, 100, 70, .25); }
+#goldShopT46 .ovAdvantages .advCard.active { border-color: #6aa33a; box-shadow: inset 0 0 0 1px #e7f4d3, 0 2px 2px rgba(80, 120, 40, .3); }
+#goldShopT46 .ovAdvantages .advInfo { position: absolute; top: 6px; right: 6px; width: 18px; height: 18px; cursor: help; }
+#goldShopT46 .ovAdvantages .advInfo svg { width: 18px; height: 18px; fill: none; stroke: #9c9283; stroke-width: 1.4; stroke-linecap: round; }
+#goldShopT46 .ovAdvantages .advWide { display: grid; grid-template-columns: 112px 1fr; grid-template-rows: 1fr auto; padding: 10px 12px 10px 8px; min-height: 160px; }
+#goldShopT46 .ovAdvantages .advWide .advImage { width: 100px; height: 80px; margin-top: 4px; background: no-repeat center / contain; }
+#goldShopT46 .ovAdvantages .advWide.goldclub .advImage { background-image: url('../img_ltr/views/shop/goldClub_huge.png'); }
+#goldShopT46 .ovAdvantages .advWide.plus .advImage { background-image: url('../img_ltr/views/shop/travianPlus_huge.png'); }
+#goldShopT46 .ovAdvantages .advWide .advText { padding-right: 18px; }
+#goldShopT46 .ovAdvantages .advWide h3 { margin: 2px 0 4px; font-size: 20px; line-height: 24px; font-weight: 700; color: #4b3324; }
+#goldShopT46 .ovAdvantages .advWide p { margin: 0; font-size: 13px; line-height: 17px; }
+#goldShopT46 .ovAdvantages .advFooter { grid-column: 1 / -1; display: flex; align-items: flex-end; justify-content: space-between; gap: 8px; margin-top: 10px; }
+#goldShopT46 .ovAdvantages .advStatus { font-size: 13px; line-height: 18px; }
+#goldShopT46 .ovAdvantages .advAutoExtend { display: flex; align-items: center; gap: 6px; margin-bottom: 2px; font-size: 13px; cursor: pointer; }
+#goldShopT46 .ovAdvantages .advAutoExtend input { width: 17px; height: 17px; margin: 0; accent-color: #6aa33a; }
+#goldShopT46 .ovAdvantages .advActive { display: flex; align-items: center; gap: 4px; font-weight: 700; color: #4f8a13; }
+#goldShopT46 .ovAdvantages .advActive svg.check { width: 18px; height: 18px; }
+#goldShopT46 .ovAdvantages .advButton { min-width: 116px; flex: none; }
+#goldShopT46 .ovAdvantages .advButton > div { display: flex; align-items: center; justify-content: center; gap: 4px; white-space: nowrap; }
+#goldShopT46 .ovAdvantages .advButton svg.goldCoin { width: 16px; height: 16px; flex: none; }
+#goldShopT46 .ovAdvantages .advBoost { display: flex; flex-direction: column; align-items: center; padding: 14px 8px 12px; text-align: center; }
+#goldShopT46 .ovAdvantages .advBoost .advImage { width: 100px; height: 72px; background: no-repeat center / contain; }
+#goldShopT46 .ovAdvantages .advBoost .advImage.lumber { background-image: url('../img_ltr/global/resources/lumber_huge.png'); }
+#goldShopT46 .ovAdvantages .advBoost .advImage.clay { background-image: url('../img_ltr/global/resources/clay_huge.png'); }
+#goldShopT46 .ovAdvantages .advBoost .advImage.iron { background-image: url('../img_ltr/global/resources/iron_huge.png'); }
+#goldShopT46 .ovAdvantages .advBoost .advImage.crop { background-image: url('../img_ltr/global/resources/crop_huge.png'); }
+#goldShopT46 .ovAdvantages .advBoost h4 { margin: 12px 0 8px; min-height: 34px; display: flex; align-items: center; font-size: 13px; line-height: 17px; font-weight: 700; color: #4b3324; }
+#goldShopT46 .ovAdvantages .advBonus { display: flex; align-items: center; gap: 4px; margin-bottom: 10px; font-size: 14px; }
+#goldShopT46 .ovAdvantages .advArrow { width: 14px; height: 16px; fill: #f3c623; stroke: #8a6a10; stroke-width: 1; stroke-linejoin: round; }
+#goldShopT46 .ovAdvantages .advBoost .advButton { width: 100%; max-width: 150px; }
+#goldShopT46 .ovAdvantages .advBoost .advStatus { margin-top: 8px; font-size: 12px; }
+#goldShopT46 .ovAdvantages .advBoost .advAutoExtend { margin-top: 4px; font-size: 12px; }
+#goldShopT46 .ovAdvantages .advCard { min-width: 0; }
+#goldShopT46 .ovAdvantages .advWide { grid-template-columns: 84px 1fr; padding: 10px 10px 10px 8px; min-height: 0; column-gap: 8px; }
+#goldShopT46 .ovAdvantages .advWide .advImage { width: 84px; height: 66px; }
+#goldShopT46 .ovAdvantages .advWide h3 { font-size: 18px; line-height: 22px; }
+#goldShopT46 .ovAdvantages .advFooter { flex-wrap: wrap; align-items: center; row-gap: 6px; }
+#goldShopT46 .ovAdvantages .advFooter .advStatus { flex: 1 1 100%; }
+#goldShopT46 .ovAdvantages .advFooter .advButton, #goldShopT46 .ovAdvantages .advFooter .advActive { margin-left: auto; }
+#goldShopT46 .ovAdvantages .advButton { min-width: 0; padding: 0; }
+#goldShopT46 .ovAdvantages .advButton > div { padding: 9px 14px 8px; }
+#goldShopT46 .ovAdvantages .advBoosts { gap: 8px; }
+#goldShopT46 .ovAdvantages .advBoost { padding: 12px 6px 10px; }
+#goldShopT46 .ovAdvantages .advBoost .advImage { width: 80px; height: 58px; }
+#goldShopT46 .ovAdvantages .advBoost h4 { font-size: 12px; line-height: 15px; margin: 8px 0 6px; min-height: 30px; }
+#goldShopT46 .ovAdvantages .advBonus { font-size: 12px; gap: 3px; margin-bottom: 8px; white-space: nowrap; }
+#goldShopT46 .ovAdvantages .advBoost .advButton { width: 100%; max-width: 128px; }
+#goldShopT46 .ovAdvantages .advBoost .advStatus, #goldShopT46 .ovAdvantages .advBoost .advAutoExtend { font-size: 11px; line-height: 15px; }
+#goldShopT46 .ovAdvantages .advBoost .advAutoExtend input { width: 14px; height: 14px; }
+@media (max-width: 700px) {
+    #goldShopT46 .ovAdvantages .advPremium { grid-template-columns: 1fr; }
+    #goldShopT46 .ovAdvantages .advBoosts { grid-template-columns: 1fr 1fr; }
+}
+
+/* dorf1 building queue (Legends): under the village map, title + "finish now" on one line, duration right of each entry. */
+body.t46Layout div.village1 .villageInfoWrapper .buildingList { margin-top: 26px; width: 400px; max-width: 100%; box-sizing: border-box; }
+body.t46Layout div.village1 .villageInfoWrapper .buildingList .boxes-contents { padding: 10px 12px 12px; font-size: 13px; line-height: 18px; }
+body.t46Layout div.village1 .villageInfoWrapper .buildingList .finishNow { float: right; margin: -3px 0 6px 10px; }
+body.t46Layout div.village1 .villageInfoWrapper .buildingList .finishNow button { min-width: 0; }
+body.t46Layout div.village1 .villageInfoWrapper .buildingList .finishNow button .button-content { padding: 0 14px; font-size: 12px; }
+body.t46Layout div.village1 .villageInfoWrapper .buildingList ul { clear: both; margin: 4px 0 0; padding: 0; }
+body.t46Layout div.village1 .villageInfoWrapper .buildingList li { display: flex; align-items: baseline; gap: 4px; padding: 3px 0; }
+body.t46Layout div.village1 .villageInfoWrapper .buildingList li > a { flex: none; }
+body.t46Layout div.village1 .villageInfoWrapper .buildingList li .name { flex: 1 1 auto; min-width: 0; float: none; font-size: 13px; }
+body.t46Layout div.village1 .villageInfoWrapper .buildingList li .name .lvl { color: #e58a14; font-weight: 700; }
+body.t46Layout div.village1 .villageInfoWrapper .buildingList li .buildDuration { flex: none; float: none; margin: 0; padding: 0; text-align: right; color: #5c5c5c; font-size: 12px; white-space: nowrap; }
+body.t46Layout div.village1 .villageInfoWrapper .buildingList li .clear { display: none; }
+
+/* Costs the village cannot pay yet: red box around the amount (Legends). */
+body.t46Layout #content .resourceWrapper .resource.notEnough, body.t46Layout #content .resourceWrapper .resources.notEnough {
+    padding: 2px 6px; border: 1px solid #c4614f; border-radius: 4px; background-color: #ffcec2; box-shadow: inset 0 0 0 1px rgba(255, 255, 255, .45); }
+body.t46Layout #content .resourceWrapper .resource.notEnough .value, body.t46Layout #content .resourceWrapper .resources.notEnough .value { color: #3f2e22; }
+
+/* Legends hero window: the gold frame of the tab bar continues around the hero panel (sides and bottom). */
+body.t46Layout.legendsV2 #content.heroV2 { padding-bottom: 8px; }
+body.t46Layout.legendsV2 #content.heroV2 > .contentV2 { position: relative; }
+body.t46Layout.legendsV2 #content.heroV2 > .contentV2::after { content: ""; position: absolute; inset: -5px -5px -5px; z-index: 6; pointer-events: none;
+    border: solid transparent; border-width: 0 4px 4px; box-shadow: 0 0 0 1px #34220d, inset 0 0 0 1px #34220d;
+    border-image: linear-gradient(to bottom, #f3ce8b 0, #ba8f5b 40%, #876338 75%, #caa065 100%) 4; }
+
+/* Task list: the green Collect button sits in the golden Legends frame. */
+body.t46Layout #tasks .task .progress button.collect.buttonFramed, body.t46Layout #tasks .task .progress button.collect.buttonFramed:hover {
+    border: 1px solid #34220d; box-shadow: 0 1px 2px rgba(0, 0, 0, .35);
+    background-image: linear-gradient(to bottom, #cba467 5%, #f3e2ae 13%, #efbf7b 32%, #aa8050 48%, #835e35 72%, #ad8a54 93%, #d7b672 100%); }
+body.t46Layout #tasks .task .progress button.collect.buttonFramed:hover::before { filter: brightness(1.12); }

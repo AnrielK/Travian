@@ -7,6 +7,7 @@ use Core\Database\DB;
 use Core\Database\GlobalDB;
 use Core\Session;
 use Game\GoldHelper;
+use Model\AutoExtendModel;
 use resources\View\GameView;
 use resources\View\PHPBatchView;
 
@@ -61,7 +62,24 @@ class GoldShopCtrl extends GameCtrl
         $helper = new GoldHelper();
         $config = Config::getInstance();
         $features = [];
-        if ($tab === 'pros') {
+        $advantages = [];
+        if ($tab === 'pros' && is_hero_v2()) {
+            // Travian Legends "Advantages" cards: gold club and Plus on top, the four production bonuses below.
+            $autoExtend = new AutoExtendModel();
+            $uid = $session->getPlayerId();
+            $advantages['goldclub'] = ['key' => 'goldclub', 'gold' => (int)$config->gold->goldClubGold,
+                'active' => $session->hasGoldClub()];
+            $advantages['plus'] = ['key' => 'plus', 'gold' => (int)$config->gold->plusGold, 'active' => $session->hasPlus(),
+                'till' => (int)$session->plusTill(), 'autoExtend' => $autoExtend->hasAutoExtend($uid, 1),
+                'duration' => (int)$config->gold->plusAccountDurationSeconds];
+            $advantages['boosts'] = [];
+            foreach ([1 => 'Wood', 2 => 'Clay', 3 => 'Iron', 4 => 'Crop'] as $r => $name) {
+                $advantages['boosts'][] = ['key' => 'productionboost' . $name, 'resource' => $r, 'name' => $name,
+                    'gold' => (int)$config->gold->productionBoostGold, 'active' => $session->hasProductionBoost($r),
+                    'till' => (int)$session->productionBoostTill($r), 'autoExtend' => $autoExtend->hasAutoExtend($uid, $r + 1),
+                    'duration' => (int)$config->gold->productionBoostDurationSeconds];
+            }
+        } elseif ($tab === 'pros') {
             $features[] = ['class' => 'plus', 'title' => T('PaymentWizard', 'Plus'), 'button' => $helper->getPlusButton(FALSE, TRUE),
                 'gold' => $config->gold->plusGold, 'active' => $session->hasPlus()];
             foreach ([1 => 'Wood', 2 => 'Clay', 3 => 'Iron', 4 => 'Crop'] as $r => $name) {
@@ -82,6 +100,8 @@ class GoldShopCtrl extends GameCtrl
             'offline' => $offline,
             'packages' => $packages,
             'features' => $features,
+            'advantages' => $advantages,
+            'canSpendGold' => $session->checkSitterPermission(Session::SITTER_CAN_BUY_OR_SPEND_GOLD),
             'gold' => $session->getAvailableGold(),
             'credited' => isset($_GET['credited']) ? (self::OFFLINE_PACKAGES[(int)$_GET['credited']] ?? null) : null,
             'checker' => $session->getChecker(),

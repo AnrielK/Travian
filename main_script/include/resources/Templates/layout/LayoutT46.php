@@ -218,6 +218,28 @@ $t46Indicator = static function ($count) {
         'hideFoolsArtifacts' => false, 'welcomeScreen' => false,
     ]); ?>;
 </script>
+<script type="text/javascript">
+    // Legends: a cost the village cannot pay yet (lumber, clay, iron, crop) is shown in a red box, updated while stock grows.
+    (function () {
+        var mark = function () {
+            if (typeof resources === 'undefined' || !resources.storage) {
+                return;
+            }
+            var items = document.querySelectorAll('#content .resourceWrapper .resource, #content .resourceWrapper .resources');
+            for (var i = 0; i < items.length; i++) {
+                var icon = items[i].querySelector('i'), value = items[i].querySelector('.value');
+                var match = icon && value && /(?:^|\s)r([1-4])(?:Big)?(?:\s|$)/.exec(icon.className);
+                if (!match) {
+                    continue;
+                }
+                var cost = parseInt(value.textContent.replace(/[^0-9]/g, ''), 10);
+                var stock = Math.floor(resources.storage['l' + match[1]] || 0);
+                items[i].classList.toggle('notEnough', !isNaN(cost) && cost > stock);
+            }
+        };
+        jQuery(function () { mark(); setInterval(mark, 2000); });
+    })();
+</script>
 </body>
 </html>
 <!---- This page was generated in <?=round(1000 * (microtime(true) - $GLOBALS['start_time']), 2); ?> ms ---->
