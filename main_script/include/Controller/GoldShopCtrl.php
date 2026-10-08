@@ -95,6 +95,7 @@ class GoldShopCtrl extends GameCtrl
         $this->view->vars['titleInHeader'] = T('Tasks', 'goldShopTitle', 'Gold & Plus');
         $this->view->vars['bodyCssClass'] = 'perspectiveResources';
         $this->view->vars['contentCssClass'] = 'goldShopT46';
+        $this->view->vars['answerId'] = 0; // Legends shop header: gold balance and close button only.
         $this->view->vars['content'] = PHPBatchView::render('goldShop/main', [
             'tab' => $tab,
             'offline' => $offline,
