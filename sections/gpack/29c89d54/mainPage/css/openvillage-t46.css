@@ -798,8 +798,8 @@ body.t46Layout .textButtonV2.buttonFramed.green:disabled::before, body.t46Layout
 
 /* Sidebars the same distance from the left and the right screen edge (also at the 1280px minimum width, e.g. iPhone). */
 body.t46Layout #center { padding-inline: 0; }
-body.t46Layout #sidebarBeforeContent { margin-left: 10px; }
-body.t46Layout #sidebarAfterContent { margin-right: 10px; }
+body.t46Layout #center #sidebarBeforeContent { margin-left: 10px; }
+body.t46Layout #center #sidebarAfterContent { margin-right: 10px; }
 
 /* Building queue: the same Legends box on dorf1 and dorf2 (incl. master builder), no empty space under the last entry. */
 body.t46Layout #content .buildingList { width: 400px; max-width: 100%; box-sizing: border-box; }
