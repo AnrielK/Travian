@@ -1,10 +1,8 @@
 name: iOS – OpenVillage offline app
 
 on:
+  # Build only by hand (Actions → Run workflow), not after every pushed commit.
   workflow_dispatch:
-  push:
-    branches: [main, t46-ios]
-    paths-ignore: ["macos/**", "*.md", "docs/**"]
 
 permissions:
   contents: write

@@ -769,7 +769,7 @@ body.t46Layout #tasks .task .progress button.collect.buttonFramed, body.t46Layou
 body.t46Layout #tasks .task .progress button.collect.buttonFramed:hover::before { filter: brightness(1.12); }
 
 /* Gold shop: gold balance sits in the window header, left of the header buttons (Legends). */
-#goldShopT46 .goldBalance { position: absolute; top: -50px; right: 58px; z-index: 5; float: none; margin: 0; height: 34px; padding: 0 12px 0 0;
+#goldShopT46 .goldBalance { position: absolute; top: -50px; right: 72px; z-index: 5; float: none; margin: 0; height: 34px; padding: 0 12px 0 0;
     display: flex; align-items: center; gap: 6px; background: none; border: 0; box-shadow: none; border-right: 1px solid rgba(255, 255, 255, .55);
     font-size: 20px; font-weight: 700; color: #fff; text-shadow: 0 1px 2px #2b1d12, 0 0 2px #2b1d12; }
 #goldShopT46 .goldBalance i.goldCoin_medium { transform: scale(1.15); }
@@ -794,3 +794,4 @@ body.t46Layout .textButtonV2.buttonFramed.green, body.t46Layout .textButtonV2.bu
 body.t46Layout .textButtonV2.buttonFramed.green.withText > div { position: relative; z-index: 3; text-align: center; }
 body.t46Layout .textButtonV2.buttonFramed.green:hover::before { filter: brightness(1.12); }
 body.t46Layout .textButtonV2.buttonFramed.green:disabled::before, body.t46Layout .textButtonV2.buttonFramed.green.disabled::before { filter: grayscale(.6) brightness(.9); }
+#goldShopT46 .goldBalance { padding-right: 16px; }

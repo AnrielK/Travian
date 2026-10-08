@@ -1,8 +1,7 @@
 name: macOS launcher
 
 on:
-  push:
-    paths: ["macos/**", ".github/workflows/macos-launcher.yml"]
+  # Runs on pull requests or by hand (Actions → Run workflow), not after every pushed commit.
   pull_request:
     paths: ["macos/**"]
   workflow_dispatch:
