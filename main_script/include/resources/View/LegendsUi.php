@@ -298,6 +298,25 @@ class LegendsUi
         return $class === '' || $svg === '' ? $svg : preg_replace('/^<svg/', '<svg class="' . self::e($class) . '"', $svg, 1);
     }
 
+    /**
+     * Click / hover shape traced from a Legends building picture (scripts/gpack/trace-building-shapes.py),
+     * for buildings whose T4.6 hand-drawn shape no longer fits the artwork (walls, rally point). Null when missing.
+     */
+    public static function traceShape(string $key, string $class, string $href): ?string
+    {
+        static $shapes = null;
+        if ($shapes === null) {
+            $shapes = json_decode((string)file_get_contents(__DIR__ . '/legendsShapes.json'), true) ?: [];
+        }
+        if (empty($shapes[$key]['d'])) {
+            return null;
+        }
+        ['w' => $w, 'h' => $h, 'd' => $d] = $shapes[$key];
+        $path = '<path fill-rule="evenodd" d="' . $d . '" onclick="window.location.href=\'' . self::e($href) . '\'"/>';
+        return '<svg width="' . (int)$w . '" height="' . (int)$h . '" viewBox="0 0 ' . (int)$w . ' ' . (int)$h . '" class="buildingShape traced '
+            . self::e($class) . '"><g class="clickShape">' . $path . '</g><g class="hoverShape">' . $path . '</g></svg>';
+    }
+
     /** Switch (formV2 label.switch with checkbox). */
     public static function toggleSwitch(string $name, bool $checked, string $label, string $wrapperClass = ''): string
     {

@@ -59,8 +59,14 @@ targets:
           DEST="$RES/game"
           mkdir -p "$DEST/scripts/native"
           for d in main_script web sections filtering; do
-            rsync -a --delete --exclude '.DS_Store' --exclude 'main_script/copyable/include/runtime' \
-                  --exclude 'runtime/' "$SRC/$d" "$DEST/"
+            # Graphic styles: only the default Legends pack (legends655) is shipped; the other style packs
+            # (29c89d54, a17a8f72, T4.4 packs) stay in the repo for the web/native runtime.
+            rsync -a --delete --delete-excluded --exclude '.DS_Store' --exclude 'main_script/copyable/include/runtime' \
+                  --exclude 'runtime/' \
+                  --exclude '/sections/gpack/29c89d54/' --exclude '/sections/gpack/a17a8f72/' \
+                  --exclude '/sections/gpack/68597666/' --exclude '/sections/gpack/d11cb434/' \
+                  --exclude '/sections/gpack/TravianOld/' \
+                  "$SRC/$d" "$DEST/"
           done
           rsync -a --delete "$SRC/scripts/native/router.php" "$SRC/scripts/native/runtime" "$DEST/scripts/native/"
           cp "$SRC/main.sql" "$DEST/main.sql"

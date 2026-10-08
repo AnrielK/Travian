@@ -833,3 +833,20 @@ body.t46Layout #contentOuterContainer #villageContent .buildingSlot:not(.g0) img
 body.t46Layout #contentOuterContainer #villageContent .buildingSlot.a40 svg.buildingShape g.hoverShape:hover path { fill: rgba(255, 255, 255, .15); }
 body.t46Layout #contentOuterContainer #villageContent .buildingSlot.a40.g0 svg.buildingShape path { fill: transparent; }
 body.t46Layout #contentOuterContainer #villageContent .buildingSlot.a40.g0 svg.buildingShape:hover g.hoverShape path { fill: rgba(255, 255, 255, .15); }
+
+/* dorf2 (Legends): empty rally point and wall sites get the green ground shadow; walls and rally point use
+   click shapes traced from their pictures; the wall level sits at the bottom of the wall, not above the village. */
+body.t46Layout #contentOuterContainer #villageContent .buildingSlot.a39.g0 svg.buildingShape.g16e g.clickShape path { fill: rgba(101, 115, 13, .57); transition: fill 150ms ease-in; }
+body.t46Layout #contentOuterContainer #villageContent .buildingSlot.a39.g0 svg.buildingShape.g16e g.hoverShape path { fill: transparent; }
+body.t46Layout #contentOuterContainer #villageContent .buildingSlot.a39.g0 svg.buildingShape.g16e:hover g.clickShape path { fill: rgba(206, 223, 100, .57); }
+body.t46Layout #contentOuterContainer #villageContent .buildingSlot.a40.legendsWall { z-index: 0; }
+body.t46Layout #contentOuterContainer #villageContent .buildingSlot.a40.legendsWall svg.traced g.clickShape path { fill: rgba(101, 115, 13, .4); transition: fill 150ms ease-in; }
+body.t46Layout #contentOuterContainer #villageContent .buildingSlot.a40.legendsWall svg.traced g.hoverShape path { fill: transparent; }
+body.t46Layout #contentOuterContainer #villageContent .buildingSlot.a40.legendsWall svg.traced:hover g.clickShape path { fill: rgba(206, 223, 100, .5); }
+body.t46Layout #contentOuterContainer #villageContent .buildingSlot:not(.g0) svg.buildingShape.traced path { fill: transparent; }
+body.t46Layout #contentOuterContainer #villageContent:has(.buildingSlot.a40:not(.g0) svg.traced g.hoverShape:hover) .buildingSlot.a40 img.wall,
+body.t46Layout #contentOuterContainer #villageContent:has(.buildingSlot.a40:not(.g0) .level:hover) .buildingSlot.a40 img.wall {
+    filter: brightness(1.15) drop-shadow(0 0 3px rgba(255, 250, 215, .95)) drop-shadow(0 0 8px rgba(255, 245, 190, .55)); }
+body.t46Layout #contentOuterContainer #villageContent .buildingSlot.a40 img.wall { transition: filter 150ms ease-in; }
+body.t46Layout #contentOuterContainer #villageContent .buildingSlot.a40.bottom .level { top: auto; bottom: 43px; left: 50%; transform: translateX(-50%); pointer-events: auto; }
+body.t46Layout #contentOuterContainer #villageContent .buildingSlot.a40.top .level { display: none; }

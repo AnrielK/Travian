@@ -84,8 +84,8 @@ struct WorldSettings: Codable, Equatable {
 
     /// Styles shipped in sections/gpack (see gpack.php); only those present in the bundle are offered.
     static let allStyles: [(hash: String, name: String)] = [
-        ("29c89d54", "Travian T4.6 (výchozí)"),
-        ("legends655", "Travian Legends 655.3"),
+        ("legends655", "Travian Legends 655.3 (výchozí)"),
+        ("29c89d54", "Travian T4.6"),
         ("a17a8f72", "OpenVillage 4.6"),
         ("d11cb434", "Travian T4.4 Seasonized v2"),
         ("68597666", "Travian T4.4 Seasonized"),
@@ -95,7 +95,11 @@ struct WorldSettings: Codable, Equatable {
         allStyles.filter { FileManager.default.fileExists(atPath: Paths.bundledGame
             .appendingPathComponent("sections/gpack/\($0.hash)/mainPage/lang/en-US/compact.css").path) }
     }
-    var style: String { gpack ?? "29c89d54" }
+    /// The chosen style, or the default (legends655) when none is chosen or the chosen one is not in this build.
+    var style: String {
+        if let gpack, Self.availableStyles.contains(where: { $0.hash == gpack }) { return gpack }
+        return "legends655"
+    }
 
     private static let key = "OpenVillage.world"
     static func load() -> WorldSettings {
