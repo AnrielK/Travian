@@ -55,10 +55,10 @@ class HeroAppearanceV2
      */
     public const EQUIPMENT = [
         1 => [[0, PHP_INT_MAX, 'helmet', 'helmet/helmet1']],
-        2 => [[0, PHP_INT_MAX, 'body', 'body/body1']],
+        2 => [[82, 87, 'body', 'body/body2'], [0, PHP_INT_MAX, 'body', 'body/body1']],
         3 => [[64, 69, 'leftHand', 'banner/banner1']], // pennants and standards
         4 => [[0, PHP_INT_MAX, 'rightHand', 'weapon/axe1']],
-        5 => [[0, PHP_INT_MAX, 'shoes', 'shoes/boots1']],
+        5 => [[94, 96, 'shoes', 'shoes/boots2'], [100, 102, 'shoes', 'shoes/boots3'], [0, PHP_INT_MAX, 'shoes', 'shoes/boots1']],
     ];
 
     /** Arm pose for a hand item (by its part folder): the fist holding it. */
