@@ -17,7 +17,7 @@ class HeroAppearanceV2
 {
     public const TABLE = 'ov_hero_appearance';
     /** Bumped whenever the composition changes, so cached images are drawn again. */
-    public const RENDER_VERSION = 2;
+    public const RENDER_VERSION = 3;
 
     /** Drawing order: layer => [category it shows (null = always), colour group it is tinted with]. */
     public const LAYERS = [
@@ -25,6 +25,8 @@ class HeroAppearanceV2
         'base' => [null, 'skinColor'],
         'leftArm' => [null, 'skinColor'],
         'rightArm' => [null, 'skinColor'],
+        // Clothes in the colours of the player's tribe (parts <gender>/tribeColor/<tribe>/body/body-<tribe>).
+        'body' => [null, 'tribeColor'],
         'jaw' => ['jaw', 'skinColor'],
         'ears' => ['ears', 'skinColor'],
         'eyesBase' => ['eyes', 'skinColor'],
@@ -152,7 +154,23 @@ class HeroAppearanceV2
     }
 
     /** Appearance of a player: [gender, colors..., categories...]. */
+    /** Tribe colours of the clothes (part folder names) per race. */
+    public const TRIBES = [1 => 'roman', 2 => 'teuton', 3 => 'gaul', 6 => 'egyptian', 7 => 'hun', 8 => 'spartan', 9 => 'viking'];
+
+    /** Clothes colour of a player's hero: their tribe (roman when unknown). */
+    public static function tribeOf(int $uid): string
+    {
+        $race = (int)DB::getInstance()->fetchScalar('SELECT race FROM users WHERE id=' . $uid);
+        return self::TRIBES[$race] ?? 'roman';
+    }
+
     public static function get(int $uid): array
+    {
+        return ['tribeColor' => self::tribeOf($uid)] + self::stored($uid);
+    }
+
+    /** The saved look (or the classic face converted), without the tribe. */
+    private static function stored(int $uid): array
     {
         self::ensureTable();
         $row = DB::getInstance()->query('SELECT gender, config FROM `' . self::TABLE . '` WHERE uid=' . $uid);
@@ -250,7 +268,7 @@ class HeroAppearanceV2
     {
         $cache = Caching::getInstance();
         foreach (['head_81', 'portrait', 'head_79x91', 'body_inventory', 'body_profile'] as $size) {
-            $cache->delete("hero_v2_r" . self::RENDER_VERSION . "_{$size}_{$uid}");
+            $cache->delete("hero_v2_r" . self::RENDER_VERSION . "_{$size}_{$uid}_" . self::tribeOf($uid));
         }
         foreach (['hero_image_%d_79x91', 'hero_image_%d_81x81', 'hero_body_%d_330x422', 'hero_body_%d_330x422_nohorse',
                      'hero_body_%d_160x205', 'heroImageHash%d', 'hero_sidebar_%d'] as $key) {
@@ -269,7 +287,7 @@ class HeroAppearanceV2
             if ($category !== null && $variant === null) {
                 continue;
             }
-            $shade = $color ? $config[$color] : null;
+            $shade = $color ? ($config[$color] ?? null) : null;
             switch ($layer) {
                 case 'base':
                     $key = "$g/skinColor/$shade/base/base-$shade";
@@ -277,6 +295,10 @@ class HeroAppearanceV2
                 case 'leftArm':
                 case 'rightArm':
                     $key = "$g/skinColor/$shade/$layer/{$layer}Default-$shade";
+                    break;
+                case 'body':
+                    $tribe = $config['tribeColor'] ?? 'roman';
+                    $key = "$g/tribeColor/$tribe/body/body-$tribe";
                     break;
                 case 'tattoo':
                     $key = "$g/tattoo/tattoo$variant";
@@ -356,7 +378,7 @@ class HeroAppearanceV2
             'body_profile' => ['bust', 160, 205],
         ];
         [$mode, $w, $h] = $sizes[$size] ?? $sizes['head_81'];
-        $cacheKey = "hero_v2_r" . self::RENDER_VERSION . "_{$size}_{$uid}";
+        $cacheKey = "hero_v2_r" . self::RENDER_VERSION . "_{$size}_{$uid}_" . self::tribeOf($uid);
         $cache = Caching::getInstance();
         $png = $cache->get($cacheKey);
         if (!$png) {

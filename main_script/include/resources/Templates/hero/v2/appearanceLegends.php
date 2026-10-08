@@ -19,6 +19,7 @@ $labels = [
 ];
 $config = [
     'appearance' => $vars['appearance'],
+    'tribe' => $vars['appearance']['tribeColor'] ?? 'roman',
     'options' => HeroAppearanceV2::options(),
     'categories' => HeroAppearanceV2::CATEGORIES,
     'layers' => HeroAppearanceV2::LAYERS,
@@ -93,6 +94,7 @@ $zoomIcon = '<svg viewBox="0 0 21.77 22" class="zoomOut"><g class="outline"><pat
             var s = color ? c[color] : null, key;
             if (layer === 'base') key = g + '/skinColor/' + s + '/base/base-' + s;
             else if (layer === 'leftArm' || layer === 'rightArm') key = g + '/skinColor/' + s + '/' + layer + '/' + layer + 'Default-' + s;
+            else if (layer === 'body') key = g + '/tribeColor/' + cfg.tribe + '/body/body-' + cfg.tribe;
             else if (layer === 'tattoo') key = g + '/tattoo/tattoo' + v;
             else key = g + '/' + color + '/' + s + '/' + layer + '/' + layer + v + '-' + s;
             if (index.parts[key]) keys.push(key);

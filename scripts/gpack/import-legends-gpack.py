@@ -45,6 +45,8 @@ def main():
     ap.add_argument('--template', default='29c89d54')
     ap.add_argument('--hero-appearance', metavar='DIR',
                     help='extracted "Hero Appearance" add-on (parts/, parts-index.json): enables the Legends hero editor')
+    ap.add_argument('--hero-atlases', metavar='DIR',
+                    help='extra hero texture atlases (e.g. tribe clothing *-tribeColor-*.json/.png) added to the parts')
     ap.add_argument('--no-rtl', action='store_true',
                     help='leave out right-to-left assets and locales (Arabic, Persian) – about half the size')
     a = ap.parse_args()
@@ -211,6 +213,11 @@ def main():
         with open(os.path.join(dst, 'heroAppearance', 'index.json'), 'w') as f:
             json.dump({'size': size, 'parts': parts}, f, separators=(',', ':'), sort_keys=True)
         print(f'{a.name}: hero appearance {len(parts)} parts')
+        if a.hero_atlases:
+            sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
+            from importlib import import_module
+            added = import_module('add-hero-atlases').add_atlases(os.path.abspath(a.hero_atlases), dst)
+            print(f'{a.name}: hero appearance +{added} atlas parts')
     print(f'{a.name}: tribes {len(seen)} rules, adapter remapped {remapped} / kept {kept}, '
           f'copied {copied} images from {a.template}/a17a8f72, unresolved {missing}')
 
