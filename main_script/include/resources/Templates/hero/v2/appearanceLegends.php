@@ -23,6 +23,9 @@ $config = [
     'options' => HeroAppearanceV2::options(),
     'categories' => HeroAppearanceV2::CATEGORIES,
     'layers' => HeroAppearanceV2::LAYERS,
+    // The editor shows the face and hair, so the helmet is left out there.
+    'equipment' => (object)array_diff_key($vars['appearance']['equipment'] ?? [], ['helmet' => true]),
+    'armPoses' => (object)HeroAppearanceV2::armPoses($vars['appearance']['equipment'] ?? []),
     'indexUrl' => get_gpack_cdn_mainPage_url() . 'heroAppearance/index.json',
     'partsUrl' => HeroAppearanceV2::partsUrl(),
     'labels' => $labels,
@@ -89,11 +92,17 @@ $zoomIcon = '<svg viewBox="0 0 21.77 22" class="zoomOut"><g class="outline"><pat
         var keys = [], g = c.gender;
         Object.keys(cfg.layers).forEach(function (layer) {
             var cat = cfg.layers[layer][0], color = cfg.layers[layer][1];
+            // Equipped items (same rules as HeroAppearanceV2::layerKeys): armour replaces the tribe clothes.
+            if (cat === 'equipment' || (layer === 'body' && cfg.equipment.body)) {
+                var part = cfg.equipment[layer] && g + '/equipment/' + cfg.equipment[layer];
+                if (part && index.parts[part]) { keys.push(part); return; }
+                if (cat === 'equipment') return;
+            }
             var v = cat === null ? '' : c[cat];
             if (cat !== null && (v === null || v === undefined)) return;
             var s = color ? c[color] : null, key;
             if (layer === 'base') key = g + '/skinColor/' + s + '/base/base-' + s;
-            else if (layer === 'leftArm' || layer === 'rightArm') key = g + '/skinColor/' + s + '/' + layer + '/' + layer + 'Default-' + s;
+            else if (layer === 'leftArm' || layer === 'rightArm') key = g + '/skinColor/' + s + '/' + layer + '/' + layer + (cfg.armPoses[layer] || 'Default') + '-' + s;
             else if (layer === 'body') key = g + '/tribeColor/' + cfg.tribe + '/body/body-' + cfg.tribe;
             else if (layer === 'tattoo') key = g + '/tattoo/tattoo' + v;
             else key = g + '/' + color + '/' + s + '/' + layer + '/' + layer + v + '-' + s;

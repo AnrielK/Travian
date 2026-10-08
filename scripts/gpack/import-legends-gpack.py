@@ -47,6 +47,8 @@ def main():
                     help='extracted "Hero Appearance" add-on (parts/, parts-index.json): enables the Legends hero editor')
     ap.add_argument('--hero-atlases', metavar='DIR',
                     help='extra hero texture atlases (e.g. tribe clothing *-tribeColor-*.json/.png) added to the parts')
+    ap.add_argument('--hero-equipment', metavar='DIR', nargs='?', const=os.path.join(ROOT, 'scripts', 'gpack', 'hero-equipment'),
+                    help='hero equipment layers <gender>/equipment/<slot>/<name>.png (default scripts/gpack/hero-equipment)')
     ap.add_argument('--no-rtl', action='store_true',
                     help='leave out right-to-left assets and locales (Arabic, Persian) – about half the size')
     a = ap.parse_args()
@@ -218,6 +220,11 @@ def main():
             from importlib import import_module
             added = import_module('add-hero-atlases').add_atlases(os.path.abspath(a.hero_atlases), dst)
             print(f'{a.name}: hero appearance +{added} atlas parts')
+        if a.hero_equipment:
+            sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
+            from importlib import import_module
+            added = import_module('add-hero-equipment').add_equipment(os.path.abspath(a.hero_equipment), dst)
+            print(f'{a.name}: hero appearance +{added} equipment layers')
     print(f'{a.name}: tribes {len(seen)} rules, adapter remapped {remapped} / kept {kept}, '
           f'copied {copied} images from {a.template}/a17a8f72, unresolved {missing}')
 

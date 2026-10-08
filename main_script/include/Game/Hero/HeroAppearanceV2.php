@@ -17,16 +17,21 @@ class HeroAppearanceV2
 {
     public const TABLE = 'ov_hero_appearance';
     /** Bumped whenever the composition changes, so cached images are drawn again. */
-    public const RENDER_VERSION = 3;
+    public const RENDER_VERSION = 4;
 
-    /** Drawing order: layer => [category it shows (null = always), colour group it is tinted with]. */
+    /** Drawing order: layer => [category it shows (null = always, 'equipment' = equipped item), colour group]. */
     public const LAYERS = [
         'backHair' => ['hair', 'hairColor'],
         'base' => [null, 'skinColor'],
+        // Clothes in the colours of the player's tribe (parts <gender>/tribeColor/<tribe>/body/body-<tribe>),
+        // replaced by the armour when the hero wears one.
+        'body' => [null, 'tribeColor'],
+        'shoes' => ['equipment', null],
+        // Hand items are held by the fists of the arms drawn over them.
+        'rightHand' => ['equipment', null],
+        'leftHand' => ['equipment', null],
         'leftArm' => [null, 'skinColor'],
         'rightArm' => [null, 'skinColor'],
-        // Clothes in the colours of the player's tribe (parts <gender>/tribeColor/<tribe>/body/body-<tribe>).
-        'body' => [null, 'tribeColor'],
         'jaw' => ['jaw', 'skinColor'],
         'ears' => ['ears', 'skinColor'],
         'eyesBase' => ['eyes', 'skinColor'],
@@ -40,6 +45,26 @@ class HeroAppearanceV2
         'tattoo' => ['tattoo', null],
         'beard' => ['beard', 'hairColor'],
         'frontHair' => ['hair', 'hairColor'],
+        'helmet' => ['equipment', null],
+    ];
+
+    /**
+     * Equipment drawn on the hero: item btype => [[first type, last type, layer, part], ...] (first match wins).
+     * Parts are <gender>/equipment/<part>.png (scripts/gpack/add-hero-equipment.py); an item without a part,
+     * or whose part the pack lacks, is not drawn.
+     */
+    public const EQUIPMENT = [
+        1 => [[0, PHP_INT_MAX, 'helmet', 'helmet/helmet1']],
+        2 => [[0, PHP_INT_MAX, 'body', 'body/body1']],
+        3 => [[64, 69, 'leftHand', 'banner/banner1']], // pennants and standards
+        4 => [[0, PHP_INT_MAX, 'rightHand', 'weapon/axe1']],
+        5 => [[0, PHP_INT_MAX, 'shoes', 'shoes/boots1']],
+    ];
+
+    /** Arm pose for a hand item (by its part folder): the fist holding it. */
+    public const EQUIPMENT_POSES = [
+        'weapon' => ['rightArm', 'Down'],
+        'banner' => ['leftArm', 'Up'],
     ];
 
     /** Editor categories => the layer whose variants are the options, the colour palette shown, may be empty. */
@@ -166,7 +191,39 @@ class HeroAppearanceV2
 
     public static function get(int $uid): array
     {
-        return ['tribeColor' => self::tribeOf($uid)] + self::stored($uid);
+        return ['tribeColor' => self::tribeOf($uid), 'equipment' => self::equipmentOf($uid)] + self::stored($uid);
+    }
+
+    /** Equipped items of a player's hero as [layer => part]. */
+    public static function equipmentOf(int $uid): array
+    {
+        $result = DB::getInstance()->query('SELECT i.btype, i.type FROM inventory v
+            JOIN items i ON i.id IN (v.helmet, v.body, v.leftHand, v.rightHand, v.shoes) AND i.uid=v.uid
+            WHERE v.uid=' . $uid);
+        $equipment = [];
+        while ($result && ($row = $result->fetch_assoc())) {
+            foreach (self::EQUIPMENT[(int)$row['btype']] ?? [] as [$from, $to, $layer, $part]) {
+                if ($row['type'] >= $from && $row['type'] <= $to) {
+                    $equipment[$layer] = $part;
+                    break;
+                }
+            }
+        }
+        ksort($equipment);
+        return $equipment;
+    }
+
+    /** Arm poses for the equipped hand items: [arm layer => pose]. */
+    public static function armPoses(array $equipment): array
+    {
+        $poses = [];
+        foreach ($equipment as $part) {
+            $pose = self::EQUIPMENT_POSES[explode('/', $part)[0]] ?? null;
+            if ($pose) {
+                $poses[$pose[0]] = $pose[1];
+            }
+        }
+        return $poses;
     }
 
     /** The saved look (or the classic face converted), without the tribe. */
@@ -267,13 +324,20 @@ class HeroAppearanceV2
     public static function invalidate(int $uid): void
     {
         $cache = Caching::getInstance();
-        foreach (['head_81', 'portrait', 'head_79x91', 'body_inventory', 'body_profile'] as $size) {
-            $cache->delete("hero_v2_r" . self::RENDER_VERSION . "_{$size}_{$uid}_" . self::tribeOf($uid));
-        }
         foreach (['hero_image_%d_79x91', 'hero_image_%d_81x81', 'hero_body_%d_330x422', 'hero_body_%d_330x422_nohorse',
                      'hero_body_%d_160x205', 'heroImageHash%d', 'hero_sidebar_%d'] as $key) {
             $cache->delete(sprintf($key, $uid));
         }
+    }
+
+    /** Equipment changed: new image URLs for the hero (face hash) and no cached sidebar. */
+    public static function equipmentChanged(int $uid): void
+    {
+        if (!self::available()) {
+            return;
+        }
+        DB::getInstance()->query('UPDATE face SET lastupdate=' . time() . ' WHERE uid=' . $uid);
+        self::invalidate($uid);
     }
 
     /** Part keys of a look, in drawing order. */
@@ -281,8 +345,19 @@ class HeroAppearanceV2
     {
         $parts = self::index()['parts'];
         $g = $config['gender'];
+        $equipment = $config['equipment'] ?? [];
+        $poses = self::armPoses($equipment);
         $keys = [];
         foreach (self::LAYERS as $layer => [$category, $color]) {
+            if ($category === 'equipment' || ($layer === 'body' && isset($equipment['body']))) {
+                if (isset($equipment[$layer], $parts["$g/equipment/{$equipment[$layer]}"])) {
+                    $keys[] = "$g/equipment/{$equipment[$layer]}";
+                    continue;
+                }
+                if ($category === 'equipment') {
+                    continue;
+                }
+            }
             $variant = $category === null ? '' : ($config[$category] ?? null);
             if ($category !== null && $variant === null) {
                 continue;
@@ -294,7 +369,8 @@ class HeroAppearanceV2
                     break;
                 case 'leftArm':
                 case 'rightArm':
-                    $key = "$g/skinColor/$shade/$layer/{$layer}Default-$shade";
+                    $pose = $poses[$layer] ?? 'Default';
+                    $key = "$g/skinColor/$shade/$layer/{$layer}$pose-$shade";
                     break;
                 case 'body':
                     $tribe = $config['tribeColor'] ?? 'roman';
@@ -378,11 +454,13 @@ class HeroAppearanceV2
             'body_profile' => ['bust', 160, 205],
         ];
         [$mode, $w, $h] = $sizes[$size] ?? $sizes['head_81'];
-        $cacheKey = "hero_v2_r" . self::RENDER_VERSION . "_{$size}_{$uid}_" . self::tribeOf($uid);
+        // The key follows the whole look (tribe and equipment included), a change never shows a stale image.
+        $config = self::get($uid);
+        $cacheKey = "hero_v2_r" . self::RENDER_VERSION . "_{$size}_{$uid}_" . md5(json_encode($config));
         $cache = Caching::getInstance();
         $png = $cache->get($cacheKey);
         if (!$png) {
-            $image = self::render(self::get($uid), $mode, $w, $h);
+            $image = self::render($config, $mode, $w, $h);
             ob_start();
             imagepng($image, null, 6);
             $png = ob_get_clean();

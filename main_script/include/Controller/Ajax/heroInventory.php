@@ -198,6 +198,8 @@ class heroInventory extends AjaxBase
         $memcache->delete("hero_body_{$uid}_330x422");
         $memcache->delete("hero_body_{$uid}_330x422_nohorse");
         $memcache->delete("hero_body_{$uid}_160x205");
+        // Legends look: the equipment is drawn on the hero (new image URLs for the portrait too).
+        \Game\Hero\HeroAppearanceV2::equipmentChanged($uid);
     }
 
     private function freeItemFromHero($id)
