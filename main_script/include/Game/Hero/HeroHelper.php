@@ -157,7 +157,14 @@ class HeroHelper extends HeroItems
     //speed
     public function calcTotalSpeed($race, $horse, $shoes, $cavalryOnly = false)
     {
-        return $this->calcSpeed($race, $horse, $cavalryOnly) + $this->calcItemSpeed($horse, $shoes);
+        return ($this->calcSpeed($race, $horse, $cavalryOnly) + $this->calcItemSpeed($horse, $shoes)) * self::speedFactor();
+    }
+
+    /** Hero movement speed multiplier of the world (GAME_HERO_SPEED, iOS app: Nastavení světa → Rychlost hrdiny). */
+    public static function speedFactor(): float
+    {
+        $factor = (float)(getenv('GAME_HERO_SPEED') ?: 1);
+        return $factor >= 1 ? min($factor, 1000.0) : 1.0;
     }
 
     public function calcSpeed($race, $horse, $cavalryOnly = false)

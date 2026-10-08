@@ -466,6 +466,11 @@ struct SettingsView: View {
                     Stepper("Délka kola: \(world.roundDays) dní", value: $world.roundDays, in: 1...365)
                 } footer: { Text("Platí po novém spuštění aplikace.") }
                 Section {
+                    Stepper("Rychlost hrdiny: ×\(world.heroSpeedFactor)",
+                            value: Binding(get: { world.heroSpeedFactor }, set: { world.heroSpeed = $0 }),
+                            in: 1...100, step: world.heroSpeedFactor < 10 ? 1 : 10)
+                } header: { Text("Hrdina") } footer: { Text("Násobí rychlost pohybu hrdiny (dobrodružství, přesuny). Platí hned po uložení pro další vyslání hrdiny.") }
+                Section {
                     Stepper("Mapa: \(world.mapSize * 2 + 1) × \(world.mapSize * 2 + 1)", value: $world.mapSize, in: 10...100, step: 5)
                 } footer: { Text("Velikost mapy se použije při vytvoření nového světa (Nástroje → Nový svět).") }
                 Section("Data") {
@@ -482,6 +487,7 @@ struct SettingsView: View {
                         let styleChanged = world.style != runtime.world.style
                         world.save(); runtime.world = world
                         if styleChanged { runtime.applyStyle(world.style) }
+                        runtime.applyHeroSpeed(world.heroSpeedFactor)
                         dismiss()
                     }
                 }

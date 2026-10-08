@@ -81,6 +81,9 @@ struct WorldSettings: Codable, Equatable {
     var roundDays = 35
     /// Graphic style (gpack "mainPage" hash); nil = default. Optional so older saved settings still decode.
     var gpack: String?
+    /// Hero movement speed multiplier (1 = normal); nil in older saved settings.
+    var heroSpeed: Int?
+    var heroSpeedFactor: Int { max(1, heroSpeed ?? 1) }
 
     /// Styles shipped in sections/gpack (see gpack.php); only those present in the bundle are offered.
     static let allStyles: [(hash: String, name: String)] = [
@@ -294,6 +297,11 @@ final class GameRuntime: ObservableObject {
         state = .running
     }
 
+    /// HeroHelper reads GAME_HERO_SPEED on every request, so a new hero speed applies to the next movement.
+    func applyHeroSpeed(_ factor: Int) {
+        setenv("GAME_HERO_SPEED", String(max(1, factor)), 1)
+    }
+
     /// sections/gpack/gpack.php reads GAME_GPACK on every request, so a new style applies immediately.
     func applyStyle(_ hash: String) {
         setenv("GAME_GPACK", hash, 1)
@@ -438,6 +446,7 @@ final class GameRuntime: ObservableObject {
             "GAME_DB_PASSWORD": Secrets.dbPassword, "GLOBAL_DB_PASSWORD": Secrets.dbPassword,
             "GAME_SPEED": String(world.speed), "GAME_MAP_SIZE": String(world.mapSize),
             "GAME_GPACK": world.style,
+            "GAME_HERO_SPEED": String(world.heroSpeedFactor),
             "GAME_ROUND_LENGTH_DAYS": String(world.roundDays),
             "GAME_WORLD_ID": "local", "GAME_TITLE": "OpenVillage 4.6", "GAME_SERVER_NAME": "iPhone World",
             "INITIAL_ADMIN_PASSWORD": secrets.adminPassword,
