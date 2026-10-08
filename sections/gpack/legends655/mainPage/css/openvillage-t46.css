@@ -964,3 +964,45 @@ body.t46Layout.legendsV2 #content.heroAdventure .adventureStarted.sent .heroStat
 body.t46Layout.legendsV2 #content.heroAdventure .adventureStarted .adventureArrival { position: relative; z-index: 3; margin: 12px 16px 0; text-align: center; font-size: 15px; }
 body.t46Layout.legendsV2 #content.heroAdventure .adventureStarted form { position: relative; z-index: 3; display: grid; justify-items: center; }
 body.t46Layout.legendsV2 #content.heroAdventure .adventureStarted button { min-width: 170px; height: 42px; margin: 25px 0 10px; position: relative; z-index: 3; justify-self: center; }
+
+/* Inventory item menu: compact, slightly taller entries; icon + label left aligned and vertically centred. */
+.ovInventoryMenu .contextMenu.defaultAppearance { min-width: 0; width: max-content; gap: 4px; padding: 4px; }
+.contextMenuWrapper.ovInventoryMenu .contextMenu.defaultAppearance button.entry:not(.textButtonV2) { display: grid; grid-template-columns: 22px auto; grid-template-rows: none; align-items: center;
+    justify-content: start; justify-items: start; gap: 7px; height: 36px; min-width: 112px; margin: 0; padding: 0 14px 0 8px; box-sizing: border-box;
+    font-size: 15px; line-height: 1; text-align: left; overflow: visible; }
+.contextMenuWrapper.ovInventoryMenu .contextMenu.defaultAppearance button.entry:not(.textButtonV2) svg { width: 22px; height: 22px; place-self: center; }
+.contextMenuWrapper.ovInventoryMenu .contextMenu.defaultAppearance button.entry:not(.textButtonV2) span.content { align-self: center; justify-self: start; white-space: nowrap; }
+/* Item info: narrower card, a bit lower on the screen, more room between the card and the close cross. */
+.ovInventoryOverlay.itemInfo { justify-content: flex-start; padding-top: max(16px, calc(50vh - 120px)); gap: 44px; }
+.ovInventoryOverlay.itemInfo .mobileHeroItemTooltip { max-width: min(440px, 100%); }
+.ovInventoryOverlay.itemInfo .heroItemTooltip { min-width: 0; width: min(440px, 90vw); }
+/* Move resources dialog: narrower; fill-up and close buttons in the golden frame with the icon centred. */
+.ovInventoryOverlay .resourceTransferDialog { width: 470px; }
+.ovInventoryOverlay .ovDialogBody { padding: 4px 16px 16px; font-size: 14px; }
+.ovInventoryOverlay .resourceTransferDialog .resourceRowBody { grid-template-columns: 64px 1fr; }
+.ovInventoryOverlay .resourceTransferDialog .heroItem { width: 62px; height: 62px; }
+.ovInventoryOverlay .resourceTransferDialog .resourceInput { grid-template-columns: 1fr 40px; gap: 8px; }
+.ovInventoryOverlay .resourceTransferDialog .ovInput { height: 40px; }
+.ovInventoryOverlay .resourceTransferDialog .actionButton { gap: 16px; }
+.ovInventoryOverlay .resourceTransferDialog .fillup.buttonFramed.withIcon.rectangle,
+.ovInventoryOverlay .ovDialogClose.buttonFramed.withIcon.rectangle { position: relative; width: 40px; height: 40px; padding: 0; box-sizing: border-box;
+    border: 3px solid transparent; outline: 1px solid #34220d; outline-offset: -1px; border-radius: 2px; box-shadow: 0 1px 2px rgba(0, 0, 0, .35);
+    background: linear-gradient(to bottom, #7cb029, #4f7a1c) padding-box,
+                linear-gradient(to bottom, #cba467 5%, #f3e2ae 13%, #efbf7b 32%, #aa8050 48%, #835e35 72%, #ad8a54 93%, #d7b672 100%) border-box; }
+.ovInventoryOverlay .resourceTransferDialog .fillup.buttonFramed.withIcon.rectangle::before,
+.ovInventoryOverlay .ovDialogClose.buttonFramed.withIcon.rectangle::before { inset: 1px; border-radius: 1px; }
+.ovInventoryOverlay .resourceTransferDialog .fillup.buttonFramed.withIcon.rectangle:disabled { filter: grayscale(.7) brightness(.95); opacity: .75; }
+.ovInventoryOverlay .resourceTransferDialog .resourceInput .fillup > svg,
+.ovInventoryOverlay .ovDialogClose > svg { position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); margin: 0; z-index: 3; }
+.ovInventoryOverlay .resourceTransferDialog .resourceInput .fillup > svg { width: 18px; height: 18px; }
+.ovInventoryOverlay .ovDialogClose > svg { width: 16px; height: 16px; }
+.ovInventoryOverlay .ovDialogClose.buttonFramed.withIcon.rectangle { position: absolute; top: 12px; right: 12px; }
+/* Inventory sort mode (Legends): dimmed page, lifted item follows the pointer, light empty place left behind. */
+html.ovSorting, html.ovSorting body { touch-action: none; overscroll-behavior: none; -webkit-user-select: none; user-select: none; }
+.ovSortDim { position: fixed; inset: 0; z-index: 10003; background: rgba(0, 0, 0, .38); pointer-events: none; }
+.ovSortGhost { position: fixed !important; z-index: 10004; pointer-events: none; transform: translate(-50%, -50%); transition: none;
+    box-shadow: 0 0 0 2px #ff6c1c, 0 6px 14px rgba(0, 0, 0, .6); }
+body.t46Layout #content.heroV2Inventory .heroItem.sortSource { opacity: 1; }
+body.t46Layout #content.heroV2Inventory .heroItem.sortSource > * { visibility: hidden; }
+body.t46Layout #content.heroV2Inventory .heroItem.sortSource { background: #b9b2a2 !important; box-shadow: inset 0 0 0 1px #8a8273; }
+body.t46Layout #content.heroV2Inventory .heroItem.sortTarget { box-shadow: inset 0 0 0 2px #ff6c1c, 0 0 8px rgba(255, 140, 60, .7); }

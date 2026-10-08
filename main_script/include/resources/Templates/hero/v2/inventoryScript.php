@@ -209,33 +209,85 @@ $resourceTypes = \Game\Hero\HeroItems::RESOURCE_TYPES;
         }
 
         // ---- sort ----------------------------------------------------------------------------------------------
+        // Legends sorting: the page is dimmed, the item is lifted out of its place (an empty light place stays)
+        // and follows the finger / mouse; it is put down on the bag place under it when released or tapped.
         var sorting = null;
+        function placeAt(x, y) {
+            var places = root.querySelectorAll('.heroItems .heroItem[data-drop^="inventory_"]');
+            for (var i = 0; i < places.length; i++) {
+                var r = places[i].getBoundingClientRect();
+                if (x >= r.left && x <= r.right && y >= r.top && y <= r.bottom) return places[i];
+            }
+            return null;
+        }
         function stopSort() {
             if (!sorting) return;
             sorting.ghost.remove();
+            sorting.dim.remove();
             sorting.item.classList.remove('sortSource');
+            root.querySelectorAll('.sortTarget').forEach(function (t) { t.classList.remove('sortTarget'); });
             root.classList.remove('sortMode');
-            document.removeEventListener('pointermove', sorting.move);
+            document.documentElement.classList.remove('ovSorting');
+            document.removeEventListener('pointermove', sorting.move, true);
+            document.removeEventListener('pointerup', sorting.up, true);
+            document.removeEventListener('pointerdown', sorting.down, true);
+            document.removeEventListener('touchmove', sorting.block, {passive: false, capture: true});
             sorting = null;
+        }
+        function dropAt(x, y) {
+            if (!sorting) return;
+            var target = placeAt(x, y), source = sorting.item;
+            stopSort();
+            if (target && target !== source) send(source.dataset.id, target.dataset.drop, 1);
         }
         function startSort(item) {
             stopSort();
             var rect = item.getBoundingClientRect();
+            var dim = el('div', 'ovSortDim');
+            document.body.appendChild(dim);
             var ghost = item.cloneNode(true);
             ghost.classList.add('ovSortGhost');
+            ghost.classList.remove('menuOpen');
             ghost.style.width = rect.width + 'px';
             ghost.style.height = rect.height + 'px';
-            ghost.style.left = rect.left + rect.width * 0.5 + 'px';
-            ghost.style.top = rect.top + rect.height * 0.5 + 'px';
-            content.appendChild(ghost);
+            document.body.appendChild(ghost);
             item.classList.add('sortSource');
             root.classList.add('sortMode');
-            var move = function (event) {
-                ghost.style.left = event.clientX + 'px';
-                ghost.style.top = event.clientY + 'px';
+            document.documentElement.classList.add('ovSorting');
+            // the lifted item sits a little below-right of the pointer so the finger does not cover it
+            var offset = 0.35 * rect.width;
+            function follow(x, y) {
+                ghost.style.left = (x + offset) + 'px';
+                ghost.style.top = (y + offset) + 'px';
+                root.querySelectorAll('.sortTarget').forEach(function (t) { t.classList.remove('sortTarget'); });
+                var target = placeAt(x, y);
+                if (target && target !== item) target.classList.add('sortTarget');
+            }
+            follow(rect.left + rect.width / 2, rect.top + rect.height / 2);
+            var pressed = false, moved = false, start = null;
+            var down = function (event) {
+                pressed = true; moved = false; start = {x: event.clientX, y: event.clientY};
+                follow(event.clientX, event.clientY);
+                event.preventDefault();
             };
-            document.addEventListener('pointermove', move);
-            sorting = {item: item, ghost: ghost, move: move};
+            var move = function (event) {
+                if (start && Math.abs(event.clientX - start.x) + Math.abs(event.clientY - start.y) > 6) moved = true;
+                if (pressed || event.pointerType === 'mouse') follow(event.clientX, event.clientY);
+            };
+            var up = function (event) {
+                if (!pressed) return;
+                pressed = false;
+                event.preventDefault();
+                event.stopPropagation();
+                // released over the bag (after dragging, or a tap on a place): put the item down there
+                if (placeAt(event.clientX, event.clientY) || !moved) dropAt(event.clientX, event.clientY);
+            };
+            var block = function (event) { event.preventDefault(); };
+            document.addEventListener('pointerdown', down, true);
+            document.addEventListener('pointermove', move, true);
+            document.addEventListener('pointerup', up, true);
+            document.addEventListener('touchmove', block, {passive: false, capture: true});
+            sorting = {item: item, ghost: ghost, dim: dim, move: move, up: up, down: down, block: block};
         }
 
         // ---- move resources dialog -----------------------------------------------------------------------------
@@ -354,17 +406,8 @@ $resourceTypes = \Game\Hero\HeroItems::RESOURCE_TYPES;
                 return;
             }
             var item = event.target.closest('.heroItem');
-            if (sorting) {
-                var place = item && item.dataset.drop && item.dataset.drop.indexOf('inventory_') === 0 ? item.dataset.drop : null;
-                var source = sorting.item;
-                stopSort();
-                if (place && item !== source) send(source.dataset.id, place, 1);
-                return;
-            }
+            if (sorting) return; // handled by the pointer events of the sort mode
             if (item && !item.classList.contains('empty')) openMenu(item);
-        });
-        document.addEventListener('click', function (event) {
-            if (sorting && !root.contains(event.target)) stopSort();
         });
         document.addEventListener('keydown', function (event) {
             if (event.key === 'Escape') { stopSort(); closeMenu(); }
