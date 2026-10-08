@@ -795,3 +795,41 @@ body.t46Layout .textButtonV2.buttonFramed.green.withText > div { position: relat
 body.t46Layout .textButtonV2.buttonFramed.green:hover::before { filter: brightness(1.12); }
 body.t46Layout .textButtonV2.buttonFramed.green:disabled::before, body.t46Layout .textButtonV2.buttonFramed.green.disabled::before { filter: grayscale(.6) brightness(.9); }
 #goldShopT46 .goldBalance { padding-right: 16px; }
+
+/* Sidebars the same distance from the left and the right screen edge (also at the 1280px minimum width, e.g. iPhone). */
+body.t46Layout #center { padding-inline: 0; }
+body.t46Layout #sidebarBeforeContent { margin-left: 10px; }
+body.t46Layout #sidebarAfterContent { margin-right: 10px; }
+
+/* Building queue: the same Legends box on dorf1 and dorf2 (incl. master builder), no empty space under the last entry. */
+body.t46Layout #content .buildingList { width: 400px; max-width: 100%; box-sizing: border-box; }
+body.t46Layout #content .buildingList .boxes-contents { padding: 10px 12px 8px; font-size: 13px; line-height: 18px; }
+body.t46Layout #content .buildingList .finishNow { float: right; margin: -3px 0 6px 10px; }
+body.t46Layout #content .buildingList .finishNow button .button-content { padding: 0 14px; font-size: 12px; }
+body.t46Layout #content .buildingList ul { clear: both; margin: 4px 0 0; padding: 0; }
+body.t46Layout #content .buildingList ul:last-child { margin-bottom: 0; }
+body.t46Layout #content .buildingList li { display: flex; align-items: baseline; gap: 4px; margin: 0; padding: 3px 0; }
+body.t46Layout #content .buildingList li > a { flex: none; }
+body.t46Layout #content .buildingList li .name { flex: 1 1 auto; min-width: 0; float: none; font-size: 13px; }
+body.t46Layout #content .buildingList li .name.inactive { color: #8a8378; }
+body.t46Layout #content .buildingList li .name .lvl { color: #e58a14; font-weight: 700; }
+body.t46Layout #content .buildingList li .buildDuration { flex: none; float: none; margin: 0; padding: 0; text-align: right; color: #5c5c5c; font-size: 12px; white-space: nowrap; }
+body.t46Layout #content .buildingList li .clear { display: none; }
+body.t46Layout #content .buildingList h5 { clear: both; margin: 8px 0 0; padding-top: 6px; border-top: 1px solid rgba(191, 179, 155, .6); font-size: 13px; font-weight: 400; }
+body.t46Layout #content .buildingList h5 > span { color: #5c5c5c; font-size: 12px; }
+body.t46Layout #content .buildingList h5 img.gold { display: inline-block; vertical-align: -3px; margin: 0 2px; }
+body.t46Layout #content .buildingList > div[class^="boxes-"]:not(.boxes-contents) { display: none; }
+
+/* dorf2 (Legends): visible empty building sites and a light-up on hover; ids added to beat the pack's "svg path { fill: transparent }". */
+body.t46Layout #contentOuterContainer #villageContent .buildingSlot.g0 svg.buildingShape.iso path { fill: rgba(101, 115, 13, .57); transition: fill 150ms ease-in; }
+body.t46Layout #contentOuterContainer #villageContent .buildingSlot.g0 svg.buildingShape.iso g.hoverShape path { fill: transparent; }
+body.t46Layout #contentOuterContainer #villageContent .buildingSlot.g0 svg.buildingShape.iso:hover g.clickShape path { fill: rgba(206, 223, 100, .57); }
+body.t46Layout #contentOuterContainer #villageContent .buildingSlot.g0 svg.buildingShape.iso:active g.clickShape path { fill: rgba(227, 238, 161, .57); }
+body.t46Layout #contentOuterContainer #villageContent .buildingSlot:not(.g0) svg.buildingShape g.hoverShape path { fill: transparent; }
+body.t46Layout #contentOuterContainer #villageContent .buildingSlot:not(.g0):has(svg.buildingShape g.hoverShape:hover) img.building,
+body.t46Layout #contentOuterContainer #villageContent .buildingSlot:not(.g0):has(.level:hover) img.building {
+    filter: brightness(1.18) drop-shadow(0 0 3px rgba(255, 250, 215, .95)) drop-shadow(0 0 8px rgba(255, 245, 190, .6)); }
+body.t46Layout #contentOuterContainer #villageContent .buildingSlot:not(.g0) img.building { transition: filter 150ms ease-in; }
+body.t46Layout #contentOuterContainer #villageContent .buildingSlot.a40 svg.buildingShape g.hoverShape:hover path { fill: rgba(255, 255, 255, .15); }
+body.t46Layout #contentOuterContainer #villageContent .buildingSlot.a40.g0 svg.buildingShape path { fill: transparent; }
+body.t46Layout #contentOuterContainer #villageContent .buildingSlot.a40.g0 svg.buildingShape:hover g.hoverShape path { fill: rgba(255, 255, 255, .15); }
