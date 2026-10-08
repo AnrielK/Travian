@@ -22,6 +22,7 @@ $resourceTypes = \Game\Hero\HeroItems::RESOURCE_TYPES;
             'notMoveable' => T('HeroInventory', 'notMoveableText'),
             'notMoveableDead' => T('HeroInventory', 'notMoveableTextDead'),
             'use' => T('HeroV2', 'use', 'Use'),
+            'equip' => T('HeroV2', 'equip', 'Equip'),
             'info' => T('HeroV2', 'info', 'Info'),
             'sort' => T('HeroV2', 'sort', 'Sort'),
             'unequip' => T('HeroV2', 'unequip', 'Take off'),
@@ -156,7 +157,7 @@ $resourceTypes = \Game\Hero\HeroItems::RESOURCE_TYPES;
                 entries.push(['unequip', text.unequip, function () { activate(item); }, false]);
             } else {
                 var blocked = root.dataset.dead === '1' && item.dataset.usableIfDead !== '1';
-                entries.push(['use', text.use, function () { activate(item); }, blocked]);
+                entries.push(['use', parseInt(item.dataset.btype, 10) <= 6 ? text.equip : text.use, function () { activate(item); }, blocked]);
             }
             entries.push(['info', text.info, function () { showInfo(item); }, false]);
             if (!item.dataset.equipped) entries.push(['sort', text.sort, function () { startSort(item); }, false]);
