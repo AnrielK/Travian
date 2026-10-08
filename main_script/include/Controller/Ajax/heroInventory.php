@@ -55,6 +55,9 @@ class heroInventory extends AjaxBase
         if (!$itemProperties['isUsableIfDead'] && ($this->session->hero->getHeroStatus() == SessionHero::STATUS_DEAD || $this->session->hero->getHeroStatus() == SessionHero::STATUS_REVIVING)) {
             goto after;
         }
+        if ((int)$selectedItem['btype'] === HeroItems::RESOURCE_BTYPE && substr($_REQUEST['drid'], 0, strlen("inventory")) != "inventory") {
+            goto after; // resource items are used through the heroResources command (move resources dialog)
+        }
         if (substr($_REQUEST['drid'], 0, strlen("inventory")) == "inventory") {
             if (!$selectedItem['proc'] || $inventory[$itemProperties['slot']] != $selectedItem['id']) {
                 $this->handleChangePlace($selectedItem);

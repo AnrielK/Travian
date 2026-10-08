@@ -54,6 +54,23 @@ class HeroAdventureCtrl extends GameCtrl
             $view->vars['villages'] .= '<option value="' . $row['kid'] . '-148135" ' . ($row['kid'] == $this->session->village->getKid() ? "selected" : "") . '>' . $row['name'] . '</option>';
         }
         $adventures = $m->getAdventures($this->session->getPlayerId());
+        if (is_hero_v2()) {
+            // Travian Legends adventure list (hero/v2/adventures.php).
+            $this->view->vars['contentCssClass'] = 'heroAdventure';
+            $this->view->vars['titleInHeader'] = T('HeroV2', 'adventures', 'Adventures');
+            $rows = [];
+            while ($row = $adventures->fetch_assoc()) {
+                $rows[] = $this->describeAdventure($row);
+            }
+            $this->view->vars['content'] = PHPBatchView::render('hero/v2/adventures', [
+                'rows' => $rows,
+                'status' => (int)$this->session->hero->getHeroStatus(),
+                'statusMessage' => $view->vars['heroStatusMessage'],
+                'noRallyPoint' => $view->vars['noRallyPoint'],
+                'extraButton' => $view->vars['extraButton'],
+            ]);
+            return;
+        }
         while($row = $adventures->fetch_assoc()) {
             $view->vars['tbody'] .= $this->renderAdventure($row);
         }
@@ -63,6 +80,39 @@ class HeroAdventureCtrl extends GameCtrl
             $view->vars['tbody'] = '<tr><td colspan="6" class="noData">' . T("HeroAdventure", "no adventures") . '</td></tr>';
         }
         $this->view->vars['content'] .= $view->output();
+    }
+
+    /** Place picture of an adventure tile (Legends views/HeroAdventure/place/*). */
+    public static function adventurePlace(array $wdata): string
+    {
+        if ($wdata['landscape']) {
+            return ['forest', 'clay', 'hill', 'lake', 'vulcano'][$wdata['landscape'] - 1] ?? 'grassland';
+        }
+        if ($wdata['fieldtype']) {
+            return $wdata['occupied'] ? 'natar_village' : 'grassland';
+        }
+        $oasis = [2 => 'forest', 'forest', 'forest', 6 => 'clay', 'clay', 'clay', 10 => 'hill', 'hill', 'hill', 14 => 'lake', 'lake'];
+        return $oasis[(int)$wdata['oasistype']] ?? 'grassland';
+    }
+
+    /** One row of the Legends adventure list. */
+    private function describeAdventure(array $row): array
+    {
+        $html = $this->renderAdventure($row); // also prepares the speed calculation context
+        $db = DB::getInstance();
+        $wdata = $db->query("SELECT fieldtype, oasistype, landscape, occupied FROM wdata WHERE id=" . (int)$row['kid'])->fetch_assoc();
+        preg_match('#id="walktime\d+">([^<]*)<#', $html, $walk);
+        $heroOnHisWay = $this->session->hero->getHeroStatus() == SessionHero::STATUS_ON_ADVENTURE
+            && $row['kid'] == $this->session->hero->hero['toKidAdventure'];
+        return [
+            'kid' => (int)$row['kid'],
+            'place' => self::adventurePlace($wdata ?: ['landscape' => 0, 'fieldtype' => 0, 'occupied' => 0, 'oasistype' => 0]),
+            'distance' => Formulas::getDistance($this->session->hero->hero['kid'], $row['kid']),
+            'duration' => trim($walk[1] ?? ''),
+            'hard' => (int)$row['dif'] === 1,
+            'timeLeft' => max(0, (int)$row['time'] - time()),
+            'onTheWay' => $heroOnHisWay,
+        ];
     }
 
     private $inventory = NULL;

@@ -259,7 +259,11 @@ class AuctionModel
         $itemId = (int)$itemId;
         $newPlaceId = (int)$newPlaceId;
         $inventorySize = max($this->getMaxPlaceId($uid), 12);
-        if ($newPlaceId > $inventorySize) {
+        if (function_exists('is_hero_v2') && is_hero_v2()) {
+            // Legends bag: whole rows of 8 places, at least 2 rows (hero/v2/inventory.php shows the same places).
+            $inventorySize = (int)ceil(max($inventorySize, $this->getInventorySize($uid), 16) / 8) * 8;
+        }
+        if ($newPlaceId < 1 || $newPlaceId > $inventorySize) {
             return;
         }
         $db->query("UPDATE items SET placeId=$placeId WHERE uid=$uid AND placeId=$newPlaceId");

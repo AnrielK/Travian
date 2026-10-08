@@ -279,7 +279,7 @@ class HeroAuctionV2
             . '<p>' . sprintf(T('HeroV2', 'sellDescription', 'Click on an item in your inventory to start an auction. Other players can bid on it. An auction lasts up to %s hours.'),
                 round(Config::getInstance()->auction->auctionTime / 3600, 1)) . '</p>';
         $items = [];
-        $result = $this->db->query("SELECT * FROM items WHERE uid=$uid AND proc=0 ORDER BY placeId, id");
+        $result = $this->db->query("SELECT * FROM items WHERE uid=$uid AND proc=0 AND btype<>" . \Game\Hero\HeroItems::RESOURCE_BTYPE . " ORDER BY placeId, id");
         while ($row = $result->fetch_assoc()) {
             $items[(int)$row['placeId']] = $row;
         }

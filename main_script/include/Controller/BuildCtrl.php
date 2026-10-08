@@ -695,6 +695,16 @@ class BuildCtrl extends GameCtrl
             $contract['contractLink'] = $this->getActionText();
         }
         $contract['isNew'] = !($village->getField($this->selectedBuildingIndex)['item_id'] <> 0);
+        if (is_hero_v2() && !$contract['isNew']) {
+            // Travian Legends upgrade page: illustrated header, collapsible description, benefits row.
+            if ($item_id == 15) {
+                $contract['culturePointsAndPopulation']['constructionTime'] = Formulas::getMainBuildingValue($curLevel);
+                $contract['nextLevelCpPop']['constructionTime'] = Formulas::getMainBuildingValue($nextLevel)
+                    - $contract['culturePointsAndPopulation']['constructionTime'];
+            }
+            $contract['tribe'] = [1 => 'roman', 2 => 'teuton', 3 => 'gaul', 6 => 'egyptian', 7 => 'hun'][$this->session->getRace()] ?? 'roman';
+            return PHPBatchView::render("build/buildingReadyLegends", $contract);
+        }
         return PHPBatchView::render("build/buildingReadyWrapper", $contract);
     }
 

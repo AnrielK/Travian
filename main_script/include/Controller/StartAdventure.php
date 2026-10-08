@@ -113,6 +113,20 @@ class StartAdventure extends GameCtrl
                 $quest->setQuestBitwise("battle", 1, Quest::QUEST_FINISHED);
             }
         }
+        if (is_hero_v2()) {
+            // Travian Legends: the adventure picture with the hero's state and a Continue button.
+            $this->view->vars['contentCssClass'] = 'heroAdventure';
+            $this->view->vars['titleInHeader'] = T('HeroV2', 'adventures', 'Adventures');
+            $this->view->vars['content'] = PHPBatchView::render('hero/v2/adventureStarted', [
+                'place' => HeroAdventureCtrl::adventurePlace($wdata ?: ['landscape' => 0, 'fieldtype' => 0, 'occupied' => 0, 'oasistype' => 0]),
+                'status' => (int)$view->vars['status'],
+                'statusMessage' => $view->vars['hasRallyPoint'] ? $view->vars['statusMessage'] : T('HeroAdventure', 'No rallyPoint'),
+                'canStart' => $view->vars['status'] == 100 && $view->vars['hasRallyPoint'],
+                'kid' => $kid,
+                'arrival' => $view->vars['arrival_text'],
+            ]);
+            return;
+        }
         $this->view->vars['content'] .= $view->output();
     }
 

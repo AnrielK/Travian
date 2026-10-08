@@ -19,18 +19,45 @@ foreach ($vars['items'] as $item) {
     }
 }
 $horse = $equipped['horse']['type'] ?? null;
+$heroItems = new \Game\Hero\HeroItems();
+// Tooltip / Info data of an item: name, category and its effects (Legends heroItemTooltip).
+$info = static function (array $item) use ($heroItems): string {
+    $btype = (int)$item['btype'];
+    $properties = $heroItems->getHeroItemProperties($btype, (int)$item['type']);
+    $stats = [];
+    foreach ((array)$properties['attributes'] as $line) {
+        $line = trim(strip_tags(str_replace(['<br>', '<br />'], ' ', (string)$line)));
+        if ($line === '') {
+            continue;
+        }
+        // "Lumber: move lumber to ..." -> title "Lumber" with the explanation as details.
+        if ($btype === \Game\Hero\HeroItems::RESOURCE_BTYPE && strpos($line, ': ') !== false) {
+            [$title, $details] = explode(': ', $line, 2);
+            $stats[] = ['t' => $title, 'd' => ucfirst($details)];
+        } else {
+            $stats[] = ['t' => $line];
+        }
+    }
+    return json_encode([
+        'name' => trim(strip_tags((string)$properties['name'])),
+        'sub' => $btype >= 7 ? T('HeroV2', 'consumable', 'Consumable items') : UI::slotName(UI::itemSlot($btype)),
+        'tier' => UI::itemTier($btype, (int)$item['type']),
+        'stats' => $stats,
+    ]);
+};
+$village = \Core\Village::getInstance();
 ?>
 <div class="contentV2">
     <div class="inventoryPageWrapper" id="heroV2Inventory"
          data-kid="<?=(int)$vars['kid']; ?>" data-checker="<?=$e($vars['checker']); ?>"
-         data-dead="<?=$vars['dead'] ? 1 : 0; ?>" data-in-village="<?=$vars['inVillage'] ? 1 : 0; ?>">
+         data-dead="<?=$vars['dead'] ? 1 : 0; ?>" data-in-village="<?=$vars['inVillage'] ? 1 : 0; ?>"
+         data-village="<?=$e($village->getName()); ?>">
         <div class="currentHeroEquipment<?=$vars['dead'] ? ' isDead' : ''; ?>">
             <div class="equipmentSlots">
                 <?php foreach (UI::EQUIPMENT as $slot): ?>
                     <?php if (isset($equipped[$slot])): $item = $equipped[$slot]; ?>
                         <?=UI::heroItem($item, [
-                            'title' => UI::itemTitle((int)$item['btype'], (int)$item['type']),
-                            'attributes' => ['data-equipped' => $slot, 'draggable' => 'true'],
+                            'attributes' => ['data-equipped' => $slot, 'draggable' => 'true', 'data-info' => $info($item)],
                         ]); ?>
                     <?php else: ?>
                         <?=UI::emptySlot($slot, [
@@ -55,9 +82,9 @@ $horse = $equipped['horse']['type'] ?? null;
                 <?php for ($place = 1; $place <= $vars['inventorySize']; $place++): ?>
                     <?php if (isset($bag[$place])): $item = $bag[$place]; ?>
                         <?=UI::heroItem($item, [
-                            'title' => UI::itemTitle((int)$item['btype'], (int)$item['type']),
                             'attributes' => ['data-place' => $place, 'data-drop' => 'inventory_' . $place, 'draggable' => 'true',
-                                'data-instant' => $item['instant'] ? 1 : 0, 'data-usable-if-dead' => $item['isUsableIfDead'] ? 1 : 0],
+                                'data-instant' => $item['instant'] ? 1 : 0, 'data-usable-if-dead' => $item['isUsableIfDead'] ? 1 : 0,
+                                'data-info' => $info($item)],
                         ]); ?>
                     <?php else: ?>
                         <?=UI::emptySlot('', ['attributes' => ['data-place' => $place, 'data-drop' => 'inventory_' . $place]]); ?>
@@ -67,91 +94,4 @@ $horse = $equipped['horse']['type'] ?? null;
         </div>
     </div>
 </div>
-<script type="text/javascript">
-    (function () {
-        var root = document.getElementById('heroV2Inventory');
-        if (!root) return;
-        var text = <?=json_encode([
-            'amount' => T('HeroInventory', 'useDialogDescription'),
-            'notMoveable' => T('HeroInventory', 'notMoveableText'),
-            'notMoveableDead' => T('HeroInventory', 'notMoveableTextDead'),
-        ]); ?>;
-        var busy = false;
-
-        function send(id, drid, amount) {
-            if (busy) return;
-            busy = true;
-            root.classList.add('loading');
-            Travian.ajax({
-                data: {cmd: 'heroInventory', id: id, drid: drid, amount: amount || 1, a: root.dataset.kid, c: root.dataset.checker},
-                onSuccess: function () { window.location.reload(); },
-                onFailure: function () { window.location.reload(); }
-            });
-        }
-
-        function activate(item) {
-            if (!item || item.classList.contains('empty')) return;
-            var id = item.dataset.id;
-            if (item.dataset.equipped) {
-                send(id, 'inventory_0', 1);
-                return;
-            }
-            if (root.dataset.dead === '1' && item.dataset.usableIfDead !== '1') {
-                alert(text.notMoveableDead);
-                return;
-            }
-            var amount = 1, count = item.querySelector('.count');
-            var max = count ? parseInt(count.textContent, 10) || 1 : 1;
-            if (item.dataset.instant === '1' && max > 1) {
-                var answer = window.prompt(text.amount, String(max));
-                if (answer === null) return;
-                amount = Math.max(1, Math.min(max, parseInt(answer, 10) || 0));
-            } else {
-                amount = max;
-            }
-            send(id, item.dataset.slot, amount);
-        }
-
-        root.addEventListener('click', function (event) {
-            var filter = event.target.closest('.filterSlot');
-            if (filter) {
-                root.querySelectorAll('.filterSlot').forEach(function (f) { f.classList.toggle('active', f === filter); });
-                var items = root.querySelector('.heroItems');
-                items.className = items.className.replace(/filter_\w+/, 'filter_' + filter.dataset.key);
-                return;
-            }
-            activate(event.target.closest('.heroItem'));
-        });
-
-        var dragged = null;
-        root.addEventListener('dragstart', function (event) {
-            dragged = event.target.closest('.heroItem');
-            if (!dragged) return;
-            event.dataTransfer.effectAllowed = 'move';
-            event.dataTransfer.setData('text/plain', dragged.dataset.id || '');
-            dragged.classList.add('dragged');
-        });
-        root.addEventListener('dragend', function () {
-            if (dragged) dragged.classList.remove('dragged');
-            root.querySelectorAll('.dropTarget').forEach(function (t) { t.classList.remove('dropTarget'); });
-        });
-        root.addEventListener('dragover', function (event) {
-            var target = event.target.closest('[data-drop],[data-equipped]');
-            if (!dragged || !target || target === dragged) return;
-            event.preventDefault();
-            root.querySelectorAll('.dropTarget').forEach(function (t) { if (t !== target) t.classList.remove('dropTarget'); });
-            target.classList.add('dropTarget');
-        });
-        root.addEventListener('drop', function (event) {
-            var target = event.target.closest('[data-drop],[data-equipped]');
-            if (!dragged || !target || target === dragged) return;
-            event.preventDefault();
-            var drop = target.dataset.drop || target.dataset.equipped;
-            if (drop.indexOf('inventory_') === 0) {
-                send(dragged.dataset.id, drop, 1);
-            } else if (!dragged.dataset.equipped) {
-                activate(dragged);
-            }
-        });
-    })();
-</script>
+<?php include __DIR__ . '/inventoryScript.php'; ?>

@@ -4974,5 +4974,43 @@ $Definition['HeroV2']['xAuctions'] = '%s auctions';
 $Definition['HeroV2']['yourAuctions'] = 'Your auctions';
 $Definition['HeroV2']['yourBids'] = 'Your bids';
 
+// <ov-legends-ui> OpenVillage Legends UI strings (hero resource items, inventory menu, build page, adventures).
+$Definition['Buildings']['description'] = 'Description';
+$Definition['HeroItems'][16][145]['name'] = 'Lumber cart';
+$Definition['HeroItems'][16][145]['title'] = 'Lumber: move lumber to the warehouse of your currently active village.';
+$Definition['HeroItems'][16][146]['name'] = 'Clay cart';
+$Definition['HeroItems'][16][146]['title'] = 'Clay: move clay to the warehouse of your currently active village.';
+$Definition['HeroItems'][16][147]['name'] = 'Iron cart';
+$Definition['HeroItems'][16][147]['title'] = 'Iron: move iron to the warehouse of your currently active village.';
+$Definition['HeroItems'][16][148]['name'] = 'Crop cart';
+$Definition['HeroItems'][16][148]['title'] = 'Crop: move crop to the granary of your currently active village.';
+$Definition['HeroV2']['adventureDistance'] = 'Distance';
+$Definition['HeroV2']['adventureFields'] = '%s fields';
+$Definition['HeroV2']['adventurePlace'] = 'Place';
+$Definition['HeroV2']['adventures'] = 'Adventures';
+$Definition['HeroV2']['consumable'] = 'Consumable items';
+$Definition['HeroV2']['continue'] = 'Continue';
+$Definition['HeroV2']['equip'] = 'Equip';
+$Definition['HeroV2']['explore'] = 'Explore';
+$Definition['HeroV2']['info'] = 'Info';
+$Definition['HeroV2']['move'] = 'Move';
+$Definition['HeroV2']['moveAmount1'] = 'Amount of lumber to move';
+$Definition['HeroV2']['moveAmount2'] = 'Amount of clay to move';
+$Definition['HeroV2']['moveAmount3'] = 'Amount of iron to move';
+$Definition['HeroV2']['moveAmount4'] = 'Amount of crop to move';
+$Definition['HeroV2']['moveMax'] = 'Fill up';
+$Definition['HeroV2']['moveMaximum'] = 'Move maximum';
+$Definition['HeroV2']['moveResources'] = 'Move resources';
+$Definition['HeroV2']['moveResourcesText'] = 'Move resources to the warehouse of your currently active village: %s';
+$Definition['HeroV2']['resourcesMoved'] = 'The resources were moved to the village.';
+$Definition['HeroV2']['resourcesNotHome'] = 'The hero must be in the active village to move resources.';
+$Definition['HeroV2']['sort'] = 'Sort';
+$Definition['HeroV2']['sortDone'] = 'Done';
+$Definition['HeroV2']['sortHint'] = 'Drag the items to their new places, then click Done.';
+$Definition['HeroV2']['stackable'] = 'The item is stackable.';
+$Definition['HeroV2']['unequip'] = 'Take off';
+$Definition['HeroV2']['use'] = 'Use';
+$Definition['Tasks']['rewardToHero'] = 'The resources were put into your hero\'s inventory.';
+// </ov-legends-ui>
 return $Definition;
 

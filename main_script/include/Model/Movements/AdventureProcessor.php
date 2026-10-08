@@ -10,6 +10,7 @@ use Game\Helpers\HeroHealthHelper;
 use Game\Hero\HeroHelper;
 use Game\NoticeHelper;
 use Game\ResourcesHelper;
+use Game\Hero\HeroItems;
 use Game\SpeedCalculator;
 use Model\AdventureModel;
 use Model\ArtefactsModel;
@@ -210,7 +211,7 @@ class AdventureProcessor
                 case 16://resources
                 case 32://resources
                     $rPerType = $this->calculateResourcesPerType();
-                    $row['data'] = implode(",", [$rPerType[1], $rPerType[2], $rPerType[3], $rPerType[4], 0]);
+                    $row['data'] = $this->resourceReward($owner, $rPerType);
                     NoticeHelper::addNotice(0,
                         $owner,
                         $row['kid'],
@@ -229,7 +230,7 @@ class AdventureProcessor
                 case 64://none or resources
                     if (mt_rand(1, 3) == 2) {
                         $rPerType = $this->calculateResourcesPerType();
-                        $row['data'] = implode(",", [$rPerType[1], $rPerType[2], $rPerType[3], $rPerType[4], 0]);
+                        $row['data'] = $this->resourceReward($owner, $rPerType);
                         NoticeHelper::addNotice(0,
                             $owner,
                             $row['kid'],
@@ -466,7 +467,7 @@ class AdventureProcessor
         } else if ($rand <= 10) {
             //resources
             $rPerType = $this->calculateResourcesPerType();
-            $row['data'] = implode(",", [$rPerType[1], $rPerType[2], $rPerType[3], $rPerType[4], 0]);
+            $row['data'] = $this->resourceReward($owner, $rPerType);
             NoticeHelper::addNotice(0,
                 $owner,
                 $row['kid'],
@@ -525,6 +526,19 @@ class AdventureProcessor
             $this->returnHero($owner, $row);
             ResourcesHelper::updateVillageResources($row['kid'], false);
         }
+    }
+
+    /**
+     * Resources found on an adventure: the returning hero carries them home (movement data), or in the Legends look
+     * they go straight into the hero's bag as resource items and the hero returns empty-handed.
+     */
+    private function resourceReward($owner, array $rPerType): string
+    {
+        if (HeroItems::resourceItemsEnabled()) {
+            HeroItems::giveResources((int)$owner, [$rPerType[1], $rPerType[2], $rPerType[3], $rPerType[4]]);
+            return '0,0,0,0,0';
+        }
+        return implode(",", [$rPerType[1], $rPerType[2], $rPerType[3], $rPerType[4], 0]);
     }
 
     private function returnHero($owner, $row)

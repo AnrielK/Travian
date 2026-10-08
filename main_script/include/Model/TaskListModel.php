@@ -150,7 +150,12 @@ class TaskListModel
             return null;
         }
         $resources = (int)$task['rewardResources'];
-        $this->village->modifyResources([$resources, $resources, $resources, $resources], 1);
+        if (\Game\Hero\HeroItems::resourceItemsEnabled()) {
+            // Legends: task rewards land in the hero's bag as resource items (used from the inventory).
+            \Game\Hero\HeroItems::giveResources((int)$uid, [$resources, $resources, $resources, $resources]);
+        } else {
+            $this->village->modifyResources([$resources, $resources, $resources, $resources], 1);
+        }
         $experience = (int)$task['rewardExperience'];
         if ($experience > 0) {
             $db->query('UPDATE hero SET exp = exp + ' . $experience . ' WHERE uid = ' . (int)$uid);

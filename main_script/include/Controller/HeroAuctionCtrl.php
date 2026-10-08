@@ -476,7 +476,7 @@ class HeroAuctionCtrl extends GameCtrl
                 $item = $db->query(
                     "SELECT * FROM items WHERE id=" . (int)$_POST['id'] .
                     " AND uid=" . (int)$session->getPlayerId() .
-                    " AND proc=0"
+                    " AND proc=0 AND btype<>" . \Game\Hero\HeroItems::RESOURCE_BTYPE
                 );
                 if ($item->num_rows) {
                     $item = $item->fetch_assoc();

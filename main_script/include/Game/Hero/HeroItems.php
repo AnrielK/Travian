@@ -7,6 +7,29 @@ use Game\Formulas;
 
 class HeroItems
 {
+    /** Legends resource items (lumber, clay, iron, crop): btype 16, types 145-148, stackable bag items. */
+    public const RESOURCE_BTYPE = 16;
+    public const RESOURCE_TYPES = [1 => 145, 2 => 146, 3 => 147, 4 => 148];
+
+    /** Rewards (tasks, adventures) go into the hero's bag as resource items in the Legends look (heroV2 packs). */
+    public static function resourceItemsEnabled(): bool
+    {
+        return function_exists('is_hero_v2') && is_hero_v2();
+    }
+
+    /** Puts resources into the hero's bag; $resources is [1 => lumber, 2 => clay, 3 => iron, 4 => crop] or a 0-based list. */
+    public static function giveResources(int $uid, array $resources): void
+    {
+        $values = array_values($resources);
+        $auction = new \Model\AuctionModel();
+        foreach (self::RESOURCE_TYPES as $r => $type) {
+            $amount = (int)floor($values[$r - 1] ?? 0);
+            if ($amount > 0) {
+                $auction->addItemToUser($uid, self::RESOURCE_BTYPE, $type, $amount);
+            }
+        }
+    }
+
     public function getRandomItem()
     {
         mt_srand(make_seed());
@@ -161,6 +184,19 @@ class HeroItems
             $result['slot'] = "horse";
         } elseif ($btype >= 7) {
             $result['slot'] = "bag";
+        }
+        if ($btype == self::RESOURCE_BTYPE) {
+            $resource = (int)array_search((int)$type, self::RESOURCE_TYPES, true) ?: 1;
+            $result['resource'] = $resource;
+            $result['instant'] = true;
+            $result['isUsableIfDead'] = true;
+            $result['attributes'] = [T('HeroItems', "16.$type.title", 'Move the resources to the warehouse of your currently active village.'),
+                T('HeroV2', 'stackable', 'The item is stackable.')];
+            $result['title'] = implode('<br />', $result['attributes']);
+            if ($result['name'] === '' || $result['name'] === "16.$type.name" || $result['name'] === false) {
+                $result['name'] = T('HeroV2', 'resourceItem' . $resource, ['', 'Lumber cart', 'Clay cart', 'Iron cart', 'Crop cart'][$resource]);
+            }
+            return $result;
         }
         $result['instant'] = !($btype <= 9 || $btype == 10);
         if ($btype < 7 || $btype == 10 || $btype == 11) {

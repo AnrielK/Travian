@@ -239,6 +239,46 @@ $t46Indicator = static function ($count) {
         };
         jQuery(function () { mark(); setInterval(mark, 2000); });
     })();
+    // Legends: tooltips sit centred under the hovered object or button (not next to the mouse pointer, which on
+    // touch screens is not where the finger is), above it when there is no room below.
+    (function () {
+        var place = function () {
+            var tip = Travian.Tip;
+            if (!tip || !tip.element || tip.displayState !== 'show' || !tip.elementCurrent || !tip.elementCurrent[0]) {
+                return;
+            }
+            var anchor = tip.elementCurrent[0].getBoundingClientRect();
+            if (!anchor.width && !anchor.height) {
+                return;
+            }
+            var box = tip.element[0], gap = 6, pad = 8, hidden = box.style.display === 'none';
+            if (hidden) { box.style.visibility = 'hidden'; box.style.display = 'block'; }
+            var width = box.offsetWidth, height = box.offsetHeight;
+            if (hidden) { box.style.display = 'none'; box.style.visibility = ''; }
+            var left = anchor.left + anchor.width / 2 - width / 2;
+            left = Math.max(pad, Math.min(left, document.documentElement.clientWidth - width - pad));
+            var top = anchor.bottom + gap;
+            if (top + height > window.innerHeight - pad && anchor.top - gap - height > pad) {
+                top = anchor.top - gap - height;
+            }
+            tip.element.css({left: left + window.pageXOffset, top: top + window.pageYOffset});
+        };
+        jQuery(function () {
+            if (!window.Travian || !Travian.Tip || typeof Travian.Tip.show !== 'function') {
+                return;
+            }
+            var show = Travian.Tip.show;
+            Travian.Tip.show = function () {
+                var result = show.apply(this, arguments);
+                place();
+                setTimeout(place, 150);
+                return result;
+            };
+            // runs after the built-in mousemove handler, which would move the tip next to the pointer again
+            jQuery('body').on('mousemove', place);
+            window.addEventListener('scroll', place, {passive: true});
+        });
+    })();
 </script>
 </body>
 </html>
