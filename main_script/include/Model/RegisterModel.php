@@ -75,8 +75,14 @@ class RegisterModel
             $minDistance = max($minDistance, 23);
             $maxDistance = ($minDistance + 10) + 10 * $tries;
         }
+        // Small maps (e.g. the 51x51 world of the iOS app): the distances above grow past the edge of the map,
+        // keep them inside it (the corners reach r = size * 1.41).
+        $mapSize = defined('MAP_SIZE') ? (int)MAP_SIZE : 400;
+        $inner = min(25, (int)floor($mapSize * 0.4));
+        $minDistance = min($minDistance, max($inner, (int)floor($mapSize * 0.8)) - 4 * $tries);
+        $maxDistance = max($maxDistance, $minDistance + 10 * ($tries + 1));
         $db = DB::getInstance();
-        switch ($sector) {
+        switch ($tries >= 10 ? '' : $sector) {   // last tries: anywhere on the map
             case 'ne':
             case 'no':
                 $angle = [0, 90];
@@ -99,7 +105,7 @@ class RegisterModel
         $conditions[] = 'occupied=0';
         $conditions[] = "fieldtype=$fieldType";
         $conditions[] = "(angle >= {$angle[0]} AND angle <= {$angle[1]})";
-        $conditions[] = "(r > 25 AND r >= $minDistance AND r <= $maxDistance)";
+        $conditions[] = "(r > $inner AND r >= $minDistance AND r <= $maxDistance)";
         $nearby = '(SELECT COUNT(av.kid) FROM available_villages av WHERE av.occupied=1 AND ABS(av.r-a.r) <= 6 AND ABS(av.angle-a.angle) <= 8)';
         $conditions[] = "$nearby < 3";
         $conditions = implode(" AND ", $conditions);

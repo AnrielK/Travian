@@ -23,6 +23,8 @@ class ActivateCtrl extends OutOfGameCtrl
     private $useNewActivation = false;
     private $token;
     private $activationRow    = [];
+    /** Travian Legends look (legends655): standalone, phone friendly pages, see activationNew/legendsPage.php */
+    private $legends          = false;
 
     public function __construct()
     {
@@ -31,6 +33,7 @@ class ActivateCtrl extends OutOfGameCtrl
             $this->availableTribes = [1, 2, 3];
         }
         $this->useNewActivation = is_new_gpack();
+        $this->legends = function_exists('is_hero_v2') && is_hero_v2();
         $config = Config::getInstance();
         if ($config->dynamic->maintenance == TRUE) {
             $this->redirect("login.php");
@@ -97,8 +100,27 @@ class ActivateCtrl extends OutOfGameCtrl
         $_SESSION[WebService::fixSessionPrefix(sprintf("%s_%s", $this->token, $name))] = $value;
     }
 
+    /** Legends activation step (tribe, sector, confirm) as a page of its own. */
+    private function legendsPage(string $step, string $error = '')
+    {
+        $this->view = new PHPBatchView('activationNew/legendsPage');
+        $this->view->vars = [
+            'step' => $step,
+            'tribes' => $this->availableTribes,
+            'tribe' => $this->getTribe(),
+            'tribeChosen' => $this->getSessionVar('race') !== null,
+            'sector' => $this->getSector(),
+            'name' => $this->getSessionVar('name', $this->activationRow['name']),
+            'error' => $error,
+        ];
+    }
+
     public function race()
     {
+        if ($this->legends) {
+            $this->legendsPage('tribe');
+            return;
+        }
         if ($this->useNewActivation) {
             $this->view->vars['titleInHeader'] = T("ActivationNew", "Select your tribe");
             $this->view->vars['content'] = PHPBatchView::render('activationNew/race', ['tribes' => $this->availableTribes]);
@@ -119,6 +141,10 @@ class ActivateCtrl extends OutOfGameCtrl
 
     public function sector()
     {
+        if ($this->legends) {
+            $this->legendsPage('sector');
+            return;
+        }
         if ($this->useNewActivation) {
             $this->view->vars['titleInHeader'] = T("ActivationNew", "Select your starting position");
             $view = new PHPBatchView("activationNew/sector");
@@ -155,6 +181,10 @@ class ActivateCtrl extends OutOfGameCtrl
 
     private function confirmation()
     {
+        if ($this->legends) {
+            $this->legendsPage('confirm');
+            return;
+        }
         $this->view->vars['titleInHeader'] = T("ActivationNew", "Ready to rule the world?");
         $view = new PHPBatchView("activationNew/confirmation");
         $view->vars = ["sector" => $this->getSector(), 'race' => $this->getTribe()];
@@ -170,11 +200,44 @@ class ActivateCtrl extends OutOfGameCtrl
         return 'sw';
     }
 
+    /** Character name chosen on the confirmation step ('' = valid, otherwise the error). */
+    private function takeCharacterName(): string
+    {
+        if (!isset($_POST['name'])) {
+            return '';
+        }
+        $name = trim((string)$_POST['name']);
+        $this->setSessionVar('name', $name);
+        if ($name === $this->activationRow['name']) {
+            return '';
+        }
+        if (preg_match('/^[A-Za-z0-9 _-]{3,15}$/', $name) !== 1) {
+            return T('ActivationNew', 'nameInvalid', 'The name must have 3–15 letters, numbers, spaces, underscores or hyphens.');
+        }
+        $db = DB::getInstance();
+        $taken = $db->run('SELECT 1 FROM users WHERE name=? UNION ALL SELECT 1 FROM activation WHERE name=? AND id<>? LIMIT 1',
+            [$name, $name, (int)$this->activationRow['id']])->get_result()->num_rows;
+        if ($taken) {
+            return T('ActivationNew', 'nameTaken', 'This name is already taken.');
+        }
+        $db->run('UPDATE activation SET name=? WHERE id=?', [$name, (int)$this->activationRow['id']]);
+        $this->activationRow['name'] = $name;
+        return '';
+    }
+
     private function completeRegistration()
     {
+        if ($this->legends && ($error = $this->takeCharacterName()) !== '') {
+            $this->legendsPage('confirm', $error);
+            return;
+        }
         $register = new RegisterModel();
         $kid = $register->generateBase($this->getSector());
         if (!$kid) {
+            if ($this->legends) {
+                $this->legendsPage('confirm', T("ActivationNew", "unableToGenerateBase"));
+                return;
+            }
             $this->view->vars['content'] .= '<h3 style="font-weight: bold">' . T("ActivationNew", "unableToGenerateBase") . '</h3>';
             return;
         }
