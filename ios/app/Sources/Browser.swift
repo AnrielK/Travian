@@ -78,9 +78,19 @@ final class BrowserModel: NSObject, ObservableObject, WKNavigationDelegate, WKUI
             try? await Task.sleep(nanoseconds: 200_000_000)   // content size follows the new viewport
             guard let self else { return }
             let scroll = self.webView.scrollView
+            // Pages made for phones (lobby, login, activation) have their own viewport: no zoom carried over
+            // from the previous game page, start at the left edge.
+            let own = (try? await self.webView.evaluateJavaScript(
+                "document.querySelector('meta[name=viewport]:not([data-ov])') ? 1 : 0")) as? Int ?? 0
+            if own == 1 {
+                let fit = scroll.minimumZoomScale
+                if abs(scroll.zoomScale - fit) > 0.01 { scroll.setZoomScale(fit, animated: false) }
+                scroll.setContentOffset(CGPoint(x: -scroll.adjustedContentInset.left, y: scroll.contentOffset.y), animated: false)
+                return
+            }
             let width = scroll.bounds.width - scroll.adjustedContentInset.left - scroll.adjustedContentInset.right
             let pageWidth = scroll.contentSize.width / max(scroll.zoomScale, 0.01)
-            guard width > 0, pageWidth > 1000 else { return }   // only the wide game layout, not the launcher
+            guard width > 0, pageWidth > 1000 else { return }   // only the wide game layout
             let portrait = scroll.bounds.height > scroll.bounds.width
             let target = portrait ? width / 480 : width / pageWidth
             if !newPage || abs(scroll.zoomScale - target) > 0.01 {
@@ -105,6 +115,7 @@ final class BrowserModel: NSObject, ObservableObject, WKNavigationDelegate, WKUI
     if (document.querySelector('meta[name=viewport]')) return;   // pages made for phones (launcher) stay as they are
     var meta = document.createElement('meta');
     meta.name = 'viewport';
+    meta.setAttribute('data-ov', '1');
     (document.head || document.documentElement).appendChild(meta);
     function portrait() {
         return typeof window.orientation === 'number' ? window.orientation % 180 === 0 : screen.height > screen.width;

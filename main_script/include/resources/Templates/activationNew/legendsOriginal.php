@@ -27,7 +27,20 @@ $logo = '<svg viewBox="0 0 172.7 60" aria-label="OpenVillage"><path class="ovEmb
 <head>
     <title>OpenVillage – <?=$e($titles[$step]); ?></title>
     <meta charset="utf-8"/>
-    <meta name="viewport" content="width=device-width"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1"/>
+    <script>
+        // The Legends mobile layout is 620 px wide: phones in portrait show it scaled to the screen width.
+        (function () {
+            var meta = document.querySelector('meta[name=viewport]');
+            function fit() {
+                var portrait = window.matchMedia('(orientation: portrait)').matches;
+                var narrow = Math.min(screen.width, screen.height) < 620;
+                meta.setAttribute('content', portrait && narrow ? 'width=620' : 'width=device-width, initial-scale=1');
+            }
+            fit();
+            window.addEventListener('orientationchange', function () { setTimeout(fit, 100); });
+        })();
+    </script>
     <meta name="theme-color" content="#F4EFE4"/>
     <link href="<?=$e($pack); ?>css/legends_ltr.css" rel="stylesheet" type="text/css"/>
     <style>

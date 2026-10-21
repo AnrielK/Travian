@@ -80,6 +80,11 @@ ob_start(static function (string $html): string {
         }
         header .accountMenu .openCloseAccountMenu .dot { width: 10px; height: 10px; border-radius: 50%; background: #91c44a; box-shadow: 0 0 6px #91c44a; }
         header .accountMenu .openCloseAccountMenu .dot.waiting { background: #d8a53d; box-shadow: 0 0 6px #d8a53d; }
+        /* footer links under the line without background (also in portrait), separated like on wide screens */
+        footer nav { display: flex !important; flex-wrap: wrap; justify-content: center; gap: 6px 0 !important; width: auto !important; }
+        footer nav a { background: none !important; border-radius: 0 !important; padding: 0 10px !important; }
+        footer nav a:not(:first-of-type) { border-inline-start: 1px solid var(--fontColor) !important; }
+        .modal { max-width: calc(100vw - 36px) !important; box-sizing: border-box; }
     </style>
 </head>
 <body class="<?= $view ?>">

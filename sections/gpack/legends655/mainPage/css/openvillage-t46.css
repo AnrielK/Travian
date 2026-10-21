@@ -1015,3 +1015,23 @@ body.t46Layout #content.heroV2Inventory .heroItem.sortTarget { box-shadow: inset
 /* Side panels start at the height of the content windows (e.g. the hero window) on every page. */
 body.t46Layout.legendsV2 #sidebarBeforeContent,
 body.t46Layout.legendsV2 #sidebarAfterContent { margin-top: 15px; }
+
+/* Legends header: logo centred in the top band, gold framed round buttons top right */
+body.t46Layout.legendsV2 #topBar #logo.legendsLogo { top: -2px; }
+body.t46Layout.legendsV2 nav#outOfGame { top: 4px; gap: 7px; }
+body.t46Layout.legendsV2 nav#outOfGame .layoutButton { width: 34px; height: 34px; border: 3px solid transparent;
+    background: linear-gradient(to bottom, #faf6ea, #c8bdaa) padding-box,
+        linear-gradient(180deg, #cba467 5%, #f3e2ae 13%, #efbf7b 32%, #aa8050 48%, #835e35 72%, #ad8a54 93%, #d7b672 100%) border-box;
+    box-shadow: 0 0 0 1px #34220d, 0 2px 3px rgba(0, 0, 0, .45); }
+body.t46Layout.legendsV2 nav#outOfGame .layoutButton:hover { background: linear-gradient(to bottom, #ffffff, #ddd3c1) padding-box,
+        linear-gradient(180deg, #cba467 5%, #f3e2ae 13%, #efbf7b 32%, #aa8050 48%, #835e35 72%, #ad8a54 93%, #d7b672 100%) border-box; }
+/* Legends footer: light line, white link row, copyright, dark down to the bottom of the page */
+html body.t46Layout.legendsV2 { background-color: #1f1e1c; }
+body.t46Layout.legendsV2 div#footer { margin-top: 30px; padding: 18px 10px 40px; text-align: center; font-size: 13px; color: #fffdf8;
+    border-top: 1px solid transparent; border-image: linear-gradient(90deg, #fffdf800, #fffdf8 40%, #fffdf8 60%, #fffdf800) 1 0 0;
+    background: radial-gradient(50% 100% ellipse at 50% 0, rgba(0, 0, 0, .45), rgba(0, 0, 0, 0)), linear-gradient(rgba(31, 30, 28, 0), #1f1e1c 70%); }
+body.t46Layout.legendsV2 div#footer #pageLinks, body.t46Layout.legendsV2 div#footer ul { display: flex; flex-wrap: wrap; justify-content: center; margin: 0; padding: 0; list-style: none; }
+body.t46Layout.legendsV2 div#footer a { color: #fffdf8; font-weight: 700; text-decoration: none; padding: 0 12px; line-height: 1.2; text-shadow: 0 1px 2px #000; }
+body.t46Layout.legendsV2 div#footer a + a, body.t46Layout.legendsV2 div#footer li + li a { border-left: 1px solid #fffdf8; }
+body.t46Layout.legendsV2 div#footer a:hover { text-decoration: underline; }
+body.t46Layout.legendsV2 div#footer .copyright, body.t46Layout.legendsV2 div#footer p { margin-top: 10px; color: #fffdf8; text-shadow: 0 1px 2px #000; }

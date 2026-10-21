@@ -31,6 +31,11 @@ ob_start(static fn(string $html): string => (string)preg_replace('~>\s+<~', '><'
         #lobbyLogin .links { display: flex; justify-content: space-between; gap: 10px; flex-wrap: wrap; margin-block: 0 20px; }
         #lobbyLogin .links a { color: #5c8a2b; font-weight: 700; text-decoration: none; }
         #lobbyLogin form > button { justify-self: center; }
+        /* footer links under the line without background (also in portrait), separated like on wide screens */
+        footer nav { display: flex !important; flex-wrap: wrap; justify-content: center; gap: 6px 0 !important; width: auto !important; }
+        footer nav a { background: none !important; border-radius: 0 !important; padding: 0 10px !important; }
+        footer nav a:not(:first-of-type) { border-inline-start: 1px solid var(--fontColor) !important; }
+        .modal { max-width: calc(100vw - 36px) !important; box-sizing: border-box; }
     </style>
 </head>
 <body>
