@@ -311,10 +311,8 @@ struct SecondPlayerView: View {
 
     var body: some View {
         NavigationView {
-            // Classic bar: the web view ends above it. Liquid Glass bar (iOS 26): the page runs under the floating
-            // bar and gets that much room at its end, so the end of long pages is never hidden behind it.
             WebView(webView: browser.webView)
-                .ignoresSafeArea(edges: Self.glassBar ? .bottom : [])
+                .ignoresSafeArea(edges: .bottom)
                 .navigationTitle("Druhý hráč")
                 .navigationBarTitleDisplayMode(.inline)
                 .toolbar {
