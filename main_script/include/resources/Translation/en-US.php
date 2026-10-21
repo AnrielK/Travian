@@ -2603,7 +2603,7 @@ $Definition['Login']['Request new CAPTCHA'] = 'Request new CAPTCHA.';
 $Definition['Login']['Email'] = 'Email';
 $Definition['Login']['Request password'] = 'Request password';
 $Definition['Login']['Sent to'] = 'Password was sent';
-$Definition['Login']['EmailEmpty'] = 'ایمیل خالی است.';
+$Definition['Login']['EmailEmpty'] = 'Email is empty.';
 $Definition['Login']['PasswordChangedSuccessfully'] = 'The password has been successfully changed.';
 $Definition['Login']['PasswordFail'] = 'Password didn\'t changed. Perhaps the code is already used.';
 $Definition['Login']['pw_forgot_email'] = nl2br('
@@ -5404,5 +5404,20 @@ $Definition['HeroV2']['unequip'] = 'Take off';
 $Definition['HeroV2']['use'] = 'Use';
 $Definition['Tasks']['rewardToHero'] = 'The resources were put into your hero\'s inventory.';
 // </ov-legends-ui>
+// <ov-openvillage> texts of the OpenVillage pages (footer, lobby menu)
+$Definition['OpenVillage'] = [
+    'home' => 'Home',
+    'lobby' => 'Lobby',
+    'login' => 'Login',
+    'rules' => 'Rules and operations',
+    'rulesShort' => 'Rules',
+    'terms' => 'Terms',
+    'privacy' => 'Privacy',
+    'project' => 'OpenVillage preservation project',
+    'copyright' => 'OpenVillage preservation project · Not affiliated with Travian Games.',
+    'copyrightLong' => 'OpenVillage preservation project · Not affiliated with or endorsed by Travian Games.',
+    'joinGameworld' => 'Join gameworld',
+];
+$Definition['Reports']['x switched from y to z'] = '%s switched from alliance %s to %s.';
+// </ov-openvillage>
 return $Definition;
-

@@ -200,13 +200,13 @@ $t46Indicator = static function ($count) {
         <div id="footer">
             <!--email_off-->
             <div id="pageLinks">
-                <a href="/">Home</a>
-                <a href="/docs/">Rules and operations</a>
-                <a href="/terms.html">Terms</a>
-                <a href="/privacy.html">Privacy</a>
+                <a href="/"><?=T("OpenVillage", "home", "Home"); ?></a>
+                <a href="/docs/"><?=T("OpenVillage", "rules", "Rules and operations"); ?></a>
+                <a href="/terms.html"><?=T("OpenVillage", "terms", "Terms"); ?></a>
+                <a href="/privacy.html"><?=T("OpenVillage", "privacy", "Privacy"); ?></a>
                 <?php if ($t46V2): ?><a href="<?=getForumUrl(); ?>" target="_blank"><?=T("inGame", "Forum.Forum"); ?></a><?php endif; ?>
             </div>
-            <p class="copyright" style="direction:ltr;">OpenVillage preservation project · Not affiliated with Travian Games.</p>
+            <p class="copyright" style="direction:ltr;"><?=T("OpenVillage", "copyright", "OpenVillage preservation project · Not affiliated with Travian Games."); ?></p>
             <!--/email_off-->
         </div>
     </div>

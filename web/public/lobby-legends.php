@@ -28,10 +28,10 @@ $speedNumber = rtrim(rtrim(number_format($speed, 2, '.', ''), '0'), '.');
 $background = $speed > 1 ? 'defaultSpeed' : 'default';
 $tribeIcons = '<div class="tribes">';
 foreach (['roman' => 'Romans', 'teuton' => 'Teutons', 'gaul' => 'Gauls', 'egyptian' => 'Egyptians', 'hun' => 'Huns'] as $tribe => $label) {
-    $tribeIcons .= '<i class="tribe ' . $tribe . '" title="' . $label . '"></i>';
+    $tribeIcons .= '<i class="tribe ' . $tribe . '" title="' . escape(lt($label)) . '"></i>';
 }
 $tribeIcons .= '</div>';
-$title = '<div class="title"><div class="avatarName">%s</div><div class="gameworldName">Local world</div><div class="subtitle">OpenVillage 4.6</div></div>';
+$title = '<div class="title"><div class="avatarName">%s</div><div class="gameworldName">' . escape(lt('Local world')) . '</div><div class="subtitle">OpenVillage 4.6</div></div>';
 $close = '<button type="button" class="framed green closeButton withIcon" data-close>' . $svg('close', true) . '</button>';
 $view = isset($_GET['join']) ? 'join' : 'worlds';
 // The Legends stylesheet sets white-space: pre-line, so whitespace between tags would become empty lines
@@ -47,7 +47,7 @@ ob_start(static function (string $html): string {
 });
 ?>
 <!doctype html>
-<html lang="en" style="--readingDirection: ltr; --readingDirectionFrom: left; --readingDirectionTo: right; --scaleXFactor: 1;">
+<html lang="<?= lobby_language() ?>" style="--readingDirection: ltr; --readingDirectionFrom: left; --readingDirectionTo: right; --scaleXFactor: 1;">
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
@@ -97,16 +97,17 @@ ob_start(static function (string $html): string {
             <nav class="pageMenu">
                 <a class="openClosePageMenu closed" data-toggle-menu><?= $svg('menu', true) ?></a>
                 <div class="menu" hidden>
-                    <a href="/"><span>Your gameworlds</span><?= $svg('chevron') ?></a>
-                    <a href="/?join=1"><span>Join new gameworld</span><?= $svg('chevron') ?></a>
-                    <a data-open="login"><span>Login</span><?= $svg('chevron') ?></a>
-                    <a href="/docs/"><span>Rules and operations</span><?= $svg('chevron') ?></a>
+                    <a href="/"><span><?= lt('Your gameworlds') ?></span><?= $svg('chevron') ?></a>
+                    <a href="/?join=1"><span><?= lt('Join new gameworld') ?></span><?= $svg('chevron') ?></a>
+                    <a data-open="login"><span><?= lt('Login') ?></span><?= $svg('chevron') ?></a>
+                    <a href="/docs/"><span><?= lt('Rules and operations') ?></span><?= $svg('chevron') ?></a>
+                    <a href="?lang=<?= lobby_language() === 'cs' ? 'en' : 'cz' ?>"><span><?= lobby_language() === 'cs' ? 'English' : 'Čeština' ?></span><?= $svg('chevron') ?></a>
                 </div>
             </nav>
             <?php if ($view === 'join'): ?>
-                <button type="button" class="secondary withText" onclick="location.href='/'"><div><?= $svg('chevron') ?><span>Back to your gameworlds</span></div></button>
+                <button type="button" class="secondary withText" onclick="location.href='/'"><div><?= $svg('chevron') ?><span><?= lt('Back to your gameworlds') ?></span></div></button>
             <?php else: ?>
-                <button type="button" class="framed green withText" onclick="location.href='/?join=1'"><div>Join new gameworld</div></button>
+                <button type="button" class="framed green withText" onclick="location.href='/?join=1'"><div><?= lt('Join new gameworld') ?></div></button>
             <?php endif; ?>
         </div>
         <svg class="logo" viewBox="0 0 173.48 60" preserveAspectRatio="xMinYMid slice" onclick="location.href='/'" aria-label="OpenVillage">
@@ -117,55 +118,55 @@ ob_start(static function (string $html): string {
         </svg>
         <div class="headerContainerEnd">
             <nav class="accountMenu">
-                <a class="openCloseAccountMenu closed" data-open="login"><span class="dot<?= $ready ? '' : ' waiting' ?>"></span><span>Local world</span><?= $svg('chevron', false, 'closed') ?></a>
+                <a class="openCloseAccountMenu closed" data-open="login"><span class="dot<?= $ready ? '' : ' waiting' ?>"></span><span><?= lt('Local world') ?></span><?= $svg('chevron', false, 'closed') ?></a>
             </nav>
         </div>
     </header>
 
     <main id="accountAvatars">
-        <h1>Your gameworlds</h1>
+        <h1><?= lt('Your gameworlds') ?></h1>
         <section class="yourGameworlds">
             <div class="gameworld owner">
                 <div class="background <?= $background ?>"></div>
                 <div class="content">
                     <?= sprintf($title, 'OpenVillage') ?>
                     <div class="lastActivity"><span><?= escape($ageShort) ?></span><?= $svg('clock', true) ?></div>
-                    <button type="button" class="minimal green playNow withText" onclick="location.href='/game/dorf1.php'"><div><?= $svg('play', true) ?><span>Play now</span></div></button>
+                    <button type="button" class="minimal green playNow withText" onclick="location.href='/game/dorf1.php'"><div><?= $svg('play', true) ?><span><?= lt('Play now') ?></span></div></button>
                     <div class="actions">
-                        <button type="button" class="framed round blue duals withIcon" data-open="register" title="Another account"><?= $svg('duals', true) ?></button>
-                        <button type="button" class="framed round green showGameworldDetails withIcon" data-open="details" title="Gameworld details"><?= $svg('info', true) ?></button>
+                        <button type="button" class="framed round blue duals withIcon" data-open="register" title="<?= escape(lt('Another account')) ?>"><?= $svg('duals', true) ?></button>
+                        <button type="button" class="framed round green showGameworldDetails withIcon" data-open="details" title="<?= escape(lt('Gameworld details')) ?>"><?= $svg('info', true) ?></button>
                     </div>
                 </div>
             </div>
-            <div class="joinNewGameworld" onclick="location.href='/?join=1'"><?= $svg('plus') ?><span>Join new gameworld</span></div>
+            <div class="joinNewGameworld" onclick="location.href='/?join=1'"><?= $svg('plus') ?><span><?= lt('Join new gameworld') ?></span></div>
         </section>
     </main>
 
     <main id="newGameworlds">
-        <h1>Join new gameworld</h1>
+        <h1><?= lt('Join new gameworld') ?></h1>
         <section class="results">
             <div class="gameworld new" data-open="details">
                 <div class="background <?= $background ?>"></div>
                 <div class="content">
                     <?= sprintf($title, '') ?>
-                    <div class="serverAge" title="Server age in days"><i></i><span><?= $ageDays ?></span></div>
-                    <div class="speed" title="Server speed"><i></i><span>×<?= escape($speedNumber) ?></span></div>
+                    <div class="serverAge" title="<?= escape(lt('Server age in days')) ?>"><i></i><span><?= $ageDays ?></span></div>
+                    <div class="speed" title="<?= escape(lt('Server speed')) ?>"><i></i><span>×<?= escape($speedNumber) ?></span></div>
                     <?= $tribeIcons ?>
                 </div>
-                <div class="recommended"><?= $svg('recommended') ?><span>Recommended</span></div>
+                <div class="recommended"><?= $svg('recommended') ?><span><?= lt('Recommended') ?></span></div>
             </div>
         </section>
     </main>
 
     <footer>
         <nav>
-            <a href="/">Lobby</a>
-            <a href="/docs/">Rules and operations</a>
-            <a href="/terms.html">Terms</a>
-            <a href="/privacy.html">Privacy</a>
-            <a href="/health.php">Health</a>
+            <a href="/"><?= lt('Lobby') ?></a>
+            <a href="/docs/"><?= lt('Rules and operations') ?></a>
+            <a href="/terms.html"><?= lt('Terms') ?></a>
+            <a href="/privacy.html"><?= lt('Privacy') ?></a>
+            <a href="/health.php"><?= lt('Health') ?></a>
         </nav>
-        <div class="copyright">OpenVillage preservation project · Not affiliated with or endorsed by Travian Games.</div>
+        <div class="copyright"><?= lt('OpenVillage preservation project · Not affiliated with or endorsed by Travian Games.') ?></div>
     </footer>
 </div>
 
@@ -177,14 +178,14 @@ ob_start(static function (string $html): string {
             <div class="content"><?= sprintf($title, '') ?><?= $tribeIcons ?></div>
         </div>
         <section class="details hasAction">
-            <div class="serverAge"><i></i><span>Age:<strong><?= $ageDays ?> <?= $ageDays === 1 ? 'day' : 'days' ?></strong></span></div>
-            <div class="speed"><i></i><span>Speed:<strong>×<?= escape($speedNumber) ?></strong></span></div>
-            <div class="playerCount"><i></i><span>Players:<strong><?= (int)$world['players'] ?></strong></span></div>
-            <div class="map"><i></i><span>Map size:<strong><?= escape($mapText) ?></strong></span></div>
+            <div class="serverAge"><i></i><span><?= lt('Age:') ?><strong><?= $ageDays ?> <?= lt($ageDays === 1 ? 'day' : 'days') ?></strong></span></div>
+            <div class="speed"><i></i><span><?= lt('Speed:') ?><strong>×<?= escape($speedNumber) ?></strong></span></div>
+            <div class="playerCount"><i></i><span><?= lt('Players:') ?><strong><?= (int)$world['players'] ?></strong></span></div>
+            <div class="map"><i></i><span><?= lt('Map size:') ?><strong><?= escape(lt($mapText)) ?></strong></span></div>
         </section>
         <section class="action">
             <form onsubmit="return false">
-                <button type="button" class="framed green withText" data-open="register" <?= $ready ? '' : 'disabled' ?>><div>Join gameworld</div></button>
+                <button type="button" class="framed green withText" data-open="register" <?= $ready ? '' : 'disabled' ?>><div><?= lt('Join gameworld') ?></div></button>
             </form>
         </section>
     </div>
@@ -193,17 +194,17 @@ ob_start(static function (string $html): string {
 <div id="overlay" data-modal="register" <?= $error === '' ? 'hidden' : '' ?>>
     <div id="registration" class="modal">
         <?= $close ?>
-        <h1>Join gameworld</h1>
+        <h1><?= lt('Join gameworld') ?></h1>
         <form method="post" action="/register.php">
-            <?php if ($error !== ''): ?><p class="error"><?= escape($error) ?></p><?php endif; ?>
+            <?php if ($error !== ''): ?><p class="error"><?= escape(lt($error)) ?></p><?php endif; ?>
             <input type="hidden" name="csrf" value="<?= escape(csrf_token()) ?>">
-            <label class="text"><input name="username" minlength="3" maxlength="15" pattern="[A-Za-z0-9 _\-]+" required autocomplete="username"><div class="label">Player name</div></label>
-            <label class="text"><input type="email" name="email" maxlength="90" required autocomplete="email"><div class="label">Email</div></label>
-            <label class="text"><input type="password" name="password" minlength="10" maxlength="128" required autocomplete="new-password"><div class="label">Password</div></label>
-            <label class="check"><input type="checkbox" name="terms" value="1" required><span>I accept the <a href="/terms.html">terms</a> and <a href="/privacy.html">privacy notice</a>.</span></label>
-            <p class="hint">Next you choose your tribe, the starting sector and the name of your character.</p>
-            <div class="links"><a data-open="login">I already have an account – log in</a></div>
-            <button type="submit" class="framed green withText" <?= $ready ? '' : 'disabled' ?>><div>Continue</div></button>
+            <label class="text"><input name="username" minlength="3" maxlength="15" pattern="[A-Za-z0-9 _\-]+" required autocomplete="username"><div class="label"><?= lt('Player name') ?></div></label>
+            <label class="text"><input type="email" name="email" maxlength="90" required autocomplete="email"><div class="label"><?= lt('Email') ?></div></label>
+            <label class="text"><input type="password" name="password" minlength="10" maxlength="128" required autocomplete="new-password"><div class="label"><?= lt('Password') ?></div></label>
+            <label class="check"><input type="checkbox" name="terms" value="1" required><span><?= lt('I accept the <a href="/terms.html">terms</a> and <a href="/privacy.html">privacy notice</a>.') ?></span></label>
+            <p class="hint"><?= lt('Next you choose your tribe, the starting sector and the name of your character.') ?></p>
+            <div class="links"><a data-open="login"><?= lt('I already have an account – log in') ?></a></div>
+            <button type="submit" class="framed green withText" <?= $ready ? '' : 'disabled' ?>><div><?= lt('Continue') ?></div></button>
         </form>
     </div>
 </div>
@@ -211,13 +212,13 @@ ob_start(static function (string $html): string {
 <div id="overlay" data-modal="login" hidden>
     <div id="login" class="modal">
         <?= $close ?>
-        <h1>Login</h1>
+        <h1><?= lt('Login') ?></h1>
         <form method="post" action="/game/login.php">
-            <label class="text"><input name="name" required autocomplete="username"><div class="label">Account name or e-mail address</div></label>
-            <label class="text"><input type="password" name="password" required autocomplete="current-password"><div class="label">Password</div></label>
+            <label class="text"><input name="name" required autocomplete="username"><div class="label"><?= lt('Account name or e-mail address') ?></div></label>
+            <label class="text"><input type="password" name="password" required autocomplete="current-password"><div class="label"><?= lt('Password') ?></div></label>
             <input type="hidden" name="s1" value="Login"><input type="hidden" name="w" value="">
-            <div class="links"><a href="/game/login.php?forgotPassword=1">Password forgotten?</a><a data-open="register">Join gameworld</a></div>
-            <button type="submit" class="framed green withText"><div>Login</div></button>
+            <div class="links"><a href="/game/login.php?forgotPassword=1"><?= lt('Password forgotten?') ?></a><a data-open="register"><?= lt('Join gameworld') ?></a></div>
+            <button type="submit" class="framed green withText"><div><?= lt('Login') ?></div></button>
         </form>
     </div>
 </div>

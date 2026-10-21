@@ -251,10 +251,10 @@ class Dorf3Ctrl extends GameCtrl
             $row['crop'] = floor(max($row['crop'], 0));
             $content .= '<tr class="' . ($row['kid'] == $this->session->getKid() ? 'hl' : 'hover') . '">';
             $content .= '<td class="vil fc"><a href="dorf1.php?newdid=' . $row['kid'] . '">' . $row['name'] . '</a></td>';
-            $content .= '<td class="lum">' . number_format($row['wood'], 0, ',', ',') . '</td>';
-            $content .= '<td class="clay">' . number_format($row['clay'], 0, ',', ',') . '</td>';
-            $content .= '<td class="iron">' . number_format($row['iron'], 0, ',', ',') . '</td>';
-            $content .= '<td class="crop">' . number_format($row['crop'], 0, ',', ',') . '</td>';
+            $content .= '<td class="lum">' . number_format($row['wood'], 0, ',', number_thousands_separator()) . '</td>';
+            $content .= '<td class="clay">' . number_format($row['clay'], 0, ',', number_thousands_separator()) . '</td>';
+            $content .= '<td class="iron">' . number_format($row['iron'], 0, ',', number_thousands_separator()) . '</td>';
+            $content .= '<td class="crop">' . number_format($row['crop'], 0, ',', number_thousands_separator()) . '</td>';
             $summary['r1'] += $row['wood'];
             $summary['r2'] += $row['clay'];
             $summary['r3'] += $row['iron'];
@@ -283,10 +283,10 @@ class Dorf3Ctrl extends GameCtrl
             $content .= '<td class="tra lc"><a href="build.php?newdid=' . $row['kid'] . '&gid=17">‎‭‭‭' . $available . '‬‬/‭‭' . $totalMerchants . '</a></td>';
             $content .= '</tr>';
         }
-        $summary['r1'] = number_format($summary['r1'], 0, ',', ',');
-        $summary['r2'] = number_format($summary['r2'], 0, ',', ',');
-        $summary['r3'] = number_format($summary['r3'], 0, ',', ',');
-        $summary['r4'] = number_format($summary['r4'], 0, ',', ',');
+        $summary['r1'] = number_format($summary['r1'], 0, ',', number_thousands_separator());
+        $summary['r2'] = number_format($summary['r2'], 0, ',', number_thousands_separator());
+        $summary['r3'] = number_format($summary['r3'], 0, ',', number_thousands_separator());
+        $summary['r4'] = number_format($summary['r4'], 0, ',', number_thousands_separator());
         $view->vars['summary'] = $summary;
         $this->view->vars['content'] .= $view->output();
     }

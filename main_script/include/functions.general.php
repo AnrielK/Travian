@@ -178,7 +178,17 @@ function number_format_x($x, $after = 1e15)
 //        return number_to_string($x);
 //    }
     if (!getDisplay("separateNumbers3By3") || !is_numeric($x) || $x == '?') return $x;
-    return number_format($x, 0, ',', ',');
+    return number_format($x, 0, ',', number_thousands_separator());
+}
+
+/** Thousands separator of the player's language: "1 005" in Czech, "1,005" otherwise. */
+function number_thousands_separator()
+{
+    static $separator = null;
+    if ($separator === null) {
+        $separator = get_locale() === 'cs-CZ' ? "\u{00A0}" : ',';
+    }
+    return $separator;
 }
 
 function isInstantFinishEnabled()
@@ -756,7 +766,11 @@ function get_locale()
 function get_gpack_link_and_hash($fileName, $useLang = true)
 {
     if ($useLang) {
-        $fileName = get_gpack_cdn_mainPage_url() . 'lang/' . get_language_properties('locale') . '/' . $fileName;
+        $locale = get_language_properties('locale');
+        if (!is_dir(get_gpack_mainPage_dir() . 'lang/' . $locale)) {
+            $locale = 'en-US'; // packs without own files for this language use the English ones
+        }
+        $fileName = get_gpack_cdn_mainPage_url() . 'lang/' . $locale . '/' . $fileName;
     } else {
         $fileName = get_gpack_cdn_mainPage_url() . 'lang/' . $fileName;
     }

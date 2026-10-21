@@ -4986,5 +4986,20 @@ $Definition['HeroV2']['unequip'] = 'Take off';
 $Definition['HeroV2']['use'] = 'Use';
 $Definition['Tasks']['rewardToHero'] = 'The resources were put into your hero\'s inventory.';
 // </ov-legends-ui>
+// <ov-openvillage> texts of the OpenVillage pages (footer, lobby menu)
+$Definition['OpenVillage'] = [
+    'home' => 'Home',
+    'lobby' => 'Lobby',
+    'login' => 'Login',
+    'rules' => 'Rules and operations',
+    'rulesShort' => 'Rules',
+    'terms' => 'Terms',
+    'privacy' => 'Privacy',
+    'project' => 'OpenVillage preservation project',
+    'copyright' => 'OpenVillage preservation project · Not affiliated with Travian Games.',
+    'copyrightLong' => 'OpenVillage preservation project · Not affiliated with or endorsed by Travian Games.',
+    'joinGameworld' => 'Join gameworld',
+];
+$Definition['Reports']['x switched from y to z'] = '%s switched from alliance %s to %s.';
+// </ov-openvillage>
 return $Definition;
-

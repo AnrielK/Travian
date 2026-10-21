@@ -18,7 +18,7 @@
 	<tr>
 		<td><?=sprintf(T('Reports', "Overflowing reports will be deleted automatically, if they are older than %s hours"), Config::getInstance()->settings->reports->interval); ?></td>
 		<td>
-			(<?=number_format($vars['count'], 0, ',', ',').'/'.number_format(Config::getInstance()->settings->reports->size, 0, ',', ','); ?>
+			(<?=number_format($vars['count'], 0, ',', number_thousands_separator()).'/'.number_format(Config::getInstance()->settings->reports->size, 0, ',', number_thousands_separator()); ?>
 			)
 		</td>
 	</tr>

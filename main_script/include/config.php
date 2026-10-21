@@ -118,6 +118,15 @@ $config = (object)[
                 'locale'     => 'en-US',
                 'country'    => 'en',
             ],
+            'cz' => (object)[
+                'title'      => 'Travian ' . $connection['worldId'] . '',
+                'direction'  => 'LTR',
+                'ForumUrl'   => $globalConfig['staticParameters']['forumUrl'],
+                'AnswersUrl' => $globalConfig['staticParameters']['answersUrl'],
+                'name'       => 'Čeština',
+                'locale'     => 'cs-CZ',
+                'country'    => 'cz',
+            ],
             'gr' => (object)[
                 'title'      => 'Travian ' . $connection['worldId'] . '',
                 'direction'  => 'LTR',

@@ -3,7 +3,7 @@
 $h = static fn($s) => htmlspecialchars((string)$s, ENT_QUOTES);
 $base = 'tasks.php?s=' . $vars['scope'];
 $v2 = is_hero_v2(); // Travian Legends 655: iconValueBox rewards, Legends progress bar and buttons, divider
-$valueBox = static fn(string $icon, $value, string $title) => '<div class="iconValueBoxWrapper" title="' . $h($title) . '"><div class="iconValueBox ' . $icon . '"><i class="' . $icon . '"></i><span>' . number_format((int)$value) . '</span></div></div>';
+$valueBox = static fn(string $icon, $value, string $title) => '<div class="iconValueBoxWrapper" title="' . $h($title) . '"><div class="iconValueBox ' . $icon . '"><i class="' . $icon . '"></i><span>' . number_format((int)$value, 0, ',', number_thousands_separator()) . '</span></div></div>';
 $label = static function (array $task) use ($h) {
     if ($task['type'] === 'level') {
         return $h(T('Buildings', 'level')) . ' <span>' . $task['value'] . '</span>/<span>' . $task['goal'] . '</span>';
@@ -12,7 +12,7 @@ $label = static function (array $task) use ($h) {
         return '<span>' . $task['value'] . '</span>/<span>' . $task['goal'] . '</span> ' . $h(sprintf(T('Tasks', 'toLevel', 'to level %d'), $task['level']));
     }
     // The pack hides the first span for population / culture point tasks (Legends puts a prefix there).
-    return '<span></span><span>' . number_format($task['value']) . '</span>/<span>' . number_format($task['goal']) . '</span>';
+    return '<span></span><span>' . number_format($task['value'], 0, ',', number_thousands_separator()) . '</span>/<span>' . number_format($task['goal'], 0, ',', number_thousands_separator()) . '</span>';
 };
 ?>
 <div id="tasks">
@@ -39,8 +39,8 @@ $label = static function (array $task) use ($h) {
                     <?=$valueBox('allResources', $task['rewardResources'], T('Tasks', 'rewardResources', 'Resources of each type')); ?>
                     <?=$valueBox('xp', $task['rewardExperience'], T('Tasks', 'rewardExperience', 'Hero experience')); ?>
                 <?php elseif ($task['state'] !== 'collected'): ?>
-                    <div class="reward resources" title="<?=$h(T('Tasks', 'rewardResources', 'Resources of each type')); ?>"><i class="resources_large"></i><?=number_format($task['rewardResources']); ?></div>
-                    <div class="reward experience" title="<?=$h(T('Tasks', 'rewardExperience', 'Hero experience')); ?>"><i class="heroExperience_medium"></i><?=number_format($task['rewardExperience']); ?></div>
+                    <div class="reward resources" title="<?=$h(T('Tasks', 'rewardResources', 'Resources of each type')); ?>"><i class="resources_large"></i><?=number_format($task['rewardResources'], 0, ',', number_thousands_separator()); ?></div>
+                    <div class="reward experience" title="<?=$h(T('Tasks', 'rewardExperience', 'Hero experience')); ?>"><i class="heroExperience_medium"></i><?=number_format($task['rewardExperience'], 0, ',', number_thousands_separator()); ?></div>
                 <?php endif; ?>
             </div>
             <div class="progress">

@@ -516,9 +516,36 @@ class Session
             }
         }
         if (!$this->isValid() || empty($this->data['language'])) {
+            // No choice yet: follow the browser / device language when the game has it (cs → Czech, en → English, …).
+            $preferred = self::preferredLanguage();
+            if ($preferred !== null) {
+                Config::getInstance()->settings->selectedLang = $preferred;
+                return $preferred;
+            }
             return Config::getProperty("settings", "selectedLang");
         }
         return $this->data['language'];
+    }
+
+    /** First language of the Accept-Language header that this game offers, as its availableLanguages key. */
+    private static function preferredLanguage()
+    {
+        $header = $_SERVER['HTTP_ACCEPT_LANGUAGE'] ?? '';
+        if ($header === '' || isset($_COOKIE['travian-lang'])) {
+            return null;
+        }
+        $languages = Config::getProperty("settings", "availableLanguages");
+        $byLocale = [];
+        foreach ($languages as $key => $properties) {
+            $byLocale[strtolower(substr($properties->locale, 0, 2))] = $key;
+        }
+        foreach (explode(',', $header) as $part) {
+            $code = strtolower(substr(trim($part), 0, 2));
+            if (isset($byLocale[$code]) && is_file(LOCALE_PATH . $languages->{$byLocale[$code]}->locale . ".php")) {
+                return $byLocale[$code];
+            }
+        }
+        return null;
     }
 
     public function setLanguage($Lang)

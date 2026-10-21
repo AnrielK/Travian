@@ -59,15 +59,15 @@ ob_start(static fn(string $html): string => (string)preg_replace('~>\s+<~', '><'
                 <input type="hidden" name="s1" value="Login"><input type="hidden" name="w" value="">
                 <div class="links">
                     <a href="login.php?forgotPassword=1"><?=$e(trim(T('Login', 'PasswordForgotten?'))); ?></a>
-                    <a href="/?join=1">Join gameworld</a>
+                    <a href="/?join=1"><?=$e(T('OpenVillage', 'joinGameworld', 'Join gameworld')); ?></a>
                 </div>
                 <button type="submit" class="framed green withText"><div><?=$e(T('Login', 'Login')); ?></div></button>
             </form>
         </div>
     </main>
     <footer>
-        <nav><a href="/">Lobby</a><a href="/docs/">Rules and operations</a><a href="/terms.html">Terms</a><a href="/privacy.html">Privacy</a></nav>
-        <div class="copyright">OpenVillage preservation project · Not affiliated with or endorsed by Travian Games.</div>
+        <nav><a href="/"><?=$e(T('OpenVillage', 'lobby', 'Lobby')); ?></a><a href="/docs/"><?=$e(T('OpenVillage', 'rules', 'Rules and operations')); ?></a><a href="/terms.html"><?=$e(T('OpenVillage', 'terms', 'Terms')); ?></a><a href="/privacy.html"><?=$e(T('OpenVillage', 'privacy', 'Privacy')); ?></a></nav>
+        <div class="copyright"><?=$e(T('OpenVillage', 'copyrightLong', 'OpenVillage preservation project · Not affiliated with or endorsed by Travian Games.')); ?></div>
     </footer>
 </div>
 <script>document.querySelector('input[name=w]').value = screen.width + ':' + screen.height;</script>

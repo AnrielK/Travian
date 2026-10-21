@@ -15,6 +15,7 @@ class Locale
         'en-US' => ['days' => 'day(s)', 'hours' => 'hour(s)', 'minutes' => 'min(s)'],
         'ar-AE' => ['days' => 'الأيام', 'hours' => 'ساعات', 'minutes' => 'الدقائق'],
         'el-GR' => ['days' => 'ημέρα(ες)', 'hours' => 'ώρα(ες)', 'minutes' => 'λεπτό(α)'],
+        'cs-CZ' => ['days' => 'dní', 'hours' => 'hod.', 'minutes' => 'min'],
         'tr-TR' => ['days' => 'günler', 'hours' => 'saat', 'minutes' => 'dakika'],
     ];
     private static $_self;

@@ -3,7 +3,7 @@
 $h = static fn($s) => htmlspecialchars((string)$s, ENT_QUOTES);
 ?>
 <div id="goldShopT46">
-    <div class="goldBalance"><i class="goldCoin_medium"></i><?=number_format((int)$vars['gold']); ?></div>
+    <div class="goldBalance"><i class="goldCoin_medium"></i><?=number_format((int)$vars['gold'], 0, ',', number_thousands_separator()); ?></div>
     <div class="contentNavi subNavi">
         <div class="container <?=$vars['tab'] === 'gold' ? 'active' : 'normal'; ?>"><div class="content"><a class="tabItem" href="gold.php"><?=$h(T('PaymentWizard', 'Buy gold')); ?></a></div></div>
         <div class="container <?=$vars['tab'] === 'pros' ? 'active' : 'normal'; ?>"><div class="content"><a class="tabItem" href="gold.php?t=pros"><?=$h(T('PaymentWizard', 'Advantages')); ?></a></div></div>
@@ -30,8 +30,8 @@ $h = static fn($s) => htmlspecialchars((string)$s, ENT_QUOTES);
                                         <?php if ($p['bestSeller']): ?><div class="best bestSeller"><div class="text"><?=$h(T('Tasks', 'bestSeller', 'Best seller')); ?></div></div><?php endif; ?>
                                         <?php if ($p['bestValue']): ?><div class="best bestValue"><div class="text"><?=$h(T('Tasks', 'bestValue', 'Best value')); ?></div></div><?php endif; ?>
                                         <div class="discount">+<?=$bonus; ?>%</div>
-                                        <div class="originalAmount"><?=\resources\View\LegendsUi::goldCoin('goldCoin'); ?><?=number_format($original); ?></div>
-                                        <div class="productAmount"><?=\resources\View\LegendsUi::goldCoin('goldCoin'); ?><span><?=number_format($p['gold']); ?></span></div>
+                                        <div class="originalAmount"><?=\resources\View\LegendsUi::goldCoin('goldCoin'); ?><?=number_format($original, 0, ',', number_thousands_separator()); ?></div>
+                                        <div class="productAmount"><?=\resources\View\LegendsUi::goldCoin('goldCoin'); ?><span><?=number_format($p['gold'], 0, ',', number_thousands_separator()); ?></span></div>
                                         <div class="packageImage size<?=$p['index']; ?>"><img src="<?=get_gpack_cdn_mainPage_url(); ?>img_ltr/legacy/views/shop/package3.png" alt=""></div>
                                         <div class="productPrice"><?=$p['price'] !== '' ? $h($p['price']) : $h(T('Tasks', 'free', 'Free')); ?></div>
                                     </label>
@@ -56,7 +56,7 @@ $h = static fn($s) => htmlspecialchars((string)$s, ENT_QUOTES);
                         <?=$vars['offline'] ? '' : 'onclick="jQuery(window).trigger(\'startPaymentWizard\', {}); return false;"'; ?>>
                         <?php if ($p['bestSeller']): ?><div class="ribbon bestSeller"><?=$h(T('Tasks', 'bestSeller', 'Best seller')); ?></div><?php endif; ?>
                         <?php if ($p['bestValue']): ?><div class="ribbon bestValue"><?=$h(T('Tasks', 'bestValue', 'Best value')); ?></div><?php endif; ?>
-                        <div class="amount"><i class="goldCoin_medium"></i><?=number_format($p['gold']); ?></div>
+                        <div class="amount"><i class="goldCoin_medium"></i><?=number_format($p['gold'], 0, ',', number_thousands_separator()); ?></div>
                         <div class="packageImage size<?=$p['index']; ?>"></div>
                         <div class="price"><?=$p['price'] !== '' ? $h($p['price']) : $h(T('Tasks', 'free', 'Free')); ?></div>
                     </a>

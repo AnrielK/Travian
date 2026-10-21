@@ -63,11 +63,11 @@ $logo = '<svg viewBox="0 0 172.7 60" aria-label="OpenVillage"><path class="ovEmb
             <div id="navigation"><label class="mobileMenuButton" for="mobileMenuState"></label></div>
             <nav id="mobileMenu" class="mobileMenuActivate">
                 <ul>
-                    <li class="lobbyItem"><a class="lobby" href="/">LOBBY</a></li>
-                    <li class="loginItem"><a class="login" href="login.php">LOGIN</a></li>
-                    <li><a class="support" href="/docs/">RULES</a></li>
+                    <li class="lobbyItem"><a class="lobby" href="/"><?=mb_strtoupper(T("OpenVillage", "lobby", "Lobby")); ?></a></li>
+                    <li class="loginItem"><a class="login" href="login.php"><?=mb_strtoupper(T("OpenVillage", "login", "Login")); ?></a></li>
+                    <li><a class="support" href="/docs/"><?=mb_strtoupper(T("OpenVillage", "rulesShort", "Rules")); ?></a></li>
                 </ul>
-                <p class="copyright">OpenVillage preservation project</p>
+                <p class="copyright"><?=T("OpenVillage", "project", "OpenVillage preservation project"); ?></p>
             </nav>
         </div>
     </div>
@@ -165,13 +165,13 @@ $logo = '<svg viewBox="0 0 172.7 60" aria-label="OpenVillage"><path class="ovEmb
 
     <div id="footer">
         <div id="pageLinks">
-            <a href="/">Lobby</a>
-            <a href="/docs/">Rules and operations</a>
-            <a href="/terms.html">Terms</a>
-            <a href="/privacy.html">Privacy</a>
+            <a href="/"><?=T("OpenVillage", "lobby", "Lobby"); ?></a>
+            <a href="/docs/"><?=T("OpenVillage", "rules", "Rules and operations"); ?></a>
+            <a href="/terms.html"><?=T("OpenVillage", "terms", "Terms"); ?></a>
+            <a href="/privacy.html"><?=T("OpenVillage", "privacy", "Privacy"); ?></a>
             <div class="clear"></div>
         </div>
-        <p class="copyright">OpenVillage preservation project · Not affiliated with Travian Games.</p>
+        <p class="copyright"><?=T("OpenVillage", "copyright", "OpenVillage preservation project · Not affiliated with Travian Games."); ?></p>
     </div>
 </div>
 <script>
