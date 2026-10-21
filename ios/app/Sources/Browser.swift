@@ -29,6 +29,14 @@ final class BrowserModel: NSObject, ObservableObject, WKNavigationDelegate, WKUI
                                                                 forMainFrameOnly: true))
         webView = WKWebView(frame: .zero, configuration: config)
         super.init()
+        UIDevice.current.beginGeneratingDeviceOrientationNotifications()
+        NotificationCenter.default.addObserver(forName: UIDevice.orientationDidChangeNotification, object: nil,
+                                               queue: .main) { [weak self] _ in
+            Task { @MainActor in
+                try? await Task.sleep(nanoseconds: 300_000_000)   // after the rotation animation
+                self?.fitToScreen(newPage: false)
+            }
+        }
         webView.navigationDelegate = self
         webView.uiDelegate = self
         webView.allowsBackForwardNavigationGestures = true
@@ -60,17 +68,29 @@ final class BrowserModel: NSObject, ObservableObject, WKNavigationDelegate, WKUI
 
     func webView(_ webView: WKWebView, didStartProvisionalNavigation navigation: WKNavigation!) { isLoading = true; lastError = nil }
     func webView(_ webView: WKWebView, didCommit navigation: WKNavigation!) { sync() }
-    func webView(_ webView: WKWebView, didFinish navigation: WKNavigation!) { sync(); centerHorizontally() }
+    func webView(_ webView: WKWebView, didFinish navigation: WKNavigation!) { sync(); fitToScreen(newPage: true) }
 
-    /// Phone in portrait: a new page starts in the middle of the (wider than the screen) Legends layout.
-    private func centerHorizontally() {
+    /// Phones: portrait shows 480 px of the 1280 px Legends layout (scrolled to the middle on a new page),
+    /// landscape the whole layout width. Also after a rotation, where WebKit would keep the previous zoom.
+    func fitToScreen(newPage: Bool) {
         guard UIDevice.current.userInterfaceIdiom == .phone else { return }
         Task { @MainActor [weak self] in
-            try? await Task.sleep(nanoseconds: 150_000_000)   // content size follows the new viewport
-            guard let scroll = self?.webView.scrollView, scroll.bounds.height > scroll.bounds.width else { return }
-            let extra = scroll.contentSize.width - scroll.bounds.width
-            if extra > 1 && scroll.contentOffset.x <= 0.5 {
+            try? await Task.sleep(nanoseconds: 200_000_000)   // content size follows the new viewport
+            guard let self else { return }
+            let scroll = self.webView.scrollView
+            let width = scroll.bounds.width - scroll.adjustedContentInset.left - scroll.adjustedContentInset.right
+            let pageWidth = scroll.contentSize.width / max(scroll.zoomScale, 0.01)
+            guard width > 0, pageWidth > 0 else { return }
+            let portrait = scroll.bounds.height > scroll.bounds.width
+            let target = portrait ? width / 480 : width / pageWidth
+            if !newPage || abs(scroll.zoomScale - target) > 0.01 {
+                scroll.setZoomScale(target, animated: false)
+            }
+            let extra = scroll.contentSize.width - width
+            if portrait && extra > 1 && (scroll.contentOffset.x <= 0.5 || !newPage) {
                 scroll.setContentOffset(CGPoint(x: (extra / 2).rounded(), y: scroll.contentOffset.y), animated: false)
+            } else if !portrait {
+                scroll.setContentOffset(CGPoint(x: -scroll.adjustedContentInset.left, y: scroll.contentOffset.y), animated: false)
             }
         }
     }
@@ -101,9 +121,8 @@ final class BrowserModel: NSObject, ObservableObject, WKNavigationDelegate, WKUI
         var p = portrait();
         if (p === last) return;
         last = p;
-        var w = p ? 480 : 1280, side = p ? Math.min(screen.width, screen.height) : Math.max(screen.width, screen.height);
-        meta.content = 'width=' + w + ', initial-scale=' + (side / w).toFixed(3) + (p ? ', shrink-to-fit=no' : '')
-            + ', minimum-scale=0.25, maximum-scale=4, user-scalable=yes';
+        meta.content = (p ? 'width=480, initial-scale=' + (Math.min(screen.width, screen.height) / 480).toFixed(3)
+            + ', shrink-to-fit=no' : 'width=1280') + ', minimum-scale=0.25, maximum-scale=4, user-scalable=yes';
         if (p) setTimeout(center, 60);
     }
     apply();

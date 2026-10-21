@@ -83,10 +83,15 @@ struct RootView: View {
     @ViewBuilder private var glassToolbar: some View {
         #if compiler(>=6.2)
         if #available(iOS 26.0, *) {
+            // One clear glass capsule as wide as on a phone in portrait (also in landscape), plain buttons inside.
             toolbarButtons
-                .padding(.horizontal, 8)
-                .padding(.vertical, 4)
-                .glassEffect(.regular.interactive(), in: .capsule)
+                .buttonStyle(.plain)
+                .menuStyle(.button)
+                .foregroundStyle(.primary)
+                .padding(.horizontal, 6)
+                .padding(.vertical, 2)
+                .frame(maxWidth: 420)
+                .glassEffect(.regular, in: .capsule)
                 .padding(.horizontal, 14)
                 .padding(.bottom, 2)
                 .background(GeometryReader { geo in
