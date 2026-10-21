@@ -60,8 +60,17 @@ class ActivateCtrl extends OutOfGameCtrl
         $this->view->vars['bodyCssClass'] = 'perspectiveBuildings';
         $this->view->vars['contentCssClass'] = 'activate';
         $page = isset($_REQUEST['page']) && in_array($_REQUEST['page'],
-            ['vid', 'sector', 'confirmation', 'dorf']) ? $_REQUEST['page'] : 'vid';
-        if ($page == 'vid') {
+            ['vid', 'sector', 'confirmation', 'dorf', 'legends']) ? $_REQUEST['page'] : 'vid';
+        if ($this->legends && $page !== 'dorf') {
+            // Legends activation page: tribe, sector and name in one page, posted together.
+            if ($page === 'legends' && WebService::isPost()) {
+                $this->setTribe((int)($_POST['tribe'] ?? 0));
+                $this->setSector((string)($_POST['sector'] ?? ''));
+                $this->completeRegistration();
+            } else {
+                $this->legendsPage('tribe');
+            }
+        } else if ($page == 'vid') {
             if (WebService::isPost() && isset($_POST['vid']) && in_array($_POST['vid'], $this->availableTribes)) {
                 if ($this->setTribe((int)$_POST['vid'])) {
                     $this->redirect("activate.php?page=sector");
@@ -103,7 +112,7 @@ class ActivateCtrl extends OutOfGameCtrl
     /** Legends activation step (tribe, sector, confirm) as a page of its own. */
     private function legendsPage(string $step, string $error = '')
     {
-        $this->view = new PHPBatchView('activationNew/legendsPage');
+        $this->view = new PHPBatchView('activationNew/legendsOriginal');
         $this->view->vars = [
             'step' => $step,
             'tribes' => $this->availableTribes,

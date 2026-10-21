@@ -89,7 +89,9 @@ class LoginCtrl extends OutOfGameCtrl
         if (function_exists('is_hero_v2') && is_hero_v2() && !$this->isAdmin && !$this->LoginView->vars['captcha']
             && !$this->LoginView->vars['forgotPassword']) {
             $vars = $this->LoginView->vars;
-            $this->view = new PHPBatchView('activationNew/legendsPage');
+            // with the graphics of the Legends lobby (scripts/gpack/fetch-lobby-assets.py) in the lobby look
+            $lobbyCss = dirname(__DIR__, 3) . '/web/public/legends/lobby.css';
+            $this->view = new PHPBatchView(is_file($lobbyCss) ? 'activationNew/lobbyLogin' : 'activationNew/legendsPage');
             $this->view->vars = [
                 'step' => 'login',
                 'tribes' => [], 'tribe' => 3, 'tribeChosen' => false, 'sector' => 'sw',

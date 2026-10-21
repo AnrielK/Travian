@@ -61,7 +61,7 @@ ob_start(static function (string $html): string {
         header svg.logo .mark { fill: #6d4a1d; }
         header svg.logo text { fill: #fff9eb; }
         header svg.logo path { display: inline; }
-        @media screen and (max-width: 880px) and (orientation: portrait) { header svg.logo text { display: none; } }
+        @media screen and (max-width: 880px) and (orientation: portrait) { header svg.logo { width: 45px; } header svg.logo text { display: none; } }
         header svg.logo .t1 { font: 700 21px "Noto Serif", Georgia, serif; letter-spacing: .02em; }
         header svg.logo .t2 { font: 400 11px "Noto Sans", Arial, sans-serif; letter-spacing: .25em; }
         body.worlds #newGameworlds, body.join #accountAvatars { display: none; }
@@ -74,10 +74,12 @@ ob_start(static function (string $html): string {
         .modal label.check a, .modal .links a { color: #5c8a2b; font-weight: 700; text-decoration: none; }
         .modal .links { display: flex; justify-content: space-between; gap: 10px; flex-wrap: wrap; margin-block: 0 15px; }
         .modal form > button { justify-self: center; }
+        @media screen and (max-width: 640px) and (orientation: portrait) {
+            header .accountMenu .openCloseAccountMenu { max-width: calc(100vw - 150px); }
+            header .accountMenu .openCloseAccountMenu span:not(.dot) { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+        }
         header .accountMenu .openCloseAccountMenu .dot { width: 10px; height: 10px; border-radius: 50%; background: #91c44a; box-shadow: 0 0 6px #91c44a; }
         header .accountMenu .openCloseAccountMenu .dot.waiting { background: #d8a53d; box-shadow: 0 0 6px #d8a53d; }
-        #pageFooter { grid-row-start: 3; text-align: center; padding: 30px 10px 20px; --fontColor: #d8cfb9; font-size: 12px; }
-        #pageFooter a { display: inline; text-decoration: underline; }
     </style>
 </head>
 <body class="<?= $view ?>">
@@ -147,9 +149,15 @@ ob_start(static function (string $html): string {
         </section>
     </main>
 
-    <footer id="pageFooter">
-        <a href="/docs/">Rules and operations</a> · <a href="/terms.html">Terms</a> · <a href="/privacy.html">Privacy</a> · <a href="/health.php">Health</a>
-        <p>Independent preservation project. Not affiliated with or endorsed by Travian Games.</p>
+    <footer>
+        <nav>
+            <a href="/">Lobby</a>
+            <a href="/docs/">Rules and operations</a>
+            <a href="/terms.html">Terms</a>
+            <a href="/privacy.html">Privacy</a>
+            <a href="/health.php">Health</a>
+        </nav>
+        <div class="copyright">OpenVillage preservation project · Not affiliated with or endorsed by Travian Games.</div>
     </footer>
 </div>
 
