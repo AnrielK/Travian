@@ -80,22 +80,16 @@ final class BrowserModel: NSObject, ObservableObject, WKNavigationDelegate, WKUI
             let scroll = self.webView.scrollView
             let width = scroll.bounds.width - scroll.adjustedContentInset.left - scroll.adjustedContentInset.right
             let pageWidth = scroll.contentSize.width / max(scroll.zoomScale, 0.01)
-            guard width > 0, pageWidth > 0 else { return }
+            guard width > 0, pageWidth > 1000 else { return }   // only the wide game layout, not the launcher
             let portrait = scroll.bounds.height > scroll.bounds.width
             let target = portrait ? width / 480 : width / pageWidth
             if !newPage || abs(scroll.zoomScale - target) > 0.01 {
                 scroll.setZoomScale(target, animated: false)
             }
-            // Portrait: the page fits the screen height, long windows scroll inside (see ovFitHeight).
-            let visible = (scroll.bounds.height - scroll.adjustedContentInset.top - scroll.adjustedContentInset.bottom)
-                / max(scroll.zoomScale, 0.01)
-            self.webView.evaluateJavaScript("window.ovFitHeight && ovFitHeight(\(portrait ? Int(visible) : 0)); 0",
-                                            completionHandler: nil)
             let extra = scroll.contentSize.width - width
-            if portrait {
-                let x = extra > 1 && (scroll.contentOffset.x <= 0.5 || !newPage) ? (extra / 2).rounded() : scroll.contentOffset.x
-                scroll.setContentOffset(CGPoint(x: x, y: -scroll.adjustedContentInset.top), animated: false)
-            } else {
+            if portrait && extra > 1 && (scroll.contentOffset.x <= 0.5 || !newPage) {
+                scroll.setContentOffset(CGPoint(x: (extra / 2).rounded(), y: scroll.contentOffset.y), animated: false)
+            } else if !portrait {
                 scroll.setContentOffset(CGPoint(x: -scroll.adjustedContentInset.left, y: scroll.contentOffset.y), animated: false)
             }
         }
@@ -108,12 +102,10 @@ final class BrowserModel: NSObject, ObservableObject, WKNavigationDelegate, WKUI
     // Phones in portrait: the Legends layout (min. 1280 px wide) at the scale of the original mobile view –
     // 480 px across the screen, scrolled to the middle – instead of the whole page shrunk to the width.
     if (Math.min(screen.width, screen.height) >= 600) return;   // tablets keep the full layout
-    var meta = document.querySelector('meta[name=viewport]');
-    if (!meta) {
-        meta = document.createElement('meta');
-        meta.name = 'viewport';
-        (document.head || document.documentElement).appendChild(meta);
-    }
+    if (document.querySelector('meta[name=viewport]')) return;   // pages made for phones (launcher) stay as they are
+    var meta = document.createElement('meta');
+    meta.name = 'viewport';
+    (document.head || document.documentElement).appendChild(meta);
     function portrait() {
         return typeof window.orientation === 'number' ? window.orientation % 180 === 0 : screen.height > screen.width;
     }
@@ -131,23 +123,21 @@ final class BrowserModel: NSObject, ObservableObject, WKNavigationDelegate, WKUI
             + ', shrink-to-fit=no' : 'width=1280') + ', minimum-scale=0.25, maximum-scale=4, user-scalable=yes';
         if (p) setTimeout(center, 60);
     }
-    // Portrait: the page is as high as the screen and does not scroll up and down; a window (building list,
-    // hero, …) taller than that scrolls inside itself. The app calls ovFitHeight(visible height in CSS px),
-    // or ovFitHeight(0) in landscape.
-    var style = document.createElement('style');
-    style.textContent = 'html.ovFitHeight,html.ovFitHeight body{height:var(--ov-view-h)!important;min-height:0!important;overflow-y:hidden!important}'
-        + 'html.ovFitHeight #contentOuterContainer{max-height:var(--ov-content-h);overflow-y:auto;overscroll-behavior:contain}'
-        + 'html.ovFitHeight .dialogWrapper{max-height:calc(var(--ov-view-h) - 20px);overflow-y:auto}';
-    (document.head || document.documentElement).appendChild(style);
-    window.ovFitHeight = function (height) {
-        var root = document.documentElement;
-        if (!height) { root.classList.remove('ovFitHeight'); return; }
-        root.style.setProperty('--ov-view-h', height + 'px');
-        var box = document.getElementById('contentOuterContainer');
-        var top = box ? box.getBoundingClientRect().top + window.scrollY : 0;
-        root.style.setProperty('--ov-content-h', Math.max(200, Math.floor(height - top - 8)) + 'px');
-        root.classList.add('ovFitHeight');
-    };
+    // Portrait: no automatic zoom when a text field gets the focus (iOS zooms in on small fonts) – the zoom
+    // is limited to the current one while the field is focused, pinch zoom works again afterwards.
+    var focusLock = false;
+    document.addEventListener('focusin', function (event) {
+        var el = event.target;
+        if (!last || !el || !/^(INPUT|TEXTAREA|SELECT)$/.test(el.tagName)) return;
+        var scale = window.visualViewport ? window.visualViewport.scale : 1;
+        meta.content = meta.content.replace(/maximum-scale=[0-9.]+/, 'maximum-scale=' + scale.toFixed(3));
+        focusLock = true;
+    });
+    document.addEventListener('focusout', function () {
+        if (!focusLock) return;
+        focusLock = false;
+        setTimeout(function () { meta.content = meta.content.replace(/maximum-scale=[0-9.]+/, 'maximum-scale=4'); }, 300);
+    });
     apply();
     window.addEventListener('orientationchange', function () { setTimeout(apply, 150); });
     window.addEventListener('load', function () { if (last) center(); });
