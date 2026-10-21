@@ -1,4 +1,4 @@
-<h4 class="round"><?php use Core\Session;echo $vars['headerRound'];?></h4>
+<h4 class="round roundV2"><?php use Core\Session;echo $vars['headerRound'];?></h4>
 <?php if(Session::getInstance()->isAdmin()):?>
 <style type="text/css">
     div.statistics td.pla {
@@ -7,7 +7,7 @@
 </style>
 <?php endif;?>
 <table cellpadding="1" cellspacing="1" id="<?=$vars['tableId'];?>"
-       class="row_table_data">
+       class="row_table_data borderGap">
     <thead>
     <?=$vars['tableColumns'];?>
     </thead>
@@ -82,4 +82,12 @@
     </form>
     <?=$vars['Navigator'];?>
     <div class="clear"></div>
-</div>
+</div><script type="text/javascript">
+    /* Header cells take the column classes of the first row, so they align like the rows (Legends borderGap tables). */
+    jQuery(function () {
+        jQuery('table.borderGap').each(function () {
+            var head = jQuery(this).find('thead tr:first td'), row = jQuery(this).find('tbody tr:first td');
+            if (head.length === row.length) head.each(function (i) { if (!this.className) this.className = row[i].className; });
+        });
+    });
+</script>

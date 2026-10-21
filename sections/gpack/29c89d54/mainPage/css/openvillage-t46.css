@@ -1052,3 +1052,51 @@ body.t46Layout.legendsV2 div#build.gid16 div.filterWrapper > .boxes > .boxes-con
 /* Server time on two lines with the UTC offset, as in Legends */
 body.t46Layout.legendsV2 #servertime { white-space: normal; padding: 4px 23px; text-align: left; }
 body.t46Layout.legendsV2 #servertime > span { display: block; white-space: nowrap; }
+
+/* Content window title buttons as in Legends (Rise of Governors): 33px, square gold frame, dark green face, bold X */
+body.t46Layout #center a.contentTitleButton#closeContentButton svg g.icon { display: none; }
+body.t46Layout.legendsV2 #center a.contentTitleButton { width: 33px; height: 33px; box-sizing: border-box; border: 1px solid #34220d; border-radius: 0; }
+body.t46Layout.legendsV2 #center a.contentTitleButton:before { top: 2px; right: 2px; bottom: 2px; left: 2px; border: 1px solid #34353c; border-radius: 0;
+    background: linear-gradient(#5d8137, #466428); box-shadow: inset 0 -4px 0 -2px #344a1d, inset 0 4px 0 -2px #b9d890, inset 0 0 0 1px #679f1b; }
+body.t46Layout.legendsV2 #center a.contentTitleButton:hover:before { background: linear-gradient(#6c9640, #527530); border-color: #34353c; }
+body.t46Layout.legendsV2 #center a.contentTitleButton#closeContentButton { right: 46px; }
+body.t46Layout.legendsV2 #center a.contentTitleButton#answersButton { right: 91px; }
+body.t46Layout.legendsV2 #center a.contentTitleButton#tabFavorButton { right: 136px; }
+body.t46Layout.legendsV2 #center a.contentTitleButton#answersButton:after { left: 12px; top: 7px; }
+body.t46Layout.legendsV2 #center a.contentTitleButton#tabFavorButton:after { left: 7px; top: 9px; }
+body.t46Layout.legendsV2 #center a.contentTitleButton#closeContentButton svg g.icon { display: inline; }
+body.t46Layout.legendsV2 #center a.contentTitleButton#closeContentButton svg g.outline path { fill: #263a11; stroke: #263a11; stroke-width: 2; }
+body.t46Layout.legendsV2 #center a.contentTitleButton#closeContentButton svg g.icon path { fill: #fff9eb; }
+
+/* Content window tabs as in Legends: width follows the label, glossy top line, golden separators */
+body.t46Layout.legendsV2 #content .contentNavi.subNavi > .container { flex: 1 1 auto; }
+body.t46Layout.legendsV2 #content .contentNavi.subNavi > .container + .container a.tabItem { border-left: 0; }
+body.t46Layout.legendsV2 #content .contentNavi.subNavi > .container a.tabItem::before { content: ""; position: absolute; left: 0; top: 0; width: 100%; height: 40px; pointer-events: none;
+    background-image: linear-gradient(rgba(255, 255, 255, 0) 3px, rgba(255, 255, 255, .45) 4px, rgba(255, 255, 255, 0) 7px, rgba(255, 255, 255, 0) 27px, #9d6960 50px); }
+body.t46Layout.legendsV2 #content .contentNavi.subNavi > .container a.tabItem::after { content: ""; position: absolute; right: 0; top: 0; width: 2px; height: 40px; pointer-events: none;
+    background-image: linear-gradient(#62493a 0, #d7b27a 12px, #e7c184 15px, #c6a871 20px, #c6a871 24px, #88663c 31px); }
+body.t46Layout.legendsV2 #content .contentNavi.subNavi > .container:last-of-type a.tabItem::after { display: none; }
+
+/* Legends link colour (#5a9a0a, lighter on hover); the older T4.4 general.css loaded after legends_ltr.css set #99c01a.
+   :where keeps the specificity of a plain "a" so every more specific link colour still wins. */
+:where(body.t46Layout.legendsV2) a, :where(body.t46Layout.legendsV2) .a { color: #5a9a0a; }
+:where(body.t46Layout.legendsV2) a:hover { color: #99c01a; }
+
+/* Sub tabs (statistics, reports, …) as in Legends: tight pills, no favourite star, thin grey base line */
+body.t46Layout.legendsV2 #content .contentNavi.tabNavi { margin-bottom: 10px;
+    background-image: linear-gradient(transparent, transparent 21px, #c0c0c0 21px, #c0c0c0 22px, transparent 22px); background-position: 0 0; background-repeat: no-repeat; }
+body.t46Layout.legendsV2 #content .contentNavi.tabNavi > #nestedTabFavorButton { float: none; margin-left: auto; margin-right: -22px; }
+body.t46Layout.legendsV2 #content .contentNavi.tabNavi > .container { margin-right: 0; }
+body.t46Layout.legendsV2 #content .contentNavi.tabNavi > .container > .content { padding: 0; }
+body.t46Layout.legendsV2 #content .contentNavi.tabNavi > .container > .content::after,
+body.t46Layout.legendsV2 #content .contentNavi.tabNavi a.tabItem img.favorIcon { display: none; }
+body.t46Layout.legendsV2 #content .contentNavi.tabNavi a.tabItem { padding: 3px 12px 0; }
+/* the favourite star on the main tabs is not shown in Legends either */
+body.t46Layout.legendsV2 #content .contentNavi.subNavi > .container > .content::after { display: none; }
+
+/* Hero items in the Rise of Governors look: quality numeral (I/II/III) in white with a black outline on the rarity dot */
+.heroItemV2 .rarityQuality svg.qualityIndicator { fill: #fff; }
+.heroItemV2 .rarityQuality svg.qualityIndicator .strokeShape { fill: #000; stroke: #000; stroke-width: 1.5; stroke-linejoin: miter; }
+
+/* Rise of Governors has no green marker above the active hero tab */
+body.t46Layout.legendsV2 #content.heroV2 .contentNavi.subNavi > .container.active::after { display: none; }

@@ -169,7 +169,7 @@ $t46Indicator = static function ($count) {
                             <a id="closeContentButton" class="contentTitleButton buttonFramed withIcon rectangle green"
                                href="<?=$vars['bodyCssClass'] == 'perspectiveResources' ? 'dorf1.php' : 'dorf2.php'; ?>"
                                title="<?=T("Global", "General.closeWindow"); ?>">
-                                <svg viewBox="0 0 16 16"><path class="outline" d="M3.2 1.5 8 6.3l4.8-4.8 1.7 1.7L9.7 8l4.8 4.8-1.7 1.7L8 9.7l-4.8 4.8-1.7-1.7L6.3 8 1.5 3.2z"/></svg>
+                                <svg viewBox="0 0 20 20"><g class="outline"><path d="M0 17.01L7.01 10 .14 3.13 3.13.14 10 7.01 17.01 0 20 2.99 12.99 10l6.87 6.87-2.99 2.99L10 12.99 2.99 20 0 17.01z"/></g><g class="icon"><path d="M0 17.01L7.01 10 .14 3.13 3.13.14 10 7.01 17.01 0 20 2.99 12.99 10l6.87 6.87-2.99 2.99L10 12.99 2.99 20 0 17.01z"/></g></svg>
                             </a>
                         <?php endif; ?>
                         <?php if ($vars['answerId']): ?>

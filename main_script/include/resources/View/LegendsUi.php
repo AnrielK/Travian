@@ -195,6 +195,27 @@ class LegendsUi
             . '<path class="from" d="M0 33l4-2-4-2v4z"/><path class="to" d="M58 31l4 2v-4l-4 2z"/></svg>';
     }
 
+    /** Hero items in the Rise of Governors look (heroItemV2: rarity colour + quality numeral); needs the Legends 655+ pack. */
+    private static function itemsV2(): bool
+    {
+        return function_exists('is_hero_v2') && is_hero_v2();
+    }
+
+    /** Rarity dot with the quality numeral (I, II, III) in the top left corner of an item. */
+    private static function rarityQuality(int $quality): string
+    {
+        $bar = 'M10.75 14h-3.5v-1l1-.2V5.2l-1-.2V4h3.5v1l-1 .2v7.6l1 .2v1z';
+        $offsets = [1 => [0], 2 => [-2, 2], 3 => [-4, 0, 4]][$quality] ?? [0];
+        $paths = '';
+        foreach (['strokeShape', ''] as $pathClass) {
+            foreach ($offsets as $dx) {
+                $paths .= '<path' . ($pathClass ? ' class="' . $pathClass . '"' : '') . ($dx ? ' transform="translate(' . $dx . ' 0)"' : '') . ' d="' . $bar . '"/>';
+            }
+        }
+        return '<div class="rarityQuality"><svg class="rarityIndicator common" viewBox="0 0 18 18"><circle class="common" cx="9" cy="9" r="9"/></svg>'
+            . '<svg class="qualityIndicator" viewBox="0 0 18 18">' . $paths . '</svg></div>';
+    }
+
     /**
      * Hero item (heroItemV1). $item: btype, type, num, id, placeId; $o: class, title, attributes, withAmount.
      */
@@ -204,7 +225,15 @@ class LegendsUi
         $type = (int)$item['type'];
         $tier = self::itemTier($btype, $type);
         $slot = self::itemSlot($btype);
-        $class = 'heroItem' . (!empty($o['class']) ? ' ' . $o['class'] : '') . ' ' . $tier . ' ' . $slot . ' heroItemV1';
+        $v2 = self::itemsV2();
+        if ($v2) {
+            // Rise of Governors item look: rarity "common" with the old tier shown as quality I/II/III.
+            $quality = $tier === 'consumable' ? 0 : (int)substr($tier, 4);
+            $class = 'heroItem' . (!empty($o['class']) ? ' ' . $o['class'] : '') . ' ' . ($quality ? 'common' : 'consumable none')
+                . ' quality' . $quality . ' ' . $tier . ' ' . $slot . ' heroItemV2';
+        } else {
+            $class = 'heroItem' . (!empty($o['class']) ? ' ' . $o['class'] : '') . ' ' . $tier . ' ' . $slot . ' heroItemV1';
+        }
         $attributes = '';
         foreach (['id' => 'data-id', 'placeId' => 'data-placeid'] as $key => $attribute) {
             if (isset($item[$key])) {
@@ -220,7 +249,8 @@ class LegendsUi
         }
         $amount = (int)($item['num'] ?? 0);
         return '<div class="' . $class . '"' . $attributes . '>' . self::itemArrows()
-            . '<div class="item item' . $type . '"></div>'
+            . '<div class="item item' . $type . ($v2 && $quality ? ' common' : '') . '"></div>'
+            . ($v2 && $quality ? self::rarityQuality($quality) : '')
             . ($tier === 'consumable' && $amount > 0 && ($o['withAmount'] ?? true) ? '<div class="count">' . $amount . '</div>' : '')
             . '</div>';
     }
@@ -235,7 +265,7 @@ class LegendsUi
         if (isset($o['title'])) {
             $attributes .= ' title="' . self::e($o['title']) . '"';
         }
-        return '<div class="heroItem empty neutral' . ($slot !== '' ? ' ' . $slot : '') . (!empty($o['class']) ? ' ' . $o['class'] : '') . ' heroItemV1"' . $attributes . '>'
+        return '<div class="heroItem empty neutral' . ($slot !== '' ? ' ' . $slot : '') . (!empty($o['class']) ? ' ' . $o['class'] : '') . (self::itemsV2() ? ' heroItemV2' : ' heroItemV1') . '"' . $attributes . '>'
             . self::itemArrows() . '<div class="item"></div></div>';
     }
 
