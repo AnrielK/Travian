@@ -149,6 +149,17 @@ class HeroInventoryCtrl extends GameCtrl
     {
         $attributesView = ($_GET['view'] ?? '') === 'attributes';
         $this->view->vars['contentCssClass'] = 'heroV2 ' . ($attributesView ? 'heroV2Attributes' : 'heroV2Inventory');
+        $this->view->vars['contextualHelp'] = $attributesView ? [
+            ['selector' => '#heroV2Attributes .stats', 'placement' => 'below', 'title' => T('ContextualHelp', 'heroStatsTitle'), 'text' => T('ContextualHelp', 'heroStats')],
+            ['selector' => '#heroV2Attributes .heroProduction', 'placement' => 'below', 'title' => T('ContextualHelp', 'heroProductionTitle'), 'text' => T('ContextualHelp', 'heroProduction')],
+            ['selector' => '#heroV2Attributes .heroAttributes', 'placement' => 'above', 'title' => T('ContextualHelp', 'heroAttributesTitle'), 'text' => T('ContextualHelp', 'heroAttributes')],
+            ['selector' => '#heroV2Attributes .heroEquipmentBenefits', 'placement' => 'above', 'title' => T('ContextualHelp', 'heroBenefitsTitle'), 'text' => T('ContextualHelp', 'heroBenefits')],
+        ] : [
+            ['selector' => '#heroV2Inventory .equipmentSlots', 'placement' => 'after', 'title' => T('ContextualHelp', 'heroEquipmentTitle'), 'text' => T('ContextualHelp', 'heroEquipment')],
+            ['selector' => '#heroV2Inventory .inventoryFilters .heroItemSlotFilter', 'placement' => 'above', 'title' => T('ContextualHelp', 'heroFiltersTitle'), 'text' => T('ContextualHelp', 'heroFilters')],
+            ['selector' => '#heroV2Inventory .heroItems', 'placement' => 'above', 'title' => T('ContextualHelp', 'heroInventoryTitle'), 'text' => T('ContextualHelp', 'heroInventory')],
+            ['selector' => '#heroV2Inventory .tradeItems', 'placement' => 'above', 'title' => T('ContextualHelp', 'heroTradeTitle'), 'text' => T('ContextualHelp', 'heroTrade')],
+        ];
         $hero = $this->session->hero;
         $heroItems = new HeroItems();
         $items = [];

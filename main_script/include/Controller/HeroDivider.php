@@ -7,6 +7,10 @@ class HeroDivider extends GameCtrl
     public function render(){
 
         $t = isset($_GET['t']) && $_GET['t'] >= 1 && $_GET['t'] <= 4 ? (int)$_GET['t'] : Session::getInstance()->getFavoriteTab("hero"); //(favourite);
+        if ((int)$t === 5) { // favourite "attributes" tab of the Legends hero window
+            $t = 1;
+            $_GET['view'] = 'attributes';
+        }
         $pages = [
             1 => 'Controller\\HeroInventoryCtrl',
             2 => 'Controller\\HeroFaceCtrl',

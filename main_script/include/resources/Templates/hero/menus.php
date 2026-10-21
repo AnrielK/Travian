@@ -3,17 +3,24 @@
     /* Travian Legends (29c89d54): the hero window has Inventory / Attributes / Appearance; adventures and
        auctions are their own windows (opened from the hero buttons in the top bar), so they get no hero tabs. */
     $t46View = $vars['selectedTab'] == 1 && (($_GET['view'] ?? '') === 'attributes') ? 'attributes' : ($vars['selectedTab'] == 1 ? 'inventory' : '');
+    // Favourite keys: 1 inventory, 5 attributes (opened as t=1&view=attributes), 2 appearance.
     $t46Tabs = [
-        ['hero.php?t=1', T("HeroGlobal", "Inventory", T("HeroInventory", "inventory", "Inventory")), $t46View === 'inventory'],
-        ['hero.php?t=1&amp;view=attributes', T("HeroGlobal", "Attributes"), $t46View === 'attributes'],
-        ['hero.php?t=2', T("HeroGlobal", "Appear"), $vars['selectedTab'] == 2],
+        ['hero.php?t=1', T("HeroGlobal", "Inventory", T("HeroInventory", "inventory", "Inventory")), $t46View === 'inventory', 1],
+        ['hero.php?t=1&amp;view=attributes', T("HeroGlobal", "Attributes"), $t46View === 'attributes', 5],
+        ['hero.php?t=2', T("HeroGlobal", "Appear"), $vars['selectedTab'] == 2, 2],
     ];
+    $t46FavourKey = 0;
+    foreach ($t46Tabs as $t46Tab) {
+        if ($t46Tab[2]) $t46FavourKey = $t46Tab[3];
+    }
     ?>
     <?php if ($vars['selectedTab'] <= 2): ?>
+        <?php if ($t46FavourKey): ?><?=\resources\View\LegendsUi::favorButton('hero', $t46FavourKey); ?><?php endif; ?>
         <div class="contentNavi subNavi">
-            <?php foreach ($t46Tabs as [$href, $label, $active]): ?>
+            <?php $t46Favourite = (int)\Core\Session::getInstance()->getFavoriteTab("hero"); ?>
+            <?php foreach ($t46Tabs as [$href, $label, $active, $key]): ?>
                 <div class="container <?=$active ? 'active' : 'normal'; ?>">
-                    <div class="content"><a href="<?=$href; ?>" class="tabItem"><?=$label; ?></a></div>
+                    <div class="content favor favorKey<?=$key; ?><?=$t46Favourite === $key ? ' favorActive' : ''; ?>"><a href="<?=$href; ?>" class="tabItem"><?=$label; ?></a></div>
                 </div>
             <?php endforeach; ?>
         </div>

@@ -155,6 +155,7 @@ class Session
             'statisticsTableAlly' => 0,
             'messages' => 0,
             'embassyBuildingSubTabs' => 0,
+            'heroAuction' => 0,
         ];
         $index = 0;
         foreach (array_keys($data['favorTabs']) as $key) {

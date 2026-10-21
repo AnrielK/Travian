@@ -163,8 +163,12 @@ $t46Indicator = static function ($count) {
                     </div>
                 </div>
             <?php else: ?>
+                <?php
+                $ovHelp = !empty($vars['contextualHelp']) && is_array($vars['contextualHelp']);
+                $ovButtonCount = ($vars['answerId'] ? 1 : 0) + ($ovHelp ? 1 : 0);
+                ?>
                 <div id="contentOuterContainer" class="contentPage">
-                    <div class="contentTitle">
+                    <div class="contentTitle buttonCount<?=$ovButtonCount; ?>">
                         <?php if ($vars['showCloseButton']): ?>
                             <a id="closeContentButton" class="contentTitleButton buttonFramed withIcon rectangle green"
                                href="<?=$vars['bodyCssClass'] == 'perspectiveResources' ? 'dorf1.php' : 'dorf2.php'; ?>"
@@ -173,9 +177,13 @@ $t46Indicator = static function ($count) {
                             </a>
                         <?php endif; ?>
                         <?php if ($vars['answerId']): ?>
-                            <a id="answersButton" class="contentTitleButton buttonFramed withIcon rectangle green"
+                            <a id="knowledgeBaseButton" class="contentTitleButton buttonFramed withIcon rectangle green"
                                href="<?=getAnswersUrl(); ?>aid=<?=$vars['answerId']; ?>#go2answer" target="_blank"
-                               title="<?=T("Global", "FAQ"); ?>"></a>
+                               title="<?=T("Global", "FAQ"); ?>">&nbsp;</a>
+                        <?php endif; ?>
+                        <?php if ($ovHelp): ?>
+                            <a id="contextualHelpButton" class="contentTitleButton buttonFramed green withIcon rectangle" href="#"
+                               title="<?=T("ContextualHelp", "button", "Show contextual help on this page"); ?>">&nbsp;</a>
                         <?php endif; ?>
                     </div>
                     <div class="contentContainer">
@@ -192,6 +200,7 @@ $t46Indicator = static function ($count) {
                     </div>
                     <div class="contentFooter"></div>
                 </div>
+                <?php if ($ovHelp) require __DIR__ . '/contextualHelp.php'; ?>
             <?php endif; ?>
             <div id="sidebarAfterContent" class="sidebar afterContent">
                 <?=$vars['sidebarAfterContent']; ?>

@@ -5187,4 +5187,64 @@ $Definition['OpenVillage'] = [
 ];
 $Definition['Reports']['x switched from y to z'] = '%s switched from alliance %s to %s.';
 // </ov-openvillage>
+// <ov-auctions-rog> texts of the Rise of Governors auction pages
+$Definition['HeroV2']['back'] = 'Back';
+$Definition['HeroV2']['detailedList'] = 'detailed list';
+$Definition['HeroV2']['compactList'] = 'compact list';
+$Definition['HeroV2']['searchItem'] = 'Search item';
+$Definition['HeroV2']['bidHint'] = 'Bid on items with a set minimum price.';
+$Definition['HeroV2']['itemRarity'] = 'Item rarity';
+$Definition['HeroV2']['rarityAll'] = 'All';
+$Definition['HeroV2']['rarityCommon'] = 'Common';
+$Definition['HeroV2']['rarityUncommon'] = 'Uncommon';
+$Definition['HeroV2']['rarityRare'] = 'Rare';
+$Definition['HeroV2']['rarityEpic'] = 'Epic';
+$Definition['HeroV2']['lowestPrice'] = 'Lowest selling price';
+$Definition['HeroV2']['averagePrice'] = 'Average selling price';
+$Definition['HeroV2']['highestPrice'] = 'Highest selling price';
+$Definition['HeroV2']['priceChartTitle'] = 'Average price and sales during the last 24 hours';
+$Definition['HeroV2']['sales'] = 'Sales';
+$Definition['HeroV2']['averagePriceShort'] = 'Average price';
+$Definition['HeroV2']['hoursAgo23'] = '23 h';
+$Definition['HeroV2']['hoursAgo12'] = '12 h';
+$Definition['HeroV2']['now'] = 'Now';
+$Definition['HeroV2']['bidsColumn'] = 'bids';
+$Definition['HeroV2']['endsColumn'] = 'End';
+$Definition['HeroV2']['xBids'] = '%s bids';
+$Definition['HeroV2']['done'] = 'Done';
+$Definition['HeroV2']['startedAtColumn'] = 'Started at';
+$Definition['HeroV2']['statusColumn'] = 'Status';
+$Definition['HeroV2']['yourBidsDescription'] = 'All your bids in active and finished auctions.';
+$Definition['HeroV2']['showMore'] = 'Show more';
+$Definition['HeroV2']['soldItems'] = 'Sold items';
+$Definition['HeroV2']['payout'] = 'Payout';
+// </ov-auctions-rog>
+// <ov-contextual-help> texts of the Legends contextual help tours
+$Definition['ContextualHelp']['button'] = 'Show contextual help on this page';
+$Definition['ContextualHelp']['close'] = 'Got it';
+$Definition['ContextualHelp']['heroStatsTitle'] = 'Hero status';
+$Definition['ContextualHelp']['heroStats'] = 'Health, experience and speed of your hero. Health regenerates every day; if it drops to zero the hero dies and has to be revived. Experience from battles and adventures raises the hero level.';
+$Definition['ContextualHelp']['heroProductionTitle'] = 'Hero production';
+$Definition['ContextualHelp']['heroProduction'] = 'Choose which resource your hero produces in his home village. "All resources" gives a smaller amount of every resource.';
+$Definition['ContextualHelp']['heroAttributesTitle'] = 'Attribute points';
+$Definition['ContextualHelp']['heroAttributes'] = 'Every level gives you new points. Spend them on fighting strength, offence and defence bonus or resource production and confirm them with Save.';
+$Definition['ContextualHelp']['heroBenefitsTitle'] = 'Equipment bonuses';
+$Definition['ContextualHelp']['heroBenefits'] = 'Summary of all bonuses your hero currently gets from the equipped items.';
+$Definition['ContextualHelp']['heroEquipmentTitle'] = 'Equipment';
+$Definition['ContextualHelp']['heroEquipment'] = 'Helmet, body armour, boots, both hands, horse and bag. Drag an item from the inventory onto the hero or double-click it to equip it.';
+$Definition['ContextualHelp']['heroFiltersTitle'] = 'Filters';
+$Definition['ContextualHelp']['heroFilters'] = 'Show only the items that fit the chosen equipment slot.';
+$Definition['ContextualHelp']['heroInventoryTitle'] = 'Inventory';
+$Definition['ContextualHelp']['heroInventory'] = 'All items your hero carries. Click a consumable such as an ointment or a scroll to use it.';
+$Definition['ContextualHelp']['heroTradeTitle'] = 'Trade';
+$Definition['ContextualHelp']['heroTrade'] = 'Opens the auctions where you can sell items you do not need and buy better ones for silver.';
+$Definition['ContextualHelp']['auctionViewTitle'] = 'List view';
+$Definition['ContextualHelp']['auctionView'] = 'Group the offers by item type or show every auction. The buttons switch between the detailed and the compact list and reload it.';
+$Definition['ContextualHelp']['auctionFilterTitle'] = 'Filter';
+$Definition['ContextualHelp']['auctionFilter'] = 'Show only the items for one equipment slot or of the chosen rarity.';
+$Definition['ContextualHelp']['auctionSilverTitle'] = 'Silver';
+$Definition['ContextualHelp']['auctionSilver'] = 'Auctions are paid with silver. Use the exchange to convert gold and silver.';
+$Definition['ContextualHelp']['auctionListTitle'] = 'Offers';
+$Definition['ContextualHelp']['auctionList'] = 'Click a row to see all auctions of that item. Bid the maximum you are willing to pay; you only pay one silver more than the second highest bid.';
+// </ov-contextual-help>
 return $Definition;

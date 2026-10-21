@@ -1185,6 +1185,8 @@ class StatistikenCtrl extends GameCtrl
         $rows = $statistics->getPlayerList($pageIndex, $this->pageSize);
         $tableBody = '';
         $rowIndex = 0;
+        $rows = is_array($rows) ? $rows : iterator_to_array($rows);
+        $tribes = $this->playersTribeAlliance(array_column($rows, 'id'));
         foreach ($rows as $row) {
             $rank = ++$rowIndex + $pageIndex * $this->pageSize;
             if (!$this->showFakeUsers && $row['access'] == 3) {
@@ -1224,9 +1226,11 @@ class StatistikenCtrl extends GameCtrl
                 $login_stat = AutomationModel::getOnlineStatusAsImg($row['last_login_time']);
                 $row['name'] = $login_stat . ' ' . $row['name'];
             }
+            $tribe = self::tribeCell($tribes[(int)$row['id']] ?? []);
             $tableBody .= <<<HTML
 <tr class="{$class}">
 			<td class="ra " >{$rank}.</td>
+			{$tribe}
 			<td class="pla " ><a href="spieler.php?uid={$row['id']}">{$row['name']}</a> </td>
 			<td class="al " >$alliance</td>
 			{$flag}
@@ -1241,6 +1245,7 @@ HTML;
                 "tableId" => "player",
                 "tableColumns" => '<tr>
 			<td></td>
+			<td class="tribe"></td>
 			<td>' . T("Statistics", "tabs.players") . '</td>
 			<td>' . T("Statistics", "alliance") . '</td>
 			' . (Session::getInstance()->isAdmin() || getDisplay("showFlagsInStatistics") ? '<td class="flags">' . T("Statistics",
@@ -1257,6 +1262,26 @@ HTML;
                 "selectedRank" => isset($_REQUEST['rank']) ? $_REQUEST['rank'] : $selectedRank,
                 "selectedName" => isset($_REQUEST['name']) ? $_REQUEST['name'] : '',
             ]);
+    }
+
+    /** Tribe and alliance (id, tag) of the given players, for the tribe icon and alliance columns of the Legends tables. */
+    private function playersTribeAlliance(array $uids): array
+    {
+        $uids = array_filter(array_map('intval', $uids));
+        if (!$uids) {
+            return [];
+        }
+        $result = \Core\Database\DB::getInstance()->query('SELECT u.id, u.race, u.aid, a.tag FROM users u LEFT JOIN alidata a ON a.id=u.aid WHERE u.id IN(' . implode(',', $uids) . ')');
+        $map = [];
+        while ($row = $result->fetch_assoc()) {
+            $map[(int)$row['id']] = $row;
+        }
+        return $map;
+    }
+
+    private static function tribeCell(array $info): string
+    {
+        return '<td class="tribe "><i class="tribe' . (int)($info['race'] ?? 0) . '_medium" title="' . htmlspecialchars(T('Global', 'races.' . (int)($info['race'] ?? 0))) . '"></i></td>';
     }
 
     /** players */
@@ -1860,7 +1885,7 @@ HTML;
 <tr class="{$class}">
 
 			<td class="ra " >{$rank}.</td>
-			<td class="vil " ><a href="karte.php?d={$row['kid']}">{$row['name']}</a> </td>
+			<td class="villageName " ><a href="karte.php?d={$row['kid']}">{$row['name']}</a> </td>
 			<td class="pla " ><a href="spieler.php?uid={$row['owner']}">{$row['player_name']}</a></td>
 			<td class="hab " >{$row['pop']}</td>
 			<td class="coords" >$coords</td>
@@ -1914,6 +1939,8 @@ HTML;
         if ($pageIndex + 1 > $tot_pages) $pageIndex = 0;
         $nav = new PageNavigator($pageIndex + 1, $total, $this->pageSize, $prefix, "statistiken.php");
         $rows = $statistics->getHerosList($pageIndex, $this->pageSize);
+        $rows = is_array($rows) ? $rows : iterator_to_array($rows);
+        $tribes = $this->playersTribeAlliance(array_column($rows, 'uid'));
         $tableBody = '';
         $rowIndex = 0;
         foreach ($rows as $row) {
@@ -1921,11 +1948,16 @@ HTML;
             $class = $rank == $selectedRank ? 'hl' : 'hover';
             $level = Formulas::heroLevel($row['exp']);
             $row['exp'] = number_format_x($row['exp']);
+            $info = $tribes[(int)$row['uid']] ?? [];
+            $tribe = self::tribeCell($info);
+            $alliance = !empty($info['aid']) ? '<a href="allianz.php?aid=' . (int)$info['aid'] . '">' . htmlspecialchars((string)$info['tag']) . '</a>' : '-';
             $tableBody .= <<<HTML
 <tr class="{$class}">
 
 			<td class="ra " >{$rank}.</td>
+			{$tribe}
 			<td class="pla " ><a href="spieler.php?uid={$row['uid']}">{$row['player_name']}</a> </td>
+			<td class="al " >{$alliance}</td>
 			<td class="lev " >$level</td>
 			<td class="xp " >{$row['exp']}</td>
 		</tr>
@@ -1937,7 +1969,9 @@ HTML;
                 "tableId" => "heros",
                 "tableColumns" => '<tr>
 			<td></td>
+			<td class="tribe"></td>
 			<td>' . T("Statistics", "tabs.players") . '</td>
+			<td>' . T("Statistics", "alliance") . '</td>
 			<td>' . T("Statistics", "level") . '</td>
 			<td>' . T("Statistics", "xp") . '</td>
 		</tr>',

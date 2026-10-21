@@ -169,8 +169,8 @@ body.t46Layout #center a.contentTitleButton:hover:before { background-color: #69
 body.t46Layout #center a.contentTitleButton#closeContentButton { right: 40px; }
 body.t46Layout #center a.contentTitleButton#closeContentButton svg { position: absolute; z-index: 2; width: 15px; height: 15px; left: 50%; top: 50%; transform: translate(-50%, -50%); }
 body.t46Layout #center a.contentTitleButton#closeContentButton svg .outline { fill: #f2e1d0; stroke: #283c08; stroke-width: 1; }
-body.t46Layout #center a.contentTitleButton#answersButton { right: 82px; }
-body.t46Layout #center a.contentTitleButton#answersButton:after { content: ""; position: absolute; z-index: 2; left: 13px; top: 8px; width: 7px; height: 18px;
+body.t46Layout #center a.contentTitleButton#knowledgeBaseButton { right: 82px; }
+body.t46Layout #center a.contentTitleButton#knowledgeBaseButton:after { content: ""; position: absolute; z-index: 2; left: 13px; top: 8px; width: 7px; height: 18px;
     background-image: url('../img_ltr/hud/content/info_small.png'); }
 body.t46Layout.village1 #center a.contentTitleButton, body.t46Layout.village2 #center a.contentTitleButton { display: none; }
 body.t46Layout #content .contentNavi.subNavi { position: relative; display: flex; gap: 0; width: calc(100% + 15px); height: 50px; left: -7px; top: -9px;
@@ -514,8 +514,6 @@ body.t46Layout #auctions .groupAndControls { margin: 8px 0; }
 body.t46Layout #auctions .sell p { margin: 0 0 10px; }
 body.t46Layout #auctions .sell .inventoryWrapper .heroItems { width: auto; box-sizing: border-box; background-color: #3d4135; border: 1px solid #000; padding: 1px; display: flex; flex-wrap: wrap; }
 body.t46Layout #auctions .sell .heroItems .heroItem:not(.empty) { cursor: pointer; }
-body.t46Layout #auctions .itemTypeDetailContainer { display: flex; align-items: center; gap: 10px; margin: 0 0 8px; font-size: 14px; color: #3f2e22; }
-body.t46Layout #auctions .itemTypeDetailContainer .backButton { width: 28px; height: 28px; place-items: center; border-radius: 50%; background: #e9dfc8; border: 1px solid #a2947b; color: #5e463a; }
 body.t46Layout #auctions table.itemType { width: 100%; }
 body.t46Layout #auctions table.itemType tr.empty td { height: 50px; }
 body.t46Layout #auctions .sellItemForm { margin: 10px 0; padding: 10px; background: #efe3ca; border: 1px solid #a2947b; border-radius: 4px; }
@@ -1060,9 +1058,9 @@ body.t46Layout.legendsV2 #center a.contentTitleButton:before { top: 2px; right: 
     background: linear-gradient(#5d8137, #466428); box-shadow: inset 0 -4px 0 -2px #344a1d, inset 0 4px 0 -2px #b9d890, inset 0 0 0 1px #679f1b; }
 body.t46Layout.legendsV2 #center a.contentTitleButton:hover:before { background: linear-gradient(#6c9640, #527530); border-color: #34353c; }
 body.t46Layout.legendsV2 #center a.contentTitleButton#closeContentButton { right: 46px; }
-body.t46Layout.legendsV2 #center a.contentTitleButton#answersButton { right: 91px; }
+body.t46Layout.legendsV2 #center a.contentTitleButton#knowledgeBaseButton { right: 91px; }
 body.t46Layout.legendsV2 #center a.contentTitleButton#tabFavorButton { right: 136px; }
-body.t46Layout.legendsV2 #center a.contentTitleButton#answersButton:after { left: 12px; top: 7px; }
+body.t46Layout.legendsV2 #center a.contentTitleButton#knowledgeBaseButton:after { left: 12px; top: 7px; }
 body.t46Layout.legendsV2 #center a.contentTitleButton#tabFavorButton:after { left: 7px; top: 9px; }
 body.t46Layout.legendsV2 #center a.contentTitleButton#closeContentButton svg g.icon { display: inline; }
 body.t46Layout.legendsV2 #center a.contentTitleButton#closeContentButton svg g.outline path { fill: #263a11; stroke: #263a11; stroke-width: 2; }
@@ -1117,3 +1115,108 @@ body.t46Layout.legendsV2 #content .contentNavi.subNavi > .container > .content::
 
 /* Rise of Governors has no green marker above the active hero tab */
 body.t46Layout.legendsV2 #content.heroV2 .contentNavi.subNavi > .container.active::after { display: none; }
+
+/* Auctions (Rise of Governors): collapsed slot filter that slides open, price chart, compact headers */
+#auctions .filterSlotsRow.collapsible .filterSlot { transition: max-width 250ms ease-out, opacity 200ms ease-out, margin 250ms ease-out; max-width: 60px; overflow: hidden; }
+#auctions .filterSlotsRow.collapsible.collapsed .filterSlot:not(.active) { max-width: 0; opacity: 0; margin-inline: 0; padding-inline: 0; pointer-events: none; }
+#auctions .itemTypeDetailedInformation .priceChart svg.ovPriceChart { width: 100%; height: auto; display: block; }
+#auctions .itemTypeDetailedInformation .priceChart .recharts-legend-wrapper { margin-top: 2px; }
+#auctions .itemTypeDetailedInformation .priceChart .recharts-default-legend { margin: 0; padding: 0; list-style: none; }
+#auctions table.itemType thead th .cellWrapper { display: inline-flex; align-items: center; gap: 4px; }
+#auctions table.itemType thead th.sortable { cursor: pointer; }
+#auctions table.itemType thead th .sortingArrow { width: 10px; height: 5px; fill: currentColor; }
+#auctions table.itemType thead th .sortingArrow.inactive { opacity: .35; }
+#auctions table.itemType thead th .sortingArrow.down { transform: rotate(180deg); }
+#auctions table.itemType tr.empty td em { color: #8a7a6f; }
+#auctions .showMore { text-align: center; margin: 8px 0 14px; font-weight: 700; }
+#auctions .itemTypeSearch.opened ~ .filterSlotsRow { visibility: hidden; }
+#auctions table.itemType thead th { white-space: nowrap; }
+#auctions .goldenWrapper .backButton { text-decoration: none; }
+#auctions table.itemType td.maximumBid { width: 1%; white-space: nowrap; }
+#auctions table.itemType td.maximumBid .bidInput input { width: 88px; }
+body.t46Layout #auctions .sell .inventoryWrapper .heroItems { display: flex; flex-wrap: wrap; grid-template-columns: none; padding: 1px; }
+body.t46Layout #auctions .sell .inventoryWrapper .heroItems .heroItem { width: 70px; height: 70px; margin: 0; flex: 0 0 70px; box-sizing: border-box; }
+#auctions table.itemType td.maximumBid { min-width: 200px; }
+
+/* Green marker above the favourite tab (Rise of Governors: statistics, hero, rally point, ...) */
+body.t46Layout.legendsV2 #content .contentNavi.subNavi > .container:has(> .content.favorActive) { overflow: visible; }
+body.t46Layout.legendsV2 #content .contentNavi.subNavi > .container:has(> .content.favorActive)::before { content: ""; position: absolute; top: -8px; left: 50%; z-index: 4;
+    width: 26px; height: 19px; transform: translateX(-50%); pointer-events: none; background: url("data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A//www.w3.org/2000/svg%22%20viewBox%3D%220%200%2026%2019%22%3E%3Cdefs%3E%3ClinearGradient%20id%3D%22g%22%20x1%3D%220%22%20y1%3D%220%22%20x2%3D%220%22%20y2%3D%221%22%3E%3Cstop%20offset%3D%220%22%20stop-color%3D%22%23f6e2b0%22/%3E%3Cstop%20offset%3D%22.45%22%20stop-color%3D%22%23d2a868%22/%3E%3Cstop%20offset%3D%221%22%20stop-color%3D%22%239a6d36%22/%3E%3C/linearGradient%3E%3ClinearGradient%20id%3D%22v%22%20x1%3D%220%22%20y1%3D%220%22%20x2%3D%220%22%20y2%3D%221%22%3E%3Cstop%20offset%3D%220%22%20stop-color%3D%22%23d9f3a6%22/%3E%3Cstop%20offset%3D%22.3%22%20stop-color%3D%22%237fc23a%22/%3E%3Cstop%20offset%3D%221%22%20stop-color%3D%22%233d7a12%22/%3E%3C/linearGradient%3E%3C/defs%3E%3Cpath%20d%3D%22M1%201.5h24L13%2018z%22%20fill%3D%22url%28%23g%29%22%20stroke%3D%22%234a3216%22%20stroke-width%3D%221.2%22%20stroke-linejoin%3D%22round%22/%3E%3Cpath%20d%3D%22M6.5%202.2h13L13%2010.8z%22%20fill%3D%22url%28%23v%29%22%20stroke%3D%22%2323400b%22%20stroke-width%3D%22.9%22%20stroke-linejoin%3D%22round%22/%3E%3C/svg%3E") no-repeat center / contain;
+    filter: drop-shadow(0 1px 1px rgba(0, 0, 0, .45)); }
+
+/* ---- Content window title buttons as in Legends: close, knowledge base (i), contextual help (bulb); the favourite
+   button sits left of them, its position follows .contentTitle.buttonCountN ---- */
+body.t46Layout #center a.contentTitleButton#knowledgeBaseButton { right: 82px; }
+body.t46Layout #center a.contentTitleButton#contextualHelpButton { right: 124px; margin-right: 0; }
+body.t46Layout #center a.contentTitleButton#knowledgeBaseButton:after,
+body.t46Layout #center a.contentTitleButton#contextualHelpButton:after { content: ""; position: absolute; z-index: 2; left: 13px; top: 8px; width: 7px; height: 18px;
+    background-image: url('../img_ltr/hud/content/info_small.png'); }
+body.t46Layout #center a.contentTitleButton#contextualHelpButton:after { left: 10px; width: 12px; background-image: url('../img_ltr/hud/content/help_small.png'); }
+body.t46Layout #center .contentTitle.buttonCount0 ~ .contentContainer a.contentTitleButton#tabFavorButton { right: 82px; }
+body.t46Layout #center .contentTitle.buttonCount2 ~ .contentContainer a.contentTitleButton#tabFavorButton { right: 166px; }
+body.t46Layout.legendsV2 #center a.contentTitleButton#knowledgeBaseButton { right: 91px; }
+body.t46Layout.legendsV2 #center a.contentTitleButton#contextualHelpButton { right: 136px; }
+body.t46Layout.legendsV2 #center a.contentTitleButton#knowledgeBaseButton:after { left: 12px; top: 7px; }
+body.t46Layout.legendsV2 #center a.contentTitleButton#contextualHelpButton:after { left: 9px; top: 7px; }
+body.t46Layout.legendsV2 #center .contentTitle.buttonCount0 ~ .contentContainer a.contentTitleButton#tabFavorButton { right: 91px; }
+body.t46Layout.legendsV2 #center .contentTitle.buttonCount1 ~ .contentContainer a.contentTitleButton#tabFavorButton { right: 136px; }
+body.t46Layout.legendsV2 #center .contentTitle.buttonCount2 ~ .contentContainer a.contentTitleButton#tabFavorButton { right: 181px; }
+body.t46Layout #center a.contentTitleButton#contextualHelpButton.active:before { background: linear-gradient(#7aa64a, #5b8236); }
+body.t46Layout #center a.contentTitleButton#tabFavorButton:active:before,
+body.t46Layout #center a.contentTitleButton#knowledgeBaseButton:active:before,
+body.t46Layout #center a.contentTitleButton#contextualHelpButton:active:before,
+body.t46Layout #center a.contentTitleButton#closeContentButton:active:before { background: linear-gradient(#3f5e22, #5d8137); }
+
+/* ---- Contextual help tour (Legends #contextualHelp): dark bubbles with golden frame, arrow, progress and chevrons ---- */
+#contextualHelp { position: absolute; top: 0; left: 0; width: 100%; height: 0; z-index: 1400; pointer-events: none; opacity: 0;
+    animation: ovHelpAppear 250ms ease-out 150ms forwards; }
+@keyframes ovHelpAppear { 0% { opacity: 0; margin-top: -50px; } 100% { opacity: 1; margin-top: 0; } }
+#contextualHelp * { box-sizing: border-box; }
+#contextualHelp .contextualHelp { display: inline-grid; position: absolute; z-index: 1; grid-template-columns: auto; }
+#contextualHelp .contextualHelp .arrowContainer { position: relative; width: 40px; opacity: 0; }
+#contextualHelp .contextualHelp .arrowContainer svg.pointingArrow { position: absolute; z-index: 5; width: 40px; height: 40px; fill: rgba(51, 51, 51, .9); }
+#contextualHelp .contextualHelp .helpBody { position: relative; z-index: 2; display: inline-block; width: 350px; min-height: 80px; padding: 30px 25px 25px;
+    word-break: break-word; background-color: rgba(51, 51, 51, .9); color: #f2f2f2; font-size: 13px; line-height: 19px; text-align: left;
+    border-radius: 7px; border: 2px solid #caa46d; border-top-color: #ffe1aa; border-bottom-color: #907151;
+    box-shadow: 0 0 0 1px #1b1a1a, inset 0 0 0 1px #1b1a1a; pointer-events: auto; }
+#contextualHelp .contextualHelp .helpBody .helpTitle { font-weight: 700; font-size: 14px; color: #f0e1cc; margin-bottom: 6px; }
+#contextualHelp .contextualHelp .helpBody .progress { position: absolute; top: 1px; left: 1px; z-index: -1; display: flex; width: calc(100% - 2px); height: 5px; }
+#contextualHelp .contextualHelp .helpBody .progress div { flex: 1 1 0; background-color: #c9b59a; transition-duration: 250ms; }
+#contextualHelp .contextualHelp .helpBody .progress div:not(:last-of-type) { margin-right: 1px; }
+#contextualHelp .contextualHelp .helpBody .progress div:first-of-type { border-top-left-radius: 5px; }
+#contextualHelp .contextualHelp .helpBody .progress div:last-of-type { border-top-right-radius: 5px; }
+#contextualHelp .contextualHelp .helpBody .progress div.active { background-color: #f0e1cc; }
+#contextualHelp .contextualHelp .helpBody nav { position: relative; z-index: 4; height: 35px; margin-top: 25px; }
+#contextualHelp .contextualHelp .helpBody nav svg { position: absolute; top: 0; width: 12px; height: 17px; margin-top: 7px; cursor: pointer; outline: none; transition-duration: 150ms; }
+#contextualHelp .contextualHelp .helpBody nav svg.chevronBack { left: 0; }
+#contextualHelp .contextualHelp .helpBody nav svg.chevronForward { right: 0; }
+#contextualHelp .contextualHelp .helpBody nav svg path { fill: transparent; stroke: #d2bda1; stroke-width: 4px; stroke-linecap: round; stroke-linejoin: round; transition-duration: 150ms; }
+#contextualHelp .contextualHelp .helpBody nav svg:not(.disabled):hover path,
+#contextualHelp .contextualHelp .helpBody nav svg:not(.disabled):focus path { stroke: #f0e1cc; }
+#contextualHelp .contextualHelp .helpBody nav svg:not(.disabled):active path { stroke: #c9b59a; }
+#contextualHelp .contextualHelp .helpBody nav svg.disabled { opacity: .3; cursor: default; }
+#contextualHelp .contextualHelp .helpBody nav button.closeHelp { position: absolute; right: 0; top: 50%; transform: translateY(-50%); height: 30px; padding: 0 16px;
+    border: 0; border-radius: 15px; background-color: #d2bda1; color: #3f2f20; font-weight: 700; font-size: 13px; cursor: pointer; transition-duration: 150ms; }
+#contextualHelp .contextualHelp .helpBody nav button.closeHelp:hover { background-color: #f0e1cc; }
+#contextualHelp .contextualHelp .helpBody nav button.closeHelp:active { background-color: #c9b59a; }
+#contextualHelp .contextualHelp.after { grid-template-columns: 40px auto; }
+#contextualHelp .contextualHelp.after .arrowContainer { grid-row: 1; grid-column: 1; margin: 27px -2px 27px 2px; animation: ovHelpArrowH 250ms ease-in 150ms forwards; transform-origin: 100% 50%; }
+#contextualHelp .contextualHelp.after .helpBody { grid-row: 1; grid-column: 2; }
+#contextualHelp .contextualHelp.after svg.pointingArrow { stroke: #caa46d; }
+#contextualHelp .contextualHelp.before { grid-template-columns: auto 40px; }
+#contextualHelp .contextualHelp.before .arrowContainer { grid-row: 1; grid-column: 2; margin: 27px 0 27px -2px; animation: ovHelpArrowH 250ms ease-in 150ms forwards; transform-origin: 0 50%; }
+#contextualHelp .contextualHelp.before .helpBody { grid-row: 1; grid-column: 1; }
+#contextualHelp .contextualHelp.before svg.pointingArrow { transform: scaleX(-1); stroke: #caa46d; }
+#contextualHelp .contextualHelp.below .arrowContainer,
+#contextualHelp .contextualHelp.above .arrowContainer { width: calc(100% - 54px); height: 40px; margin: 0 27px; }
+#contextualHelp .contextualHelp.below .arrowContainer { grid-row: 1; margin-bottom: -2px; animation: ovHelpArrowV 250ms ease-in 150ms forwards; transform-origin: 50% 100%; }
+#contextualHelp .contextualHelp.below .helpBody { grid-row: 2; }
+#contextualHelp .contextualHelp.below svg.pointingArrow { top: 2px; transform: rotate(90deg); stroke: #ffe1aa; }
+#contextualHelp .contextualHelp.above .arrowContainer { grid-row: 2; margin-top: -2px; animation: ovHelpArrowV 250ms ease-in 150ms forwards; transform-origin: 50% 0; }
+#contextualHelp .contextualHelp.above .helpBody { grid-row: 1; }
+#contextualHelp .contextualHelp.above svg.pointingArrow { top: -2px; transform: rotate(-90deg); stroke: #907151; }
+@keyframes ovHelpArrowH { 0% { opacity: 0; transform: scaleX(0); } 100% { opacity: 1; transform: scaleX(1); } }
+@keyframes ovHelpArrowV { 0% { opacity: 0; transform: scaleY(0); } 100% { opacity: 1; transform: scaleY(1); } }
+@media screen and (max-width: 620px) and (orientation: portrait) {
+    .mobileOptimized #contextualHelp, .mobileOptimized div#center a.contentTitleButton#contextualHelpButton { display: none; }
+}

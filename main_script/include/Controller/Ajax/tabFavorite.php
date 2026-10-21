@@ -124,7 +124,7 @@ class tabFavorite extends AjaxBase
                 }
                 break;
             case 'hero':
-                if(in_array($number, [1, 2, 3, 4])) {
+                if(in_array($number, [1, 2, 3, 4, 5])) {
                     $x['data']['result'] = FALSE;
                     $x['data']['success'] = TRUE;
                     $session->setFavoriteTab($name, $number);
@@ -135,6 +135,16 @@ class tabFavorite extends AjaxBase
                     return FALSE;
                 }
                 break;
+            case 'heroAuction':
+                if(in_array($number, [0, 1, 2])) {
+                    $x['data']['result'] = FALSE;
+                    $x['data']['success'] = TRUE;
+                    $session->setFavoriteTab($name, $number);
+                    return TRUE;
+                }
+                $x['error'] = TRUE;
+                $x['errorMsg'] = "Tab number is not valid!";
+                return FALSE;
             case 'statistics':
                 if(in_array($number, [0, 1, 2, 3, 5, 6, 7, 8])) {
                     $x['data']['result'] = FALSE;

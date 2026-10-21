@@ -19,6 +19,19 @@ class LegendsUi
     /** Slot filters of the inventory and the auctions (filter key => item slots it shows). */
     public const FILTERS = ['all', 'leftHand', 'rightHand', 'helmet', 'body', 'shoes', 'bag', 'horse'];
 
+    /**
+     * Legends "set as favourite tab" title button: stores the tab through the tabFavorite ajax command and moves the
+     * favourite marker (.favor.favorActive) to the tab content with class favorKey{$number}.
+     */
+    public static function favorButton(string $name, $number): string
+    {
+        $js = "Travian.ajax({data:{cmd:'tabFavorite',name:" . json_encode($name) . ",number:" . json_encode((string)$number) . "},"
+            . "onSuccess:function(d){if(d.success){jQuery('.favor').removeClass('favorActive');"
+            . "jQuery('.favor.favorKey" . preg_replace('/[^a-zA-Z0-9_-]/', '', (string)$number) . "').addClass('favorActive');}}});return false;";
+        return '<a id="tabFavorButton" class="icon contentTitleButton buttonFramed green withIcon rectangle" href="#"'
+            . ' title="' . self::e(T("inGame", "Select this tab as fav")) . '" onclick="' . self::e($js) . '">&nbsp;</a>';
+    }
+
     public static function e($s): string
     {
         return htmlspecialchars((string)$s, ENT_QUOTES);
@@ -202,7 +215,7 @@ class LegendsUi
     }
 
     /** Rarity dot with the quality numeral (I, II, III) in the top left corner of an item. */
-    private static function rarityQuality(int $quality): string
+    public static function rarityQuality(int $quality, bool $withRarity = true): string
     {
         $bar = 'M10.75 14h-3.5v-1l1-.2V5.2l-1-.2V4h3.5v1l-1 .2v7.6l1 .2v1z';
         $offsets = [1 => [0], 2 => [-2, 2], 3 => [-4, 0, 4]][$quality] ?? [0];
@@ -212,7 +225,7 @@ class LegendsUi
                 $paths .= '<path' . ($pathClass ? ' class="' . $pathClass . '"' : '') . ($dx ? ' transform="translate(' . $dx . ' 0)"' : '') . ' d="' . $bar . '"/>';
             }
         }
-        return '<div class="rarityQuality"><svg class="rarityIndicator common" viewBox="0 0 18 18"><circle class="common" cx="9" cy="9" r="9"/></svg>'
+        return '<div class="rarityQuality">' . ($withRarity ? '<svg class="rarityIndicator common" viewBox="0 0 18 18"><circle class="common" cx="9" cy="9" r="9"/></svg>' : '')
             . '<svg class="qualityIndicator" viewBox="0 0 18 18">' . $paths . '</svg></div>';
     }
 

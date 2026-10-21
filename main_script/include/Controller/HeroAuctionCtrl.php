@@ -98,9 +98,20 @@ class HeroAuctionCtrl extends GameCtrl
     /** Travian Legends 655 auctions (graphic packs with 'heroV2'); actions are processed as on the classic pages. */
     private function renderV2($canTakePlaceInAuction)
     {
-        $action = in_array($_REQUEST['action'] ?? '', ['buy', 'sell', 'bids', 'accounting'], true) ? $_REQUEST['action'] : 'buy';
         $session = Session::getInstance();
+        if (!isset($_REQUEST['action'])) {
+            $_REQUEST['action'] = HeroAuctionV2::FAVOURITE_TABS[(int)$session->getFavoriteTab('heroAuction')] ?? 'buy';
+        }
+        $action = in_array($_REQUEST['action'], ['buy', 'sell', 'bids', 'accounting'], true) ? $_REQUEST['action'] : 'buy';
         $this->view->vars['contentCssClass'] = HeroAuctionV2::contentClass($action);
+        if ($action === 'buy') {
+            $this->view->vars['contextualHelp'] = [
+                ['selector' => '#auctions .groupAndControls', 'placement' => 'below', 'title' => T('ContextualHelp', 'auctionViewTitle'), 'text' => T('ContextualHelp', 'auctionView')],
+                ['selector' => '#auctions .goldenWrapper .heroItemSlotFilter, #auctions .rarityFilter', 'placement' => 'below', 'title' => T('ContextualHelp', 'auctionFilterTitle'), 'text' => T('ContextualHelp', 'auctionFilter')],
+                ['selector' => '#auctions .exchangeWidget', 'placement' => 'below', 'title' => T('ContextualHelp', 'auctionSilverTitle'), 'text' => T('ContextualHelp', 'auctionSilver')],
+                ['selector' => '#auctions .itemTypeListWrapper thead, #auctions .auctionListWrapper thead', 'placement' => 'above', 'title' => T('ContextualHelp', 'auctionListTitle'), 'text' => T('ContextualHelp', 'auctionList')],
+            ];
+        }
         $this->view->vars['titleInHeader'] = '';
         $this->view->vars['content'] = '';
         // Bids, sales and cancellations: run the classic handlers, keep their messages, drop their markup.
