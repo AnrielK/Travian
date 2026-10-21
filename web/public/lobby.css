@@ -78,7 +78,7 @@ h1 .back { font-size: 22px; text-decoration: none; opacity: .8; }
     color: #fff; text-shadow: 0 1px 3px #000, 0 0 2px #000; }
 .card .stat.days { top: 56px; }
 .card .stat.speed { top: 150px; }
-.card .stat i { display: inline-block; width: 58px; height: 58px; background: center / contain no-repeat; filter: drop-shadow(0 1px 2px rgba(0, 0, 0, .6)); }
+.card .stat i { display: inline-block; width: 58px; height: 58px; background-position: center; background-size: contain; background-repeat: no-repeat; filter: drop-shadow(0 1px 2px rgba(0, 0, 0, .6)); }
 
 .joinCard { display: flex; align-items: center; justify-content: center; gap: 46px; min-height: 300px; border-radius: 10px; text-decoration: none;
     border: 2px solid #a7c95c; background: rgba(34, 38, 42, .95); color: #a7c95c;
@@ -131,7 +131,7 @@ i.mapIcon { background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w
 .stats div { display: flex; align-items: center; gap: 16px; padding: 18px 0; border-bottom: 2px solid #8f8070;
     font: 500 21px/1.25 "Avenir Next Condensed", "Fira Sans Condensed", "Arial Narrow", Arial, sans-serif; }
 .stats b { display: block; font-size: 22px; }
-.stats i { flex: 0 0 54px; height: 54px; background: center / contain no-repeat; }
+.stats i { flex: 0 0 54px; height: 54px; background-position: center; background-size: contain; background-repeat: no-repeat; }
 .buttons { display: flex; flex-direction: column; align-items: center; gap: 12px; padding: 26px 20px 26px; }
 
 /* registration / login: the frame and header of the game windows (hud/content) */
