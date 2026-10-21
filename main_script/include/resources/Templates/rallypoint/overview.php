@@ -27,7 +27,7 @@ $subFiltersArray = $filter == 1 ? [
 ] : [4 => 1, 5 => 1, 6 => 0];
 
 if( $vars['filter'] > 0 and $vars['filter'] < 3):?>
-    <div class="filter subFilterContainer">
+    <div class="filter filterWrapper subFilterContainer">
         <div class="boxes boxesColor gray">
             <div class="boxes-tl"></div>
             <div class="boxes-tr"></div>
@@ -80,7 +80,7 @@ if( $vars['filter'] > 0 and $vars['filter'] < 3):?>
         <div class="clear"></div>
     </div>
 <?php endif;?>
-<div class="filter">
+<div class="filter filterWrapper">
     <div class="boxes boxesColor gray">
         <div class="boxes-tl"></div>
         <div class="boxes-tr"></div>

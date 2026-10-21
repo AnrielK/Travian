@@ -148,7 +148,8 @@ $t46Indicator = static function ($count) {
         <div id="center">
             <?php if ($vars['headerBar']): ?>
                 <div id="servertime" class="stime">
-                    <?=T("inGame", "serverTime"); ?>:&nbsp;<?=appendTimer($vars['dateTime'] ?? time(), 1); ?>
+                    <span><?=T("inGame", "serverTime"); ?>:</span>
+                    <span><?=appendTimer($vars['dateTime'] ?? time(), 1); ?>&nbsp;(UTC&nbsp;<?=date('P'); ?>)</span>
                 </div>
             <?php endif; ?>
             <div id="sidebarBeforeContent" class="sidebar beforeContent">

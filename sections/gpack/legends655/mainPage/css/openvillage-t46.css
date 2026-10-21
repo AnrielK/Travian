@@ -1043,3 +1043,12 @@ body.t46Layout.legendsV2 #background:after { content: ""; position: absolute; z-
     background: linear-gradient(rgb(84, 99, 58), rgb(84, 99, 58) 120px, #2c3520 calc(100% - 140px), #1f1e1c); pointer-events: none; }
 body.t46Layout.legendsV2.perspectiveResources #background:after { top: 890px; }
 body.t46Layout.legendsV2.perspectiveResources #background:after { background: linear-gradient(rgb(103, 119, 46), rgb(103, 119, 46) 60px, #2c3520 calc(100% - 140px), #1f1e1c); }
+
+/* Rally point overview filters as in Legends: small grey pills on the right, no box frame */
+body.t46Layout.legendsV2 div#build.gid16 div.filterWrapper > .boxes > div:not(.boxes-contents){display:none}
+body.t46Layout.legendsV2 div#build.gid16 div.filterWrapper > .boxes{background:none;padding:0;margin:0 0 6px}
+body.t46Layout.legendsV2 div#build.gid16 div.filterWrapper > .boxes > .boxes-contents{padding:0;background:none}
+
+/* Server time on two lines with the UTC offset, as in Legends */
+body.t46Layout.legendsV2 #servertime { white-space: normal; padding: 4px 23px; text-align: left; }
+body.t46Layout.legendsV2 #servertime > span { display: block; white-space: nowrap; }
