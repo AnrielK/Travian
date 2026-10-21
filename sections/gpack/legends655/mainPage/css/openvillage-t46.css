@@ -1011,3 +1011,7 @@ body.t46Layout #content.heroV2Inventory .heroItem.sortTarget { box-shadow: inset
 .ovInventoryOverlay.itemInfo .heroItemTooltip { width: min(540px, 92vw); }
 .ovInventoryOverlay .resourceTransferDialog { width: 540px; }
 .ovInventoryOverlay .resourceTransferDialog .ovDialogBody .intro { padding-right: 46px; }
+
+/* Side panels start at the height of the content windows (e.g. the hero window) on every page. */
+body.t46Layout.legendsV2 #sidebarBeforeContent,
+body.t46Layout.legendsV2 #sidebarAfterContent { margin-top: 15px; }
