@@ -92,18 +92,40 @@ final class BrowserModel: NSObject, ObservableObject, WKNavigationDelegate, WKUI
             let pageWidth = scroll.contentSize.width / max(scroll.zoomScale, 0.01)
             guard width > 0, pageWidth > 1000 else { return }   // only the wide game layout
             let portrait = scroll.bounds.height > scroll.bounds.width
-            let target = portrait ? width / 480 : width / pageWidth
+            // Portrait: the village views show 480 px around the middle; pages with a content window (building
+            // lists, hero, reports, …) show the whole window.
+            var shown: CGFloat = 480
+            var left: CGFloat? = nil
+            if portrait, let box = (try? await self.webView.evaluateJavaScript(Self.contentWindowScript)) as? [NSNumber], box.count == 2 {
+                shown = CGFloat(truncating: box[1]) + 24
+                left = CGFloat(truncating: box[0]) - 12
+            }
+            let target = portrait ? width / shown : width / pageWidth
             if !newPage || abs(scroll.zoomScale - target) > 0.01 {
                 scroll.setZoomScale(target, animated: false)
             }
             let extra = scroll.contentSize.width - width
-            if portrait && extra > 1 && (scroll.contentOffset.x <= 0.5 || !newPage) {
+            if portrait, let left, extra > 1 {
+                let x = min(max(0, left * scroll.zoomScale), extra)
+                scroll.setContentOffset(CGPoint(x: x.rounded(), y: scroll.contentOffset.y), animated: false)
+            } else if portrait && extra > 1 && (scroll.contentOffset.x <= 0.5 || !newPage) {
                 scroll.setContentOffset(CGPoint(x: (extra / 2).rounded(), y: scroll.contentOffset.y), animated: false)
             } else if !portrait {
                 scroll.setContentOffset(CGPoint(x: -scroll.adjustedContentInset.left, y: scroll.contentOffset.y), animated: false)
             }
         }
     }
+
+    /// Left edge and width (CSS px) of the content window, or null on the village views and the map.
+    private static let contentWindowScript = """
+    (function () {
+        if (/(dorf1|dorf2|karte)\\.php/.test(location.pathname)) return null;
+        var box = document.getElementById('contentOuterContainer');
+        if (!box) return null;
+        var r = box.getBoundingClientRect();
+        return [r.left + window.scrollX, r.width];
+    })()
+    """
 
     /// Viewport of the game pages on phones (the game itself sets none, so WebKit would shrink the whole
     /// 1280 px layout to the screen width).

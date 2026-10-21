@@ -1035,3 +1035,11 @@ body.t46Layout.legendsV2 div#footer a { color: #fffdf8; font-weight: 700; text-d
 body.t46Layout.legendsV2 div#footer a + a, body.t46Layout.legendsV2 div#footer li + li a { border-left: 1px solid #fffdf8; }
 body.t46Layout.legendsV2 div#footer a:hover { text-decoration: underline; }
 body.t46Layout.legendsV2 div#footer .copyright, body.t46Layout.legendsV2 div#footer p { margin-top: 10px; color: #fffdf8; text-shadow: 0 1px 2px #000; }
+
+/* Below the background picture (long pages): continue its bottom colour and darken towards the footer
+   instead of the flat green edge. */
+body.t46Layout.legendsV2 #background { isolation: isolate; }
+body.t46Layout.legendsV2 #background:after { content: ""; position: absolute; z-index: -1; left: 0; right: 0; bottom: 0; top: 1500px;
+    background: linear-gradient(rgb(84, 99, 58), rgb(84, 99, 58) 120px, #2c3520 calc(100% - 140px), #1f1e1c); pointer-events: none; }
+body.t46Layout.legendsV2.perspectiveResources #background:after { top: 890px; }
+body.t46Layout.legendsV2.perspectiveResources #background:after { background: linear-gradient(rgb(103, 119, 46), rgb(103, 119, 46) 60px, #2c3520 calc(100% - 140px), #1f1e1c); }

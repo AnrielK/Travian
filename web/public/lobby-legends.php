@@ -85,6 +85,9 @@ ob_start(static function (string $html): string {
         footer nav a { background: none !important; border-radius: 0 !important; padding: 0 10px !important; }
         footer nav a:not(:first-of-type) { border-inline-start: 1px solid var(--fontColor) !important; }
         .modal { max-width: calc(100vw - 36px) !important; box-sizing: border-box; }
+        /* world picture of the details dialog: as wide as the dialog, cut off instead of overflowing the frame */
+        #gameworldDetails .gameworld.details { width: auto; max-width: 100%; overflow: hidden; }
+        #gameworldDetails .gameworld.details .background, #gameworldDetails .gameworld.details .background:before, #gameworldDetails .gameworld.details .background:after { background-size: cover; }
     </style>
 </head>
 <body class="<?= $view ?>">
