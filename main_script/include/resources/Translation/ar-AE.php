@@ -5060,6 +5060,7 @@ $Definition['HeroV2']['showMore'] = 'Show more';
 $Definition['HeroV2']['soldItems'] = 'Sold items';
 $Definition['HeroV2']['payout'] = 'Payout';
 // </ov-auctions-rog>
+$Definition['Buildings']['fasterBuild'] = '%s%% faster construction';
 // <ov-contextual-help> texts of the Legends contextual help tours
 $Definition['ContextualHelp']['button'] = 'Show contextual help on this page';
 $Definition['ContextualHelp']['close'] = 'Got it';

@@ -152,6 +152,9 @@ class BuildCtrl extends GameCtrl
             } while ($category < 3);
         }
         $newBuilds = $this->getCategoryAvailableBuildings($category);
+        if (is_hero_v2()) {
+            $this->view->vars['answerId'] = 0; // Legends: the "construct new building" window has only the close button
+        }
         $view = new PHPBatchView("build/newBuildingMenu");
         $view->vars = ["selectedId" => $this->selectedBuildingIndex, "activeTab" => $category, "InfrastructureTab" => ["id" => get_button_id(), "text" => T("Buildings", "newBuilding.Infrastructure"),], "MilitaryTab" => ["id" => get_button_id(), "text" => T("Buildings", "newBuilding.Military"),], "ResourcesTab" => ["id" => get_button_id(), "text" => T("Buildings", "newBuilding.Resources"),],];
         $content = $view->output();
@@ -175,7 +178,7 @@ class BuildCtrl extends GameCtrl
                 continue;
             }
             $content .= $this->getBuildingWrapper($item_id, $build);
-            if (--$x > 0) {
+            if (--$x > 0 && !is_hero_v2()) {
                 $content .= '<hr />';
             }
         }
@@ -190,7 +193,7 @@ class BuildCtrl extends GameCtrl
                 $content .= '<h4 class="round spacer">' . T("Buildings", "soon_available") . '</h4>';
                 foreach ($newBuilds['soon'] as $item_id => $build) {
                     $content .= $this->getBuildingWrapper($item_id, $build, TRUE);
-                    if (--$x > 0) {
+                    if (--$x > 0 && !is_hero_v2()) {
                         $content .= '<hr />';
                     }
                 }
@@ -300,7 +303,55 @@ class BuildCtrl extends GameCtrl
                 $data['contractLink'] .= '</span>';
             }
         }
+        if (is_hero_v2()) {
+            return $this->getBuildingWrapperLegends($item_id, $data, $soon, $contractLink ?? null);
+        }
         return PHPBatchView::render("build/buildingWrapper", $data);
+    }
+
+    /** Travian Legends layout of one building in the "construct new building" window. */
+    private function getBuildingWrapperLegends($item_id, array $data, $soon, $contractLink)
+    {
+        $village = Village::getInstance();
+        $race = (int)$this->session->getRace();
+        $cpPop = Formulas::buildingCpPop($item_id, 0, 1);
+        $number = static fn($v) => number_format_x($v);
+        $data['benefits'] = [['culturePoints_medium', $number($cpPop[1])], ['population_medium', $number($cpPop[0])]];
+        $alliance_bonus = 1;
+        if ($item_id == 28 && $this->session->getAllianceId() > 0) {
+            $alliance_bonus = AllianceBonus::getTradersBonus($this->session->getAllianceId(), $this->session->getAllianceJoinTime());
+        }
+        $extra = [
+            15 => ['constructionTime_medium', Formulas::getMainBuildingValue(1) . '%'],
+            23 => ['crannyCap_small', $number(Formulas::crannyCAP(1, $race))],
+            10 => ['warehouseCap_medium', $number(Formulas::storeCAP(1))],
+            38 => ['warehouseCap_medium', $number(Formulas::bigStoreCAP(1))],
+            11 => ['granaryCap_medium', $number(Formulas::storeCAP(1))],
+            39 => ['granaryCap_medium', $number(Formulas::bigStoreCAP(1))],
+            28 => ['merchantCap_small', $number(Formulas::merchantCAP($race, 1, $alliance_bonus))],
+            34 => ['stabilityBonus_small', Formulas::StonemasonsLodgeValue(1) . '%'],
+            14 => ['troopSpeed_medium', Formulas::TournamentSqValue(1) . '%'],
+            36 => ['maxTraps_medium', $number(Formulas::trapperValue(1))],
+            19 => ['infantryBonusTime_medium', '100%'], 29 => ['infantryBonusTime_medium', '100%'],
+            20 => ['cavalryBonusTime_medium', '100%'], 30 => ['cavalryBonusTime_medium', '100%'],
+            21 => ['siegeTime_small', '100%'],
+            5 => ['lumberBonus_small', '5%'], 6 => ['clayBonus_small', '5%'], 7 => ['ironBonus_small', '5%'],
+            8 => ['cropBonus_medium', '5%'], 9 => ['cropBonus_medium', '5%'],
+        ];
+        if (isset($extra[$item_id])) {
+            $data['benefits'][] = $extra[$item_id];
+        }
+        $resources = $village->getCurrentResources(-1, true);
+        $data['missing'] = [];
+        for ($r = 0; $r < 4; $r++) {
+            $data['missing'][$r] = !$soon && floor($resources[$r]) < $data['cost'][$r];
+        }
+        $data['soon'] = $soon;
+        $data['tribe'] = [1 => 'roman', 2 => 'teuton', 3 => 'gaul', 6 => 'egyptian', 7 => 'hun'][$race] ?? 'roman';
+        $time = Formulas::buildingUpgradeTime($item_id, 1, $village->getMainBuildingLvl(), $village->isWW());
+        $data['fastTimeInString'] = secondsToString(Village::fastBuildTime($time));
+        $data['contractLink'] = $soon ? $data['contractLink'] : $contractLink;
+        return PHPBatchView::render("build/buildingWrapperLegends", $data);
     }
 
     private function getActionText($item_id = 0)
@@ -311,6 +362,7 @@ class BuildCtrl extends GameCtrl
             'plus' => null,
             'noResources' => false,
             'extraModuleButton' => null,
+            'fast' => null,
         ];
         $village = Village::getInstance();
         $fieldId = $this->selectedBuildingIndex;
@@ -405,6 +457,16 @@ class BuildCtrl extends GameCtrl
             $result['plus'] .= T("Buildings", "buildingQueue.desc");
         }
         $cost = Formulas::buildingUpgradeCosts($item_id, $lvl);
+        if (is_hero_v2() && ($session->hasPlus() || !$workerResult['isBusy'])) {
+            // Legends: build 25 % faster (the video bonus of Travian Legends, here without the video).
+            $fastReady = !$workerResult['isBusy'] && $village->isResourcesAvailable($cost);
+            $result['fast'] = getButton([
+                "type" => "button",
+                "class" => "textButtonV1 purple new videoFeatureButton" . ($fastReady ? '' : ' disabled'),
+                "onclick" => $fastReady ? "window.location.href = '$link&fast=1'; return false;" : "return false;",
+            ], ['data' => ["class" => "purple new videoFeatureButton"]],
+                sprintf(T("Buildings", "fasterBuild", "%s%% faster construction"), Village::FAST_BUILD_PERCENT) . \resources\View\LegendsUi::svg('speedUp', 'speedUp'));
+        }
         if (!$village->isResourcesAvailable($cost)) {
             $result['noResources'] = true;
             $result['main'] = $village->calcWhenResourcesAreAvailable($cost, TRUE);
@@ -703,6 +765,14 @@ class BuildCtrl extends GameCtrl
                     - $contract['culturePointsAndPopulation']['constructionTime'];
             }
             $contract['tribe'] = [1 => 'roman', 2 => 'teuton', 3 => 'gaul', 6 => 'egyptian', 7 => 'hun'][$this->session->getRace()] ?? 'roman';
+            $field = $village->getField($this->selectedBuildingIndex);
+            $contract['fastTimeInString'] = secondsToString(Village::fastBuildTime(Formulas::buildingUpgradeTime($field['item_id'],
+                $field['level'] + $field['upgrade_state'] + 1, $village->getMainBuildingLvl(), $village->isWW())));
+            $resources = $village->getCurrentResources(-1, true);
+            $contract['missing'] = [];
+            for ($r = 0; $r < 4; $r++) {
+                $contract['missing'][$r] = floor($resources[$r]) < $contract['cost'][$r];
+            }
             return PHPBatchView::render("build/buildingReadyLegends", $contract);
         }
         return PHPBatchView::render("build/buildingReadyWrapper", $contract);

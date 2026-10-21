@@ -32,6 +32,63 @@ class LegendsUi
             . ' title="' . self::e(T("inGame", "Select this tab as fav")) . '" onclick="' . self::e($js) . '">&nbsp;</a>';
     }
 
+    /**
+     * Sidebar box header buttons in the Legends look: the classic sprite buttons (layoutButton workshopBlack gold, …)
+     * become framed round buttons with the Legends SVG icons, like the adventure button in the top bar.
+     */
+    public static function framedSidebarButtons(string $html): string
+    {
+        $icons = [
+            'workshop' => 'sbWorkshop', 'stable' => 'sbStable', 'barracks' => 'sbBarracks', 'market' => 'sbMarket',
+            'embassy' => 'sbEmbassy', 'allianceForum' => 'sbForum', 'edit' => 'sbEdit',
+        ];
+        $parts = preg_split('/(?=<div[^>]*\bid="sidebarBox)/', $html);
+        foreach ($parts as &$part) {
+            $inVillageList = strpos($part, 'id="sidebarBoxVillagelist"') !== false || strpos($part, 'id="sidebarBoxVillageList"') !== false;
+            $part = preg_replace_callback('/<(button|a)\b([^>]*?)\bclass="layoutButton ([^"]*)"([^>]*)>/', function ($m) use ($icons, $inVillageList) {
+                $classes = preg_split('/\s+/', trim($m[3]));
+                if (in_array('buttonFramed', $classes, true) || in_array('toggle', $classes, true)) {
+                    return $m[0];
+                }
+                $name = '';
+                $color = in_array('green', $classes, true) ? 'green' : 'gold';
+                if (preg_match('/^([a-zA-Z]+?)(White|Black|Active)$/', $classes[0], $n)) {
+                    $name = $n[1];
+                }
+                $svg = '';
+                if ($name === 'overview') {
+                    $svg = $inVillageList ? 'sbOverview' : 'sbAlliance';
+                } elseif (isset($icons[$name])) {
+                    $svg = $icons[$name];
+                }
+                $extra = array_values(array_diff($classes, [$classes[0], 'green', 'gold']));
+                if ($name === '') {
+                    $extra = array_values(array_diff($classes, ['green', 'gold']));
+                }
+                $class = trim('layoutButton buttonFramed withIcon round ' . $name . ' ' . $color . ' ' . implode(' ', $extra));
+                return '<' . $m[1] . $m[2] . 'class="' . $class . '"' . $m[4] . '>' . ($svg !== '' ? self::svg($svg) : '');
+            }, $part);
+        }
+        unset($part);
+        return implode('', $parts);
+    }
+
+    /**
+     * Outline (SVG path) of a resource field on the Legends resource view, traced from the field picture of the
+     * village layout (layout 3 = the original Travian Legends outlines); slot 0 = the village centre. Null if unknown.
+     */
+    public static function fieldShape(int $layout, int $slot): ?string
+    {
+        static $shapes = null;
+        if ($shapes === null) {
+            $shapes = json_decode((string)file_get_contents(__DIR__ . '/legendsFieldShapes.json'), true) ?: [];
+        }
+        if ($slot === 0) {
+            return $shapes['center'] ?? null;
+        }
+        return $shapes['layouts'][(string)$layout][(string)$slot] ?? null;
+    }
+
     public static function e($s): string
     {
         return htmlspecialchars((string)$s, ENT_QUOTES);

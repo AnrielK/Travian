@@ -76,13 +76,14 @@ $signed = static function ($delta, callable $format): string {
 <?php else: ?>
     <?php
     $plusAdvertising = !empty($vars['contractLink']['plus']) && !empty($vars['contractLink']['master']);
-    $section2 = $plusAdvertising || !empty($vars['contractLink']['extraModuleButton']);
+    $fast = !empty($vars['contractLink']['fast']) && !$plusAdvertising ? $vars['contractLink']['fast'] : null;
+    $section2 = $plusAdvertising || $fast !== null || !empty($vars['contractLink']['extraModuleButton']);
     ?>
     <div class="upgradeBuilding">
         <div id="contract" class="contractWrapper">
             <div class="inlineIconList resourceWrapper">
                 <?php for ($r = 0; $r < 4; $r++): ?>
-                    <div class="inlineIcon resource"><i class="r<?=$r + 1; ?>Big"></i><span class="value value"><?=number_format_x($vars['cost'][$r]); ?></span></div>
+                    <div class="inlineIcon resource<?=!empty($vars['missing'][$r]) ? ' fillUp' : ''; ?>"><i class="r<?=$r + 1; ?>Big"></i><span class="value value"><?=number_format_x($vars['cost'][$r]); ?></span></div>
                 <?php endfor; ?>
                 <div class="inlineIcon resource"><i class="cropConsumptionBig"></i><span class="value value"><?=$vars['freeCrop']; ?></span></div>
             </div>
@@ -123,6 +124,10 @@ $signed = static function ($delta, callable $format): string {
                 <div class="section2">
                     <?php if ($plusAdvertising): ?>
                         <div class="plusAdvertising"><?=str_replace(['<br />', '<br>', '<br/>'], '', $vars['contractLink']['plus']); ?></div>
+                    <?php endif; ?>
+                    <?php if ($fast !== null): ?>
+                        <?=$fast; ?>
+                        <div class="inlineIcon duration fast"><div class="iconWrapper"><i class="clock_medium"></i><?=\resources\View\LegendsUi::svg('speedUp', 'speedUp'); ?></div><span class="value"><?=$vars['fastTimeInString']; ?></span></div>
                     <?php endif; ?>
                     <?=str_replace(['<br />', '<br>', '<br/>'], '', $vars['contractLink']['extraModuleButton']); ?>
                 </div>

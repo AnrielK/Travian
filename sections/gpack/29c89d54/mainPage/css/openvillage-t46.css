@@ -224,22 +224,22 @@ body.t46Layout .sidebar #sidebarBoxInfobox .messageShortInfo img.messages[class*
     background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 18 14'%3E%3Crect x='.5' y='.5' width='17' height='13' rx='1.5' fill='%23e69043' stroke='%237a3f12'/%3E%3Cpath d='M1 1.5 9 8l8-6.5' fill='none' stroke='%237a3f12'/%3E%3C/svg%3E"); }
 
 /* ---- Round layout buttons (sidebar headers): Legends look – gold rim, green/gold face, white sprite icon ---- */
-body.t46Layout button.layoutButton { width: 36px; height: 36px; padding: 0; border-radius: 50%; border: 1px solid #34220d; overflow: visible;
+body.t46Layout button.layoutButton:not(.buttonFramed) { width: 36px; height: 36px; padding: 0; border-radius: 50%; border: 1px solid #34220d; overflow: visible;
     background-image: linear-gradient(to bottom, #cba467 5%, #f3e2ae 13%, #efbf7b 32%, #aa8050 48%, #835e35 72%, #ad8a54 93%, #d7b672 100%);
     box-shadow: 0 2px 3px rgba(0, 0, 0, .35); }
-body.t46Layout button.layoutButton:before { content: ""; position: absolute; top: 2px; right: 2px; bottom: 2px; left: 2px; width: auto; height: auto; z-index: 1;
+body.t46Layout button.layoutButton:not(.buttonFramed):before { content: ""; position: absolute; top: 2px; right: 2px; bottom: 2px; left: 2px; width: auto; height: auto; z-index: 1;
     border-radius: 50%; border: 1px solid #34220d; background-image: none; background-color: #546e39;
     box-shadow: inset 0 -2px 1px 1px #63a90b, inset 2px -1px 1px 0 #578b11, inset -2px -1px 1px 0 #578b11, inset 0 2px 1px 1px #cfdcbe; }
-body.t46Layout button.layoutButton:hover:not(.disabled):before { background-color: #699128;
+body.t46Layout button.layoutButton:not(.buttonFramed):hover:not(.disabled):before { background-color: #699128;
     box-shadow: inset 0 -2px 1px 1px #71bb13, inset 2px -1px 1px 0 #6da71d, inset -2px -1px 1px 0 #6da71d, inset 0 2px 1px 1px #d4e2c1; }
-body.t46Layout button.layoutButton:after { display: none; }
-body.t46Layout button.layoutButton.gold:before { background-color: #ffd55e; background-image: linear-gradient(to bottom, #ffeaae, #ffd55e);
+body.t46Layout button.layoutButton:not(.buttonFramed):after { display: none; }
+body.t46Layout button.layoutButton:not(.buttonFramed).gold:before { background-color: #ffd55e; background-image: linear-gradient(to bottom, #ffeaae, #ffd55e);
     box-shadow: inset 0 -2px 1px 1px #ffe94c, inset 2px -1px 1px 0 #ffe464, inset -2px -1px 1px 0 #ffe464, inset 0 2px 1px 1px #ffeaae; }
-body.t46Layout button.layoutButton.disabled:before { background-color: #8a8a7a; box-shadow: inset 0 -1px 1px 1px #a3a690, inset 0 1px 1px 1px #c4c7b3; }
-body.t46Layout button.layoutButton.gold.disabled:before { background-color: #cda862; background-image: none; box-shadow: inset 0 -1px 1px 1px #daba4a, inset 0 1px 1px 1px #f4dc6a; }
-body.t46Layout button.layoutButton .button-container { position: absolute; top: 0; left: 0; right: 0; bottom: 0; }
-body.t46Layout button.layoutButton i { top: 1px; left: 1px; width: 32px; height: 32px; z-index: 3; }
-body.t46Layout button.layoutButton.disabled i { opacity: .75; }
+body.t46Layout button.layoutButton:not(.buttonFramed).disabled:before { background-color: #8a8a7a; box-shadow: inset 0 -1px 1px 1px #a3a690, inset 0 1px 1px 1px #c4c7b3; }
+body.t46Layout button.layoutButton:not(.buttonFramed).gold.disabled:before { background-color: #cda862; background-image: none; box-shadow: inset 0 -1px 1px 1px #daba4a, inset 0 1px 1px 1px #f4dc6a; }
+body.t46Layout button.layoutButton:not(.buttonFramed) .button-container { position: absolute; top: 0; left: 0; right: 0; bottom: 0; }
+body.t46Layout button.layoutButton:not(.buttonFramed) i { top: 1px; left: 1px; width: 32px; height: 32px; z-index: 3; }
+body.t46Layout button.layoutButton:not(.buttonFramed).disabled i { opacity: .75; }
 
 /* ---- Stock bar: Legends uses the normal (bold 11px) numbers ---- */
 body.t46Layout #stockBar .value { font-size: 11px !important; font-weight: 700; }
@@ -1181,3 +1181,130 @@ body.t46Layout #center a.contentTitleButton#closeContentButton:active:before { b
 @media screen and (max-width: 620px) and (orientation: portrait) {
     .mobileOptimized #contextualHelp, .mobileOptimized div#center a.contentTitleButton#contextualHelpButton { display: none; }
 }
+
+/* ---- Sidebar box header buttons as in Legends: framed round buttons with SVG icons (like the adventure button) ---- */
+body.t46Layout.legendsV2 .sidebar .sidebarBox .innerBox.header .buttonsWrapper { display: flex; align-items: center; gap: 8px; }
+body.t46Layout.legendsV2 .sidebar .sidebarBox .innerBox.header .buttonsWrapper > .layoutButton.buttonFramed { margin: 0; }
+body.t46Layout.legendsV2 .sidebar .layoutButton.buttonFramed.round { position: relative; display: grid; place-items: center; width: 40px; height: 40px;
+    padding: 0; box-sizing: border-box; cursor: pointer; filter: drop-shadow(0 3px 3px rgba(0, 0, 0, .3)); }
+body.t46Layout.legendsV2 .sidebar .layoutButton.buttonFramed.round .button-container { position: absolute; inset: 0; z-index: 3; }
+body.t46Layout.legendsV2 .sidebar .layoutButton.buttonFramed.round .button-container > i { display: none; }
+body.t46Layout.legendsV2 .sidebar .layoutButton.buttonFramed.round > svg { width: 22px; height: 22px; max-width: 22px; max-height: 22px; }
+body.t46Layout.legendsV2 .sidebar .layoutButton.buttonFramed.round.disabled { cursor: default; }
+body.t46Layout.legendsV2 .sidebar #sidebarBoxActiveVillage .layoutButton.market { order: 1; }
+body.t46Layout.legendsV2 .sidebar #sidebarBoxActiveVillage .layoutButton.barracks { order: 2; }
+body.t46Layout.legendsV2 .sidebar #sidebarBoxActiveVillage .layoutButton.stable { order: 3; }
+body.t46Layout.legendsV2 .sidebar #sidebarBoxActiveVillage .layoutButton.workshop { order: 4; }
+body.t46Layout.legendsV2 .sidebar .sidebarBox .layoutButton.buttonFramed.round { position: relative; display: grid; place-items: center; width: 40px; height: 40px;
+    margin: 0; padding: 0; box-sizing: border-box; overflow: visible; border-radius: 50%; border: 1px solid #34220d; box-shadow: none;
+    background-color: transparent; background-image: linear-gradient(to bottom, #cba467 5%, #f3e2ae 13%, #efbf7b 32%, #aa8050 48%, #835e35 72%, #ad8a54 93%, #d7b672 100%);
+    filter: drop-shadow(0 3px 3px rgba(0, 0, 0, .3)); --iconColor: #263a11; }
+body.t46Layout.legendsV2 .sidebar .sidebarBox .layoutButton.buttonFramed.round:before,
+body.t46Layout.legendsV2 .sidebar .sidebarBox .layoutButton.buttonFramed.round:after { content: ""; position: absolute; top: 2px; left: 2px; right: 2px; bottom: 2px;
+    width: auto; height: auto; margin: 0; border-radius: 50%; box-sizing: border-box; opacity: 1; background-image: none; transition: background-color 150ms, box-shadow 150ms; }
+body.t46Layout.legendsV2 .sidebar .sidebarBox .layoutButton.buttonFramed.round:before { z-index: 2; border: 1px solid #34220d; background-color: #546e39;
+    box-shadow: inset 0 -2px 1px 1px #63a90b, inset 2px -1px 1px 0 #578b11, inset -2px -1px 1px 0 #578b11, inset 0 2px 1px 1px #cfdcbe; }
+body.t46Layout.legendsV2 .sidebar .sidebarBox .layoutButton.buttonFramed.round:after { z-index: 1; border: 0; background-color: transparent; }
+body.t46Layout.legendsV2 .sidebar .sidebarBox .layoutButton.buttonFramed.round.green:not(.disabled):hover:before { background-color: #699128;
+    box-shadow: inset 0 -2px 1px 1px #71bb13, inset 2px -1px 1px 0 #6da71d, inset -2px -1px 1px 0 #6da71d, inset 0 2px 1px 1px #d4e2c1; }
+body.t46Layout.legendsV2 .sidebar .sidebarBox .layoutButton.buttonFramed.round.green:not(.disabled):active:before { background-color: #88c72d;
+    box-shadow: inset 0 -2px 1px 1px #88c72d, inset 2px -1px 1px 0 #8dc03a, inset -2px -1px 1px 0 #8dc03a, inset 0 2px 1px 1px #abd171; }
+body.t46Layout.legendsV2 .sidebar .sidebarBox .layoutButton.buttonFramed.round.green.disabled:before { background-color: #7c9161;
+    box-shadow: inset 0 -1px 1px 1px #90b65e, inset 0 1px 1px 1px #b3c19d; }
+body.t46Layout.legendsV2 .sidebar .sidebarBox .layoutButton.buttonFramed.round.gold { --iconColor: #aa6928; }
+body.t46Layout.legendsV2 .sidebar .sidebarBox .layoutButton.buttonFramed.round.gold:before { background-color: transparent;
+    box-shadow: inset 0 -2px 1px 1px #ffe94c, inset 2px -1px 1px 0 #ffe464, inset -2px -1px 1px 0 #ffe464, inset 0 2px 1px 1px #ffeaae; }
+body.t46Layout.legendsV2 .sidebar .sidebarBox .layoutButton.buttonFramed.round.gold:after { background-image: linear-gradient(#ffeaae, #ffd55e); }
+body.t46Layout.legendsV2 .sidebar .sidebarBox .layoutButton.buttonFramed.round.gold:not(.disabled):hover:after { background-image: linear-gradient(#fff2cb, #ffe08a); }
+body.t46Layout.legendsV2 .sidebar .sidebarBox .layoutButton.buttonFramed.round.gold.disabled:before { border-color: #392818; box-shadow: inset 0 -1px 1px 1px #daba4a, inset 0 1px 1px 1px #f4dc6a; }
+body.t46Layout.legendsV2 .sidebar .sidebarBox .layoutButton.buttonFramed.round.gold.disabled:after { background-image: none; background-color: #cda862; }
+body.t46Layout.legendsV2 .sidebar .sidebarBox .layoutButton.buttonFramed.round > svg { position: relative; inset: auto; z-index: 3; width: 22px; height: 22px;
+    max-width: 22px; max-height: 22px; margin: 0; overflow: visible; pointer-events: none; transform: none; }
+body.t46Layout.legendsV2 .sidebar .sidebarBox .layoutButton.buttonFramed.round > svg .outline path,
+body.t46Layout.legendsV2 .sidebar .sidebarBox .layoutButton.buttonFramed.round > svg .outline > path { fill: var(--iconColor); stroke: var(--iconColor); stroke-width: 2;
+    stroke-linecap: round; vector-effect: non-scaling-stroke; }
+body.t46Layout.legendsV2 .sidebar .sidebarBox .layoutButton.buttonFramed.round > svg .icon,
+body.t46Layout.legendsV2 .sidebar .sidebarBox .layoutButton.buttonFramed.round > svg .icon path { fill: #fff9eb; stroke: none; }
+body.t46Layout.legendsV2 .sidebar .sidebarBox .layoutButton.buttonFramed.round.disabled > svg { opacity: .6; }
+body.t46Layout.legendsV2 .sidebar .sidebarBox .layoutButton.buttonFramed.round > .button-container { position: absolute; inset: 0; z-index: 4; background: none; }
+body.t46Layout.legendsV2 .sidebar .sidebarBox .layoutButton.buttonFramed.round > .button-container > i { display: none; }
+body.t46Layout.legendsV2 .sidebar .sidebarBox .layoutButton.buttonFramed.round > .button-container > img { z-index: 3; }
+body.t46Layout.legendsV2 .sidebar .sidebarBox .layoutButton.buttonFramed.round > svg svg { position: absolute; top: 0; left: 0; width: 100%; height: 100%; transform: none; overflow: visible; }
+
+/* ---- Task overview box as in Legends: the mentor with a green outline stands on a box holding only the title ---- */
+body.t46Layout.legendsV2 .sidebar #sidebarBoxQuestmaster.legendsMentor .buttonsWrapper,
+body.t46Layout.legendsV2 .sidebar #sidebarBoxQuestmaster.legendsMentor .newQuestSpeechBubble,
+body.t46Layout.legendsV2 .sidebar #sidebarBoxQuestmaster.legendsMentor .taskOverview ul { display: none; }
+body.t46Layout.legendsV2 .sidebar #sidebarBoxQuestmaster.legendsMentor .taskOverview { margin: 0; }
+body.t46Layout.legendsV2 .sidebar #sidebarBoxQuestmaster.legendsMentor .taskOverview .boxTitle { padding: 22px 0 14px; }
+body.t46Layout.legendsV2 .sidebar #sidebarBoxQuestmaster.legendsMentor .header #questmasterButton .mentor {
+    filter: drop-shadow(2px 0 0 #6aa83a) drop-shadow(-2px 0 0 #6aa83a) drop-shadow(0 -2px 0 #6aa83a) drop-shadow(0 2px 0 #6aa83a) drop-shadow(0 0 1px #2f5a12); }
+body.t46Layout.legendsV2 .sidebar #sidebarBoxQuestmaster.legendsMentor .header #questmasterButton:hover .mentor {
+    filter: brightness(1.08) drop-shadow(2px 0 0 #86c64f) drop-shadow(-2px 0 0 #86c64f) drop-shadow(0 -2px 0 #86c64f) drop-shadow(0 2px 0 #86c64f) drop-shadow(0 0 1px #2f5a12); }
+body.t46Layout.legendsV2 .sidebar #sidebarBoxQuestmaster.legendsMentor .taskOverview .boxTitle { margin: 4px 0 0; padding: 14px 18px 12px; border: 0; border-radius: 22px;
+    background: linear-gradient(90deg, rgba(255, 251, 238, 0), rgba(255, 251, 238, .75) 18%, rgba(255, 251, 238, .75) 82%, rgba(255, 251, 238, 0)); }
+body.t46Layout.legendsV2 .sidebar #sidebarBoxQuestmaster.legendsMentor .taskOverview .boxTitle:before,
+body.t46Layout.legendsV2 .sidebar #sidebarBoxQuestmaster.legendsMentor .taskOverview .boxTitle:after { display: none; }
+body.t46Layout.legendsV2 .sidebar #sidebarBoxQuestmaster.legendsMentor .taskOverview .boxTitle:hover { background-color: transparent; color: #3f2a14; }
+
+/* ---- "Construct new building" window in the Legends layout: text + picture, framed box with costs, benefits, buttons ---- */
+body.t46Layout.legendsV2 div#build .buildingWrapper.ovLegendsBuild { display: grid; grid-template-columns: 1fr auto; column-gap: 10px; align-items: start; padding: 0; margin: 25px 0 0; border: 0; }
+body.t46Layout.legendsV2 div#build .buildingWrapper.ovLegendsBuild:first-of-type { margin-top: 4px; }
+body.t46Layout.legendsV2 div#build h4.round.spacer + .buildingWrapper.ovLegendsBuild { margin-top: 10px; }
+body.t46Layout.legendsV2 div#build .ovLegendsBuild .build_desc { grid-column: 1; display: block; min-height: 0; padding: 0; margin: 0; font-size: 13px; line-height: 16px; color: #333; }
+body.t46Layout.legendsV2 div#build .ovLegendsBuild .build_desc h2 { margin: 0 0 1px; font-size: 16px; line-height: 20px; font-weight: 700; color: #2f2116; }
+body.t46Layout.legendsV2 div#build .ovLegendsBuild .build_logo_link { grid-column: 2; display: block; line-height: 0; }
+body.t46Layout.legendsV2 div#build .ovLegendsBuild img.build_logo { float: none; display: block; margin: 0; width: 150px; height: 125px; background-size: contain; background-repeat: no-repeat; background-position: center center; }
+body.t46Layout.legendsV2 div#build .ovLegendsBuild .upgradeBuilding { grid-column: 1 / -1; margin: 14px 0 0; }
+body.t46Layout.legendsV2 div#build .ovLegendsBuild .contractWrapper { text-align: center; }
+body.t46Layout.legendsV2 div#build .ovLegendsBuild .contractWrapper .resourceWrapper { display: inline-grid; width: auto; margin: 0; }
+body.t46Layout.legendsV2 div#build .ovLegendsBuild .contractWrapper .resourceWrapper .inlineIcon { width: auto; }
+body.t46Layout.legendsV2 div#build .ovLegendsBuild .contractWrapper .resourceWrapper .inlineIcon.fillUp { padding: 0 6px; border-radius: 4px;
+    background: #f5c6bb; box-shadow: inset 0 0 0 1px #d0503b; }
+body.t46Layout.legendsV2 div#build .ovLegendsBuild .upgradeBlocked { display: grid; grid-template-columns: 1fr auto; align-items: center; gap: 10px; text-align: left; }
+body.t46Layout.legendsV2 div#build .ovLegendsBuild .upgradeBlocked:not(:empty) { padding: 6px 0 2px; }
+body.t46Layout.legendsV2 div#build .ovLegendsBuild .upgradeBlocked .errorMessage { color: #777; font-weight: 700; font-size: 12px; }
+body.t46Layout.legendsV2 div#build .ovLegendsBuild .upgradeBlocked button { margin: 0; }
+body.t46Layout.legendsV2 div#build .ovLegendsBuild .upgradeButtonsContainer { display: table; width: 100%; table-layout: fixed; padding: 10px 0; box-sizing: border-box; }
+body.t46Layout.legendsV2 div#build .ovLegendsBuild .upgradeButtonsContainer > .clear { display: none; }
+body.t46Layout.legendsV2 div#build .ovLegendsBuild .upgradeButtonsContainer .section1,
+body.t46Layout.legendsV2 div#build .ovLegendsBuild .upgradeButtonsContainer .section2 { display: table-cell; vertical-align: top; text-align: center; padding: 0 8px; }
+body.t46Layout.legendsV2 div#build .ovLegendsBuild .upgradeButtonsContainer:not(.section2Enabled) .section1 { width: 100%; }
+body.t46Layout.legendsV2 div#build .ovLegendsBuild .upgradeButtonsContainer button { display: block; margin: 0 auto 8px; min-width: 128px; font-size: 12px; }
+body.t46Layout.legendsV2 div#build .ovLegendsBuild .upgradeButtonsContainer button + br { display: none; }
+body.t46Layout.legendsV2 div#build .ovLegendsBuild .upgradeButtonsContainer button svg.speedUp { display: inline-block; width: 16px; height: 11px; margin: -3px 0 0 5px; vertical-align: middle; }
+body.t46Layout.legendsV2 div#build .ovLegendsBuild .upgradeButtonsContainer button.disabled { opacity: .55; cursor: default; filter: saturate(.4); }
+body.t46Layout.legendsV2 div#build .ovLegendsBuild .upgradeButtonsContainer .inlineIcon.duration { display: inline-flex; align-items: center; gap: 4px; margin: 0; }
+body.t46Layout.legendsV2 div#build .ovLegendsBuild .upgradeButtonsContainer .inlineIcon.duration .iconWrapper { position: relative; display: inline-block; line-height: 0; }
+body.t46Layout.legendsV2 div#build .ovLegendsBuild .upgradeButtonsContainer .inlineIcon.duration svg.speedUp { position: absolute; left: 7px; bottom: -3px; width: 18px; height: 12px; }
+body.t46Layout.legendsV2 div#build .ovLegendsBuild .upgradeButtonsContainer .plusAdvertising { font-size: 13px; line-height: 17px; color: #333; }
+body.t46Layout.legendsV2 div#build .ovLegendsBuild .upgradeButtonsContainer .plusAdvertising button { margin-bottom: 8px; }
+body.t46Layout.legendsV2 div#build .ovLegendsBuild.soon .upgradeButtonsContainer { display: block; text-align: center; }
+body.t46Layout.legendsV2 div#build .ovLegendsBuild.soon .upgradeButtonsContainer > .contractText { display: none; }
+body.t46Layout.legendsV2 div#build .ovLegendsBuild.soon .buildingCondition { font-size: 17px; line-height: 24px; }
+body.t46Layout.legendsV2 div#build .ovLegendsBuild.soon .buildingCondition a { font-weight: 700; color: #6a9e18; }
+body.t46Layout.legendsV2 div#build .ovLegendsBuild.soon .buildingCondition span { color: #6a9e18; }
+body.t46Layout.legendsV2 div#build .ovLegendsBuild.soon .buildingCondition.error span { color: #c0281d; }
+/* Upgrade page: missing resources and the faster construction like in the new building window */
+body.t46Layout.legendsV2 #build .upgradeBuilding .resourceWrapper .inlineIcon.fillUp { padding: 0 6px; border-radius: 4px; background: #f5c6bb; box-shadow: inset 0 0 0 1px #d0503b; }
+body.t46Layout.legendsV2 #build .upgradeBuilding .upgradeButtonsContainer > .clear { display: none; }
+body.t46Layout.legendsV2 #build .upgradeBuilding .upgradeButtonsContainer button svg.speedUp { display: inline-block; width: 16px; height: 11px; margin: -3px 0 0 5px; vertical-align: middle; }
+body.t46Layout.legendsV2 #build .upgradeBuilding .upgradeButtonsContainer button.videoFeatureButton { display: block; margin: 0 auto 8px; }
+body.t46Layout.legendsV2 #build .upgradeBuilding .upgradeButtonsContainer button.videoFeatureButton.disabled { opacity: .55; cursor: default; filter: saturate(.4); }
+body.t46Layout.legendsV2 #build .upgradeBuilding .upgradeButtonsContainer .inlineIcon.duration .iconWrapper { position: relative; display: inline-block; line-height: 0; }
+body.t46Layout.legendsV2 #build .upgradeBuilding .upgradeButtonsContainer .inlineIcon.duration svg.speedUp { position: absolute; left: 7px; bottom: -3px; width: 18px; height: 12px; }
+body.t46Layout.legendsV2 #build .upgradeBuilding .upgradeButtonsContainer.section2Enabled { display: table; width: 100%; table-layout: fixed; box-sizing: border-box; padding: 10px 0; }
+body.t46Layout.legendsV2 #build .upgradeBuilding .upgradeButtonsContainer.section2Enabled .section1,
+body.t46Layout.legendsV2 #build .upgradeBuilding .upgradeButtonsContainer.section2Enabled .section2 { display: table-cell; vertical-align: top; text-align: center; padding: 0 8px; }
+body.t46Layout.legendsV2 #build .upgradeBuilding .upgradeButtonsContainer.section2Enabled .section1 button { display: block; margin: 0 auto 8px; }
+
+/* ---- Resource view: the field (or the village centre) under the finger / pointer lights up with a white outline ---- */
+body.t46Layout div.village1 #resourceFieldContainer svg.resourceField > path,
+body.t46Layout div.village1 #resourceFieldContainer svg.villageCenter > path { fill: rgba(255, 255, 255, 0); stroke: rgba(255, 255, 255, 0); stroke-width: 2;
+    stroke-linejoin: round; cursor: pointer; transition: fill 120ms, stroke 120ms; -webkit-tap-highlight-color: transparent; }
+body.t46Layout div.village1 #resourceFieldContainer svg.resourceField > path:hover,
+body.t46Layout div.village1 #resourceFieldContainer svg.villageCenter > path:hover,
+body.t46Layout div.village1 #resourceFieldContainer svg > path.ovLit { fill: rgba(255, 255, 255, .2); stroke: rgba(255, 255, 255, .5); }
+body.t46Layout div.village1 #resourceFieldContainer svg.resourceField > path:active,
+body.t46Layout div.village1 #resourceFieldContainer svg.villageCenter > path:active,
+body.t46Layout div.village1 #resourceFieldContainer svg > path.ovLit.ovPressed { fill: rgba(255, 255, 255, .35); stroke: rgba(255, 255, 255, .5); }

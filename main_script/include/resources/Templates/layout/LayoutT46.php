@@ -153,7 +153,7 @@ $t46Indicator = static function ($count) {
                 </div>
             <?php endif; ?>
             <div id="sidebarBeforeContent" class="sidebar beforeContent">
-                <?=$vars['sidebarBeforeContent']; ?>
+                <?=$t46V2 ? \resources\View\LegendsUi::framedSidebarButtons($vars['sidebarBeforeContent']) : $vars['sidebarBeforeContent']; ?>
             </div>
             <?php if ($t46VillageView): ?>
                 <div id="contentOuterContainer">
@@ -203,7 +203,7 @@ $t46Indicator = static function ($count) {
                 <?php if ($ovHelp) require __DIR__ . '/contextualHelp.php'; ?>
             <?php endif; ?>
             <div id="sidebarAfterContent" class="sidebar afterContent">
-                <?=$vars['sidebarAfterContent']; ?>
+                <?=$t46V2 ? \resources\View\LegendsUi::framedSidebarButtons($vars['sidebarAfterContent']) : $vars['sidebarAfterContent']; ?>
             </div>
         </div>
         <div id="footer">

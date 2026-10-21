@@ -9,6 +9,7 @@ struct RootView: View {
     @State private var sheet: Sheet?
     /// Bottom bar folded away (a small button brings it back), remembered between launches.
     @AppStorage("OpenVillage.toolbarHidden") private var barHidden = false
+    @Namespace private var glassSpace
 
     enum Sheet: String, Identifiable {
         case tools, logs, sql, secondPlayer, settings
@@ -41,6 +42,7 @@ struct RootView: View {
         }
         .safeAreaInset(edge: .bottom) { if !Self.glassBar && !barHidden { toolbar } }
         .overlay(alignment: .bottom) { if Self.glassBar && !barHidden { glassToolbar } }
+        .animation(.spring(response: 0.38, dampingFraction: 0.82), value: browser.barMinimized)
         .overlay(alignment: .bottomTrailing) { if barHidden { showBarButton } }
         .onChange(of: barHidden) { hidden in if hidden { browser.setBottomInset(0) } }
         .alert("Aplikace minule spadla při startu", isPresented: Binding(
@@ -107,23 +109,57 @@ struct RootView: View {
         #if compiler(>=6.2)
         if #available(iOS 26.0, *) {
             // One clear glass capsule as wide as on a phone in portrait (also in landscape), plain buttons inside.
-            toolbarButtons
-                .buttonStyle(.plain)
-                .menuStyle(.button)
-                .foregroundStyle(.primary)
-                .padding(.horizontal, 6)
-                .padding(.vertical, 2)
-                .frame(maxWidth: 420)
-                .glassEffect(.regular, in: .capsule)
-                .padding(.horizontal, 14)
-                .padding(.bottom, 2)
-                .background(GeometryReader { geo in
-                    Color.clear
-                        .onAppear { browser.setBottomInset(geo.size.height + 8) }
-                        .onChange(of: geo.size.height) { height in browser.setBottomInset(height + 8) }
-                })
+            // Scrolling down shrinks it into a small capsule with the page name (like Safari on iOS 26); a tap on
+            // it or scrolling up brings the whole bar back, the glass morphs between both shapes.
+            GlassEffectContainer {
+                if browser.barMinimized {
+                    Button { browser.barMinimized = false } label: {
+                        HStack(spacing: 6) {
+                            Image(systemName: "square.grid.2x2").font(.system(size: 12, weight: .semibold))
+                            Text(compactTitle).font(.system(size: 13, weight: .semibold)).lineLimit(1)
+                        }
+                        .padding(.horizontal, 16)
+                        .frame(height: 34)
+                        .contentShape(Capsule())
+                    }
+                    .buttonStyle(.plain)
+                    .foregroundStyle(.primary)
+                    .accessibilityLabel("Zobrazit lištu")
+                    .glassEffect(.regular.interactive(), in: .capsule)
+                    .glassEffectID("bar", in: glassSpace)
+                } else {
+                    toolbarButtons
+                        .buttonStyle(.plain)
+                        .menuStyle(.button)
+                        .foregroundStyle(.primary)
+                        .padding(.horizontal, 6)
+                        .padding(.vertical, 2)
+                        .frame(maxWidth: 420)
+                        .glassEffect(.regular, in: .capsule)
+                        .glassEffectID("bar", in: glassSpace)
+                }
+            }
+            .padding(.horizontal, 14)
+            .padding(.bottom, 2)
+            .background(GeometryReader { geo in
+                Color.clear
+                    .onAppear { browser.setBottomInset(geo.size.height + 8) }
+                    .onChange(of: geo.size.height) { height in browser.setBottomInset(height + 8) }
+            })
         }
         #endif
+    }
+
+    /// Name of the open page for the minimised bar.
+    private var compactTitle: String {
+        let names = ["dorf1.php": "Vesnice", "dorf2.php": "Centrum vesnice", "dorf3.php": "Přehled vesnic",
+                     "karte.php": "Mapa", "build.php": "Budova", "hero.php": "Hrdina", "statistiken.php": "Statistiky",
+                     "reports.php": "Hlášení", "messages.php": "Zprávy", "allianz.php": "Aliance", "spieler.php": "Profil",
+                     "tasks.php": "Úkoly", "options.php": "Nastavení"]
+        _ = browser.title   // re-evaluated whenever a page finished loading
+        if let page = browser.webView.url?.lastPathComponent, let name = names[page] { return name }
+        let title = browser.title.trimmingCharacters(in: .whitespaces)
+        return title.isEmpty ? "OpenVillage" : title
     }
 
     private var toolbarButtons: some View {
@@ -135,7 +171,7 @@ struct RootView: View {
                 Button { go("game/dorf2.php") } label: { Label("Centrum vesnice", systemImage: "building.2") }
                 Button { go("game/karte.php") } label: { Label("Mapa", systemImage: "map") }
                 Button { go("game/build.php?id=39") } label: { Label("Shromaždiště", systemImage: "flag") }
-                Button { go("game/berichte.php") } label: { Label("Hlášení", systemImage: "doc.text") }
+                Button { go("game/reports.php") } label: { Label("Hlášení", systemImage: "doc.text") }
                 Button { go("game/messages.php") } label: { Label("Zprávy", systemImage: "envelope") }
                 Button { go("game/statistiken.php") } label: { Label("Statistiky", systemImage: "chart.bar") }
                 Divider()

@@ -11,6 +11,11 @@ final class BrowserModel: NSObject, ObservableObject, WKNavigationDelegate, WKUI
     @Published var isLoading = false
     @Published var title = ""
     @Published var lastError: String?
+    /// Liquid Glass bar minimised while the page is scrolled down (as in Safari on iOS 26); scrolling up expands it.
+    @Published var barMinimized = false
+    private var offsetObservation: NSKeyValueObservation?
+    private var lastOffsetY: CGFloat = 0
+    private var scrollTravel: CGFloat = 0
 
     init(profile: UUID? = nil) {
         let config = WKWebViewConfiguration()
@@ -42,6 +47,33 @@ final class BrowserModel: NSObject, ObservableObject, WKNavigationDelegate, WKUI
         webView.allowsBackForwardNavigationGestures = true
         webView.scrollView.contentInsetAdjustmentBehavior = .automatic
         if #available(iOS 16.4, *) { webView.isInspectable = true }   // Safari → Develop → Simulator/iPhone
+        offsetObservation = webView.scrollView.observe(\.contentOffset, options: [.new]) { [weak self] scroll, _ in
+            let y = scroll.contentOffset.y
+            let top = -scroll.adjustedContentInset.top
+            let bottom = scroll.contentSize.height - scroll.bounds.height + scroll.adjustedContentInset.bottom
+            let userScroll = scroll.isTracking || scroll.isDragging || scroll.isDecelerating
+            Task { @MainActor in self?.scrolled(y: y, top: top, bottom: bottom, userScroll: userScroll) }
+        }
+    }
+
+    /// Scroll down by a few points → minimise the bar; scroll up (or reach the top) → expand it again.
+    private func scrolled(y: CGFloat, top: CGFloat, bottom: CGFloat, userScroll: Bool) {
+        let delta = y - lastOffsetY
+        lastOffsetY = y
+        guard userScroll else { return }
+        if y <= top + 4 {
+            scrollTravel = 0
+            if barMinimized { barMinimized = false }
+            return
+        }
+        if y >= bottom - 2 && delta > 0 { return }   // rubber band at the end of the page
+        if (delta > 0) != (scrollTravel > 0) { scrollTravel = 0 }
+        scrollTravel += delta
+        if scrollTravel > 24 && !barMinimized {
+            barMinimized = true
+        } else if scrollTravel < -24 && barMinimized {
+            barMinimized = false
+        }
     }
 
     func load(_ url: URL) {
@@ -67,7 +99,7 @@ final class BrowserModel: NSObject, ObservableObject, WKNavigationDelegate, WKUI
     }
 
     func webView(_ webView: WKWebView, didStartProvisionalNavigation navigation: WKNavigation!) { isLoading = true; lastError = nil }
-    func webView(_ webView: WKWebView, didCommit navigation: WKNavigation!) { sync() }
+    func webView(_ webView: WKWebView, didCommit navigation: WKNavigation!) { sync(); barMinimized = false; scrollTravel = 0 }
     func webView(_ webView: WKWebView, didFinish navigation: WKNavigation!) { sync(); fitToScreen(newPage: true) }
 
     /// Phones: portrait shows 480 px of the 1280 px Legends layout (scrolled to the middle on a new page),
@@ -116,10 +148,10 @@ final class BrowserModel: NSObject, ObservableObject, WKNavigationDelegate, WKUI
         }
     }
 
-    /// Left edge and width (CSS px) of the content window, or null on the village views and the map.
+    /// Left edge and width (CSS px) of the content window (also the map window), or null on the village views.
     private static let contentWindowScript = """
     (function () {
-        if (/(dorf1|dorf2|karte)\\.php/.test(location.pathname)) return null;
+        if (/(dorf1|dorf2)\\.php/.test(location.pathname)) return null;
         var box = document.getElementById('contentOuterContainer');
         if (!box) return null;
         var r = box.getBoundingClientRect();

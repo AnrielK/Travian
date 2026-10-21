@@ -26,15 +26,49 @@ $tribe = (int)($vars['t46Race'] ?? 1);
         </a>
     <?php endforeach; ?>
     <a class="villageCenter" href="dorf2.php" title="<?=T("inGame", "Navigation.Buildings"); ?>"></a>
-    <svg class="resourceField" width="473" height="304" viewBox="0 0 473 304">
-        <?php foreach ($t46Badges as $index => [$top, $left]): $cx = $left + 12; $cy = $top + 14; ?>
-            <path class="buildingSlot<?=$index; ?>" d="M<?=$cx - 36; ?> <?=$cy; ?>a36 24 0 1 0 72 0a36 24 0 1 0 -72 0z"
+    <svg class="resourceField resourceField<?=(int)$vars['fieldType']; ?>" width="473" height="304" viewBox="0 0 473 304">
+        <?php foreach ($t46Badges as $index => [$top, $left]): $cx = $left + 12; $cy = $top + 14;
+            $shape = \resources\View\LegendsUi::fieldShape((int)$vars['fieldType'], $index); ?>
+            <path class="buildingSlot<?=$index; ?>" d="<?=$shape ?? 'M' . ($cx - 36) . ' ' . $cy . 'a36 24 0 1 0 72 0a36 24 0 1 0 -72 0z'; ?>"
                   onclick="window.location.href='build.php?id=<?=$index; ?><?=$fastUp; ?>'"><title><?=htmlspecialchars($vars['areas'][$index - 1]['title'] ?? ''); ?></title></path>
         <?php endforeach; ?>
     </svg>
     <svg class="villageCenter" width="473" height="304" viewBox="0 0 473 304">
-        <path d="M196 152a42 30 0 1 0 84 0a42 30 0 1 0 -84 0z" onclick="window.location.href='dorf2.php'"><title><?=T("inGame", "Navigation.Buildings"); ?></title></path>
+        <path d="<?=\resources\View\LegendsUi::fieldShape(0, 0) ?? 'M196 152a42 30 0 1 0 84 0a42 30 0 1 0 -84 0z'; ?>" onclick="window.location.href='dorf2.php'"><title><?=T("inGame", "Navigation.Buildings"); ?></title></path>
     </svg>
+    <script type="text/javascript">
+        (function () {
+            // The tapped field (or the village centre) lights up like in Travian Legends before the page changes.
+            var box = document.getElementById('resourceFieldContainer');
+            if (!box) return;
+            function shapeFor(el) {
+                if (el.tagName.toLowerCase() === 'path') return el;
+                var m = /buildingSlot(\d+)/.exec(el.className);
+                if (m) return box.querySelector('svg.resourceField path.buildingSlot' + m[1]);
+                return el.classList.contains('villageCenter') ? box.querySelector('svg.villageCenter path') : null;
+            }
+            function light(el, pressed) {
+                box.querySelectorAll('path.ovLit').forEach(function (p) { p.classList.remove('ovLit', 'ovPressed'); });
+                var shape = shapeFor(el);
+                if (shape) { shape.classList.add('ovLit'); if (pressed) shape.classList.add('ovPressed'); }
+            }
+            box.querySelectorAll('a.level, a.villageCenter, svg path').forEach(function (el) {
+                el.addEventListener('pointerdown', function () { light(el, true); });
+                el.addEventListener('pointercancel', function () { light(el, false); });
+                el.addEventListener('click', function (event) {
+                    var href = el.getAttribute('href') || (el.getAttribute('onclick') || '').replace(/^.*href='([^']*)'.*$/, '$1');
+                    if (!href || event.metaKey || event.ctrlKey) return;
+                    event.preventDefault();
+                    event.stopImmediatePropagation();
+                    light(el, false);
+                    setTimeout(function () { window.location.href = href; }, 160);
+                }, true);
+            });
+            window.addEventListener('pageshow', function () {
+                box.querySelectorAll('path.ovLit').forEach(function (p) { p.classList.remove('ovLit', 'ovPressed'); });
+            });
+        })();
+    </script>
 </div>
 <div class="villageInfoWrapper">
     <?=$vars['onLoadBuildings']; ?>

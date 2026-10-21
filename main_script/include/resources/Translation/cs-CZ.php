@@ -513,7 +513,7 @@ $Definition['Buildings']['mainBuilding']['Demolish completely'] = 'Zbourat úpln
 $Definition['Buildings']['mainBuilding']['complete_demolish_title'] = 'Okamžitě zbourat vybranou budovu? Bude z vesnice odstraněna';
 $Definition['Buildings']['buildingQueue']['buildingQueue'] = 'Stavební fronta';
 $Definition['Buildings']['buildingQueue']['name'] = 'Travian PLUS';
-$Definition['Buildings']['buildingQueue']['desc'] = 'Travian PLUS ti umožní zařadit do fronty další stavební zakázku.';
+$Definition['Buildings']['buildingQueue']['desc'] = 'S Travian PLUS můžeš zadat do fronty stavbu další budovy.';
 $Definition['Buildings']['newBuilding']['Infrastructure'] = 'Infrastruktura';
 $Definition['Buildings']['newBuilding']['Military'] = 'Vojenské';
 $Definition['Buildings']['newBuilding']['Resources'] = 'Surovinové';
@@ -529,7 +529,7 @@ $Definition['Buildings']['errors']['constructWarehouse'] = 'Postav sklad surovin
 $Definition['Buildings']['errors']['constructGranny'] = 'Postav sýpku.';
 $Definition['Buildings']['errors']['noGreatArtefact'] = 'K rozšíření této budovy potřebuješ artefakt.';
 $Definition['Buildings']['errors']['wwPlans'] = 'Divy světa lze stavět jen v jedné ze starých natarských vesnic. Potřebný je ale i stavební plán. Od úrovně 50 je k dokončení potřeba další plán, který musí vlastnit jiný hráč ze stejné aliance.';
-$Definition['Buildings']['construct_with_master_builder'] = 'Postavit se stavitelem';
+$Definition['Buildings']['construct_with_master_builder'] = 'Postavit se stavbyvedoucím';
 $Definition['Buildings']['constructNewBuilding'] = 'Postavit novou budovu';
 $Definition['Buildings']['preRequests'] = 'Předpoklady';
 $Definition['Buildings']['no_building_available'] = 'Momentálně nelze postavit žádnou budovu.<br />Většina budov má určité předpoklady. Více zjistíš v příručce.';
@@ -1447,7 +1447,7 @@ $Definition['Global']['SUPPORT_MESSAGE_EXTRA_THINGS'] = '<br /><br />';
 $Definition['Global']['SUPPORT_MESSAGE_EXTRA_THINGS_UNIQUE_FINDER'] = '<br />';
 $Definition['Global']['GoldPromotionPublicMsg'] = '<font color="#998200" size="4"><b>Zlatá akce!!!</b></font><br /><br />Tato zlatá akce probíhá od %s do %s.<br /><br />Za veškeré zlato zakoupené v této době dostaneš o <b>20%%</b> zlata více než obvykle.';
 //GoldHelper
-$Definition['GoldHelper']['exchangeResources']['exchangeResources'] = 'Směnit suroviny';
+$Definition['GoldHelper']['exchangeResources']['exchangeResources'] = 'Vyměnit suroviny';
 $Definition['GoldHelper']['exchangeResources']['error_in_ww'] = 'Tuto funkci nelze použít ve vesnicích s divem světa.';
 $Definition['GoldHelper']['exchangeResources']['error_no_marketplace'] = 'Postav tržiště';
 $Definition['GoldHelper']['exchangeResources']['error_low_pop'] = 'Musíš mít alespoň 40 obyvatel';
@@ -5507,6 +5507,7 @@ $Definition['HeroV2']['highestBidderYou'] = 'Ty';
 $Definition['HeroV2']['reload'] = 'obnovit';
 $Definition['HeroV2']['grouped'] = 'seskupit';
 // </ov-auctions-rog>
+$Definition['Buildings']['fasterBuild'] = 'O %s%% rychlejší stavba';
 // <ov-contextual-help> texts of the Legends contextual help tours
 $Definition['ContextualHelp']['button'] = 'Zobrazit kontextovou nápovědu na této stránce';
 $Definition['ContextualHelp']['close'] = 'Rozumím';
