@@ -25,6 +25,8 @@ final class BrowserModel: NSObject, ObservableObject, WKNavigationDelegate, WKUI
         }
         config.preferences.javaScriptCanOpenWindowsAutomatically = true
         config.allowsInlineMediaPlayback = true
+        config.userContentController.addUserScript(WKUserScript(source: Self.phoneViewport, injectionTime: .atDocumentEnd,
+                                                                forMainFrameOnly: true))
         webView = WKWebView(frame: .zero, configuration: config)
         super.init()
         webView.navigationDelegate = self
@@ -50,7 +52,57 @@ final class BrowserModel: NSObject, ObservableObject, WKNavigationDelegate, WKUI
 
     func webView(_ webView: WKWebView, didStartProvisionalNavigation navigation: WKNavigation!) { isLoading = true; lastError = nil }
     func webView(_ webView: WKWebView, didCommit navigation: WKNavigation!) { sync() }
-    func webView(_ webView: WKWebView, didFinish navigation: WKNavigation!) { sync() }
+    func webView(_ webView: WKWebView, didFinish navigation: WKNavigation!) { sync(); centerHorizontally() }
+
+    /// Phone in portrait: a new page starts in the middle of the (wider than the screen) Legends layout.
+    private func centerHorizontally() {
+        guard UIDevice.current.userInterfaceIdiom == .phone else { return }
+        DispatchQueue.main.asyncAfter(deadline: .now() + 0.15) { [weak self] in
+            guard let scroll = self?.webView.scrollView, scroll.bounds.height > scroll.bounds.width else { return }
+            let extra = scroll.contentSize.width - scroll.bounds.width
+            if extra > 1 && scroll.contentOffset.x <= 0.5 {
+                scroll.setContentOffset(CGPoint(x: (extra / 2).rounded(), y: scroll.contentOffset.y), animated: false)
+            }
+        }
+    }
+
+    /// Viewport of the game pages on phones (the game itself sets none, so WebKit would shrink the whole
+    /// 1280 px layout to the screen width).
+    private static let phoneViewport = """
+(function () {
+    // Phones in portrait: the Legends layout (min. 1280 px wide) at the scale of the original mobile view –
+    // 860 px across the screen, scrolled to the middle – instead of the whole page shrunk to the width.
+    if (Math.min(screen.width, screen.height) >= 600) return;   // tablets keep the full layout
+    var meta = document.querySelector('meta[name=viewport]');
+    if (!meta) {
+        meta = document.createElement('meta');
+        meta.name = 'viewport';
+        (document.head || document.documentElement).appendChild(meta);
+    }
+    function portrait() {
+        return typeof window.orientation === 'number' ? window.orientation % 180 === 0 : screen.height > screen.width;
+    }
+    function center() {
+        var view = window.visualViewport ? window.visualViewport.width : window.innerWidth;
+        var max = document.documentElement.scrollWidth - view;
+        if (max > 0 && window.scrollX < 1 && (!window.visualViewport || window.visualViewport.pageLeft < 1)) window.scrollTo(Math.round(max / 2), window.scrollY);
+    }
+    var last = null;
+    function apply() {
+        var p = portrait();
+        if (p === last) return;
+        last = p;
+        var w = p ? 860 : 1280, side = p ? Math.min(screen.width, screen.height) : Math.max(screen.width, screen.height);
+        meta.content = 'width=' + w + ', initial-scale=' + (side / w).toFixed(3) + (p ? ', shrink-to-fit=no' : '')
+            + ', minimum-scale=0.25, maximum-scale=4, user-scalable=yes';
+        if (p) setTimeout(center, 60);
+    }
+    apply();
+    window.addEventListener('orientationchange', function () { setTimeout(apply, 150); });
+    window.addEventListener('load', function () { if (last) center(); });
+})();
+"""
+
     func webView(_ webView: WKWebView, didFail navigation: WKNavigation!, withError error: Error) { fail(error) }
     func webView(_ webView: WKWebView, didFailProvisionalNavigation navigation: WKNavigation!, withError error: Error) { fail(error) }
 

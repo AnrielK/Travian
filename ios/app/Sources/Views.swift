@@ -15,8 +15,8 @@ struct RootView: View {
 
     var body: some View {
         ZStack {
+            // Ends above the bottom toolbar, so the end of long pages is not hidden behind it.
             WebView(webView: browser.webView)
-                .ignoresSafeArea(edges: .bottom)
             switch runtime.state {
             case .idle:
                 StatusCard(icon: "hourglass", text: "Spouštím…", spinner: true)
@@ -278,8 +278,8 @@ struct SecondPlayerView: View {
 
     var body: some View {
         NavigationView {
+            // Ends above the bottom toolbar, so the end of long pages is not hidden behind it.
             WebView(webView: browser.webView)
-                .ignoresSafeArea(edges: .bottom)
                 .navigationTitle("Druhý hráč")
                 .navigationBarTitleDisplayMode(.inline)
                 .toolbar {
