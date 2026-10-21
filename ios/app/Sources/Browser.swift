@@ -43,6 +43,14 @@ final class BrowserModel: NSObject, ObservableObject, WKNavigationDelegate, WKUI
 
     func reload() { webView.reload() }
 
+    /// Room at the end of the page for a toolbar floating over the web view (Liquid Glass bar).
+    func setBottomInset(_ inset: CGFloat) {
+        let scroll = webView.scrollView
+        guard abs(scroll.contentInset.bottom - inset) > 0.5 else { return }
+        scroll.contentInset.bottom = inset
+        scroll.verticalScrollIndicatorInsets.bottom = inset
+    }
+
     private func sync() {
         canGoBack = webView.canGoBack
         canGoForward = webView.canGoForward
@@ -72,7 +80,7 @@ final class BrowserModel: NSObject, ObservableObject, WKNavigationDelegate, WKUI
     private static let phoneViewport = """
 (function () {
     // Phones in portrait: the Legends layout (min. 1280 px wide) at the scale of the original mobile view –
-    // 860 px across the screen, scrolled to the middle – instead of the whole page shrunk to the width.
+    // 480 px across the screen, scrolled to the middle – instead of the whole page shrunk to the width.
     if (Math.min(screen.width, screen.height) >= 600) return;   // tablets keep the full layout
     var meta = document.querySelector('meta[name=viewport]');
     if (!meta) {
@@ -93,7 +101,7 @@ final class BrowserModel: NSObject, ObservableObject, WKNavigationDelegate, WKUI
         var p = portrait();
         if (p === last) return;
         last = p;
-        var w = p ? 860 : 1280, side = p ? Math.min(screen.width, screen.height) : Math.max(screen.width, screen.height);
+        var w = p ? 480 : 1280, side = p ? Math.min(screen.width, screen.height) : Math.max(screen.width, screen.height);
         meta.content = 'width=' + w + ', initial-scale=' + (side / w).toFixed(3) + (p ? ', shrink-to-fit=no' : '')
             + ', minimum-scale=0.25, maximum-scale=4, user-scalable=yes';
         if (p) setTimeout(center, 60);

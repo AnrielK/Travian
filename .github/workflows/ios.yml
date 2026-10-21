@@ -135,6 +135,11 @@ jobs:
           merge-multiple: true
       - name: Tools
         run: brew install xcodegen "$MARIADB_FORMULA" >/dev/null
+      - name: Xcode 26 (Liquid Glass toolbar; older Xcode builds the classic bar)
+        run: |
+          X=$(ls -d /Applications/Xcode_26*.app 2>/dev/null | sort -V | tail -1)
+          if [ -n "$X" ]; then sudo xcode-select -s "$X"; fi
+          xcodebuild -version
       - name: MariaDB xcframework + data template
         run: |
           set -o pipefail

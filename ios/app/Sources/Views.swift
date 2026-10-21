@@ -15,8 +15,10 @@ struct RootView: View {
 
     var body: some View {
         ZStack {
-            // Ends above the bottom toolbar, so the end of long pages is not hidden behind it.
+            // Classic bar: the web view ends above it. Liquid Glass bar (iOS 26): the page runs under the floating
+            // bar and gets that much room at its end, so the end of long pages is never hidden behind it.
             WebView(webView: browser.webView)
+                .ignoresSafeArea(edges: Self.glassBar ? .bottom : [])
             switch runtime.state {
             case .idle:
                 StatusCard(icon: "hourglass", text: "Spouštím…", spinner: true)
@@ -35,7 +37,8 @@ struct RootView: View {
                 }
             }
         }
-        .safeAreaInset(edge: .bottom) { toolbar }
+        .safeAreaInset(edge: .bottom) { if !Self.glassBar { toolbar } }
+        .overlay(alignment: .bottom) { if Self.glassBar { glassToolbar } }
         .alert("Aplikace minule spadla při startu", isPresented: Binding(
             get: { runtime.previousCrash != nil }, set: { if !$0 { runtime.previousCrash = nil } })) {
             Button("Logy") { runtime.previousCrash = nil; sheet = .logs }
@@ -62,7 +65,40 @@ struct RootView: View {
         }
     }
 
+    /// Liquid Glass bottom bar: built with the iOS 26 SDK and running on iOS 26 or later.
+    private static var glassBar: Bool {
+        #if compiler(>=6.2)
+        if #available(iOS 26.0, *) { return true }
+        #endif
+        return false
+    }
+
     private var toolbar: some View {
+        toolbarButtons
+            .padding(.horizontal, 6)
+            .padding(.top, 4)
+            .background(.bar)
+    }
+
+    @ViewBuilder private var glassToolbar: some View {
+        #if compiler(>=6.2)
+        if #available(iOS 26.0, *) {
+            toolbarButtons
+                .padding(.horizontal, 8)
+                .padding(.vertical, 4)
+                .glassEffect(.regular.interactive(), in: .capsule)
+                .padding(.horizontal, 14)
+                .padding(.bottom, 2)
+                .background(GeometryReader { geo in
+                    Color.clear
+                        .onAppear { browser.setBottomInset(geo.size.height + 8) }
+                        .onChange(of: geo.size.height) { height in browser.setBottomInset(height + 8) }
+                })
+        }
+        #endif
+    }
+
+    private var toolbarButtons: some View {
         HStack(spacing: 0) {
             barButton("chevron.left", "Zpět") { browser.webView.goBack() }.disabled(!browser.canGoBack)
             barButton("arrow.clockwise", "Obnovit") { browser.reload() }
@@ -91,9 +127,6 @@ struct RootView: View {
                 barLabel("ellipsis.circle", "Více")
             }
         }
-        .padding(.horizontal, 6)
-        .padding(.top, 4)
-        .background(.bar)
     }
 
     private func go(_ path: String) { browser.load(runtime.url(path)) }
@@ -278,8 +311,10 @@ struct SecondPlayerView: View {
 
     var body: some View {
         NavigationView {
-            // Ends above the bottom toolbar, so the end of long pages is not hidden behind it.
+            // Classic bar: the web view ends above it. Liquid Glass bar (iOS 26): the page runs under the floating
+            // bar and gets that much room at its end, so the end of long pages is never hidden behind it.
             WebView(webView: browser.webView)
+                .ignoresSafeArea(edges: Self.glassBar ? .bottom : [])
                 .navigationTitle("Druhý hráč")
                 .navigationBarTitleDisplayMode(.inline)
                 .toolbar {

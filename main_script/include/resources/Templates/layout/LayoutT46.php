@@ -280,6 +280,40 @@ $t46Indicator = static function ($count) {
         });
     })();
 </script>
+<script type="text/javascript">
+    // Dialogs centred on the page: when only part of the page is visible (phone in portrait, where the
+    // 1280 px layout is wider than the screen), centre them in the visible part instead of the whole page.
+    (function () {
+        if (!window.Travian || !Travian.Dialog || typeof Travian.Dialog.Dialog !== 'function') {
+            return;
+        }
+        var Dialog = Travian.Dialog.Dialog;
+        var Patched = function () {
+            Dialog.apply(this, arguments);
+            var calculate = this.calculatePosition;
+            if (typeof calculate !== 'function') {
+                return;
+            }
+            this.calculatePosition = function () {
+                var position = calculate.apply(this, arguments);
+                var view = window.visualViewport, body = jQuery('body');
+                var relative = jQuery(this.options.relativeTo);
+                if (!view || view.width >= body.width() - 2 || (relative.length && !relative.is(body))) {
+                    return position;
+                }
+                var width = this.wrapper.outerWidth(), height = this.wrapper.outerHeight();
+                this.wrapper.css({position: 'absolute'});
+                return {
+                    left: Math.max(view.pageLeft + 5, view.pageLeft + (view.width - width) / 2),
+                    top: Math.max(view.pageTop + 10, view.pageTop + (view.height - height) / 2)
+                };
+            };
+        };
+        Patched.prototype = Dialog.prototype;
+        Object.keys(Dialog).forEach(function (key) { Patched[key] = Dialog[key]; });
+        Travian.Dialog.Dialog = Patched;
+    })();
+</script>
 </body>
 </html>
 <!---- This page was generated in <?=round(1000 * (microtime(true) - $GLOBALS['start_time']), 2); ?> ms ---->
