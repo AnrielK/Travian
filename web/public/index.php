@@ -40,6 +40,11 @@ $figures = static function () use ($img, $tribes): string {
     return $html . '</div>';
 };
 $view = isset($_GET['join']) ? 'join' : 'worlds';
+// Original Legends lobby look when its graphics were fetched (scripts/gpack/fetch-lobby-assets.py).
+if (is_file(__DIR__ . '/legends/lobby.css') && !isset($_GET['classic'])) {
+    require __DIR__ . '/lobby-legends.php';
+    return;
+}
 ?>
 <!doctype html>
 <html lang="en">

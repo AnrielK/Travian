@@ -28,3 +28,6 @@ ios/app/Generated/
 ios/app/Payload/
 ios/app/*.xcodeproj/
 *.ipa
+
+# Travian Legends lobby graphics, fetched by scripts/gpack/fetch-lobby-assets.py
+web/public/legends/

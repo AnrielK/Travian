@@ -140,6 +140,8 @@ jobs:
           X=$(ls -d /Applications/Xcode_26*.app 2>/dev/null | sort -V | tail -1)
           if [ -n "$X" ]; then sudo xcode-select -s "$X"; fi
           xcodebuild -version
+      - name: Legends lobby graphics (fetched, not in the repository)
+        run: python3 -I scripts/gpack/fetch-lobby-assets.py
       - name: MariaDB xcframework + data template
         run: |
           set -o pipefail
