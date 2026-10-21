@@ -84,6 +84,21 @@ class LoginCtrl extends OutOfGameCtrl
         }
         $this->LoginView->vars['lowRes'] = '';
         $this->LoginView->vars['timestamp'] = time();
+        // Travian Legends look: the login as a window page of its own (like the activation), not for the
+        // admin login, the captcha or the password reset.
+        if (function_exists('is_hero_v2') && is_hero_v2() && !$this->isAdmin && !$this->LoginView->vars['captcha']
+            && !$this->LoginView->vars['forgotPassword']) {
+            $vars = $this->LoginView->vars;
+            $this->view = new PHPBatchView('activationNew/legendsPage');
+            $this->view->vars = [
+                'step' => 'login',
+                'tribes' => [], 'tribe' => 3, 'tribeChosen' => false, 'sector' => 'sw',
+                'name' => (string)$vars['name'],
+                'welcome' => (string)$vars['WelcomeText'],
+                'error' => trim(strip_tags($vars['userError'] . ' ' . $vars['pwError'])),
+            ];
+            return;
+        }
         $this->view->vars['content'] .= $this->LoginView->output();
     }
 

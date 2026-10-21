@@ -5,7 +5,8 @@
  * Steps post to the same activate.php pages as the classic activation (vid / sector / name).
  */
 $e = static fn($v) => htmlspecialchars((string)$v, ENT_QUOTES, 'UTF-8');
-$img = get_gpack_cdn_mainPage_url() . 'img_ltr/views/activation/';
+$pack = get_gpack_cdn_mainPage_url();
+$img = $pack . 'img_ltr/views/activation/';
 $bg = get_gpack_cdn_mainPage_url() . 'img_ltr/themes/default/background/bgBuildings.jpg';
 $files = [1 => 'roman', 2 => 'teuton', 3 => 'gaul', 6 => 'egyptian', 7 => 'hun', 8 => 'spartan', 9 => 'viking'];
 $step = $vars['step'];
@@ -20,6 +21,7 @@ $titles = [
     'tribe' => T('ActivationNew', 'Select your tribe'),
     'sector' => T('ActivationNew', 'selectStartingSector', 'Select starting sector'),
     'confirm' => T('ActivationNew', 'confirmChoice', 'Confirm your choice'),
+    'login' => T('Login', 'Login'),
 ];
 $feather = '<svg viewBox="0 0 20 20" aria-hidden="true"><path d="M17.5 2.5c-6 .5-10 4.5-11.5 9.5l-3.5 5.5 1 .5 3-4.5c4 0 9-3 11-11z" fill="#c9b79a" stroke="#6b5a45" stroke-width="1"/><path d="M15 5L4 16" stroke="#6b5a45" stroke-width="1"/></svg>';
 ?><!doctype html>
@@ -34,21 +36,34 @@ $feather = '<svg viewBox="0 0 20 20" aria-hidden="true"><path d="M17.5 2.5c-6 .5
         body { font: 14px/1.4 Verdana, Arial, sans-serif; color: #3f3326; background: #4f6531 url('<?=$e($bg); ?>') center top / cover fixed;
             display: flex; flex-direction: column; min-height: 100vh; }
         main { flex: 1; padding: 16px 12px 24px; display: flex; justify-content: center; align-items: flex-start; }
-        .frame { width: 100%; max-width: 600px; background: #cfc1a4; border: 2px solid #7a6650; border-radius: 4px; padding: 5px;
-            box-shadow: 0 0 0 1px #e6dcc6 inset, 0 6px 24px rgba(0, 0, 0, .45); }
-        .window { background: #f4efe4 url('<?=$e($img); ?>activateBackground.png') center bottom / 100% auto no-repeat; border: 1px solid #8f7b62;
-            min-height: 640px; display: flex; flex-direction: column; padding-bottom: 200px; position: relative; }
-        .title { background: linear-gradient(#b7a587, #9b8668); border-bottom: 2px solid #6e5b45; padding: 10px 18px;
-            font: 700 26px/1.2 "Noto Serif", Georgia, "Times New Roman", serif; color: #fdf6e6;
-            text-shadow: 0 1px 0 #5b4935, 0 0 3px #5b4935; }
+        @font-face { font-family: "Noto Serif"; font-weight: 700; src: url('<?=$e($pack); ?>fonts/noto-serif-latin-ext-700-normal.woff2') format("woff2");
+            unicode-range: U+0100-024F, U+1E00-1EFF; }
+        @font-face { font-family: "Noto Serif"; font-weight: 700; src: url('<?=$e($pack); ?>fonts/noto-serif-latin-700-normal.woff2') format("woff2"); }
+        /* game window: the frame and header of the Legends content windows (hud/content) */
+        .frame { position: relative; width: 100%; max-width: 620px; padding: 68px 11px 11px; filter: drop-shadow(0 6px 12px rgba(0, 0, 0, .45)); }
+        .frame:before { content: ""; position: absolute; inset: 19px 0 auto; height: 48px; background: url('<?=$e($pack); ?>img_ltr/hud/content/header.jpg') repeat-x; }
+        .frame:after { content: ""; position: absolute; inset: 0; z-index: 1; pointer-events: none; border-style: solid; border-width: 68px 51px 11px 51px;
+            border-image: url('<?=$e($pack); ?>img_ltr/hud/content/frame.png') 68 51 11 51 repeat; }
+        .window { position: relative; z-index: 2; background: #f4efe4 url('<?=$e($img); ?>activateBackground.png') center bottom / 100% auto no-repeat;
+            min-height: 620px; display: flex; flex-direction: column; padding-bottom: 190px; }
+        .title { position: absolute; z-index: 2; top: 24px; left: 46px; right: 46px; margin: 0; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+            font: 700 24px/26px "Noto Serif", Georgia, serif; color: #f2f2f2;
+            text-shadow: #b68363 1px 0 0, #b68363 1px 1px 0, #b68363 0 1px 0, #5e463a -1px 1px 0, #5e463a -1px 0 0, #5e463a -1px -1px 0, #5e463a 0 -1px 0, #5e463a 1px -1px 0; }
+        .logoTop { display: none; position: absolute; top: 10px; left: 16px; z-index: 3; }
+        .logoTop svg { width: 190px; height: 44px; }
         .body { padding: 14px 18px 0; flex: 1; display: flex; flex-direction: column; }
         .lead { font-weight: 700; margin: 0 0 18px; }
         .error { background: #f6d9d3; border: 1px solid #c4544a; color: #8a2219; padding: 8px 10px; border-radius: 3px; margin-bottom: 14px; }
         .actions { margin-top: auto; padding: 28px 0 0; text-align: center; }
-        .green { appearance: none; border: 1px solid #2f3f17; border-radius: 3px; min-width: 260px; padding: 10px 24px; cursor: pointer;
-            font: 700 18px Verdana, Arial, sans-serif; color: #fff; text-shadow: 0 1px 1px rgba(0, 0, 0, .5);
-            background: linear-gradient(#7aa043, #5a7e2c 55%, #4b6c22); box-shadow: 0 0 0 2px #c9b07a, 0 0 0 3px #6e5b45, inset 0 1px 0 rgba(255, 255, 255, .3); }
+        .green { appearance: none; position: relative; min-width: 240px; padding: 9px 26px; cursor: pointer; border-radius: 5px;
+            font: 700 17px/1.2 Arial, Helvetica, sans-serif; color: #f2f2f2; text-shadow: rgba(0, 0, 0, .5) 1px 1px 1px;
+            background: linear-gradient(#7cb029, #587c1e); border: 1px solid #283308;
+            box-shadow: #4b6f19 2px 0 1px -1px inset, #4b6f19 -2px 0 1px -1px inset, #b5e251 0 3px 1px -1px inset, rgba(44, 75, 12, .6) 0 -3px 1px -1px inset; }
+        .goldFrame { display: inline-block; padding: 3px; border-radius: 7px; border: 1px solid #34220d;
+            background: linear-gradient(180deg, #cba467 5%, #f3e2ae 13%, #efbf7b 32%, #aa8050 48%, #835e35 72%, #ad8a54 93%, #d7b672 100%); }
         .green:active { filter: brightness(.92); }
+        .links { margin-top: 14px; display: flex; justify-content: space-between; gap: 10px; flex-wrap: wrap; }
+        .links a { color: #5c8a2b; font-weight: 700; text-decoration: none; }
         input[type=radio] { position: absolute; opacity: 0; pointer-events: none; }
 
         /* step 1: tribe */
@@ -115,15 +130,20 @@ $feather = '<svg viewBox="0 0 20 20" aria-hidden="true"><path d="M17.5 2.5c-6 .5
         footer { background: linear-gradient(#a99a83, #94846c); border-top: 2px solid #cdbfa5; padding: 10px 16px; display: flex; align-items: center; gap: 10px; }
         footer a { display: flex; align-items: center; gap: 8px; text-decoration: none; color: #fff; }
         footer svg { width: 172px; height: 40px; }
-        footer .emblem { fill: #b5302b; stroke: #f2f2f2; stroke-width: 1.4; }
-        footer .coin { fill: #e5b75b; stroke: #6d4a1d; }
-        footer .coinMark { fill: #6d4a1d; }
-        footer .t1 { fill: #fff; font: 700 16.5px Georgia, serif; }
-        footer .t2 { fill: #fff; font: 600 7.5px Arial, sans-serif; letter-spacing: 1.2px; }
+        .logoTop .emblem, footer .emblem { fill: #b5302b; stroke: #f2f2f2; stroke-width: 1.4; }
+        .logoTop .coin, footer .coin { fill: #e5b75b; stroke: #6d4a1d; }
+        .logoTop .coinMark, footer .coinMark { fill: #6d4a1d; }
+        .logoTop .t1, footer .t1 { fill: #fff; font: 700 16.5px Georgia, serif; }
+        .logoTop .t2, footer .t2 { fill: #fff; font: 600 7.5px Arial, sans-serif; letter-spacing: 1.2px; }
 
+        @media (min-width: 760px) {
+            .logoTop { display: block; }
+            footer { display: none; }
+            main { padding-top: 70px; }
+        }
         @media (max-width: 520px) {
             main { padding: 10px 6px 16px; }
-            .title { font-size: 22px; padding: 9px 14px; }
+            .title { font-size: 21px; left: 40px; }
             .body { padding: 12px 12px 0; }
             .window { min-height: 0; padding-bottom: 140px; }
             .tribes { gap: 4px; }
@@ -138,10 +158,16 @@ $feather = '<svg viewBox="0 0 20 20" aria-hidden="true"><path d="M17.5 2.5c-6 .5
     </style>
 </head>
 <body>
+<a class="logoTop" href="/" title="OpenVillage"><svg viewBox="0 0 172 40" aria-label="OpenVillage">
+            <path class="emblem" d="M4 3h18v18c0 8-5 13-9 16-4-3-9-8-9-16z"/>
+            <circle class="coin" cx="13" cy="17" r="6.5"/><path class="coinMark" d="M10 13.5h6v1.6h-2.2v6.4h-1.6v-6.4H10z"/>
+            <text class="t1" x="30" y="23">OPENVILLAGE</text>
+            <text class="t2" x="31" y="35">L E G E N D S</text>
+        </svg></a>
 <main>
     <div class="frame">
+        <h1 class="title"><?=$e($titles[$step]); ?></h1>
         <div class="window">
-            <div class="title"><?=$e($titles[$step]); ?></div>
             <div class="body">
                 <?php if ($vars['error'] !== ''): ?>
                     <div class="error"><?=$e($vars['error']); ?></div>
@@ -176,7 +202,7 @@ $feather = '<svg viewBox="0 0 20 20" aria-hidden="true"><path d="M17.5 2.5c-6 .5
                                 </div>
                             <?php endforeach; ?>
                         </div>
-                        <div class="actions"><button type="submit" class="green"><?=$e(T('ActivationNew', 'Confirm')); ?></button></div>
+                        <div class="actions"><span class="goldFrame"><button type="submit" class="green"><?=$e(T('ActivationNew', 'Confirm')); ?></button></span></div>
                     </form>
 
                 <?php elseif ($step === 'sector'): ?>
@@ -197,8 +223,28 @@ $feather = '<svg viewBox="0 0 20 20" aria-hidden="true"><path d="M17.5 2.5c-6 .5
                                 <?php endforeach; ?>
                             </div>
                         </div>
-                        <div class="actions"><button type="submit" class="green"><?=$e(T('ActivationNew', 'Confirm')); ?></button></div>
+                        <div class="actions"><span class="goldFrame"><button type="submit" class="green"><?=$e(T('ActivationNew', 'Confirm')); ?></button></span></div>
                     </form>
+
+                <?php elseif ($step === 'login'): ?>
+                    <form method="post" action="login.php" class="step login">
+                        <p class="lead"><?=$e($vars['welcome'] ?? ''); ?></p>
+                        <div class="field">
+                            <label for="loginName"><?=$e(T('Login', 'accountNameOrEmailAddress', 'Account name or e-mail address')); ?></label>
+                            <input id="loginName" name="name" value="<?=$e($vars['name']); ?>" required autocomplete="username">
+                        </div>
+                        <div class="field">
+                            <label for="loginPassword"><?=$e(T('Login', 'pass')); ?></label>
+                            <input id="loginPassword" type="password" name="password" required autocomplete="current-password">
+                        </div>
+                        <input type="hidden" name="s1" value="Login"><input type="hidden" name="w" value="">
+                        <div class="links">
+                            <a href="login.php?forgotPassword=1"><?=$e(trim(T('Login', 'PasswordForgotten?'))); ?></a>
+                            <a href="/"><?=$e(T('Login', 'registerNow', 'Join the game world')); ?></a>
+                        </div>
+                        <div class="actions"><span class="goldFrame"><button type="submit" class="green"><?=$e(T('Login', 'Login')); ?></button></span></div>
+                    </form>
+                    <script>document.querySelector('input[name=w]').value = screen.width + ':' + screen.height;</script>
 
                 <?php else: ?>
                     <form method="post" action="activate.php?page=dorf" class="step">
@@ -220,7 +266,7 @@ $feather = '<svg viewBox="0 0 20 20" aria-hidden="true"><path d="M17.5 2.5c-6 .5
                                    pattern="[A-Za-z0-9 _\-]+" required autocomplete="off">
                         </div>
                         <div class="info"><i>i</i><span><?=$e(T('ActivationNew', 'characterNameInfo', 'This is the name of your character on the game world.')); ?></span></div>
-                        <div class="actions"><button type="submit" class="green"><?=$e(T('ActivationNew', 'letsPlay', "Let's play")); ?></button></div>
+                        <div class="actions"><span class="goldFrame"><button type="submit" class="green"><?=$e(T('ActivationNew', 'letsPlay', "Let's play")); ?></button></span></div>
                     </form>
                 <?php endif; ?>
             </div>
