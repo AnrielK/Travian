@@ -57,7 +57,8 @@ final class BrowserModel: NSObject, ObservableObject, WKNavigationDelegate, WKUI
     /// Phone in portrait: a new page starts in the middle of the (wider than the screen) Legends layout.
     private func centerHorizontally() {
         guard UIDevice.current.userInterfaceIdiom == .phone else { return }
-        DispatchQueue.main.asyncAfter(deadline: .now() + 0.15) { [weak self] in
+        Task { @MainActor [weak self] in
+            try? await Task.sleep(nanoseconds: 150_000_000)   // content size follows the new viewport
             guard let scroll = self?.webView.scrollView, scroll.bounds.height > scroll.bounds.width else { return }
             let extra = scroll.contentSize.width - scroll.bounds.width
             if extra > 1 && scroll.contentOffset.x <= 0.5 {
