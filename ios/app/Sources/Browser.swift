@@ -167,7 +167,8 @@ final class BrowserModel: NSObject, ObservableObject, WKNavigationDelegate, WKUI
     private static let phoneViewport = """
 (function () {
     // Phones in portrait: the Legends layout (min. 1280 px wide) at the scale of the original mobile view –
-    // 480 px across the screen, scrolled to the middle – instead of the whole page shrunk to the width.
+    // the whole content window across the screen (480 px around the middle on the village views) – instead
+    // of the whole page shrunk to the width.
     if (Math.min(screen.width, screen.height) >= 600) return;   // tablets keep the full layout
     if (document.querySelector('meta[name=viewport]')) return;   // pages made for phones (launcher) stay as they are
     var meta = document.createElement('meta');
@@ -177,17 +178,31 @@ final class BrowserModel: NSObject, ObservableObject, WKNavigationDelegate, WKUI
     function portrait() {
         return typeof window.orientation === 'number' ? window.orientation % 180 === 0 : screen.height > screen.width;
     }
+    // Left edge and width of the content window (messages, statistics, map, building list, …), null on the
+    // village views or while the styles are not there yet.
+    function windowBox() {
+        if (/(dorf1|dorf2)\\.php/.test(location.pathname)) return null;
+        var box = document.getElementById('contentOuterContainer');
+        if (!box) return null;
+        var r = box.getBoundingClientRect();
+        return r.width > 300 && r.width < 1000 ? [r.left + window.scrollX, r.width] : null;
+    }
     function center() {
         var view = window.visualViewport ? window.visualViewport.width : window.innerWidth;
         var max = document.documentElement.scrollWidth - view;
-        if (max > 0 && window.scrollX < 1 && (!window.visualViewport || window.visualViewport.pageLeft < 1)) window.scrollTo(Math.round(max / 2), window.scrollY);
+        if (max <= 0 || window.scrollX >= 1 || (window.visualViewport && window.visualViewport.pageLeft >= 1)) return;
+        var box = windowBox();
+        window.scrollTo(Math.round(box ? Math.min(Math.max(0, box[0] - 12), max) : max / 2), window.scrollY);
     }
+    // Portrait: the viewport is as wide as the content window (+ margin), so every window is shown whole like
+    // the building list; the village views keep 480 px around the middle.
     var last = null;
     function apply() {
-        var p = portrait();
-        if (p === last) return;
-        last = p;
-        meta.content = (p ? 'width=480, initial-scale=' + (Math.min(screen.width, screen.height) / 480).toFixed(3)
+        var p = portrait(), box = p ? windowBox() : null;
+        var key = p ? (box ? Math.round(box[1] + 24) : 480) : 'landscape';
+        if (key === last) return;
+        last = key;
+        meta.content = (p ? 'width=' + key + ', initial-scale=' + (Math.min(screen.width, screen.height) / key).toFixed(3)
             + ', shrink-to-fit=no' : 'width=1280') + ', minimum-scale=0.25, maximum-scale=4, user-scalable=yes';
         if (p) setTimeout(center, 60);
     }
@@ -196,7 +211,7 @@ final class BrowserModel: NSObject, ObservableObject, WKNavigationDelegate, WKUI
     var focusLock = false;
     document.addEventListener('focusin', function (event) {
         var el = event.target;
-        if (!last || !el || !/^(INPUT|TEXTAREA|SELECT)$/.test(el.tagName)) return;
+        if (last === null || last === 'landscape' || !el || !/^(INPUT|TEXTAREA|SELECT)$/.test(el.tagName)) return;
         var scale = window.visualViewport ? window.visualViewport.scale : 1;
         meta.content = meta.content.replace(/maximum-scale=[0-9.]+/, 'maximum-scale=' + scale.toFixed(3));
         focusLock = true;
@@ -212,10 +227,10 @@ final class BrowserModel: NSObject, ObservableObject, WKNavigationDelegate, WKUI
     function refit() {
         try { window.webkit.messageHandlers.ovFit.postMessage(1); } catch (e) {}
     }
-    window.addEventListener('load', function () { setTimeout(refit, 450); setTimeout(refit, 1300); });
+    window.addEventListener('load', function () { if (!focusLock) apply(); setTimeout(refit, 450); setTimeout(refit, 1300); });
     window.addEventListener('pageshow', function (e) { if (e.persisted) setTimeout(refit, 60); });
     window.addEventListener('orientationchange', function () { setTimeout(apply, 150); });
-    window.addEventListener('load', function () { if (last) center(); });
+    window.addEventListener('load', function () { if (last !== 'landscape') center(); });
 })();
 """
 
