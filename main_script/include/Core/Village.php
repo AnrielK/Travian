@@ -23,10 +23,8 @@ use function uniqid;
 
 class Village
 {
-    /** Legends "build 25 % faster" (the video bonus of Travian Legends): reduction of the construction time in percent. */
+    /** Legends "build 25 % faster" (a video bonus of Travian Legends, shown but not active): time reduction in percent. */
     public const FAST_BUILD_PERCENT = 25;
-    /** Set for one request when the player chose the faster construction (…&fast=1). */
-    public $fastBuild = false;
 
     public static function fastBuildTime($seconds)
     {
@@ -828,8 +826,7 @@ HTML;
             } else {
                 $commence = $this->getLastCommence($field <= 18);
             }
-            $upTime = Formulas::buildingUpgradeTime($item_id, $nextLevel, $this->getMainBuildingLvl(), $this->isWW());
-            $commence += $this->fastBuild ? self::fastBuildTime($upTime) : $upTime;
+            $commence += Formulas::buildingUpgradeTime($item_id, $nextLevel, $this->getMainBuildingLvl(), $this->isWW());
             $isMaster = $isMaster ? 1 : 0;
             $stmt = $this->db->run(
                 "INSERT INTO building_upgrade (kid, building_field, isMaster, start_time, commence) VALUES (?, ?, ?, ?, ?)",
@@ -1487,11 +1484,10 @@ HTML;
             } else {
                 $commence = $this->getLastCommence($field <= 18);
             }
-            $upTime = Formulas::buildingUpgradeTime($item_id,
+            $commence += Formulas::buildingUpgradeTime($item_id,
                 $nextLevel,
                 $this->getMainBuildingLvl(),
                 $this->isWW());
-            $commence += $this->fastBuild ? self::fastBuildTime($upTime) : $upTime;
             $isMaster = $isMaster ? 1 : 0;
             $stmt = $this->db->run("INSERT INTO building_upgrade (kid, building_field, isMaster, start_time, commence) VALUES (?,?,?,?,?)",
                 [

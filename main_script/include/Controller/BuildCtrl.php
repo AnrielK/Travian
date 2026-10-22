@@ -458,12 +458,11 @@ class BuildCtrl extends GameCtrl
         }
         $cost = Formulas::buildingUpgradeCosts($item_id, $lvl);
         if (is_hero_v2() && ($session->hasPlus() || !$workerResult['isBusy'])) {
-            // Legends: build 25 % faster (the video bonus of Travian Legends, here without the video).
-            $fastReady = !$workerResult['isBusy'] && $village->isResourcesAvailable($cost);
+            // Legends "25 % faster construction" (a video bonus there): shown as in Travian Legends, not active here.
             $result['fast'] = getButton([
                 "type" => "button",
-                "class" => "textButtonV1 purple new videoFeatureButton" . ($fastReady ? '' : ' disabled'),
-                "onclick" => $fastReady ? "window.location.href = '$link&fast=1'; return false;" : "return false;",
+                "class" => "textButtonV1 purple new videoFeatureButton disabled",
+                "onclick" => "return false;",
             ], ['data' => ["class" => "purple new videoFeatureButton"]],
                 sprintf(T("Buildings", "fasterBuild", "%s%% faster construction"), Village::FAST_BUILD_PERCENT) . \resources\View\LegendsUi::svg('speedUp', 'speedUp'));
         }

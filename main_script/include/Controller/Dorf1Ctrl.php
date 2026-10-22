@@ -180,7 +180,6 @@ class Dorf1Ctrl extends GameCtrl
         }
         $session->changeChecker();
         $village = $this->session->village;
-        $village->fastBuild = is_hero_v2() && isset($_GET['fast']) && (int)$_GET['fast'] === 1 && !(isset($_GET['b']) && (int)$_GET['b'] === 1);
         if (!isset($_GET['id'])) {
             if ((int)$_GET['a'] === 0) {
                 $village->removeBuilding((int)$_GET['d']);

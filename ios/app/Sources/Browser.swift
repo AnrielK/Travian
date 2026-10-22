@@ -32,8 +32,11 @@ final class BrowserModel: NSObject, ObservableObject, WKNavigationDelegate, WKUI
         config.allowsInlineMediaPlayback = true
         config.userContentController.addUserScript(WKUserScript(source: Self.phoneViewport, injectionTime: .atDocumentEnd,
                                                                 forMainFrameOnly: true))
+        let fitRelay = FitMessageRelay()
+        config.userContentController.add(fitRelay, name: "ovFit")
         webView = WKWebView(frame: .zero, configuration: config)
         super.init()
+        fitRelay.browser = self
         UIDevice.current.beginGeneratingDeviceOrientationNotifications()
         NotificationCenter.default.addObserver(forName: UIDevice.orientationDidChangeNotification, object: nil,
                                                queue: .main) { [weak self] _ in
@@ -204,10 +207,24 @@ final class BrowserModel: NSObject, ObservableObject, WKNavigationDelegate, WKUI
         setTimeout(function () { meta.content = meta.content.replace(/maximum-scale=[0-9.]+/, 'maximum-scale=4'); }, 300);
     });
     apply();
+    // Ask the app to fit the content window again once the page has settled (pictures, scripts that scroll)
+    // and when a page comes back from the back/forward cache, so every window sits like the building list.
+    function refit() {
+        try { window.webkit.messageHandlers.ovFit.postMessage(1); } catch (e) {}
+    }
+    window.addEventListener('load', function () { setTimeout(refit, 450); setTimeout(refit, 1300); });
+    window.addEventListener('pageshow', function (e) { if (e.persisted) setTimeout(refit, 60); });
     window.addEventListener('orientationchange', function () { setTimeout(apply, 150); });
     window.addEventListener('load', function () { if (last) center(); });
 })();
 """
+
+    /// The page asked for another fit (see `phoneViewport`); skipped while the user is touching the page.
+    func refitRequested() {
+        let scroll = webView.scrollView
+        guard !scroll.isTracking, !scroll.isDragging, !scroll.isDecelerating, !scroll.isZooming else { return }
+        fitToScreen(newPage: true)
+    }
 
     func webView(_ webView: WKWebView, didFail navigation: WKNavigation!, withError error: Error) { fail(error) }
     func webView(_ webView: WKWebView, didFailProvisionalNavigation navigation: WKNavigation!, withError error: Error) { fail(error) }
@@ -282,4 +299,13 @@ struct WebView: UIViewRepresentable {
     let webView: WKWebView
     func makeUIView(context: Context) -> WKWebView { webView }
     func updateUIView(_ uiView: WKWebView, context: Context) {}
+}
+
+/// Forwards the page's "ovFit" messages without the content controller keeping the browser alive.
+final class FitMessageRelay: NSObject, WKScriptMessageHandler {
+    weak var browser: BrowserModel?
+
+    func userContentController(_ userContentController: WKUserContentController, didReceive message: WKScriptMessage) {
+        Task { @MainActor [weak self] in self?.browser?.refitRequested() }
+    }
 }

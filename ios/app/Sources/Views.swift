@@ -7,8 +7,6 @@ struct RootView: View {
     @StateObject private var browser = BrowserModel()
     @Environment(\.scenePhase) private var scenePhase
     @State private var sheet: Sheet?
-    /// Bottom bar folded away (a small button brings it back), remembered between launches.
-    @AppStorage("OpenVillage.toolbarHidden") private var barHidden = false
     @Namespace private var glassSpace
 
     enum Sheet: String, Identifiable {
@@ -40,11 +38,9 @@ struct RootView: View {
                 }
             }
         }
-        .safeAreaInset(edge: .bottom) { if !Self.glassBar && !barHidden { toolbar } }
-        .overlay(alignment: .bottom) { if Self.glassBar && !barHidden { glassToolbar } }
+        .safeAreaInset(edge: .bottom) { if !Self.glassBar { toolbar } }
+        .overlay(alignment: .bottom) { if Self.glassBar { glassToolbar } }
         .animation(.spring(response: 0.38, dampingFraction: 0.82), value: browser.barMinimized)
-        .overlay(alignment: .bottomTrailing) { if barHidden { showBarButton } }
-        .onChange(of: barHidden) { hidden in if hidden { browser.setBottomInset(0) } }
         .alert("Aplikace minule spadla při startu", isPresented: Binding(
             get: { runtime.previousCrash != nil }, set: { if !$0 { runtime.previousCrash = nil } })) {
             Button("Logy") { runtime.previousCrash = nil; sheet = .logs }
@@ -77,25 +73,6 @@ struct RootView: View {
         if #available(iOS 26.0, *) { return true }
         #endif
         return false
-    }
-
-    /// Small round button that brings the folded bottom bar back.
-    @ViewBuilder private var showBarButton: some View {
-        let button = Button { withAnimation(.easeOut(duration: 0.2)) { barHidden = false } } label: {
-            Image(systemName: "chevron.up").font(.system(size: 16, weight: .semibold)).frame(width: 44, height: 44)
-        }
-        .buttonStyle(.plain)
-        .foregroundStyle(.primary)
-        .accessibilityLabel("Zobrazit lištu")
-        #if compiler(>=6.2)
-        if #available(iOS 26.0, *) {
-            button.glassEffect(.regular, in: .circle).padding(.trailing, 16).padding(.bottom, 4)
-        } else {
-            button.background(.bar, in: Circle()).padding(.trailing, 16).padding(.bottom, 4)
-        }
-        #else
-        button.background(.bar, in: Circle()).padding(.trailing, 16).padding(.bottom, 4)
-        #endif
     }
 
     private var toolbar: some View {
@@ -190,11 +167,6 @@ struct RootView: View {
             } label: {
                 barLabel("ellipsis.circle", "Více")
             }
-            Button { withAnimation(.easeOut(duration: 0.2)) { barHidden = true } } label: {
-                Image(systemName: "chevron.down").font(.system(size: 15, weight: .semibold))
-                    .frame(width: 30).padding(.vertical, 12)
-            }
-            .accessibilityLabel("Schovat lištu")
         }
     }
 
