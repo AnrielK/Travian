@@ -40,6 +40,25 @@ The administrator accounts **Multihunter** and **Support** use the password give
 To install again (a new world), delete `xampp/config.local.php` and restart the launcher; the wizard asks
 before overwriting existing game databases.
 
+## Troubleshooting
+
+**Broken MariaDB system tables** (`Incorrect file format 'tables_priv'`, `Got error 176 "Read page with wrong
+checksum" from storage engine Aria`, …): the `mysql` system database of XAMPP is damaged or comes from another
+version, typically a data folder kept from an older XAMPP. The wizard first repairs the named table; when that
+does not help it runs the game with the administrator account from step 2 (`root`) instead of its own user, so
+the game works anyway. To fix XAMPP's MariaDB itself (phpMyAdmin and other users need it too):
+
+1. Stop MySQL in the XAMPP Control Panel and copy `xampp\mysql\data` somewhere as a backup.
+2. Repair the system tables: open the XAMPP **Shell** and run
+   `aria_chk -r mysql\data\mysql\*.MAI` (Linux: `/opt/lampp/bin/aria_chk -r /opt/lampp/var/mysql/mysql/*.MAI`),
+   then start MySQL and run `mysql_upgrade -u root --force`.
+3. If that fails, replace the system database with XAMPP's clean copy: stop MySQL, copy the folder
+   `xampp\mysql\backup\mysql` over `xampp\mysql\data\mysql` and start MySQL again. This resets the MariaDB
+   users to XAMPP's defaults (`root` without a password); the game's databases (`openvillage_*`) stay.
+
+**Old PHP**: `start.bat` skips PHP older than 8.2; if it finds none, set `XAMPP_PHP` to the `php.exe` of an XAMPP
+with PHP 8.2+.
+
 ## How it works
 
 | File | Role |

@@ -40,7 +40,7 @@ if (!class_exists('Redis', false)) {
             $pdo = new PDO(
                 sprintf('mysql:host=%s;charset=utf8mb4', $env('GAME_DB_HOST', 'localhost')),
                 $env('GAME_DB_USER', 'openvillage'),
-                $env('GAME_DB_PASSWORD', 'local-game-password'),
+                getenv('GAME_DB_PASSWORD') !== false ? getenv('GAME_DB_PASSWORD') : 'local-game-password',
                 [PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION, PDO::ATTR_EMULATE_PREPARES => false]
             );
             $pdo->exec("CREATE DATABASE IF NOT EXISTS `$database`");

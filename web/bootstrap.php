@@ -30,7 +30,7 @@ function game_database(): PDO
     $database = new PDO(
         $dsn,
         env_value('GAME_DB_USER', 'openvillage'),
-        env_value('GAME_DB_PASSWORD', 'local-game-password'),
+        getenv('GAME_DB_PASSWORD') !== false ? getenv('GAME_DB_PASSWORD') : 'local-game-password',
         [
             PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION,
             PDO::ATTR_DEFAULT_FETCH_MODE => PDO::FETCH_ASSOC,

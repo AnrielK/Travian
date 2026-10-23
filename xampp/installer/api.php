@@ -205,32 +205,28 @@ try {
             try {
                 ov_create_game_account($db, $password);
             } catch (mysqli_sql_exception $e) {
-                if (!ov_is_grant_table_error($e)) {
-                    throw $e;
-                }
-                // System tables of another MariaDB/MySQL version (e.g. a data folder kept from an older XAMPP).
-                $notes[] = 'Systémové tabulky MariaDB jsou poškozené nebo z jiné verze (' . $e->getMessage() . '), opravuji je…';
-                foreach (ov_repair_grant_tables($db, $e->getMessage()) as $line) {
-                    $notes[] = '  ' . $line;
-                }
-                try {
-                    ov_create_game_account($db, $password);
-                    $notes[] = 'Systémové tabulky opraveny.';
-                } catch (mysqli_sql_exception $e) {
-                    if (!ov_is_grant_table_error($e)) {
-                        throw $e;
+                // The privilege tables (mysql.*) of this server are broken or from another version, e.g. a data folder
+                // kept from an older XAMPP: try to repair the one named, otherwise run the game as the administrator.
+                $notes[] = 'Uživatele openvillage nejde založit: ' . $e->getMessage();
+                $created = false;
+                if (ov_is_grant_table_error($e)) {
+                    $notes[] = 'Opravuji systémové tabulky MariaDB…';
+                    foreach (ov_repair_grant_tables($db, $e->getMessage()) as $line) {
+                        $notes[] = '  ' . $line;
                     }
-                    if ((string)($_POST['db_password'] ?? '') === '') {
-                        // The game's settings treat an empty password as unset, so a root without one cannot stand in.
-                        ov_reply(['ok' => false, 'notes' => $notes, 'error' => 'Systémové tabulky MariaDB v XAMPPu jsou poškozené'
-                            . ' nebo z jiné verze a automatická oprava se nepovedla (' . $e->getMessage() . ').' . "\n"
-                            . 'Oprava: v XAMPP Control Panelu otevři Shell, spusť „mysql_upgrade -u root --force", pak MySQL zastav'
-                            . ' a znovu spusť (Stop / Start) a instalaci zopakuj.'], 500);
-                        return;
+                    try {
+                        ov_create_game_account($db, $password);
+                        $notes[] = 'Systémové tabulky opraveny.';
+                        $created = true;
+                    } catch (mysqli_sql_exception $e) {
+                        $notes[] = 'Oprava nepomohla: ' . $e->getMessage();
                     }
-                    $gameUser = (string)$_POST['db_user'];
-                    $password = (string)$_POST['db_password'];
-                    $notes[] = 'Uživatele openvillage nešlo vytvořit, hra použije zadaný účet správce.';
+                }
+                if (!$created) {
+                    $gameUser = (string)($_POST['db_user'] ?? 'root');
+                    $password = (string)($_POST['db_password'] ?? '');
+                    $notes[] = "Hra použije účet správce databáze ($gameUser). Systémové tabulky MariaDB zůstávají poškozené,"
+                        . ' viz xampp/README.md (Troubleshooting).';
                 }
             }
             foreach (OV_DATABASES as $name) {
