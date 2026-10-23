@@ -1,8 +1,8 @@
 <?php
 /* Page frame of the Travian 4.0 graphic pack (gpack.php 'layout' => 't40', included by Layout.php): the 4.0
  * header with the round navigation, the resource line, the village sign on the left and the hero, player,
- * alliance and village list signs on the right, with the quest master and the info box below them (styles: <pack>/mainPage/lang/openvillage-t40.css). The pages
- * inside it are the same as in the other layouts. */
+ * alliance and village list signs on the right, the quest master's picture and the info sign on the left tree
+ * (styles: <pack>/mainPage/lang/openvillage-t40.css). The pages inside it are the same as in the other layouts. */
 
 use Core\Config;
 
@@ -108,6 +108,43 @@ $stock = $vars['stockBar'] ?? null;
                                 "loyalty"); ?>: <?=round($t40['loyalty']); ?>%</span>
                     </div>
                 </div>
+            <?php endif; ?>
+            <?php if (!empty($t40['questmaster'])): ?>
+                <div class="questMaster">
+                    <button type="button"
+                            class="master nation<?=in_array($t40['hero']['race'] ?? 1, [1, 2, 3]) ? $t40['hero']['race'] : 1; ?>"
+                            onclick="jQuery('#questmasterButton').click(); return false;"
+                            title="<?=T("Quest", "helperAndTasks"); ?>"></button>
+                </div>
+                <?php /* the T4.4 quest master box, hidden: its script opens the quest dialog */ ?>
+                <div id="t40Questmaster"><?=$t40['questmaster']; ?></div>
+            <?php endif; ?>
+            <?php if (!empty($t40['infoCount'])): ?>
+                <div id="sideInfoCountdown">
+                    <div class="head"></div>
+                    <div class="content">
+                        <ul><?=$t40['infoItems']; ?></ul>
+                        <?php if ($t40['infoCount'] > 1): ?>
+                            <div class="pager"><a class="back">&lsaquo;</a> <span class="page">1</span>/<?=$t40['infoCount']; ?>
+                                <a class="next">&rsaquo;</a></div>
+                        <?php endif; ?>
+                    </div>
+                </div>
+                <script type="text/javascript">
+                    jQuery(function () {
+                        var sign = jQuery('#sideInfoCountdown'), items = sign.find('.content > ul > li'), shown = 0;
+                        function show(i) {
+                            shown = (i + items.length) % items.length;
+                            items.removeClass('shown').eq(shown).addClass('shown');
+                            sign.find('.pager .page').text(shown + 1);
+                        }
+                        sign.find('.pager .back').click(function () { show(shown - 1); });
+                        sign.find('.pager .next').click(function () { show(shown + 1); });
+                        show(0);
+                        Travian.Game.Layout.setupInfoboxItemsDeletionWithMessage('<?=T("inGame",
+                            "Delete this message permanently?");?>', '<?=T("inGame", "Confirm");?>');
+                    });
+                </script>
             <?php endif; ?>
             <?php if ($stock && $vars['showStockbar']): ?>
                 <ul id="res">
@@ -226,13 +263,6 @@ $stock = $vars['stockBar'] ?? null;
                         </div>
                         <div class="foot"></div>
                     </div>
-                    <?php if (!empty($t40['infoBox']) || !empty($t40['questmaster'])): ?>
-                        <div id="sidebarAfterContent" class="sidebar afterContent">
-                            <?=$t40['questmaster'] ?? ''; ?>
-                            <?=$t40['infoBox'] ?? ''; ?>
-                            <div class="clear"></div>
-                        </div>
-                    <?php endif; ?>
                 </div>
             <?php endif; ?>
             <div class="clear"></div>

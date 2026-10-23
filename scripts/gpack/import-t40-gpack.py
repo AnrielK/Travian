@@ -30,7 +30,7 @@ FRAME_T44 = re.compile(r'#(header|logo|navigation|background|bodyWrapper|center|
                        r'myGameLink\w*)\b|^\s*body(\.[\w-]+)*\s*$|(^|[\s,])\.stime\b')
 FRAME_40 = re.compile(r'#(wrapper|staticElements|header|mtop|logo|navigation|plusLink|plus|gs|myGameLink\w*|mid|'
                       r'side_info|villageName|villageList|linkList|res|contentOuterContainer|footer|mfoot|'
-                      r'ingameManual|logout|anwersQuestionMark)\b|^\s*body(\.[\w-]+)*\s*$|(^|[\s,])\.stime\b|'
+                      r'ingameManual|logout|anwersQuestionMark|sideInfoCountdown)\b|\.questMaster\b|^\s*body(\.[\w-]+)*\s*$|(^|[\s,])\.stime\b|'
                       r'^\s*(body(\.[\w-]+)*\s+)?#content(\.[\w-]+)?(>h1)?\s*$|^\s*\.bubble\b')
 # 4.0 rules for pages that are not part of the game (login, sign-up, error pages)
 OUTSIDE = re.compile(r'\b(loader|login|logout|signup|support|activate|error_site|fatal_error|banned_cn|'
@@ -38,7 +38,16 @@ OUTSIDE = re.compile(r'\b(loader|login|logout|signup|support|activate|error_site
 # The T4.4 pages inside the 4.0 frame: where 4.0 placed them differently
 PAGES_IN_FRAME = '''
 div.village1 div#map_details{position:absolute;right:0;top:10px;width:245px;margin:0;float:none}
-#side_info #sidebarAfterContent{float:none;position:relative;left:2px;top:0;width:auto;margin:6px 0 0;padding:0}
+#sideInfoCountdown{z-index:60}
+#sideInfoCountdown .content ul{margin:0;padding:0;list-style:none}
+#sideInfoCountdown .content li{display:none;overflow:hidden;max-height:120px}
+#sideInfoCountdown .content li.shown{display:block}
+#sideInfoCountdown .content li .infoboxDeleteButton{float:right}
+#sideInfoCountdown .pager{margin-top:4px;font-size:11px}
+#sideInfoCountdown .pager a{cursor:pointer;font-weight:bold;padding:0 4px}
+.questMaster .master{display:block;border:0;padding:0;background-color:transparent}
+.questMaster .master:hover{background-position:right top}
+#t40Questmaster{display:none}
 '''
 
 

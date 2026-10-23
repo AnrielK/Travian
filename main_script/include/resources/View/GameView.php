@@ -423,7 +423,8 @@ class GameView
         if ($infoBox_count == 0) return;
 
         $this->vars['sidebarBeforeContent'] .= $output;
-        $this->vars['t40']['infoBox'] = $output;
+        $this->vars['t40']['infoItems'] = $view->vars['content'];
+        $this->vars['t40']['infoCount'] = $infoBox_count;
     }
 
     private function renderInGameInfoBox($row)

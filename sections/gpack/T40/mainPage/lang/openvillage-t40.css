@@ -153,6 +153,9 @@ body #wrapper .bodyWrapper{margin:0 auto;position:relative;width:990px;}
 #side_info #linkList .pager a.back{left:6px;bottom:10px;}
 #side_info #linkList .pager a.next{right:9px;bottom:14px;}
 #side_info .listing ul .external{background-image:url(../img40/a/external.gif);background-position:left 2px;}
+#sideInfoCountdown{width:160px;position:absolute;left:-21px;top:415px;}
+#sideInfoCountdown .head{background-image:url("../img40/layout/signInfoTop-rtl.png");height:23px;}
+#sideInfoCountdown .content{width:123px;padding-left:17px;padding-right:18px;padding-top:5px;padding-bottom:22px;background-image:url("../img40/layout/signInfoBottom-rtl.png");background-position:left bottom;text-align:center;font-size:11px;}
 #anwersQuestionMark{z-index:1000;position:absolute;left:756px;top:122px;width:28px;height:28px;}
 #anwersQuestionMark a{display:block;width:28px;height:28px;background-image:url("../img40/answers/questionMark.png");}
 #anwersQuestionMark a:hover{background-position:0 -38px;}
@@ -179,6 +182,14 @@ body #wrapper .bodyWrapper{margin:0 auto;position:relative;width:990px;}
 #navigation .messages a:hover,#navigation .messages a:focus{background-position:-375px -75px;}
 #navigation .messages a:active,#navigation .messages a.active{background-position:-375px -150px;}
 #navigation li .bubble{top:0;left:51px;}
+.questMaster{position:absolute;left:-11px;top:221px;width:160px;height:195px;z-index:100;}
+.questMaster #anm{display:none;}
+.questMaster .master{width:160px;height:195px;cursor:pointer;top:-7px;}
+.questMaster .master{background-position:left top;position:relative;top:-7px;}
+.questMaster .master.nation1{background-image:url(../img40/q/masterNation1-rtl.png);}
+.questMaster .master.nation2{background-image:url(../img40/q/masterNation2-rtl.png);}
+.questMaster .master.nation3{background-image:url(../img40/q/masterNation3-rtl.png);}
+.questMaster .master.active{background-position:right top;}
 @CHARSET "UTF-8";.boxesColor.orange .boxes-tr{background-position:-25px 0;}
 div#header div#mtop a#myGameLinkHeader{display:block;background-image:url(../../img/myGame/myGameLogoHeader.png);width:44px;height:33px;}
 div#footer div#mfoot a#myGameLinkFooter{position:absolute;top:-7px;right:80px;background-image:url(../../img/myGame/myGameLogoFooter.png);width:64px;height:46px;border:none;margin:0;padding:0;}
@@ -204,4 +215,13 @@ body.qualificationServerLoader #wrapper,body.qualificationServerLogin #wrapper,b
 body.qualificationServerLoader #logo,body.qualificationServerLogin #logo,body.qualificationServerLogout #logo,body.qualificationServerSignup #logo,body.qualificationServerSupport #logo,body.qualificationServerActivate #logo,body.qualificationServerError_site #logo,body.qualificationServerFatal_error #logo,body.qualificationServerBanned_cn #logo{margin:38px 0 0 192px;width:241px;height:83px;background-image:url(../../img/layout/travianLogoQualification.png);}
 /* T4.4 pages in the 4.0 frame */
 div.village1 div#map_details{position:absolute;right:0;top:10px;width:245px;margin:0;float:none}
-#side_info #sidebarAfterContent{float:none;position:relative;left:2px;top:0;width:auto;margin:6px 0 0;padding:0}
+#sideInfoCountdown{z-index:60}
+#sideInfoCountdown .content ul{margin:0;padding:0;list-style:none}
+#sideInfoCountdown .content li{display:none;overflow:hidden;max-height:120px}
+#sideInfoCountdown .content li.shown{display:block}
+#sideInfoCountdown .content li .infoboxDeleteButton{float:right}
+#sideInfoCountdown .pager{margin-top:4px;font-size:11px}
+#sideInfoCountdown .pager a{cursor:pointer;font-weight:bold;padding:0 4px}
+.questMaster .master{display:block;border:0;padding:0;background-color:transparent}
+.questMaster .master:hover{background-position:right top}
+#t40Questmaster{display:none}
