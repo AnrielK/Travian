@@ -1,7 +1,7 @@
 #!/bin/sh
 set -eu
 
-cd "$(dirname "$0")/.."
+cd "$(dirname "$0")/../.."
 
 find main_script web sections tests \
     -path 'main_script/copyable/include/runtime' -prune -o \

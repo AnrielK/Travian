@@ -7,7 +7,7 @@ in [`.upstream-main`](../.upstream-main), and can be checked without modifying
 the checkout:
 
 ```sh
-./scripts/check-upstream.sh
+./scripts/checks/check-upstream.sh
 ```
 
 The modernization history was sanitized and re-authored before integration.

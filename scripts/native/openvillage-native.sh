@@ -243,7 +243,7 @@ GRANT ALL PRIVILEGES ON \`$GAME_DB_NAME\`.* TO '$GAME_DB_USER'@'127.0.0.1';
 FLUSH PRIVILEGES;
 SQL
     db_root -e "CREATE DATABASE IF NOT EXISTS openvillage_cache; GRANT ALL PRIVILEGES ON openvillage_cache.* TO '$GAME_DB_USER'@'localhost'; GRANT ALL PRIVILEGES ON openvillage_cache.* TO '$GAME_DB_USER'@'127.0.0.1';"
-    db_root "$GLOBAL_DB_NAME" <"$ROOT/main.sql"
+    db_root "$GLOBAL_DB_NAME" <"$ROOT/data/main.sql"
     db_root "$GAME_DB_NAME" <"$ROOT/main_script/include/schema/T4.4.sql"
     if [ "$IOS_EMU" = 1 ]; then touch "$DATA/.db-initialised"; return 0; fi   # setup endpoint does the rest
     db_root "$GAME_DB_NAME" -e "INSERT INTO config (startTime, map_size, worldUniqueId, installed, loginInfoTitle, loginInfoHTML, message) VALUES (UNIX_TIMESTAMP(), $GAME_MAP_SIZE, 1, 0, '', '', '');"

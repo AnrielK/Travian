@@ -1,7 +1,7 @@
 #!/bin/sh
 set -eu
 
-cd "$(dirname "$0")/.."
+cd "$(dirname "$0")/../.."
 
 command -v node >/dev/null 2>&1 || {
     echo 'Node.js is required for JavaScript syntax verification.' >&2

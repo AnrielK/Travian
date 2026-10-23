@@ -41,6 +41,9 @@
 
 ### Changed
 
+- Repository layout: `main.sql` and the filter lists live in `data/`, the
+  clean-install compose override in `docker/`, and the checks and tests run by
+  `verify.sh` and CI in `scripts/checks/`; the README describes the layout.
 - Selected `main_script` as the canonical maintained game tree.
 - Modernized password verification/migration, sessions, random tokens, and CSRF.
 - Updated the application for PHP 8.3 and current MariaDB/Redis runtimes.

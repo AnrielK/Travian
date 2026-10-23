@@ -57,6 +57,23 @@ Release verification from empty isolated volumes is available through:
 That disposable check includes registration, activation, village creation,
 login, authenticated gameplay routes, and password-confirmed account downloads.
 
+## Repository layout
+
+| Path | Contents |
+| --- | --- |
+| `main_script/` | The game: PHP source (`include/`) and the web root of `/game/` (`copyable/public/`) |
+| `sections/` | World configuration and the graphic packs (`sections/gpack/`, list in `gpack.php`) |
+| `web/` | Lobby, registration and static pages served at `/` |
+| `data/` | Global database schema (`main.sql`) and the name / word / URL filter lists |
+| `docker/` | Docker images, Apache/PHP configuration and the clean-install compose override |
+| `scripts/` | Entry points: `verify.sh`, `verify-clean-install.sh`, `backup.sh`, `restore.sh` |
+| `scripts/checks/` | The checks and tests `verify.sh` and CI run |
+| `scripts/native/` | Docker-free runtime (macOS, Linux, iOS) |
+| `scripts/gpack/` | Tools that build and convert graphic packs |
+| `tests/` | PHP regression tests and worker fixtures |
+| `ios/`, `macos/` | The iOS app and the OpenVillage Local macOS app |
+| `docs/` | Ruleset, operations, privacy, release, upstream and roadmap documents |
+
 ## Documentation
 
 - [Supported ruleset](docs/RULESET.md)

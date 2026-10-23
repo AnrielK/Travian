@@ -1,7 +1,7 @@
 #!/bin/sh
 set -eu
 
-cd "$(dirname "$0")/.."
+cd "$(dirname "$0")/../.."
 
 if ! command -v rg >/dev/null 2>&1; then
     echo 'Required verification tool not found: rg (ripgrep).' >&2
@@ -11,7 +11,7 @@ fi
 if rg -n --hidden \
     --glob '!.git' \
     --glob '!.git/**' \
-    --glob '!scripts/check-public-hygiene.sh' \
+    --glob '!scripts/checks/check-public-hygiene.sh' \
     '(/Users/|BEGIN (OPENSSH|RSA|EC) PRIVATE KEY|sftp\.json|statcounter|molon-lave|chamirhossein|travianarab@yahoo)' .; then
     echo 'Sensitive path, key, or legacy personal metadata found.' >&2
     exit 1
@@ -20,7 +20,7 @@ fi
 if rg -n --hidden \
     --glob '!.git' \
     --glob '!.git/**' \
-    --glob '!scripts/check-public-hygiene.sh' \
+    --glob '!scripts/checks/check-public-hygiene.sh' \
     '[[:alnum:]._%+-]+@(gmail|yahoo|hotmail|outlook|icloud)\.[[:alpha:]]{2,}' .; then
     echo 'Consumer email address found.' >&2
     exit 1

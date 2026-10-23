@@ -1,7 +1,7 @@
 #!/bin/sh
 set -eu
 
-cd "$(dirname "$0")/.."
+cd "$(dirname "$0")/../.."
 
 controller='main_script/include/Controller/OptionCtrl.php'
 template='main_script/include/resources/Templates/options/Sitters.php'

@@ -1,7 +1,7 @@
 #!/bin/sh
 set -eu
 
-ROOT_DIR=$(CDPATH= cd -- "$(dirname -- "$0")/.." && pwd)
+ROOT_DIR=$(CDPATH= cd -- "$(dirname -- "$0")/../.." && pwd)
 BASELINE_FILE="$ROOT_DIR/.upstream-main"
 UPSTREAM_URL=${UPSTREAM_URL:-https://github.com/advocaite/TravianT4.6.git}
 
