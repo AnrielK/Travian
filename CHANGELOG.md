@@ -4,6 +4,10 @@
 
 ### Added
 
+- XAMPP runtime for Windows and Linux (`xampp/`): `start.bat` / `start.sh` run
+  the game with XAMPP's PHP and MariaDB, and a web installation wizard checks
+  the requirements, creates the database user and databases and installs the
+  world. Redis and the worker processes are replaced as in the iOS app.
 - Travian 4.0 graphic pack (`T40`): the 4.0 page frame (`layout/LayoutT40.php`:
   round navigation, resource line, village sign, hero / player / alliance /
   village list signs) around the T4.4 pages, with the Travian 4.0 pictures from
