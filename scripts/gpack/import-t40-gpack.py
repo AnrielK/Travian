@@ -132,7 +132,7 @@ body:has(.dialog.questInformation) > .overlay{background:none !important}
 .activate .activationScreen{box-sizing:border-box;background:#e4e4e4;border-radius:5px;padding:12px 20px 5px}
 .activate .activationScreen #presentation{padding:15px 0 0;background:none}
 .activate .activationScreen #presentation>svg{display:none}
-.activate .activationScreen #presentation #tribeSelectors{display:block;position:relative;height:262px;margin-bottom:30px}
+.activate .activationScreen #presentation #tribeSelectors{display:block;position:relative;height:262px;width:calc(100% + 9px);margin:0 0 30px -9px}
 .activate .activationScreen #presentation #tribeSelectors input + .selector{position:absolute;left:0;width:80px;min-width:0;max-width:none;height:72px;margin:0;border:0;border-radius:0;box-shadow:none;background:url(../img/activate/volkIcon-ltr.png) no-repeat}
 .activate .activationScreen #presentation #tribeSelectors input:checked + .selector{border:0;box-shadow:none}
 .activate .activationScreen #presentation #tribeSelectors input + .selector[data-text]:before{bottom:2px;right:2px}
