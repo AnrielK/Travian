@@ -4,6 +4,9 @@
 
 ### Added
 
+- Travian 4.0 graphic pack (`T40`): the T4.4 Classic layout with the
+  Travian 4.0 pictures (buildings, village backgrounds, units, icons) from
+  `travian_Travian_4.0_41`, built by `scripts/gpack/import-t40-gpack.py`.
 - OpenVillage Local macOS app (`macos/`) and a Docker-free native runtime
   (`scripts/native/`): PHP built-in server router equivalent to the Apache
   vhost, private MariaDB/Redis instances, supervised worker, backup/restore.

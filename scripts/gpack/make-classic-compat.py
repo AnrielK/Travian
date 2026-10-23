@@ -21,7 +21,7 @@ import sys
 
 ROOT = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 GPACK = os.path.join(ROOT, 'sections', 'gpack')
-PACKS = ['TravianOld', '68597666', 'd11cb434']
+PACKS = ['TravianOld', '68597666', 'd11cb434', 'T40']
 MODERN_PREFIX = 'a17a8f72/mainPage/'
 MODERN_CSS = os.path.join(GPACK, 'a17a8f72', 'mainPage', 'lang', 'en-US', 'compact.css')
 # <body> classes of the T4.6 layout (Layout.php): not a reason to take a rule from a17a8f72

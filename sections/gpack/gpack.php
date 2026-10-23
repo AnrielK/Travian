@@ -13,6 +13,8 @@ $styles = [
     '68597666' => ['hash' => '68597666', 'name' => 'Travian T4.4 Seasonized', 'isNew' => false],
     'd11cb434' => ['hash' => 'd11cb434', 'name' => 'Travian T4.4 Seasonized v2', 'isNew' => false],
     'TravianOld' => ['hash' => 'TravianOld', 'name' => 'Travian T4.4 Classic', 'isNew' => false],
+    // T40 = Travian 4.0 (travian_Travian_4.0_41), the look T4.4 Classic grew from.
+    'T40' => ['hash' => 'T40', 'name' => 'Travian 4.0', 'isNew' => false],
 ];
 $styles = array_filter($styles, static fn ($p, $hash) => is_file(__DIR__ . "/$hash/mainPage/lang/en-US/compact.css"),
     ARRAY_FILTER_USE_BOTH);

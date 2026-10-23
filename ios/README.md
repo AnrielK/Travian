@@ -44,7 +44,7 @@ Logy jsou v aplikaci Soubory → Na iPhonu → OpenVillage → `logs` (`mariadb.
 
 Nastavení světa → Vzhled → Grafika: Travian T4.6 (29c89d54, výchozí), Travian Legends 655.3 (legends655),
 OpenVillage 4.6 (a17a8f72),
-Travian T4.4 Seasonized v2, T4.4 Seasonized a T4.4 Classic. Volí se balíček „mainPage“ (CSS a obrázky
+Travian T4.4 Seasonized v2, T4.4 Seasonized, T4.4 Classic a Travian 4.0 (T40). Volí se balíček „mainPage“ (CSS a obrázky
 rozhraní), změna platí hned. Na Macu/Linuxu stejně: `GAME_GPACK=TravianOld scripts/native/openvillage-native.sh start`.
 29c89d54 má vzhled Travian Legends: vlastní rozložení stránky (`layout/LayoutT46.php` – horní lišta s hrdinou,
 kulatá navigace, sklad pod navigací, rámované boční panely, celoplošné dorf1/dorf2 ve stylu buildingsV3),
