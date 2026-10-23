@@ -5,7 +5,7 @@ cd "$(dirname "$0")/.."
 
 clean_project=${CLEAN_PROJECT_NAME:-openvillage-clean-$$}
 clean_port=${CLEAN_APP_PORT:-$((20000 + ($$ % 20000)))}
-clean_files="compose.yaml:compose.clean.yaml"
+clean_files="compose.yaml:docker/compose.clean.yaml"
 
 cleanup() {
     COMPOSE_PROJECT_NAME="$clean_project" \

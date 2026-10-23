@@ -60,7 +60,7 @@ switch ($ovAction) {
     case 'reset':
         $started = microtime(true);
         $schemas = [
-            ov_env('GLOBAL_DB_NAME', 'openvillage_global') => $ovRoot . '/main.sql',
+            ov_env('GLOBAL_DB_NAME', 'openvillage_global') => $ovRoot . '/data/main.sql',
             ov_env('GAME_DB_NAME', 'openvillage_game') => $ovRoot . '/main_script/include/schema/T4.4.sql',
             ov_env('OV_KV_DB', 'openvillage_cache') => null,
         ];

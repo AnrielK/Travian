@@ -73,13 +73,12 @@ targets:
             case "$WANT" in *" $p "*) ;; *) EXCLUDES+=(--exclude "/sections/gpack/$p/") ;; esac
           done
           echo "Bundled gpacks:$WANT"
-          for d in main_script web sections filtering; do
+          for d in main_script web sections data; do
             rsync -a --delete --delete-excluded --exclude '.DS_Store' --exclude 'main_script/copyable/include/runtime' \
                   --exclude 'runtime/' ${EXCLUDES[@]+"${EXCLUDES[@]}"} \
                   "$SRC/$d" "$DEST/"
           done
           rsync -a --delete "$SRC/scripts/native/router.php" "$SRC/scripts/native/runtime" "$DEST/scripts/native/"
-          cp "$SRC/main.sql" "$DEST/main.sql"
           (cd "$SRC" && git rev-parse --short HEAD 2>/dev/null || date +%s) > "$DEST/.build-id"
           date +%s >> "$DEST/.build-id"
           rsync -a --delete "${SRCROOT}/../mariadb/build/share/" "$RES/mariadb-share/"

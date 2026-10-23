@@ -31,7 +31,7 @@ GRANT ALL PRIVILEGES ON \`${game_db}\`.* TO '${app_user}'@'%';
 FLUSH PRIVILEGES;
 SQL
 
-run_root "$global_db" < /workspace/main.sql
+run_root "$global_db" < /workspace/data/main.sql
 run_root "$game_db" < /workspace/main_script/include/schema/T4.4.sql
 
 run_root "$game_db" <<SQL

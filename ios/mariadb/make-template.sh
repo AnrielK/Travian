@@ -41,7 +41,7 @@ GRANT ALL PRIVILEGES ON openvillage_game.*   TO 'openvillage'@'localhost';
 GRANT ALL PRIVILEGES ON openvillage_cache.*  TO 'openvillage'@'localhost';
 FLUSH PRIVILEGES;
 SQL
-sql openvillage_global <"$ROOT/main.sql"
+sql openvillage_global <"$ROOT/data/main.sql"
 sql openvillage_game <"$ROOT/main_script/include/schema/T4.4.sql"
 sql -N -e "SELECT VERSION()" > "$OUT/version.txt"
 
