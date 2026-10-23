@@ -1,0 +1,236 @@
+@charset "UTF-8";
+/*
+ * Travian 4.0 "klasik" skin for the T4.4 markup.
+ * Graphics: gpack travian_Travian_4.0_41 (gpack/legacy/packs/travian_Travian_4.0_41/img); LTR mirrors + widened signs in gpack/legacy/compat/t40/.
+ * Loaded after the T4.4 stylesheets and scoped to html.gpack-t40, so it only re-skins the look –
+ * the layout and all game screens stay T4.4. !important is used on purpose: the T4.4 sheets are very specific.
+ */
+
+/* ---------------------------------------------------------------- page background */
+html.gpack-t40,
+html.gpack-t40 body {
+  background-color: #a1bb79 !important;
+}
+html.gpack-t40 body {
+  background-image: url(t40/bgV.jpg) !important;
+  background-repeat: repeat-x !important;
+  color: #252525;
+}
+html.gpack-t40 #background {
+  background-color: #a2ba7c !important; /* = bottom edge of the landscape images */
+  background-image: url(t40/bgVillage-ltr.jpg) !important;
+  background-position: center top !important;
+  background-repeat: no-repeat !important;
+  background-size: auto !important;
+}
+html.gpack-t40 body.village1 #background,
+html.gpack-t40 body.gidResources #background {
+  background-image: url(t40/bgResources-ltr.jpg) !important;
+}
+html.gpack-t40 #background:before { display: none !important; }
+html.gpack-t40 #background div#headerBar { background: none !important; }
+
+/* ---------------------------------------------------------------- header */
+html.gpack-t40 #header:before,
+html.gpack-t40 #header:after { display: none !important; }
+html.gpack-t40 #header { background: none !important; }
+html.gpack-t40 #logo .overlayUIBackgroundHelper,
+html.gpack-t40 #logo:before,
+html.gpack-t40 #logo:after { display: none !important; }
+html.gpack-t40 #logo {
+  background-image: url(t40/logoSmall.png) !important;
+  background-size: 124px 43px !important;
+  background-position: 0 0 !important;
+  width: 124px !important;
+  height: 43px !important;
+  top: 22px !important;
+  z-index: 30 !important;
+}
+
+html.gpack-t40 #navigation li { width: 74px !important; margin: 0 2px !important; background: none !important; }
+html.gpack-t40 #navigation li:before,
+html.gpack-t40 #navigation li:after { display: none !important; }
+html.gpack-t40 #navigation li:not(.gold) a {
+  width: 70px !important;
+  height: 70px !important;
+  margin: 2px 0 0 !important;
+  background-image: url(t40/mainNav.png) !important;
+  background-repeat: no-repeat !important;
+  background-size: auto !important;
+  background-color: transparent !important;
+  border: 0 !important;
+  border-radius: 0 !important;
+  box-shadow: none !important;
+}
+html.gpack-t40 #navigation li:not(.gold) a:before,
+html.gpack-t40 #navigation li:not(.gold) a:after { display: none !important; }
+html.gpack-t40 #navigation li.villageResources a { background-position: 0 0 !important; }
+html.gpack-t40 #navigation li.villageBuildings a { background-position: -75px 0 !important; }
+html.gpack-t40 #navigation li.map a              { background-position: -150px 0 !important; }
+html.gpack-t40 #navigation li.statistics a       { background-position: -225px 0 !important; }
+html.gpack-t40 #navigation li.reports a          { background-position: -300px 0 !important; }
+html.gpack-t40 #navigation li.messages a         { background-position: -375px 0 !important; }
+html.gpack-t40 #navigation li.villageResources a:hover { background-position: 0 -75px !important; }
+html.gpack-t40 #navigation li.villageBuildings a:hover { background-position: -75px -75px !important; }
+html.gpack-t40 #navigation li.map a:hover              { background-position: -150px -75px !important; }
+html.gpack-t40 #navigation li.statistics a:hover       { background-position: -225px -75px !important; }
+html.gpack-t40 #navigation li.reports a:hover          { background-position: -300px -75px !important; }
+html.gpack-t40 #navigation li.messages a:hover         { background-position: -375px -75px !important; }
+html.gpack-t40 #navigation li.villageResources a.active { background-position: 0 -150px !important; }
+html.gpack-t40 #navigation li.villageBuildings a.active { background-position: -75px -150px !important; }
+html.gpack-t40 #navigation li.map a.active              { background-position: -150px -150px !important; }
+html.gpack-t40 #navigation li.statistics a.active       { background-position: -225px -150px !important; }
+html.gpack-t40 #navigation li.reports a.active          { background-position: -300px -150px !important; }
+html.gpack-t40 #navigation li.messages a.active         { background-position: -375px -150px !important; }
+
+/* ---------------------------------------------------------------- sidebars: wooden signs */
+html.gpack-t40 .sidebarBox .sidebarBoxBaseBox,
+html.gpack-t40 .sidebarBox .sidebarBoxInnerBox:after,
+html.gpack-t40 .sidebarBox .sidebarBoxInnerBox .header:not(.noHeader):after { display: none !important; }
+html.gpack-t40 .sidebarBox .sidebarBoxInnerBox {
+  background-image: url(t40/sign-top.png), url(t40/sign-bot.png), url(t40/sign-mid.png) !important;
+  background-position: left top, left bottom, left top !important;
+  background-repeat: no-repeat, no-repeat, repeat-y !important;
+  background-color: transparent !important;
+  padding: 16px 0 24px !important;
+  min-height: 70px;
+}
+html.gpack-t40 .sidebarBox .sidebarBoxInnerBox .header,
+html.gpack-t40 .sidebarBox .sidebarBoxInnerBox .content,
+html.gpack-t40 .sidebarBox .sidebarBoxInnerBox .footer { padding-left: 26px !important; padding-right: 26px !important; }
+html.gpack-t40 .sidebarBox .sidebarBoxInnerBox .header,
+html.gpack-t40 .sidebarBox .sidebarBoxInnerBox .header a { color: #252525 !important; }
+
+/* ---------------------------------------------------------------- resources bar (plain T4.0 style) */
+html.gpack-t40 #stockBar {
+  background: none !important;
+  border: 0 !important;
+  box-shadow: none !important;
+}
+html.gpack-t40 #stockBar:before,
+html.gpack-t40 #stockBar:after,
+html.gpack-t40 #stockBar .stockBarButton:before,
+html.gpack-t40 #stockBar .stockBarButton .middle a:after { display: none !important; }
+html.gpack-t40 #stockBar .stockBarButton { box-shadow: none !important; border-radius: 3px !important; overflow: visible !important; }
+html.gpack-t40 #stockBar .stockBarButton .middle {
+  background: rgba(255, 255, 255, .6) !important;
+  border: 1px solid #9fae84 !important;
+  border-radius: 3px !important;
+  box-shadow: none !important;
+}
+html.gpack-t40 #stockBar .value { font-weight: bold; color: #252525 !important; }
+
+/* ---------------------------------------------------------------- content box (white T4.0 frame) */
+html.gpack-t40 #contentOuterContainer { box-shadow: none !important; }
+html.gpack-t40 #contentOuterContainer div.contentTitle {
+  background: url(t40/contentTitle.png) no-repeat left top !important;
+  background-size: 100% 39px !important;
+  border: 0 !important;
+  border-radius: 0 !important;
+  box-shadow: none !important;
+  height: 39px !important;
+}
+html.gpack-t40 #contentOuterContainer div.contentContainer {
+  background: url(t40/contentContainer.png) repeat-y left top !important;
+  background-size: 100% 10px !important;
+  border: 0 !important;
+  color: #252525;
+}
+html.gpack-t40 #contentOuterContainer div.contentFooter {
+  background: url(t40/contentFooter.png) no-repeat left top !important;
+  background-size: 100% 26px !important;
+  border: 0 !important;
+  border-radius: 0 !important;
+  height: 26px !important;
+}
+/* village views sit straight on the landscape, like in T4.0 */
+html.gpack-t40 body.village1 #contentOuterContainer div.contentTitle,
+html.gpack-t40 body.village2 #contentOuterContainer div.contentTitle,
+html.gpack-t40 body.village1 #contentOuterContainer div.contentFooter,
+html.gpack-t40 body.village2 #contentOuterContainer div.contentFooter { visibility: hidden !important; }
+html.gpack-t40 body.village1 #contentOuterContainer div.contentContainer,
+html.gpack-t40 body.village2 #contentOuterContainer div.contentContainer { background: none !important; }
+
+/* ---------------------------------------------------------------- footer */
+html.gpack-t40 #footer {
+  background: url(t40/footer.png) no-repeat center top !important;
+  color: #fff;
+}
+
+/* ---------------------------------------------------------------- T4.0 building graphics (same 120x120 format as T4.4) */
+html.gpack-t40 img.building.g10:not(.big), html.gpack-t40 img.g10:not(.big).building { background-image: url(t40/g/g10-ltr.png) !important; }
+html.gpack-t40 img.big.g10 { background-image: url(t40/g/g10-ltr.png) !important; background-size: contain !important; background-position: center bottom !important; background-repeat: no-repeat !important; }
+html.gpack-t40 img.building.g11:not(.big), html.gpack-t40 img.g11:not(.big).building { background-image: url(t40/g/g11-ltr.png) !important; }
+html.gpack-t40 img.big.g11 { background-image: url(t40/g/g11-ltr.png) !important; background-size: contain !important; background-position: center bottom !important; background-repeat: no-repeat !important; }
+html.gpack-t40 img.building.g12:not(.big), html.gpack-t40 img.g12:not(.big).building { background-image: url(t40/g/g12-ltr.png) !important; }
+html.gpack-t40 img.big.g12 { background-image: url(t40/g/g12-ltr.png) !important; background-size: contain !important; background-position: center bottom !important; background-repeat: no-repeat !important; }
+html.gpack-t40 img.building.g13:not(.big), html.gpack-t40 img.g13:not(.big).building { background-image: url(t40/g/g13-ltr.png) !important; }
+html.gpack-t40 img.big.g13 { background-image: url(t40/g/g13-ltr.png) !important; background-size: contain !important; background-position: center bottom !important; background-repeat: no-repeat !important; }
+html.gpack-t40 img.building.g14:not(.big), html.gpack-t40 img.g14:not(.big).building { background-image: url(t40/g/g14-ltr.png) !important; }
+html.gpack-t40 img.big.g14 { background-image: url(t40/g/g14-ltr.png) !important; background-size: contain !important; background-position: center bottom !important; background-repeat: no-repeat !important; }
+html.gpack-t40 img.building.g15:not(.big), html.gpack-t40 img.g15:not(.big).building { background-image: url(t40/g/g15-ltr.png) !important; }
+html.gpack-t40 img.big.g15 { background-image: url(t40/g/g15-ltr.png) !important; background-size: contain !important; background-position: center bottom !important; background-repeat: no-repeat !important; }
+html.gpack-t40 img.building.g16:not(.big), html.gpack-t40 img.g16:not(.big).building { background-image: url(t40/g/g16-ltr.png) !important; }
+html.gpack-t40 img.big.g16 { background-image: url(t40/g/g16-ltr.png) !important; background-size: contain !important; background-position: center bottom !important; background-repeat: no-repeat !important; }
+html.gpack-t40 img.building.g17:not(.big), html.gpack-t40 img.g17:not(.big).building { background-image: url(t40/g/g17-ltr.png) !important; }
+html.gpack-t40 img.big.g17 { background-image: url(t40/g/g17-ltr.png) !important; background-size: contain !important; background-position: center bottom !important; background-repeat: no-repeat !important; }
+html.gpack-t40 img.building.g18:not(.big), html.gpack-t40 img.g18:not(.big).building { background-image: url(t40/g/g18-ltr.png) !important; }
+html.gpack-t40 img.big.g18 { background-image: url(t40/g/g18-ltr.png) !important; background-size: contain !important; background-position: center bottom !important; background-repeat: no-repeat !important; }
+html.gpack-t40 img.building.g19:not(.big), html.gpack-t40 img.g19:not(.big).building { background-image: url(t40/g/g19-ltr.png) !important; }
+html.gpack-t40 img.big.g19 { background-image: url(t40/g/g19-ltr.png) !important; background-size: contain !important; background-position: center bottom !important; background-repeat: no-repeat !important; }
+html.gpack-t40 img.building.g20:not(.big), html.gpack-t40 img.g20:not(.big).building { background-image: url(t40/g/g20-ltr.png) !important; }
+html.gpack-t40 img.big.g20 { background-image: url(t40/g/g20-ltr.png) !important; background-size: contain !important; background-position: center bottom !important; background-repeat: no-repeat !important; }
+html.gpack-t40 img.building.g21:not(.big), html.gpack-t40 img.g21:not(.big).building { background-image: url(t40/g/g21-ltr.png) !important; }
+html.gpack-t40 img.big.g21 { background-image: url(t40/g/g21-ltr.png) !important; background-size: contain !important; background-position: center bottom !important; background-repeat: no-repeat !important; }
+html.gpack-t40 img.building.g22:not(.big), html.gpack-t40 img.g22:not(.big).building { background-image: url(t40/g/g22-ltr.png) !important; }
+html.gpack-t40 img.big.g22 { background-image: url(t40/g/g22-ltr.png) !important; background-size: contain !important; background-position: center bottom !important; background-repeat: no-repeat !important; }
+html.gpack-t40 img.building.g23:not(.big), html.gpack-t40 img.g23:not(.big).building { background-image: url(t40/g/g23-ltr.png) !important; }
+html.gpack-t40 img.big.g23 { background-image: url(t40/g/g23-ltr.png) !important; background-size: contain !important; background-position: center bottom !important; background-repeat: no-repeat !important; }
+html.gpack-t40 img.building.g24:not(.big), html.gpack-t40 img.g24:not(.big).building { background-image: url(t40/g/g24-ltr.png) !important; }
+html.gpack-t40 img.big.g24 { background-image: url(t40/g/g24-ltr.png) !important; background-size: contain !important; background-position: center bottom !important; background-repeat: no-repeat !important; }
+html.gpack-t40 img.building.g25:not(.big), html.gpack-t40 img.g25:not(.big).building { background-image: url(t40/g/g25-ltr.png) !important; }
+html.gpack-t40 img.big.g25 { background-image: url(t40/g/g25-ltr.png) !important; background-size: contain !important; background-position: center bottom !important; background-repeat: no-repeat !important; }
+html.gpack-t40 img.building.g26:not(.big), html.gpack-t40 img.g26:not(.big).building { background-image: url(t40/g/g26-ltr.png) !important; }
+html.gpack-t40 img.big.g26 { background-image: url(t40/g/g26-ltr.png) !important; background-size: contain !important; background-position: center bottom !important; background-repeat: no-repeat !important; }
+html.gpack-t40 img.building.g27:not(.big), html.gpack-t40 img.g27:not(.big).building { background-image: url(t40/g/g27-ltr.png) !important; }
+html.gpack-t40 img.big.g27 { background-image: url(t40/g/g27-ltr.png) !important; background-size: contain !important; background-position: center bottom !important; background-repeat: no-repeat !important; }
+html.gpack-t40 img.building.g28:not(.big), html.gpack-t40 img.g28:not(.big).building { background-image: url(t40/g/g28-ltr.png) !important; }
+html.gpack-t40 img.big.g28 { background-image: url(t40/g/g28-ltr.png) !important; background-size: contain !important; background-position: center bottom !important; background-repeat: no-repeat !important; }
+html.gpack-t40 img.building.g29:not(.big), html.gpack-t40 img.g29:not(.big).building { background-image: url(t40/g/g29-ltr.png) !important; }
+html.gpack-t40 img.big.g29 { background-image: url(t40/g/g29-ltr.png) !important; background-size: contain !important; background-position: center bottom !important; background-repeat: no-repeat !important; }
+html.gpack-t40 img.building.g30:not(.big), html.gpack-t40 img.g30:not(.big).building { background-image: url(t40/g/g30-ltr.png) !important; }
+html.gpack-t40 img.big.g30 { background-image: url(t40/g/g30-ltr.png) !important; background-size: contain !important; background-position: center bottom !important; background-repeat: no-repeat !important; }
+html.gpack-t40 img.building.g34:not(.big), html.gpack-t40 img.g34:not(.big).building { background-image: url(t40/g/g34-ltr.png) !important; }
+html.gpack-t40 img.big.g34 { background-image: url(t40/g/g34-ltr.png) !important; background-size: contain !important; background-position: center bottom !important; background-repeat: no-repeat !important; }
+html.gpack-t40 img.building.g36:not(.big), html.gpack-t40 img.g36:not(.big).building { background-image: url(t40/g/g36-ltr.png) !important; }
+html.gpack-t40 img.big.g36 { background-image: url(t40/g/g36-ltr.png) !important; background-size: contain !important; background-position: center bottom !important; background-repeat: no-repeat !important; }
+html.gpack-t40 img.building.g37:not(.big), html.gpack-t40 img.g37:not(.big).building { background-image: url(t40/g/g37-ltr.png) !important; }
+html.gpack-t40 img.big.g37 { background-image: url(t40/g/g37-ltr.png) !important; background-size: contain !important; background-position: center bottom !important; background-repeat: no-repeat !important; }
+html.gpack-t40 img.building.g38:not(.big), html.gpack-t40 img.g38:not(.big).building { background-image: url(t40/g/g38-ltr.png) !important; }
+html.gpack-t40 img.big.g38 { background-image: url(t40/g/g38-ltr.png) !important; background-size: contain !important; background-position: center bottom !important; background-repeat: no-repeat !important; }
+html.gpack-t40 img.building.g39:not(.big), html.gpack-t40 img.g39:not(.big).building { background-image: url(t40/g/g39-ltr.png) !important; }
+html.gpack-t40 img.big.g39 { background-image: url(t40/g/g39-ltr.png) !important; background-size: contain !important; background-position: center bottom !important; background-repeat: no-repeat !important; }
+html.gpack-t40 img.building.g41:not(.big), html.gpack-t40 img.g41:not(.big).building { background-image: url(t40/g/g41-ltr.png) !important; }
+html.gpack-t40 img.big.g41 { background-image: url(t40/g/g41-ltr.png) !important; background-size: contain !important; background-position: center bottom !important; background-repeat: no-repeat !important; }
+html.gpack-t40 img.building.g5:not(.big), html.gpack-t40 img.g5:not(.big).building { background-image: url(t40/g/g5-ltr.png) !important; }
+html.gpack-t40 img.big.g5 { background-image: url(t40/g/g5-ltr.png) !important; background-size: contain !important; background-position: center bottom !important; background-repeat: no-repeat !important; }
+html.gpack-t40 img.building.g6:not(.big), html.gpack-t40 img.g6:not(.big).building { background-image: url(t40/g/g6-ltr.png) !important; }
+html.gpack-t40 img.big.g6 { background-image: url(t40/g/g6-ltr.png) !important; background-size: contain !important; background-position: center bottom !important; background-repeat: no-repeat !important; }
+html.gpack-t40 img.building.g7:not(.big), html.gpack-t40 img.g7:not(.big).building { background-image: url(t40/g/g7-ltr.png) !important; }
+html.gpack-t40 img.big.g7 { background-image: url(t40/g/g7-ltr.png) !important; background-size: contain !important; background-position: center bottom !important; background-repeat: no-repeat !important; }
+html.gpack-t40 img.building.g8:not(.big), html.gpack-t40 img.g8:not(.big).building { background-image: url(t40/g/g8-ltr.png) !important; }
+html.gpack-t40 img.big.g8 { background-image: url(t40/g/g8-ltr.png) !important; background-size: contain !important; background-position: center bottom !important; background-repeat: no-repeat !important; }
+html.gpack-t40 img.building.g9:not(.big), html.gpack-t40 img.g9:not(.big).building { background-image: url(t40/g/g9-ltr.png) !important; }
+html.gpack-t40 img.big.g9 { background-image: url(t40/g/g9-ltr.png) !important; background-size: contain !important; background-position: center bottom !important; background-repeat: no-repeat !important; }
+/* walls */
+html.gpack-t40 img.g31Top { background-image: url(t40/g/g31Top-ltr.png) !important; }
+html.gpack-t40 img.g31Bottom { background-image: url(t40/g/g31Bottom-ltr.png) !important; }
+html.gpack-t40 img.g32Top { background-image: url(t40/g/g32Top-ltr.png) !important; }
+html.gpack-t40 img.g32Bottom { background-image: url(t40/g/g32Bottom-ltr.png) !important; }
+html.gpack-t40 img.g33Top { background-image: url(t40/g/g33Top-ltr.png) !important; }
+html.gpack-t40 img.g33Bottom { background-image: url(t40/g/g33Bottom-ltr.png) !important; }
+
+/* server time sits on the grey T4.0 top bar */
+html.gpack-t40 #servertime { background: none !important; box-shadow: none !important; border: 0 !important; }
+html.gpack-t40 #servertime,
+html.gpack-t40 #servertime * { color: #444 !important; text-shadow: none !important; }

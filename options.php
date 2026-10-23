@@ -5,6 +5,13 @@ if($session->sit == 1) {
 }
 include ("application/Profile.php");
 
+// Graphic pack switch (Options → Graphic pack)
+if (isset($_POST['gpack'])) {
+    gpack_set((string)$_POST['gpack']);
+    header("Location: options.php?s=3");
+    exit;
+}
+
 $profile->procProfile($_POST);
 $profile->procSpecial($_GET);
 if(isset($_GET['uid']) && !is_numeric($_GET['uid'])) die('Hacking Attemp');
@@ -72,6 +79,11 @@ if(isset($_GET['s'])){
                                     <div class="background-end">&nbsp;</div>
                                     <div class="content"><a href="options.php?s=2" class="tabItem"><?=PROFM4?></a></div>
                                 </div>
+                                <div title="" class="container <?php if(isset($_GET['s']) && is_numeric($_GET['s']) && $_GET['s'] == 3){ echo "active"; }else{ echo "normal"; } ?>">
+                                    <div class="background-start">&nbsp;</div>
+                                    <div class="background-end">&nbsp;</div>
+                                    <div class="content"><a href="options.php?s=3" class="tabItem">Graphic pack</a></div>
+                                </div>
 
                                 <div class="clear"></div>
                             </div>
@@ -79,6 +91,8 @@ if(isset($_GET['s'])){
 
                         if(isset($_GET['s']) && is_numeric($_GET['s']) && $_GET['s'] == 2){
                                 include("application/views/Profile/account.php");
+                        }elseif(isset($_GET['s']) && is_numeric($_GET['s']) && $_GET['s'] == 3){
+                                include("application/views/Profile/gpack.php");
                         }else{
                             include("application/views/Profile/goptions.php");
                         }

@@ -8,9 +8,7 @@
     <meta http-equiv="imagetoolbar" content="no"/>
     <meta http-equiv="content-type" content="text/html; charset=UTF-8"/>
     <meta name="content-language" content="<?php echo LANG_UR; ?>"/>
-    <link href="gpack/lang/<?php echo LANG_UR; ?>/compact.css" rel="stylesheet" type="text/css"/>
-    <link href="gpack/lang/<?php echo LANG_UR; ?>/lang.css" rel="stylesheet" type="text/css"/>
-	<link href="gpack/lang/<?php echo LANG_UR; ?>/fixes.css?rev13" rel="stylesheet" type="text/css"/>
+<?php echo gpack_css_links(); ?>
     <script type="text/javascript" src="js/default/jquery-3.2.1.min.js"></script>
     <script type="text/javascript" src="js/default/jquery.md5.min.js"></script>
     <script type="text/javascript" src="js/default/jquery.scrollbar.min.js"></script>

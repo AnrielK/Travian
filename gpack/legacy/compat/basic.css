@@ -1,0 +1,121 @@
+@charset "UTF-8";
+/*
+ * Travian "basic" skin (classic white T3.6/T4.0 basic look) for the T4.4 markup.
+ * Graphics: gpack travian_basic (gpack/legacy/packs/travian_basic). Loaded after the T4.4 stylesheets,
+ * scoped to html.gpack-basic; !important is used on purpose because the T4.4 sheets are very specific.
+ */
+
+/* ---------------------------------------------------------------- page */
+html.gpack-basic,
+html.gpack-basic body { background: #fff !important; color: #000; }
+html.gpack-basic #background {
+  background: #fff url(basic/dyn_bg1.jpg) repeat-x center top !important;
+  background-size: auto 90px !important;
+}
+html.gpack-basic #background:before,
+html.gpack-basic #background div#headerBar { display: none !important; }
+
+/* ---------------------------------------------------------------- header */
+html.gpack-basic #header:before,
+html.gpack-basic #header:after,
+html.gpack-basic #navigation:before,
+html.gpack-basic #navigation:after { display: none !important; }
+html.gpack-basic #header { background: none !important; }
+html.gpack-basic #logo .overlayUIBackgroundHelper,
+html.gpack-basic #logo:before,
+html.gpack-basic #logo:after { display: none !important; }
+html.gpack-basic #logo {
+  background: url(basic/travian0.gif) no-repeat 0 0 !important;
+  background-size: 116px 60px !important;
+  width: 116px !important;
+  height: 60px !important;
+  top: 14px !important;
+  z-index: 30 !important;
+}
+html.gpack-basic #servertime { background: rgba(255, 255, 255, .85) !important; color: #000 !important; border-radius: 0 0 4px 4px; }
+html.gpack-basic #servertime * { color: #000 !important; }
+
+html.gpack-basic #navigation li { width: 74px !important; margin: 0 2px !important; background: none !important; }
+html.gpack-basic #navigation li:before,
+html.gpack-basic #navigation li:after { display: none !important; }
+html.gpack-basic #navigation li:not(.gold) a {
+  width: 70px !important;
+  height: 74px !important;
+  margin: 2px 0 0 !important;
+  background-repeat: no-repeat !important;
+  background-size: auto !important;
+  background-color: transparent !important;
+  background-position: 0 -100px !important; /* coloured icon */
+  border: 0 !important;
+  border-radius: 0 !important;
+  box-shadow: none !important;
+}
+html.gpack-basic #navigation li:not(.gold) a:hover { background-position: 0 0 !important; } /* grey icon */
+html.gpack-basic #navigation li:not(.gold) a.active { background-position: 0 -100px !important; filter: drop-shadow(0 0 4px #71d000); }
+html.gpack-basic #navigation li:not(.gold) a:before,
+html.gpack-basic #navigation li:not(.gold) a:after { display: none !important; }
+html.gpack-basic #navigation li.villageResources a { background-image: url(basic/n1.gif) !important; }
+html.gpack-basic #navigation li.villageBuildings a { background-image: url(basic/n2.gif) !important; }
+html.gpack-basic #navigation li.map a              { background-image: url(basic/n3.gif) !important; }
+html.gpack-basic #navigation li.statistics a       { background-image: url(basic/n4.gif) !important; }
+/* T3.6 had one combined reports/messages icon: m3 = reports highlighted, m2 = messages highlighted */
+html.gpack-basic #navigation li.reports a,
+html.gpack-basic #navigation li.messages a { background-position: 0 0 !important; }
+html.gpack-basic #navigation li.reports a  { background-image: url(basic/m3.gif) !important; }
+html.gpack-basic #navigation li.messages a { background-image: url(basic/m2.gif) !important; }
+
+/* ---------------------------------------------------------------- sidebars: plain white boxes */
+html.gpack-basic .sidebarBox .sidebarBoxBaseBox,
+html.gpack-basic .sidebarBox .sidebarBoxInnerBox:after,
+html.gpack-basic .sidebarBox .sidebarBoxInnerBox .header:not(.noHeader):after { display: none !important; }
+html.gpack-basic .sidebarBox .sidebarBoxInnerBox {
+  background: #fff !important;
+  border: 1px solid #c0c0c0 !important;
+  box-shadow: none !important;
+  padding: 6px 0 10px !important;
+}
+html.gpack-basic .sidebarBox .sidebarBoxInnerBox .header,
+html.gpack-basic .sidebarBox .sidebarBoxInnerBox .content,
+html.gpack-basic .sidebarBox .sidebarBoxInnerBox .footer { padding-left: 14px !important; padding-right: 14px !important; }
+html.gpack-basic .sidebarBox .sidebarBoxInnerBox .header {
+  background: #f3f3f3 !important;
+  border-bottom: 1px solid #c0c0c0;
+  margin-top: -6px;
+  color: #000 !important;
+}
+html.gpack-basic .sidebarBox .sidebarBoxInnerBox .header a { color: #000 !important; }
+
+/* ---------------------------------------------------------------- resources bar */
+html.gpack-basic #stockBar { background: none !important; border: 0 !important; box-shadow: none !important; }
+html.gpack-basic #stockBar:before,
+html.gpack-basic #stockBar:after,
+html.gpack-basic #stockBar .stockBarButton:before,
+html.gpack-basic #stockBar .stockBarButton .middle a:after { display: none !important; }
+html.gpack-basic #stockBar .stockBarButton { box-shadow: none !important; border-radius: 0 !important; overflow: visible !important; }
+html.gpack-basic #stockBar .stockBarButton .middle {
+  background: #fff !important;
+  border: 1px solid #c0c0c0 !important;
+  border-radius: 0 !important;
+  box-shadow: none !important;
+}
+html.gpack-basic #stockBar .value { font-weight: bold; color: #000 !important; }
+html.gpack-basic #stockBar .stock.overlayUIAffected { color: #000 !important; }
+
+/* ---------------------------------------------------------------- content */
+html.gpack-basic #contentOuterContainer { box-shadow: none !important; }
+html.gpack-basic #contentOuterContainer div.contentTitle,
+html.gpack-basic #contentOuterContainer div.contentContainer,
+html.gpack-basic #contentOuterContainer div.contentFooter {
+  background: #fff !important;
+  border-color: #c0c0c0 !important;
+  border-radius: 0 !important;
+  box-shadow: none !important;
+  color: #000;
+}
+
+/* ---------------------------------------------------------------- footer */
+html.gpack-basic #footer {
+  background: url(basic/footer.png) no-repeat center top !important;
+  color: #444 !important;
+}
+html.gpack-basic #footer div#pageLinks a { color: #444 !important; border-left-color: #999 !important; }

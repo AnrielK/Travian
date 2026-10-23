@@ -60,6 +60,7 @@ struct RootView: View {
                 Button { go("build.php?id=39") } label: { Label("Shromaždiště", systemImage: "flag") }
                 Button { go("berichte.php") } label: { Label("Hlášení", systemImage: "doc.text") }
                 Button { go("nachrichten.php") } label: { Label("Zprávy", systemImage: "envelope") }
+                Button { go("options.php?s=3") } label: { Label("Vzhled (grafický balíček)", systemImage: "paintpalette") }
                 Divider()
                 Button { go("login.php") } label: { Label("Přihlášení", systemImage: "person.crop.circle") }
                 Button { go("anmelden.php") } label: { Label("Registrace", systemImage: "person.badge.plus") }

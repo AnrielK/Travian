@@ -56,6 +56,24 @@ scripts/fast-forward.sh     # „dokončit vše hned“ (v druhém okně Termin�
 
 Funguje i na Linuxu (`apt install php php-mysql php-gd php-mbstring mariadb-server`).
 
+## Vzhled – grafické balíčky (gpack)
+
+Ve hře **Nastavení → Graphic pack** (`options.php?s=3`, v iOS aplikaci Menu → *Vzhled*) si každý hráč vybere vzhled:
+
+| Volba | Vzhled |
+|---|---|
+| **Travian 4.4** (výchozí) | současný vzhled T4.4 |
+| **Travian 4.0 classic** | krajina se stromy, kulaté menu, dřevěné cedule v bočních panelech, budovy T4.0 (gpack `travian_Travian_4.0_41`) |
+| **Travian basic** | světlý klasický vzhled – bílá stránka, klasické ikony menu (gpack `travian_basic`) |
+
+- Volba se ukládá do cookie `gpack` (pro každý prohlížeč zvlášť, okno *2. hráč* může mít jiný vzhled).
+  Výchozí vzhled pro nové prohlížeče lze změnit proměnnou prostředí `TRAVIAN_GPACK=t44|t40|basic`.
+- Původní balíčky z Travian-T4 (PHP 8) jsou v `gpack/legacy/packs/`. Jejich CSS je psané pro staré HTML T4.0,
+  takže je hra nepoužívá přímo: skiny `gpack/legacy/compat/t40.css` a `basic.css` přebarvují rozložení T4.4
+  grafikou z těchto balíčků (podklady jsou v `gpack/legacy/compat/t40/` a `basic/`, pro LTR zrcadlené).
+  Do iOS aplikace se kopírují jen skiny, ne celé balíčky.
+- Kód: `application/gpack.php` (seznam balíčků, cookie, `<link>` do hlavičky), `application/views/Profile/gpack.php`.
+
 ## Adresy a účty
 
 - Hra: http://127.0.0.1:8080/login.php – účet si založte přes *Registrace*.

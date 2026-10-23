@@ -34,6 +34,7 @@ cd ios/app && xcodegen generate && open TravianLocal.xcodeproj
 - **Hráči** – přehled účtů, **Obnovit databázi** – čistý svět
 - **2. hráč** – samostatné okno s vlastními cookies (můžete útočit sami na sebe)
 - **Logy** – přístupový log serveru, PHP chyby, SQL chyby
+- **Vzhled** – Menu → Vzhled: Travian 4.4, Travian 4.0 classic nebo Travian basic (viz README-local.md)
 - Admin panel: Menu → Admin panel, účet **Multihunter / admin123**
 - Data (databáze, logy) jsou vidět v aplikaci Soubory → Na iPhonu → Travian Local
 

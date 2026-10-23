@@ -60,7 +60,7 @@ targets:
             --exclude '.git' --exclude '.github' --exclude 'ios' --exclude 'mac-app' --exclude 'scripts' \
             --exclude 'travian.sql' --exclude '*.md' --exclude 'TravianLocal.app' \
             --exclude 'mcache/*' --exclude 'hcache/*' --exclude 'mmark/*' --exclude 'local/logs/*' \
-            --exclude 'application/queue2/*.txt' --exclude '.DS_Store' \
+            --exclude 'application/queue2/*.txt' --exclude '.DS_Store' --exclude 'gpack/legacy/packs' \
             "$GAME_SRC/" "$DEST/"
           (cd "$GAME_SRC" && git rev-parse --short HEAD 2>/dev/null || date +%s) > "$DEST/.build-id"
           echo "$(date +%s)" >> "$DEST/.build-id"

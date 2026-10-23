@@ -22,6 +22,7 @@ define("LOCAL_MULTI_ACCOUNTS", getenv("TRAVIAN_SINGLE_ACCOUNT_PER_IP") ? false :
 
 
 include_once(__DIR__.'/compat.php');
+include_once(__DIR__.'/gpack.php');
 define('APP_MAIN_PATH', dirname(realpath(__DIR__)));
 define('APP_BASE_PATH', realpath(__DIR__));
 include_once(realpath(__DIR__)."/DB.php");
