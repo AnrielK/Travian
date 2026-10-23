@@ -9,17 +9,20 @@ icons and every building site piles up in the corner of the village. The generat
   2. moves the T4.4 building level circles from #levels into the building slots,
   3. adds the buildingsV1 slot positions of a17a8f72 (same 120 x 120 building images as T4.4),
   4. adds a few rules for T4.6 elements whose T4.4 class names changed.
-The pack's own building pictures stay in use. head.php loads the file for every pack with 'isNew' => false.
+The pack's own building pictures stay in use; the a17a8f72 pictures the file needs are copied into the pack
+(mainPage/t46/), so no pack depends on another. head.php loads the file for every pack with 'isNew' => false.
 
 Usage: python3 -I scripts/gpack/make-classic-compat.py [pack ...]   (default: every T4.4 pack present)
 """
 import os
 import re
+import shutil
 import sys
 
 ROOT = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 GPACK = os.path.join(ROOT, 'sections', 'gpack')
 PACKS = ['TravianOld', '68597666', 'd11cb434']
+MODERN_PREFIX = 'a17a8f72/mainPage/'
 MODERN_CSS = os.path.join(GPACK, 'a17a8f72', 'mainPage', 'lang', 'en-US', 'compact.css')
 # <body> classes of the T4.6 layout (Layout.php): not a reason to take a rule from a17a8f72
 BODY_CLASSES = {'.v35', '.webkit', '.chrome', '.ltr', '.rtl', '.buildingsV1', '.buildingsV2', '.buildingsV3',
@@ -42,7 +45,7 @@ def read_css(path: str, seen=None) -> str:
 
     def absolute(m):
         url = m.group(2)
-        if re.match(r'(data:|https?:|/|@/)', url):
+        if re.match(r'(data:|https?:|/|@/|#)', url):
             return m.group(0)
         target = os.path.relpath(os.path.normpath(os.path.join(base, url)), GPACK)
         return 'url(' + m.group(1) + '@/' + target.replace(os.sep, '/') + m.group(1) + ')'
@@ -165,8 +168,27 @@ def build(pack: str) -> str:
         'ul#stockBar .stockBarButton .middle>i{position:absolute;left:3px;top:4px}',
         '',
     ])
-    # the file lives in <pack>/mainPage/lang/
-    return css.replace('@/', '../../../')
+    # The file lives in <pack>/mainPage/lang/. Pictures of a17a8f72 are copied into the pack (mainPage/t46/), so
+    # every pack works on its own (iOS app, trimmed distributions); pictures of the pack itself stay where they are.
+    own = os.path.join(GPACK, pack, 'mainPage')
+    shutil.rmtree(os.path.join(own, 't46'), ignore_errors=True)
+
+    def local(m):
+        quote, path = m.group(1), m.group(2)
+        clean = re.split(r'[?#]', path)[0]
+        if clean.startswith(MODERN_PREFIX):
+            source = os.path.join(GPACK, clean)
+            if not os.path.isfile(source):
+                return 'url(' + quote + '../../../' + path + quote + ')'
+            below = clean[len(MODERN_PREFIX):]
+            target = os.path.join(own, 't46', below)
+            os.makedirs(os.path.dirname(target), exist_ok=True)
+            shutil.copyfile(source, target)
+            return 'url(' + quote + '../t46/' + below + path[len(clean):] + quote + ')'
+        if clean.startswith(pack + '/mainPage/'):
+            return 'url(' + quote + '../' + path[len(pack + '/mainPage/'):] + quote + ')'
+        return 'url(' + quote + '../../../' + path + quote + ')'
+    return re.sub(r'url\((["\']?)@/([^"\')]+)\1\)', local, css)
 
 
 def main(argv):
