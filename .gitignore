@@ -6,6 +6,10 @@
 *.sqlite3
 *.bak
 *.swp
+Thumbs.db
+error_log
+__pycache__/
+*.pyc
 
 main_script/copyable/backups/
 main_script/copyable/include/runtime/

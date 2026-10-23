@@ -10,17 +10,9 @@ if ($templateName == 'tpl/layout.tpl'): ?>
     <html>
     <head>
         <title>OpenVillage administration</title>
-        <!--
-        <link href="gpack/travian_Travian_3.6_Mandarinenmaennchen/lang/en/compact.css?25795fbe" rel="stylesheet" type="text/css"/>
-        <link href="gpack/travian_Travian_3.6_Mandarinenmaennchen/lang/en/lang.css?25795fbe" rel="stylesheet" type="text/css"/>-->
         <link rel="stylesheet" type="text/css" href="img/admin/admin.css">
         <link rel="stylesheet" type="text/css" href="img/admin/acp.css">
         <link rel="stylesheet" type="text/css" href="img/admin/infobox.css">
-        <!--
-        <link rel="stylesheet" type="text/css" href="img/img.css">
-        <script src="mt-full.js?25795fbe" type="text/javascript"></script>
-        <script src="unx.js?25795fbe" type="text/javascript"></script>
-        <script src="new.js?25795fbe" type="text/javascript"></script>-->
         <meta http-equiv="content-type" content="text/html; charset=utf-8"/>
         <meta http-equiv="imagetoolbar" content="no">
         <script type="text/javascript">

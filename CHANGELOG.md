@@ -137,6 +137,11 @@
 
 ### Removed
 
+- Unused files: the unreferenced `main_default` and `newsletter` graphic
+  folders, five templates nothing renders (old web installer, gold transfer
+  popup, voting, verification progress), stray `Thumbs.db` / `error_log` /
+  Python cache files and the agent working log `progress.md`; the roadmap
+  moved to `docs/ROADMAP.md`.
 - Payments, password-derived privileged login links, and obsolete hosted services.
 - Generated/duplicate game trees, phpMyAdmin, legacy deploy services, and logs.
 - Unused D3 and d3pie files.

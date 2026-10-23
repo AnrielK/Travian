@@ -69,7 +69,7 @@ login, authenticated gameplay routes, and password-confirmed account downloads.
 - [Third-party inventory](THIRD_PARTY.md)
 - [Changelog](CHANGELOG.md)
 - [Contribution guide](CONTRIBUTING.md)
-- [Modernization roadmap](project-improvements/README.md)
+- [Modernization roadmap](docs/ROADMAP.md)
 
 ## Current release boundary
 
