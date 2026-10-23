@@ -153,14 +153,16 @@ body:has(.dialog.questInformation) > .overlay{background:none !important}
 .activate .activationScreen #presentation #tribeSelectors input + .selector + .tribeDescription ul{position:static;padding:0;width:auto;height:auto;font-weight:normal}
 .activate .activationScreen #presentation #tribeSelectors input + .selector + .tribeDescription ul li{max-width:250px;padding:2px 0 2px 16px;margin:0;line-height:140%;background:url(../img/activate/dot.png) left 9px no-repeat}
 .activate .activationScreen #presentation #tribeSelectors input + .selector + .tribeDescription ul li:before{display:none}
-.activate .activationScreen #presentation #tribeSelectors input + .selector + .tribeDescription ul:after{bottom:-100px;right:-12px;z-index:3;width:188px;height:200px;background-image:url(../../img/activate/avatars-rtl.png)}
+.activate .activationScreen #presentation #tribeSelectors input + .selector + .tribeDescription ul:after{bottom:-134px;right:-12px;z-index:3;width:188px;height:200px;background-image:url(../../img/activate/avatars-rtl.png)}
 .activate .activationScreen #presentation #tribeSelectors input[value="3"] + .selector + .tribeDescription ul:after{background-position:0 0}
 .activate .activationScreen #presentation #tribeSelectors input[value="2"] + .selector + .tribeDescription ul:after{background-position:0 -200px}
 .activate .activationScreen #presentation #tribeSelectors input[value="1"] + .selector + .tribeDescription ul:after{background-position:0 -400px}
-.activate .activationScreen #presentation #tribeSelectors input + .selector + .tribeDescription:after{content:'';position:absolute;left:-24px;width:25px;height:22px;background:url(../img/activate/bubble-ltr.png)}
-.activate .activationScreen #presentation #tribeSelectors input[value="3"] + .selector + .tribeDescription:after{top:35px}
-.activate .activationScreen #presentation #tribeSelectors input[value="1"] + .selector + .tribeDescription:after{top:125px}
-.activate .activationScreen #presentation #tribeSelectors input[value="2"] + .selector + .tribeDescription:after{top:215px}
+.activate .activationScreen #presentation #tribeSelectors input + .selector + .tribeDescription:after{content:'';position:absolute;left:-7px;width:12px;height:12px;box-sizing:border-box;border:solid #d6d6d6;border-width:0 0 1px 1px;background:#fff;transform:rotate(45deg)}
+.activate .activationScreen #presentation #tribeSelectors input[value="3"] + .selector + .tribeDescription:after{top:40px}
+.activate .activationScreen #presentation #tribeSelectors input[value="1"] + .selector + .tribeDescription:after{top:130px}
+.activate .activationScreen #presentation #tribeSelectors input[value="2"] + .selector + .tribeDescription:after{top:220px}
+.activate .greenbox.t40Thanks{margin:0 0 12px;padding:8px 10px;border-radius:3px;background:#fff}
+.activate .greenbox.t40Thanks .greenbox-content{float:none;width:auto;padding:0;color:#4b7e0d;font-weight:normal}
 .activate .activationScreen .acceptChallenge{color:#252525;text-shadow:none}
 .activate .activationScreen .buttonContainer{height:60px}
 .activate .activationScreen .buttonContainer button{transform:none;box-shadow:none}
