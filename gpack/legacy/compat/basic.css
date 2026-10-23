@@ -119,3 +119,9 @@ html.gpack-basic #footer {
   color: #444 !important;
 }
 html.gpack-basic #footer div#pageLinks a { color: #444 !important; border-left-color: #999 !important; }
+
+/* village centre on the classic village ground */
+html.gpack-basic body.village2 #content.village2 {
+  background: url(basic/village.jpg) no-repeat center 20px !important;
+  background-size: 620px auto !important;
+}
