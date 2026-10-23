@@ -45,6 +45,56 @@ function ov_admin_connection(): mysqli
     return $db;
 }
 
+/** The game's database user with all rights on openvillage_* databases. */
+function ov_create_game_account(mysqli $db, string $password): void
+{
+    foreach (['localhost', '127.0.0.1', '::1'] as $from) {
+        $account = "'" . OV_DB_USER . "'@'$from'";
+        $db->query("CREATE USER IF NOT EXISTS $account IDENTIFIED BY '$password'");
+        $db->query("ALTER USER $account IDENTIFIED BY '$password'");
+        $db->query("GRANT ALL PRIVILEGES ON `openvillage\\_%`.* TO $account");
+    }
+    $db->query('FLUSH PRIVILEGES');
+}
+
+/** Errors of privilege tables left by an older server version ("Incorrect file format 'tables_priv'", ...). */
+function ov_is_grant_table_error(mysqli_sql_exception $e): bool
+{
+    return (bool)preg_match('/Incorrect (file format|information in file)|(tables|columns|procs|proxies|global)_priv|Column count of mysql\\.|'
+        . 'needs to be upgraded|Cannot load from mysql\\./i', $e->getMessage());
+}
+
+/**
+ * Repairs the privilege tables named in $error (all of them when none is named) with REPAIR TABLE, rebuilding
+ * their index from the table definition (USE_FRM) when a plain repair fails – what an "Incorrect file format"
+ * left by another server version needs. Returns one line per table for the wizard's log.
+ */
+function ov_repair_grant_tables(mysqli $db, string $error): array
+{
+    $tables = preg_match("/'(?:\\.\\/mysql\\/)?(\\w+?)(?:\\.frm)?'/", $error, $m) ? [$m[1]]
+        : ['global_priv', 'user', 'db', 'tables_priv', 'columns_priv', 'procs_priv', 'proxies_priv', 'roles_mapping'];
+    $log = [];
+    foreach ($tables as $table) {
+        if (!preg_match('/^\\w+$/', $table)) {
+            continue;
+        }
+        foreach (['', ' USE_FRM'] as $mode) {
+            try {
+                $db->query("REPAIR TABLE mysql.`$table`$mode");
+                $check = $db->query("CHECK TABLE mysql.`$table`")->fetch_all(MYSQLI_ASSOC);
+                $status = (string)end($check)['Msg_text'];
+            } catch (mysqli_sql_exception $e) {
+                $status = $e->getMessage();
+            }
+            if ($status === 'OK') {
+                break;
+            }
+        }
+        $log[] = "mysql.$table: $status";
+    }
+    return $log;
+}
+
 function ov_existing_databases(mysqli $db): array
 {
     $found = [];
@@ -149,14 +199,40 @@ try {
             }
             // The game's own account, limited to its databases (the control endpoint drops and recreates them).
             $password = ov_random(32);
+            $gameUser = OV_DB_USER;
+            $notes = [];
             $host = trim((string)($_POST['db_host'] ?? '127.0.0.1')) ?: '127.0.0.1';
-            foreach (['localhost', '127.0.0.1', '::1'] as $from) {
-                $account = "'" . OV_DB_USER . "'@'$from'";
-                $db->query("CREATE USER IF NOT EXISTS $account IDENTIFIED BY '$password'");
-                $db->query("ALTER USER $account IDENTIFIED BY '$password'");
-                $db->query("GRANT ALL PRIVILEGES ON `openvillage\\_%`.* TO $account");
+            try {
+                ov_create_game_account($db, $password);
+            } catch (mysqli_sql_exception $e) {
+                if (!ov_is_grant_table_error($e)) {
+                    throw $e;
+                }
+                // System tables of another MariaDB/MySQL version (e.g. a data folder kept from an older XAMPP).
+                $notes[] = 'Systémové tabulky MariaDB jsou poškozené nebo z jiné verze (' . $e->getMessage() . '), opravuji je…';
+                foreach (ov_repair_grant_tables($db, $e->getMessage()) as $line) {
+                    $notes[] = '  ' . $line;
+                }
+                try {
+                    ov_create_game_account($db, $password);
+                    $notes[] = 'Systémové tabulky opraveny.';
+                } catch (mysqli_sql_exception $e) {
+                    if (!ov_is_grant_table_error($e)) {
+                        throw $e;
+                    }
+                    if ((string)($_POST['db_password'] ?? '') === '') {
+                        // The game's settings treat an empty password as unset, so a root without one cannot stand in.
+                        ov_reply(['ok' => false, 'notes' => $notes, 'error' => 'Systémové tabulky MariaDB v XAMPPu jsou poškozené'
+                            . ' nebo z jiné verze a automatická oprava se nepovedla (' . $e->getMessage() . ').' . "\n"
+                            . 'Oprava: v XAMPP Control Panelu otevři Shell, spusť „mysql_upgrade -u root --force", pak MySQL zastav'
+                            . ' a znovu spusť (Stop / Start) a instalaci zopakuj.'], 500);
+                        return;
+                    }
+                    $gameUser = (string)$_POST['db_user'];
+                    $password = (string)$_POST['db_password'];
+                    $notes[] = 'Uživatele openvillage nešlo vytvořit, hra použije zadaný účet správce.';
+                }
             }
-            $db->query('FLUSH PRIVILEGES');
             foreach (OV_DATABASES as $name) {
                 $db->query("CREATE DATABASE IF NOT EXISTS `$name` CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci");
             }
@@ -165,7 +241,7 @@ try {
                 'GAME_DB_HOST' => $host,
                 'GAME_DB_NAME' => 'openvillage_game',
                 'GLOBAL_DB_NAME' => 'openvillage_global',
-                'GAME_DB_USER' => OV_DB_USER,
+                'GAME_DB_USER' => $gameUser,
                 'GAME_DB_PASSWORD' => $password,
                 'APP_SECRET' => ov_random(48),
                 'APP_TIMEZONE' => $timezone,
@@ -182,7 +258,7 @@ try {
                 $env['GAME_GPACK'] = $gpack;
             }
             ov_write_config($configFile, ['installed' => false, 'env' => $env]);
-            ov_reply(['ok' => true, 'token' => $env['OV_CONTROL_TOKEN']]);
+            ov_reply(['ok' => true, 'token' => $env['OV_CONTROL_TOKEN'], 'notes' => $notes]);
             return;
 
         case 'finish':
