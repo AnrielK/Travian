@@ -60,14 +60,16 @@ targets:
           mkdir -p "$DEST/scripts/native"
           # Graphic styles to ship: build setting / env OV_GPACKS (comma-separated, e.g. "29c89d54,TravianOld"
           # or "all"); the default Legends pack (legends655) is always included. Unset = legends655 only.
-          # 29c89d54 serves its missing files from a17a8f72 (scripts/native/router.php), so it pulls that pack in.
+          # 29c89d54 serves its missing files from a17a8f72 (scripts/native/router.php), and the T4.4 packs take
+          # the styles and pictures of newer page elements from it (openvillage-compat.css): both pull that pack in.
           ALL_PACKS="legends655 29c89d54 a17a8f72 68597666 d11cb434 TravianOld"
           WANT=" legends655 "
           for p in $(echo "${OV_GPACKS:-}" | tr ',' ' '); do
             if [ "$p" = all ]; then WANT=" $ALL_PACKS "; continue; fi
             case " $ALL_PACKS " in *" $p "*) WANT="$WANT$p " ;; *) echo "warning: unknown gpack '$p' in OV_GPACKS" ;; esac
           done
-          case "$WANT" in *" 29c89d54 "*) case "$WANT" in *" a17a8f72 "*) ;; *) WANT="${WANT}a17a8f72 " ;; esac ;; esac
+          case "$WANT" in *" 29c89d54 "*|*" 68597666 "*|*" d11cb434 "*|*" TravianOld "*)
+            case "$WANT" in *" a17a8f72 "*) ;; *) WANT="${WANT}a17a8f72 " ;; esac ;; esac
           EXCLUDES=()
           for p in $ALL_PACKS; do
             case "$WANT" in *" $p "*) ;; *) EXCLUDES+=(--exclude "/sections/gpack/$p/") ;; esac

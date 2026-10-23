@@ -62,6 +62,11 @@
 
 ### Fixed
 
+- T4.4 graphic packs (Classic, Seasonized, Seasonized v2) show the icons of the
+  T4.6 markup and place the village centre buildings on their sites
+  (`scripts/gpack/make-classic-compat.py`).
+- iOS app on phones in portrait: every graphic pack fills the screen height;
+  wider pages scroll sideways.
 - Registration/activation/login routing and authenticated-page PHP failures.
 - Database connection-age handling and worker polling/shutdown behavior.
 - Regression-test auto-increment isolation and unsigned adventure ownership.

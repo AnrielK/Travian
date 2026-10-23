@@ -105,8 +105,9 @@ final class BrowserModel: NSObject, ObservableObject, WKNavigationDelegate, WKUI
     func webView(_ webView: WKWebView, didCommit navigation: WKNavigation!) { sync(); barMinimized = false; scrollTravel = 0 }
     func webView(_ webView: WKWebView, didFinish navigation: WKNavigation!) { sync(); fitToScreen(newPage: true) }
 
-    /// Phones: portrait shows 480 px of the 1280 px Legends layout (scrolled to the middle on a new page),
-    /// landscape the whole layout width. Also after a rotation, where WebKit would keep the previous zoom.
+    /// Phones: portrait zooms the game to the screen height (header down to the end of the sidebars, as in
+    /// landscape) and scrolls sideways to the content window, or to the middle on the village views;
+    /// landscape shows the whole layout width. Also after a rotation, where WebKit would keep the previous zoom.
     func fitToScreen(newPage: Bool) {
         guard UIDevice.current.userInterfaceIdiom == .phone else { return }
         Task { @MainActor [weak self] in
@@ -124,51 +125,42 @@ final class BrowserModel: NSObject, ObservableObject, WKNavigationDelegate, WKUI
                 return
             }
             let width = scroll.bounds.width - scroll.adjustedContentInset.left - scroll.adjustedContentInset.right
+            let height = scroll.bounds.height - scroll.adjustedContentInset.top - scroll.adjustedContentInset.bottom
             let pageWidth = scroll.contentSize.width / max(scroll.zoomScale, 0.01)
-            guard width > 0, pageWidth > 1000 else { return }   // only the wide game layout
+            guard width > 0, height > 0, pageWidth > 900 else { return }   // only the wide game layout
             let portrait = scroll.bounds.height > scroll.bounds.width
-            // Portrait: the village views show 480 px around the middle; pages with a content window (building
-            // lists, hero, reports, …) show the whole window.
-            var shown: CGFloat = 480
-            var left: CGFloat? = nil
-            if portrait, let box = (try? await self.webView.evaluateJavaScript(Self.contentWindowScript)) as? [NSNumber], box.count == 2 {
-                shown = CGFloat(truncating: box[1]) + 24
-                left = CGFloat(truncating: box[0]) - 12
+            // Portrait: the game area (CSS px from the top of the page) fills the height; focus = the middle of
+            // the content window or of the page, kept in the middle of the screen.
+            var focus: CGFloat? = nil
+            var target = width / pageWidth
+            if portrait, let box = (try? await self.webView.evaluateJavaScript(Self.portraitScript)) as? [NSNumber], box.count == 2 {
+                focus = CGFloat(truncating: box[0])
+                target = max(target, height / max(CGFloat(truncating: box[1]), 1))
             }
-            let target = portrait ? width / shown : width / pageWidth
             if !newPage || abs(scroll.zoomScale - target) > 0.01 {
                 scroll.setZoomScale(target, animated: false)
             }
             let extra = scroll.contentSize.width - width
-            if portrait, let left, extra > 1 {
-                let x = min(max(0, left * scroll.zoomScale), extra)
+            if portrait, let focus, extra > 1, newPage || scroll.contentOffset.x <= 0.5 {
+                let x = min(max(0, focus * scroll.zoomScale - width / 2), extra)
                 scroll.setContentOffset(CGPoint(x: x.rounded(), y: scroll.contentOffset.y), animated: false)
-            } else if portrait && extra > 1 && (scroll.contentOffset.x <= 0.5 || !newPage) {
-                scroll.setContentOffset(CGPoint(x: (extra / 2).rounded(), y: scroll.contentOffset.y), animated: false)
             } else if !portrait {
                 scroll.setContentOffset(CGPoint(x: -scroll.adjustedContentInset.left, y: scroll.contentOffset.y), animated: false)
             }
         }
     }
 
-    /// Left edge and width (CSS px) of the content window (also the map window), or null on the village views.
-    private static let contentWindowScript = """
-    (function () {
-        if (/(dorf1|dorf2)\\.php/.test(location.pathname)) return null;
-        var box = document.getElementById('contentOuterContainer');
-        if (!box) return null;
-        var r = box.getBoundingClientRect();
-        return [r.left + window.scrollX, r.width];
-    })()
+    /// Portrait: [focus x, height of the game area] in CSS px (see `ovPortrait` in `phoneViewport`).
+    private static let portraitScript = """
+    (function () { return window.ovPortrait ? window.ovPortrait() : null; })()
     """
 
     /// Viewport of the game pages on phones (the game itself sets none, so WebKit would shrink the whole
-    /// 1280 px layout to the screen width).
+    /// page to the screen width).
     private static let phoneViewport = """
 (function () {
-    // Phones in portrait: the Legends layout (min. 1280 px wide) at the scale of the original mobile view –
-    // the whole content window across the screen (480 px around the middle on the village views) – instead
-    // of the whole page shrunk to the width.
+    // Phones in portrait: the game at the height of the screen (as in landscape) instead of the whole page
+    // shrunk to the width; the rest of the page is reached by scrolling sideways.
     if (Math.min(screen.width, screen.height) >= 600) return;   // tablets keep the full layout
     if (document.querySelector('meta[name=viewport]')) return;   // pages made for phones (launcher) stay as they are
     var meta = document.createElement('meta');
@@ -178,28 +170,39 @@ final class BrowserModel: NSObject, ObservableObject, WKNavigationDelegate, WKUI
     function portrait() {
         return typeof window.orientation === 'number' ? window.orientation % 180 === 0 : screen.height > screen.width;
     }
-    // Left edge and width of the content window (messages, statistics, map, building list, …), null on the
-    // village views or while the styles are not there yet.
-    function windowBox() {
-        if (/(dorf1|dorf2)\\.php/.test(location.pathname)) return null;
-        var box = document.getElementById('contentOuterContainer');
-        if (!box) return null;
-        var r = box.getBoundingClientRect();
-        return r.width > 300 && r.width < 1000 ? [r.left + window.scrollX, r.width] : null;
+    function pageRect(el) {
+        var r = el.getBoundingClientRect();
+        return {left: r.left + window.scrollX, top: r.top + window.scrollY, width: r.width, height: r.height};
     }
+    // [focus x, height]: the game area ends with the sidebars (#center, the same in every graphic pack); the
+    // focus is the middle of the content window (messages, statistics, map, building list, …) or, on the
+    // village views, of the page. null while the styles are not there yet.
+    window.ovPortrait = function () {
+        var center = document.getElementById('center');
+        var page = document.documentElement.scrollWidth;
+        if (!center || page < 900) return null;
+        var area = pageRect(center), bottom = area.top + area.height;
+        if (bottom < 300) return null;
+        var focus = page / 2, box = document.getElementById('contentOuterContainer');
+        if (box && !/(dorf1|dorf2)\\.php/.test(location.pathname)) {
+            var r = pageRect(box);
+            if (r.width > 300 && r.width < 1000) focus = r.left + r.width / 2;
+        }
+        return [focus, Math.ceil(bottom + 8)];
+    };
     function center() {
         var view = window.visualViewport ? window.visualViewport.width : window.innerWidth;
         var max = document.documentElement.scrollWidth - view;
         if (max <= 0 || window.scrollX >= 1 || (window.visualViewport && window.visualViewport.pageLeft >= 1)) return;
-        var box = windowBox();
-        window.scrollTo(Math.round(box ? Math.min(Math.max(0, box[0] - 12), max) : max / 2), window.scrollY);
+        var game = window.ovPortrait();
+        window.scrollTo(Math.round(game ? Math.min(Math.max(0, game[0] - view / 2), max) : max / 2), window.scrollY);
     }
-    // Portrait: the viewport is as wide as the content window (+ margin), so every window is shown whole like
-    // the building list; the village views keep 480 px around the middle.
+    // Portrait: the layout viewport as wide as the game area is tall times the screen's aspect ratio.
     var last = null;
     function apply() {
-        var p = portrait(), box = p ? windowBox() : null;
-        var key = p ? (box ? Math.round(box[1] + 24) : 480) : 'landscape';
+        var p = portrait(), game = p ? window.ovPortrait() : null;
+        var aspect = Math.min(screen.width, screen.height) / Math.max(screen.width, screen.height);
+        var key = p ? Math.max(320, Math.round((game ? game[1] : 1040) * aspect)) : 'landscape';
         if (key === last) return;
         last = key;
         meta.content = (p ? 'width=' + key + ', initial-scale=' + (Math.min(screen.width, screen.height) / key).toFixed(3)
@@ -222,8 +225,8 @@ final class BrowserModel: NSObject, ObservableObject, WKNavigationDelegate, WKUI
         setTimeout(function () { meta.content = meta.content.replace(/maximum-scale=[0-9.]+/, 'maximum-scale=4'); }, 300);
     });
     apply();
-    // Ask the app to fit the content window again once the page has settled (pictures, scripts that scroll)
-    // and when a page comes back from the back/forward cache, so every window sits like the building list.
+    // Ask the app to fit the game again once the page has settled (pictures, scripts that scroll) and when a
+    // page comes back from the back/forward cache.
     function refit() {
         try { window.webkit.messageHandlers.ovFit.postMessage(1); } catch (e) {}
     }
