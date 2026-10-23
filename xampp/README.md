@@ -25,8 +25,9 @@ installation, without Docker. A web wizard creates the database and the world on
    second. Close it or press Ctrl+C to stop the game.
 
 Options: `start.bat --port=8081` (another port; the next free one is used when 8080 is taken),
-`--no-browser`. PHP is found in `%XAMPP_PHP%` / `$XAMPP_PHP`, `XAMPP_HOME`, `C:\xampp`, `D:\xampp`,
-`E:\xampp`, `/opt/lampp` or the `PATH`.
+`--no-browser`. `start.bat` uses the first PHP 8.2+ it finds in `%XAMPP_PHP%`, `%XAMPP_HOME%\php`, the XAMPP
+folder the game lies in (e.g. `C:\xampp8\htdocs\Travian`), `C:\xampp*`, `D:\xampp*`, `E:\xampp*` or the `PATH`;
+an older PHP is skipped. `start.sh` looks in `$XAMPP_PHP`, `$XAMPP_HOME/bin`, `/opt/lampp/bin` or the `PATH`.
 
 The administrator accounts **Multihunter** and **Support** use the password given in the wizard.
 
@@ -44,7 +45,8 @@ before overwriting existing game databases.
 | File | Role |
 | --- | --- |
 | `start.bat`, `start.sh` | Find XAMPP's PHP and run `launcher.php` |
-| `launcher.php` | Checks PHP, starts MySQL (Windows), starts `php -S` with `router.php`, opens the browser and calls `/__openvillage/tick` every second |
+| `launcher.php` | Checks the PHP version (readable by old PHP too) and loads `launcher-run.php` |
+| `launcher-run.php` | Checks the PHP extensions, starts MySQL (Windows), starts `php -S` with `router.php`, opens the browser and calls `/__openvillage/tick` every second |
 | `router.php` | Loads `config.local.php` into the environment, serves the wizard until the world is installed, then hands requests to `scripts/native/router.php` |
 | `installer/` | The installation wizard (`index.php`) and its back end (`api.php`) |
 | `runtime/` | PHP sessions and logs: `logs/php-error.log`, `logs/server.log`, `logs/automation.log` (not in git) |
