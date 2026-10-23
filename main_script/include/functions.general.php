@@ -811,6 +811,15 @@ function is_t46_layout()
     return ($gpacks['styles'][$mainPage]['layout'] ?? ($mainPage === '29c89d54' ? 'legends' : '')) === 'legends';
 }
 
+/** Travian 4.0 graphic pack ('layout' => 't40' in sections/gpack/gpack.php): the 4.0 page frame of layout/LayoutT40.php. */
+function is_t40_layout()
+{
+    global $globalConfig;
+    $gpacks = $globalConfig['staticParameters']['gpacks'] ?? [];
+    $mainPage = $gpacks['mainPage'] ?? '';
+    return ($gpacks['styles'][$mainPage]['layout'] ?? '') === 't40';
+}
+
 /** Folder of the active graphic pack's mainPage on disk (sections/gpack/<hash>/mainPage/). */
 function get_gpack_mainPage_dir()
 {

@@ -116,6 +116,9 @@ class GameView
             if ($this->session->getPlayerId() > 2) {
                 $this->renderQuest();
             }
+            if (is_t40_layout()) {
+                $this->renderT40Frame();
+            }
         }
         $this->vars['dateTime'] = TimezoneHelper::real_strtotime(TimezoneHelper::date(TimezoneHelper::getTimeFormat(),
             NULL,
@@ -231,6 +234,10 @@ class GameView
         }
         $view->vars['adventureWhiteButton']['id'] = get_button_id();
         $view->vars['auctionWhiteButton']['id'] = get_button_id();
+        if (is_t40_layout()) {
+            // Travian 4.0 layout: the hero sign of the right column (LayoutT40.php).
+            $this->vars['t40']['hero'] = $view->vars;
+        }
         if (is_t46_layout()) {
             // Travian Legends layout: the hero sits in the top bar instead of the sidebar.
             $this->vars['topBarHero'] = PHPBatchView::render('layout/topBarHero', $view->vars);
@@ -1006,5 +1013,30 @@ class GameView
             }
         }
         $this->vars['sidebarAfterContent'] .= $view->output();
+    }
+
+    /** Data of the Travian 4.0 page frame (LayoutT40.php): village sign, alliance sign, village list. */
+    private function renderT40Frame()
+    {
+        $village = Village::getInstance();
+        $this->vars['t40']['villageName'] = $village->getName();
+        $this->vars['t40']['loyalty'] = $village->getLoyalty();
+        $aid = $this->session->getAllianceId();
+        $this->vars['t40']['allianceId'] = $aid;
+        $this->vars['t40']['allianceName'] = $aid ? (new AllianceModel())->getAllianceField($aid, "name") : '';
+        $prefix = http_build_query($this->newVillagePrefix);
+        $villages = [];
+        foreach ((new ProfileCache($this->session->get("profileCacheVersion")))->getProfileVillagesSortedByName($this->session->getPlayerId()) as $row) {
+            $x = $y = 0;
+            extract(Formulas::kid2xy($row['kid']), EXTR_IF_EXISTS);
+            $villages[] = [
+                'name'   => $row['name'],
+                'x'      => $x,
+                'y'      => $y,
+                'href'   => '?newdid=' . $row['kid'] . ($prefix !== '' ? '&' . $prefix : ''),
+                'active' => $row['kid'] == $this->session->getKid(),
+            ];
+        }
+        $this->vars['t40']['villages'] = $villages;
     }
 }

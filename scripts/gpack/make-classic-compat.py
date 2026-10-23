@@ -25,6 +25,9 @@ PACKS = ['TravianOld', '68597666', 'd11cb434', 'T40']
 MODERN_PREFIX = 'a17a8f72/mainPage/'
 MODERN_CSS = os.path.join(GPACK, 'a17a8f72', 'mainPage', 'lang', 'en-US', 'compact.css')
 # <body> classes of the T4.6 layout (Layout.php): not a reason to take a rule from a17a8f72
+# Packs built from another T4.4 pack without its page frame rules (T40: scripts/gpack/import-t40-gpack.py);
+# the frame of the base pack still counts as known, so no a17a8f72 frame rule comes back.
+BASE_PACKS = {'T40': 'TravianOld'}
 BODY_CLASSES = {'.v35', '.webkit', '.chrome', '.ltr', '.rtl', '.buildingsV1', '.buildingsV2', '.buildingsV3',
                 '.season-winter', '.season-spring', '.season-summer', '.season-fall', '.openvillage'}
 
@@ -139,6 +142,10 @@ def build(pack: str) -> str:
     known = set(BODY_CLASSES)
     for sel in selectors_of(items):
         known |= tokens(sel)
+    if pack in BASE_PACKS:
+        base = os.path.join(GPACK, BASE_PACKS[pack], 'mainPage', 'lang', 'en-US', 'compact.css')
+        for sel in selectors_of(rules(read_css(base))):
+            known |= tokens(sel)
     # the page frame (header, navigation, stock bar, sidebars) keeps the T4.4 layout entirely
     frame = re.compile(r'sidebar|#header|navigation|stockBar|layoutButton|#footer|outOfGame|#logo|#background|'
                        r'bodyWrapper|snowAnimation|^\s*\.ie\d', re.I)
