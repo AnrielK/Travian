@@ -299,25 +299,37 @@ div.village2 div#village_map div.buildingSlot div.colorLayer .labelLayer,div.vil
 #build .roundedCornersBox.big>h4{display:none}
 div#build .upgradeButtonsContainer,div#build .upgradeButtonsContainer .section1,div#build .upgradeButtonsContainer .section2{display:block;border:0;background:none;text-align:left;float:none;width:auto}
 div#build .culturePointsAndPopulation{text-align:left;margin:8px 0 0}
-div#build #build_value{width:auto}
-div#build #build_value th{padding-right:40px}
+div#build table#build_value{width:auto}
+div#build table#build_value th{width:170px;padding-right:10px}
+div#build table#build_value td{text-align:left}
 div#build .upgradeButtonsContainer .section1{display:flex;flex-direction:column-reverse;align-items:flex-start}
 div#build .upgradeButtonsContainer .section1 .inlineIcon.duration{margin:0 0 12px}
 body:has(.dialog.questInformation) > .overlay{background:none !important}
 .dialog.questInformation{width:513px;color:#252525}
 .dialog.questInformation .dialog-container{padding:8px 0;background:url(../img40/q/whitePopupTop.png) left top no-repeat border-box,url(../img40/q/whitePopupBottom.png) left bottom no-repeat border-box,url(../img40/q/whitePopupMiddle.png) left top repeat-y content-box}
 .dialog.questInformation .dialog-container>div[class^=dialog-background]{display:none}
-.dialog.questInformation .dialog-contents{padding:17px 20px 12px;width:auto}
-.dialog.questInformation .dialog-dragbar{position:absolute;margin:0;left:7px;top:-1px;width:499px !important;height:18px;background:#eee}
+.dialog.questInformation .dialog-contents{padding:8px 20px 12px;width:auto}
+.dialog.white.questInformation .dialog-contents .dialog-dragbar{position:absolute;margin:0;left:7px;top:-1px;width:499px !important;height:18px;background:#eee}
 .dialog.questInformation .dialog-dragbar div{display:none}
 .dialog.questInformation #dialogCancelButton{position:absolute;top:-1px;right:7px;left:auto;width:18px;height:18px;border:0;margin:0;background:url(../img40/q/close.png) 5px 4px no-repeat;z-index:3}
 .dialog.questInformation #dialogCancelButton:hover{background-position:5px -15px}
 .dialog.questInformation .questWrapper{display:flex;flex-direction:column;width:auto}
 .dialog.questInformation .questWrapper .questText{order:1;float:none;width:auto;margin:0}
-.dialog.questInformation .questWrapper .questImage{order:2;float:none;width:auto;height:auto;margin:5px 0 0;padding:0;border:0;background:none;text-align:center}
-.dialog.questInformation .questWrapper .clear{order:3}
-.dialog.questInformation .questWrapper .questButtons{order:4;height:auto;margin-top:12px;text-align:right}
-.dialog.questInformation .questWrapper .questButtons button{position:static;margin-left:8px}
+.dialog.questInformation .questWrapper .questImage{order:3;float:none;width:auto;height:auto;margin:5px 0 0;padding:0;border:0;background:none;text-align:center}
+.dialog.questInformation .questWrapper .clear{order:4}
+.dialog.questInformation .questWrapper .questButtons{order:2;display:flex;height:auto;margin:12px 0 0}
+.dialog.questInformation .questWrapper .questButtons button{position:static;margin:0;height:auto}
+.dialog.questInformation .questWrapper .questButtons button:last-of-type{margin-left:auto}
+.dialog.questInformation .questWrapper .questButtons button .button-container,.dialog.questInformation .questWrapper .questButtons button .button-container.hover,.dialog.questInformation .questWrapper .questButtons button:hover .button-container{height:auto;background:none;box-shadow:none}
+.dialog.questInformation .questWrapper .questButtons button .button-container .button-content{padding:0;font-size:13px;color:#99c01a}
+.dialog.questInformation .questWrapper .questButtons button:hover .button-container .button-content{color:#00bc00}
+.dialog.questInformation .questWrapper .questButtons button .button-content:before{content:"\25B8";color:#252525;margin-right:4px}
+.dialog.questInformation .questDescription h4{font-size:13px;font-weight:bold;margin:12px 0 2px}
+.dialog.questInformation #questTodolist{margin:0;padding:0;list-style:none}
+.dialog.questInformation .questDescription,.dialog.questInformation .questTasks{margin:0;padding:0}
+.dialog.questInformation .questTasks ul#questTodolist li{padding:0;margin:0}
+.dialog.questInformation #questTodolist li img{display:none}
+.dialog.questInformation .questDescription>br{display:none}
 .dialog.questInformation .questTitle{font-size:13px;font-weight:bold;margin:3px 0 20px}
 .dialog.questInformation .questDescription #questDescription{font-style:italic}
 .dialog.questInformation #questLogo.tutorial_01_task_image_vid1{width:473px;height:257px;background:url(../img40/q/introRomans.jpg)}
@@ -325,18 +337,16 @@ body:has(.dialog.questInformation) > .overlay{background:none !important}
 .dialog.questInformation #questLogo.tutorial_01_task_image_vid3{width:473px;height:257px;background:url(../img40/q/introGauls.jpg)}
 .dialog.questInformation #questLogo.tutorial_01_task_image_vid6,.dialog.questInformation #questLogo.tutorial_01_task_image_vid7{width:473px;height:257px;background:url(../img40/q/intro.jpg)}
 #side_navi ul li a{font-weight:bold;text-transform:uppercase}
-.activate .activationScreen{box-sizing:border-box;background:#ebebeb;border-radius:5px;padding:12px 20px 5px}
+.activate .activationScreen{box-sizing:border-box;background:#e4e4e4;border-radius:5px;padding:12px 20px 5px}
 .activate .activationScreen #presentation{padding:15px 0 0;background:none}
 .activate .activationScreen #presentation>svg{display:none}
-.activate .activationScreen #presentation #tribeSelectors{display:block;position:relative;height:400px}
+.activate .activationScreen #presentation #tribeSelectors{display:block;position:relative;height:262px;margin-bottom:30px}
 .activate .activationScreen #presentation #tribeSelectors input + .selector{position:absolute;left:0;width:80px;min-width:0;max-width:none;height:72px;margin:0;border:0;border-radius:0;box-shadow:none;background:url(../img/activate/volkIcon-ltr.png) no-repeat}
 .activate .activationScreen #presentation #tribeSelectors input:checked + .selector{border:0;box-shadow:none}
 .activate .activationScreen #presentation #tribeSelectors input + .selector[data-text]:before{bottom:2px;right:2px}
-.activate .activationScreen #presentation #tribeSelectors input[value="3"] + .selector{top:0;background-position:-11px -88px}
-.activate .activationScreen #presentation #tribeSelectors input[value="1"] + .selector{top:80px;background-position:-11px -388px}
-.activate .activationScreen #presentation #tribeSelectors input[value="2"] + .selector{top:160px;background-position:-11px -688px}
-.activate .activationScreen #presentation #tribeSelectors input[value="6"] + .selector{top:240px}
-.activate .activationScreen #presentation #tribeSelectors input[value="7"] + .selector{top:320px}
+.activate .activationScreen #presentation #tribeSelectors input[value="3"] + .selector{top:10px;background-position:-11px -88px}
+.activate .activationScreen #presentation #tribeSelectors input[value="1"] + .selector{top:100px;background-position:-11px -388px}
+.activate .activationScreen #presentation #tribeSelectors input[value="2"] + .selector{top:190px;background-position:-11px -688px}
 .activate .activationScreen #presentation #tribeSelectors input[value="3"] + .selector:hover{background-position:-11px -182px}
 .activate .activationScreen #presentation #tribeSelectors input[value="1"] + .selector:hover{background-position:-11px -482px}
 .activate .activationScreen #presentation #tribeSelectors input[value="2"] + .selector:hover{background-position:-11px -782px}
@@ -344,16 +354,22 @@ body:has(.dialog.questInformation) > .overlay{background:none !important}
 .activate .activationScreen #presentation #tribeSelectors input[value="1"]:checked + .selector{background-position:-11px -582px}
 .activate .activationScreen #presentation #tribeSelectors input[value="2"]:checked + .selector{background-position:-11px -882px}
 .activate .activationScreen #presentation #tribeSelectors input[value="1"] + .selector:after,.activate .activationScreen #presentation #tribeSelectors input[value="2"] + .selector:after,.activate .activationScreen #presentation #tribeSelectors input[value="3"] + .selector:after{display:none}
-.activate .activationScreen #presentation #tribeSelectors input[value="6"] + .selector:after,.activate .activationScreen #presentation #tribeSelectors input[value="7"] + .selector:after{left:4px;top:3px;width:72px;height:66px;background-size:72px auto;border:2px solid #b5b5b5;border-radius:2px;box-sizing:border-box}
-.activate .activationScreen #presentation #tribeSelectors input[value="6"]:checked + .selector:after,.activate .activationScreen #presentation #tribeSelectors input[value="7"]:checked + .selector:after{border-color:#f88c1f}
-.activate .activationScreen #presentation #tribeSelectors input + .selector + .tribeDescription{display:none;left:95px;top:0;width:436px;height:396px;padding:15px 18px;border:1px solid #d6d6d6;border-radius:3px;opacity:1;color:#252525;background:linear-gradient(#fff calc(100% - 247px),rgba(255,255,255,0) calc(100% - 167px)),#fff url(../img/activate/volkBackground-ltr.jpg) right bottom no-repeat}
+.activate .activationScreen #presentation #tribeSelectors input[value="6"] + .selector,.activate .activationScreen #presentation #tribeSelectors input[value="7"] + .selector{display:none}
+.activate .activationScreen #presentation #tribeSelectors input + .selector + .tribeDescription{display:none;left:91px;top:0;width:calc(100% - 91px);height:262px;padding:15px 18px;border:1px solid #d6d6d6;border-radius:3px;opacity:1;color:#252525;background:linear-gradient(#fff calc(100% - 247px),rgba(255,255,255,0) calc(100% - 167px)),#fff url(../img/activate/volkBackground-ltr.jpg) right bottom no-repeat}
 .activate .activationScreen #presentation #tribeSelectors input:checked + .selector + .tribeDescription{display:block}
 .activate .activationScreen #presentation #tribeSelectors input + .selector + .tribeDescription[data-text]:before{position:static;display:block;float:none;margin:0 0 8px;padding:0;background:none;border:0;color:#99c01a;text-transform:none;font-size:12px}
 .activate .activationScreen #presentation #tribeSelectors .tribeDescription h2{font-size:120%;color:#252525;text-shadow:none;text-transform:none;margin:0 0 10px}
 .activate .activationScreen #presentation #tribeSelectors input + .selector + .tribeDescription ul{position:static;padding:0;width:auto;height:auto;font-weight:normal}
 .activate .activationScreen #presentation #tribeSelectors input + .selector + .tribeDescription ul li{max-width:250px;padding:2px 0 2px 16px;margin:0;line-height:140%;background:url(../img/activate/dot.png) left 9px no-repeat}
 .activate .activationScreen #presentation #tribeSelectors input + .selector + .tribeDescription ul li:before{display:none}
-.activate .activationScreen #presentation #tribeSelectors input + .selector + .tribeDescription ul:after{bottom:0;right:0;z-index:0}
+.activate .activationScreen #presentation #tribeSelectors input + .selector + .tribeDescription ul:after{bottom:-100px;right:-12px;z-index:3;width:188px;height:200px;background-image:url(../img40/activate/avatars-rtl.png)}
+.activate .activationScreen #presentation #tribeSelectors input[value="3"] + .selector + .tribeDescription ul:after{background-position:0 0}
+.activate .activationScreen #presentation #tribeSelectors input[value="2"] + .selector + .tribeDescription ul:after{background-position:0 -200px}
+.activate .activationScreen #presentation #tribeSelectors input[value="1"] + .selector + .tribeDescription ul:after{background-position:0 -400px}
+.activate .activationScreen #presentation #tribeSelectors input + .selector + .tribeDescription:after{content:'';position:absolute;left:-24px;width:25px;height:22px;background:url(../img/activate/bubble-ltr.png)}
+.activate .activationScreen #presentation #tribeSelectors input[value="3"] + .selector + .tribeDescription:after{top:35px}
+.activate .activationScreen #presentation #tribeSelectors input[value="1"] + .selector + .tribeDescription:after{top:125px}
+.activate .activationScreen #presentation #tribeSelectors input[value="2"] + .selector + .tribeDescription:after{top:215px}
 .activate .activationScreen .acceptChallenge{color:#252525;text-shadow:none}
 .activate .activationScreen .buttonContainer{height:60px}
 .activate .activationScreen .buttonContainer button{transform:none;box-shadow:none}
