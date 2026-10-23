@@ -2,7 +2,30 @@ name: iOS – OpenVillage offline app
 
 on:
   # Build only by hand (Actions → Run workflow), not after every pushed commit.
+  # The checkboxes pick which graphic packs (gpacks) go into the app; Legends 655.3 (default look) is always in.
+  # Each extra pack adds roughly 30–125 MB to the IPA.
   workflow_dispatch:
+    inputs:
+      gpack_29c89d54:
+        description: "Travian T4.6 (29c89d54, přidá i OpenVillage 4.6)"
+        type: boolean
+        default: false
+      gpack_a17a8f72:
+        description: "OpenVillage 4.6 (a17a8f72)"
+        type: boolean
+        default: false
+      gpack_d11cb434:
+        description: "Travian T4.4 Seasonized v2 (d11cb434)"
+        type: boolean
+        default: false
+      gpack_68597666:
+        description: "Travian T4.4 Seasonized (68597666)"
+        type: boolean
+        default: false
+      gpack_TravianOld:
+        description: "Travian T4.4 Classic (TravianOld)"
+        type: boolean
+        default: false
 
 permissions:
   contents: write
@@ -148,6 +171,17 @@ jobs:
           ls -la ios/mariadb/build ios/mariadb/build/* | head -40 | tee prep.log
           bash ios/mariadb/make-xcframework.sh 2>&1 | tee -a prep.log
           bash ios/mariadb/make-template.sh ios/mariadb/build/template openvillage-ios-local 2>&1 | tee -a prep.log
+      - name: Selected graphic packs
+        run: |
+          G=""
+          ${{ inputs.gpack_29c89d54 == true }} && G="$G,29c89d54"
+          ${{ inputs.gpack_a17a8f72 == true }} && G="$G,a17a8f72"
+          ${{ inputs.gpack_d11cb434 == true }} && G="$G,d11cb434"
+          ${{ inputs.gpack_68597666 == true }} && G="$G,68597666"
+          ${{ inputs.gpack_TravianOld == true }} && G="$G,TravianOld"
+          G="${G#,}"
+          echo "OV_GPACKS=$G" >> "$GITHUB_ENV"
+          echo "### Graphic packs: legends655${G:+,$G}" >> "$GITHUB_STEP_SUMMARY"
       - name: Generate Xcode project
         run: cd ios/app && xcodegen generate
       - name: Build for simulator
@@ -155,7 +189,7 @@ jobs:
           cd ios/app
           xcodebuild -project OpenVillage.xcodeproj -scheme OpenVillage -configuration Debug \
             -sdk iphonesimulator -destination 'generic/platform=iOS Simulator' -derivedDataPath build \
-            ARCHS=arm64 ONLY_ACTIVE_ARCH=NO CODE_SIGNING_ALLOWED=NO build 2>&1 | tee ../../xcodebuild-sim.log | grep -E "error:|BUILD (SUCCEEDED|FAILED)" || true
+            ARCHS=arm64 ONLY_ACTIVE_ARCH=NO CODE_SIGNING_ALLOWED=NO OV_GPACKS="$OV_GPACKS" build 2>&1 | tee ../../xcodebuild-sim.log | grep -E "error:|BUILD (SUCCEEDED|FAILED)" || true
           test -d build/Build/Products/Debug-iphonesimulator/OpenVillage.app
       - name: Run in simulator + end-to-end test
         id: e2e
@@ -189,7 +223,7 @@ jobs:
           cd ios/app
           xcodebuild -project OpenVillage.xcodeproj -scheme OpenVillage -configuration Release \
             -sdk iphoneos -destination 'generic/platform=iOS' -derivedDataPath build-device \
-            CODE_SIGNING_ALLOWED=NO CODE_SIGNING_REQUIRED=NO CODE_SIGN_IDENTITY="" build 2>&1 | tee ../../xcodebuild-device.log | grep -E "error:|BUILD (SUCCEEDED|FAILED)" || true
+            CODE_SIGNING_ALLOWED=NO CODE_SIGNING_REQUIRED=NO CODE_SIGN_IDENTITY="" OV_GPACKS="$OV_GPACKS" build 2>&1 | tee ../../xcodebuild-device.log | grep -E "error:|BUILD (SUCCEEDED|FAILED)" || true
           mkdir -p Payload && cp -R build-device/Build/Products/Release-iphoneos/OpenVillage.app Payload/
           zip -qry ../../OpenVillage-unsigned.ipa Payload
           ls -lh ../../OpenVillage-unsigned.ipa
