@@ -12,6 +12,10 @@
   round navigation, resource line, village sign, hero / player / alliance /
   village list signs) around the T4.4 pages, with the Travian 4.0 pictures from
   `travian_Travian_4.0_41`, built by `scripts/gpack/import-t40-gpack.py`.
+  The pages are restyled as in 4.0: green buttons that turn grey under the
+  mouse, the white quest popup with its big picture, the building page, white
+  level circles on the fields, and the tribe and start choice outside the game
+  frame with the wooden menu and the 4.0 tribe portraits.
 - OpenVillage Local macOS app (`macos/`) and a Docker-free native runtime
   (`scripts/native/`): PHP built-in server router equivalent to the Apache
   vhost, private MariaDB/Redis instances, supervised worker, backup/restore.

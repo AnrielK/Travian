@@ -30,11 +30,13 @@ FRAME_T44 = re.compile(r'#(header|logo|navigation|background|bodyWrapper|center|
                        r'myGameLink\w*)\b|^\s*body(\.[\w-]+)*\s*$|(^|[\s,])\.stime\b')
 FRAME_40 = re.compile(r'#(wrapper|staticElements|header|mtop|logo|navigation|plusLink|plus|gs|myGameLink\w*|mid|'
                       r'side_info|villageName|villageList|linkList|res|contentOuterContainer|footer|mfoot|'
-                      r'ingameManual|logout|anwersQuestionMark|sideInfoCountdown)\b|\.questMaster\b|^\s*body(\.[\w-]+)*\s*$|(^|[\s,])\.stime\b|'
+                      r'ingameManual|logout|anwersQuestionMark|sideInfoCountdown|side_navi)\b|\.questMaster\b|^\s*body(\.[\w-]+)*\s*$|(^|[\s,])\.stime\b|'
                       r'^\s*(body(\.[\w-]+)*\s+)?#content(\.[\w-]+)?(>h1)?\s*$|^\s*\.bubble\b')
 # 4.0 rules for pages that are not part of the game (login, sign-up, error pages)
 OUTSIDE = re.compile(r'\b(loader|login|logout|signup|support|activate|error_site|fatal_error|banned_cn|'
                      r'support_form|presto|ie\d?|manual|map\.fullScreen)\b|cooperationLogo|#betaBox')
+# ... except the tribe and start choice (activate.php), which runs inside the 4.0 frame
+ACTIVATE = re.compile(r'^\s*body\.activate\b')
 # The T4.4 pages inside the 4.0 frame: where 4.0 placed them differently
 PAGES_IN_FRAME = '''
 div.village1 div#map_details{position:absolute;right:0;top:10px;width:245px;margin:0;float:none}
@@ -48,6 +50,89 @@ div.village1 div#map_details{position:absolute;right:0;top:10px;width:245px;marg
 .questMaster .master{display:block;border:0;padding:0;background-color:transparent}
 .questMaster .master:hover{background-position:right top}
 #t40Questmaster{display:none}
+'''
+
+# The T4.4 pages restyled the way they looked in Travian 4.0 (after a 2012 video of a 4.0 server): green buttons that
+# turn grey under the mouse, the white quest popup with its big picture, the building page, the white level circles
+# on the resource fields and the tribe choice. Pictures as in the 4.0 stylesheet (../../img/) come from the 4.0 pack.
+LOOK_40 = '''
+button.green .button-background,button.orange .button-background{display:none}
+button.green .button-container,button.orange .button-container{height:25px;border-radius:4px;background:linear-gradient(#c4d983,#abc558 46%,#7a9d0e 54%,#708f11);box-shadow:0 1px 1px rgba(0,0,0,.25)}
+button.green:hover .button-container,button.orange:hover .button-container,button.green .button-container.hover,button.orange .button-container.hover,button.green .button-container.click,button.orange .button-container.click{background:linear-gradient(#b2b2b2,#939393 46%,#5c5c5c 54%,#555)}
+button.green .button-container .button-content,button.orange .button-container .button-content{color:#fff;text-shadow:none}
+button.green.disabled .button-container,button.green:disabled .button-container,button.orange.disabled .button-container,button.orange:disabled .button-container{background:linear-gradient(#f0f0f0,#d6d6d6);box-shadow:none}
+button.green.disabled .button-container .button-content,button.green:disabled .button-container .button-content,button.orange.disabled .button-container .button-content,button.orange:disabled .button-container .button-content{color:#999}
+body.gidResources{background-image:url(../../img/layout/bgR.jpg)}
+body.gidResources #wrapper{background-image:url(../../img/layout/bgResources-rtl.jpg)}
+div.village1 #village_map .colorLayer,div.village1 #village_map .colorLayer.good,div.village1 #village_map .colorLayer.notNow,div.village1 #village_map .colorLayer.maxLevel{border:0;margin:2px 0 0 2px;width:24px;height:23px;border-radius:0;box-shadow:none;background:url(../img/g/circle.png) 0 0 no-repeat}
+div.village1 #village_map .colorLayer.underConstruction{background-position:0 -33px}
+div.village1 #village_map .colorLayer .labelLayer,div.village1 #village_map .colorLayer.underConstruction .labelLayer{top:0;left:0;right:auto;width:23px;height:23px;background:none;border-radius:0;line-height:23px;font-size:13px;font-family:Arial,Helvetica,Verdana,sans-serif;color:#252525}
+#content.build h1.titleInHeader .level{text-transform:capitalize}
+#build .roundedCornersBox.big{background:none;border:0;box-shadow:none;padding:0;margin:15px 0 0}
+#build .roundedCornersBox.big>h4{display:none}
+div#build .upgradeButtonsContainer,div#build .upgradeButtonsContainer .section1,div#build .upgradeButtonsContainer .section2{display:block;border:0;background:none;text-align:left;float:none;width:auto}
+div#build .culturePointsAndPopulation{text-align:left;margin:8px 0 0}
+div#build #build_value{width:auto}
+div#build #build_value th{padding-right:40px}
+div#build .upgradeButtonsContainer .section1{display:flex;flex-direction:column-reverse;align-items:flex-start}
+div#build .upgradeButtonsContainer .section1 .inlineIcon.duration{margin:0 0 12px}
+body:has(.dialog.questInformation) > .overlay{background:none !important}
+.dialog.questInformation{width:513px;color:#252525}
+.dialog.questInformation .dialog-container{padding:8px 0;background:url(../../img/q/whitePopupTop.png) left top no-repeat border-box,url(../../img/q/whitePopupBottom.png) left bottom no-repeat border-box,url(../../img/q/whitePopupMiddle.png) left top repeat-y content-box}
+.dialog.questInformation .dialog-container>div[class^=dialog-background]{display:none}
+.dialog.questInformation .dialog-contents{padding:17px 20px 12px;width:auto}
+.dialog.questInformation .dialog-dragbar{position:absolute;margin:0;left:7px;top:-1px;width:499px !important;height:18px;background:#eee}
+.dialog.questInformation .dialog-dragbar div{display:none}
+.dialog.questInformation #dialogCancelButton{position:absolute;top:-1px;right:7px;left:auto;width:18px;height:18px;border:0;margin:0;background:url(../../img/q/close.png) 5px 4px no-repeat;z-index:3}
+.dialog.questInformation #dialogCancelButton:hover{background-position:5px -15px}
+.dialog.questInformation .questWrapper{display:flex;flex-direction:column;width:auto}
+.dialog.questInformation .questWrapper .questText{order:1;float:none;width:auto;margin:0}
+.dialog.questInformation .questWrapper .questImage{order:2;float:none;width:auto;height:auto;margin:5px 0 0;padding:0;border:0;background:none;text-align:center}
+.dialog.questInformation .questWrapper .clear{order:3}
+.dialog.questInformation .questWrapper .questButtons{order:4;height:auto;margin-top:12px;text-align:right}
+.dialog.questInformation .questWrapper .questButtons button{position:static;margin-left:8px}
+.dialog.questInformation .questTitle{font-size:13px;font-weight:bold;margin:3px 0 20px}
+.dialog.questInformation .questDescription #questDescription{font-style:italic}
+.dialog.questInformation #questLogo.tutorial_01_task_image_vid1{width:473px;height:257px;background:url(../../img/q/introRomans.jpg)}
+.dialog.questInformation #questLogo.tutorial_01_task_image_vid2{width:473px;height:257px;background:url(../../img/q/introTeutons.jpg)}
+.dialog.questInformation #questLogo.tutorial_01_task_image_vid3{width:473px;height:257px;background:url(../../img/q/introGauls.jpg)}
+.dialog.questInformation #questLogo.tutorial_01_task_image_vid6,.dialog.questInformation #questLogo.tutorial_01_task_image_vid7{width:473px;height:257px;background:url(../../img/q/intro.jpg)}
+#side_navi ul li a{font-weight:bold;text-transform:uppercase}
+.activate .activationScreen{box-sizing:border-box;background:#ebebeb;border-radius:5px;padding:12px 20px 5px}
+.activate .activationScreen #presentation{padding:15px 0 0;background:none}
+.activate .activationScreen #presentation>svg{display:none}
+.activate .activationScreen #presentation #tribeSelectors{display:block;position:relative;height:400px}
+.activate .activationScreen #presentation #tribeSelectors input + .selector{position:absolute;left:0;width:80px;min-width:0;max-width:none;height:72px;margin:0;border:0;border-radius:0;box-shadow:none;background:url(../img/activate/volkIcon-ltr.png) no-repeat}
+.activate .activationScreen #presentation #tribeSelectors input:checked + .selector{border:0;box-shadow:none}
+.activate .activationScreen #presentation #tribeSelectors input + .selector[data-text]:before{bottom:2px;right:2px}
+.activate .activationScreen #presentation #tribeSelectors input[value="3"] + .selector{top:0;background-position:-11px -88px}
+.activate .activationScreen #presentation #tribeSelectors input[value="1"] + .selector{top:80px;background-position:-11px -388px}
+.activate .activationScreen #presentation #tribeSelectors input[value="2"] + .selector{top:160px;background-position:-11px -688px}
+.activate .activationScreen #presentation #tribeSelectors input[value="6"] + .selector{top:240px}
+.activate .activationScreen #presentation #tribeSelectors input[value="7"] + .selector{top:320px}
+.activate .activationScreen #presentation #tribeSelectors input[value="3"] + .selector:hover{background-position:-11px -182px}
+.activate .activationScreen #presentation #tribeSelectors input[value="1"] + .selector:hover{background-position:-11px -482px}
+.activate .activationScreen #presentation #tribeSelectors input[value="2"] + .selector:hover{background-position:-11px -782px}
+.activate .activationScreen #presentation #tribeSelectors input[value="3"]:checked + .selector{background-position:-11px -282px}
+.activate .activationScreen #presentation #tribeSelectors input[value="1"]:checked + .selector{background-position:-11px -582px}
+.activate .activationScreen #presentation #tribeSelectors input[value="2"]:checked + .selector{background-position:-11px -882px}
+.activate .activationScreen #presentation #tribeSelectors input[value="1"] + .selector:after,.activate .activationScreen #presentation #tribeSelectors input[value="2"] + .selector:after,.activate .activationScreen #presentation #tribeSelectors input[value="3"] + .selector:after{display:none}
+.activate .activationScreen #presentation #tribeSelectors input[value="6"] + .selector:after,.activate .activationScreen #presentation #tribeSelectors input[value="7"] + .selector:after{left:4px;top:3px;width:72px;height:66px;background-size:72px auto;border:2px solid #b5b5b5;border-radius:2px;box-sizing:border-box}
+.activate .activationScreen #presentation #tribeSelectors input[value="6"]:checked + .selector:after,.activate .activationScreen #presentation #tribeSelectors input[value="7"]:checked + .selector:after{border-color:#f88c1f}
+.activate .activationScreen #presentation #tribeSelectors input + .selector + .tribeDescription{display:none;left:95px;top:0;width:436px;height:396px;padding:15px 18px;border:1px solid #d6d6d6;border-radius:3px;opacity:1;color:#252525;background:linear-gradient(#fff calc(100% - 247px),rgba(255,255,255,0) calc(100% - 167px)),#fff url(../img/activate/volkBackground-ltr.jpg) right bottom no-repeat}
+.activate .activationScreen #presentation #tribeSelectors input:checked + .selector + .tribeDescription{display:block}
+.activate .activationScreen #presentation #tribeSelectors input + .selector + .tribeDescription[data-text]:before{position:static;display:block;float:none;margin:0 0 8px;padding:0;background:none;border:0;color:#99c01a;text-transform:none;font-size:12px}
+.activate .activationScreen #presentation #tribeSelectors .tribeDescription h2{font-size:120%;color:#252525;text-shadow:none;text-transform:none;margin:0 0 10px}
+.activate .activationScreen #presentation #tribeSelectors input + .selector + .tribeDescription ul{position:static;padding:0;width:auto;height:auto;font-weight:normal}
+.activate .activationScreen #presentation #tribeSelectors input + .selector + .tribeDescription ul li{max-width:250px;padding:2px 0 2px 16px;margin:0;line-height:140%;background:url(../img/activate/dot.png) left 9px no-repeat}
+.activate .activationScreen #presentation #tribeSelectors input + .selector + .tribeDescription ul li:before{display:none}
+.activate .activationScreen #presentation #tribeSelectors input + .selector + .tribeDescription ul:after{bottom:0;right:0;z-index:0}
+.activate .activationScreen .acceptChallenge{color:#252525;text-shadow:none}
+.activate .activationScreen .buttonContainer{height:60px}
+.activate .activationScreen .buttonContainer button{transform:none;box-shadow:none}
+.activate .activationScreen .buttonContainer button.green:not(:hover):not(:focus):not(:active){text-shadow:none;animation:none}
+.activate .activationScreen .buttonContainer button.green:not(:hover):not(:focus):not(:active):not(:disabled):before,.activate .activationScreen .buttonContainer button.green:not(:hover):not(:focus):not(:active):not(:disabled):after{display:none}
+.activate .activationScreen .buttonContainer button.green:not(:hover):not(:focus):not(:active):not(:disabled) span{animation:none}
 '''
 
 
@@ -151,7 +236,8 @@ def frame_css(src: str, pack: str) -> str:
         open(os.path.join(lang, 'compact.css'), encoding='utf-8', errors='replace').read()
     css = re.sub(r'/\*.*?\*/', '', css, flags=re.S)
     css = re.sub(r'@(import|charset)[^;]+;', '', css)
-    out = serialize(blocks(css), lambda s: FRAME_40.search(s) and not OUTSIDE.search(s))
+    out = serialize(blocks(css), lambda s: FRAME_40.search(s) and (not OUTSIDE.search(s) or
+                                                         ACTIVATE.search(s) and 'cooperationLogo' not in s))
 
     def local(m):
         path = m.group(2)
@@ -163,9 +249,10 @@ def frame_css(src: str, pack: str) -> str:
         os.makedirs(os.path.dirname(target), exist_ok=True)
         shutil.copyfile(source, target)
         return 'url(' + m.group(1) + '../img40/' + below.replace(os.sep, '/') + m.group(1) + ')'
-    out = re.sub(r'url\(\s*(["\']?)([^"\')]+)\1\s*\)', local, out)
-    return '/* Generated by scripts/gpack/import-t40-gpack.py from travian_Travian_4.0_41 - do not edit. */\n' + out + \
-        '\n/* T4.4 pages in the 4.0 frame */' + PAGES_IN_FRAME
+    url = re.compile(r'url\(\s*(["\']?)([^"\')]+)\1\s*\)')
+    return '/* Generated by scripts/gpack/import-t40-gpack.py from travian_Travian_4.0_41 - do not edit. */\n' + \
+        url.sub(local, out) + '\n/* T4.4 pages in the 4.0 frame */' + PAGES_IN_FRAME + \
+        '/* T4.4 pages in the 4.0 look */' + url.sub(local, LOOK_40)
 
 
 def main(src: str) -> None:
