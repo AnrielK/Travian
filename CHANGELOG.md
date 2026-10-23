@@ -15,7 +15,8 @@
   The pages are restyled as in 4.0: green buttons that turn grey under the
   mouse, the white quest popup with its big picture, the building page, white
   level circles on the fields, and the tribe and start choice outside the game
-  frame with the wooden menu and the 4.0 tribe portraits.
+  frame with the wooden menu and the 4.0 tribe portraits; the 4.0 logo and
+  the 4.0 tabs.
 - OpenVillage Local macOS app (`macos/`) and a Docker-free native runtime
   (`scripts/native/`): PHP built-in server router equivalent to the Apache
   vhost, private MariaDB/Redis instances, supervised worker, backup/restore.

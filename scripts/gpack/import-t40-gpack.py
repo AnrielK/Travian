@@ -37,6 +37,8 @@ OUTSIDE = re.compile(r'\b(loader|login|logout|signup|support|activate|error_site
                      r'support_form|presto|ie\d?|manual|map\.fullScreen)\b|cooperationLogo|#betaBox')
 # ... except the tribe and start choice (activate.php), which runs inside the 4.0 frame
 ACTIVATE = re.compile(r'^\s*body\.activate\b')
+# 4.0 rules for page parts whose markup T4.4 kept from 4.0 (tabs, ...): they replace the T4.4 look
+COMPONENTS_40 = re.compile(r'^\s*\.(contentNavi|subNavi|tabNavi)\b')
 # The T4.4 pages inside the 4.0 frame: where 4.0 placed them differently
 PAGES_IN_FRAME = '''
 div.village1 div#map_details{position:absolute;right:0;top:10px;width:245px;margin:0;float:none}
@@ -53,9 +55,12 @@ div.village1 div#map_details{position:absolute;right:0;top:10px;width:245px;marg
 '''
 
 # The T4.4 pages restyled the way they looked in Travian 4.0 (after a 2012 video of a 4.0 server): green buttons that
-# turn grey under the mouse, the white quest popup with its big picture, the building page, the white level circles
+# turn grey under the mouse, the Travian logo, the white quest popup with its big picture, the building page, the white level circles
 # on the resource fields and the tribe choice. Pictures as in the 4.0 stylesheet (../../img/) come from the 4.0 pack.
 LOOK_40 = '''
+body.layoutT40 div#header #logo{background-image:url(../../img/layout/logoSmall.png) !important;font-size:0;line-height:0}
+body.layoutT40.activate div#header #logo{background-image:url(../../img/layout/logoBig.png) !important}
+body.layoutT40 div#header #logo::before{content:none}
 button.green .button-background,button.orange .button-background{display:none}
 button.green .button-container,button.orange .button-container{height:25px;border-radius:4px;background:linear-gradient(#c4d983,#abc558 46%,#7a9d0e 54%,#708f11);box-shadow:0 1px 1px rgba(0,0,0,.25)}
 button.green:hover .button-container,button.orange:hover .button-container,button.green .button-container.hover,button.orange .button-container.hover,button.green .button-container.click,button.orange .button-container.click{background:linear-gradient(#b2b2b2,#939393 46%,#5c5c5c 54%,#555)}
@@ -67,6 +72,14 @@ body.gidResources #wrapper{background-image:url(../../img/layout/bgResources-rtl
 div.village1 #village_map .colorLayer,div.village1 #village_map .colorLayer.good,div.village1 #village_map .colorLayer.notNow,div.village1 #village_map .colorLayer.maxLevel{border:0;margin:2px 0 0 2px;width:24px;height:23px;border-radius:0;box-shadow:none;background:url(../img/g/circle.png) 0 0 no-repeat}
 div.village1 #village_map .colorLayer.underConstruction{background-position:0 -33px}
 div.village1 #village_map .colorLayer .labelLayer,div.village1 #village_map .colorLayer.underConstruction .labelLayer{top:0;left:0;right:auto;width:23px;height:23px;background:none;border-radius:0;line-height:23px;font-size:13px;font-family:Arial,Helvetica,Verdana,sans-serif;color:#252525}
+.contentNavi.subNavi{display:flex;align-items:flex-start;width:auto;margin-right:-46px;overflow:visible}
+#content>a#tabFavorButton{position:absolute}
+.tabNavi .container.active .content .tabItem{color:#252525}
+.contentNavi.subNavi .container{flex:none}
+.subNavi .container .content .tabItem{padding:11px 6px 0}
+div.village2 div#village_map div.buildingSlot div.colorLayer,div.village2 div#village_map div.buildingSlot div.colorLayer.good,div.village2 div#village_map div.buildingSlot div.colorLayer.notNow,div.village2 div#village_map div.buildingSlot div.colorLayer.maxLevel{border:0;margin:2px 0 0 2px;width:24px;height:23px;border-radius:0;box-shadow:none;background:url(../img/g/circle.png) 0 0 no-repeat}
+div.village2 div#village_map div.buildingSlot div.colorLayer.underConstruction{background-position:0 -33px}
+div.village2 div#village_map div.buildingSlot div.colorLayer .labelLayer,div.village2 div#village_map div.buildingSlot div.colorLayer.underConstruction .labelLayer{top:0;left:0;right:auto;width:23px;height:23px;background:none;border-radius:0;line-height:23px;font-size:13px;font-family:Arial,Helvetica,Verdana,sans-serif;color:#252525}
 #content.build h1.titleInHeader .level{text-transform:capitalize}
 #build .roundedCornersBox.big{background:none;border:0;box-shadow:none;padding:0;margin:15px 0 0}
 #build .roundedCornersBox.big>h4{display:none}
@@ -235,7 +248,7 @@ def frame_css(src: str, pack: str) -> str:
     css = open(os.path.join(lang, 'compact1.css'), encoding='utf-8', errors='replace').read() + \
         open(os.path.join(lang, 'compact.css'), encoding='utf-8', errors='replace').read()
     css = re.sub(r'/\*.*?\*/', '', css, flags=re.S)
-    css = re.sub(r'@(import|charset)[^;]+;', '', css)
+    css = re.sub(r'@(import|charset)[^;]+;', '', css, flags=re.I)
     out = serialize(blocks(css), lambda s: FRAME_40.search(s) and (not OUTSIDE.search(s) or
                                                          ACTIVATE.search(s) and 'cooperationLogo' not in s))
 
@@ -249,9 +262,11 @@ def frame_css(src: str, pack: str) -> str:
         os.makedirs(os.path.dirname(target), exist_ok=True)
         shutil.copyfile(source, target)
         return 'url(' + m.group(1) + '../img40/' + below.replace(os.sep, '/') + m.group(1) + ')'
+    components = serialize(blocks(css), lambda s: COMPONENTS_40.search(s) and not OUTSIDE.search(s))
     url = re.compile(r'url\(\s*(["\']?)([^"\')]+)\1\s*\)')
     return '/* Generated by scripts/gpack/import-t40-gpack.py from travian_Travian_4.0_41 - do not edit. */\n' + \
         url.sub(local, out) + '\n/* T4.4 pages in the 4.0 frame */' + PAGES_IN_FRAME + \
+        '/* 4.0 page parts */\n' + url.sub(local, components) + '\n' + \
         '/* T4.4 pages in the 4.0 look */' + url.sub(local, LOOK_40)
 
 
