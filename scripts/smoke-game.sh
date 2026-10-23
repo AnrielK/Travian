@@ -128,31 +128,49 @@ esac
 request_status 200 -b "$launcher_cookies" -c "$game_cookies" "$base_url$activation_path"
 expect_body 'Select your tribe'
 
-request_status 302 -b "$game_cookies" -c "$game_cookies" --data 'vid=1' \
-    "$base_url/game/activate.php?page=vid"
-request_status 200 -b "$game_cookies" -c "$game_cookies" \
-    "$base_url/game/activate.php?page=sector"
-expect_body 'Select your starting position'
-
 activation_completed=0
-for sector in sw se nw ne; do
-    request_status 200 -b "$game_cookies" -c "$game_cookies" --data "sector=$sector" \
-        "$base_url/game/activate.php?page=confirmation"
-    expect_body 'PLAY NOW'
+if rg -q 'action="activate.php\?page=legends"' "$body"; then
+    # Travian Legends look (default graphic pack): tribe and sector are posted together from one page.
+    for sector in sw se nw ne; do
+        actual=$(curl -sS -o "$body" -D "$headers" -w '%{http_code}' \
+            -b "$game_cookies" -c "$game_cookies" --data "tribe=1&sector=$sector" \
+            "$base_url/game/activate.php?page=legends")
+        if [ "$actual" = '302' ]; then
+            activation_completed=1
+            break
+        fi
+        if [ "$actual" != '200' ] || ! rg -qi 'unable to generate a new village' "$body"; then
+            echo "Expected activation redirect or an unavailable sector, received HTTP $actual." >&2
+            sed -n '1,80p' "$body" >&2
+            exit 1
+        fi
+    done
+else
+    request_status 302 -b "$game_cookies" -c "$game_cookies" --data 'vid=1' \
+        "$base_url/game/activate.php?page=vid"
+    request_status 200 -b "$game_cookies" -c "$game_cookies" \
+        "$base_url/game/activate.php?page=sector"
+    expect_body 'Select your starting position'
 
-    actual=$(curl -sS -o "$body" -D "$headers" -w '%{http_code}' \
-        -b "$game_cookies" -c "$game_cookies" --data "sector=$sector" \
-        "$base_url/game/activate.php?page=dorf")
-    if [ "$actual" = '302' ]; then
-        activation_completed=1
-        break
-    fi
-    if [ "$actual" != '200' ] || ! rg -qi 'unable to generate a new village' "$body"; then
-        echo "Expected activation redirect or an unavailable sector, received HTTP $actual." >&2
-        sed -n '1,80p' "$body" >&2
-        exit 1
-    fi
-done
+    for sector in sw se nw ne; do
+        request_status 200 -b "$game_cookies" -c "$game_cookies" --data "sector=$sector" \
+            "$base_url/game/activate.php?page=confirmation"
+        expect_body 'PLAY NOW'
+
+        actual=$(curl -sS -o "$body" -D "$headers" -w '%{http_code}' \
+            -b "$game_cookies" -c "$game_cookies" --data "sector=$sector" \
+            "$base_url/game/activate.php?page=dorf")
+        if [ "$actual" = '302' ]; then
+            activation_completed=1
+            break
+        fi
+        if [ "$actual" != '200' ] || ! rg -qi 'unable to generate a new village' "$body"; then
+            echo "Expected activation redirect or an unavailable sector, received HTTP $actual." >&2
+            sed -n '1,80p' "$body" >&2
+            exit 1
+        fi
+    done
+fi
 if [ "$activation_completed" -ne 1 ]; then
     echo 'No starting sector had an available village field.' >&2
     exit 1

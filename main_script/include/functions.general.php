@@ -828,6 +828,15 @@ function is_hero_v2()
     return is_t46_layout() && !empty($gpacks['styles'][$mainPage]['heroV2']);
 }
 
+/** Travian T4.4 graphic packs ('isNew' => false in sections/gpack/gpack.php): T4.4 CSS for the T4.6 markup. */
+function is_classic_gpack()
+{
+    global $globalConfig;
+    $gpacks = $globalConfig['staticParameters']['gpacks'] ?? [];
+    $mainPage = $gpacks['mainPage'] ?? '';
+    return isset($gpacks['styles'][$mainPage]) && empty($gpacks['styles'][$mainPage]['isNew']);
+}
+
 function is_new_gpack()
 {
     global $globalConfig;
