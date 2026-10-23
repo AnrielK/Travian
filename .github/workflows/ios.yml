@@ -26,6 +26,10 @@ on:
         description: "Travian T4.4 Classic (TravianOld)"
         type: boolean
         default: false
+      gpack_T40:
+        description: "Travian 4.0 (T40)"
+        type: boolean
+        default: false
 
 permissions:
   contents: write
@@ -179,6 +183,7 @@ jobs:
           ${{ inputs.gpack_d11cb434 == true }} && G="$G,d11cb434"
           ${{ inputs.gpack_68597666 == true }} && G="$G,68597666"
           ${{ inputs.gpack_TravianOld == true }} && G="$G,TravianOld"
+          ${{ inputs.gpack_T40 == true }} && G="$G,T40"
           G="${G#,}"
           echo "OV_GPACKS=$G" >> "$GITHUB_ENV"
           echo "### Graphic packs: legends655${G:+,$G}" >> "$GITHUB_STEP_SUMMARY"

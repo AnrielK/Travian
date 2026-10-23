@@ -61,7 +61,7 @@ targets:
           # Graphic styles to ship: build setting / env OV_GPACKS (comma-separated, e.g. "29c89d54,TravianOld"
           # or "all"); the default Legends pack (legends655) is always included. Unset = legends655 only.
           # 29c89d54 serves its missing files from a17a8f72 (scripts/native/router.php), so it pulls that pack in.
-          ALL_PACKS="legends655 29c89d54 a17a8f72 68597666 d11cb434 TravianOld"
+          ALL_PACKS="legends655 29c89d54 a17a8f72 68597666 d11cb434 TravianOld T40"
           WANT=" legends655 "
           for p in $(echo "${OV_GPACKS:-}" | tr ',' ' '); do
             if [ "$p" = all ]; then WANT=" $ALL_PACKS "; continue; fi

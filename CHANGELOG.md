@@ -4,6 +4,10 @@
 
 ### Added
 
+- Travian 4.0 graphic pack (`T40`): the 4.0 page frame (`layout/LayoutT40.php`:
+  round navigation, resource line, village sign, hero / player / alliance /
+  village list signs) around the T4.4 pages, with the Travian 4.0 pictures from
+  `travian_Travian_4.0_41`, built by `scripts/gpack/import-t40-gpack.py`.
 - OpenVillage Local macOS app (`macos/`) and a Docker-free native runtime
   (`scripts/native/`): PHP built-in server router equivalent to the Apache
   vhost, private MariaDB/Redis instances, supervised worker, backup/restore.

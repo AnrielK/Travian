@@ -174,11 +174,11 @@ final class BrowserModel: NSObject, ObservableObject, WKNavigationDelegate, WKUI
         var r = el.getBoundingClientRect();
         return {left: r.left + window.scrollX, top: r.top + window.scrollY, width: r.width, height: r.height};
     }
-    // [focus x, height]: the game area ends with the sidebars (#center, the same in every graphic pack); the
+    // [focus x, height]: the game area ends with the sidebars (#center; #mid in the Travian 4.0 layout); the
     // focus is the middle of the content window (messages, statistics, map, building list, …) or, on the
     // village views, of the page. null while the styles are not there yet.
     window.ovPortrait = function () {
-        var center = document.getElementById('center');
+        var center = document.getElementById('center') || document.getElementById('mid');
         var page = document.documentElement.scrollWidth;
         if (!center || page < 900) return null;
         var area = pageRect(center), bottom = area.top + area.height;

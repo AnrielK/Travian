@@ -93,6 +93,7 @@ struct WorldSettings: Codable, Equatable {
         ("d11cb434", "Travian T4.4 Seasonized v2"),
         ("68597666", "Travian T4.4 Seasonized"),
         ("TravianOld", "Travian T4.4 Classic"),
+        ("T40", "Travian 4.0"),
     ]
     static var availableStyles: [(hash: String, name: String)] {
         allStyles.filter { FileManager.default.fileExists(atPath: Paths.bundledGame
