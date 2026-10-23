@@ -25,8 +25,9 @@ installation, without Docker. A web wizard creates the database and the world on
    second. Close it or press Ctrl+C to stop the game.
 
 Options: `start.bat --port=8081` (another port; the next free one is used when 8080 is taken),
-`--no-browser`. PHP is found in `%XAMPP_PHP%` / `$XAMPP_PHP`, `XAMPP_HOME`, `C:\xampp`, `D:\xampp`,
-`E:\xampp`, `/opt/lampp` or the `PATH`.
+`--no-browser`. `start.bat` uses the first PHP 8.2+ it finds in `%XAMPP_PHP%`, `%XAMPP_HOME%\php`, the XAMPP
+folder the game lies in (e.g. `C:\xampp8\htdocs\Travian`), `C:\xampp*`, `D:\xampp*`, `E:\xampp*` or the `PATH`;
+an older PHP is skipped. `start.sh` looks in `$XAMPP_PHP`, `$XAMPP_HOME/bin`, `/opt/lampp/bin` or the `PATH`.
 
 The administrator accounts **Multihunter** and **Support** use the password given in the wizard.
 
@@ -39,12 +40,32 @@ The administrator accounts **Multihunter** and **Support** use the password give
 To install again (a new world), delete `xampp/config.local.php` and restart the launcher; the wizard asks
 before overwriting existing game databases.
 
+## Troubleshooting
+
+**Broken MariaDB system tables** (`Incorrect file format 'tables_priv'`, `Got error 176 "Read page with wrong
+checksum" from storage engine Aria`, …): the `mysql` system database of XAMPP is damaged or comes from another
+version, typically a data folder kept from an older XAMPP. The wizard first repairs the named table; when that
+does not help it runs the game with the administrator account from step 2 (`root`) instead of its own user, so
+the game works anyway. To fix XAMPP's MariaDB itself (phpMyAdmin and other users need it too):
+
+1. Stop MySQL in the XAMPP Control Panel and copy `xampp\mysql\data` somewhere as a backup.
+2. Repair the system tables: open the XAMPP **Shell** and run
+   `aria_chk -r mysql\data\mysql\*.MAI` (Linux: `/opt/lampp/bin/aria_chk -r /opt/lampp/var/mysql/mysql/*.MAI`),
+   then start MySQL and run `mysql_upgrade -u root --force`.
+3. If that fails, replace the system database with XAMPP's clean copy: stop MySQL, copy the folder
+   `xampp\mysql\backup\mysql` over `xampp\mysql\data\mysql` and start MySQL again. This resets the MariaDB
+   users to XAMPP's defaults (`root` without a password); the game's databases (`openvillage_*`) stay.
+
+**Old PHP**: `start.bat` skips PHP older than 8.2; if it finds none, set `XAMPP_PHP` to the `php.exe` of an XAMPP
+with PHP 8.2+.
+
 ## How it works
 
 | File | Role |
 | --- | --- |
 | `start.bat`, `start.sh` | Find XAMPP's PHP and run `launcher.php` |
-| `launcher.php` | Checks PHP, starts MySQL (Windows), starts `php -S` with `router.php`, opens the browser and calls `/__openvillage/tick` every second |
+| `launcher.php` | Checks the PHP version (readable by old PHP too) and loads `launcher-run.php` |
+| `launcher-run.php` | Checks the PHP extensions, starts MySQL (Windows), starts `php -S` with `router.php`, opens the browser and calls `/__openvillage/tick` every second |
 | `router.php` | Loads `config.local.php` into the environment, serves the wizard until the world is installed, then hands requests to `scripts/native/router.php` |
 | `installer/` | The installation wizard (`index.php`) and its back end (`api.php`) |
 | `runtime/` | PHP sessions and logs: `logs/php-error.log`, `logs/server.log`, `logs/automation.log` (not in git) |

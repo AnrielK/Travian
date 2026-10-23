@@ -29,7 +29,7 @@ $globalConfig['cachingServers'] = [];
 $globalConfig['dataSources'] = [];
 $globalConfig['dataSources']['globalDB']['hostname'] = $env('GLOBAL_DB_HOST', 'database');
 $globalConfig['dataSources']['globalDB']['username'] = $env('GLOBAL_DB_USER', 'openvillage');
-$globalConfig['dataSources']['globalDB']['password'] = $env('GLOBAL_DB_PASSWORD', 'local-game-password');
+$globalConfig['dataSources']['globalDB']['password'] = getenv('GLOBAL_DB_PASSWORD') !== false ? getenv('GLOBAL_DB_PASSWORD') : 'local-game-password';
 $globalConfig['dataSources']['globalDB']['database'] = $env('GLOBAL_DB_NAME', 'openvillage_global');
 $globalConfig['dataSources']['globalDB']['charset'] = 'utf8mb4';
 

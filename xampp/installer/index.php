@@ -38,7 +38,7 @@ button{padding:9px 18px;border:0;border-radius:6px;background:var(--green);color
 button:hover{background:var(--green-dark)}
 button.secondary{background:#cfc0a0;color:var(--ink)}
 button:disabled{opacity:.5;cursor:default}
-.msg{margin-top:12px;padding:10px 12px;border-radius:6px;display:none}
+.msg{margin-top:12px;padding:10px 12px;border-radius:6px;display:none;white-space:pre-wrap}
 .msg.show{display:block}
 .msg.error{background:#f6dcd6;color:var(--red)}
 .msg.info{background:#e4eed6;color:var(--green-dark)}
@@ -234,6 +234,7 @@ dt{color:var(--muted)}dd{margin:0;font-weight:600;word-break:break-all}
     var fail = function (text) { message('msg4', text); log('CHYBA: ' + text); $('back4').hidden = false; throw new Error(text); };
     log('Zakládám uživatele a databáze…');
     api('configure', fields).then(function (r) {
+      (r.notes || []).forEach(function (l) { log('  ' + l); });
       if (!r.ok) fail(r.error);
       token = r.token;
       progress(20);

@@ -8,6 +8,13 @@ function migration_env(string $name, string $default = ''): string
     return $value === false || $value === '' ? $default : $value;
 }
 
+/** Database password: set but empty is an empty password (XAMPP's root), only an unset one gets the default. */
+function migration_password(string $name): string
+{
+    $value = getenv($name);
+    return $value === false ? 'local-game-password' : $value;
+}
+
 function run_schema_migrations(): void
 {
     $database = new PDO(
@@ -17,7 +24,7 @@ function run_schema_migrations(): void
             migration_env('GAME_DB_NAME', 'openvillage_game')
         ),
         migration_env('GAME_DB_USER', 'openvillage'),
-        migration_env('GAME_DB_PASSWORD', 'local-game-password'),
+        migration_password('GAME_DB_PASSWORD'),
         [
             PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION,
             PDO::ATTR_EMULATE_PREPARES => false,
@@ -82,7 +89,7 @@ function run_global_schema_migrations(): void
             migration_env('GLOBAL_DB_NAME', 'openvillage_global')
         ),
         migration_env('GLOBAL_DB_USER', 'openvillage'),
-        migration_env('GLOBAL_DB_PASSWORD', 'local-game-password'),
+        migration_password('GLOBAL_DB_PASSWORD'),
         [
             PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION,
             PDO::ATTR_EMULATE_PREPARES => false,

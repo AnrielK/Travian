@@ -20,7 +20,7 @@ $connection = [
     'database' => [
         'hostname' => $env('GAME_DB_HOST', 'database'),
         'username' => $env('GAME_DB_USER', 'openvillage'),
-        'password' => $env('GAME_DB_PASSWORD', 'local-game-password'),
+        'password' => getenv('GAME_DB_PASSWORD') !== false ? getenv('GAME_DB_PASSWORD') : 'local-game-password',
         'database' => $env('GAME_DB_NAME', 'openvillage_game'),
         'charset' => 'utf8mb4',
     ],

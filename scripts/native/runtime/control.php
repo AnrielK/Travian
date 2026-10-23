@@ -29,13 +29,20 @@ function ov_env(string $name, string $default = ''): string
     return $v === false || $v === '' ? $default : $v;
 }
 
+/** Database password: set but empty is an empty password (XAMPP's root), only an unset one gets the default. */
+function ov_db_password(): string
+{
+    $v = getenv('GAME_DB_PASSWORD');
+    return $v === false ? 'local-game-password' : $v;
+}
+
 function ov_pdo(?string $database = null): PDO
 {
     $dsn = sprintf('mysql:host=%s;charset=utf8mb4', ov_env('GAME_DB_HOST', 'localhost'));
     if ($database !== null) {
         $dsn .= ';dbname=' . $database;
     }
-    return new PDO($dsn, ov_env('GAME_DB_USER', 'openvillage'), ov_env('GAME_DB_PASSWORD', 'local-game-password'), [
+    return new PDO($dsn, ov_env('GAME_DB_USER', 'openvillage'), ov_db_password(), [
         PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION,
         PDO::ATTR_DEFAULT_FETCH_MODE => PDO::FETCH_ASSOC,
     ]);
@@ -65,7 +72,7 @@ switch ($ovAction) {
             ov_env('OV_KV_DB', 'openvillage_cache') => null,
         ];
         mysqli_report(MYSQLI_REPORT_OFF);
-        $m = @new mysqli(ov_env('GAME_DB_HOST', 'localhost'), ov_env('GAME_DB_USER', 'openvillage'), ov_env('GAME_DB_PASSWORD', 'local-game-password'));
+        $m = @new mysqli(ov_env('GAME_DB_HOST', 'localhost'), ov_env('GAME_DB_USER', 'openvillage'), ov_db_password());
         if ($m->connect_errno) {
             ov_json(['ok' => false, 'error' => $m->connect_error], 500);
             return;
@@ -268,7 +275,7 @@ switch ($ovAction) {
         }
         mysqli_report(MYSQLI_REPORT_OFF);
         $started = microtime(true);
-        $m = @new mysqli(ov_env('GAME_DB_HOST', 'localhost'), ov_env('GAME_DB_USER', 'openvillage'), ov_env('GAME_DB_PASSWORD', 'local-game-password'), $database);
+        $m = @new mysqli(ov_env('GAME_DB_HOST', 'localhost'), ov_env('GAME_DB_USER', 'openvillage'), ov_db_password(), $database);
         if ($m->connect_errno) {
             ov_json(['ok' => false, 'error' => $m->connect_error], 500);
             return;
