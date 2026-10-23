@@ -1,7 +1,8 @@
 <?php
 /* Page frame of the Travian 4.0 graphic pack (gpack.php 'layout' => 't40', included by Layout.php): the 4.0
  * header with the round navigation, the resource line, the village sign on the left and the hero, player,
- * alliance and village list signs on the right, the quest master's picture and the info sign on the left tree
+ * alliance and village list signs on the right, the quest master's picture and the info sign on the left tree, and
+ * on the tribe and start choice (no navigation bar) the wooden menu on the left
  * (styles: <pack>/mainPage/lang/openvillage-t40.css). The pages inside it are the same as in the other layouts. */
 
 use Core\Config;
@@ -95,6 +96,15 @@ $stock = $vars['stockBar'] ?? null;
             </div>
         </div>
         <div id="mid">
+            <?php if (!$vars['showNavBar']): ?>
+                <div id="side_navi">
+                    <ul>
+                        <li><a href="/">Home</a></li>
+                        <li><a href="/docs/">Rules</a></li>
+                        <li><a href="logout.php"><?=T("inGame", "Logout.Logout"); ?></a></li>
+                    </ul>
+                </div>
+            <?php endif; ?>
             <?php if ($vars['showNavBar']): ?>
                 <a id="ingameManual" href="help.php" title="<?=T("inGame", "Help.Help"); ?>"><img class="question"
                                                                                                  src="img/x.gif" alt=""/></a>

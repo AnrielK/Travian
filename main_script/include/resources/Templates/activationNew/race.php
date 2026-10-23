@@ -1,3 +1,6 @@
+<?php if (is_t40_layout()): ?>
+    <div class="greenbox t40Thanks"><div class="greenbox-content"><?=T("activation", "thanksForActivation");?></div></div>
+<?php endif; ?>
 <div class="activationScreen">
     <?=T("ActivationNew", "vidSelectDescription");?>
     <form method="post" action="activate.php?page=vid">
