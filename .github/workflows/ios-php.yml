@@ -3,7 +3,7 @@ name: iOS – PHP core + app
 on:
   workflow_dispatch:
   push:
-    branches: [ios-local]
+    branches: [travian-T4.4, ios-local]
     paths-ignore: ["mac-app/**", "scripts/**", "*.md"]
 
 permissions:
