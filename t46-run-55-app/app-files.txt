@@ -1,0 +1,30 @@
+/Users/runner/Library/Developer/CoreSimulator/Devices/DC4CD8B3-4457-4153-9087-A0D7A2F9BFD9/data/Containers/Data/Application/A5CF00BE-E9E2-4E81-B96D-A9004732C193/Documents/logs:
+total 152
+drwxr-xr-x  6 runner  staff    192 Oct 23 10:46 .
+drwxr-xr-x  3 runner  staff     96 Oct 23 10:45 ..
+-rw-rw----  1 runner  staff  31958 Oct 23 10:49 automation.log
+-rw-rw----  1 runner  staff  35610 Oct 23 10:49 mariadb.log
+-rw-r--r--  1 runner  staff    393 Oct 23 10:45 server.log
+-rw-rw----  1 runner  staff    582 Oct 23 10:46 setup.log
+
+/Users/runner/Library/Developer/CoreSimulator/Devices/DC4CD8B3-4457-4153-9087-A0D7A2F9BFD9/data/Containers/Data/Application/A5CF00BE-E9E2-4E81-B96D-A9004732C193/Library/Application Support/OpenVillage:
+total 16
+drwxr-xr-x   8 runner  staff  256 Oct 23 10:45 .
+drwxr-xr-x   3 runner  staff   96 Oct 23 10:45 ..
+drwxr-xr-x  23 runner  staff  736 Oct 23 10:45 mariadb
+drwxr-xr-x   3 runner  staff   96 Oct 23 10:46 run
+-rw-r--r--   1 runner  staff  145 Oct 23 10:45 secrets.json
+drwxr-xr-x  15 runner  staff  480 Oct 23 10:47 sessions
+drwxr-xr-x   8 runner  staff  256 Oct 23 10:45 www
+-rw-r--r--@  1 runner  staff   19 Oct 23 10:45 www.build-id
+
+/Users/runner/Library/Developer/CoreSimulator/Devices/DC4CD8B3-4457-4153-9087-A0D7A2F9BFD9/data/Containers/Data/Application/A5CF00BE-E9E2-4E81-B96D-A9004732C193/Library/Application Support/OpenVillage/www:
+total 48
+drwxr-xr-x  8 runner  staff    256 Oct 23 10:45 .
+drwxr-xr-x  8 runner  staff    256 Oct 23 10:45 ..
+lrwxr-xr-x  1 runner  staff    193 Oct 23 10:45 filtering -> /Users/runner/Library/Developer/CoreSimulator/Devices/DC4CD8B3-4457-4153-9087-A0D7A2F9BFD9/data/Containers/Bundle/Application/449193F4-8830-40DE-A4A1-12FCFBABEAB0/OpenVillage.app/game/filtering
+drwxr-xr-x  4 runner  staff    128 Oct 23 10:45 main_script
+-rw-r--r--  1 runner  staff  21840 Oct 23 10:43 main.sql
+drwxr-xr-x  3 runner  staff     96 Oct 23 10:45 scripts
+drwxr-xr-x  4 runner  staff    128 Oct 23 10:45 sections
+drwxr-xr-x  4 runner  staff    128 Oct 23 10:45 web
