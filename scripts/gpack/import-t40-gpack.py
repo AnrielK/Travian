@@ -90,6 +90,7 @@ div.village2 div#village_map div.buildingSlot div.colorLayer .labelLayer,div.vil
 #build .roundedCornersBox.big>h4{display:none}
 div#build .upgradeButtonsContainer,div#build .upgradeButtonsContainer .section1,div#build .upgradeButtonsContainer .section2{display:block;border:0;background:none;text-align:left;float:none;width:auto}
 div#build .culturePointsAndPopulation{text-align:left;margin:8px 0 0}
+div#build i.cropConsumptionBig,div#build i.culturePoints_medium,div#build i.population_medium,div#build i.clock_medium{width:16px;height:16px;background-size:contain;background-position:center;vertical-align:middle}
 div#build table#build_value{width:auto}
 div#build table#build_value th{width:170px;padding-right:10px}
 div#build table#build_value td{text-align:left}
