@@ -87,3 +87,7 @@ div.activate .container .kind .vid{background-image: url(../../lowRes/img/activa
 div.activate .container .description-container{background-image: url(../../lowRes/img/activate/volkBackground-ltr.jpg);}
 div.activate #sector .map{background-image: url(../../lowRes/img/activate/map-ltr.jpg);}
 div.activate .start{background-image: url(../../lowRes/img/activate/bubbleSector-ltr.jpg);}
+#sidebarBoxQuestmaster #questmasterButton.vid_1 img.border,#sidebarBoxQuestmaster #questmasterButton.vid_1 img.mentor{background-image: url(../../lowRes/img/layout/mentorRoman-ltr.png);}
+#sidebarBoxQuestmaster #questmasterButton.vid_2 img.border,#sidebarBoxQuestmaster #questmasterButton.vid_2 img.mentor{background-image: url(../../lowRes/img/layout/mentorTeuton-ltr.png);}
+#sidebarBoxQuestmaster #questmasterButton.vid_3 img.border,#sidebarBoxQuestmaster #questmasterButton.vid_3 img.mentor{background-image: url(../../lowRes/img/layout/mentorGaul-ltr.png);}
+div.sidebar div#sidebarBoxHero .heroImageButton{background-image: url(../../lowRes/img/layout/heroButton.png);}

@@ -1,7 +1,7 @@
 <?php
 /* Page frame of the Travian 4.0 graphic pack (gpack.php 'layout' => 't40', included by Layout.php): the 4.0
  * header with the round navigation, the resource line, the village sign on the left and the hero, player,
- * alliance and village list signs on the right (styles: <pack>/mainPage/lang/openvillage-t40.css). The pages
+ * alliance and village list signs on the right, with the quest master and the info box below them (styles: <pack>/mainPage/lang/openvillage-t40.css). The pages
  * inside it are the same as in the other layouts. */
 
 use Core\Config;
@@ -226,6 +226,13 @@ $stock = $vars['stockBar'] ?? null;
                         </div>
                         <div class="foot"></div>
                     </div>
+                    <?php if (!empty($t40['infoBox']) || !empty($t40['questmaster'])): ?>
+                        <div id="sidebarAfterContent" class="sidebar afterContent">
+                            <?=$t40['questmaster'] ?? ''; ?>
+                            <?=$t40['infoBox'] ?? ''; ?>
+                            <div class="clear"></div>
+                        </div>
+                    <?php endif; ?>
                 </div>
             <?php endif; ?>
             <div class="clear"></div>

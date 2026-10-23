@@ -204,3 +204,4 @@ body.qualificationServerLoader #wrapper,body.qualificationServerLogin #wrapper,b
 body.qualificationServerLoader #logo,body.qualificationServerLogin #logo,body.qualificationServerLogout #logo,body.qualificationServerSignup #logo,body.qualificationServerSupport #logo,body.qualificationServerActivate #logo,body.qualificationServerError_site #logo,body.qualificationServerFatal_error #logo,body.qualificationServerBanned_cn #logo{margin:38px 0 0 192px;width:241px;height:83px;background-image:url(../../img/layout/travianLogoQualification.png);}
 /* T4.4 pages in the 4.0 frame */
 div.village1 div#map_details{position:absolute;right:0;top:10px;width:245px;margin:0;float:none}
+#side_info #sidebarAfterContent{float:none;position:relative;left:2px;top:0;width:auto;margin:6px 0 0;padding:0}

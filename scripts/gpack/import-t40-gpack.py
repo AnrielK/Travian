@@ -8,8 +8,8 @@ signs on the right. The pages inside the frame are the T4.4 ones, which grew fro
      picture in the same size: buildings, resource fields, units, icons, ...,
   2. without the T4.4 rules for the page frame (compact*.css),
   3. plus lang/openvillage-t40.css: the 4.0 rules for the page frame, with the 4.0 pictures they need in img40/.
-The 4.0 pack is a right-to-left pack in name only: its "-rtl" pictures are drawn for its left-to-right English
-stylesheet, so they are used as they are, also under the "-ltr" names of T4.4.
+Some of the 4.0 "-rtl" pictures are drawn for its left-to-right English stylesheet (page frame, backgrounds,
+resource fields), others are really mirrored (buildings, units); see replace_pictures().
 openvillage-compat.css is generated afterwards (scripts/gpack/make-classic-compat.py T40).
 
 Usage: python3 -I scripts/gpack/import-t40-gpack.py <unzipped gpack/travian_Travian_4.0_41>
@@ -19,14 +19,14 @@ import re
 import shutil
 import sys
 
-from PIL import Image
+from PIL import Image, ImageChops, ImageOps, ImageStat
 
 ROOT = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 GPACK = os.path.join(ROOT, 'sections', 'gpack')
 
 # The page frame of T4.4 (Layout.php) and of 4.0 (LayoutT40.php): selectors naming one of these belong to it.
 FRAME_T44 = re.compile(r'#(header|logo|navigation|background|bodyWrapper|center|contentOuterContainer|footer|'
-                       r'outOfGame|goldSilver|servertime|headerBar|ingameManual|stockBar\w*|sidebar\w*|'
+                       r'outOfGame|goldSilver|servertime|headerBar|ingameManual|stockBar\w*|sidebarBeforeContent|'
                        r'myGameLink\w*)\b|^\s*body(\.[\w-]+)*\s*$|(^|[\s,])\.stime\b')
 FRAME_40 = re.compile(r'#(wrapper|staticElements|header|mtop|logo|navigation|plusLink|plus|gs|myGameLink\w*|mid|'
                       r'side_info|villageName|villageList|linkList|res|contentOuterContainer|footer|mfoot|'
@@ -38,10 +38,18 @@ OUTSIDE = re.compile(r'\b(loader|login|logout|signup|support|activate|error_site
 # The T4.4 pages inside the 4.0 frame: where 4.0 placed them differently
 PAGES_IN_FRAME = '''
 div.village1 div#map_details{position:absolute;right:0;top:10px;width:245px;margin:0;float:none}
+#side_info #sidebarAfterContent{float:none;position:relative;left:2px;top:0;width:auto;margin:6px 0 0;padding:0}
 '''
 
 
+def difference(a, b) -> float:
+    return sum(ImageStat.Stat(ImageChops.difference(a, b)).mean)
+
+
 def replace_pictures(src_img: str, pack_img: str) -> int:
+    """Puts the 4.0 pictures over the T4.4 ones of the same name and size. A 4.0 "-rtl" picture is either drawn
+    for the left-to-right page (page backgrounds, resource fields) or really mirrored (buildings, units, ...):
+    it goes in the way round that is closer to the T4.4 picture it replaces."""
     replaced = 0
     for folder, _, files in os.walk(src_img):
         for name in files:
@@ -52,11 +60,28 @@ def replace_pictures(src_img: str, pack_img: str) -> int:
                 if not os.path.isfile(target) or open(source, 'rb').read() == open(target, 'rb').read():
                     continue
                 try:
-                    if Image.open(source).size != Image.open(target).size:
+                    new, old = Image.open(source), Image.open(target)
+                    if new.size != old.size:
                         continue   # another sprite layout: the T4.4 stylesheet would cut it wrong
+                    flip = False
+                    if '-rtl.' in name:
+                        a, b = new.convert('RGBA'), old.convert('RGBA')
+                        straight, mirrored = difference(a, b), difference(ImageOps.mirror(a), b)
+                        if min(straight, mirrored) < 0.5:
+                            continue   # the T4.4 picture, only the other way round
+                        flip = mirrored < straight
                 except OSError:
                     continue
-                shutil.copyfile(source, target)
+                if not flip:
+                    shutil.copyfile(source, target)
+                elif getattr(new, 'n_frames', 1) == 1:
+                    image = ImageOps.mirror(new)
+                    if target.lower().endswith(('.jpg', '.jpeg')):
+                        image.convert('RGB').save(target, quality=92)
+                    else:
+                        image.save(target, **{k: new.info[k] for k in ('transparency',) if k in new.info})
+                else:
+                    continue   # mirrored animation: the T4.4 one stays
                 replaced += 1
     return replaced
 

@@ -423,6 +423,7 @@ class GameView
         if ($infoBox_count == 0) return;
 
         $this->vars['sidebarBeforeContent'] .= $output;
+        $this->vars['t40']['infoBox'] = $output;
     }
 
     private function renderInGameInfoBox($row)
@@ -1012,7 +1013,8 @@ class GameView
                 return;
             }
         }
-        $this->vars['sidebarAfterContent'] .= $view->output();
+        $this->vars['t40']['questmaster'] = $view->output();
+        $this->vars['sidebarAfterContent'] .= $this->vars['t40']['questmaster'];
     }
 
     /** Data of the Travian 4.0 page frame (LayoutT40.php): village sign, alliance sign, village list. */
