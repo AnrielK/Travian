@@ -33,6 +33,12 @@ multi-player browser, test runner, live logs, SQL console and gameplay testing t
 Build it with `./macos/build-app.sh`; see [macos/README.md](macos/README.md).
 The same native runtime is scriptable through `scripts/native/openvillage-native.sh`.
 
+## XAMPP on Windows / Linux (no Docker)
+
+With [XAMPP](https://www.apachefriends.org/) (PHP 8.2+), start MySQL in the XAMPP Control Panel and run
+`xampp\start.bat` (Windows) or `./xampp/start.sh` (Linux). The browser opens an installation wizard that
+creates the database and the world; see [xampp/README.md](xampp/README.md).
+
 ## Verify a checkout
 
 With the stack running:
@@ -71,6 +77,7 @@ login, authenticated gameplay routes, and password-confirmed account downloads.
 | `scripts/native/` | Docker-free runtime (macOS, Linux, iOS) |
 | `scripts/gpack/` | Tools that build and convert graphic packs |
 | `tests/` | PHP regression tests and worker fixtures |
+| `xampp/` | Launcher and installation wizard for XAMPP (Windows / Linux) |
 | `ios/`, `macos/` | The iOS app and the OpenVillage Local macOS app |
 | `docs/` | Ruleset, operations, privacy, release, upstream and roadmap documents |
 
