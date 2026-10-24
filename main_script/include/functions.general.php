@@ -802,6 +802,47 @@ function array_filter_units($row)
     return $units;
 }
 
+/** The graphic pack the game is drawn with (sections/gpack/<hash>/). */
+function get_gpack_main_page()
+{
+    global $globalConfig;
+    return $globalConfig['staticParameters']['gpacks']['mainPage'] ?? '';
+}
+
+/**
+ * The look is chosen when a world is created (GAME_GPACK, stored in config.gpack by InstallerModel::finalize) and
+ * fixed for the world afterwards: config.gpack wins over GAME_GPACK. A world created before config.gpack existed
+ * keeps the look it has now. A pack missing from this build leaves the GAME_GPACK / default look, without storing it.
+ */
+function apply_world_gpack($dynamic)
+{
+    global $globalConfig;
+    if (!is_object($dynamic) || !property_exists($dynamic, 'gpack')) {
+        return; // schema migration 005 not applied yet
+    }
+    $gpacks =& $globalConfig['staticParameters']['gpacks'];
+    if ($dynamic->gpack === '' && !empty($dynamic->installed) && $gpacks['mainPage'] !== '') {
+        $dynamic->gpack = $gpacks['mainPage'];
+        $db = \Core\Database\DB::getInstance();
+        $db->query("UPDATE config SET gpack='" . $db->real_escape_string($dynamic->gpack) . "' WHERE gpack=''");
+    }
+    if ($dynamic->gpack !== '' && isset($gpacks['styles'][$dynamic->gpack])) {
+        $gpacks['mainPage'] = $dynamic->gpack;
+    }
+}
+
+/** Tribes a player can choose in this world: those of its look ('tribes' in sections/gpack/gpack.php). */
+function get_world_tribes()
+{
+    global $globalConfig;
+    $gpacks = $globalConfig['staticParameters']['gpacks'] ?? [];
+    $tribes = $gpacks['styles'][$gpacks['mainPage'] ?? '']['tribes'] ?? [1, 2, 3, 6, 7];
+    if (!getGame("allowNewTribes")) {
+        $tribes = array_values(array_intersect($tribes, [1, 2, 3]));
+    }
+    return $tribes;
+}
+
 /** Travian Legends graphic packs ('layout' => 'legends' in sections/gpack/gpack.php) use their own page layout. */
 function is_t46_layout()
 {

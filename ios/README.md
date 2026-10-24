@@ -42,10 +42,13 @@ Logy jsou v aplikaci Soubory → Na iPhonu → OpenVillage → `logs` (`mariadb.
 
 ## Grafika (gpack)
 
-Nastavení světa → Vzhled → Grafika: Travian T4.6 (29c89d54, výchozí), Travian Legends 655.3 (legends655),
+Nastavení světa → Vzhled nového světa → Grafika: Travian T4.6 (29c89d54, výchozí), Travian Legends 655.3 (legends655),
 OpenVillage 4.6 (a17a8f72),
 Travian T4.4 Seasonized v2, T4.4 Seasonized, T4.4 Classic a Travian 4.0 (T40). Volí se balíček „mainPage“ (CSS a obrázky
-rozhraní), změna platí hned. Na Macu/Linuxu stejně: `GAME_GPACK=TravianOld scripts/native/openvillage-native.sh start`.
+rozhraní). Vzhled se volí při vytvoření světa (Nástroje → Nový svět) a svět si ho pamatuje v databázi
+(`config.gpack`), u běžícího světa se už nemění. Vzhled určuje i národy na výběr: Travian 4.0 a T4.4 Classic mají
+Římany, Germány a Galy, ostatní k nim přidávají Egypťany a Huny (Legends později i Sparťany, `'tribes'` v `gpack.php`).
+Na Macu/Linuxu stejně: `GAME_GPACK=TravianOld scripts/native/openvillage-native.sh start` před vytvořením světa.
 29c89d54 má vzhled Travian Legends: vlastní rozložení stránky (`layout/LayoutT46.php` – horní lišta s hrdinou,
 kulatá navigace, sklad pod navigací, rámované boční panely, celoplošné dorf1/dorf2 ve stylu buildingsV3),
 jeho CSS + styly a17a8f72 pro dialogy, tlačítka a obsah stránek. Soubory, které balíčku chybí, server

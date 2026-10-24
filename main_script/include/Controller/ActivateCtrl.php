@@ -19,7 +19,7 @@ use function session_regenerate_id;
 
 class ActivateCtrl extends OutOfGameCtrl
 {
-    private $availableTribes  = [1, 2, 3, 6, 7];
+    private $availableTribes  = [1, 2, 3, 6, 7]; // get_world_tribes(): the tribes of the world's look
     private $useNewActivation = false;
     private $token;
     private $activationRow    = [];
@@ -29,9 +29,7 @@ class ActivateCtrl extends OutOfGameCtrl
     public function __construct()
     {
         parent::__construct();
-        if (!getGame("allowNewTribes")) {
-            $this->availableTribes = [1, 2, 3];
-        }
+        $this->availableTribes = get_world_tribes();
         $this->useNewActivation = is_new_gpack();
         $this->legends = function_exists('is_hero_v2') && is_hero_v2();
         $config = Config::getInstance();

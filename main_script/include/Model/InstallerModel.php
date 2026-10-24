@@ -1560,7 +1560,9 @@ class InstallerModel
         $WonderOfTheWorld->createWWVillages();
         //multihunter
         $register->createBaseVillage(2, "Multihunter", 1, Formulas::xy2kid(1, 0));
-        $db->query("UPDATE config SET installed=1, installationTime=" . time());
+        // The look chosen for the new world (GAME_GPACK) stays with it: see apply_world_gpack().
+        $gpack = $db->real_escape_string(get_gpack_main_page());
+        $db->query("UPDATE config SET installed=1, installationTime=" . time() . ", gpack='$gpack'");
         /*
         $newsletter_subject = sprintf(T("Global", "Newsletter_NewServer_subject"), Config::getProperty("settings", "serverName"), getGameSpeed());
         $newsletter_message = T("Global", "Newsletter_NewServer_content");

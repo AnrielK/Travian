@@ -157,7 +157,8 @@ try {
                 'ok' => true,
                 'checks' => $checks,
                 'passed' => !array_filter($checks, static fn ($c) => $c['required'] && !$c['ok']),
-                'gpacks' => array_map(static fn ($s) => ['hash' => $s['hash'], 'name' => $s['name']], array_values($styles)),
+                'gpacks' => array_map(static fn ($s) => ['hash' => $s['hash'], 'name' => $s['name'],
+                    'tribes' => count($s['tribes'] ?? [])], array_values($styles)),
                 'timezone' => date_default_timezone_get(),
             ]);
             return;

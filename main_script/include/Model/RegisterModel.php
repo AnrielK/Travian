@@ -51,11 +51,8 @@ class RegisterModel
             if (empty($kid)) {
                 continue;
             }
-            if (getGame("allowNewTribes")) {
-                $race = [1, 2, 3, 6, 7][mt_rand(0, 4)];
-            } else {
-                $race = [1, 2, 3][mt_rand(0, 2)];
-            }
+            $tribes = get_world_tribes();
+            $race = $tribes[mt_rand(0, count($tribes) - 1)];
             $uid = $this->addUser($name, sha1(get_random_string(mt_rand(1, 11))), '', $race, $kid, 3);
             $this->createBaseVillage($uid, $name, $race, $kid);
             $db->query("UPDATE users SET last_login_time=" . (time() - mt_rand(1, 7200)) . " WHERE id=$uid");

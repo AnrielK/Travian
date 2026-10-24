@@ -19,7 +19,7 @@ installation, without Docker. A web wizard creates the database and the world on
    - Windows: double-click `xampp\start.bat`
    - Linux / macOS: `./xampp/start.sh`
 3. The browser opens <http://127.0.0.1:8080/>. On the first start it shows the installation wizard:
-   requirements → database account → world settings (speed, map size, round length, hero speed, graphics,
+   requirements → database account → world settings (speed, map size, round length, hero speed, look,
    time zone, administrator password) → installation → done.
 4. Keep the launcher window open while playing: it runs the game's automation (building, troops, …) once a
    second. Close it or press Ctrl+C to stop the game.
@@ -37,8 +37,13 @@ The administrator accounts **Multihunter** and **Support** use the password give
 - the databases `openvillage_game`, `openvillage_global` and `openvillage_cache` (cache instead of Redis),
 - `xampp/config.local.php` with the settings and generated secrets (not in git).
 
-To install again (a new world), delete `xampp/config.local.php` and restart the launcher; the wizard asks
-before overwriting existing game databases.
+The look (graphic pack) is chosen once, when the world is created, and the world keeps it: it is stored in the
+world's database, so changing `GAME_GPACK` in `config.local.php` later has no effect on it. The look also decides
+the tribes players can choose: Travian 4.0 and T4.4 Classic offer Romans, Teutons and Gauls, the other looks
+add Egyptians and Huns.
+
+To install again (a new world, possibly with another look), delete `xampp/config.local.php` and restart the
+launcher; the wizard asks before overwriting existing game databases.
 
 ## Troubleshooting
 

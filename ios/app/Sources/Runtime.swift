@@ -196,8 +196,6 @@ final class GameRuntime: ObservableObject {
     @Published var tickEnabled = true
     /// Set when the previous launch died during start-up (step + end of mariadb.log).
     @Published var previousCrash: String?
-    /// Bumped when the graphic style changes so open web views reload.
-    @Published private(set) var styleVersion = 0
     let secrets = Secrets.load()
     var world = WorldSettings.load()
 
@@ -287,13 +285,14 @@ final class GameRuntime: ObservableObject {
         appendLog(Paths.setupLog, "\(Date()) setup: \(result)")
     }
 
-    /// Drops all data and creates a new world (map size from settings).
+    /// Drops all data and creates a new world (map size and look from settings; the world keeps its look).
     func newWorld() async throws {
         tickEnabled = false
         defer { tickEnabled = true }
         state = .working("Mažu svět…")
         _ = try await controlChecked("reset", form: [:], timeout: 900)
         setenv("GAME_MAP_SIZE", String(world.mapSize), 1)
+        setenv("GAME_GPACK", world.style, 1)
         try await ensureWorld()
         state = .running
     }
@@ -301,15 +300,6 @@ final class GameRuntime: ObservableObject {
     /// HeroHelper reads GAME_HERO_SPEED on every request, so a new hero speed applies to the next movement.
     func applyHeroSpeed(_ factor: Int) {
         setenv("GAME_HERO_SPEED", String(max(1, factor)), 1)
-    }
-
-    /// sections/gpack/gpack.php reads GAME_GPACK on every request, so a new style applies immediately.
-    func applyStyle(_ hash: String) {
-        setenv("GAME_GPACK", hash, 1)
-        Task {
-            _ = try? await control("flush", form: [:])
-            styleVersion += 1
-        }
     }
 
     // MARK: control endpoint

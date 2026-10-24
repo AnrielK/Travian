@@ -104,7 +104,7 @@ dt{color:var(--muted)}dd{margin:0;font-weight:600;word-break:break-all}
       <select id="hero_speed"><option value="1" selected>1×</option><option value="2">2×</option><option value="3">3×</option><option value="5">5×</option></select></div>
   </div>
   <div class="row">
-    <div><label for="gpack">Grafika</label><select id="gpack"></select></div>
+    <div><label for="gpack">Vzhled <span class="hint">(u světa už nejde změnit)</span></label><select id="gpack"></select></div>
     <div><label for="timezone">Časové pásmo</label><select id="timezone"></select></div>
   </div>
   <label for="admin_password">Heslo správce <span class="hint">(účty Multihunter a Support, aspoň 6 znaků)</span></label>
@@ -188,7 +188,9 @@ dt{color:var(--muted)}dd{margin:0;font-weight:600;word-break:break-all}
       message('msg1', r.passed ? '' : 'Některé povinné požadavky nejsou splněné.');
       var gpack = $('gpack');
       gpack.innerHTML = '';
-      (r.gpacks || []).forEach(function (g) { gpack.add(new Option(g.name, g.hash)); });
+      (r.gpacks || []).forEach(function (g) {
+        gpack.add(new Option(g.name + (g.tribes ? ' – ' + g.tribes + (g.tribes < 5 ? ' národy' : ' národů') : ''), g.hash));
+      });
       var zones = (Intl.supportedValuesOf ? Intl.supportedValuesOf('timeZone') : []).concat(['UTC']);
       var local = Intl.DateTimeFormat().resolvedOptions().timeZone || r.timezone || 'UTC';
       var tz = $('timezone');

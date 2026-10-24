@@ -11,6 +11,8 @@
  * @var int $ageDays
  * @var string $ageShort
  * @var string $mapText
+ * @var string[] $tribes tribes of the world's look
+ * @var string $lookName
  */
 $icons = json_decode((string)@file_get_contents(__DIR__ . '/legends/icons.json'), true) ?: [];
 $svg = static function (string $name, bool $outline = false, string $class = '') use ($icons): string {
@@ -28,10 +30,12 @@ $speedNumber = rtrim(rtrim(number_format($speed, 2, '.', ''), '0'), '.');
 $background = $speed > 1 ? 'defaultSpeed' : 'default';
 $tribeIcons = '<div class="tribes">';
 foreach (['roman' => 'Romans', 'teuton' => 'Teutons', 'gaul' => 'Gauls', 'egyptian' => 'Egyptians', 'hun' => 'Huns'] as $tribe => $label) {
-    $tribeIcons .= '<i class="tribe ' . $tribe . '" title="' . escape(lt($label)) . '"></i>';
+    if (in_array($tribe, $tribes, true)) {
+        $tribeIcons .= '<i class="tribe ' . $tribe . '" title="' . escape(lt($label)) . '"></i>';
+    }
 }
 $tribeIcons .= '</div>';
-$title = '<div class="title"><div class="avatarName">%s</div><div class="gameworldName">' . escape(lt('Local world')) . '</div><div class="subtitle">OpenVillage 4.6</div></div>';
+$title = '<div class="title"><div class="avatarName">%s</div><div class="gameworldName">' . escape(lt('Local world')) . '</div><div class="subtitle">' . escape($lookName) . '</div></div>';
 $close = '<button type="button" class="framed green closeButton withIcon" data-close>' . $svg('close', true) . '</button>';
 $view = isset($_GET['join']) ? 'join' : 'worlds';
 // The Legends stylesheet sets white-space: pre-line, so whitespace between tags would become empty lines
