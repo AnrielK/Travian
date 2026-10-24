@@ -25,6 +25,15 @@ docker compose run --rm bootstrap
 Never reuse the example secrets outside an isolated local machine. Keep `.env`
 out of version control.
 
+## Several worlds
+
+The native runtime, the XAMPP runtime and the iOS app can run further worlds next to the installation's world:
+the lobby's *Game worlds* page (`/worlds.php`, loopback only) creates one with its own look, speed, map size,
+round length and hero speed, and deletes it again. A further world is a `gameServers` row in the global database
+(its id is the world's `worldUniqueId`) with its own game database `<GAME_DB_NAME>_<id>`; its pages are at
+`/game<id>/` and its automation runs through `/__openvillage/tick?world=<id>`. Accounts are per world; sessions
+and cache keys are separated by the world id. The Docker setup (Apache) serves only the first world.
+
 ## Routine checks
 
 ```sh

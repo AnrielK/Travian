@@ -10,6 +10,9 @@
  *   POST sql     run SQL (form fields: query, db=game|global) and return the result sets as JSON
  *   GET  status  installed flag, counts, versions
  *   POST flush   clear the cache table used by the Redis replacement
+ *   GET  worlds  ids of all worlds (1 = the installation's world, see worlds.php), for the automation loops
+ *
+ * "?world=<id>" runs tick, setup, sql and status for a further world (scripts/native/runtime/worlds.php).
  */
 
 $ovAction = $GLOBALS['ovControlAction'] ?? '';
@@ -61,6 +64,12 @@ if ($token !== false && $token !== '' && !hash_equals($token, (string)($_SERVER[
 }
 set_time_limit(0);
 ignore_user_abort(true);
+require_once __DIR__ . '/worlds.php';
+$ovWorld = max(1, (int)($_GET['world'] ?? 1));
+if (!ov_apply_world($ovWorld)) {
+    ov_json(['ok' => false, 'error' => "unknown world $ovWorld"], 404);
+    return;
+}
 
 switch ($ovAction) {
     // ------------------------------------------------------------------------------------------
@@ -79,6 +88,10 @@ switch ($ovAction) {
         }
         $m->set_charset('utf8mb4');
         $log = [];
+        foreach (ov_extra_worlds() as $id => $extra) {                 // a reset erases every world
+            ov_delete_world($id);
+            $log[] = "world $id deleted";
+        }
         foreach ($schemas as $database => $file) {
             if (!preg_match('/^[A-Za-z0-9_]+$/', $database)) {
                 ov_json(['ok' => false, 'error' => "bad database name $database"], 500);
@@ -127,32 +140,7 @@ switch ($ovAction) {
                 $log[] = 'config row created';
             }
             // The rest is install.php (which only runs from the CLI) executed in-process.
-            define('IS_INSTALLER', true);
-            require $ovRoot . '/main_script/copyable/include/env.php';
-            require $ovRoot . '/main_script/include/bootstrap.php';
-            require $ovRoot . '/main_script/copyable/include/migrate.php';
-            ob_start();
-            run_schema_migrations();
-            run_global_schema_migrations();
-            $log[] = trim((string)ob_get_clean());
-            mt_srand(make_seed());
-            $installed = (bool)\Core\Config::getInstance()->dynamic->installed;
-            if (!$installed) {
-                $password = ov_env('INITIAL_ADMIN_PASSWORD');
-                if ($password === '') {
-                    throw new RuntimeException('INITIAL_ADMIN_PASSWORD is required');
-                }
-                ini_set('memory_limit', '-1');
-                $installer = new \Model\InstallerModel();
-                $installer->mapToArray();
-                $installer->createRestOfTheMap();
-                $installer->pushMapToDB();
-                $installer->finalize($password);
-                \Core\Database\DB::getInstance()->query('UPDATE odata SET lasttrain=' . \Core\Config::getProperty('game', 'start_time'));
-                $log[] = 'world installed';
-            } else {
-                $log[] = 'already installed';
-            }
+            $log = array_merge($log, ov_install_world(ov_env('INITIAL_ADMIN_PASSWORD')));
             while (ob_get_level() > 0) {
                 ob_end_clean();
             }
@@ -323,6 +311,11 @@ switch ($ovAction) {
         } catch (Throwable $e) {
             ov_json(['ok' => false, 'installed' => false, 'error' => $e->getMessage()], 503);
         }
+        return;
+
+    // ------------------------------------------------------------------------------------------
+    case 'worlds':
+        ov_json(['ok' => true, 'worlds' => array_merge([1], array_keys(ov_extra_worlds()))]);
         return;
 
     // ------------------------------------------------------------------------------------------

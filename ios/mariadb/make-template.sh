@@ -39,6 +39,7 @@ CREATE USER 'openvillage'@'localhost' IDENTIFIED BY '$PASSWORD';
 GRANT ALL PRIVILEGES ON openvillage_global.* TO 'openvillage'@'localhost';
 GRANT ALL PRIVILEGES ON openvillage_game.*   TO 'openvillage'@'localhost';
 GRANT ALL PRIVILEGES ON openvillage_cache.*  TO 'openvillage'@'localhost';
+GRANT ALL PRIVILEGES ON \`openvillage\\_game\\_%\`.* TO 'openvillage'@'localhost';
 FLUSH PRIVILEGES;
 SQL
 sql openvillage_global <"$ROOT/data/main.sql"

@@ -206,6 +206,9 @@ final class GameRuntime: ObservableObject {
     private var phpRuns = 0
     private var tickTimer: Timer?
     private var tickInFlight = false
+    /// Worlds to tick (1 = the app's world; further ones are created on the lobby's "Game worlds" page).
+    private var worldIds = [1]
+    private var worldsCheckedAt = Date.distantPast
 
     // MARK: start
 
@@ -373,14 +376,21 @@ final class GameRuntime: ObservableObject {
         guard tickEnabled, state == .running, !tickInFlight else { return }
         tickInFlight = true
         defer { tickInFlight = false }
-        guard let r = try? await control("tick", timeout: 300) else { return }
-        let ran = r["ran"] as? [String] ?? []
-        let errors = r["errors"] as? [String] ?? []
-        if !errors.isEmpty { tickErrors += errors.count }
-        if !ran.isEmpty || !errors.isEmpty {
-            let line = "\(Self.stamp()) \(r["ms"] ?? 0) ms  " + (ran + errors.map { "ERROR " + $0 }).joined(separator: ", ")
-            lastTick = line
-            appendLog(Paths.tickLog, line)
+        if Date().timeIntervalSince(worldsCheckedAt) >= 10 {
+            worldsCheckedAt = Date()
+            if let r = try? await control("worlds"), let ids = r["worlds"] as? [Int], !ids.isEmpty { worldIds = ids }
+        }
+        for world in worldIds {
+            guard let r = try? await control("tick?world=\(world)", timeout: 300) else { continue }
+            let ran = r["ran"] as? [String] ?? []
+            let errors = r["errors"] as? [String] ?? []
+            if !errors.isEmpty { tickErrors += errors.count }
+            if !ran.isEmpty || !errors.isEmpty {
+                let line = "\(Self.stamp()) \(world == 1 ? "" : "[svět \(world)] ")\(r["ms"] ?? 0) ms  "
+                    + (ran + errors.map { "ERROR " + $0 }).joined(separator: ", ")
+                lastTick = line
+                appendLog(Paths.tickLog, line)
+            }
         }
     }
 

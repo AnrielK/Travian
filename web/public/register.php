@@ -3,9 +3,16 @@
 declare(strict_types=1);
 require dirname(__DIR__) . '/bootstrap.php';
 
+// The world to join (1 = the installation's world; further worlds see scripts/native/runtime/worlds.php).
+$worldId = max(1, (int)($_POST['world'] ?? 1));
+if ($worldId > 1 && !isset(ov_extra_worlds()[$worldId])) {
+    $worldId = 1;
+}
+
 function fail_registration(string $message): never
 {
-    header('Location: /?error=' . rawurlencode($message), true, 303);
+    global $worldId;
+    header('Location: /?' . ($worldId > 1 ? 'world=' . $worldId . '&' : '') . 'error=' . rawurlencode($message), true, 303);
     exit;
 }
 
@@ -45,7 +52,7 @@ if (strlen($password) < 10 || strlen($password) > 128) {
 }
 
 try {
-    $database = game_database();
+    $database = game_database($worldId);
     $database->beginTransaction();
 
     $statement = $database->prepare(
@@ -90,4 +97,4 @@ try {
 }
 
 unset($_SESSION['launcher_csrf']);
-header('Location: /game/activate.php?token=' . rawurlencode($token), true, 303);
+header('Location: ' . ov_world_path($worldId) . 'activate.php?token=' . rawurlencode($token), true, 303);
