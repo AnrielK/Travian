@@ -7745,6 +7745,7 @@ div.village2 div#village_map div.buildingSlot .colorLayer.maxLevel{border:1px so
 div.village2 div#village_map div.buildingSlot .colorLayer .labelLayer{position:relative;top:4px;left:4px;width:18px;height:18px;background-color:white;border-radius:50%;line-height:17px;font-size:11px;font-family:Verdana;text-align:center}
 div.village2 div#village_map div.buildingSlot .colorLayer.underConstruction .labelLayer{background-color:#ffa84f}
 .buildingsV1 #village_map{width:628px;height:534px;position:absolute;z-index:1}
+.buildingsV1 .buildingSlot.a39.g0{left:356px;top:171px}
 .buildingsV1 #village_map .buildingSlot img.building{left:0;top:0;width:120px;height:120px}
 .buildingsV1 #village_map .buildingSlot img.g16,.buildingsV1 #village_map .buildingSlot img.g16b,.buildingsV1 #village_map .buildingSlot img.g16e{height:160px}
 .buildingsV1 #village_map .buildingSlot img.g16_ww,.buildingsV1 #village_map .buildingSlot img.g16b_ww,.buildingsV1 #village_map .buildingSlot img.g16e_ww{width:83px;height:133px}

@@ -283,6 +283,8 @@ button.green.disabled .button-container,button.green:disabled .button-container,
 button.green.disabled .button-container .button-content,button.green:disabled .button-container .button-content,button.orange.disabled .button-container .button-content,button.orange:disabled .button-container .button-content{color:#999}
 body.gidResources{background-image:url(../img40/layout/bgR.jpg)}
 body.gidResources #wrapper{background-image:url(../img40/layout/bgResources-rtl.jpg)}
+/* the image map of the resource fields uses the 400px wide T4.4 coordinates: centre it on the 500px wide 4.0 fields */
+div.village1 img#resfeld{left:56px;margin-top:4px}
 div.village1 #village_map .colorLayer,div.village1 #village_map .colorLayer.good,div.village1 #village_map .colorLayer.notNow,div.village1 #village_map .colorLayer.maxLevel{border:0;margin:2px 0 0 2px;width:24px;height:23px;border-radius:0;box-shadow:none;background:url(../img/g/circle.png) 0 0 no-repeat}
 div.village1 #village_map .colorLayer.underConstruction{background-position:0 -33px}
 div.village1 #village_map .colorLayer .labelLayer,div.village1 #village_map .colorLayer.underConstruction .labelLayer{top:0;left:0;right:auto;width:23px;height:23px;background:none;border-radius:0;line-height:23px;font-size:13px;font-family:Arial,Helvetica,Verdana,sans-serif;color:#252525}
