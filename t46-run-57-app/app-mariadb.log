@@ -1,0 +1,187 @@
+2026-10-24  5:54:55 0 [Note] Starting MariaDB 11.4.13-MariaDB source revision 170b1d70737be6f134448f51713cdc1ae215b420 server_uid unknown as process 8076
+2026-10-24  5:54:55 0 [Note] InnoDB: Compressed tables use zlib 1.3.2
+2026-10-24  5:54:55 0 [Note] InnoDB: Number of transaction pools: 1
+2026-10-24  5:54:55 0 [Note] InnoDB: Using generic crc32 instructions
+2026-10-24  5:54:55 0 [Note] InnoDB: innodb_buffer_pool_size_max=64m, innodb_buffer_pool_size=48m
+2026-10-24  5:54:55 0 [Note] InnoDB: Completed initialization of buffer pool
+2026-10-24  5:54:55 0 [Note] InnoDB: End of log at LSN=1586886
+2026-10-24  5:54:55 0 [Note] InnoDB: Resizing redo log from 96.000MiB to 16.000MiB; LSN=1586886
+2026-10-24  5:54:55 0 [Note] InnoDB: Opened 3 undo tablespaces
+2026-10-24  5:54:55 0 [Note] InnoDB: 128 rollback segments in 3 undo tablespaces are active.
+2026-10-24  5:54:55 0 [Note] InnoDB: Setting file './ibtmp1' size to 12.000MiB. Physically writing the file full; Please wait ...
+2026-10-24  5:54:55 0 [Note] InnoDB: File './ibtmp1' size is now 12.000MiB.
+2026-10-24  5:54:55 0 [Note] InnoDB: log sequence number 1586886; transaction id 1063
+2026-10-24  5:54:55 0 [Note] InnoDB: Loading buffer pool(s) from /Users/runner/Library/Developer/CoreSimulator/Devices/DC4CD8B3-4457-4153-9087-A0D7A2F9BFD9/data/Containers/Data/Application/C0DA8424-79EF-4A31-A7E9-D32BD28E5A2E/Library/Application Support/OpenVillage/mariadb/ib_buffer_pool
+2026-10-24  5:54:56 0 [Note] InnoDB: Buffer pool(s) load completed at 261024  5:54:56
+[Sat Oct 24 05:54:58 2026] 127.0.0.1:50778 Accepted
+[Sat Oct 24 05:55:00 2026] 127.0.0.1:50795 Accepted
+[Sat Oct 24 05:55:03 2026] 127.0.0.1:50814 Accepted
+[Sat Oct 24 05:55:05 2026] 127.0.0.1:50833 Accepted
+[Sat Oct 24 05:55:07 2026] 127.0.0.1:50852 Accepted
+[Sat Oct 24 05:55:09 2026] 127.0.0.1:50871 Accepted
+[Sat Oct 24 05:55:11 2026] 127.0.0.1:50888 Accepted
+2026-10-24  5:55:12 0 [Warning] 'user' entry 'root@sat12-dp152-73f57acc-517d-4e21-a49d-2afa0791713c-1a9f8e874009.local' ignored in --skip-name-resolve mode.
+2026-10-24  5:55:12 0 [Warning] 'proxies_priv' entry '@% root@sat12-dp152-73f57acc-517d-4e21-a49d-2afa0791713c-1a9f8e874009.local' ignored in --skip-name-resolve mode.
+2026-10-24  5:55:12 0 [Note] mariadbd: Event Scheduler: Loaded 0 events
+2026-10-24  5:55:12 0 [Note] mariadbd: ready for connections.
+Version: '11.4.13-MariaDB'  socket: '/tmp/ov-501-m.sock'  port: 0  Source distribution
+2026-10-24  5:55:12 3 [Warning] Aborted connection 3 to db: 'unconnected' user: 'unauthenticated' host: 'localhost' (This connection closed normally without authentication)
+[Sat Oct 24 05:55:12 2026] 127.0.0.1:50894 Accepted
+[Sat Oct 24 05:55:12 2026] 127.0.0.1:50895 Accepted
+[Sat Oct 24 05:55:14 2026] 127.0.0.1:50908 Accepted
+[Sat Oct 24 05:55:14 2026] 127.0.0.1:50912 Accepted
+[Sat Oct 24 05:55:14 2026] 127.0.0.1:50913 Accepted
+[Sat Oct 24 05:55:15 2026] 127.0.0.1:50923 Accepted
+[Sat Oct 24 05:55:15 2026] 127.0.0.1:50924 Accepted
+[Sat Oct 24 05:55:15 2026] 127.0.0.1:50926 Accepted
+[Sat Oct 24 05:55:15 2026] 127.0.0.1:50927 Accepted
+[Sat Oct 24 05:55:15 2026] 127.0.0.1:50928 Accepted
+[Sat Oct 24 05:55:15 2026] 127.0.0.1:50929 Accepted
+[Sat Oct 24 05:55:16 2026] 127.0.0.1:50935 Accepted
+[Sat Oct 24 05:55:17 2026] 127.0.0.1:50944 Accepted
+[Sat Oct 24 05:55:18 2026] 127.0.0.1:50953 Accepted
+[Sat Oct 24 05:55:18 2026] 127.0.0.1:50955 Accepted
+[Sat Oct 24 05:55:18 2026] 127.0.0.1:50959 Accepted
+[Sat Oct 24 05:55:18 2026] 127.0.0.1:50961 Accepted
+[Sat Oct 24 05:55:18 2026] 127.0.0.1:50962 Accepted
+[Sat Oct 24 05:55:19 2026] 127.0.0.1:50967 Accepted
+[Sat Oct 24 05:55:19 2026] 127.0.0.1:50968 Accepted
+[Sat Oct 24 05:55:19 2026] 127.0.0.1:50969 Accepted
+[Sat Oct 24 05:55:19 2026] 127.0.0.1:50975 Accepted
+[Sat Oct 24 05:55:20 2026] 127.0.0.1:50979 Accepted
+[Sat Oct 24 05:55:20 2026] 127.0.0.1:50981 Accepted
+[Sat Oct 24 05:55:20 2026] 127.0.0.1:50986 Accepted
+[Sat Oct 24 05:55:20 2026] 127.0.0.1:50987 Accepted
+[Sat Oct 24 05:55:21 2026] 127.0.0.1:50992 Accepted
+[Sat Oct 24 05:55:21 2026] 127.0.0.1:50993 Accepted
+[Sat Oct 24 05:55:21 2026] 127.0.0.1:50999 Accepted
+[Sat Oct 24 05:55:21 2026] 127.0.0.1:51001 Accepted
+[Sat Oct 24 05:55:22 2026] 127.0.0.1:51004 Accepted
+[Sat Oct 24 05:55:22 2026] 127.0.0.1:51006 Accepted
+[Sat Oct 24 05:55:22 2026] 127.0.0.1:51010 Accepted
+[Sat Oct 24 05:55:22 2026] 127.0.0.1:51014 Accepted
+[Sat Oct 24 05:55:23 2026] 127.0.0.1:51016 Accepted
+[Sat Oct 24 05:55:23 2026] 127.0.0.1:51017 Accepted
+[Sat Oct 24 05:55:23 2026] 127.0.0.1:51022 Accepted
+[Sat Oct 24 05:55:24 2026] 127.0.0.1:51027 Accepted
+[Sat Oct 24 05:55:24 2026] 127.0.0.1:51029 Accepted
+[Sat Oct 24 05:55:24 2026] 127.0.0.1:51030 Accepted
+[Sat Oct 24 05:55:24 2026] 127.0.0.1:51034 Accepted
+[Sat Oct 24 05:55:25 2026] 127.0.0.1:51040 Accepted
+[Sat Oct 24 05:55:25 2026] 127.0.0.1:51041 Accepted
+[Sat Oct 24 05:55:25 2026] 127.0.0.1:51046 Accepted
+[Sat Oct 24 05:55:26 2026] 127.0.0.1:51048 Accepted
+[Sat Oct 24 05:55:26 2026] 127.0.0.1:51049 Accepted
+[Sat Oct 24 05:55:26 2026] 127.0.0.1:51055 Accepted
+[Sat Oct 24 05:55:27 2026] 127.0.0.1:51060 Accepted
+[Sat Oct 24 05:55:27 2026] 127.0.0.1:51062 Accepted
+[Sat Oct 24 05:55:27 2026] 127.0.0.1:51067 Accepted
+[Sat Oct 24 05:55:28 2026] 127.0.0.1:51071 Accepted
+[Sat Oct 24 05:55:28 2026] 127.0.0.1:51072 Accepted
+[Sat Oct 24 05:55:28 2026] 127.0.0.1:51078 Accepted
+[Sat Oct 24 05:55:29 2026] 127.0.0.1:51082 Accepted
+[Sat Oct 24 05:55:29 2026] 127.0.0.1:51084 Accepted
+[Sat Oct 24 05:55:29 2026] 127.0.0.1:51089 Accepted
+[Sat Oct 24 05:55:30 2026] 127.0.0.1:51093 Accepted
+[Sat Oct 24 05:55:30 2026] 127.0.0.1:51095 Accepted
+……
+[Sat Oct 24 05:57:17 2026] 127.0.0.1:52177 Accepted
+[Sat Oct 24 05:57:18 2026] 127.0.0.1:52185 Accepted
+[Sat Oct 24 05:57:19 2026] 127.0.0.1:52196 Accepted
+[Sat Oct 24 05:57:20 2026] 127.0.0.1:52206 Accepted
+[Sat Oct 24 05:57:21 2026] 127.0.0.1:52217 Accepted
+[Sat Oct 24 05:57:22 2026] 127.0.0.1:52227 Accepted
+[Sat Oct 24 05:57:23 2026] 127.0.0.1:52238 Accepted
+[Sat Oct 24 05:57:24 2026] 127.0.0.1:52248 Accepted
+[Sat Oct 24 05:57:25 2026] 127.0.0.1:52258 Accepted
+[Sat Oct 24 05:57:26 2026] 127.0.0.1:52269 Accepted
+[Sat Oct 24 05:57:27 2026] 127.0.0.1:52279 Accepted
+[Sat Oct 24 05:57:28 2026] 127.0.0.1:52288 Accepted
+[Sat Oct 24 05:57:29 2026] 127.0.0.1:52298 Accepted
+[Sat Oct 24 05:57:30 2026] 127.0.0.1:52308 Accepted
+[Sat Oct 24 05:57:31 2026] 127.0.0.1:52318 Accepted
+[Sat Oct 24 05:57:32 2026] 127.0.0.1:52328 Accepted
+[Sat Oct 24 05:57:33 2026] 127.0.0.1:52338 Accepted
+[Sat Oct 24 05:57:34 2026] 127.0.0.1:52348 Accepted
+[Sat Oct 24 05:57:35 2026] 127.0.0.1:52359 Accepted
+[Sat Oct 24 05:57:36 2026] 127.0.0.1:52369 Accepted
+[Sat Oct 24 05:57:37 2026] 127.0.0.1:52379 Accepted
+[Sat Oct 24 05:57:38 2026] 127.0.0.1:52387 Accepted
+[Sat Oct 24 05:57:39 2026] 127.0.0.1:52396 Accepted
+[Sat Oct 24 05:57:40 2026] 127.0.0.1:52406 Accepted
+[Sat Oct 24 05:57:41 2026] 127.0.0.1:52415 Accepted
+[Sat Oct 24 05:57:42 2026] 127.0.0.1:52425 Accepted
+[Sat Oct 24 05:57:43 2026] 127.0.0.1:52435 Accepted
+[Sat Oct 24 05:57:44 2026] 127.0.0.1:52446 Accepted
+[Sat Oct 24 05:57:45 2026] 127.0.0.1:52456 Accepted
+[Sat Oct 24 05:57:46 2026] 127.0.0.1:52466 Accepted
+[Sat Oct 24 05:57:47 2026] 127.0.0.1:52476 Accepted
+[Sat Oct 24 05:57:48 2026] 127.0.0.1:52486 Accepted
+[Sat Oct 24 05:57:49 2026] 127.0.0.1:52496 Accepted
+[Sat Oct 24 05:57:50 2026] 127.0.0.1:52506 Accepted
+[Sat Oct 24 05:57:51 2026] 127.0.0.1:52517 Accepted
+[Sat Oct 24 05:57:52 2026] 127.0.0.1:52526 Accepted
+[Sat Oct 24 05:57:53 2026] 127.0.0.1:52536 Accepted
+[Sat Oct 24 05:57:54 2026] 127.0.0.1:52547 Accepted
+[Sat Oct 24 05:57:55 2026] 127.0.0.1:52557 Accepted
+[Sat Oct 24 05:57:56 2026] 127.0.0.1:52567 Accepted
+[Sat Oct 24 05:57:57 2026] 127.0.0.1:52578 Accepted
+[Sat Oct 24 05:57:58 2026] 127.0.0.1:52588 Accepted
+[Sat Oct 24 05:57:59 2026] 127.0.0.1:52600 Accepted
+[Sat Oct 24 05:58:00 2026] 127.0.0.1:52610 Accepted
+[Sat Oct 24 05:58:01 2026] 127.0.0.1:52619 Accepted
+[Sat Oct 24 05:58:02 2026] 127.0.0.1:52629 Accepted
+[Sat Oct 24 05:58:03 2026] 127.0.0.1:52639 Accepted
+[Sat Oct 24 05:58:04 2026] 127.0.0.1:52649 Accepted
+[Sat Oct 24 05:58:05 2026] 127.0.0.1:52660 Accepted
+[Sat Oct 24 05:58:06 2026] 127.0.0.1:52670 Accepted
+[Sat Oct 24 05:58:07 2026] 127.0.0.1:52681 Accepted
+[Sat Oct 24 05:58:08 2026] 127.0.0.1:52691 Accepted
+[Sat Oct 24 05:58:09 2026] 127.0.0.1:52702 Accepted
+[Sat Oct 24 05:58:10 2026] 127.0.0.1:52712 Accepted
+[Sat Oct 24 05:58:11 2026] 127.0.0.1:52723 Accepted
+[Sat Oct 24 05:58:12 2026] 127.0.0.1:52732 Accepted
+[Sat Oct 24 05:58:13 2026] 127.0.0.1:52741 Accepted
+[Sat Oct 24 05:58:14 2026] 127.0.0.1:52751 Accepted
+[Sat Oct 24 05:58:15 2026] 127.0.0.1:52760 Accepted
+[Sat Oct 24 05:58:16 2026] 127.0.0.1:52769 Accepted
+[Sat Oct 24 05:58:17 2026] 127.0.0.1:52778 Accepted
+[Sat Oct 24 05:58:18 2026] 127.0.0.1:52787 Accepted
+[Sat Oct 24 05:58:19 2026] 127.0.0.1:52796 Accepted
+[Sat Oct 24 05:58:20 2026] 127.0.0.1:52805 Accepted
+[Sat Oct 24 05:58:21 2026] 127.0.0.1:52814 Accepted
+[Sat Oct 24 05:58:22 2026] 127.0.0.1:52824 Accepted
+[Sat Oct 24 05:58:23 2026] 127.0.0.1:52833 Accepted
+[Sat Oct 24 05:58:24 2026] 127.0.0.1:52843 Accepted
+[Sat Oct 24 05:58:25 2026] 127.0.0.1:52852 Accepted
+[Sat Oct 24 05:58:26 2026] 127.0.0.1:52861 Accepted
+[Sat Oct 24 05:58:27 2026] 127.0.0.1:52870 Accepted
+[Sat Oct 24 05:58:28 2026] 127.0.0.1:52879 Accepted
+[Sat Oct 24 05:58:29 2026] 127.0.0.1:52889 Accepted
+[Sat Oct 24 05:58:30 2026] 127.0.0.1:52898 Accepted
+[Sat Oct 24 05:58:31 2026] 127.0.0.1:52907 Accepted
+[Sat Oct 24 05:58:32 2026] 127.0.0.1:52917 Accepted
+[Sat Oct 24 05:58:33 2026] 127.0.0.1:52925 Accepted
+[Sat Oct 24 05:58:34 2026] 127.0.0.1:52933 Accepted
+[Sat Oct 24 05:58:35 2026] 127.0.0.1:52942 Accepted
+[Sat Oct 24 05:58:36 2026] 127.0.0.1:52951 Accepted
+[Sat Oct 24 05:58:37 2026] 127.0.0.1:52961 Accepted
+[Sat Oct 24 05:58:38 2026] 127.0.0.1:52970 Accepted
+[Sat Oct 24 05:58:39 2026] 127.0.0.1:52979 Accepted
+[Sat Oct 24 05:58:40 2026] 127.0.0.1:52991 Accepted
+[Sat Oct 24 05:58:41 2026] 127.0.0.1:53000 Accepted
+[Sat Oct 24 05:58:42 2026] 127.0.0.1:53011 Accepted
+[Sat Oct 24 05:58:43 2026] 127.0.0.1:53020 Accepted
+[Sat Oct 24 05:58:44 2026] 127.0.0.1:53028 Accepted
+[Sat Oct 24 05:58:45 2026] 127.0.0.1:53038 Accepted
+[Sat Oct 24 05:58:46 2026] 127.0.0.1:53047 Accepted
+[Sat Oct 24 05:58:47 2026] 127.0.0.1:53057 Accepted
+[Sat Oct 24 05:58:48 2026] 127.0.0.1:53067 Accepted
+[Sat Oct 24 05:58:49 2026] 127.0.0.1:53075 Accepted
+[Sat Oct 24 05:58:50 2026] 127.0.0.1:53086 Accepted
+[Sat Oct 24 05:58:51 2026] 127.0.0.1:53097 Accepted
+[Sat Oct 24 05:58:52 2026] 127.0.0.1:53108 Accepted
+[Sat Oct 24 05:58:53 2026] 127.0.0.1:53118 Accepted
+[Sat Oct 24 05:58:54 2026] 127.0.0.1:53128 Accepted
+[Sat Oct 24 05:58:55 2026] 127.0.0.1:53138 Accepted
+[Sat Oct 24 05:58:56 2026] 127.0.0.1:53150 Accepted

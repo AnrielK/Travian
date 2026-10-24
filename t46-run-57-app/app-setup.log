@@ -1,0 +1,25 @@
+2026-10-24 05:55:12 +0000 status: ["players": 0, "mariadb": 11.4.13-MariaDB, "php": 8.3.35, "time": 1792821312, "installed": 0, "ok": 1]
+2026-10-24 05:55:14 +0000 setup: ["installed": 1, "log": <__NSArrayI 0x600000c65350>(
+config row created,
+Applied migration 001_ajax_token_length.sql
+Applied migration 002_adventure_uid_unsigned.sql
+Applied migration 003_scheduled_task_failures.sql
+Applied migration 004_brewery_festivals.sql
+Applied global migration 001_notification_delivery_key.sql
+Applied global migration 002_mail_delivery_key.sql,
+world installed
+)
+, "ok": 1, "ms": 1787]
+……
+2026-10-24 05:55:12 +0000 status: ["players": 0, "mariadb": 11.4.13-MariaDB, "php": 8.3.35, "time": 1792821312, "installed": 0, "ok": 1]
+2026-10-24 05:55:14 +0000 setup: ["installed": 1, "log": <__NSArrayI 0x600000c65350>(
+config row created,
+Applied migration 001_ajax_token_length.sql
+Applied migration 002_adventure_uid_unsigned.sql
+Applied migration 003_scheduled_task_failures.sql
+Applied migration 004_brewery_festivals.sql
+Applied global migration 001_notification_delivery_key.sql
+Applied global migration 002_mail_delivery_key.sql,
+world installed
+)
+, "ok": 1, "ms": 1787]
