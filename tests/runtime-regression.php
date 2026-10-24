@@ -78,7 +78,10 @@ $start = (int)$config->game->start_time;
 expect_same(10, (int)$config->game->speed, 'supported game speed');
 expect_same(25, (int)MAP_SIZE, 'supported map radius');
 expect_same(4, (int)$config->game->movement_speed_increase, 'movement multiplier');
-expect_same(true, (bool)$config->game->allowNewTribes, 'Egyptians and Huns enabled');
+// Egyptians and Huns where the world's look offers them ('tribes' in sections/gpack/gpack.php; not T40 / T4.4 Classic).
+$gpacks = $GLOBALS['globalConfig']['staticParameters']['gpacks'];
+expect_same((bool)array_intersect([6, 7], $gpacks['styles'][$gpacks['mainPage']]['tribes'] ?? [6, 7]),
+    (bool)$config->game->allowNewTribes, 'Egyptians and Huns enabled');
 expect_same(false, (bool)$config->custom->paymentWizardBuyGoldEnabled, 'payments disabled');
 expect_same(false, (bool)$config->custom->serverIsFreeGold, 'free-gold mode disabled');
 expect_same(true, (bool)$config->game->starvation, 'starvation enabled');

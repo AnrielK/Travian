@@ -11,14 +11,15 @@ require __DIR__ . '/lobby-i18n.php';
  */
 $error = isset($_GET['error']) ? trim((string)$_GET['error']) : '';
 $ready = false;
-$world = ['start' => time(), 'mapSize' => (int)env_value('GAME_MAP_SIZE', '100'), 'players' => 0];
+$world = ['start' => time(), 'mapSize' => (int)env_value('GAME_MAP_SIZE', '100'), 'players' => 0, 'gpack' => ''];
 try {
     $database = game_database();
-    $config = $database->query('SELECT installed, startTime, map_size FROM config LIMIT 1')->fetch();
+    $config = $database->query('SELECT * FROM config LIMIT 1')->fetch();
     if ($config) {
         $ready = (int)$config['installed'] === 1;
         $world['start'] = (int)$config['startTime'];
         $world['mapSize'] = (int)$config['map_size'];
+        $world['gpack'] = (string)($config['gpack'] ?? '');
     }
     $world['players'] = (int)$database->query('SELECT COUNT(*) FROM users WHERE id > 2')->fetchColumn();
 } catch (Throwable $exception) {
@@ -32,7 +33,12 @@ $ageShort = $age < 3600 ? '<1h' : ($age < 86400 ? intdiv($age, 3600) . 'h' : ($a
 $mapText = $world['mapSize'] <= 50 ? 'Small' : ($world['mapSize'] <= 150 ? 'Medium' : 'Large');
 $pack = '/gpack/legends655/mainPage/';
 $img = $pack . 'img_ltr/';
-$tribes = ['roman', 'teuton', 'gaul', 'egyptian', 'hun'];
+// The world's look (config.gpack, chosen when the world was created) and the tribes it offers.
+$gpacks = require dirname(__DIR__, 2) . '/sections/gpack/gpack.php';
+$look = $gpacks['styles'][$world['gpack']] ?? $gpacks['styles'][$gpacks['mainPage']] ?? [];
+$tribeNames = [1 => 'roman', 2 => 'teuton', 3 => 'gaul', 6 => 'egyptian', 7 => 'hun', 8 => 'spartan'];
+$tribes = array_values(array_intersect_key($tribeNames, array_flip($look['tribes'] ?? [1, 2, 3, 6, 7])));
+$lookName = preg_replace('/\s*\(.*\)$/', '', (string)($look['name'] ?? 'OpenVillage 4.6'));
 $figures = static function () use ($img, $tribes): string {
     $html = '<div class="figures">';
     foreach ($tribes as $tribe) {
@@ -114,7 +120,7 @@ if (is_file(__DIR__ . '/legends/lobby.css') && !isset($_GET['classic'])) {
                 <div class="art"></div>
                 <?= $figures() ?>
                 <div class="ribbon"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M2 10h4v11H2zM8 21h9c1 0 2-1 2-2l2-7c0-1-1-2-2-2h-6l1-5c0-1-1-3-3-3L8 10z"/></svg><?= lt('Recommended') ?></div>
-                <div class="caption"><h2><?= lt('Local world') ?></h2><span class="sub">OpenVillage 4.6</span></div>
+                <div class="caption"><h2><?= lt('Local world') ?></h2><span class="sub"><?= escape($lookName) ?></span></div>
                 <div class="stat days"><i class="calendar"></i><?= $ageDays ?></div>
                 <div class="stat speed"><i class="boot"></i><?= escape($speedText) ?></div>
             </article>

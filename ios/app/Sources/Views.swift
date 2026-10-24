@@ -52,7 +52,6 @@ struct RootView: View {
         .onChange(of: runtime.state) { state in
             if state == .running && browser.webView.url == nil { browser.load(runtime.baseURL) }
         }
-        .onChange(of: runtime.styleVersion) { _ in browser.reload() }
         .onChange(of: scenePhase) { phase in
             if phase == .active { runtime.ensureRunning() }
         }
@@ -534,7 +533,9 @@ struct SettingsView: View {
                     Picker("Grafika", selection: Binding(get: { world.style }, set: { world.gpack = $0 })) {
                         ForEach(WorldSettings.availableStyles, id: \.hash) { Text($0.name).tag($0.hash) }
                     }
-                } header: { Text("Vzhled") } footer: { Text("Grafický balíček (gpack) – změní se hned po uložení.") }
+                } header: { Text("Vzhled nového světa") } footer: {
+                    Text("Grafický balíček (gpack) se použije při vytvoření nového světa (Nástroje → Nový svět). Běžící svět si svůj vzhled ponechá. Travian 4.0 a T4.4 Classic mají na výběr 3 národy, ostatní 5.")
+                }
                 Section {
                     Stepper("Rychlost: ×\(world.speed)", value: $world.speed, in: 1...1000, step: world.speed < 10 ? 1 : 10)
                     Stepper("Délka kola: \(world.roundDays) dní", value: $world.roundDays, in: 1...365)
@@ -558,9 +559,7 @@ struct SettingsView: View {
                 ToolbarItem(placement: .cancellationAction) { Button("Zavřít") { dismiss() } }
                 ToolbarItem(placement: .confirmationAction) {
                     Button("Uložit") {
-                        let styleChanged = world.style != runtime.world.style
                         world.save(); runtime.world = world
-                        if styleChanged { runtime.applyStyle(world.style) }
                         runtime.applyHeroSpeed(world.heroSpeedFactor)
                         dismiss()
                     }

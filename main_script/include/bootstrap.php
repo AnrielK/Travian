@@ -69,6 +69,7 @@ $db = DB::getInstance();
         logError("No column found in config row.");
         exit("We are having issues, please try again in a moment. E2");
     }
+    apply_world_gpack($config->dynamic);
     $config->game->start_time = $config->dynamic->startTime;
     $config->settings->worldUniqueId = $config->dynamic->worldUniqueId;
     define("MAP_SIZE", $config->dynamic->map_size);
@@ -77,6 +78,10 @@ if (property_exists($config->dynamic, 'isRestore') && $config->dynamic->isRestor
     exit("We are having issues, please try again in a moment. E3");
 }
 require(INCLUDE_PATH . "config/config.after.php");
+// Egyptians and Huns only where the world's look offers them (T40 and T4.4 Classic: Romans, Teutons, Gauls).
+if (!array_intersect([6, 7], get_world_tribes())) {
+    $config->game->allowNewTribes = false;
+}
 if (!$config->dynamic->installed) {
     $config->dynamic->maintenance = true;
 }
