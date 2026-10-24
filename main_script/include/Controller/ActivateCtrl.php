@@ -154,7 +154,8 @@ class ActivateCtrl extends OutOfGameCtrl
             $this->legendsPage('sector');
             return;
         }
-        if ($this->useNewActivation) {
+        // the Travian 4.0 layout keeps the 4.0 page: map, sector list and "create village" in one step
+        if ($this->useNewActivation && !is_t40_layout()) {
             $this->view->vars['titleInHeader'] = T("ActivationNew", "Select your starting position");
             $view = new PHPBatchView("activationNew/sector");
             $this->view->vars['content'] = $view->output();

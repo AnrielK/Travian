@@ -88,10 +88,14 @@ body.layoutT40{--ov-portrait-zoom-out:1.3;--ov-portrait-align:left}
 div.village1 img#resfeld{left:56px;margin-top:4px}
 div.village1 #village_map .colorLayer,div.village1 #village_map .colorLayer.good,div.village1 #village_map .colorLayer.notNow,div.village1 #village_map .colorLayer.maxLevel{border:0;margin:2px 0 0 2px;width:24px;height:23px;border-radius:0;box-shadow:none;background:url(../img/g/circle.png) 0 0 no-repeat}
 div.village1 #village_map .colorLayer.underConstruction{background-position:0 -33px}
-/* tutorial tip: keep the 4.0 circle and draw the 36px T4.4 red ring around it instead of in its place */
+/* 4.0 resource line: green bars, red once the store is full */
+#res li .bar{background-color:#046802}
+#res li .bar.stockFull{background-color:#d40000}
+/* tutorial tip: keep the 4.0 circle and draw a thin red ring around it instead of the thick T4.4 ring in its place */
 div.village1 #village_map .level.highlighted.background{background-image:url(../img/g/circle.png);background-position:0 0;margin:2px 0 0 2px}
 div.village1 #village_map .level.underConstruction.highlighted.background{background-position:0 -33px}
-div.village1 #village_map .level.highlighted.background::after{content:"";position:absolute;left:-6.5px;top:-6.5px;width:36px;height:36px;background:url(../img/quests/highlight/resourceFieldHighlight.png) no-repeat;pointer-events:none}
+div.village1 #village_map .level.highlighted.background::after{content:"";position:absolute;left:-4px;top:-4px;width:31px;height:31px;box-sizing:border-box;border:2.5px solid red;border-radius:50%;pointer-events:none}
+.colorBlind div.village1 #village_map .level.highlighted.background::after{border-color:#0024d8}
 div.village1 #village_map .colorLayer .labelLayer,div.village1 #village_map .colorLayer.underConstruction .labelLayer{top:0;left:0;right:auto;width:23px;height:23px;background:none;border-radius:0;line-height:23px;font-size:13px;font-family:Arial,Helvetica,Verdana,sans-serif;color:#252525}
 .contentNavi.subNavi{display:flex;align-items:flex-start;width:auto;margin-right:-46px;overflow:visible}
 #content>a#tabFavorButton{position:absolute}

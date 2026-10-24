@@ -175,7 +175,7 @@ $stock = $vars['stockBar'] ?? null;
                     <li class="r5" title="<?=htmlspecialchars($stock['titles'][4]); ?>">
                         <p>
                             <a href="production.php?t=5"><img src="img/x.gif" alt=""/></a>
-                            <span class="value" id="stockBarFreeCrop"><?=$stock['production'][4]; ?></span>
+                            <span class="value"><?=number_format_x($stock['cropUsage'][0]); ?>/<?=number_format_x($stock['cropUsage'][1]); ?></span>
                         </p>
                     </li>
                 </ul>

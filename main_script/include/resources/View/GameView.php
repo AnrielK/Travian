@@ -157,6 +157,11 @@ class GameView
                     ($this->session->village->getProduction(3) < 0 ? $this->getCropEmptyTime() : $this->getProductionFullTime(3))),
                 4 => sprintf(T("inGame", "stockBar.production.r5"), number_format_x($this->session->village->getProduction(3)))
             ],
+            // crop used by the population and the troops / crop produced (the Travian 4.0 resource line)
+            'cropUsage'       => [
+                round($this->session->village->village['pop'] + $this->session->village->village['upkeep']),
+                round($this->session->village->village['cropp']),
+            ],
             'storageString'   => [null, null, null, null],
             'storageClass'    => [null, null, null, null],
             'percents'        => [0, 0, 0, 0],
