@@ -238,7 +238,9 @@ div.village1 div#map_details{position:absolute;right:0;top:10px;width:245px;marg
 #sideInfoCountdown .pager{margin-top:2px;font-size:11px}
 #sideInfoCountdown .pager a{cursor:pointer;font-weight:bold;padding:0 4px}
 .questMaster .master{display:block;border:0;padding:0;background-color:transparent}
-.questMaster .master:hover{background-position:right top}
+/* 4.0: the quest master crosses his arms while a task is open and leans on the sign once it is done */
+.questMaster .master,.questMaster .master:hover{background-position:right top}
+.questMaster:has(+ #t40Questmaster .newQuestSpeechBubble) .master{background-position:left top}
 #t40Questmaster{display:none}
 /* 4.0 page parts */
 .contentNavi{position:relative;width:557px;overflow:hidden;background-repeat:repeat-x;background-position:left bottom;}
@@ -283,6 +285,14 @@ button.green.disabled .button-container,button.green:disabled .button-container,
 button.green.disabled .button-container .button-content,button.green:disabled .button-container .button-content,button.orange.disabled .button-container .button-content,button.orange:disabled .button-container .button-content{color:#999}
 body.gidResources{background-image:url(../img40/layout/bgR.jpg)}
 body.gidResources #wrapper{background-image:url(../img40/layout/bgResources-rtl.jpg)}
+/* 4.0 had no tutorial highlight: the T4.4 red frame would surround the hidden quest master button */
+body.layoutT40 .highlighted.rectangle{display:none !important}
+/* the question mark picture is drawn for right-to-left pages */
+#ingameManual .question{transform:scaleX(-1)}
+/* free building sites a little lighter than the T4.4 pictures */
+.buildingsV1 #village_map .buildingSlot img.iso,.buildingsV1 #village_map .buildingSlot img.g16e{opacity:.75}
+/* phones in portrait (iOS app): fit a slightly taller game area, so a little more of the village shows */
+body.layoutT40{--ov-portrait-zoom-out:1.15}
 /* the image map of the resource fields uses the 400px wide T4.4 coordinates: centre it on the 500px wide 4.0 fields */
 div.village1 img#resfeld{left:56px;margin-top:4px}
 div.village1 #village_map .colorLayer,div.village1 #village_map .colorLayer.good,div.village1 #village_map .colorLayer.notNow,div.village1 #village_map .colorLayer.maxLevel{border:0;margin:2px 0 0 2px;width:24px;height:23px;border-radius:0;box-shadow:none;background:url(../img/g/circle.png) 0 0 no-repeat}

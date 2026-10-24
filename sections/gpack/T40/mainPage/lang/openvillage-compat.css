@@ -7746,6 +7746,9 @@ div.village2 div#village_map div.buildingSlot .colorLayer .labelLayer{position:r
 div.village2 div#village_map div.buildingSlot .colorLayer.underConstruction .labelLayer{background-color:#ffa84f}
 .buildingsV1 #village_map{width:628px;height:534px;position:absolute;z-index:1}
 .buildingsV1 .buildingSlot.a39.g0{left:356px;top:171px}
+.buildingsV1 .buildingSlot.a39.g0 svg.buildingShape path{fill:transparent !important}
+.buildingsV1 .buildingSlot.a39.g0:has(.clickShape:hover) img.g16e{filter:brightness(1.25)}
+.buildingsV1 .buildingSlot.a39.g0:has(.clickShape:active) img.g16e{filter:brightness(1.45)}
 .buildingsV1 #village_map .buildingSlot img.building{left:0;top:0;width:120px;height:120px}
 .buildingsV1 #village_map .buildingSlot img.g16,.buildingsV1 #village_map .buildingSlot img.g16b,.buildingsV1 #village_map .buildingSlot img.g16e{height:160px}
 .buildingsV1 #village_map .buildingSlot img.g16_ww,.buildingsV1 #village_map .buildingSlot img.g16b_ww,.buildingsV1 #village_map .buildingSlot img.g16e_ww{width:83px;height:133px}
