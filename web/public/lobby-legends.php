@@ -11,8 +11,8 @@
  * @var int $ageDays
  * @var string $ageShort
  * @var string $mapText
- * @var string[] $tribes tribes of the world's look
- * @var string $lookName
+ * @var array $worlds every world of this server (lobby_worlds() + title, speedText, ageDays, ageShort)
+ * @var string $gamePath URL path of the chosen world's pages
  */
 $icons = json_decode((string)@file_get_contents(__DIR__ . '/legends/icons.json'), true) ?: [];
 $svg = static function (string $name, bool $outline = false, string $class = '') use ($icons): string {
@@ -27,15 +27,21 @@ $svg = static function (string $name, bool $outline = false, string $class = '')
     return '<svg' . ($class !== '' ? ' class="' . escape($class) . '"' : '') . ' viewBox="' . escape($icons[$name]['viewBox']) . '">' . $inner . '</svg>';
 };
 $speedNumber = rtrim(rtrim(number_format($speed, 2, '.', ''), '0'), '.');
-$background = $speed > 1 ? 'defaultSpeed' : 'default';
-$tribeIcons = '<div class="tribes">';
-foreach (['roman' => 'Romans', 'teuton' => 'Teutons', 'gaul' => 'Gauls', 'egyptian' => 'Egyptians', 'hun' => 'Huns'] as $tribe => $label) {
-    if (in_array($tribe, $tribes, true)) {
-        $tribeIcons .= '<i class="tribe ' . $tribe . '" title="' . escape(lt($label)) . '"></i>';
+$tribeIconsOf = static function (array $of): string {
+    $html = '<div class="tribes">';
+    foreach (['roman' => 'Romans', 'teuton' => 'Teutons', 'gaul' => 'Gauls', 'egyptian' => 'Egyptians', 'hun' => 'Huns'] as $tribe => $label) {
+        if (in_array($tribe, $of['tribes'], true)) {
+            $html .= '<i class="tribe ' . $tribe . '" title="' . escape(lt($label)) . '"></i>';
+        }
     }
-}
-$tribeIcons .= '</div>';
-$title = '<div class="title"><div class="avatarName">%s</div><div class="gameworldName">' . escape(lt('Local world')) . '</div><div class="subtitle">' . escape($lookName) . '</div></div>';
+    return $html . '</div>';
+};
+$tribeIcons = $tribeIconsOf($world);
+$titleOf = static function (array $of, string $avatar): string {
+    return '<div class="title"><div class="avatarName">' . escape($avatar) . '</div><div class="gameworldName">' . escape($of['title'])
+        . '</div><div class="subtitle">' . escape($of['lookName']) . '</div></div>';
+};
+$backgroundOf = static fn (array $of): string => $of['speed'] > 1 ? 'defaultSpeed' : 'default';
 $close = '<button type="button" class="framed green closeButton withIcon" data-close>' . $svg('close', true) . '</button>';
 $view = isset($_GET['join']) ? 'join' : 'worlds';
 // The Legends stylesheet sets white-space: pre-line, so whitespace between tags would become empty lines
@@ -103,6 +109,7 @@ ob_start(static function (string $html): string {
                 <div class="menu" hidden>
                     <a href="/"><span><?= lt('Your gameworlds') ?></span><?= $svg('chevron') ?></a>
                     <a href="/?join=1"><span><?= lt('Join new gameworld') ?></span><?= $svg('chevron') ?></a>
+                    <a href="/worlds.php"><span><?= lt('Game worlds') ?></span><?= $svg('chevron') ?></a>
                     <a data-open="login"><span><?= lt('Login') ?></span><?= $svg('chevron') ?></a>
                     <a href="/docs/"><span><?= lt('Rules and operations') ?></span><?= $svg('chevron') ?></a>
                     <a href="?lang=<?= lobby_language() === 'cs' ? 'en' : 'cz' ?>"><span><?= lobby_language() === 'cs' ? 'English' : 'Čeština' ?></span><?= $svg('chevron') ?></a>
@@ -122,7 +129,7 @@ ob_start(static function (string $html): string {
         </svg>
         <div class="headerContainerEnd">
             <nav class="accountMenu">
-                <a class="openCloseAccountMenu closed" data-open="login"><span class="dot<?= $ready ? '' : ' waiting' ?>"></span><span><?= lt('Local world') ?></span><?= $svg('chevron', false, 'closed') ?></a>
+                <a class="openCloseAccountMenu closed" data-open="login"><span class="dot<?= $ready ? '' : ' waiting' ?>"></span><span><?= escape($world['title']) ?></span><?= $svg('chevron', false, 'closed') ?></a>
             </nav>
         </div>
     </header>
@@ -130,18 +137,20 @@ ob_start(static function (string $html): string {
     <main id="accountAvatars">
         <h1><?= lt('Your gameworlds') ?></h1>
         <section class="yourGameworlds">
-            <div class="gameworld owner">
-                <div class="background <?= $background ?>"></div>
+            <?php foreach ($worlds as $w): ?>
+            <div class="gameworld owner" data-world="<?= $w['id'] ?>">
+                <div class="background <?= $backgroundOf($w) ?>"></div>
                 <div class="content">
-                    <?= sprintf($title, 'OpenVillage') ?>
-                    <div class="lastActivity"><span><?= escape($ageShort) ?></span><?= $svg('clock', true) ?></div>
-                    <button type="button" class="minimal green playNow withText" onclick="location.href='/game/dorf1.php'"><div><?= $svg('play', true) ?><span><?= lt('Play now') ?></span></div></button>
+                    <?= $titleOf($w, 'OpenVillage') ?>
+                    <div class="lastActivity"><span><?= escape($w['ageShort']) ?></span><?= $svg('clock', true) ?></div>
+                    <button type="button" class="minimal green playNow withText" onclick="location.href='<?= escape($w['path']) ?>dorf1.php'"><div><?= $svg('play', true) ?><span><?= lt('Play now') ?></span></div></button>
                     <div class="actions">
                         <button type="button" class="framed round blue duals withIcon" data-open="register" title="<?= escape(lt('Another account')) ?>"><?= $svg('duals', true) ?></button>
                         <button type="button" class="framed round green showGameworldDetails withIcon" data-open="details" title="<?= escape(lt('Gameworld details')) ?>"><?= $svg('info', true) ?></button>
                     </div>
                 </div>
             </div>
+            <?php endforeach; ?>
             <div class="joinNewGameworld" onclick="location.href='/?join=1'"><?= $svg('plus') ?><span><?= lt('Join new gameworld') ?></span></div>
         </section>
     </main>
@@ -149,16 +158,21 @@ ob_start(static function (string $html): string {
     <main id="newGameworlds">
         <h1><?= lt('Join new gameworld') ?></h1>
         <section class="results">
-            <div class="gameworld new" data-open="details">
-                <div class="background <?= $background ?>"></div>
+            <?php foreach ($worlds as $w): ?>
+            <div class="gameworld new" data-open="details" data-world="<?= $w['id'] ?>">
+                <div class="background <?= $backgroundOf($w) ?>"></div>
                 <div class="content">
-                    <?= sprintf($title, '') ?>
-                    <div class="serverAge" title="<?= escape(lt('Server age in days')) ?>"><i></i><span><?= $ageDays ?></span></div>
-                    <div class="speed" title="<?= escape(lt('Server speed')) ?>"><i></i><span>×<?= escape($speedNumber) ?></span></div>
-                    <?= $tribeIcons ?>
+                    <?= $titleOf($w, '') ?>
+                    <div class="serverAge" title="<?= escape(lt('Server age in days')) ?>"><i></i><span><?= $w['ageDays'] ?></span></div>
+                    <div class="speed" title="<?= escape(lt('Server speed')) ?>"><i></i><span><?= escape($w['speedText']) ?></span></div>
+                    <?= $tribeIconsOf($w) ?>
                 </div>
+                <?php if ($w['id'] === max(array_keys($worlds))): ?>
                 <div class="recommended"><?= $svg('recommended') ?><span><?= lt('Recommended') ?></span></div>
+                <?php endif; ?>
             </div>
+            <?php endforeach; ?>
+            <div class="joinNewGameworld" onclick="location.href='/worlds.php'"><?= $svg('plus') ?><span><?= lt('Create a new game world') ?></span></div>
         </section>
     </main>
 
@@ -178,8 +192,8 @@ ob_start(static function (string $html): string {
     <div id="gameworldDetails" class="modal">
         <?= $close ?>
         <div class="gameworld details">
-            <div class="background <?= $background ?>"></div>
-            <div class="content"><?= sprintf($title, '') ?><?= $tribeIcons ?></div>
+            <div class="background <?= $backgroundOf($world) ?>"></div>
+            <div class="content"><?= $titleOf($world, '') ?><?= $tribeIcons ?></div>
         </div>
         <section class="details hasAction">
             <div class="serverAge"><i></i><span><?= lt('Age:') ?><strong><?= $ageDays ?> <?= lt($ageDays === 1 ? 'day' : 'days') ?></strong></span></div>
@@ -200,6 +214,7 @@ ob_start(static function (string $html): string {
         <?= $close ?>
         <h1><?= lt('Join gameworld') ?></h1>
         <form method="post" action="/register.php">
+            <input type="hidden" name="world" value="<?= $world['id'] ?>">
             <?php if ($error !== ''): ?><p class="error"><?= escape(lt($error)) ?></p><?php endif; ?>
             <input type="hidden" name="csrf" value="<?= escape(csrf_token()) ?>">
             <label class="text"><input name="username" minlength="3" maxlength="15" pattern="[A-Za-z0-9 _\-]+" required autocomplete="username"><div class="label"><?= lt('Player name') ?></div></label>
@@ -217,11 +232,11 @@ ob_start(static function (string $html): string {
     <div id="login" class="modal">
         <?= $close ?>
         <h1><?= lt('Login') ?></h1>
-        <form method="post" action="/game/login.php">
+        <form method="post" action="<?= escape($gamePath) ?>login.php">
             <label class="text"><input name="name" required autocomplete="username"><div class="label"><?= lt('Account name or e-mail address') ?></div></label>
             <label class="text"><input type="password" name="password" required autocomplete="current-password"><div class="label"><?= lt('Password') ?></div></label>
             <input type="hidden" name="s1" value="Login"><input type="hidden" name="w" value="">
-            <div class="links"><a href="/game/login.php?forgotPassword=1"><?= lt('Password forgotten?') ?></a><a data-open="register"><?= lt('Join gameworld') ?></a></div>
+            <div class="links"><a href="<?= escape($gamePath) ?>login.php?forgotPassword=1"><?= lt('Password forgotten?') ?></a><a data-open="register"><?= lt('Join gameworld') ?></a></div>
             <button type="submit" class="framed green withText"><div><?= lt('Login') ?></div></button>
         </form>
     </div>
@@ -243,11 +258,21 @@ ob_start(static function (string $html): string {
                 return;
             }
             var opener = event.target.closest('[data-open]');
+            var other = event.target.closest('[data-world]');
+            if (opener && other && other.getAttribute('data-world') !== '<?= $world['id'] ?>') {
+                // another world: reload the lobby with its dialogs
+                event.preventDefault();
+                location.href = '/?<?= $view === 'join' ? 'join=1&' : '' ?>world=' + other.getAttribute('data-world') + '&open=' + opener.getAttribute('data-open');
+                return;
+            }
             if (opener) { event.preventDefault(); event.stopPropagation(); open(opener.getAttribute('data-open')); return; }
             if (event.target.closest('[data-close]') || event.target.hasAttribute('data-modal')) {
                 event.target.closest('[data-modal]').hidden = true;
             }
         });
+        var wanted = new URLSearchParams(location.search).get('open');
+        if (wanted === 'worldDialog') wanted = 'details';
+        if (wanted && document.querySelector('[data-modal="' + wanted.replace(/[^A-Za-z]/g, '') + '"]')) open(wanted);
         document.addEventListener('keyup', function (event) {
             if (event.key === 'Escape') document.querySelectorAll('[data-modal]').forEach(function (o) { o.hidden = true; });
         });

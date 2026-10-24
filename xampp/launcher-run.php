@@ -155,9 +155,11 @@ if (!isset($options['no-browser'])) {
     }
 }
 
-// ---- automation: one tick a second once the world is installed ------------------------------------
+// ---- automation: one tick a second for every world once the installation's world is installed ------
 $automationLog = $runtime . '/logs/automation.log';
 $announced = false;
+$worlds = [1];
+$worldsCheckedAt = 0;
 while (true) {
     $status = proc_get_status($server);
     if (!$status['running']) {
@@ -175,11 +177,18 @@ while (true) {
             'timeout' => 300,
             'ignore_errors' => true,
         ]]);
-        $response = @file_get_contents("http://127.0.0.1:$port/__openvillage/tick", false, $context);
-        $result = is_string($response) ? json_decode($response, true) : null;
-        if (!is_array($result) || !empty($result['errors'])) {
-            $line = date('Y-m-d H:i:s') . ' ' . (is_array($result) ? implode('; ', (array)$result['errors']) : 'tick failed: ' . substr((string)$response, 0, 300));
-            file_put_contents($automationLog, $line . PHP_EOL, FILE_APPEND);
+        if (time() - $worldsCheckedAt >= 10) {                   // worlds created or deleted in the lobby (/worlds.php)
+            $list = json_decode((string)@file_get_contents("http://127.0.0.1:$port/__openvillage/worlds", false, $context), true);
+            $worlds = is_array($list) && !empty($list['worlds']) ? array_map('intval', $list['worlds']) : [1];
+            $worldsCheckedAt = time();
+        }
+        foreach ($worlds as $world) {
+            $response = @file_get_contents("http://127.0.0.1:$port/__openvillage/tick?world=$world", false, $context);
+            $result = is_string($response) ? json_decode($response, true) : null;
+            if (!is_array($result) || !empty($result['errors'])) {
+                $line = date('Y-m-d H:i:s') . " [world $world] " . (is_array($result) ? implode('; ', (array)($result['errors'] ?? [$result['error'] ?? ''])) : 'tick failed: ' . substr((string)$response, 0, 300));
+                file_put_contents($automationLog, $line . PHP_EOL, FILE_APPEND);
+            }
         }
     }
     sleep(1);

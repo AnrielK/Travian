@@ -49,6 +49,12 @@ rozhraní). Vzhled se volí při vytvoření světa (Nástroje → Nový svět) 
 (`config.gpack`), u běžícího světa se už nemění. Vzhled určuje i národy na výběr: Travian 4.0 a T4.4 Classic mají
 Římany, Germány a Galy, ostatní k nim přidávají Egypťany a Huny (Legends později i Sparťany, `'tribes'` v `gpack.php`).
 Na Macu/Linuxu stejně: `GAME_GPACK=TravianOld scripts/native/openvillage-native.sh start` před vytvořením světa.
+
+Další světy vedle sebe (každý s vlastním vzhledem, rychlostí a mapou) se zakládají v lobby: menu → Herní světy
+(`/worlds.php`). Každý má vlastní databázi `openvillage_game_<id>` a stránky na `/game<id>/`, automatika tiká
+všechny (`/__openvillage/worlds`, `tick?world=<id>`, viz `scripts/native/runtime/worlds.php`). Účet `openvillage`
+k tomu potřebuje práva na `openvillage\_game\_%`: nová šablona MariaDB (`ios/mariadb/make-template.sh`) je má,
+data z dřívější instalace aplikace ne.
 29c89d54 má vzhled Travian Legends: vlastní rozložení stránky (`layout/LayoutT46.php` – horní lišta s hrdinou,
 kulatá navigace, sklad pod navigací, rámované boční panely, celoplošné dorf1/dorf2 ve stylu buildingsV3),
 jeho CSS + styly a17a8f72 pro dialogy, tlačítka a obsah stránek. Soubory, které balíčku chybí, server

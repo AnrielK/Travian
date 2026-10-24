@@ -10,37 +10,32 @@ require __DIR__ . '/lobby-i18n.php';
  * in the game) and the login, in dialogs with the frame and header of the game windows.
  */
 $error = isset($_GET['error']) ? trim((string)$_GET['error']) : '';
-$ready = false;
-$world = ['start' => time(), 'mapSize' => (int)env_value('GAME_MAP_SIZE', '100'), 'players' => 0, 'gpack' => ''];
-try {
-    $database = game_database();
-    $config = $database->query('SELECT * FROM config LIMIT 1')->fetch();
-    if ($config) {
-        $ready = (int)$config['installed'] === 1;
-        $world['start'] = (int)$config['startTime'];
-        $world['mapSize'] = (int)$config['map_size'];
-        $world['gpack'] = (string)($config['gpack'] ?? '');
-    }
-    $world['players'] = (int)$database->query('SELECT COUNT(*) FROM users WHERE id > 2')->fetchColumn();
-} catch (Throwable $exception) {
-    $ready = false;
+// Every world of this server (scripts/native/runtime/worlds.php); the dialogs show the chosen one (?world=<id>).
+$worlds = lobby_worlds();
+foreach ($worlds as &$entry) {
+    $entry['speedText'] = '×' . rtrim(rtrim(number_format($entry['speed'], 2, '.', ''), '0'), '.');
+    $entryAge = max(0, time() - $entry['start']);
+    $entry['ageDays'] = intdiv($entryAge, 86400);
+    $entry['ageShort'] = $entryAge < 3600 ? '<1h' : ($entryAge < 86400 ? intdiv($entryAge, 3600) . 'h'
+        : ($entry['ageDays'] > 1 ? '>' . $entry['ageDays'] . 'd' : '>24h'));
+    $entry['title'] = $entry['id'] === 1 && $entry['name'] === 'Local World' ? lt('Local world') : $entry['name'];
 }
-$speed = (float)env_value('GAME_SPEED', '1');
-$speedText = '×' . rtrim(rtrim(number_format($speed, 2, '.', ''), '0'), '.');
-$age = max(0, time() - $world['start']);
-$ageDays = intdiv($age, 86400);
-$ageShort = $age < 3600 ? '<1h' : ($age < 86400 ? intdiv($age, 3600) . 'h' : ($ageDays > 1 ? '>' . $ageDays . 'd' : '>24h'));
+unset($entry);
+$world = $worlds[(int)($_GET['world'] ?? 1)] ?? $worlds[1];
+$ready = $world['ready'];
+$speed = $world['speed'];
+$speedText = $world['speedText'];
+$ageDays = $world['ageDays'];
+$ageShort = $world['ageShort'];
 $mapText = $world['mapSize'] <= 50 ? 'Small' : ($world['mapSize'] <= 150 ? 'Medium' : 'Large');
+$tribes = $world['tribes'];
+$lookName = $world['lookName'];
+$gamePath = $world['path'];
 $pack = '/gpack/legends655/mainPage/';
 $img = $pack . 'img_ltr/';
-// The world's look (config.gpack, chosen when the world was created) and the tribes it offers.
-$gpacks = require dirname(__DIR__, 2) . '/sections/gpack/gpack.php';
-$look = $gpacks['styles'][$world['gpack']] ?? $gpacks['styles'][$gpacks['mainPage']] ?? [];
-$tribeNames = [1 => 'roman', 2 => 'teuton', 3 => 'gaul', 6 => 'egyptian', 7 => 'hun', 8 => 'spartan'];
-$tribes = array_values(array_intersect_key($tribeNames, array_flip($look['tribes'] ?? [1, 2, 3, 6, 7])));
-$lookName = preg_replace('/\s*\(.*\)$/', '', (string)($look['name'] ?? 'OpenVillage 4.6'));
-$figures = static function () use ($img, $tribes): string {
+$figures = static function (?array $of = null) use ($img, $world): string {
     $html = '<div class="figures">';
+    $tribes = ($of ?? $world)['tribes'];
     foreach ($tribes as $tribe) {
         $html .= '<img src="' . escape($img) . 'views/activation/preview/tribe/' . $tribe . '.png" alt="">';
     }
@@ -80,7 +75,7 @@ if (is_file(__DIR__ . '/legends/lobby.css') && !isset($_GET['classic'])) {
         </svg>
         <span class="name">OpenVillage<small>Lobby</small></span>
     </a>
-    <button class="account" type="button" data-open="loginDialog"><span class="dot<?= $ready ? '' : ' waiting' ?>"></span><span class="label"><?= lt('Local world') ?></span>
+    <button class="account" type="button" data-open="loginDialog"><span class="dot<?= $ready ? '' : ' waiting' ?>"></span><span class="label"><?= escape($world['title']) ?></span>
         <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 9l7 7 7-7"/></svg></button>
 </header>
 
@@ -88,18 +83,19 @@ if (is_file(__DIR__ . '/legends/lobby.css') && !isset($_GET['classic'])) {
     <section class="worlds">
         <h1><?= lt('Your game worlds') ?></h1>
         <div class="grid">
-            <article class="card" data-open="worldDialog" tabindex="0">
+            <?php foreach ($worlds as $w): ?>
+            <article class="card" data-open="worldDialog" data-world="<?= $w['id'] ?>" tabindex="0">
                 <div class="art"></div>
-                <?= $figures() ?>
+                <?= $figures($w) ?>
                 <div class="caption">
-                    <span class="player">OpenVillage</span>
-                    <h2><?= lt('Local world') ?></h2>
-                    <span class="sub"><?= lt('Speed') ?> <?= escape($speedText) ?></span>
+                    <span class="player"><?= escape($w['lookName']) ?></span>
+                    <h2><?= escape($w['title']) ?></h2>
+                    <span class="sub"><?= lt('Speed') ?> <?= escape($w['speedText']) ?></span>
                 </div>
-                <div class="age"><?= escape($ageShort) ?>
+                <div class="age"><?= escape($w['ageShort']) ?>
                     <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg>
                 </div>
-                <a class="play" href="/game/dorf1.php"><svg viewBox="0 0 20 20" aria-hidden="true"><path d="M4 2l14 8-14 8z"/></svg><?= lt('Play now') ?></a>
+                <a class="play" href="<?= escape($w['path']) ?>dorf1.php"><svg viewBox="0 0 20 20" aria-hidden="true"><path d="M4 2l14 8-14 8z"/></svg><?= lt('Play now') ?></a>
                 <div class="roundButtons">
                     <button class="round blue" type="button" data-open="registerDialog" aria-label="<?= escape(lt('Another account')) ?>">
                         <svg viewBox="0 0 32 32" aria-hidden="true"><circle cx="12" cy="11" r="5"/><path d="M3 26c0-6 4-9 9-9s9 3 9 9z"/><circle cx="22" cy="13" r="4"/><path d="M19 26c0-4 2-7 6-7s5 3 5 7z"/><path class="plus" d="M24 3v8M20 7h8"/></svg>
@@ -109,6 +105,7 @@ if (is_file(__DIR__ . '/legends/lobby.css') && !isset($_GET['classic'])) {
                     </button>
                 </div>
             </article>
+            <?php endforeach; ?>
             <a class="joinCard" href="/?join=1"><span class="plus"></span><span><?= lt('Join a new game world') ?></span></a>
         </div>
     </section>
@@ -116,14 +113,19 @@ if (is_file(__DIR__ . '/legends/lobby.css') && !isset($_GET['classic'])) {
     <section class="join">
         <h1><?= lt('Join a new game world') ?> <a class="back" href="/" aria-label="Back">✕</a></h1>
         <div class="grid">
-            <article class="card new" data-open="worldDialog" tabindex="0">
+            <?php foreach ($worlds as $w): ?>
+            <article class="card new" data-open="worldDialog" data-world="<?= $w['id'] ?>" tabindex="0">
                 <div class="art"></div>
-                <?= $figures() ?>
+                <?= $figures($w) ?>
+                <?php if ($w['id'] === max(array_keys($worlds))): ?>
                 <div class="ribbon"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M2 10h4v11H2zM8 21h9c1 0 2-1 2-2l2-7c0-1-1-2-2-2h-6l1-5c0-1-1-3-3-3L8 10z"/></svg><?= lt('Recommended') ?></div>
-                <div class="caption"><h2><?= lt('Local world') ?></h2><span class="sub"><?= escape($lookName) ?></span></div>
-                <div class="stat days"><i class="calendar"></i><?= $ageDays ?></div>
-                <div class="stat speed"><i class="boot"></i><?= escape($speedText) ?></div>
+                <?php endif; ?>
+                <div class="caption"><h2><?= escape($w['title']) ?></h2><span class="sub"><?= escape($w['lookName']) ?></span></div>
+                <div class="stat days"><i class="calendar"></i><?= $w['ageDays'] ?></div>
+                <div class="stat speed"><i class="boot"></i><?= escape($w['speedText']) ?></div>
             </article>
+            <?php endforeach; ?>
+            <a class="joinCard" href="/worlds.php"><span class="plus"></span><span><?= lt('Create a new game world') ?></span></a>
         </div>
     </section>
 
@@ -136,7 +138,7 @@ if (is_file(__DIR__ . '/legends/lobby.css') && !isset($_GET['classic'])) {
 <div class="overlay" id="worldDialog" hidden>
     <section class="worldDialog" role="dialog" aria-modal="true" aria-labelledby="worldTitle">
         <div class="art">
-            <h2 id="worldTitle"><?= lt('Local world') ?></h2>
+            <h2 id="worldTitle"><?= escape($world['title']) ?></h2>
             <button class="close" type="button" data-close aria-label="Close"><svg viewBox="0 0 16 16"><path d="M3 3l10 10M13 3L3 13"/></svg></button>
             <?= $figures() ?>
         </div>
@@ -158,6 +160,7 @@ if (is_file(__DIR__ . '/legends/lobby.css') && !isset($_GET['classic'])) {
         <h2 class="title" id="registerTitle"><?= lt('Join the game world') ?></h2>
         <button class="close" type="button" data-close aria-label="Close"><svg viewBox="0 0 16 16"><path d="M3 3l10 10M13 3L3 13"/></svg></button>
         <form class="content" method="post" action="/register.php">
+            <input type="hidden" name="world" value="<?= $world['id'] ?>">
             <?php if ($error !== ''): ?>
                 <p class="error"><?= escape(lt($error)) ?></p>
             <?php endif; ?>
@@ -188,7 +191,7 @@ if (is_file(__DIR__ . '/legends/lobby.css') && !isset($_GET['classic'])) {
     <section class="window" role="dialog" aria-modal="true" aria-labelledby="loginTitle">
         <h2 class="title" id="loginTitle"><?= lt('Login') ?></h2>
         <button class="close" type="button" data-close aria-label="Close"><svg viewBox="0 0 16 16"><path d="M3 3l10 10M13 3L3 13"/></svg></button>
-        <form class="content" method="post" action="/game/login.php">
+        <form class="content" method="post" action="<?= escape($gamePath) ?>login.php">
             <label><?= lt('Account name or e-mail address') ?>
                 <input name="name" required autocomplete="username">
             </label>
@@ -199,7 +202,7 @@ if (is_file(__DIR__ . '/legends/lobby.css') && !isset($_GET['classic'])) {
             <p class="hint"><i>i</i><?= lt('Log in with the account you created on this game world.') ?></p>
             <div class="buttons">
                 <span class="goldFrame"><button class="green" type="submit"><?= lt('Login') ?></button></span>
-                <a class="link" href="/game/login.php?forgotPassword=1"><?= lt('Password forgotten?') ?></a>
+                <a class="link" href="<?= escape($gamePath) ?>login.php?forgotPassword=1"><?= lt('Password forgotten?') ?></a>
                 <button class="link" type="button" data-open="registerDialog"><?= lt('No account yet – join the game world') ?></button>
             </div>
         </form>
@@ -211,6 +214,7 @@ if (is_file(__DIR__ . '/legends/lobby.css') && !isset($_GET['classic'])) {
         <button class="close" type="button" data-close aria-label="Close"><svg viewBox="0 0 16 16"><path d="M3 3l10 10M13 3L3 13"/></svg></button>
         <a href="/"><?= lt('Your game worlds') ?></a>
         <a href="/?join=1"><?= lt('Join a new game world') ?></a>
+        <a href="/worlds.php"><?= lt('Game worlds') ?></a>
         <button type="button" data-open="loginDialog"><?= lt('Login') ?></button>
         <a href="/docs/"><?= lt('Rules and operations') ?></a>
         <a href="/terms.html"><?= lt('Terms') ?></a>
@@ -230,6 +234,13 @@ if (is_file(__DIR__ . '/legends/lobby.css') && !isset($_GET['classic'])) {
         document.addEventListener('click', function (event) {
             if (event.target.closest('a.play')) return;
             var opener = event.target.closest('[data-open]');
+            var other = event.target.closest('[data-world]');
+            if (opener && other && other.getAttribute('data-world') !== '<?= $world['id'] ?>') {
+                // another world: reload the lobby with its dialogs
+                event.preventDefault();
+                location.href = '/?<?= $view === 'join' ? 'join=1&' : '' ?>world=' + other.getAttribute('data-world') + '&open=' + opener.getAttribute('data-open');
+                return;
+            }
             if (opener) {
                 event.preventDefault();
                 open(opener.getAttribute('data-open'));
@@ -239,9 +250,11 @@ if (is_file(__DIR__ . '/legends/lobby.css') && !isset($_GET['classic'])) {
                 event.target.closest('.overlay').hidden = true;
             }
         });
+        var wanted = new URLSearchParams(location.search).get('open');
+        if (wanted && /^[A-Za-z]+$/.test(wanted) && document.getElementById(wanted)) open(wanted);
         document.addEventListener('keydown', function (event) {
             if (event.key === 'Escape') document.querySelectorAll('.overlay').forEach(function (o) { o.hidden = true; });
-            if (event.key === 'Enter' && event.target.matches('.card')) open('worldDialog');
+            if (event.key === 'Enter' && event.target.matches('.card')) event.target.click();
         });
     })();
 </script>

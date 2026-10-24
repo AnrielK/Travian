@@ -5,6 +5,7 @@
  * Reproduces docker/php/openvillage.conf:
  *   /        -> web/public                      (launcher, register, health)
  *   /game/   -> main_script/copyable/public      (static files + index.php front controller)
+ *   /game<N>/ -> the same, for further world N (runtime/worlds.php)
  *   /gpack/  -> sections/gpack                   (static graphic pack)
  * plus the security headers, the .htaccess deny rules and long-lived caching for assets.
  *
@@ -99,14 +100,21 @@ if (preg_match('#^/__openvillage/([a-z]+)$#', $path, $m)) {
     return ov_run_php(__DIR__ . '/runtime/control.php', '/__openvillage/' . $m[1]);
 }
 
-// ---- /game/ ---------------------------------------------------------------
-if ($path === '/game') {
-    header('Location: /game/', true, 302);
+// ---- /game/ and /game<N>/ (further worlds) ---------------------------------
+if (preg_match('#^/game([1-9][0-9]*)?$#', $path)) {
+    header('Location: ' . $path . '/', true, 302);
     return true;
 }
-if (str_starts_with($path, '/game/')) {
+if (preg_match('#^/game([1-9][0-9]*)?/#', $path, $m)) {
+    $prefix = $m[0];
+    if (isset($m[1])) {
+        require_once __DIR__ . '/runtime/worlds.php';
+        if ((int)$m[1] === 1 || !ov_apply_world((int)$m[1])) {
+            return ov_deny(404);
+        }
+    }
     $base = $root . '/main_script/copyable/public';
-    $relative = substr($path, strlen('/game/'));
+    $relative = substr($path, strlen($prefix));
     if (preg_match('#php.*/.*$#', $relative)) {          // .htaccess: RewriteRule .*php.*\/.*$ [R=404]
         return ov_deny(404);
     }
@@ -119,16 +127,16 @@ if (str_starts_with($path, '/game/')) {
         return ov_deny(403);
     }
     if (is_dir($file) && is_file($file . '/index.php')) {
-        return ov_run_php(realpath($file . '/index.php'), '/game/' . trim($relative, '/') . ($relative === '' ? '' : '/') . 'index.php');
+        return ov_run_php(realpath($file . '/index.php'), $prefix . trim($relative, '/') . ($relative === '' ? '' : '/') . 'index.php');
     }
     if (is_file($file)) {
         if (str_ends_with($file, '.php')) {
-            return ov_run_php($file, '/game/' . $relative);
+            return ov_run_php($file, $prefix . $relative);
         }
         return ov_static($file);
     }
     // Front controller (RewriteRule ^ index.php)
-    return ov_run_php($base . '/index.php', '/game/index.php');
+    return ov_run_php($base . '/index.php', $prefix . 'index.php');
 }
 
 // ---- /gpack/ --------------------------------------------------------------

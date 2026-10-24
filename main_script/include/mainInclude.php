@@ -9,7 +9,8 @@ use Model\ArtefactsModel;
 
 require __DIR__ . DIRECTORY_SEPARATOR . "bootstrap.php";
 $requestPath = rawurldecode((string)(parse_url($_SERVER['REQUEST_URI'] ?? '/', PHP_URL_PATH) ?: '/'));
-$gamePrefix = '/game';
+// /game/ or, for a further world (scripts/native/runtime/worlds.php), /game<id>/
+$gamePrefix = preg_match('#^/game[1-9][0-9]*(?=/|$)#', $requestPath, $gameMatch) ? $gameMatch[0] : '/game';
 if ($requestPath === $gamePrefix) {
     $relativePath = '';
 } else if (str_starts_with($requestPath, $gamePrefix . '/')) {

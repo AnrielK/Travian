@@ -227,6 +227,12 @@ start_redis() {
     die "Redis did not become ready"
 }
 
+# Databases of further worlds (<game db>_<id>, scripts/native/runtime/worlds.php); also for older data directories.
+grant_world_databases() {
+    local pattern="${GAME_DB_NAME//_/\\_}\\_%"
+    db_root -e "GRANT ALL PRIVILEGES ON \`$pattern\`.* TO '$GAME_DB_USER'@'localhost'; GRANT ALL PRIVILEGES ON \`$pattern\`.* TO '$GAME_DB_USER'@'127.0.0.1'; FLUSH PRIVILEGES;"
+}
+
 # Same work as docker/mariadb/init.sh – only once per data directory.
 init_databases() {
     [ -f "$DATA/.db-initialised" ] && return 0
@@ -274,21 +280,33 @@ control() { # control <action> [curl args…]
     curl -sS --max-time 600 -H "X-OV-Token: $OV_CONTROL_TOKEN" ${1+"$@"} "http://127.0.0.1:$PORT/__openvillage/$action" 2>&1
 }
 
-start_ticker() { # iOS emulation: the app calls /__openvillage/tick every second
-    if pid_alive worker; then return 0; fi
-    step "Starting automation ticker (1 s)"
-    OV_URL="http://127.0.0.1:$PORT/__openvillage/tick" nohup bash -c '
+start_ticker() { # start_ticker <pid name> <first world>: calls /__openvillage/tick?world=N every second
+    # iOS emulation: every world (the app ticks the same way); otherwise the further worlds of the lobby's
+    # "Game worlds" page (scripts/native/runtime/worlds.php), next to the forked worker of world 1.
+    local name=$1 first=$2
+    if pid_alive "$name"; then return 0; fi
+    step "Starting automation ticker (1 s, worlds from $first)"
+    OV_BASE="http://127.0.0.1:$PORT/__openvillage" OV_FIRST="$first" nohup bash -c '
         trap "exit 0" TERM INT
+        worlds=1; checked=0
         while true; do
-            out="$(curl -s --max-time 300 -H "X-OV-Token: $OV_CONTROL_TOKEN" "$OV_URL")"
-            case "$out" in *"\"ran\":[]"*"\"errors\":[]"*|"") ;; *) echo "$(date "+%F %T") $out" ;; esac
+            if [ $(( $(date +%s) - checked )) -ge 10 ]; then
+                worlds="$(curl -s --max-time 10 -H "X-OV-Token: $OV_CONTROL_TOKEN" "$OV_BASE/worlds" | sed -n "s/.*\"worlds\":\[\([0-9,]*\)\].*/\1/p" | tr , " ")"
+                checked=$(date +%s)
+            fi
+            for w in ${worlds:-1}; do
+                [ "$w" -ge "$OV_FIRST" ] || continue
+                out="$(curl -s --max-time 300 -H "X-OV-Token: $OV_CONTROL_TOKEN" "$OV_BASE/tick?world=$w")"
+                case "$out" in *"\"errors\":[]"*|*"\"busy\":true"*|"") ;; *) echo "$(date "+%F %T") [world $w] $out" ;; esac
+            done
             sleep 1
-        done' >>"$LOGS/worker.log" 2>&1 &
-    echo $! >"$RUN/worker.pid"
+        done' >>"$LOGS/$name.log" 2>&1 &
+    echo $! >"$RUN/$name.pid"
 }
 
 start_worker() {
-    if [ "$IOS_EMU" = 1 ]; then start_ticker; return; fi
+    if [ "$IOS_EMU" = 1 ]; then start_ticker worker 1; return; fi
+    start_ticker worlds 2
     if pid_alive worker; then return 0; fi
     step "Starting automation worker"
     # Supervised like the compose service (restart: unless-stopped): if the engine exits, start it again.
@@ -331,6 +349,7 @@ cmd_start() {
     php_run -r 'exit(ini_get("mysqli.default_socket")===getenv("MYSQL_UNIX_PORT")?0:1);' \
         || die "PHP ignores PHP_INI_SCAN_DIR – cannot apply the runtime php.ini"
     start_mariadb
+    grant_world_databases
     if [ "$IOS_EMU" = 1 ]; then
         init_databases
         start_web
@@ -352,6 +371,7 @@ cmd_start() {
 cmd_stop() {
     load_secrets
     stop_one worker TERM 20
+    stop_one worlds TERM 20
     # the built-in server forks workers that share its process group
     if pid_alive web; then pkill -TERM -P "$(cat "$RUN/web.pid")" 2>/dev/null || true; fi
     stop_one web TERM 5

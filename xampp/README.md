@@ -42,8 +42,14 @@ world's database, so changing `GAME_GPACK` in `config.local.php` later has no ef
 the tribes players can choose: Travian 4.0 and T4.4 Classic offer Romans, Teutons and Gauls, the other looks
 add Egyptians and Huns.
 
-To install again (a new world, possibly with another look), delete `xampp/config.local.php` and restart the
-launcher; the wizard asks before overwriting existing game databases.
+More worlds can run side by side, each with its own look, speed and map: the lobby's menu → *Game worlds*
+(<http://127.0.0.1:8080/worlds.php>) creates a further world (database `openvillage_game_<id>`, pages at
+`/game<id>/`) and deletes it again. The launcher runs the automation of every world. While a world is being
+created (a minute or more for a big map), the game does not answer, because PHP's built-in server on Windows
+handles one request at a time.
+
+To install again from scratch, delete `xampp/config.local.php` and restart the launcher; the wizard asks before
+overwriting existing game databases.
 
 ## Troubleshooting
 
