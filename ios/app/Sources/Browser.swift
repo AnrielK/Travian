@@ -188,7 +188,9 @@ final class BrowserModel: NSObject, ObservableObject, WKNavigationDelegate, WKUI
             var r = pageRect(box);
             if (r.width > 300 && r.width < 1000) focus = r.left + r.width / 2;
         }
-        return [focus, Math.ceil(bottom + 8)];
+        // a layout may ask for a taller box (zoomed out a little more): --ov-portrait-zoom-out on <body>
+        var zoomOut = parseFloat(getComputedStyle(document.body).getPropertyValue('--ov-portrait-zoom-out')) || 1;
+        return [focus, Math.ceil((bottom + 8) * Math.max(1, zoomOut))];
     };
     function center() {
         var view = window.visualViewport ? window.visualViewport.width : window.innerWidth;
