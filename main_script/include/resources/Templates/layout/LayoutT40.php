@@ -100,15 +100,19 @@ $stock = $vars['stockBar'] ?? null;
                 <div id="side_navi">
                     <ul>
                         <li><a href="/">Home</a></li>
-                        <li><a href="/docs/">Rules</a></li>
-                        <li><a href="logout.php"><?=T("inGame", "Logout.Logout"); ?></a></li>
+                        <?php if ($vars['contentCssClass'] == 'activate'): ?>
+                            <li><a href="/docs/">Rules</a></li>
+                            <li><a href="logout.php"><?=T("inGame", "Logout.Logout"); ?></a></li>
+                        <?php else: ?>
+                            <li class="<?=$vars['contentCssClass'] == 'login' ? 'active' : ''; ?>"><a href="login.php">Login</a></li>
+                            <li><a href="/?join=1">Register</a></li>
+                            <li><a href="/docs/">Rules</a></li>
+                        <?php endif; ?>
                     </ul>
                 </div>
             <?php endif; ?>
-            <?php if ($vars['showNavBar']): ?>
-                <a id="ingameManual" href="help.php" title="<?=T("inGame", "Help.Help"); ?>"><img class="question"
-                                                                                                 src="img/x.gif" alt=""/></a>
-            <?php endif; ?>
+            <a id="ingameManual" href="<?=$vars['showNavBar'] ? 'help.php' : '/docs/'; ?>" title="<?=T("inGame", "Help.Help"); ?>"><img
+                        class="question" src="img/x.gif" alt=""/></a>
             <?php if (isset($t40['villageName'])): ?>
                 <div id="villageName">
                     <div class="clickable" onclick="window.location.href='dorf3.php';"
@@ -175,7 +179,7 @@ $stock = $vars['stockBar'] ?? null;
                     <li class="r5" title="<?=htmlspecialchars($stock['titles'][4]); ?>">
                         <p>
                             <a href="production.php?t=5"><img src="img/x.gif" alt=""/></a>
-                            <span class="value" id="stockBarFreeCrop"><?=$stock['production'][4]; ?></span>
+                            <span class="value"><?=number_format_x($stock['cropUsage'][0]); ?>/<?=number_format_x($stock['cropUsage'][1]); ?></span>
                         </p>
                     </li>
                 </ul>

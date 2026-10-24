@@ -91,6 +91,24 @@
     </form>
 </div>
 <script type="text/javascript">
-    var sector = new Travian.Game.Sector('ne');
+    jQuery(function () {
+        // the map and the list choose the same sector
+        var select = jQuery('#sector select[name=sector]');
+        function show() {
+            jQuery('#sector .map .highlight').removeClass('active hover');
+            jQuery('#sector .map #' + select.val() + ' .highlight').addClass('active');
+        }
+        jQuery('#sector .map .sector').on('click', function () {
+            select.val(this.id);
+            show();
+        }).on('mouseenter', function () {
+            jQuery(this).find('.highlight:not(.active)').addClass('hover');
+        }).on('mouseleave', function () {
+            jQuery(this).find('.highlight').removeClass('hover');
+        });
+        select.on('change', show);
+        select.val('ne');
+        show();
+    });
 </script>
 <div class="clear"></div>

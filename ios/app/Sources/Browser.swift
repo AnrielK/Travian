@@ -131,18 +131,22 @@ final class BrowserModel: NSObject, ObservableObject, WKNavigationDelegate, WKUI
             let portrait = scroll.bounds.height > scroll.bounds.width
             // Portrait: the game area (CSS px from the top of the page) fills the height; focus = the middle of
             // the content window or of the page, kept in the middle of the screen.
+            // A layout may ask the village views to start at the left edge of the game instead (third value).
             var focus: CGFloat? = nil
+            var left: CGFloat? = nil
             var target = width / pageWidth
-            if portrait, let box = (try? await self.webView.evaluateJavaScript(Self.portraitScript)) as? [NSNumber], box.count == 2 {
-                focus = CGFloat(truncating: box[0])
-                target = max(target, height / max(CGFloat(truncating: box[1]), 1))
+            if portrait, let box = (try? await self.webView.evaluateJavaScript(Self.portraitScript)) as? [Any], box.count >= 2,
+               let boxFocus = box[0] as? NSNumber, let boxHeight = box[1] as? NSNumber {
+                focus = CGFloat(truncating: boxFocus)
+                if box.count > 2, let boxLeft = box[2] as? NSNumber { left = CGFloat(truncating: boxLeft) }
+                target = max(target, height / max(CGFloat(truncating: boxHeight), 1))
             }
             if !newPage || abs(scroll.zoomScale - target) > 0.01 {
                 scroll.setZoomScale(target, animated: false)
             }
             let extra = scroll.contentSize.width - width
             if portrait, let focus, extra > 1, newPage || scroll.contentOffset.x <= 0.5 {
-                let x = min(max(0, focus * scroll.zoomScale - width / 2), extra)
+                let x = min(max(0, left.map { $0 * scroll.zoomScale } ?? focus * scroll.zoomScale - width / 2), extra)
                 scroll.setContentOffset(CGPoint(x: x.rounded(), y: scroll.contentOffset.y), animated: false)
             } else if !portrait {
                 scroll.setContentOffset(CGPoint(x: -scroll.adjustedContentInset.left, y: scroll.contentOffset.y), animated: false)
@@ -150,7 +154,7 @@ final class BrowserModel: NSObject, ObservableObject, WKNavigationDelegate, WKUI
         }
     }
 
-    /// Portrait: [focus x, height of the game area] in CSS px (see `ovPortrait` in `phoneViewport`).
+    /// Portrait: [focus x, height of the game area, left edge or null] in CSS px (see `ovPortrait` in `phoneViewport`).
     private static let portraitScript = """
     (function () { return window.ovPortrait ? window.ovPortrait() : null; })()
     """
@@ -174,7 +178,7 @@ final class BrowserModel: NSObject, ObservableObject, WKNavigationDelegate, WKUI
         var r = el.getBoundingClientRect();
         return {left: r.left + window.scrollX, top: r.top + window.scrollY, width: r.width, height: r.height};
     }
-    // [focus x, height]: the game area ends with the sidebars (#center; #mid in the Travian 4.0 layout); the
+    // [focus x, height, left edge or null]: the game area ends with the sidebars (#center; #mid in the Travian 4.0 layout); the
     // focus is the middle of the content window (messages, statistics, map, building list, …) or, on the
     // village views, of the page. null while the styles are not there yet.
     window.ovPortrait = function () {
@@ -189,15 +193,28 @@ final class BrowserModel: NSObject, ObservableObject, WKNavigationDelegate, WKUI
             if (r.width > 300 && r.width < 1000) focus = r.left + r.width / 2;
         }
         // a layout may ask for a taller box (zoomed out a little more): --ov-portrait-zoom-out on <body>
-        var zoomOut = parseFloat(getComputedStyle(document.body).getPropertyValue('--ov-portrait-zoom-out')) || 1;
-        return [focus, Math.ceil((bottom + 8) * Math.max(1, zoomOut))];
+        var style = getComputedStyle(document.body);
+        var zoomOut = parseFloat(style.getPropertyValue('--ov-portrait-zoom-out')) || 1;
+        // and for the village views to start at the left edge of the game (its sidebar fully visible) instead
+        // of the middle of the page: --ov-portrait-align: left
+        var left = null;
+        if (style.getPropertyValue('--ov-portrait-align').trim() === 'left' && /(dorf1|dorf2)\\.php/.test(location.pathname)) {
+            left = area.left;
+            document.querySelectorAll('#header, .questMaster, #side_navi').forEach(function (el) {
+                var r = pageRect(el);
+                if (r.width > 0) left = Math.min(left, r.left);
+            });
+            left = Math.max(0, left - 8);
+        }
+        return [focus, Math.ceil((bottom + 8) * Math.max(1, zoomOut)), left];
     };
     function center() {
         var view = window.visualViewport ? window.visualViewport.width : window.innerWidth;
         var max = document.documentElement.scrollWidth - view;
         if (max <= 0 || window.scrollX >= 1 || (window.visualViewport && window.visualViewport.pageLeft >= 1)) return;
         var game = window.ovPortrait();
-        window.scrollTo(Math.round(game ? Math.min(Math.max(0, game[0] - view / 2), max) : max / 2), window.scrollY);
+        var x = !game ? max / 2 : game[2] !== null ? game[2] : game[0] - view / 2;
+        window.scrollTo(Math.round(Math.min(Math.max(0, x), max)), window.scrollY);
     }
     // Portrait: the layout viewport as wide as the game area is tall times the screen's aspect ratio.
     var last = null;

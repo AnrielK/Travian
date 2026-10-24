@@ -35,8 +35,9 @@ FRAME_40 = re.compile(r'#(wrapper|staticElements|header|mtop|logo|navigation|plu
 # 4.0 rules for pages that are not part of the game (login, sign-up, error pages)
 OUTSIDE = re.compile(r'\b(loader|login|logout|signup|support|activate|error_site|fatal_error|banned_cn|'
                      r'support_form|presto|ie\d?|manual|map\.fullScreen)\b|cooperationLogo|#betaBox')
-# ... except the tribe and start choice (activate.php), which runs inside the 4.0 frame
-ACTIVATE = re.compile(r'^\s*body\.activate\b')
+# ... except the pages that run inside the 4.0 frame: tribe and start choice (activate.php), login, logout and
+# the error pages
+ACTIVATE = re.compile(r'^\s*body\.(activate|login|logout|error_site)\b')
 # 4.0 rules for page parts whose markup T4.4 kept from 4.0 (tabs, ...): they replace the T4.4 look
 COMPONENTS_40 = re.compile(r'^\s*\.(contentNavi|subNavi|tabNavi)\b')
 # The T4.4 pages inside the 4.0 frame: where 4.0 placed them differently
@@ -63,7 +64,7 @@ div.village1 div#map_details{position:absolute;right:0;top:10px;width:245px;marg
 # on the resource fields and the tribe choice. Pictures as in the 4.0 stylesheet (../../img/) come from the 4.0 pack.
 LOOK_40 = '''
 body.layoutT40 div#header #logo{background-image:url(../../img/layout/logoSmall.png) !important;font-size:0;line-height:0}
-body.layoutT40.activate div#header #logo{background-image:url(../../img/layout/logoBig.png) !important}
+body.layoutT40.activate div#header #logo,body.layoutT40.login div#header #logo,body.layoutT40.logout div#header #logo,body.layoutT40.error_site div#header #logo{background-image:url(../../img/layout/logoBig.png) !important}
 body.layoutT40 div#header #logo::before{content:none}
 #plusLink #plus{top:-4px;z-index:2}
 #plusLink #plus a.plusBtn .plusBtn-l,#plusLink #plus a.plusBtn .plusBtn-r{vertical-align:top}
@@ -82,12 +83,20 @@ body.layoutT40 .highlighted.rectangle{display:none !important}
 #ingameManual .question{transform:translate(5px,-2px) rotate(-35deg)}
 /* free building sites a little lighter than the T4.4 pictures */
 .buildingsV1 #village_map .buildingSlot img.iso,.buildingsV1 #village_map .buildingSlot img.g16e{opacity:.75}
-/* phones in portrait (iOS app): fit a slightly taller game area, so a little more of the village shows */
-body.layoutT40{--ov-portrait-zoom-out:1.15}
+/* phones in portrait (iOS app): zoom out so the whole left side of the game shows, starting at its left edge */
+body.layoutT40{--ov-portrait-zoom-out:1.3;--ov-portrait-align:left}
 /* the image map of the resource fields uses the 400px wide T4.4 coordinates: centre it on the 500px wide 4.0 fields */
 div.village1 img#resfeld{left:56px;margin-top:4px}
 div.village1 #village_map .colorLayer,div.village1 #village_map .colorLayer.good,div.village1 #village_map .colorLayer.notNow,div.village1 #village_map .colorLayer.maxLevel{border:0;margin:2px 0 0 2px;width:24px;height:23px;border-radius:0;box-shadow:none;background:url(../img/g/circle.png) 0 0 no-repeat}
 div.village1 #village_map .colorLayer.underConstruction{background-position:0 -33px}
+/* 4.0 resource line: green bars, red once the store is full */
+#res li .bar{background-color:#046802}
+#res li .bar.stockFull{background-color:#d40000}
+/* tutorial tip: keep the 4.0 circle and draw a thin red ring around it instead of the thick T4.4 ring in its place */
+div.village1 #village_map .level.highlighted.background{background-image:url(../img/g/circle.png);background-position:0 0;margin:2px 0 0 2px}
+div.village1 #village_map .level.underConstruction.highlighted.background{background-position:0 -33px}
+div.village1 #village_map .level.highlighted.background::after{content:"";position:absolute;left:-4px;top:-4px;width:31px;height:31px;box-sizing:border-box;border:2.5px solid red;border-radius:50%;pointer-events:none}
+.colorBlind div.village1 #village_map .level.highlighted.background::after{border-color:#0024d8}
 div.village1 #village_map .colorLayer .labelLayer,div.village1 #village_map .colorLayer.underConstruction .labelLayer{top:0;left:0;right:auto;width:23px;height:23px;background:none;border-radius:0;line-height:23px;font-size:13px;font-family:Arial,Helvetica,Verdana,sans-serif;color:#252525}
 .contentNavi.subNavi{display:flex;align-items:flex-start;width:auto;margin-right:-46px;overflow:visible}
 #content>a#tabFavorButton{position:absolute}

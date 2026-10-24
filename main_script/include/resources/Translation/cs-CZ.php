@@ -88,7 +88,7 @@ $Definition['activation'] = [
     ],
     "selectedRace" => "Vybral sis národ %s. %s bude od teď tvým rádcem.",
     "changeVid" => "Změnit národ",
-    "submitSector" => "Vyber výchozí pozici",
+    "submitSector" => "Založit vesnici",
     "sectorDescription" => 'Vyber výchozí polohu své vesnice kliknutím na mapu.',
     "selectARace" => "Vyber národ.",
     "submitKind" => "Vyber národ",
