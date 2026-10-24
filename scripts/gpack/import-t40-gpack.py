@@ -79,7 +79,7 @@ body.gidResources #wrapper{background-image:url(../../img/layout/bgResources-rtl
 /* 4.0 had no tutorial highlight: the T4.4 red frame would surround the hidden quest master button */
 body.layoutT40 .highlighted.rectangle{display:none !important}
 /* 4.0: the question mark leans the other way, in the middle of the book cover */
-#ingameManual .question{transform:translate(7px,-2px) rotate(-35deg)}
+#ingameManual .question{transform:translate(5px,-2px) rotate(-35deg)}
 /* free building sites a little lighter than the T4.4 pictures */
 .buildingsV1 #village_map .buildingSlot img.iso,.buildingsV1 #village_map .buildingSlot img.g16e{opacity:.75}
 /* phones in portrait (iOS app): fit a slightly taller game area, so a little more of the village shows */
