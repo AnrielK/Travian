@@ -28,9 +28,6 @@ MODERN_CSS = os.path.join(GPACK, 'a17a8f72', 'mainPage', 'lang', 'en-US', 'compa
 # Packs built from another T4.4 pack without its page frame rules (T40: scripts/gpack/import-t40-gpack.py);
 # the frame of the base pack still counts as known, so no a17a8f72 frame rule comes back.
 BASE_PACKS = {'T40': 'TravianOld'}
-# Packs whose village picture (bgBuildings) has its building sites 20px right and 10px lower than the a17a8f72
-# slot positions: the empty sites, the rally point and the wall would sit off the path ends
-VILLAGE_MAP_SHIFT = {'TravianOld': (20, 10), 'T40': (20, 10)}
 BODY_CLASSES = {'.v35', '.webkit', '.chrome', '.ltr', '.rtl', '.buildingsV1', '.buildingsV2', '.buildingsV3',
                 '.season-winter', '.season-spring', '.season-summer', '.season-fall', '.openvillage'}
 
@@ -165,8 +162,9 @@ def build(pack: str) -> str:
         '/* 3. building level circles inside the village centre building slots */',
         *levels,
         '.buildingsV1 #village_map{width:628px;height:534px;position:absolute;z-index:1}',
-        *(['.buildingsV1 div.village2 div#village_map{margin:%dpx 0 0 %dpx}' % VILLAGE_MAP_SHIFT[pack][::-1]]
-          if pack in VILLAGE_MAP_SHIFT else []),
+        # the empty rally point site is the T4.4 picture: T4.4 places it like the rally point (a17a8f72 has its
+        # own, taller picture 15px higher, which put the T4.4 one across the village square)
+        '.buildingsV1 .buildingSlot.a39.g0{left:356px;top:171px}',
         # T4.4 places the rally point / Wonder of the World on the village map itself; here the slot does it
         '.buildingsV1 #village_map .buildingSlot img.building{left:0;top:0;width:120px;height:120px}',
         '.buildingsV1 #village_map .buildingSlot img.g16,.buildingsV1 #village_map .buildingSlot img.g16b,'
