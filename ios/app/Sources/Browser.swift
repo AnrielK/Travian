@@ -200,7 +200,7 @@ final class BrowserModel: NSObject, ObservableObject, WKNavigationDelegate, WKUI
         var left = null;
         if (style.getPropertyValue('--ov-portrait-align').trim() === 'left' && /(dorf1|dorf2)\\.php/.test(location.pathname)) {
             left = area.left;
-            document.querySelectorAll('#header, .questMaster, #side_navi').forEach(function (el) {
+            document.querySelectorAll('#header, .questMaster, #side_navi, #sideInfoCountdown, #villageName, #ingameManual').forEach(function (el) {
                 var r = pageRect(el);
                 if (r.width > 0) left = Math.min(left, r.left);
             });

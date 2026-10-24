@@ -84,7 +84,10 @@ body.layoutT40 .highlighted.rectangle{display:none !important}
 /* free building sites a little lighter than the T4.4 pictures */
 .buildingsV1 #village_map .buildingSlot img.iso,.buildingsV1 #village_map .buildingSlot img.g16e{opacity:.75}
 /* phones in portrait (iOS app): zoom out so the whole left side of the game shows, starting at its left edge */
-body.layoutT40{--ov-portrait-zoom-out:1.3;--ov-portrait-align:left}
+body.layoutT40{--ov-portrait-zoom-out:1.45;--ov-portrait-align:left}
+/* a window narrower than the game (phones in portrait): the signs and the quest master on the left tree stick out
+   of the 990px game, so keep a margin on the left where they can show (the scenery goes on in it) */
+@media (max-width:1060px){body.layoutT40{min-width:1020px}body.layoutT40 #wrapper{box-sizing:border-box;padding-left:30px;background-origin:content-box}body.layoutT40 #wrapper #staticElements{background-position:calc(50% - 15px) top}}
 /* the image map of the resource fields uses the 400px wide T4.4 coordinates: centre it on the 500px wide 4.0 fields */
 div.village1 img#resfeld{left:56px;margin-top:4px}
 div.village1 #village_map .colorLayer,div.village1 #village_map .colorLayer.good,div.village1 #village_map .colorLayer.notNow,div.village1 #village_map .colorLayer.maxLevel{border:0;margin:2px 0 0 2px;width:24px;height:23px;border-radius:0;box-shadow:none;background:url(../img/g/circle.png) 0 0 no-repeat}
@@ -92,10 +95,11 @@ div.village1 #village_map .colorLayer.underConstruction{background-position:0 -3
 /* 4.0 resource line: green bars, red once the store is full */
 #res li .bar{background-color:#046802}
 #res li .bar.stockFull{background-color:#d40000}
-/* tutorial tip: keep the 4.0 circle and draw a thin red ring around it instead of the thick T4.4 ring in its place */
-div.village1 #village_map .level.highlighted.background{background-image:url(../img/g/circle.png);background-position:0 0;margin:2px 0 0 2px}
-div.village1 #village_map .level.underConstruction.highlighted.background{background-position:0 -33px}
-div.village1 #village_map .level.highlighted.background::after{content:"";position:absolute;left:-4px;top:-4px;width:31px;height:31px;box-sizing:border-box;border:2.5px solid red;border-radius:50%;pointer-events:none}
+/* tutorial tip: the T4.4 highlighter puts an empty copy of the field circle 4px around it (class "highlighted
+   background", inline size 32x31): no circle in the copy, a thin red ring around the 4.0 circle instead of the
+   thick T4.4 ring */
+div.village1 #village_map .level.highlighted.background{background:none;margin:2px 0 0 2px}
+div.village1 #village_map .level.highlighted.background::after{content:"";position:absolute;left:0;top:0;width:31px;height:31px;box-sizing:border-box;border:2.5px solid red;border-radius:50%;pointer-events:none}
 .colorBlind div.village1 #village_map .level.highlighted.background::after{border-color:#0024d8}
 div.village1 #village_map .colorLayer .labelLayer,div.village1 #village_map .colorLayer.underConstruction .labelLayer{top:0;left:0;right:auto;width:23px;height:23px;background:none;border-radius:0;line-height:23px;font-size:13px;font-family:Arial,Helvetica,Verdana,sans-serif;color:#252525}
 .contentNavi.subNavi{display:flex;align-items:flex-start;width:auto;margin-right:-46px;overflow:visible}
