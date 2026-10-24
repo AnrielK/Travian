@@ -1,0 +1,14 @@
+[01] health.php reports ready
+     server: PHP 8.3.35, 11.4.13-MariaDB, installed=True
+[02] automation tick runs without errors
+[03] register + activate Alpha838988 (Romans) and Beta838988 (Gauls)
+[04] log in again with a fresh session
+[05] authenticated pages render without PHP errors
+[06] queue a resource field upgrade
+[07] fast-forward the queue; the automation tick completes it
+[08] send a message from A to B and read it as B
+[09] admin (Support) can open the admin panel
+[10] no quarantined scheduled tasks
+done in 50.5s, 67 pages crawled
+
+E2E PASSED
