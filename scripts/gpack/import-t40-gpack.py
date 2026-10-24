@@ -35,8 +35,9 @@ FRAME_40 = re.compile(r'#(wrapper|staticElements|header|mtop|logo|navigation|plu
 # 4.0 rules for pages that are not part of the game (login, sign-up, error pages)
 OUTSIDE = re.compile(r'\b(loader|login|logout|signup|support|activate|error_site|fatal_error|banned_cn|'
                      r'support_form|presto|ie\d?|manual|map\.fullScreen)\b|cooperationLogo|#betaBox')
-# ... except the tribe and start choice (activate.php), which runs inside the 4.0 frame
-ACTIVATE = re.compile(r'^\s*body\.activate\b')
+# ... except the pages that run inside the 4.0 frame: tribe and start choice (activate.php), login, logout and
+# the error pages
+ACTIVATE = re.compile(r'^\s*body\.(activate|login|logout|error_site)\b')
 # 4.0 rules for page parts whose markup T4.4 kept from 4.0 (tabs, ...): they replace the T4.4 look
 COMPONENTS_40 = re.compile(r'^\s*\.(contentNavi|subNavi|tabNavi)\b')
 # The T4.4 pages inside the 4.0 frame: where 4.0 placed them differently
@@ -63,7 +64,7 @@ div.village1 div#map_details{position:absolute;right:0;top:10px;width:245px;marg
 # on the resource fields and the tribe choice. Pictures as in the 4.0 stylesheet (../../img/) come from the 4.0 pack.
 LOOK_40 = '''
 body.layoutT40 div#header #logo{background-image:url(../../img/layout/logoSmall.png) !important;font-size:0;line-height:0}
-body.layoutT40.activate div#header #logo{background-image:url(../../img/layout/logoBig.png) !important}
+body.layoutT40.activate div#header #logo,body.layoutT40.login div#header #logo,body.layoutT40.logout div#header #logo,body.layoutT40.error_site div#header #logo{background-image:url(../../img/layout/logoBig.png) !important}
 body.layoutT40 div#header #logo::before{content:none}
 #plusLink #plus{top:-4px;z-index:2}
 #plusLink #plus a.plusBtn .plusBtn-l,#plusLink #plus a.plusBtn .plusBtn-r{vertical-align:top}
