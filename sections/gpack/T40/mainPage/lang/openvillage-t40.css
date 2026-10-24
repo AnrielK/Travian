@@ -294,8 +294,8 @@ body.layoutT40 .highlighted.rectangle{display:none !important}
 /* phones in portrait (iOS app): zoom out so the whole left side of the game shows, starting at its left edge */
 body.layoutT40{--ov-portrait-zoom-out:1.45;--ov-portrait-align:left}
 /* a window narrower than the game (phones in portrait): the signs and the quest master on the left tree stick out
-   of the 990px game, so keep a margin on the left where they can show */
-@media (max-width:1060px){body.layoutT40{background-image:none}body.layoutT40 #wrapper{margin-left:30px}}
+   of the 990px game, so keep a margin on the left where they can show (the scenery goes on in it) */
+@media (max-width:1060px){body.layoutT40{min-width:1020px}body.layoutT40 #wrapper{box-sizing:border-box;padding-left:30px;background-origin:content-box}body.layoutT40 #wrapper #staticElements{background-position:calc(50% - 15px) top}}
 /* the image map of the resource fields uses the 400px wide T4.4 coordinates: centre it on the 500px wide 4.0 fields */
 div.village1 img#resfeld{left:56px;margin-top:4px}
 div.village1 #village_map .colorLayer,div.village1 #village_map .colorLayer.good,div.village1 #village_map .colorLayer.notNow,div.village1 #village_map .colorLayer.maxLevel{border:0;margin:2px 0 0 2px;width:24px;height:23px;border-radius:0;box-shadow:none;background:url(../img/g/circle.png) 0 0 no-repeat}
