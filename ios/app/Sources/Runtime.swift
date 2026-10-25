@@ -84,6 +84,9 @@ struct WorldSettings: Codable, Equatable {
     /// Hero movement speed multiplier (1 = normal); nil in older saved settings.
     var heroSpeed: Int?
     var heroSpeedFactor: Int { max(1, heroSpeed ?? 1) }
+    /// Name of the world (lobby, page title); nil in older saved settings.
+    var name: String?
+    var worldName: String { (name ?? "").trimmingCharacters(in: .whitespaces).isEmpty ? "iPhone World" : name! }
 
     /// Styles shipped in sections/gpack (see gpack.php); only those present in the bundle are offered.
     static let allStyles: [(hash: String, name: String)] = [
@@ -98,6 +101,10 @@ struct WorldSettings: Codable, Equatable {
     static var availableStyles: [(hash: String, name: String)] {
         allStyles.filter { FileManager.default.fileExists(atPath: Paths.bundledGame
             .appendingPathComponent("sections/gpack/\($0.hash)/mainPage/lang/en-US/compact.css").path) }
+    }
+    /// Tribes a world with this look offers (like 'tribes' in sections/gpack/gpack.php).
+    static func tribes(_ hash: String) -> String {
+        ["T40", "TravianOld"].contains(hash) ? "Římané, Germáni, Galové" : "Římané, Germáni, Galové, Egypťané, Hunové"
     }
     /// The chosen style, or the default (legends655) when none is chosen or the chosen one is not in this build.
     var style: String {
@@ -187,6 +194,8 @@ final class GameRuntime: ObservableObject {
         case working(String)
         case running
         case failed(String)
+        /// No world yet (first start or Nástroje → Nový svět): the world settings form is shown (WorldSetupView).
+        case needsWorld
     }
 
     @Published private(set) var state: State = .idle
@@ -196,6 +205,8 @@ final class GameRuntime: ObservableObject {
     @Published var tickEnabled = true
     /// Set when the previous launch died during start-up (step + end of mariadb.log).
     @Published var previousCrash: String?
+    /// Bumped when a new world was created, so the web view loads the lobby again.
+    @Published private(set) var worldVersion = 0
     let secrets = Secrets.load()
     var world = WorldSettings.load()
 
@@ -229,7 +240,7 @@ final class GameRuntime: ObservableObject {
 
     func start() {
         if case .working = state { return }
-        if state == .running { return }
+        if state == .running || state == .needsWorld { return }
         state = .working("Připravuji soubory…")
         port = Self.requestedPort() ?? (Self.isPortOpen(8080) ? Int.random(in: 49152...60000) : 8080)
         let port = self.port
@@ -250,11 +261,17 @@ final class GameRuntime: ObservableObject {
                     await self.launchMariaDB()
                     try await Self.wait("MariaDB", seconds: 90) { Self.isSocketOpen(Paths.socket) }
                 }
-                Self.mark("založení světa")
-                try await self.ensureWorld()
+                Self.mark("kontrola světa")
+                let installed = try await self.ensureWorld()
                 try? FileManager.default.removeItem(at: Paths.startMarker)
-                await self.setState(.running)
-                await self.startTicker()
+                if installed {
+                    await self.setState(.running)
+                    await self.startTicker()
+                } else if ProcessInfo.processInfo.arguments.contains("-createWorld") {
+                    await self.createWorld(self.world)            // CI (ios.yml): saved settings, no form
+                } else {
+                    await self.setState(.needsWorld)              // the settings form creates it (createWorld)
+                }
             } catch {
                 appendLog(Paths.setupLog, "\(Date()) start failed: \(error.localizedDescription)")
                 await self.setState(.failed(error.localizedDescription))
@@ -266,38 +283,56 @@ final class GameRuntime: ObservableObject {
 
     /// After returning from the background iOS may have closed the listening socket.
     func ensureRunning() {
-        guard state == .running, !Self.isPortOpen(port) else { return }
+        guard state == .running || state == .needsWorld, !Self.isPortOpen(port) else { return }
         state = .idle
         start()
     }
 
     // MARK: world
 
-    private func ensureWorld() async throws {
+    /// Whether the world exists; prepares empty databases when they are missing.
+    private func ensureWorld() async throws -> Bool {
         state = .working("Kontroluji svět…")
         let status = try? await control("status", timeout: 30)
         appendLog(Paths.setupLog, "\(Date()) status: \(status.map { "\($0)" } ?? "no response")")
-        if status?["installed"] as? Bool == true { return }
+        if status?["installed"] as? Bool == true { return true }
         let error = status?["error"] as? String ?? ""
         if error.contains("doesn't exist") || error.contains("Unknown database") {
             state = .working("Zakládám databáze…")
             _ = try await controlChecked("reset", form: [:], timeout: 900)
         }
-        state = .working("Vytvářím svět (mapa \(world.mapSize * 2 + 1)×\(world.mapSize * 2 + 1))…\nPrvní spuštění trvá desítky sekund.")
-        let result = try await controlChecked("setup", form: [:], timeout: 1800)
-        appendLog(Paths.setupLog, "\(Date()) setup: \(result)")
+        return false
     }
 
-    /// Drops all data and creates a new world (map size and look from settings; the world keeps its look).
+    /// Creates the world with the settings chosen in WorldSetupView (look, speed, map, round length, hero speed, name).
+    /// The look stays with the world; speed, round length and hero speed can be changed later in Nastavení.
+    func createWorld(_ settings: WorldSettings) async {
+        world = settings
+        world.save()
+        for (name, value) in [("GAME_SPEED", String(world.speed)), ("GAME_MAP_SIZE", String(world.mapSize)),
+                              ("GAME_GPACK", world.style), ("GAME_ROUND_LENGTH_DAYS", String(world.roundDays)),
+                              ("GAME_HERO_SPEED", String(world.heroSpeedFactor)), ("GAME_SERVER_NAME", world.worldName)] {
+            setenv(name, value, 1)
+        }
+        state = .working("Vytvářím svět (mapa \(world.mapSize * 2 + 1)×\(world.mapSize * 2 + 1))…\nTrvá to desítky sekund.")
+        do {
+            let result = try await controlChecked("setup", form: [:], timeout: 1800)
+            appendLog(Paths.setupLog, "\(Date()) setup: \(result)")
+            state = .running
+            worldVersion += 1
+            startTicker()
+        } catch {
+            appendLog(Paths.setupLog, "\(Date()) setup failed: \(error.localizedDescription)")
+            state = .failed(error.localizedDescription)
+        }
+    }
+
+    /// Drops all data; the settings form then creates the new world (createWorld).
     func newWorld() async throws {
-        tickEnabled = false
-        defer { tickEnabled = true }
+        tickTimer?.invalidate()
         state = .working("Mažu svět…")
         _ = try await controlChecked("reset", form: [:], timeout: 900)
-        setenv("GAME_MAP_SIZE", String(world.mapSize), 1)
-        setenv("GAME_GPACK", world.style, 1)
-        try await ensureWorld()
-        state = .running
+        state = .needsWorld
     }
 
     /// HeroHelper reads GAME_HERO_SPEED on every request, so a new hero speed applies to the next movement.
@@ -449,7 +484,7 @@ final class GameRuntime: ObservableObject {
             "GAME_GPACK": world.style,
             "GAME_HERO_SPEED": String(world.heroSpeedFactor),
             "GAME_ROUND_LENGTH_DAYS": String(world.roundDays),
-            "GAME_WORLD_ID": "local", "GAME_TITLE": "OpenVillage 4.6", "GAME_SERVER_NAME": "iPhone World",
+            "GAME_WORLD_ID": "local", "GAME_TITLE": "OpenVillage 4.6", "GAME_SERVER_NAME": world.worldName,
             "INITIAL_ADMIN_PASSWORD": secrets.adminPassword,
             "OV_CONTROL_TOKEN": secrets.controlToken,
             "OV_KV_DB": "openvillage_cache",
