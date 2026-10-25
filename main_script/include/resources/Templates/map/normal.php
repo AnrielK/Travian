@@ -711,5 +711,32 @@
                         }
                     }
             }));
+        // The map remembers where it sits on the page and turns clicks into fields with it. Its own update
+        // (positionChange) is never called: it is bound to jQuery("window"), a selector, and uses MooTools calls that
+        // no longer exist. So after the page layout changed (a resized window, the iOS app setting its viewport after
+        // loading) clicks hit a field beside the right one. Measure again on a resize and before each click or touch.
+        var refreshMapPosition = function () {
+            var map = Travian.Game.Map._map;
+            if (!map || !map.containerViewSize) {
+                return;
+            }
+            var offset = map.containerRender.offset();
+            var size = {x: offset.left, y: offset.top, width: map.containerRender.width(), height: map.containerRender.height()};
+            var view = map.containerViewSize;
+            if (size.x === view.x && size.y === view.y && size.width === view.width && size.height === view.height) {
+                return;
+            }
+            var change = {x: view.x - size.x, y: view.y - size.y};
+            map.setContainerSizes(size);
+            if (map.miniMap && map.miniMap.container) {
+                var miniOffset = jQuery(map.miniMap.container).offset();
+                map.miniMap.containerPosition = {x: miniOffset.left, y: miniOffset.top};
+            }
+            map.transition.containerPositionChange(change);
+        };
+        jQuery(window).on('resize', refreshMapPosition);
+        ['mousedown', 'touchstart'].forEach(function (type) {
+            document.getElementById('mapContainer').addEventListener(type, refreshMapPosition, true);
+        });
     });
 </script>
