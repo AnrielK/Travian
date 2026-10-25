@@ -3107,6 +3107,43 @@ div.plus table td{font-family: IRANSans, Arial, Helvetica, Verdana, sans-serif;}
 #reportWrapper > .header.noImages ~ .body .reportImage{display: none;}
 #reportWrapper > .header .headline{height: 30px;
   border-bottom: solid 1px #DDC6A2;}
+#reportWrapper > .header .headline.withQuickNavigation{display: -ms-grid;
+  display: grid;
+  -ms-grid-columns: 30px 1fr 30px;
+  grid-template-columns: 30px 1fr 30px;}
+#reportWrapper > .header .headline.withQuickNavigation .reportQuickNavigation{display: inline-block;
+  width: 30px;
+  text-align: center;
+  background-color: rgba(255, 255, 255, 0);
+  transition-duration: 150ms;}
+#reportWrapper > .header .headline.withQuickNavigation .reportQuickNavigation:first-of-type{-ms-grid-column: 1;
+  grid-column-start: 1;}
+#reportWrapper > .header .headline.withQuickNavigation .reportQuickNavigation:last-of-type{-ms-grid-column: 3;
+  grid-column-start: 3;}
+#reportWrapper > .header .headline.withQuickNavigation .reportQuickNavigation svg{width: 12px;
+  height: 17px;
+  margin-top: 7px;
+  transform: translateX(0);
+  transition-duration: 150ms;
+  transition-timing-function: ease-out;}
+.rtl #reportWrapper > .header .headline.withQuickNavigation .reportQuickNavigation svg{transform: scale(-1, 1);}
+#reportWrapper > .header .headline.withQuickNavigation .reportQuickNavigation svg path{fill: transparent;
+  stroke: #DDC6A2;
+  stroke-width: 4px;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  transition-duration: 150ms;}
+#reportWrapper > .header .headline.withQuickNavigation .reportQuickNavigation:not(.disabled):hover,#reportWrapper > .header .headline.withQuickNavigation .reportQuickNavigation:not(.disabled):focus{background-color: rgba(255, 255, 255, 0.3);}
+#reportWrapper > .header .headline.withQuickNavigation .reportQuickNavigation:not(.disabled):hover svg.chevronBack,#reportWrapper > .header .headline.withQuickNavigation .reportQuickNavigation:not(.disabled):focus svg.chevronBack{margin-right: 10px;}
+#reportWrapper > .header .headline.withQuickNavigation .reportQuickNavigation:not(.disabled):hover svg.chevronForward,#reportWrapper > .header .headline.withQuickNavigation .reportQuickNavigation:not(.disabled):focus svg.chevronForward{margin-left: 10px;}
+.rtl #reportWrapper > .header .headline.withQuickNavigation .reportQuickNavigation:not(.disabled):hover svg.chevronBack,.rtl #reportWrapper > .header .headline.withQuickNavigation .reportQuickNavigation:not(.disabled):focus svg.chevronBack{transform: scale(-1, 1);}
+.rtl #reportWrapper > .header .headline.withQuickNavigation .reportQuickNavigation:not(.disabled):hover svg.chevronForward,.rtl #reportWrapper > .header .headline.withQuickNavigation .reportQuickNavigation:not(.disabled):focus svg.chevronForward{transform: scale(-1, 1);}
+#reportWrapper > .header .headline.withQuickNavigation .reportQuickNavigation:not(.disabled):hover svg path,#reportWrapper > .header .headline.withQuickNavigation .reportQuickNavigation:not(.disabled):focus svg path{stroke: #998D73;}
+#reportWrapper > .header .headline.withQuickNavigation .reportQuickNavigation:not(.disabled):active{background-color: rgba(255, 255, 255, 0.6);}
+#reportWrapper > .header .headline.withQuickNavigation .reportQuickNavigation.disabled{pointer-events: none;}
+#reportWrapper > .header .headline.withQuickNavigation .reportQuickNavigation.disabled svg path{stroke: transparent;}
+#reportWrapper > .header .headline.withQuickNavigation .subject{-ms-grid-column: 2;
+  grid-column-start: 2;}
 #reportWrapper > .header .headline .subject{font-weight: bold;
   white-space: nowrap;
   text-overflow: ellipsis;
@@ -3116,6 +3153,9 @@ div.plus table td{font-family: IRANSans, Arial, Helvetica, Verdana, sans-serif;}
   padding: 0 5px;
   border-left: solid 1px #DDC6A2;
   border-right: solid 1px #DDC6A2;}
+#reportWrapper > .header .headline:not(.withQuickNavigation) .subject{width: 100%;
+  border: none;
+  padding: 0 10px;}
 #reportWrapper > .header .time{padding-left: 10px;
   height: 36px;
   line-height: 38px;}
@@ -7102,3 +7142,5 @@ div.village2 div#village_map div.buildingSlot .colorLayer.underConstruction .lab
 .buildingsV1 #village_map .buildingSlot .colorLayer{position:absolute}
 /* 4. T4.6 markup without a T4.4 counterpart */
 ul#stockBar .stockBarButton .middle>i{position:absolute;left:3px;top:4px}
+div.reports #reportWrapper>.header{float:none;margin:-4px 0 0}
+#reportWrapper .iconButton i,#reportWrapper button.icon i{display:inline-block;vertical-align:middle}

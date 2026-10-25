@@ -241,6 +241,9 @@ div.village1 div#map_details{position:absolute;right:0;top:10px;width:245px;marg
 /* 4.0: the quest master crosses his arms while a task is open and leans on the sign once it is done */
 .questMaster .master,.questMaster .master:hover{background-position:right top}
 .questMaster:has(+ #t40Questmaster .newQuestSpeechBubble) .master{background-position:left top}
+/* the Teuton's arms-crossed picture of the 4.0 pack leans the RTL way (towards the left): mirror it */
+.questMaster .master.nation2{transform:scaleX(-1)}
+.questMaster:has(+ #t40Questmaster .newQuestSpeechBubble) .master.nation2{transform:none}
 #t40Questmaster{display:none}
 /* 4.0 page parts */
 .contentNavi{position:relative;width:557px;overflow:hidden;background-repeat:repeat-x;background-position:left bottom;}
@@ -283,6 +286,10 @@ button.green:hover .button-container,button.orange:hover .button-container,butto
 button.green .button-container .button-content,button.orange .button-container .button-content{color:#fff;text-shadow:none}
 button.green.disabled .button-container,button.green:disabled .button-container,button.orange.disabled .button-container,button.orange:disabled .button-container{background:linear-gradient(#f0f0f0,#d6d6d6);box-shadow:none}
 button.green.disabled .button-container .button-content,button.green:disabled .button-container .button-content,button.orange.disabled .button-container .button-content,button.orange:disabled .button-container .button-content{color:#999}
+/* buttons the scripts build without the T4.4 inner boxes (the OK button of the game dialogs, e.g. using a hero item) */
+button.green:not(:has(.button-container)),button.orange:not(:has(.button-container)){height:25px;padding:0 20px;border-radius:4px;outline:none;color:#fff;font-weight:bold;font-size:11px;line-height:25px;text-align:center;background:linear-gradient(#c4d983,#abc558 46%,#7a9d0e 54%,#708f11);box-shadow:0 1px 1px rgba(0,0,0,.25)}
+button.green:not(:has(.button-container)):hover,button.orange:not(:has(.button-container)):hover{background:linear-gradient(#b2b2b2,#939393 46%,#5c5c5c 54%,#555)}
+button.green:not(:has(.button-container)):disabled,button.orange:not(:has(.button-container)):disabled,button.green.disabled:not(:has(.button-container)),button.orange.disabled:not(:has(.button-container)){color:#999;background:linear-gradient(#f0f0f0,#d6d6d6);box-shadow:none}
 body.gidResources{background-image:url(../img40/layout/bgR.jpg)}
 body.gidResources #wrapper{background-image:url(../img40/layout/bgResources-rtl.jpg)}
 /* 4.0 had no tutorial highlight: the T4.4 red frame would surround the hidden quest master button */

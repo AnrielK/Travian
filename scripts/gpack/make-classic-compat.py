@@ -147,7 +147,7 @@ def build(pack: str) -> str:
         for sel in selectors_of(rules(read_css(base))):
             known |= tokens(sel)
     # the page frame (header, navigation, stock bar, sidebars) keeps the T4.4 layout entirely
-    frame = re.compile(r'sidebar|#header|navigation|stockBar|layoutButton|#footer|outOfGame|#logo|#background|'
+    frame = re.compile(r'sidebar|#header|(?<!quick)navigation|stockBar|layoutButton|#footer|outOfGame|#logo|#background|'
                        r'bodyWrapper|snowAnimation|^\s*\.ie\d', re.I)
     unknown = lambda sel: sel.strip() if tokens(sel) - known and not frame.search(sel) else None
     modern = convert(rules(read_css(MODERN_CSS)), unknown, keep)
@@ -180,6 +180,9 @@ def build(pack: str) -> str:
         '/* 4. T4.6 markup without a T4.4 counterpart */',
         # the resource icons lost their T4.4 class "res"
         'ul#stockBar .stockBarButton .middle>i{position:absolute;left:3px;top:4px}',
+        # report header: T4.4 floats its own "div.reports .header" and its report buttons hold no <i> icons
+        'div.reports #reportWrapper>.header{float:none;margin:-4px 0 0}',
+        '#reportWrapper .iconButton i,#reportWrapper button.icon i{display:inline-block;vertical-align:middle}',
         '',
     ])
     # The file lives in <pack>/mainPage/lang/. Pictures of a17a8f72 are copied into the pack (mainPage/t46/), so
