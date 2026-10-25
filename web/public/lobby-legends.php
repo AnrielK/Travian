@@ -245,7 +245,9 @@ ob_start(static function (string $html): string {
 <script>
     (function () {
         document.querySelectorAll('input[name=w]').forEach(function (i) { i.value = screen.width + ':' + screen.height; });
+        var registerUrl = <?= json_encode($world['registerUrl']) ?>;   // the look's own registration page (Travian 4.0)
         function open(name) {
+            if (name === 'register' && registerUrl) { location.href = registerUrl; return; }
             document.querySelectorAll('[data-modal]').forEach(function (o) { o.hidden = o.getAttribute('data-modal') !== name; });
         }
         document.addEventListener('click', function (event) {

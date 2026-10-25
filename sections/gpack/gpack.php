@@ -20,8 +20,10 @@ $styles = [
     'd11cb434' => ['hash' => 'd11cb434', 'name' => 'Travian T4.4 Seasonized v2', 'isNew' => false, 'tribes' => $fiveTribes],
     'TravianOld' => ['hash' => 'TravianOld', 'name' => 'Travian T4.4 Classic', 'isNew' => false, 'tribes' => $classicTribes],
     // T40 = Travian 4.0 (travian_Travian_4.0_41), the look T4.4 Classic grew from: the 4.0 page frame of
-    // layout/LayoutT40.php around the T4.4 pages (scripts/gpack/import-t40-gpack.py).
-    'T40' => ['hash' => 'T40', 'name' => 'Travian 4.0', 'isNew' => false, 'layout' => 't40', 'tribes' => $classicTribes],
+    // layout/LayoutT40.php around the T4.4 pages (scripts/gpack/import-t40-gpack.py). 'ownRegistration': the
+    // lobby sends players to the world's register.php (in the 4.0 frame, like login.php) instead of its dialog.
+    'T40' => ['hash' => 'T40', 'name' => 'Travian 4.0', 'isNew' => false, 'layout' => 't40', 'tribes' => $classicTribes,
+        'ownRegistration' => true],
 ];
 $styles = array_filter($styles, static fn ($p, $hash) => is_file(__DIR__ . "/$hash/mainPage/lang/en-US/compact.css"),
     ARRAY_FILTER_USE_BOTH);

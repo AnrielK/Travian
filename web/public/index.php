@@ -226,7 +226,9 @@ if (is_file(__DIR__ . '/legends/lobby.css') && !isset($_GET['classic'])) {
 <script>
     (function () {
         document.querySelectorAll('input[name=w]').forEach(function (input) { input.value = screen.width + ':' + screen.height; });
+        var registerUrl = <?= json_encode($world['registerUrl']) ?>;   // the look's own registration page (Travian 4.0)
         function open(id) {
+            if (id === 'registerDialog' && registerUrl) { location.href = registerUrl; return; }
             document.querySelectorAll('.overlay').forEach(function (o) { o.hidden = o.id !== id; });
             var field = document.querySelector('#' + id + ' input:not([type=hidden])');
             if (field && window.matchMedia('(pointer: fine)').matches) field.focus();

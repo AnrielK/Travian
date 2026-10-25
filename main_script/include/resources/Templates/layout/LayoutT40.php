@@ -104,8 +104,8 @@ $stock = $vars['stockBar'] ?? null;
                             <li><a href="/docs/">Rules</a></li>
                             <li><a href="logout.php"><?=T("inGame", "Logout.Logout"); ?></a></li>
                         <?php else: ?>
-                            <li class="<?=$vars['contentCssClass'] == 'login' ? 'active' : ''; ?>"><a href="login.php">Login</a></li>
-                            <li><a href="/?join=1">Register</a></li>
+                            <li class="<?=$vars['contentCssClass'] == 'login' && empty($vars['registerPage']) ? 'active' : ''; ?>"><a href="login.php">Login</a></li>
+                            <li class="<?=!empty($vars['registerPage']) ? 'active' : ''; ?>"><a href="register.php">Register</a></li>
                             <li><a href="/docs/">Rules</a></li>
                         <?php endif; ?>
                     </ul>
