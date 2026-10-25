@@ -999,6 +999,10 @@ class GameView
     private
     function renderQuest()
     {
+        if (is_t40_layout()) {
+            $this->renderQuestT40();
+            return;
+        }
         $quest = Quest::getInstance();
         if ($quest->isFullyCompleted()) {
             return;
@@ -1021,6 +1025,19 @@ class GameView
         }
         $this->vars['t40']['questmaster'] = $view->output();
         $this->vars['sidebarAfterContent'] .= $this->vars['t40']['questmaster'];
+    }
+
+    /** Travian 4.0 task line (Model\QuestT40) instead of the T4.4 tutorial and task list: opened from the quest master sign. */
+    private function renderQuestT40()
+    {
+        $quest = new \Model\QuestT40();
+        if ($quest->isDeclined()) {
+            return;
+        }
+        $this->vars['t40']['questmaster'] = PHPBatchView::render('layout/t40Questmaster', [
+            'reward' => $quest->hasReward(),
+            'welcome' => $quest->getState() === \Model\QuestT40::WELCOME,
+        ]);
     }
 
     /** Data of the Travian 4.0 page frame (LayoutT40.php): village sign, alliance sign, village list. */

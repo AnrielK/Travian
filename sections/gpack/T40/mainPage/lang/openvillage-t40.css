@@ -368,6 +368,72 @@ body:has(.dialog.questInformation) > .overlay{background:none !important}
 .dialog.questInformation #questLogo.tutorial_01_task_image_vid2{width:473px;height:257px;background:url(../img40/q/introTeutons.jpg)}
 .dialog.questInformation #questLogo.tutorial_01_task_image_vid3{width:473px;height:257px;background:url(../img40/q/introGauls.jpg)}
 .dialog.questInformation #questLogo.tutorial_01_task_image_vid6,.dialog.questInformation #questLogo.tutorial_01_task_image_vid7{width:473px;height:257px;background:url(../img40/q/intro.jpg)}
+.questT40Dialog .dialog-contents>.questT40{width:473px}
+.questT40 h4{font-size:13px;font-weight:bold;margin:16px 0 20px}
+.questT40 .spoken{margin-bottom:15px;font-style:italic}
+.questT40 .rew{margin-bottom:15px;overflow:hidden}
+.questT40 .rew p.ta_aw{margin:0 0 5px;font-weight:bold}
+.questT40 .rew .resources{float:left;margin-right:16px;white-space:nowrap}
+.questT40 .rew .resources i,.questT40 .rew .resources img{margin-right:5px;vertical-align:middle}
+.questT40 .rew b.plus{color:#71d000}
+.questT40 .links{display:flex;justify-content:space-between;margin:0 0 12px}
+.questT40 a.arrow{background:none;padding:0;color:#99c01a;font-weight:bold}
+.questT40 a.arrow:hover{color:#00bc00}
+.questT40 a.arrow:before{content:"\25B8";color:#252525;margin-right:4px}
+.questT40 .answer{display:flex;align-items:center;gap:10px;margin:0 0 12px}
+.questT40 .answer input.text{width:60px}
+.questT40 .choice{display:flex;justify-content:space-between;margin:0 12px 12px}
+.questT40 p.wrong{color:#c00;margin:0 0 12px}
+.questT40 ul.optional{margin:0 0 12px;padding:0;list-style:none}
+.questT40 ul.optional li{padding:2px 0}
+.questT40 ul.optional span.done{color:#777;text-decoration:line-through}
+.questT40 ul.optional span.ready{margin-left:6px;color:#00bc00;font-size:11px}
+.questT40 #qstbg{margin-top:5px;height:257px;width:473px;background-repeat:no-repeat}
+.questT40 #qstbg.wood{background-image:url(../img40/q/wood.jpg)}
+.questT40 #qstbg.farm{background-image:url(../img40/q/farm.jpg)}
+.questT40 #qstbg.village_name{background-image:url(../img40/q/village_name.jpg)}
+.questT40 #qstbg.rally{background-image:url(../img40/q/rally.jpg)}
+.questT40 #qstbg.first_adventure{background-image:url(../img40/q/first_adventure.jpg)}
+.questT40 #qstbg.rank1{background-image:url(../img40/q/rank1.jpg)}
+.questT40 #qstbg.clay_iron{background-image:url(../img40/q/clay_iron.jpg)}
+.questT40 #qstbg.msg{background-image:url(../img40/q/msg.jpg)}
+.questT40 #qstbg.res_one_of_each{background-image:url(../img40/q/res_one_of_each.jpg)}
+.questT40 #qstbg.neighbour{background-image:url(../img40/q/neighbour.jpg)}
+.questT40 #qstbg.heroproduction{background-image:url(../img40/q/heroproduction.jpg)}
+.questT40 #qstbg.adventure_report{background-image:url(../img40/q/adventure_report.jpg)}
+.questT40 #qstbg.second_adventure{background-image:url(../img40/q/second_adventure.jpg)}
+.questT40 #qstbg.res_all_one{background-image:url(../img40/q/res_all_one.jpg)}
+.questT40 #qstbg.medal{background-image:url(../img40/q/medal.jpg)}
+.questT40 #qstbg.cranny{background-image:url(../img40/q/cranny.jpg)}
+.questT40 #qstbg.res_two_of_each{background-image:url(../img40/q/res_two_of_each.jpg)}
+.questT40 #qstbg.cost{background-image:url(../img40/q/cost.jpg)}
+.questT40 #qstbg.main{background-image:url(../img40/q/main.jpg)}
+.questT40 #qstbg.rank2{background-image:url(../img40/q/rank2.jpg)}
+.questT40 #qstbg.granary_barracks{background-image:url(../img40/q/granary_barracks.jpg)}
+.questT40 #qstbg.granary_barracks1{background-image:url(../img40/q/granary_barracks1.jpg)}
+.questT40 #qstbg.warehouse{background-image:url(../img40/q/warehouse.jpg)}
+.questT40 #qstbg.market{background-image:url(../img40/q/market.jpg)}
+.questT40 #qstbg.granary_barracks2{background-image:url(../img40/q/granary_barracks2.jpg)}
+.questT40 #qstbg.units{background-image:url(../img40/q/units.jpg)}
+.questT40 #qstbg.wall{background-image:url(../img40/q/wall.jpg)}
+.questT40 #qstbg.earthwall{background-image:url(../img40/q/earthwall.jpg)}
+.questT40 #qstbg.pallisade{background-image:url(../img40/q/pallisade.jpg)}
+.questT40 #qstbg.freunde{background-image:url(../img40/q/freunde.jpg)}
+.questT40 #qstbg.quest_res_all_two{background-image:url(../img40/q/quest_res_all_two.jpg)}
+.questT40 #qstbg.quest_dispatch{background-image:url(../img40/q/quest_dispatch.jpg)}
+.questT40 #qstbg.quest_alliance{background-image:url(../img40/q/quest_alliance.jpg)}
+.questT40 #qstbg.quest_finished_ten_adventures{background-image:url(../img40/q/quest_finished_ten_adventures.jpg)}
+.questT40 #qstbg.quest_main_on_five{background-image:url(../img40/q/quest_main_on_five.jpg)}
+.questT40 #qstbg.quest_granary_on_three{background-image:url(../img40/q/quest_granary_on_three.jpg)}
+.questT40 #qstbg.quest_warehouse_on_seven{background-image:url(../img40/q/quest_warehouse_on_seven.jpg)}
+.questT40 #qstbg.quest_res_all_five{background-image:url(../img40/q/quest_res_all_five.jpg)}
+.questT40 #qstbg.quest_palace_or_residence{background-image:url(../img40/q/quest_palace_or_residence.jpg)}
+.questT40 #qstbg.quest_three_settlers{background-image:url(../img40/q/quest_three_settlers.jpg)}
+.questT40 #qstbg.quest_new_village{background-image:url(../img40/q/quest_new_village.jpg)}
+.questT40 #qstbg.intro{background-image:url(../img40/q/intro.jpg)}
+.questT40 #qstbg.introRomans{background-image:url(../img40/q/introRomans.jpg)}
+.questT40 #qstbg.introTeutons{background-image:url(../img40/q/introTeutons.jpg)}
+.questT40 #qstbg.introGauls{background-image:url(../img40/q/introGauls.jpg)}
 #side_navi ul li a{font-weight:bold;text-transform:uppercase}
 .activate .activationScreen{box-sizing:border-box;background:#e4e4e4;border-radius:5px;padding:12px 20px 5px}
 .activate .activationScreen #presentation{padding:15px 0 0;background:none}

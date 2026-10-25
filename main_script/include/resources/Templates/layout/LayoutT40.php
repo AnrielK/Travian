@@ -127,10 +127,10 @@ $stock = $vars['stockBar'] ?? null;
                 <div class="questMaster">
                     <button type="button"
                             class="master nation<?=in_array($t40['hero']['race'] ?? 1, [1, 2, 3]) ? $t40['hero']['race'] : 1; ?>"
-                            onclick="jQuery('#questmasterButton').click(); return false;"
+                            onclick="T40Quest.open(); return false;"
                             title="<?=T("Quest", "helperAndTasks"); ?>"></button>
                 </div>
-                <?php /* the T4.4 quest master box, hidden: its script opens the quest dialog */ ?>
+                <?php /* the 4.0 task line (layout/t40Questmaster.php): the dialog script and the "reward waits" marker */ ?>
                 <div id="t40Questmaster"><?=$t40['questmaster']; ?></div>
             <?php endif; ?>
             <?php if (!empty($t40['infoCount'])): ?>
