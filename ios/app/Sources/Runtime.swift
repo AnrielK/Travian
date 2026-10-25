@@ -267,6 +267,8 @@ final class GameRuntime: ObservableObject {
                 if installed {
                     await self.setState(.running)
                     await self.startTicker()
+                } else if ProcessInfo.processInfo.arguments.contains("-createWorld") {
+                    await self.createWorld(self.world)            // CI (ios.yml): saved settings, no form
                 } else {
                     await self.setState(.needsWorld)              // the settings form creates it (createWorld)
                 }

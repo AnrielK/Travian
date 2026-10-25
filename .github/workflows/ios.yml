@@ -204,7 +204,7 @@ jobs:
           echo "UDID=$UDID" >> "$GITHUB_ENV"
           xcrun simctl boot "$UDID"; xcrun simctl bootstatus "$UDID" -b
           xcrun simctl install "$UDID" ios/app/build/Build/Products/Debug-iphonesimulator/OpenVillage.app
-          xcrun simctl launch "$UDID" local.openvillage.OpenVillage -port 8080
+          xcrun simctl launch "$UDID" local.openvillage.OpenVillage -port 8080 -createWorld   # no world settings form
           DATA="$(xcrun simctl get_app_container "$UDID" local.openvillage.OpenVillage data)/Library/Application Support/OpenVillage"
           echo "DATA=$DATA" >> "$GITHUB_ENV"
           echo "LOGS=$(xcrun simctl get_app_container "$UDID" local.openvillage.OpenVillage data)/Documents/logs" >> "$GITHUB_ENV"
