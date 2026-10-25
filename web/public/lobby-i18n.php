@@ -100,6 +100,7 @@ function lt(string $text): string
         'Spartans' => 'Sparťané',
         'Game worlds' => 'Herní světy',
         'Create a new game world' => 'Založit nový herní svět',
+        'Create your game world' => 'Založit herní svět',
         'World' => 'Svět',
         'Look' => 'Vzhled',
         'Tribes' => 'Národy',
