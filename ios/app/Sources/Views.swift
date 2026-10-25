@@ -30,6 +30,8 @@ struct RootView: View {
                     Button("Zkusit znovu") { runtime.start() }.buttonStyle(.borderedProminent)
                     Button("Logy") { sheet = .logs }
                 }
+            case .needsWorld:
+                WorldSetupView()
             case .running:
                 if let error = browser.lastError {
                     StatusCard(icon: "bolt.horizontal.circle", text: error, spinner: false) {
@@ -52,6 +54,7 @@ struct RootView: View {
         .onChange(of: runtime.state) { state in
             if state == .running && browser.webView.url == nil { browser.load(runtime.baseURL) }
         }
+        .onChange(of: runtime.worldVersion) { _ in browser.load(runtime.baseURL) }
         .onChange(of: scenePhase) { phase in
             if phase == .active { runtime.ensureRunning() }
         }
@@ -293,13 +296,12 @@ struct ToolsView: View {
                 Button("Vytvořit nový svět", role: .destructive) {
                     Task {
                         busy = true
-                        do { try await runtime.newWorld(); message = "✓ Nový svět vytvořen" } catch { message = "✖ \(error.localizedDescription)" }
+                        // the world settings form (WorldSetupView) takes over once the old world is gone
+                        do { try await runtime.newWorld(); dismiss() } catch { message = "✖ \(error.localizedDescription)" }
                         busy = false
-                        browser.load(runtime.baseURL)
-                        await refresh()
                     }
                 }
-            }
+            } message: { Text("Potom si vybereš vzhled, rychlost a velikost mapy nového světa.") }
         }
     }
 
@@ -518,6 +520,51 @@ struct SQLConsoleView: View {
     }
 }
 
+// MARK: - New world
+
+/// Settings of a new world, shown on the first start and after Nástroje → Nový svět (like the lobby's
+/// "Herní světy" page for further worlds): the look is chosen here once and the world keeps it.
+@MainActor
+struct WorldSetupView: View {
+    @EnvironmentObject var runtime: GameRuntime
+    @State private var world = WorldSettings.load()
+    @State private var name = WorldSettings.load().worldName
+
+    var body: some View {
+        NavigationView {
+            Form {
+                Section {
+                    TextField("Název světa", text: $name)
+                } header: { Text("Název světa") }
+                Section {
+                    Picker("Vzhled", selection: Binding(get: { world.style }, set: { world.gpack = $0 })) {
+                        ForEach(WorldSettings.availableStyles, id: \.hash) { Text($0.name).tag($0.hash) }
+                    }
+                    LabeledContent("Národy", value: WorldSettings.tribes(world.style))
+                } header: { Text("Vzhled") } footer: { Text("Vzhled už u založeného světa nejde změnit.") }
+                Section {
+                    Stepper("Rychlost: ×\(world.speed)", value: $world.speed, in: 1...1000, step: world.speed < 10 ? 1 : 10)
+                    Stepper("Mapa: \(world.mapSize * 2 + 1) × \(world.mapSize * 2 + 1)", value: $world.mapSize, in: 10...100, step: 5)
+                    Stepper("Délka kola: \(world.roundDays) dní", value: $world.roundDays, in: 1...365)
+                    Stepper("Rychlost hrdiny: ×\(world.heroSpeedFactor)",
+                            value: Binding(get: { world.heroSpeedFactor }, set: { world.heroSpeed = $0 }),
+                            in: 1...100, step: world.heroSpeedFactor < 10 ? 1 : 10)
+                } header: { Text("Svět") } footer: { Text("Větší mapa = delší zakládání.") }
+                Section {
+                    Button("Založit svět") {
+                        var settings = world
+                        settings.name = name
+                        Task { await runtime.createWorld(settings) }
+                    }
+                    .frame(maxWidth: .infinity)
+                }
+            }
+            .navigationTitle("Nový svět")
+            .navigationBarTitleDisplayMode(.inline)
+        }
+    }
+}
+
 // MARK: - Settings
 
 @MainActor
@@ -530,24 +577,16 @@ struct SettingsView: View {
         NavigationView {
             Form {
                 Section {
-                    Picker("Grafika", selection: Binding(get: { world.style }, set: { world.gpack = $0 })) {
-                        ForEach(WorldSettings.availableStyles, id: \.hash) { Text($0.name).tag($0.hash) }
-                    }
-                } header: { Text("Vzhled nového světa") } footer: {
-                    Text("Grafický balíček (gpack) se použije při vytvoření nového světa (Nástroje → Nový svět). Běžící svět si svůj vzhled ponechá. Travian 4.0 a T4.4 Classic mají na výběr 3 národy, ostatní 5.")
-                }
-                Section {
                     Stepper("Rychlost: ×\(world.speed)", value: $world.speed, in: 1...1000, step: world.speed < 10 ? 1 : 10)
                     Stepper("Délka kola: \(world.roundDays) dní", value: $world.roundDays, in: 1...365)
-                } footer: { Text("Platí po novém spuštění aplikace.") }
+                } header: { Text(world.worldName) } footer: {
+                    Text("Platí po novém spuštění aplikace. Vzhled a mapa se volí při založení světa a pak se nemění: jiný vzhled přes Nástroje → Nový svět, nebo další svět vedle tohoto v lobby (menu → Herní světy).")
+                }
                 Section {
                     Stepper("Rychlost hrdiny: ×\(world.heroSpeedFactor)",
                             value: Binding(get: { world.heroSpeedFactor }, set: { world.heroSpeed = $0 }),
                             in: 1...100, step: world.heroSpeedFactor < 10 ? 1 : 10)
                 } header: { Text("Hrdina") } footer: { Text("Násobí rychlost pohybu hrdiny (dobrodružství, přesuny). Platí hned po uložení pro další vyslání hrdiny.") }
-                Section {
-                    Stepper("Mapa: \(world.mapSize * 2 + 1) × \(world.mapSize * 2 + 1)", value: $world.mapSize, in: 10...100, step: 5)
-                } footer: { Text("Velikost mapy se použije při vytvoření nového světa (Nástroje → Nový svět).") }
                 Section("Data") {
                     LabeledContent("Logy", value: "Soubory → Na iPhonu → OpenVillage → logs")
                     LabeledContent("PHP + MariaDB", value: "v aplikaci, offline")
