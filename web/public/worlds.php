@@ -8,16 +8,21 @@ require __DIR__ . '/lobby-i18n.php';
  * Game worlds of this server: the list, a form that creates a further world with its own look, speed and map
  * (scripts/native/runtime/worlds.php) and deleting a further world. The look is chosen here once: the world keeps
  * it (config.gpack). Creating and deleting work only from this computer (loopback), like the control endpoint.
+ *
+ * iOS app without a world yet (first start, Nástroje → Nový svět): the same form creates the app's own world 1.
+ * It is sent to openvillage://create-world, which the app catches (BrowserModel) and creates the world with.
  */
 $local = in_array($_SERVER['REMOTE_ADDR'] ?? '', ['127.0.0.1', '::1'], true);
 $supported = function_exists('ov_register_world');
+$firstWorld = getenv('OV_IOS') === '1' && !(lobby_worlds()[1]['ready'] ?? false);
 $gpacks = require dirname(__DIR__, 2) . '/sections/gpack/gpack.php';
 $tribeLabels = [1 => 'Romans', 2 => 'Teutons', 3 => 'Gauls', 6 => 'Egyptians', 7 => 'Huns', 8 => 'Spartans'];
 $message = '';
 $error = '';
-$form = ['name' => '', 'gpack' => $gpacks['default'], 'speed' => 10, 'mapSize' => 50, 'roundDays' => 35, 'heroSpeed' => 1];
+$form = ['name' => '', 'gpack' => $gpacks['default'], 'speed' => 10, 'mapSize' => $firstWorld ? 25 : 50, 'roundDays' => 35,
+    'heroSpeed' => 1];
 
-if (($_SERVER['REQUEST_METHOD'] ?? 'GET') === 'POST') {
+if (($_SERVER['REQUEST_METHOD'] ?? 'GET') === 'POST' && !$firstWorld) {
     $action = (string)($_POST['action'] ?? '');
     if (!$local || !$supported) {
         $error = lt('Worlds can only be created and deleted on this computer.');
@@ -120,10 +125,11 @@ header('Content-Type: text/html; charset=utf-8');
 <body>
 <main>
     <h1><?= escape(lt('Game worlds')) ?></h1>
-    <p><a href="/">← <?= escape(lt('Lobby')) ?></a></p>
+    <?php if (!$firstWorld): ?><p><a href="/">← <?= escape(lt('Lobby')) ?></a></p><?php endif; ?>
     <?php if ($message !== ''): ?><div class="msg"><?= escape($message) ?></div><?php endif; ?>
     <?php if ($error !== ''): ?><div class="msg error"><?= escape($error) ?></div><?php endif; ?>
 
+    <?php if (!$firstWorld): ?>
     <section>
         <table>
             <tr><th><?= escape(lt('World')) ?></th><th><?= escape(lt('Look')) ?></th><th class="small"><?= escape(lt('Tribes')) ?></th>
@@ -149,13 +155,18 @@ header('Content-Type: text/html; charset=utf-8');
             <?php endforeach; ?>
         </table>
     </section>
+    <?php endif; ?>
 
     <section>
-        <h2><?= escape(lt('Create a new game world')) ?></h2>
-        <?php if (!$local || !$supported): ?>
+        <h2><?= escape(lt($firstWorld ? 'Create your game world' : 'Create a new game world')) ?></h2>
+        <?php if ($firstWorld): ?>
+        <form method="get" action="openvillage://create-world" id="create">
+        <?php elseif (!$local || !$supported): ?>
             <p class="hint"><?= escape(lt('Worlds can only be created and deleted on this computer.')) ?></p>
         <?php else: ?>
         <form method="post" id="create">
+        <?php endif; ?>
+        <?php if ($firstWorld || ($local && $supported)): ?>
             <input type="hidden" name="csrf" value="<?= escape(csrf_token()) ?>">
             <input type="hidden" name="action" value="create">
             <div class="row">
@@ -193,8 +204,10 @@ header('Content-Type: text/html; charset=utf-8');
                         <?php endforeach; ?>
                     </select></div>
             </div>
+            <?php if (!$firstWorld): ?>
             <label for="password"><?= escape(lt('Administrator password')) ?> <span class="hint">(<?= escape(lt('Multihunter and Support of this world, at least 6 characters')) ?>)</span></label>
             <input id="password" name="password" type="password" minlength="6" required autocomplete="new-password">
+            <?php endif; ?>
             <div class="actions"><span></span><button type="submit"><?= escape(lt('Create world')) ?></button></div>
             <p id="busy"><?= escape(lt('Creating the world, this can take several minutes…')) ?></p>
         </form>

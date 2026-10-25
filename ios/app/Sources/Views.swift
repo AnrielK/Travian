@@ -31,7 +31,7 @@ struct RootView: View {
                     Button("Logy") { sheet = .logs }
                 }
             case .needsWorld:
-                WorldSetupView()
+                EmptyView()                                   // the web view shows the world settings page
             case .running:
                 if let error = browser.lastError {
                     StatusCard(icon: "bolt.horizontal.circle", text: error, spinner: false) {
@@ -53,6 +53,8 @@ struct RootView: View {
         .onAppear { runtime.start() }
         .onChange(of: runtime.state) { state in
             if state == .running && browser.webView.url == nil { browser.load(runtime.baseURL) }
+            // no world yet: the lobby's "Herní světy" page with its form creates it (openvillage://create-world)
+            if state == .needsWorld { browser.load(runtime.url("/worlds.php")) }
         }
         .onChange(of: runtime.worldVersion) { _ in browser.load(runtime.baseURL) }
         .onChange(of: scenePhase) { phase in
@@ -296,7 +298,7 @@ struct ToolsView: View {
                 Button("Vytvořit nový svět", role: .destructive) {
                     Task {
                         busy = true
-                        // the world settings form (WorldSetupView) takes over once the old world is gone
+                        // the world settings page (worlds.php) takes over once the old world is gone
                         do { try await runtime.newWorld(); dismiss() } catch { message = "✖ \(error.localizedDescription)" }
                         busy = false
                     }
@@ -517,51 +519,6 @@ struct SQLConsoleView: View {
         running = true
         result = await runtime.sql(query, global: global)
         running = false
-    }
-}
-
-// MARK: - New world
-
-/// Settings of a new world, shown on the first start and after Nástroje → Nový svět (like the lobby's
-/// "Herní světy" page for further worlds): the look is chosen here once and the world keeps it.
-@MainActor
-struct WorldSetupView: View {
-    @EnvironmentObject var runtime: GameRuntime
-    @State private var world = WorldSettings.load()
-    @State private var name = WorldSettings.load().worldName
-
-    var body: some View {
-        NavigationView {
-            Form {
-                Section {
-                    TextField("Název světa", text: $name)
-                } header: { Text("Název světa") }
-                Section {
-                    Picker("Vzhled", selection: Binding(get: { world.style }, set: { world.gpack = $0 })) {
-                        ForEach(WorldSettings.availableStyles, id: \.hash) { Text($0.name).tag($0.hash) }
-                    }
-                    LabeledContent("Národy", value: WorldSettings.tribes(world.style))
-                } header: { Text("Vzhled") } footer: { Text("Vzhled už u založeného světa nejde změnit.") }
-                Section {
-                    Stepper("Rychlost: ×\(world.speed)", value: $world.speed, in: 1...1000, step: world.speed < 10 ? 1 : 10)
-                    Stepper("Mapa: \(world.mapSize * 2 + 1) × \(world.mapSize * 2 + 1)", value: $world.mapSize, in: 10...100, step: 5)
-                    Stepper("Délka kola: \(world.roundDays) dní", value: $world.roundDays, in: 1...365)
-                    Stepper("Rychlost hrdiny: ×\(world.heroSpeedFactor)",
-                            value: Binding(get: { world.heroSpeedFactor }, set: { world.heroSpeed = $0 }),
-                            in: 1...100, step: world.heroSpeedFactor < 10 ? 1 : 10)
-                } header: { Text("Svět") } footer: { Text("Větší mapa = delší zakládání.") }
-                Section {
-                    Button("Založit svět") {
-                        var settings = world
-                        settings.name = name
-                        Task { await runtime.createWorld(settings) }
-                    }
-                    .frame(maxWidth: .infinity)
-                }
-            }
-            .navigationTitle("Nový svět")
-            .navigationBarTitleDisplayMode(.inline)
-        }
     }
 }
 

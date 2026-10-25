@@ -274,6 +274,11 @@ final class BrowserModel: NSObject, ObservableObject, WKNavigationDelegate, WKUI
     }
 
     func webView(_ webView: WKWebView, decidePolicyFor navigationAction: WKNavigationAction) async -> WKNavigationActionPolicy {
+        // the world settings page (web/public/worlds.php) of an app without a world
+        if let url = navigationAction.request.url, let settings = WorldSettings(createWorldURL: url) {
+            Task { await GameRuntime.shared.createWorld(settings) }
+            return .cancel
+        }
         if let url = navigationAction.request.url, let host = url.host, url.scheme?.hasPrefix("http") == true,
            host != "127.0.0.1", host != "localhost" {
             await UIApplication.shared.open(url)

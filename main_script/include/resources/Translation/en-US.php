@@ -5481,4 +5481,21 @@ $Definition['ContextualHelp']['auctionSilver'] = 'Auctions are paid with silver.
 $Definition['ContextualHelp']['auctionListTitle'] = 'Offers';
 $Definition['ContextualHelp']['auctionList'] = 'Click a row to see all auctions of that item. Bid the maximum you are willing to pay; you only pay one silver more than the second highest bid.';
 // </ov-contextual-help>
+// Registration page of a world in its own look (register.php, RegisterCtrl)
+$Definition['Register']['title'] = 'Join the game world';
+$Definition['Register']['heading'] = 'Create your account';
+$Definition['Register']['expired'] = 'Your form expired. Please try again.';
+$Definition['Register']['tooMany'] = 'Too many attempts. Please wait one minute.';
+$Definition['Register']['nameInvalid'] = 'Player name must be 3–15 letters, numbers, spaces, underscores, or hyphens.';
+$Definition['Register']['emailInvalid'] = 'Enter a valid email address.';
+$Definition['Register']['passwordInvalid'] = 'Password must be 10–128 characters.';
+$Definition['Register']['termsMissing'] = 'You must accept the terms and privacy notice.';
+$Definition['Register']['unavailable'] = 'Registration is temporarily unavailable.';
+$Definition['Register']['taken'] = 'That player name or email is already registered.';
+$Definition['Register']['name'] = 'Player name';
+$Definition['Register']['email'] = 'Email';
+$Definition['Register']['terms'] = 'I accept the <a href="/terms.html">terms</a> and <a href="/privacy.html">privacy notice</a>.';
+$Definition['Register']['next'] = 'Next you choose your tribe and the starting position of your village.';
+$Definition['Register']['submit'] = 'Register';
+$Definition['Register']['haveAccount'] = 'I already have an account – log in';
 return $Definition;

@@ -62,7 +62,7 @@ function game_database(int $world = 1): PDO
 
 /**
  * The worlds shown in the lobby: id, path (/game/, /game2/, ...), name, look (gpack and its name), tribes, speed,
- * start, map size, players and whether the world is installed (ready).
+ * start, map size, players, whether the world is installed (ready) and its own registration page (registerUrl).
  */
 function lobby_worlds(): array
 {
@@ -93,6 +93,8 @@ function lobby_worlds(): array
         $look = $gpacks['styles'][$world['gpack']] ?? ($id === 1 ? $gpacks['styles'][$gpacks['mainPage']] ?? [] : []);
         $world['lookName'] = preg_replace('/\s*\(.*\)$/', '', (string)($look['name'] ?? 'OpenVillage 4.6'));
         $world['tribes'] = array_values(array_intersect_key($tribeNames, array_flip($look['tribes'] ?? [1, 2, 3, 6, 7])));
+        // The look's own registration page (Travian 4.0) instead of the lobby's dialog.
+        $world['registerUrl'] = empty($look['ownRegistration']) ? '' : $world['path'] . 'register.php';
     }
     unset($world);
     return $worlds;

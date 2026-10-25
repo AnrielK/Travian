@@ -102,10 +102,6 @@ struct WorldSettings: Codable, Equatable {
         allStyles.filter { FileManager.default.fileExists(atPath: Paths.bundledGame
             .appendingPathComponent("sections/gpack/\($0.hash)/mainPage/lang/en-US/compact.css").path) }
     }
-    /// Tribes a world with this look offers (like 'tribes' in sections/gpack/gpack.php).
-    static func tribes(_ hash: String) -> String {
-        ["T40", "TravianOld"].contains(hash) ? "Římané, Germáni, Galové" : "Římané, Germáni, Galové, Egypťané, Hunové"
-    }
     /// The chosen style, or the default (legends655) when none is chosen or the chosen one is not in this build.
     var style: String {
         if let gpack, Self.availableStyles.contains(where: { $0.hash == gpack }) { return gpack }
@@ -120,6 +116,25 @@ struct WorldSettings: Codable, Equatable {
         return s
     }
     func save() { UserDefaults.standard.set(try? JSONEncoder().encode(self), forKey: Self.key) }
+}
+
+// In an extension, so WorldSettings keeps its default initializer.
+extension WorldSettings {
+    /// Settings sent by the world settings page (web/public/worlds.php) to openvillage://create-world.
+    init?(createWorldURL url: URL) {
+        guard url.scheme == "openvillage", url.host == "create-world",
+              let items = URLComponents(url: url, resolvingAgainstBaseURL: false)?.queryItems else { return nil }
+        let value = { (name: String) in items.first { $0.name == name }?.value ?? "" }
+        let number = { (name: String, range: ClosedRange<Int>, fallback: Int) in
+            min(range.upperBound, max(range.lowerBound, Int(value(name)) ?? fallback))
+        }
+        name = String(value("name").trimmingCharacters(in: .whitespaces).prefix(40))
+        gpack = value("gpack")
+        speed = number("speed", 1...1000, 10)
+        mapSize = number("mapSize", 10...200, 25)
+        roundDays = number("roundDays", 1...365, 35)
+        heroSpeed = number("heroSpeed", 1...100, 1)
+    }
 }
 
 enum GameFiles {
@@ -194,7 +209,7 @@ final class GameRuntime: ObservableObject {
         case working(String)
         case running
         case failed(String)
-        /// No world yet (first start or Nástroje → Nový svět): the world settings form is shown (WorldSetupView).
+        /// No world yet (first start or Nástroje → Nový svět): the web view shows the world settings page (worlds.php).
         case needsWorld
     }
 
@@ -270,7 +285,7 @@ final class GameRuntime: ObservableObject {
                 } else if ProcessInfo.processInfo.arguments.contains("-createWorld") {
                     await self.createWorld(self.world)            // CI (ios.yml): saved settings, no form
                 } else {
-                    await self.setState(.needsWorld)              // the settings form creates it (createWorld)
+                    await self.setState(.needsWorld)              // the settings page creates it (createWorld)
                 }
             } catch {
                 appendLog(Paths.setupLog, "\(Date()) start failed: \(error.localizedDescription)")
@@ -304,7 +319,7 @@ final class GameRuntime: ObservableObject {
         return false
     }
 
-    /// Creates the world with the settings chosen in WorldSetupView (look, speed, map, round length, hero speed, name).
+    /// Creates the world with the settings chosen on the world settings page (look, speed, map, round length, hero speed, name).
     /// The look stays with the world; speed, round length and hero speed can be changed later in Nastavení.
     func createWorld(_ settings: WorldSettings) async {
         world = settings

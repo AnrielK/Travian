@@ -42,7 +42,7 @@ Logy jsou v aplikaci Soubory → Na iPhonu → OpenVillage → `logs` (`mariadb.
 
 ## Grafika (gpack)
 
-Při prvním spuštění (a po Nástroje → Nový svět) aplikace ukáže nastavení nového světa: název, vzhled (s národy, které nabízí), rychlost, mapu, délku kola a rychlost hrdiny; svět se založí až potvrzením. Vzhledy: Travian T4.6 (29c89d54, výchozí), Travian Legends 655.3 (legends655),
+Při prvním spuštění (a po Nástroje → Nový svět) aplikace ukáže stránku Herní světy (`web/public/worlds.php`, stejný formulář jako pro další světy v lobby): název, vzhled (s národy, které nabízí), rychlost, mapu, délku kola a rychlost hrdiny. Formulář se odešle na `openvillage://create-world`, aplikace ho zachytí (`BrowserModel`) a svět založí. Vzhledy: Travian T4.6 (29c89d54, výchozí), Travian Legends 655.3 (legends655),
 OpenVillage 4.6 (a17a8f72),
 Travian T4.4 Seasonized v2, T4.4 Seasonized, T4.4 Classic a Travian 4.0 (T40). Volí se balíček „mainPage“ (CSS a obrázky
 rozhraní). Vzhled se volí při vytvoření světa (Nástroje → Nový svět) a svět si ho pamatuje v databázi

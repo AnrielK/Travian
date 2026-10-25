@@ -129,6 +129,7 @@ $pages = [
     'linklist.php' => 'LinkListCtrl',
     'login.php' => 'LoginCtrl',
     'logout.php' => 'LogoutCtrl',
+    'register.php' => 'RegisterCtrl',
     'manual.php' => 'ManualCtrl',
     'map_block.php' => 'Map_blockCtrl',
     'map_mark.php' => 'Map_markCtrl',

@@ -5536,4 +5536,21 @@ $Definition['ContextualHelp']['auctionSilver'] = 'Aukce se platí stříbrem. Ve
 $Definition['ContextualHelp']['auctionListTitle'] = 'Nabídky';
 $Definition['ContextualHelp']['auctionList'] = 'Kliknutím na řádek zobrazíš všechny aukce daného předmětu. Nabídni maximum, které jsi ochoten zaplatit; zaplatíš jen o jedno stříbro víc než druhá nejvyšší nabídka.';
 // </ov-contextual-help>
+// Registration page of a world in its own look (register.php, RegisterCtrl)
+$Definition['Register']['title'] = 'Připojit se k hernímu světu';
+$Definition['Register']['heading'] = 'Založ si účet';
+$Definition['Register']['expired'] = 'Formulář vypršel. Zkus to prosím znovu.';
+$Definition['Register']['tooMany'] = 'Příliš mnoho pokusů. Počkej prosím minutu.';
+$Definition['Register']['nameInvalid'] = 'Jméno hráče musí mít 3–15 písmen, číslic, mezer, podtržítek nebo pomlček.';
+$Definition['Register']['emailInvalid'] = 'Zadej platnou e-mailovou adresu.';
+$Definition['Register']['passwordInvalid'] = 'Heslo musí mít 10–128 znaků.';
+$Definition['Register']['termsMissing'] = 'Musíš přijmout podmínky a zásady ochrany soukromí.';
+$Definition['Register']['unavailable'] = 'Registrace je dočasně nedostupná.';
+$Definition['Register']['taken'] = 'Toto jméno hráče nebo e-mail už je registrovaný.';
+$Definition['Register']['name'] = 'Jméno hráče';
+$Definition['Register']['email'] = 'E-mail';
+$Definition['Register']['terms'] = 'Souhlasím s <a href="/terms.html">podmínkami</a> a <a href="/privacy.html">zásadami ochrany soukromí</a>.';
+$Definition['Register']['next'] = 'Potom si vybereš národ a místo, kde začne tvoje vesnice.';
+$Definition['Register']['submit'] = 'Registrovat';
+$Definition['Register']['haveAccount'] = 'Už mám účet – přihlásit se';
 return $Definition;
