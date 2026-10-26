@@ -24,7 +24,7 @@ use Core\Helper\PreferencesHelper;
         <!-- T4.4 packs: icons and village centre slots for the T4.6 markup (scripts/gpack/make-classic-compat.py) -->
         <link href="<?=get_gpack_link_and_hash("openvillage-compat.css", false); ?>?rev2" rel="stylesheet" type="text/css"/>
     <?php endif; ?>
-    <link href="openvillage.css?rev10" rel="stylesheet" type="text/css"/>
+    <link href="openvillage.css?rev20" rel="stylesheet" type="text/css"/>
     <?php if (is_t40_layout()): ?>
         <!-- Travian 4.0: page frame of layout/LayoutT40.php (scripts/gpack/import-t40-gpack.py) -->
         <link href="<?=get_gpack_link_and_hash("openvillage-t40.css", false); ?>?rev1" rel="stylesheet" type="text/css"/>
@@ -97,16 +97,15 @@ use Core\Helper\PreferencesHelper;
             return '<?=isset($vars['ajaxToken']) ? $vars['ajaxToken'] : null;?>';
         };
         Travian.Game.Preferences.initialize(<?=json_encode($preferences);?>);
-        // the manual (manual.php) as in Travian Legends: a window titled "Manuál" as large as the screen allows, which
-        // scrolls (the original was a fixed 475 x 525 frame that cut the building list off)
+        // the manual (manual.php) in its original 475 x 525 window, titled "Manuál" as in Travian Legends; it scrolls
+        // (the original did not, and cut the building list off), and shrinks on a phone
         Travian.Game.iPopup = function (gid, typ) {
-            var width = Math.min(720, jQuery(window).width() - 30), height = Math.min(640, jQuery(window).height() - 130);
             var dialog = new Travian.Dialog.Dialog({
                 title: <?=json_encode(T("Manual", "title"));?>, buttonOk: false, enableBackground: false, draggable: true,
-                cssClass: 'white manualDialog', fx: {open: {opacity: 1}, close: {opacity: 0}, duration: 0}
+                fx: {open: {opacity: 1}, close: {opacity: 0}, duration: 0}
             });
-            dialog.setContent('<iframe class="popup manual" frameborder="0" id="Frame" src="manual.php?typ=' + typ + '&amp;gid=' + gid
-                + '" width="' + width + '" height="' + height + '" scrolling="auto" allowTransparency="true"></iframe>');
+            dialog.setContent('<iframe class="popup" frameborder="0" id="Frame" src="manual.php?typ=' + typ + '&amp;gid=' + gid
+                + '" width="' + Math.min(475, jQuery(window).width() - 30) + '" height="525" scrolling="auto" allowTransparency="true"></iframe>');
             dialog.show();
             return false;
         };

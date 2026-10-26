@@ -195,10 +195,10 @@ div.village1 #village_map .fieldGlow.shown {
 /* the manual (manual.php in the window of Travian.Game.iPopup, layout/head.php), laid out as in Travian Legends */
 html body.manual {
     margin: 0;
-    padding: 10px 16px 16px;
+    padding: 6px 6px 10px;
     background: #fff !important;
     color: #222;
-    font-size: 15px;
+    font-size: 12px;
     line-height: 1.35;
     width: auto !important;
     min-width: 0;
@@ -209,7 +209,7 @@ body.manual h3 {
     align-items: center;
     gap: 6px;
     margin: 6px 0 10px;
-    font-size: 21px;
+    font-size: 16px;
 }
 
 body.manual #buildings {
@@ -250,14 +250,14 @@ body.manual .contentNavi .container .content {
 body.manual .contentNavi .container a.tabItem {
     display: block;
     height: auto !important;
-    padding: 4px 14px !important;
+    padding: 3px 8px !important;
     border: 1px solid #c8c8c8;
     border-radius: 2px;
     background: #ececec;
     color: #555;
-    font-size: 15px;
+    font-size: 12px;
     font-weight: normal;
-    line-height: 20px;
+    line-height: 18px;
     cursor: pointer;
     text-decoration: none;
 }
@@ -272,7 +272,7 @@ body.manual #troops ul,
 body.manual #buildings ul {
     display: grid;
     grid-template-columns: 1fr 1fr;
-    gap: 8px 16px;
+    gap: 6px 12px;
     margin: 0;
     padding: 0 0 0 14px;
     list-style: none;
@@ -301,7 +301,7 @@ body.manual #buildings li:empty {
 
 body.manual #troops li a,
 body.manual #buildings li a {
-    font-size: 16px;
+    font-size: 13px;
     font-weight: bold;
 }
 
@@ -311,7 +311,7 @@ body.manual h1.titleInHeader {
     align-items: center;
     gap: 6px;
     margin: 8px 0 10px;
-    font-size: 21px;
+    font-size: 16px;
 }
 
 body.manual > .cf {
@@ -319,23 +319,23 @@ body.manual > .cf {
 }
 
 body.manual > .cf > p.description {
-    width: calc(100% - 270px) !important;
+    width: calc(100% - 190px) !important;
 }
 
 body.manual p.description,
 body.manual #t_desc {
-    font-size: 16px;
+    font-size: 13px;
     line-height: 1.4;
 }
 
 body.manual .costsHeader,
 body.manual #prereqs {
     margin-top: 16px;
-    font-size: 16px;
+    font-size: 13px;
 }
 
 body.manual #prereqs b {
-    font-size: 18px;
+    font-size: 14px;
 }
 
 body.manual .resourceWrapper .inlineIcon .value,
@@ -343,7 +343,7 @@ body.manual .inlineIcon.duration .value,
 body.manual table#troop_info td,
 body.manual table.troopData td,
 body.manual table.troopData th {
-    font-size: 15px;
+    font-size: 12px;
 }
 
 body.manual #build.manualIllustration {
@@ -358,18 +358,32 @@ body.manual #build.manualIllustration {
 body.manual #build.manualIllustration .upgradeHeader,
 body.manual #build.manualIllustration .buildingIllustration {
     position: static;
-    width: 241px;
+    width: 170px;
+    height: 113px;
+    background-size: contain;
     margin: 0;
     padding: 0;
     background-color: transparent;
 }
 
-body.manual .answers {
-    margin-top: 14px;
-    font-size: 15px;
+/* the unit's stats beside its picture also when the 475 px window shows a scrollbar */
+body.manual .boxes {
+    box-sizing: border-box;
+    width: calc(100% - 150px);
+    max-width: 300px;
 }
 
-@media (max-width: 480px) {
+body.manual .boxes table#troop_info,
+body.manual .boxes table.troopData {
+    width: 100%;
+}
+
+body.manual .answers {
+    margin-top: 14px;
+    font-size: 12px;
+}
+
+@media (max-width: 360px) {
     body.manual #troops ul,
     body.manual #buildings ul {
         gap: 8px 10px;
@@ -390,51 +404,70 @@ body.manual .answers {
     }
 }
 
-/* the large map (karte.php?fullscreen=1, map/normal.php): a window frame with a title bar and a close button */
-#ovMapFrame {
-    position: fixed;
-    inset: 0;
+/* the large map (karte.php?fullscreen=1, map/normal.php): the page window of the look (title, frame, close button),
+   stretched over the screen, the rest of the page invisible; the map is laid over the window's content */
+body.ovMapFullScreen #wrapper,
+body.ovMapFullScreen div#background div#bodyWrapper,
+body.ovMapFullScreen div#background div#headerBar {
+    display: block !important;
+    visibility: hidden;
+}
+
+body.ovMapFullScreen #contentOuterContainer.ovMapWindow {
+    visibility: visible;
+    position: fixed !important;
+    top: 8px !important;
+    right: 8px !important;
+    bottom: 8px !important;
+    left: 8px !important;
     z-index: 999;
-    box-sizing: border-box;
-    border: 3px solid #3d2f1c;
-    background: linear-gradient(#7a6141, #5a4630);
-    box-shadow: inset 0 0 0 4px #8d7450;
+    display: flex !important;
+    flex-direction: column;
+    width: auto !important;
+    height: calc(100vh - 16px) !important;
+    max-width: none !important;
+    margin: 0 !important;
+    float: none !important;
 }
 
-#ovMapFrame .ovMapFrameTitle {
-    position: absolute;
-    top: 0;
-    left: 14px;
-    right: 60px;
-    height: 39px;
-    line-height: 39px;
-    color: #f6ecd6;
-    font-size: 18px;
-    font-weight: bold;
-    text-shadow: 0 1px 2px rgba(0, 0, 0, .6);
-    white-space: nowrap;
-    overflow: hidden;
+/* flex items would take the z-index of the look's title bar and cover the window frame drawn by :before and :after */
+body.ovMapFullScreen .ovMapWindow .contentTitle {
+    z-index: auto !important;
 }
 
-#ovMapFrame .ovMapFrameClose {
-    position: absolute;
-    top: 5px;
-    right: 10px;
-    width: 28px;
-    height: 28px;
-    box-sizing: border-box;
-    border: 2px solid #f6ecd6;
-    border-radius: 50%;
-    background: #a23a2a;
-    color: #fff;
-    font-size: 15px;
-    font-weight: bold;
-    line-height: 24px;
-    text-align: center;
-    text-decoration: none;
-    box-shadow: 0 1px 3px rgba(0, 0, 0, .5);
+body.ovMapFullScreen .ovMapWindow .contentContainer {
+    z-index: auto !important;
+    display: flex;
+    flex: 1;
+    align-self: stretch;
+    margin-left: 0 !important;
+    margin-right: 0 !important;
+    flex-direction: column;
+    min-height: 0;
+    width: auto !important;
+    height: auto !important;
 }
 
-#ovMapFrame .ovMapFrameClose:hover {
-    background: #c0412d;
+body.ovMapFullScreen .ovMapWindow > :not(.contentTitle):not(.contentContainer):not(.contentFooter) {
+    display: none !important;
+}
+
+body.ovMapFullScreen .ovMapWindow #content {
+    flex: 1;
+    align-self: stretch;
+    min-height: 0;
+    margin-left: 0 !important;
+    margin-right: 0 !important;
+    width: auto !important;
+    height: auto !important;
+}
+
+/* Legends: the white content lies inside the window frame */
+body.legendsV2.ovMapFullScreen .ovMapWindow #content {
+    width: calc(100% - 34px) !important;
+    margin: 0 auto !important;
+}
+
+body.ovMapFullScreen .ovMapWindow #content > :not(.titleInHeader) {
+    display: none;
 }
