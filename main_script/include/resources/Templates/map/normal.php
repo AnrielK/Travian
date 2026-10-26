@@ -735,6 +735,19 @@
             // the original positionChange had the y sign wrong and drew the next blocks a few rows off)
             map.transition.containerPositionChange({x: view.x - size.x, y: size.y - view.y});
         };
+        // The map moves its blocks and its origin by each drag step and finds the fields of a block by rounding their
+        // difference down. On a zoomed page (the iOS app) touches come in fractions of a pixel, the two sums drift
+        // apart by rounding errors and a block gets the fields of the row (or column) beside it: rows shown twice or
+        // shifted after the map loads new blocks. Move by whole pixels and keep the fraction for the next step.
+        if (Travian.Game.Map._map) {
+            var map = Travian.Game.Map._map, moveBy = map.move, rest = {x: 0, y: 0};
+            map.move = function (delta) {
+                var x = delta.x + rest.x, y = delta.y + rest.y;
+                var step = {x: Math.round(x), y: Math.round(y)};
+                rest = {x: x - step.x, y: y - step.y};
+                return step.x === 0 && step.y === 0 ? this : moveBy.call(this, step);
+            };
+        }
         jQuery(window).on('resize', refreshMapPosition);
         ['mousedown', 'touchstart'].forEach(function (type) {
             document.getElementById('mapContainer').addEventListener(type, refreshMapPosition, true);

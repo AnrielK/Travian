@@ -234,7 +234,12 @@ div.village1 div#map_details{position:absolute;right:0;top:10px;width:245px;marg
 #sideInfoCountdown .content li{display:none;overflow:hidden;max-height:64px}
 #sideInfoCountdown .content li p{margin:0}
 #sideInfoCountdown .content li.shown{display:block}
-#sideInfoCountdown .content li .infoboxDeleteButton{float:right}
+/* the close cross stays on the board (T4.4 places it absolutely, onto the frame), the text flows round it */
+#sideInfoCountdown .content li .infoboxDeleteButton{float:right;position:static;margin:2px 0 2px 3px}
+/* the button (Prolong, 25 gold) is as wide as the board's inner width at most: narrower ends */
+#sideInfoCountdown .content li button{max-width:100%}
+#sideInfoCountdown .content li button .button-content{padding-left:10px;padding-right:10px}
+#sideInfoCountdown .content li button .buttonMiddle{margin:0 10px}
 #sideInfoCountdown .pager{margin-top:2px;font-size:11px}
 #sideInfoCountdown .pager a{cursor:pointer;font-weight:bold;padding:0 4px}
 .questMaster .master{display:block;border:0;padding:0;background-color:transparent}
@@ -301,8 +306,9 @@ body.layoutT40 .highlighted.rectangle{display:none !important}
 /* phones in portrait (iOS app): zoom out so the whole left side of the game shows, starting at its left edge */
 body.layoutT40{--ov-portrait-zoom-out:1.45;--ov-portrait-align:left}
 /* a window narrower than the game (phones in portrait): the signs and the quest master on the left tree stick out
-   of the 990px game, so keep a margin on the left where they can show (the scenery goes on in it) */
-@media (max-width:1060px){body.layoutT40{min-width:1020px}body.layoutT40 #wrapper{box-sizing:border-box;padding-left:30px;background-origin:content-box}body.layoutT40 #wrapper #staticElements{background-position:calc(50% - 15px) top}}
+   of the 990px game, so keep a margin on the left where they can show (the scenery goes on in it); the trees of
+   #staticElements cover the whole wrapper, not 30px past its right edge (that widened the page past the scenery) */
+@media (max-width:1060px){body.layoutT40{min-width:1020px}body.layoutT40 #wrapper{box-sizing:border-box;padding-left:30px;background-origin:content-box}body.layoutT40 #wrapper #staticElements{left:0;background-position:calc(50% + 15px) top}}
 /* the image map of the resource fields uses the 400px wide T4.4 coordinates: centre it on the 500px wide 4.0 fields */
 div.village1 img#resfeld{left:56px;margin-top:4px}
 /* level circles as in the Legends look: coloured ring by state (green can be built, yellow not now, blue max),
