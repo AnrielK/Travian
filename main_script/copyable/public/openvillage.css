@@ -318,7 +318,8 @@ body.manual > .cf {
     width: auto !important;
 }
 
-body.manual > .cf > p.description {
+body.manual > .cf > p.description,
+body.manual .manualCosts p.description {
     float: none;
     width: auto !important;
     min-height: 0;

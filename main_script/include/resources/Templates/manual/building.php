@@ -7,11 +7,11 @@
                                    src="img/x.gif"
                                    alt="<?=T("Buildings", $vars['building']['gid'] . ".title");?>"> <?=T("Buildings", $vars['building']['gid'] . ".title");?>
     </h1>
-    <p class="description">
-        <?=T("Buildings", $vars['building']['gid']. ".desc");?></p>
-    <!-- the costs beside the picture, as in Travian Legends -->
+    <!-- the description and the costs beside the picture -->
     <div class="manualRow">
         <div class="manualCosts">
+            <p class="description">
+                <?=T("Buildings", $vars['building']['gid']. ".desc");?></p>
             <p class="costsHeader">
                 <b><?=T("Buildings", "costs");?></b> <?=T("Manual", "and");?>
                 <b><?=T("Manual", "construction_time") . ' ' . T("Manual", "for") . ' ' . T("Manual", "level");?></b> 1:<br/>
