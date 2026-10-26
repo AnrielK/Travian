@@ -196,12 +196,13 @@
             }
         </script>
         <script type="text/javascript">
-            Travian.Game.Quest.createHighlights();
-            Travian.Game.Quest.toggleHighlights(true);
+            // draw the marks as the player left the tips (the light bulb): toggling them here switched them off on
+            // every other page and dialog, and opening the tutorial dialog alone ticked off "switch the tips off"
+            Travian.Game.Quest.highlightsToggle = Travian.Game.Preferences.get('highlightsToggle') !== false;
+            Travian.Game.Quest.drawHighlights();
             jQuery('.questInformation .iconButton.small.cancel').click(function (event) {
                 setTimeout(function () {
-                    Travian.Game.Quest.createHighlights();
-                    Travian.Game.Quest.toggleHighlights(true);
+                    Travian.Game.Quest.drawHighlights();
                 }, 500);
             });
         </script>

@@ -322,46 +322,13 @@ $stock = $vars['stockBar'] ?? null;
     </div>
     <div id="ce"></div>
 </div>
+<?php require __DIR__ . '/touchPreview.php'; ?>
 <script type="text/javascript">
     var T4_feature_flags = <?=json_encode([
         'vacationMode' => true, 'territory' => false, 'heroitems' => true, 'allianceBonus' => true,
         'boostedStart' => false, 'pushingProtectionAlways' => false, 'tribesEgyptiansAndHuns' => false,
         'hideFoolsArtifacts' => false, 'welcomeScreen' => false,
     ]);?>;
-    // Touch screens have no hover, so the tooltip with the upgrade costs of a field or building never showed: the
-    // first tap on a field or building only shows its tooltip and light, a second tap on it opens it.
-    (function () {
-        var touch = false, shown = null;
-        document.addEventListener('pointerdown', function (event) {
-            touch = event.pointerType === 'touch' || event.pointerType === 'pen';
-        }, true);
-        document.addEventListener('click', function (event) {
-            if (!touch || !event.target.closest) {
-                return;
-            }
-            var target = event.target.closest('#rx area[data-index], #village_map .buildingSlot path, #village_map .buildingSlot .level');
-            var slot = target && (target.closest('.buildingSlot') || target);
-            if (!slot || slot === shown) {
-                shown = null;
-                return;
-            }
-            event.preventDefault();
-            event.stopImmediatePropagation();
-            if (shown && shown !== slot) {
-                ['mouseout', 'mouseleave'].forEach(function (type) {
-                    jQuery(shown).find('path').addBack('area').each(function () {
-                        this.dispatchEvent(new MouseEvent(type, {bubbles: type === 'mouseout', view: window}));
-                    });
-                });
-            }
-            shown = slot;
-            ['mouseover', 'mouseenter', 'mousemove'].forEach(function (type) {
-                target.dispatchEvent(new MouseEvent(type, {
-                    bubbles: type !== 'mouseenter', view: window, clientX: event.clientX, clientY: event.clientY
-                }));
-            });
-        }, true);
-    })();
 </script>
 </body>
 </html>

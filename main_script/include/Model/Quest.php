@@ -477,7 +477,7 @@ class Quest
             'highlightSelectors' => [
                 0 => [
                     [
-                        'selector' => '#finishNowDialog button',
+                        'selector' => '.dialog #finishNowDialog button',
                         'renderer' => 'rectangle',
                     ],
                     [
@@ -1617,6 +1617,8 @@ class Quest
             return TRUE;
         }
         if ($current[0] == 2 && $current[1] == 3) {
+            // the task taught switching the tips off; the next tasks point at what to click, so they come back on
+            PreferencesHelper::setPreference('highlightsToggle', 'true');
             $village = Village::getInstance();
             for ($i = 1; $i <= 18; ++$i) {
                 if ($village->getField($i)['item_id'] == 2 && $village->getField($i)['level'] == 0 && $village->getField($i)['upgrade_state'] == 0) {

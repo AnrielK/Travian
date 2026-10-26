@@ -429,6 +429,10 @@ if (is_t40_layout()) {
     </div>
     <div id="ce"></div>
 </div>
+<?php if (is_classic_gpack()): ?>
+    <?php require __DIR__ . '/touchPreview.php'; ?>
+    <?php require __DIR__ . '/questHighlights.php'; ?>
+<?php endif; ?>
 <script type="text/javascript">
     <?php
     $feature_flags = [

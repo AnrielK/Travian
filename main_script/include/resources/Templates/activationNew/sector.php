@@ -23,7 +23,7 @@
         </div>
 
         <div class="buttonContainer">
-            <button type="submit" value="<?=T("ActivationNew", "Confirm");?>" id="<?=($button_id = get_button_id());?>" class="orange ">
+            <button type="submit" value="<?=T("ActivationNew", "Confirm");?>" id="<?=($button_id = get_button_id());?>" class="<?=$buttonColour = is_classic_gpack() ? 'green' : 'orange';?> "><?php /* the T4.4 packs have no orange button pictures: the button was a blank box */ ?>
                 <div class="button-container addHoverClick">
                     <div class="button-background">
                         <div class="buttonStart">
@@ -38,7 +38,7 @@
             <script type="text/javascript" id="<?=$button_id;?>_script">
                 jQuery(function() {
                         jQuery('#<?=$button_id;?>').click(function (event) {
-                            jQuery(window).trigger('buttonClicked', [this, {"type":"submit","value":"<?=T("ActivationNew", "Confirm");?>","name":"","id":"<?=$button_id;?>","class":"orange ","title":"","confirm":"","onclick":""}]);
+                            jQuery(window).trigger('buttonClicked', [this, {"type":"submit","value":"<?=T("ActivationNew", "Confirm");?>","name":"","id":"<?=$button_id;?>","class":"<?=$buttonColour;?> ","title":"","confirm":"","onclick":""}]);
                         });
                 });
             </script>

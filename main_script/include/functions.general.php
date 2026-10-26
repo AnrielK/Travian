@@ -861,6 +861,15 @@ function is_t40_layout()
     return ($gpacks['styles'][$mainPage]['layout'] ?? '') === 't40';
 }
 
+/** The village pictures of the graphic pack take the Legends outlines of the resource fields (gpack.php 'fieldShapes'). */
+function has_field_shapes()
+{
+    global $globalConfig;
+    $gpacks = $globalConfig['staticParameters']['gpacks'] ?? [];
+    $mainPage = $gpacks['mainPage'] ?? '';
+    return !empty($gpacks['styles'][$mainPage]['fieldShapes']);
+}
+
 /** Folder of the active graphic pack's mainPage on disk (sections/gpack/<hash>/mainPage/). */
 function get_gpack_mainPage_dir()
 {

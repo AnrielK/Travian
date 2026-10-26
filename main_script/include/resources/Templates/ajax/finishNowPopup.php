@@ -54,3 +54,18 @@
         <?=$vars['button'];?>
     </div>
 </div>
+<script type="text/javascript">
+    // the tutorial (task 10) frames the redeem button of this window once it is open, and the finish now button
+    // again once the window is closed
+    if (window.Travian && Travian.Game.Quest && Travian.Game.Quest.highlightsToggle === true) {
+        setTimeout(function () {
+            Travian.Game.Quest.createHighlights();
+            var open = setInterval(function () {
+                if (!document.getElementById('finishNowDialog')) {
+                    clearInterval(open);
+                    Travian.Game.Quest.createHighlights();
+                }
+            }, 300);
+        }, 0);
+    }
+</script>

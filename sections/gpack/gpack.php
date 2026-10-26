@@ -3,6 +3,8 @@
 // GAME_GPACK picks it for a new world (installation wizard, iOS app: Nastavení světa → Vzhled nového světa, native
 // runtime: GAME_GPACK=…); the world keeps it in config.gpack from then on (apply_world_gpack() in functions.general.php).
 // 'tribes' = the tribes players of a world with this look can choose (1 Romans, 2 Teutons, 3 Gauls, 6 Egyptians, 7 Huns).
+// 'fieldShapes' = the resource fields of the pack's village pictures (img/g/fN-ltr.jpg) lie where the Legends ones do,
+// so dorf1 lights the field under the pointer with the Legends outline (resources/Templates/dorf1/main.php).
 // Packs whose folder is missing are skipped, so a trimmed distribution keeps working.
 $classicTribes = [1, 2, 3];          // Travian 4.0 and T4.4 Classic: the three original tribes
 $fiveTribes = [1, 2, 3, 6, 7];       // the other looks: with Egyptians and Huns
@@ -18,12 +20,13 @@ $styles = [
     'a17a8f72' => ['hash' => 'a17a8f72', 'name' => 'OpenVillage 4.6', 'isNew' => true, 'tribes' => $fiveTribes],
     '68597666' => ['hash' => '68597666', 'name' => 'Travian T4.4 Seasonized', 'isNew' => false, 'tribes' => $fiveTribes],
     'd11cb434' => ['hash' => 'd11cb434', 'name' => 'Travian T4.4 Seasonized v2', 'isNew' => false, 'tribes' => $fiveTribes],
-    'TravianOld' => ['hash' => 'TravianOld', 'name' => 'Travian T4.4 Classic', 'isNew' => false, 'tribes' => $classicTribes],
+    'TravianOld' => ['hash' => 'TravianOld', 'name' => 'Travian T4.4 Classic', 'isNew' => false, 'tribes' => $classicTribes,
+        'fieldShapes' => true],
     // T40 = Travian 4.0 (travian_Travian_4.0_41), the look T4.4 Classic grew from: the 4.0 page frame of
     // layout/LayoutT40.php around the T4.4 pages (scripts/gpack/import-t40-gpack.py). 'ownRegistration': the
     // lobby sends players to the world's register.php (in the 4.0 frame, like login.php) instead of its dialog.
     'T40' => ['hash' => 'T40', 'name' => 'Travian 4.0', 'isNew' => false, 'layout' => 't40', 'tribes' => $classicTribes,
-        'ownRegistration' => true],
+        'ownRegistration' => true, 'fieldShapes' => true],
 ];
 $styles = array_filter($styles, static fn ($p, $hash) => is_file(__DIR__ . "/$hash/mainPage/lang/en-US/compact.css"),
     ARRAY_FILTER_USE_BOTH);
