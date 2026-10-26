@@ -89,3 +89,352 @@ div.village1 #village_map .fieldGlow.shown {
     background-repeat: no-repeat;
     vertical-align: middle;
 }
+
+/* unit cards of the training buildings, laid out as in Travian Legends (build/trainingWrapper.php) */
+.trainUnits .action.ovTrainCard {
+    position: relative;
+    background-color: #fff;
+}
+
+.trainUnits .action.ovTrainCard.moving {
+    z-index: 2;
+    box-shadow: 0 4px 14px rgba(0, 0, 0, .35);
+}
+
+.trainUnits .ovTrainCard .ovFavorite {
+    position: absolute;
+    top: 6px;
+    right: 6px;
+    z-index: 1;
+    width: 26px;
+    height: 26px;
+    min-width: 0;
+    margin: 0;
+    padding: 2px;
+    border: 1px solid #a6c97a;
+    border-radius: 3px;
+    background: linear-gradient(#e9f4da, #cfe5b0);
+    box-shadow: none;
+    cursor: pointer;
+}
+
+.trainUnits .ovTrainCard .ovFavorite svg {
+    display: block;
+    width: 20px;
+    height: 20px;
+    fill: #fff;
+    stroke: #8db65a;
+    stroke-width: 1.4;
+}
+
+.trainUnits .ovTrainCard .ovFavorite.active {
+    border-color: #5d8f22;
+    background: linear-gradient(#9fd15a, #5f9a1e);
+}
+
+.trainUnits .ovTrainCard .ovFavorite.active svg {
+    stroke: #fff;
+}
+
+.trainUnits .ovTrainCard .tit {
+    padding-right: 34px;
+}
+
+.trainUnits .ovTrainCard .tit .level {
+    color: #f88c1f;
+}
+
+.trainUnits .ovTrainCard .inlineIcon.duration {
+    display: flex !important; /* the packs set inline-grid by #build rules: own line, as in Legends */
+    align-items: center;
+    gap: 4px;
+    clear: both;
+    float: none;
+    margin: 4px 0 0;
+}
+
+.trainUnits .ovTrainCard .cta {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-between;
+    gap: 6px 10px;
+    float: none;
+    position: static;
+    width: auto;
+    margin-top: 8px;
+}
+
+.trainUnits .ovTrainCard .cta .ovCount {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    white-space: nowrap;
+}
+
+.trainUnits .ovTrainCard .cta .ovCount input.text {
+    width: 56px;
+    margin: 0 2px;
+}
+
+.trainUnits .ovTrainCard .cta > button {
+    float: none;
+    position: static;
+    margin: 0 0 0 auto;
+}
+
+.trainUnits .ovTrainCard .cta .status.none {
+    flex-basis: 100%;
+    order: 3;
+}
+
+.trainUnits .ovTrainCard .cta .status.none:empty {
+    display: none;
+}
+
+/* the manual (manual.php in the window of Travian.Game.iPopup, layout/head.php), laid out as in Travian Legends */
+html body.manual {
+    margin: 0;
+    padding: 10px 16px 16px;
+    background: #fff !important;
+    color: #222;
+    font-size: 15px;
+    line-height: 1.35;
+    width: auto !important;
+    min-width: 0;
+}
+
+body.manual h3 {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    margin: 6px 0 10px;
+    font-size: 21px;
+}
+
+body.manual #buildings {
+    margin-top: 28px;
+}
+
+body.manual .contentNavi.tabNavi {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 4px 4px;
+    height: auto;
+    margin: 0 0 14px;
+    padding: 0 0 4px;
+    border-bottom: 1px solid #ccc;
+    background: none;
+}
+
+body.manual .contentNavi .container {
+    float: none;
+    height: auto;
+    margin: 0;
+    padding: 0;
+    background: none;
+}
+
+body.manual .contentNavi .container .background-start,
+body.manual .contentNavi .container .background-end {
+    display: none;
+}
+
+body.manual .contentNavi .container .content {
+    height: auto;
+    margin: 0;
+    padding: 0;
+    background: none;
+}
+
+body.manual .contentNavi .container a.tabItem {
+    display: block;
+    height: auto !important;
+    padding: 4px 14px !important;
+    border: 1px solid #c8c8c8;
+    border-radius: 2px;
+    background: #ececec;
+    color: #555;
+    font-size: 15px;
+    font-weight: normal;
+    line-height: 20px;
+    cursor: pointer;
+    text-decoration: none;
+}
+
+body.manual .contentNavi .container.active a.tabItem {
+    border-color: #6fa52d;
+    background: #8cc142;
+    color: #fff;
+}
+
+body.manual #troops ul,
+body.manual #buildings ul {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 8px 16px;
+    margin: 0;
+    padding: 0 0 0 14px;
+    list-style: none;
+}
+
+body.manual #troops ul.hide,
+body.manual #buildings ul.hide {
+    display: none;
+}
+
+body.manual #troops li,
+body.manual #buildings li {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    float: none;
+    width: auto;
+    height: auto;
+    margin: 0;
+    padding: 0;
+}
+
+body.manual #buildings li:empty {
+    display: none;
+}
+
+body.manual #troops li a,
+body.manual #buildings li a {
+    font-size: 16px;
+    font-weight: bold;
+}
+
+body.manual h1.titleInHeader {
+    position: static;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    margin: 8px 0 10px;
+    font-size: 21px;
+}
+
+body.manual > .cf {
+    width: auto !important;
+}
+
+body.manual > .cf > p.description {
+    width: calc(100% - 270px) !important;
+}
+
+body.manual p.description,
+body.manual #t_desc {
+    font-size: 16px;
+    line-height: 1.4;
+}
+
+body.manual .costsHeader,
+body.manual #prereqs {
+    margin-top: 16px;
+    font-size: 16px;
+}
+
+body.manual #prereqs b {
+    font-size: 18px;
+}
+
+body.manual .resourceWrapper .inlineIcon .value,
+body.manual .inlineIcon.duration .value,
+body.manual table#troop_info td,
+body.manual table.troopData td,
+body.manual table.troopData th {
+    font-size: 15px;
+}
+
+body.manual #build.manualIllustration {
+    float: right !important;
+    width: auto !important;
+    min-height: 0;
+    margin: 0 0 8px 12px !important;
+    padding: 0;
+    background: none;
+}
+
+body.manual #build.manualIllustration .upgradeHeader,
+body.manual #build.manualIllustration .buildingIllustration {
+    position: static;
+    width: 241px;
+    margin: 0;
+    padding: 0;
+    background-color: transparent;
+}
+
+body.manual .answers {
+    margin-top: 14px;
+    font-size: 15px;
+}
+
+@media (max-width: 480px) {
+    body.manual #troops ul,
+    body.manual #buildings ul {
+        gap: 8px 10px;
+        padding-left: 4px;
+    }
+
+    body.manual > .cf > p.description {
+        width: auto !important;
+        float: none;
+    }
+
+    body.manual img.building.big,
+    body.manual #build.manualIllustration,
+    body.manual .bigUnitSection {
+        float: none;
+        display: block;
+        margin: 6px auto;
+    }
+}
+
+/* the large map (karte.php?fullscreen=1, map/normal.php): a window frame with a title bar and a close button */
+#ovMapFrame {
+    position: fixed;
+    inset: 0;
+    z-index: 999;
+    box-sizing: border-box;
+    border: 3px solid #3d2f1c;
+    background: linear-gradient(#7a6141, #5a4630);
+    box-shadow: inset 0 0 0 4px #8d7450;
+}
+
+#ovMapFrame .ovMapFrameTitle {
+    position: absolute;
+    top: 0;
+    left: 14px;
+    right: 60px;
+    height: 39px;
+    line-height: 39px;
+    color: #f6ecd6;
+    font-size: 18px;
+    font-weight: bold;
+    text-shadow: 0 1px 2px rgba(0, 0, 0, .6);
+    white-space: nowrap;
+    overflow: hidden;
+}
+
+#ovMapFrame .ovMapFrameClose {
+    position: absolute;
+    top: 5px;
+    right: 10px;
+    width: 28px;
+    height: 28px;
+    box-sizing: border-box;
+    border: 2px solid #f6ecd6;
+    border-radius: 50%;
+    background: #a23a2a;
+    color: #fff;
+    font-size: 15px;
+    font-weight: bold;
+    line-height: 24px;
+    text-align: center;
+    text-decoration: none;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, .5);
+}
+
+#ovMapFrame .ovMapFrameClose:hover {
+    background: #c0412d;
+}

@@ -45,6 +45,46 @@
         </script>
         <?=$vars['finishTraining_button'];?>
     </form>
+    <script type="text/javascript">
+        // The star of a unit (as in Travian Legends): marked units are listed first, in their usual order; the card
+        // slides to its new place. The choice is kept for the player (ajax unitFavorite).
+        jQuery(function () {
+            var list = jQuery('.trainUnits');
+            list.on('click', '.ovFavorite', function () {
+                var star = jQuery(this), card = star.closest('.ovTrainCard'), favorite = !card.hasClass('favorite');
+                card.toggleClass('favorite', favorite);
+                star.toggleClass('active', favorite).attr('title', star.data(favorite ? 'remove' : 'add'));
+                Travian.ajax({data: {cmd: 'unitFavorite', unitId: card.data('unit'), favorite: favorite ? 1 : 0}});
+
+                var cards = list.children('.ovTrainCard'), before = new Map();
+                cards.each(function () {
+                    before.set(this, this.getBoundingClientRect().top);
+                });
+                cards.sort(function (a, b) {
+                    var fa = jQuery(a).hasClass('favorite'), fb = jQuery(b).hasClass('favorite');
+                    return fa !== fb ? (fa ? -1 : 1) : jQuery(a).data('order') - jQuery(b).data('order');
+                }).appendTo(list);
+                cards.removeClass('first').first().addClass('first');
+                cards.each(function () {
+                    var shift = before.get(this) - this.getBoundingClientRect().top;
+                    if (!shift) {
+                        return;
+                    }
+                    var moved = this;
+                    moved.style.transition = 'none';
+                    moved.style.transform = 'translateY(' + shift + 'px)';
+                    moved.getBoundingClientRect();
+                    moved.style.transition = 'transform .45s ease';
+                    moved.style.transform = '';
+                    jQuery(moved).toggleClass('moving', moved === card[0]);
+                    setTimeout(function () {
+                        moved.style.transition = '';
+                        jQuery(moved).removeClass('moving');
+                    }, 460);
+                });
+            });
+        });
+    </script>
 <?php elseif( $vars['item_id'] != 25 and $vars['item_id'] != 26):?>
     <h4 class="round"><?=T("inGame", "train_troops");?></h4>
     <span class="errorMessage"><?=T("inGame", "noTroops");?></span>

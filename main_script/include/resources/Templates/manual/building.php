@@ -7,8 +7,18 @@
                                    src="img/x.gif"
                                    alt="<?=T("Buildings", $vars['building']['gid'] . ".title");?>"> <?=T("Buildings", $vars['building']['gid'] . ".title");?>
     </h1>
+    <?php if (is_hero_v2()):
+        // Travian Legends packs have no "building big" pictures: the illustration of the upgrade page, in the player's tribe
+        // (the pack scopes it to #build .upgradeHeader)
+        $gid = $vars['building']['gid'];
+        $tribe = [1 => 'roman', 2 => 'teuton', 3 => 'gaul', 6 => 'egyptian', 7 => 'hun'][\Core\Session::getInstance()->getRace()] ?? 'roman'; ?>
+        <div id="build" class="manualIllustration"><div class="upgradeHeader">
+            <div class="buildingIllustration g<?=$gid;?><?=$gid <= 4 ? '' : ' ' . $tribe;?>" title="<?=T("Buildings", $gid . ".title");?>"></div>
+        </div></div>
+    <?php else: ?>
     <img class="building big black g<?=$vars['building']['gid'];?>" src="img/x.gif"
          alt="Woodcutter" title="<?=T("Buildings", $vars['building']['gid'] . ".title");?>"/>
+    <?php endif; ?>
     <p class="description">
         <?=T("Buildings", $vars['building']['gid']. ".desc");?></p>
     <p class="costsHeader">

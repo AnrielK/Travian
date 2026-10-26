@@ -3,11 +3,12 @@
         <img src="img/x.gif" class="unit uunits"/> <?=T("Manual", "Units"); ?></h3>
 	<div class="contentNavi tabNavi ">
 		<?php
-		for($i = 1; $i <= 7; ++$i) {
-		    if($i == 4 || $i == 5) continue;
+		// all tribes as in Travian Legends, nature and the Natars last
+		$tribes = [1, 2, 3, 6, 7, 4, 5];
+		foreach($tribes as $i) {
 			$active = $i == 1 ? "active" : "normal";
 			$tribe = T("Global", "races.".$i);
-			echo '<div title="" class="container category'.$i.' '.$active.'">
+			echo '<div title="" class="container vid'.$i.' '.$active.'">
 			<div class="background-start">&nbsp;</div>
 			<div class="background-end">&nbsp;</div>
 			<div class="content">
@@ -21,8 +22,7 @@
 		<div class="clear"></div>
 	</div>
 	<?php
-	for($i = 1; $i <= 7; ++$i) {
-        if($i == 4 || $i == 5) continue;
+	foreach($tribes as $i) {
         echo '<ul class="troops'.$i.' '.($i == 1 ? "" : "hide").'">';
 		$start = ($i - 1) * 10 + 1;
 		for($x = $start; $x <= $start + 9; ++$x) {

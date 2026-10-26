@@ -526,10 +526,28 @@
     jQuery(function () {
         <?php if($vars['fullscreen']):?>
         jQuery('body').addClass('fullScreen');
+        // the large map sits in a frame with a title bar and a close button (back to the normal map), as a window
+        var frame = {side: 10, top: 42};
+        jQuery('<div id="ovMapFrame"><div class="ovMapFrameTitle"><?=T("map", "map");?></div>'
+            + '<a class="ovMapFrameClose" href="karte.php" title="<?=T("Global", "General.close");?>">&#x2715;</a></div>')
+            .appendTo('body');
+        jQuery('#ovMapFrame .ovMapFrameClose').on('click', function () {
+            // the normal map at the place the player has moved to
+            var normal = jQuery('#toolbar .viewNormal');
+            if (normal.length) {
+                normal.trigger('click');
+                return false;
+            }
+        });
+        jQuery(document).on('keydown', function (event) {
+            if (event.key === 'Escape' && !jQuery('.dialogVisible, .dialog:visible').length) {
+                jQuery('#ovMapFrame .ovMapFrameClose')[0].click();
+            }
+        });
         // Mind the order, first, the windows size should be adjusted by applying class, and then container view size determined
         var containerViewSize = {
-            width: jQuery(window).width() - 25, // 25 is ruler width
-            height: jQuery(window).height() - 16 // 16 is ruler width
+            width: jQuery(window).width() - 25 - 2 * frame.side, // 25 is ruler width
+            height: jQuery(window).height() - 16 - frame.top - frame.side // 16 is ruler width
         };
         <?php if(getDirection() == "LTR"):?>
         jQuery('#mapContainer')
@@ -538,8 +556,8 @@
                 position: 'absolute',
                 width: containerViewSize.width,
                 height: containerViewSize.height,
-                top: 0,
-                right: 0
+                top: frame.top,
+                right: frame.side
             })
             .appendTo('body');
         <?php else:?>
@@ -549,8 +567,8 @@
                 position: 'absolute',
                 width: containerViewSize.width,
                 height: containerViewSize.height,
-                top: 0,
-                left: 0
+                top: frame.top,
+                left: frame.side
             })
             .appendTo('body');
         <?php endif;?>

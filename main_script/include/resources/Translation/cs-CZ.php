@@ -2383,6 +2383,9 @@ $Definition['inGame']['zoom_in'] = 'Přiblížit';
 $Definition['inGame']['zoomIn'] = 'Přiblížit';
 $Definition['inGame']['available'] = 'k dispozici';
 $Definition['inGame']['Amount'] = 'Množství';
+$Definition['inGame']['trainCount'] = 'Počet';
+$Definition['inGame']['unitFavorite'] = 'Přidat k oblíbeným';
+$Definition['inGame']['unitFavoriteRemove'] = 'Odebrat z oblíbených';
 $Definition['inGame']['train_troops'] = 'Cvičit jednotky';
 $Definition['inGame']['bannedSmallPage'] = 'Jsi zablokován.';
 $Definition['inGame']['in_training'] = 've výcviku';
@@ -2648,6 +2651,7 @@ $Definition['Logout'] = [
 ];
 //Manual
 $Definition['Manual'] = [
+    "title" => "Manuál",
     'fightingStrength' => "Síla",
     "fightingStrengthAgainstInf" => "Síla proti pěchotě",
     'fightingStrengthAgainstCav' => "Síla proti jízdě",
@@ -2658,7 +2662,7 @@ $Definition['Manual'] = [
     "durationOfTraining" => "Doba výcviku",
     "fieldsPerHour" => "polí za hodinu",
     "preRequests" => "Předpoklady",
-    "toOverview" => "na přehled",
+    "toOverview" => "k přehledu",
     "None" => "Žádný",
     "and" => "a",
     "construction_time" => "Doba stavby",

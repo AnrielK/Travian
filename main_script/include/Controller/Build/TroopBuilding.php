@@ -22,6 +22,7 @@ use Model\ArtefactsModel;
 use Model\DailyQuestModel;
 use Model\Quest;
 use Model\TrainingModel;
+use Model\UnitFavorites;
 use resources\View\PHPBatchView;
 
 class TroopBuilding extends AnyCtrl
@@ -31,6 +32,9 @@ class TroopBuilding extends AnyCtrl
     private $building_level = 1;
     private $art_eff = 1;
     private $units = [];
+    /** unit ids marked with the star, smithy row of the village (upgrade level per unit) */
+    private $favorites = null;
+    private $smithy = [];
     private $alliance_bonus = 1;
 
     public function __construct($index)
@@ -95,8 +99,19 @@ class TroopBuilding extends AnyCtrl
         $this->view->vars['finishTraining_button'] = null;
         $this->view->vars['checker'] = Session::getInstance()->getChecker();
         $this->view->vars['wrappers'] = '';
+        $order = [];
+        if ($this->building_id != 36) {
+            // units marked with the star come first (as in Travian Legends), the others keep their order
+            $race = Session::getInstance()->getRace();
+            $this->favorites = UnitFavorites::get(Session::getInstance()->getPlayerId());
+            $isFavorite = fn($nr) => in_array(nrToUnitId($nr, $race), $this->favorites);
+            $order = array_flip(array_values($troopsCanTrain));
+            $troopsCanTrain = array_merge(array_filter($troopsCanTrain, $isFavorite),
+                array_filter($troopsCanTrain, fn($nr) => !$isFavorite($nr)));
+            $this->smithy = DB::getInstance()->query("SELECT * FROM smithy WHERE kid=" . Village::getInstance()->getKid())->fetch_assoc() ?: [];
+        }
         foreach ($troopsCanTrain as $k => $v) {
-            $this->view->vars['wrappers'] .= $this->getTroopWrapper($v);
+            $this->view->vars['wrappers'] .= $this->getTroopWrapper($v, $order[$v] ?? 0);
         }
         $training = $m->getTraining(Village::getInstance()->getKid(), $this->building_id);
         $this->view->vars['isTraining'] = $training->num_rows;
@@ -348,7 +363,7 @@ class TroopBuilding extends AnyCtrl
         return $time;
     }
 
-    public function getTroopWrapper($nr)
+    public function getTroopWrapper($nr, $order = 0)
     {
         $helper = new GoldHelper();
         $training = new TrainingHelper();
@@ -369,6 +384,9 @@ class TroopBuilding extends AnyCtrl
         ][$this->building_id];
 
         $view->vars['unitId'] = nrToUnitId($nr, Session::getInstance()->getRace());
+        $view->vars['order'] = $order;
+        $view->vars['favorite'] = $this->favorites === null ? null : in_array($view->vars['unitId'], $this->favorites);
+        $view->vars['smithyLevel'] = (int)($this->smithy['u' . $nr] ?? 0);
         $view->vars['cost'] = Formulas::uTrainingCost($view->vars['unitId'], $this->building_id == 30 || $this->building_id == 29);
         $view->vars['upkeep'] = Formulas::uUpkeep($view->vars['unitId'], Village::getInstance()->getHorseDrinkingPoolLvl());
         $view->vars['max'] = $training->getMaxUnitByNr($nr, $this->building_id == 30 || $this->building_id == 29);
