@@ -319,7 +319,43 @@ body.manual > .cf {
 }
 
 body.manual > .cf > p.description {
-    width: calc(100% - 190px) !important;
+    float: none;
+    width: auto !important;
+    min-height: 0;
+}
+
+/* the costs of a building and the stats of a unit beside the picture, as in Travian Legends */
+body.manual .manualRow {
+    display: flex;
+    align-items: flex-start;
+    gap: 10px;
+    clear: both;
+}
+
+body.manual .manualCosts,
+body.manual .manualStats {
+    flex: 1;
+    min-width: 0;
+}
+
+body.manual .manualRow img.building.big,
+body.manual .manualRow #build.manualIllustration,
+body.manual .manualRow .bigUnitSection {
+    flex: none;
+    float: none !important;
+    margin: 0 !important;
+}
+
+body.manual .manualCosts p.costsHeader {
+    float: none;
+    width: auto;
+    margin-top: 0;
+}
+
+body.manual .manualCosts .resourceWrapper {
+    display: flex !important;
+    flex-wrap: wrap;
+    gap: 4px 10px;
 }
 
 body.manual p.description,
@@ -358,19 +394,17 @@ body.manual #build.manualIllustration {
 body.manual #build.manualIllustration .upgradeHeader,
 body.manual #build.manualIllustration .buildingIllustration {
     position: static;
-    width: 170px;
-    height: 113px;
+    width: 170px !important;
+    height: 113px !important;
     background-size: contain;
     margin: 0;
     padding: 0;
     background-color: transparent;
 }
 
-/* the unit's stats beside its picture also when the 475 px window shows a scrollbar */
 body.manual .boxes {
     box-sizing: border-box;
-    width: calc(100% - 150px);
-    max-width: 300px;
+    width: 100%;
 }
 
 body.manual .boxes table#troop_info,
@@ -390,9 +424,9 @@ body.manual .answers {
         padding-left: 4px;
     }
 
-    body.manual > .cf > p.description {
-        width: auto !important;
-        float: none;
+    body.manual .manualRow {
+        flex-direction: column-reverse;
+        align-items: center;
     }
 
     body.manual img.building.big,
