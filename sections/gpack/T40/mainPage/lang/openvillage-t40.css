@@ -316,7 +316,7 @@ div.village1 #village_map .level.colorLayer.underConstruction .labelLayer{backgr
 /* light on the resource field under the pointer (dorf1/main.php) */
 div.village1 #village_map .fieldGlow{position:absolute;box-sizing:border-box;border:2px solid rgba(255,255,255,.5);border-radius:50%;background:rgba(255,255,255,.2);pointer-events:none;z-index:1;display:none}
 div.village1 #village_map .fieldGlow.shown{display:block}
-/* outlines of the fields (dorf1/main.php, scripts/gpack/trace-t40-field-shapes.py), lit like the Legends fields */
+/* outlines of the fields (the Legends outlines, dorf1/main.php), lit like the Legends fields */
 div.village1 #village_map svg.fieldShapes{position:absolute;left:0;top:0;pointer-events:none;z-index:1}
 div.village1 #village_map svg.fieldShapes path{fill:none;stroke:none}
 div.village1 #village_map svg.fieldShapes path.shown{fill:rgba(255,255,255,.2);stroke:rgba(255,255,255,.5);stroke-width:2;stroke-linejoin:round}

@@ -16,16 +16,19 @@
 <div id="village_map" class="f<?=$vars['fieldType']; ?>">
     <?php if (is_t40_layout()): ?>
         <?php
-        // outlines of the fields on the 4.0 picture of this layout (scripts/gpack/trace-t40-field-shapes.py), lit by
-        // the hover script at the end of the page; the right-to-left picture is the mirror image
-        $fieldShapes = json_decode((string)file_get_contents(__DIR__ . '/../../View/t40FieldShapes.json'), true);
-        $fieldShapes = $fieldShapes[(string)$vars['fieldType']] ?? [];
+        // the fields of the 4.0 picture lie where the Legends picture has them: its outlines (LegendsUi::fieldShape),
+        // moved onto the 4.0 picture of #village_map by one matrix fitted on all 12 layouts; the right-to-left
+        // picture is the mirror image
         ?>
         <svg class="fieldShapes" width="500" height="370" viewBox="0 0 500 370">
             <g<?=getDirection() == 'RTL' ? ' transform="matrix(-1 0 0 1 500 0)"' : ''; ?>>
-                <?php foreach ($fieldShapes as $field => $shape): ?>
-                    <path data-field="<?=(int)$field; ?>" d="<?=htmlspecialchars($shape); ?>"/>
-                <?php endforeach; ?>
+                <g transform="matrix(0.9719 -0.031 0.0181 0.9548 13.17 75.16)">
+                    <?php for ($field = 1; $field <= 18; ++$field): ?>
+                        <?php if ($shape = \resources\View\LegendsUi::fieldShape((int)$vars['fieldType'], $field)): ?>
+                            <path data-field="<?=$field; ?>" d="<?=$shape; ?>"/>
+                        <?php endif; ?>
+                    <?php endfor; ?>
+                </g>
             </g>
         </svg>
     <?php endif; ?>
