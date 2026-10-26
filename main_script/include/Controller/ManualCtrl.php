@@ -142,7 +142,7 @@ if($settings['type'] == 1) {
 			19 => 77, 20 => 183, 21 => 186, 22 => 75, 29 => 178, 30 => 179,
 			31 => 85, 32 => 86, 33 => 87, 36 => 185, 37 => 180,
 		];
-		$answerId = $answerId[$settings['gid']];
+		$answerId = $answerIDs[$settings['gid']] ?? 0;
 	}
 	$_template->display([
 		"building"              => [

@@ -2387,6 +2387,9 @@ $Definition['inGame']['zoom_in'] = 'Zoom in';
 $Definition['inGame']['zoomIn'] = 'Zoom In';
 $Definition['inGame']['available'] = 'available';
 $Definition['inGame']['Amount'] = 'Amount';
+$Definition['inGame']['trainCount'] = 'Count';
+$Definition['inGame']['unitFavorite'] = 'Add to favourites';
+$Definition['inGame']['unitFavoriteRemove'] = 'Remove from favourites';
 $Definition['inGame']['train_troops'] = 'Train troops';
 $Definition['inGame']['bannedSmallPage'] = 'You are banned.';
 $Definition['inGame']['in_training'] = 'in training';
@@ -2652,6 +2655,7 @@ $Definition['Logout'] = [
 ];
 //Manual
 $Definition['Manual'] = [
+    "title" => "Manual",
     'fightingStrength' => "Fighting strength",
     "fightingStrengthAgainstInf" => "Fighting strength against Inf",
     'fightingStrengthAgainstCav' => "Fighting strength against Cav",

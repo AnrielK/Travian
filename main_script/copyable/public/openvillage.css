@@ -89,3 +89,420 @@ div.village1 #village_map .fieldGlow.shown {
     background-repeat: no-repeat;
     vertical-align: middle;
 }
+
+/* unit cards of the training buildings, laid out as in Travian Legends (build/trainingWrapper.php) */
+.trainUnits .action.ovTrainCard {
+    position: relative;
+    background-color: #fff;
+}
+
+.trainUnits .action.ovTrainCard.moving {
+    z-index: 2;
+    box-shadow: 0 4px 14px rgba(0, 0, 0, .35);
+}
+
+.trainUnits .ovTrainCard .ovFavorite {
+    position: absolute;
+    top: 6px;
+    right: 6px;
+    z-index: 1;
+    width: 26px;
+    height: 26px;
+    min-width: 0;
+    margin: 0;
+    padding: 2px;
+    border: 1px solid #a6c97a;
+    border-radius: 3px;
+    background: linear-gradient(#e9f4da, #cfe5b0);
+    box-shadow: none;
+    cursor: pointer;
+}
+
+.trainUnits .ovTrainCard .ovFavorite svg {
+    display: block;
+    width: 20px;
+    height: 20px;
+    fill: #fff;
+    stroke: #8db65a;
+    stroke-width: 1.4;
+}
+
+.trainUnits .ovTrainCard .ovFavorite.active {
+    border-color: #5d8f22;
+    background: linear-gradient(#9fd15a, #5f9a1e);
+}
+
+.trainUnits .ovTrainCard .ovFavorite.active svg {
+    stroke: #fff;
+}
+
+.trainUnits .ovTrainCard .tit {
+    padding-right: 34px;
+}
+
+.trainUnits .ovTrainCard .tit .level {
+    color: #f88c1f;
+}
+
+.trainUnits .ovTrainCard .inlineIcon.duration {
+    display: flex !important; /* the packs set inline-grid by #build rules: own line, as in Legends */
+    align-items: center;
+    gap: 4px;
+    clear: both;
+    float: none;
+    margin: 4px 0 0;
+}
+
+.trainUnits .ovTrainCard .cta {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-between;
+    gap: 6px 10px;
+    float: none;
+    position: static;
+    width: auto;
+    margin-top: 8px;
+}
+
+.trainUnits .ovTrainCard .cta .ovCount {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    white-space: nowrap;
+}
+
+.trainUnits .ovTrainCard .cta .ovCount input.text {
+    width: 56px;
+    margin: 0 2px;
+}
+
+.trainUnits .ovTrainCard .cta > button {
+    float: none;
+    position: static;
+    margin: 0 0 0 auto;
+}
+
+.trainUnits .ovTrainCard .cta .status.none {
+    flex-basis: 100%;
+    order: 3;
+}
+
+.trainUnits .ovTrainCard .cta .status.none:empty {
+    display: none;
+}
+
+/* the manual (manual.php in the window of Travian.Game.iPopup, layout/head.php), laid out as in Travian Legends */
+html body.manual {
+    margin: 0;
+    padding: 6px 6px 10px;
+    background: #fff !important;
+    color: #222;
+    font-size: 12px;
+    line-height: 1.35;
+    width: auto !important;
+    min-width: 0;
+}
+
+body.manual h3 {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    margin: 6px 0 10px;
+    font-size: 16px;
+}
+
+body.manual #buildings {
+    margin-top: 28px;
+}
+
+body.manual .contentNavi.tabNavi {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 4px 4px;
+    height: auto;
+    margin: 0 0 14px;
+    padding: 0 0 4px;
+    border-bottom: 1px solid #ccc;
+    background: none;
+}
+
+body.manual .contentNavi .container {
+    float: none;
+    height: auto;
+    margin: 0;
+    padding: 0;
+    background: none;
+}
+
+body.manual .contentNavi .container .background-start,
+body.manual .contentNavi .container .background-end {
+    display: none;
+}
+
+body.manual .contentNavi .container .content {
+    height: auto;
+    margin: 0;
+    padding: 0;
+    background: none;
+}
+
+body.manual .contentNavi .container a.tabItem {
+    display: block;
+    height: auto !important;
+    padding: 3px 8px !important;
+    border: 1px solid #c8c8c8;
+    border-radius: 2px;
+    background: #ececec;
+    color: #555;
+    font-size: 12px;
+    font-weight: normal;
+    line-height: 18px;
+    cursor: pointer;
+    text-decoration: none;
+}
+
+body.manual .contentNavi .container.active a.tabItem {
+    border-color: #6fa52d;
+    background: #8cc142;
+    color: #fff;
+}
+
+body.manual #troops ul,
+body.manual #buildings ul {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 6px 12px;
+    margin: 0;
+    padding: 0 0 0 14px;
+    list-style: none;
+}
+
+body.manual #troops ul.hide,
+body.manual #buildings ul.hide {
+    display: none;
+}
+
+body.manual #troops li,
+body.manual #buildings li {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    float: none;
+    width: auto;
+    height: auto;
+    margin: 0;
+    padding: 0;
+}
+
+body.manual #buildings li:empty {
+    display: none;
+}
+
+body.manual #troops li a,
+body.manual #buildings li a {
+    font-size: 13px;
+    font-weight: bold;
+}
+
+body.manual h1.titleInHeader {
+    position: static;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    margin: 8px 0 10px;
+    font-size: 16px;
+}
+
+body.manual > .cf {
+    width: auto !important;
+}
+
+body.manual > .cf > p.description,
+body.manual .manualCosts p.description {
+    float: none;
+    width: auto !important;
+    min-height: 0;
+}
+
+/* the costs of a building and the stats of a unit beside the picture, as in Travian Legends */
+body.manual .manualRow {
+    display: flex;
+    align-items: flex-start;
+    gap: 10px;
+    clear: both;
+}
+
+body.manual .manualCosts,
+body.manual .manualStats {
+    flex: 1;
+    min-width: 0;
+}
+
+body.manual .manualRow img.building.big,
+body.manual .manualRow #build.manualIllustration,
+body.manual .manualRow .bigUnitSection {
+    flex: none;
+    float: none !important;
+    margin: 0 !important;
+}
+
+body.manual .manualCosts p.costsHeader {
+    float: none;
+    width: auto;
+    margin-top: 0;
+}
+
+body.manual .manualCosts .resourceWrapper {
+    display: flex !important;
+    flex-wrap: wrap;
+    gap: 4px 10px;
+}
+
+body.manual p.description,
+body.manual #t_desc {
+    font-size: 13px;
+    line-height: 1.4;
+}
+
+body.manual .costsHeader,
+body.manual #prereqs {
+    margin-top: 16px;
+    font-size: 13px;
+}
+
+body.manual #prereqs b {
+    font-size: 14px;
+}
+
+body.manual .resourceWrapper .inlineIcon .value,
+body.manual .inlineIcon.duration .value,
+body.manual table#troop_info td,
+body.manual table.troopData td,
+body.manual table.troopData th {
+    font-size: 12px;
+}
+
+body.manual #build.manualIllustration {
+    float: right !important;
+    width: auto !important;
+    min-height: 0;
+    margin: 0 0 8px 12px !important;
+    padding: 0;
+    background: none;
+}
+
+body.manual #build.manualIllustration .upgradeHeader,
+body.manual #build.manualIllustration .buildingIllustration {
+    position: static;
+    width: 170px !important;
+    height: 113px !important;
+    background-size: contain;
+    margin: 0;
+    padding: 0;
+    background-color: transparent;
+}
+
+body.manual .boxes {
+    box-sizing: border-box;
+    width: 100%;
+}
+
+body.manual .boxes table#troop_info,
+body.manual .boxes table.troopData {
+    width: 100%;
+}
+
+body.manual .answers {
+    margin-top: 14px;
+    font-size: 12px;
+}
+
+@media (max-width: 360px) {
+    body.manual #troops ul,
+    body.manual #buildings ul {
+        gap: 8px 10px;
+        padding-left: 4px;
+    }
+
+    body.manual .manualRow {
+        flex-direction: column-reverse;
+        align-items: center;
+    }
+
+    body.manual img.building.big,
+    body.manual #build.manualIllustration,
+    body.manual .bigUnitSection {
+        float: none;
+        display: block;
+        margin: 6px auto;
+    }
+}
+
+/* the large map (karte.php?fullscreen=1, map/normal.php): the page window of the look (title, frame, close button),
+   stretched over the screen, the rest of the page invisible; the map is laid over the window's content */
+body.ovMapFullScreen #wrapper,
+body.ovMapFullScreen div#background div#bodyWrapper,
+body.ovMapFullScreen div#background div#headerBar {
+    display: block !important;
+    visibility: hidden;
+}
+
+body.ovMapFullScreen #contentOuterContainer.ovMapWindow {
+    visibility: visible;
+    position: fixed !important;
+    top: 8px !important;
+    right: 8px !important;
+    bottom: 8px !important;
+    left: 8px !important;
+    z-index: 999;
+    display: flex !important;
+    flex-direction: column;
+    width: auto !important;
+    height: calc(100vh - 16px) !important;
+    max-width: none !important;
+    margin: 0 !important;
+    float: none !important;
+}
+
+/* flex items would take the z-index of the look's title bar and cover the window frame drawn by :before and :after */
+body.ovMapFullScreen .ovMapWindow .contentTitle {
+    z-index: auto !important;
+}
+
+body.ovMapFullScreen .ovMapWindow .contentContainer {
+    z-index: auto !important;
+    display: flex;
+    flex: 1;
+    align-self: stretch;
+    margin-left: 0 !important;
+    margin-right: 0 !important;
+    flex-direction: column;
+    min-height: 0;
+    width: auto !important;
+    height: auto !important;
+}
+
+body.ovMapFullScreen .ovMapWindow > :not(.contentTitle):not(.contentContainer):not(.contentFooter) {
+    display: none !important;
+}
+
+body.ovMapFullScreen .ovMapWindow #content {
+    flex: 1;
+    align-self: stretch;
+    min-height: 0;
+    margin-left: 0 !important;
+    margin-right: 0 !important;
+    width: auto !important;
+    height: auto !important;
+}
+
+/* Legends: the white content lies inside the window frame */
+body.legendsV2.ovMapFullScreen .ovMapWindow #content {
+    width: calc(100% - 34px) !important;
+    margin: 0 auto !important;
+}
+
+body.ovMapFullScreen .ovMapWindow #content > :not(.titleInHeader) {
+    display: none;
+}

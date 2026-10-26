@@ -522,38 +522,88 @@
             'k.sattack': '<?=T("map", "attack");?>'
         });
 </script>
+<?php if ($vars['fullscreen'] && is_t40_layout()): $packUrl = get_gpack_cdn_mainPage_url(); ?>
+    <style type="text/css">
+        /* Travian 4.0: the large map's window (see openvillage.css) with the 4.0 frame pictures, whose rounded corners must
+           not stretch, and the close button of the 4.0 pages */
+        body.ovMapFullScreen .ovMapWindow .contentTitle,
+        body.ovMapFullScreen .ovMapWindow .contentFooter {
+            box-sizing: border-box;
+            background: none;
+            border-style: solid;
+            border-width: 0 24px;
+        }
+        body.ovMapFullScreen .ovMapWindow .contentTitle {
+            position: relative;
+            border-image: url(<?=$packUrl;?>img40/layout/contentTitle.png) 0 24 fill stretch;
+        }
+        body.ovMapFullScreen .ovMapWindow .contentFooter {
+            flex: none;
+            border-image: url(<?=$packUrl;?>img40/layout/contentFooter.png) 0 24 fill stretch;
+        }
+        body.ovMapFullScreen .ovMapWindow .contentContainer {
+            background-size: 100% 10px;
+        }
+        body.ovMapFullScreen .ovMapWindow #closeContentButton {
+            position: absolute;
+            top: 6px;
+            right: -10px;
+            width: 28px;
+            height: 28px;
+            background: url(<?=$packUrl;?>img/layout/contentTitleButtons.png) 0 0 no-repeat;
+        }
+        body.ovMapFullScreen .ovMapWindow #closeContentButton:hover {
+            background-position: 0 -38px;
+        }
+        body.ovMapFullScreen .ovMapWindow #answersButton {
+            display: none;
+        }
+    </style>
+<?php endif; ?>
 <script type="text/javascript">
     jQuery(function () {
         <?php if($vars['fullscreen']):?>
-        jQuery('body').addClass('fullScreen');
+        jQuery('body').addClass('fullScreen ovMapFullScreen');
+        // the large map in the look's own page window: its title bar, frame and close button (back to the normal map)
+        // (the page stays in place, invisible, so that the look's styles of the window still apply)
+        var mapWindow = jQuery('#contentOuterContainer').addClass('ovMapWindow');
+        var close = mapWindow.find('#closeContentButton').attr('href', 'karte.php').on('click', function () {
+            // the normal map at the place the player has moved to
+            var normal = jQuery('#toolbar .viewNormal');
+            if (normal.length) {
+                normal.trigger('click');
+                return false;
+            }
+        });
+        jQuery(document).on('keydown', function (event) {
+            if (event.key === 'Escape' && close.length && !jQuery('.dialog:visible').length) {
+                close[0].click();
+            }
+        });
+        // the map fills the window's content below its title; the rulers (25 and 16 px) lie inside that box
+        var content = mapWindow.find('#content'), title = content.children('.titleInHeader');
+        var box = {
+            left: content.offset().left + parseInt(content.css('padding-left'), 10),
+            top: title.length && title.is(':visible') ? title.offset().top + title.outerHeight(true)
+                : content.offset().top + parseInt(content.css('padding-top'), 10),
+            right: content.offset().left + content.outerWidth() - parseInt(content.css('padding-right'), 10),
+            bottom: content.offset().top + content.outerHeight() - parseInt(content.css('padding-bottom'), 10)
+        };
         // Mind the order, first, the windows size should be adjusted by applying class, and then container view size determined
         var containerViewSize = {
-            width: jQuery(window).width() - 25, // 25 is ruler width
-            height: jQuery(window).height() - 16 // 16 is ruler width
+            width: box.right - box.left - 25, // 25 is ruler width
+            height: box.bottom - box.top - 16 // 16 is ruler width
         };
-        <?php if(getDirection() == "LTR"):?>
         jQuery('#mapContainer')
             .remove()
             .css({
                 position: 'absolute',
                 width: containerViewSize.width,
                 height: containerViewSize.height,
-                top: 0,
-                right: 0
+                top: box.top,
+                left: box.left<?=getDirection() == "LTR" ? ' + 25' : '';?>
             })
             .appendTo('body');
-        <?php else:?>
-        jQuery('#mapContainer')
-            .remove()
-            .css({
-                position: 'absolute',
-                width: containerViewSize.width,
-                height: containerViewSize.height,
-                top: 0,
-                left: 0
-            })
-            .appendTo('body');
-        <?php endif;?>
         <?php else:?>
         var containerViewSize = {
             width: 543,
