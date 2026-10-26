@@ -14,6 +14,21 @@
 </map>
 <img id="resfeld" usemap="#rx" src="img/x.gif" alt=""/>
 <div id="village_map" class="f<?=$vars['fieldType']; ?>">
+    <?php if (is_t40_layout()): ?>
+        <?php
+        // outlines of the fields on the 4.0 picture of this layout (scripts/gpack/trace-t40-field-shapes.py), lit by
+        // the hover script at the end of the page; the right-to-left picture is the mirror image
+        $fieldShapes = json_decode((string)file_get_contents(__DIR__ . '/../../View/t40FieldShapes.json'), true);
+        $fieldShapes = $fieldShapes[(string)$vars['fieldType']] ?? [];
+        ?>
+        <svg class="fieldShapes" width="500" height="370" viewBox="0 0 500 370">
+            <g<?=getDirection() == 'RTL' ? ' transform="matrix(-1 0 0 1 500 0)"' : ''; ?>>
+                <?php foreach ($fieldShapes as $field => $shape): ?>
+                    <path data-field="<?=(int)$field; ?>" d="<?=htmlspecialchars($shape); ?>"/>
+                <?php endforeach; ?>
+            </g>
+        </svg>
+    <?php endif; ?>
     <?php if ($vars['showColored']): ?>
         <?php $index = 0; ?>
         <?php foreach ($vars['maps'] as $index => $map):++$index; ?>
@@ -181,12 +196,17 @@
 <?=$vars['onLoadBuildings']; ?>
 <?php if (is_t40_layout()): ?>
     <script type="text/javascript">
-        // 4.0 has no shapes for the resource fields: light up the circle of the image map under the pointer, in the
-        // colours of the Legends look (white fill with a lighter ring), below the level circles
+        // light up the outline of the field under the pointer in the colours of the Legends look (white fill with a
+        // lighter border), below the level circles; a field without an outline gets the circle of the image map
         jQuery(function () {
             var map = jQuery('#village_map'), field = jQuery('#resfeld');
             var glow = jQuery('<div class="fieldGlow"></div>').prependTo(map);
             jQuery('#rx area[data-index]').on('mouseenter', function () {
+                var shape = map.find('svg.fieldShapes path[data-field="' + this.getAttribute('data-index') + '"]');
+                if (shape.length) {
+                    shape.addClass('shown');
+                    return;
+                }
                 var circle = (this.getAttribute('coords') || '').split(',');
                 if (circle.length < 3) {
                     return;
@@ -201,6 +221,7 @@
                     height: 2 * radius
                 }).addClass('shown');
             }).on('mouseleave', function () {
+                map.find('svg.fieldShapes path').removeClass('shown');
                 glow.removeClass('shown');
             });
         });
