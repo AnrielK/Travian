@@ -24,7 +24,7 @@ use Core\Helper\PreferencesHelper;
         <!-- T4.4 packs: icons and village centre slots for the T4.6 markup (scripts/gpack/make-classic-compat.py) -->
         <link href="<?=get_gpack_link_and_hash("openvillage-compat.css", false); ?>?rev2" rel="stylesheet" type="text/css"/>
     <?php endif; ?>
-    <link href="openvillage.css?rev27" rel="stylesheet" type="text/css"/>
+    <link href="openvillage.css?rev32" rel="stylesheet" type="text/css"/>
     <?php if (is_t40_layout()): ?>
         <!-- Travian 4.0: page frame of layout/LayoutT40.php (scripts/gpack/import-t40-gpack.py) -->
         <link href="<?=get_gpack_link_and_hash("openvillage-t40.css", false); ?>?rev1" rel="stylesheet" type="text/css"/>
@@ -97,15 +97,15 @@ use Core\Helper\PreferencesHelper;
             return '<?=isset($vars['ajaxToken']) ? $vars['ajaxToken'] : null;?>';
         };
         Travian.Game.Preferences.initialize(<?=json_encode($preferences);?>);
-        // the manual (manual.php) in its original 475 x 525 window, titled "Manuál" as in Travian Legends; it scrolls
-        // (the original did not, and cut the building list off), and shrinks on a phone
+        // the manual (manual.php) in its original 475 x 525 window, titled "Manuál" as in Travian Legends; its pages
+        // fit the window (openvillage.css), so it does not scroll and its content cannot be moved; narrower on a phone
         Travian.Game.iPopup = function (gid, typ) {
             var dialog = new Travian.Dialog.Dialog({
                 title: <?=json_encode(T("Manual", "title"));?>, buttonOk: false, enableBackground: false, draggable: true,
                 cssClass: 'ovManualDialog', fx: {open: {opacity: 1}, close: {opacity: 0}, duration: 0}
             });
             dialog.setContent('<iframe class="popup" frameborder="0" id="Frame" src="manual.php?typ=' + typ + '&amp;gid=' + gid
-                + '" width="' + Math.min(475, jQuery(window).width() - 30) + '" height="525" scrolling="auto" allowTransparency="true"></iframe>');
+                + '" width="' + Math.min(475, jQuery(window).width() - 30) + '" height="525" scrolling="no" allowTransparency="true"></iframe>');
             dialog.show();
             return false;
         };

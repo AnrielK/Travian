@@ -200,9 +200,30 @@ div.village1 #village_map .fieldGlow.shown {
     font-weight: bold;
 }
 
+/* the manual's content stays put in its window: nothing wider than the window (a touch could move it sideways) */
+html:has(body.manual) {
+    overflow-x: hidden;
+    overscroll-behavior: none;
+}
+
+/* T4.0 puts this answers link beside a wider window, out of the manual's (it was never visible in 475 px) */
+body.manual #anwersQuestionMark {
+    display: none;
+}
+
+body.manual #troops,
+body.manual #buildings,
+body.manual .contentNavi.tabNavi {
+    box-sizing: border-box;
+    width: auto !important;
+    max-width: 100%;
+}
+
 html body.manual {
     margin: 0;
-    padding: 6px 6px 10px;
+    padding: 4px 6px 4px;
+    box-sizing: border-box;
+    min-height: 0 !important;
     background: #fff !important;
     color: #222;
     font-size: 12px;
@@ -215,12 +236,12 @@ body.manual h3 {
     display: flex;
     align-items: center;
     gap: 6px;
-    margin: 6px 0 10px;
+    margin: 4px 0 6px;
     font-size: 16px;
 }
 
 body.manual #buildings {
-    margin-top: 28px;
+    margin-top: 8px;
 }
 
 body.manual .contentNavi.tabNavi {
@@ -228,7 +249,7 @@ body.manual .contentNavi.tabNavi {
     flex-wrap: wrap;
     gap: 4px 4px;
     height: auto;
-    margin: 0 0 14px;
+    margin: 0 0 8px;
     padding: 0 0 4px;
     border-bottom: 1px solid #ccc;
     background: none;
@@ -279,7 +300,7 @@ body.manual #troops ul,
 body.manual #buildings ul {
     display: grid;
     grid-template-columns: 1fr 1fr;
-    gap: 6px 12px;
+    gap: 2px 12px;
     margin: 0;
     padding: 0 0 0 14px;
     list-style: none;
@@ -374,8 +395,12 @@ body.manual #t_desc {
 
 body.manual .costsHeader,
 body.manual #prereqs {
-    margin-top: 16px;
+    margin-top: 8px !important;
     font-size: 13px;
+}
+
+body.manual #t_desc {
+    margin-top: 6px !important;
 }
 
 body.manual #prereqs b {
@@ -410,9 +435,18 @@ body.manual #build.manualIllustration .buildingIllustration {
     background-color: transparent;
 }
 
+/* the unit's stats a little smaller than the boxes of the pack */
 body.manual .boxes {
     box-sizing: border-box;
-    width: 100%;
+    width: 88%;
+}
+
+body.manual .boxes table#troop_info td,
+body.manual .boxes table.troopData td,
+body.manual .boxes table.troopData th {
+    padding-top: 1px !important;
+    padding-bottom: 1px !important;
+    font-size: 11px !important;
 }
 
 body.manual .boxes table#troop_info,
@@ -421,7 +455,7 @@ body.manual .boxes table.troopData {
 }
 
 body.manual .answers {
-    margin-top: 14px;
+    margin-top: 6px;
     font-size: 12px;
 }
 
