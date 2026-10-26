@@ -17,12 +17,12 @@
     <?php if (is_t40_layout()): ?>
         <?php
         // the fields of the 4.0 picture lie where the Legends picture has them: its outlines (LegendsUi::fieldShape),
-        // moved onto the 4.0 picture of #village_map by one matrix fitted on all 12 layouts; the right-to-left
-        // picture is the mirror image
+        // moved onto the 4.0 picture of #village_map by the matrix that lays them best over the forests, pits, mountains
+        // and crop of all 12 4.0 layouts; the right-to-left picture is the mirror image
         ?>
         <svg class="fieldShapes" width="500" height="370" viewBox="0 0 500 370">
             <g<?=getDirection() == 'RTL' ? ' transform="matrix(-1 0 0 1 500 0)"' : ''; ?>>
-                <g transform="matrix(0.9719 -0.031 0.0181 0.9548 13.17 75.16)">
+                <g transform="matrix(0.9676 -0.0299 0.0265 0.9646 18.23 70.87)">
                     <?php for ($field = 1; $field <= 18; ++$field): ?>
                         <?php if ($shape = \resources\View\LegendsUi::fieldShape((int)$vars['fieldType'], $field)): ?>
                             <path data-field="<?=$field; ?>" d="<?=$shape; ?>"/>
