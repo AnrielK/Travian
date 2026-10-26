@@ -1,0 +1,29 @@
+2026-10-26 14:59:14 +0000 status: ["players": 0, "php": 8.3.35, "mariadb": 11.4.13-MariaDB, "time": 1793026754, "installed": 0, "ok": 1]
+2026-10-26 14:59:16 +0000 setup: ["installed": 1, "ok": 1, "log": <__NSArrayI 0x600000c5f120>(
+config row created,
+Applied migration 001_ajax_token_length.sql
+Applied migration 002_adventure_uid_unsigned.sql
+Applied migration 003_scheduled_task_failures.sql
+Applied migration 004_brewery_festivals.sql
+Applied migration 005_world_gpack.sql
+Applied global migration 001_notification_delivery_key.sql
+Applied global migration 002_mail_delivery_key.sql
+Applied global migration 003_world_registry.sql,
+world installed
+)
+, "ms": 2838]
+……
+2026-10-26 14:59:14 +0000 status: ["players": 0, "php": 8.3.35, "mariadb": 11.4.13-MariaDB, "time": 1793026754, "installed": 0, "ok": 1]
+2026-10-26 14:59:16 +0000 setup: ["installed": 1, "ok": 1, "log": <__NSArrayI 0x600000c5f120>(
+config row created,
+Applied migration 001_ajax_token_length.sql
+Applied migration 002_adventure_uid_unsigned.sql
+Applied migration 003_scheduled_task_failures.sql
+Applied migration 004_brewery_festivals.sql
+Applied migration 005_world_gpack.sql
+Applied global migration 001_notification_delivery_key.sql
+Applied global migration 002_mail_delivery_key.sql
+Applied global migration 003_world_registry.sql,
+world installed
+)
+, "ms": 2838]

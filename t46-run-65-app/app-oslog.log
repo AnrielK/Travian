@@ -1,0 +1,300 @@
+2026-10-26 15:02:50.946 Df OpenVillage[4737:5447] [com.apple.CFNetwork:Default] Task <9597A1B0-0BD9-4A80-AA0E-A2BC4C940FF8>.<236> setting up Connection 236
+2026-10-26 15:02:50.946 Df OpenVillage[4737:5447] [com.apple.network:connection] nw_socket_handle_socket_event [C236:2] Socket received CONNECTED event
+2026-10-26 15:02:50.946 Df OpenVillage[4737:5447] [com.apple.network:connection] nw_flow_connected [C236 127.0.0.1:8080 in_progress socket-flow (satisfied (Path is satisfied), interface: lo0)] Transport protocol connected (socket)
+2026-10-26 15:02:50.946 Df OpenVillage[4737:5447] [com.apple.network:connection] [C236 127.0.0.1:8080 in_progress socket-flow (satisfied (Path is satisfied), interface: lo0)] event: flow:finish_transport @0.000s
+2026-10-26 15:02:50.947 Df OpenVillage[4737:5447] [com.apple.network:connection] nw_flow_connected [C236 127.0.0.1:8080 in_progress socket-flow (satisfied (Path is satisfied), interface: lo0)] Output protocol connected (CFNetworkConnection-2485504240)
+2026-10-26 15:02:50.947 Df OpenVillage[4737:5447] [com.apple.network:connection] [C236 127.0.0.1:8080 ready socket-flow (satisfied (Path is satisfied), interface: lo0)] event: flow:finish_connect @0.000s
+2026-10-26 15:02:50.947 Df OpenVillage[4737:5447] [com.apple.network:connection] nw_connection_report_state_with_handler_on_nw_queue [C236] reporting state ready
+2026-10-26 15:02:50.947 Df OpenVillage[4737:5447] [com.apple.network:connection] [C236 127.0.0.1:8080 ready socket-flow (satisfied (Path is satisfied), interface: lo0)] event: flow:changed_viability @0.000s
+2026-10-26 15:02:50.947 Df OpenVillage[4737:5447] [com.apple.network:connection] nw_connection_send_viability_changed_on_nw_queue [C236] viability_changed_handler(true)
+2026-10-26 15:02:50.947 Df OpenVillage[4737:5447] [com.apple.CFNetwork:Default] Connection 236: connected successfully
+2026-10-26 15:02:50.947 Df OpenVillage[4737:5447] [com.apple.CFNetwork:Default] Connection 236: ready C(N) E(N)
+2026-10-26 15:02:50.947 Df OpenVillage[4737:5447] [com.apple.CFNetwork:Default] Task <9597A1B0-0BD9-4A80-AA0E-A2BC4C940FF8>.<236> now using Connection 236
+2026-10-26 15:02:50.947 Df OpenVillage[4737:5447] [com.apple.CFNetwork:Default] Connection 236: received viability advisory(Y)
+2026-10-26 15:02:50.947 Df OpenVillage[4737:5447] [com.apple.CFNetwork:Default] Task <9597A1B0-0BD9-4A80-AA0E-A2BC4C940FF8>.<236> sent request, body N 0
+2026-10-26 15:02:50.949 Df OpenVillage[4737:5444] [com.apple.CFNetwork:Default] Task <9597A1B0-0BD9-4A80-AA0E-A2BC4C940FF8>.<236> received response, status 200 content U
+2026-10-26 15:02:50.949 Df OpenVillage[4737:5444] [com.apple.CFNetwork:Default] Connection 236: read-side closed
+2026-10-26 15:02:50.949 Df OpenVillage[4737:5444] [com.apple.network:connection] nw_socket_handle_socket_event [C236:2] Socket received READ_CLOSE event
+2026-10-26 15:02:50.949 Df OpenVillage[4737:5444] [com.apple.CFNetwork:Default] Connection 236: final read 0:0, complete[Y], final[N]
+2026-10-26 15:02:50.949 Df OpenVillage[4737:5444] [com.apple.CFNetwork:Default] Connection 236: cleaning up
+2026-10-26 15:02:50.949 Df OpenVillage[4737:5444] [com.apple.network:connection] [C236 CFFF14C5-E42C-4872-9D59-EBC8CA4D5FE5 127.0.0.1:8080 tcp, url: http://127.0.0.1:8080/__openvillage/worlds, definite, attribution: developer] cancel
+2026-10-26 15:02:50.949 Df OpenVillage[4737:5444] [com.apple.network:connection] [C236 CFFF14C5-E42C-4872-9D59-EBC8CA4D5FE5 127.0.0.1:8080 tcp, url: http://127.0.0.1:8080/__openvillage/worlds, definite, attribution: developer] cancelled
+	[C236 4C1F3AE5-14CF-48B8-B5EE-A20C738178D4 127.0.0.1:51483<->127.0.0.1:8080]
+	Connected Path: satisfied (Path is satisfied), viable, interface: lo0
+	Privacy Stance: Not Eligible
+	Duration: 0.003s, TCP @0.000s took 0.000s
+	bytes in/out: 547/324, packets in/out: 3/1, rtt: 0.001s, retransmitted bytes: 0, out-of-order bytes: 0
+	ecn packets sent/acked/marked/lost: 0/0/0/0
+2026-10-26 15:02:50.950 E  OpenVillage[4737:5444] [com.apple.network:connection] nw_protocol_socket_set_no_wake_from_sleep [C236:2] setsockopt SO_NOWAKEFROMSLEEP failed [22: Invalid argument]
+2026-10-26 15:02:50.950 E  OpenVillage[4737:5444] [com.apple.network:] nw_protocol_socket_set_no_wake_from_sleep setsockopt SO_NOWAKEFROMSLEEP failed [22: Invalid argument]
+2026-10-26 15:02:50.950 Df OpenVillage[4737:5444] [com.apple.network:connection] nw_flow_disconnected [C236 127.0.0.1:8080 cancelled socket-flow ((null))] Output protocol disconnected
+2026-10-26 15:02:50.950 Df OpenVillage[4737:5444] [com.apple.network:connection] nw_connection_report_state_with_handler_on_nw_queue [C236] reporting state cancelled
+2026-10-26 15:02:50.950 Df OpenVillage[4737:5444] [com.apple.CFNetwork:Default] Task <9597A1B0-0BD9-4A80-AA0E-A2BC4C940FF8>.<236> response ended
+2026-10-26 15:02:50.950 Df OpenVillage[4737:5444] [com.apple.CFNetwork:Default] Task <9597A1B0-0BD9-4A80-AA0E-A2BC4C940FF8>.<236> done using Connection 236
+2026-10-26 15:02:50.950 Df OpenVillage[4737:5444] [com.apple.CFNetwork:Default] Connection 236: done
+2026-10-26 15:02:50.950 Df OpenVillage[4737:5444] [com.apple.CFNetwork:Summary] Task <9597A1B0-0BD9-4A80-AA0E-A2BC4C940FF8>.<236> summary for task success {transaction_duration_ms=4, response_status=200, connection=236, protocol="http/1.1", domain_lookup_duration_ms=0, connect_duration_ms=0, secure_connection_duration_ms=0, private_relay=false, request_start_ms=1, request_duration_ms=0, response_start_ms=4, response_duration_ms=0, request_bytes=324, request_throughput_kbps=1930, response_bytes=547, response_throughput_kbps=1021, cache_hit=false}
+2026-10-26 15:02:50.950 Df OpenVillage[4737:5444] [com.apple.CFNetwork:Default] Task <9597A1B0-0BD9-4A80-AA0E-A2BC4C940FF8>.<236> finished successfully
+2026-10-26 15:02:50.950 Df OpenVillage[4737:5441] [com.apple.CFNetwork:Default] Task <18A2D23D-EE09-4772-B50F-573984EA966B>.<237> resuming, timeouts(300.0, 604800.0) qos(0x19) voucher((null)) activity(00000000-0000-0000-0000-000000000000)
+2026-10-26 15:02:50.950 A  OpenVillage[4737:5444] (Security) SecTrustReportNetworkingAnalytics
+2026-10-26 15:02:50.951 Df OpenVillage[4737:5441] [com.apple.CFNetwork:Default] Connection 237: starting, TC(0x0)
+2026-10-26 15:02:50.951 Df OpenVillage[4737:5441] [com.apple.network:connection] [C237 BE306049-50FD-480F-9308-3CEFBDA49EA9 127.0.0.1:8080 tcp, url: http://127.0.0.1:8080/__openvillage/tick, definite, attribution: developer, context: com.apple.CFNetwork.NSURLSession.{A9C61C80-4ED5-4D41-AAF9-83B43D134F42}{(null)}{Y}{2}{0x0} (private), proc: 463387AC-F3E0-3204-9EF3-28E095D18FC0] start
+2026-10-26 15:02:50.951 Df OpenVillage[4737:5441] [com.apple.network:connection] [C237 127.0.0.1:8080 initial parent-flow ((null))] event: path:start @0.000s
+2026-10-26 15:02:50.951 Df OpenVillage[4737:5444] [com.apple.securityd:SecError] SecTrustReportNetworkingAnalytics failed with error: -4
+2026-10-26 15:02:50.951 Df OpenVillage[4737:5441] [com.apple.network:connection] [C237 127.0.0.1:8080 waiting parent-flow (satisfied (Path is satisfied), interface: lo0)] event: path:satisfied @0.000s, uuid: 4C1F3AE5-14CF-48B8-B5EE-A20C738178D4
+2026-10-26 15:02:50.951 Df OpenVillage[4737:5441] [com.apple.network:connection] [C237 127.0.0.1:8080 in_progress socket-flow (satisfied (Path is satisfied), interface: lo0)] event: flow:start_connect @0.000s
+2026-10-26 15:02:50.951 Df OpenVillage[4737:5441] [com.apple.network:connection] nw_connection_report_state_with_handler_on_nw_queue [C237] reporting state preparing
+2026-10-26 15:02:50.951 Df OpenVillage[4737:5441] [com.apple.CFNetwork:Default] Task <18A2D23D-EE09-4772-B50F-573984EA966B>.<237> setting up Connection 237
+2026-10-26 15:02:50.951 Df OpenVillage[4737:5441] [com.apple.network:connection] nw_socket_handle_socket_event [C237:2] Socket received CONNECTED event
+2026-10-26 15:02:50.951 Df OpenVillage[4737:5441] [com.apple.network:connection] nw_flow_connected [C237 127.0.0.1:8080 in_progress socket-flow (satisfied (Path is satisfied), interface: lo0)] Transport protocol connected (socket)
+2026-10-26 15:02:50.951 Df OpenVillage[4737:5441] [com.apple.network:connection] [C237 127.0.0.1:8080 in_progress socket-flow (satisfied (Path is satisfied), interface: lo0)] event: flow:finish_transport @0.000s
+2026-10-26 15:02:50.951 Df OpenVillage[4737:5441] [com.apple.network:connection] nw_flow_connected [C237 127.0.0.1:8080 in_progress socket-flow (satisfied (Path is satisfied), interface: lo0)] Output protocol connected (CFNetworkConnection-2485504240)
+2026-10-26 15:02:50.951 Df OpenVillage[4737:5441] [com.apple.network:connection] [C237 127.0.0.1:8080 ready socket-flow (satisfied (Path is satisfied), interface: lo0)] event: flow:finish_connect @0.000s
+2026-10-26 15:02:50.951 Df OpenVillage[4737:5441] [com.apple.network:connection] nw_connection_report_state_with_handler_on_nw_queue [C237] reporting state ready
+2026-10-26 15:02:50.952 Df OpenVillage[4737:5441] [com.apple.network:connection] [C237 127.0.0.1:8080 ready socket-flow (satisfied (Path is satisfied), interface: lo0)] event: flow:changed_viability @0.000s
+2026-10-26 15:02:50.952 Df OpenVillage[4737:5441] [com.apple.network:connection] nw_connection_send_viability_changed_on_nw_queue [C237] viability_changed_handler(true)
+2026-10-26 15:02:50.952 Df OpenVillage[4737:5441] [com.apple.CFNetwork:Default] Connection 237: connected successfully
+2026-10-26 15:02:50.952 Df OpenVillage[4737:5441] [com.apple.CFNetwork:Default] Connection 237: ready C(N) E(N)
+2026-10-26 15:02:50.952 Df OpenVillage[4737:5441] [com.apple.CFNetwork:Default] Task <18A2D23D-EE09-4772-B50F-573984EA966B>.<237> now using Connection 237
+2026-10-26 15:02:50.952 Df OpenVillage[4737:5441] [com.apple.CFNetwork:Default] Connection 237: received viability advisory(Y)
+2026-10-26 15:02:50.952 Df OpenVillage[4737:5441] [com.apple.CFNetwork:Default] Task <18A2D23D-EE09-4772-B50F-573984EA966B>.<237> sent request, body N 0
+2026-10-26 15:02:50.976 Df OpenVillage[4737:5444] [com.apple.network:connection] nw_socket_handle_socket_event [C237:2] Socket received READ_CLOSE event
+2026-10-26 15:02:50.976 Df OpenVillage[4737:5444] [com.apple.CFNetwork:Default] Task <18A2D23D-EE09-4772-B50F-573984EA966B>.<237> received response, status 200 content U
+2026-10-26 15:02:50.976 Df OpenVillage[4737:5444] [com.apple.CFNetwork:Default] Connection 237: read-side closed
+2026-10-26 15:02:50.976 Df OpenVillage[4737:5444] [com.apple.CFNetwork:Default] Connection 237: final read 0:0, complete[Y], final[N]
+2026-10-26 15:02:50.976 Df OpenVillage[4737:5444] [com.apple.CFNetwork:Default] Connection 237: cleaning up
+2026-10-26 15:02:50.976 Df OpenVillage[4737:5444] [com.apple.network:connection] [C237 BE306049-50FD-480F-9308-3CEFBDA49EA9 127.0.0.1:8080 tcp, url: http://127.0.0.1:8080/__openvillage/tick, definite, attribution: developer] cancel
+2026-10-26 15:02:50.976 Df OpenVillage[4737:5444] [com.apple.network:connection] [C237 BE306049-50FD-480F-9308-3CEFBDA49EA9 127.0.0.1:8080 tcp, url: http://127.0.0.1:8080/__openvillage/tick, definite, attribution: developer] cancelled
+	[C237 4C1F3AE5-14CF-48B8-B5EE-A20C738178D4 127.0.0.1:51484<->127.0.0.1:8080]
+	Connected Path: satisfied (Path is satisfied), viable, interface: lo0
+	Privacy Stance: Not Eligible
+	Duration: 0.025s, TCP @0.000s took 0.000s
+	bytes in/out: 885/330, packets in/out: 3/1, rtt: 0.001s, retransmitted bytes: 0, out-of-order bytes: 0
+	ecn packets sent/acked/marked/lost: 0/0/0/0
+2026-10-26 15:02:50.977 E  OpenVillage[4737:5444] [com.apple.network:connection] nw_protocol_socket_set_no_wake_from_sleep [C237:2] setsockopt SO_NOWAKEFROMSLEEP failed [22: Invalid argument]
+2026-10-26 15:02:50.977 E  OpenVillage[4737:5444] [com.apple.network:] nw_protocol_socket_set_no_wake_from_sleep setsockopt SO_NOWAKEFROMSLEEP failed [22: Invalid argument]
+2026-10-26 15:02:50.977 Df OpenVillage[4737:5444] [com.apple.network:connection] nw_flow_disconnected [C237 127.0.0.1:8080 cancelled socket-flow ((null))] Output protocol disconnected
+2026-10-26 15:02:50.977 Df OpenVillage[4737:5444] [com.apple.network:connection] nw_connection_report_state_with_handler_on_nw_queue [C237] reporting state cancelled
+2026-10-26 15:02:50.977 Df OpenVillage[4737:5444] [com.apple.CFNetwork:Default] Task <18A2D23D-EE09-4772-B50F-573984EA966B>.<237> response ended
+2026-10-26 15:02:50.977 Df OpenVillage[4737:5444] [com.apple.CFNetwork:Default] Task <18A2D23D-EE09-4772-B50F-573984EA966B>.<237> done using Connection 237
+2026-10-26 15:02:50.978 Df OpenVillage[4737:5441] [com.apple.CFNetwork:Summary] Task <18A2D23D-EE09-4772-B50F-573984EA966B>.<237> summary for task success {transaction_duration_ms=28, response_status=200, connection=237, protocol="http/1.1", domain_lookup_duration_ms=0, connect_duration_ms=0, secure_connection_duration_ms=0, private_relay=false, request_start_ms=1, request_duration_ms=0, response_start_ms=26, response_duration_ms=1, request_bytes=330, request_throughput_kbps=11124, response_bytes=885, response_throughput_kbps=743, cache_hit=false}
+2026-10-26 15:02:50.978 Df OpenVillage[4737:5441] [com.apple.CFNetwork:Default] Task <18A2D23D-EE09-4772-B50F-573984EA966B>.<237> finished successfully
+2026-10-26 15:02:51.945 Df OpenVillage[4737:5447] [com.apple.CFNetwork:Default] Task <0EB19D8E-C15B-425D-9CB0-E48CB289EFA4>.<238> resuming, timeouts(300.0, 604800.0) qos(0x19) voucher((null)) activity(00000000-0000-0000-0000-000000000000)
+2026-10-26 15:02:51.945 A  OpenVillage[4737:5447] (Security) SecTrustReportNetworkingAnalytics
+2026-10-26 15:02:51.945 Df OpenVillage[4737:5444] [com.apple.CFNetwork:Default] Connection 238: starting, TC(0x0)
+2026-10-26 15:02:51.946 Df OpenVillage[4737:5444] [com.apple.network:connection] [C238 824F93F5-8137-40CE-92DB-4E061BC6F5A8 127.0.0.1:8080 tcp, url: http://127.0.0.1:8080/__openvillage/tick, definite, attribution: developer, context: com.apple.CFNetwork.NSURLSession.{A9C61C80-4ED5-4D41-AAF9-83B43D134F42}{(null)}{Y}{2}{0x0} (private), proc: 463387AC-F3E0-3204-9EF3-28E095D18FC0] start
+2026-10-26 15:02:51.946 Df OpenVillage[4737:5444] [com.apple.network:connection] [C238 127.0.0.1:8080 initial parent-flow ((null))] event: path:start @0.000s
+2026-10-26 15:02:51.946 Df OpenVillage[4737:5444] [com.apple.network:connection] [C238 127.0.0.1:8080 waiting parent-flow (satisfied (Path is satisfied), interface: lo0)] event: path:satisfied @0.000s, uuid: 4C1F3AE5-14CF-48B8-B5EE-A20C738178D4
+2026-10-26 15:02:51.946 Df OpenVillage[4737:5447] [com.apple.securityd:SecError] SecTrustReportNetworkingAnalytics failed with error: -4
+2026-10-26 15:02:51.946 Df OpenVillage[4737:5444] [com.apple.network:connection] [C238 127.0.0.1:8080 in_progress socket-flow (satisfied (Path is satisfied), interface: lo0)] event: flow:start_connect @0.000s
+2026-10-26 15:02:51.946 Df OpenVillage[4737:5444] [com.apple.network:connection] nw_connection_report_state_with_handler_on_nw_queue [C238] reporting state preparing
+2026-10-26 15:02:51.946 Df OpenVillage[4737:5444] [com.apple.CFNetwork:Default] Task <0EB19D8E-C15B-425D-9CB0-E48CB289EFA4>.<238> setting up Connection 238
+2026-10-26 15:02:51.946 Df OpenVillage[4737:5444] [com.apple.network:connection] nw_socket_handle_socket_event [C238:2] Socket received CONNECTED event
+2026-10-26 15:02:51.946 Df OpenVillage[4737:5444] [com.apple.network:connection] nw_flow_connected [C238 127.0.0.1:8080 in_progress socket-flow (satisfied (Path is satisfied), interface: lo0)] Transport protocol connected (socket)
+2026-10-26 15:02:51.946 Df OpenVillage[4737:5444] [com.apple.network:connection] [C238 127.0.0.1:8080 in_progress socket-flow (satisfied (Path is satisfied), interface: lo0)] event: flow:finish_transport @0.000s
+2026-10-26 15:02:51.946 Df OpenVillage[4737:5444] [com.apple.network:connection] nw_flow_connected [C238 127.0.0.1:8080 in_progress socket-flow (satisfied (Path is satisfied), interface: lo0)] Output protocol connected (CFNetworkConnection-2485504240)
+2026-10-26 15:02:51.947 Df OpenVillage[4737:5444] [com.apple.network:connection] [C238 127.0.0.1:8080 ready socket-flow (satisfied (Path is satisfied), interface: lo0)] event: flow:finish_connect @0.000s
+2026-10-26 15:02:51.947 Df OpenVillage[4737:5444] [com.apple.network:connection] nw_connection_report_state_with_handler_on_nw_queue [C238] reporting state ready
+2026-10-26 15:02:51.947 Df OpenVillage[4737:5444] [com.apple.network:connection] [C238 127.0.0.1:8080 ready socket-flow (satisfied (Path is satisfied), interface: lo0)] event: flow:changed_viability @0.000s
+2026-10-26 15:02:51.947 Df OpenVillage[4737:5444] [com.apple.network:connection] nw_connection_send_viability_changed_on_nw_queue [C238] viability_changed_handler(true)
+2026-10-26 15:02:51.947 Df OpenVillage[4737:5444] [com.apple.CFNetwork:Default] Connection 238: connected successfully
+2026-10-26 15:02:51.947 Df OpenVillage[4737:5444] [com.apple.CFNetwork:Default] Connection 238: ready C(N) E(N)
+2026-10-26 15:02:51.947 Df OpenVillage[4737:5444] [com.apple.CFNetwork:Default] Task <0EB19D8E-C15B-425D-9CB0-E48CB289EFA4>.<238> now using Connection 238
+2026-10-26 15:02:51.947 Df OpenVillage[4737:5444] [com.apple.CFNetwork:Default] Connection 238: received viability advisory(Y)
+2026-10-26 15:02:51.947 Df OpenVillage[4737:5444] [com.apple.CFNetwork:Default] Task <0EB19D8E-C15B-425D-9CB0-E48CB289EFA4>.<238> sent request, body N 0
+2026-10-26 15:02:51.964 Df OpenVillage[4737:5447] [com.apple.CFNetwork:Default] Task <0EB19D8E-C15B-425D-9CB0-E48CB289EFA4>.<238> received response, status 200 content U
+2026-10-26 15:02:51.965 Df OpenVillage[4737:5447] [com.apple.network:connection] nw_socket_handle_socket_event [C238:2] Socket received READ_CLOSE event
+2026-10-26 15:02:51.965 Df OpenVillage[4737:5447] [com.apple.CFNetwork:Default] Connection 238: read-side closed
+2026-10-26 15:02:51.965 Df OpenVillage[4737:5447] [com.apple.CFNetwork:Default] Connection 238: final read 0:0, complete[Y], final[N]
+2026-10-26 15:02:51.965 Df OpenVillage[4737:5447] [com.apple.CFNetwork:Default] Connection 238: cleaning up
+2026-10-26 15:02:51.965 Df OpenVillage[4737:5447] [com.apple.network:connection] [C238 824F93F5-8137-40CE-92DB-4E061BC6F5A8 127.0.0.1:8080 tcp, url: http://127.0.0.1:8080/__openvillage/tick, definite, attribution: developer] cancel
+2026-10-26 15:02:51.965 Df OpenVillage[4737:5447] [com.apple.network:connection] [C238 824F93F5-8137-40CE-92DB-4E061BC6F5A8 127.0.0.1:8080 tcp, url: http://127.0.0.1:8080/__openvillage/tick, definite, attribution: developer] cancelled
+	[C238 4C1F3AE5-14CF-48B8-B5EE-A20C738178D4 127.0.0.1:51491<->127.0.0.1:8080]
+	Connected Path: satisfied (Path is satisfied), viable, interface: lo0
+	Privacy Stance: Not Eligible
+	Duration: 0.019s, TCP @0.000s took 0.000s
+	bytes in/out: 666/330, packets in/out: 3/1, rtt: 0.001s, retransmitted bytes: 0, out-of-order bytes: 0
+	ecn packets sent/acked/marked/lost: 0/0/0/0
+2026-10-26 15:02:51.965 E  OpenVillage[4737:5447] [com.apple.network:connection] nw_protocol_socket_set_no_wake_from_sleep [C238:2] setsockopt SO_NOWAKEFROMSLEEP failed [22: Invalid argument]
+2026-10-26 15:02:51.966 E  OpenVillage[4737:5447] [com.apple.network:] nw_protocol_socket_set_no_wake_from_sleep setsockopt SO_NOWAKEFROMSLEEP failed [22: Invalid argument]
+2026-10-26 15:02:51.966 Df OpenVillage[4737:5447] [com.apple.network:connection] nw_flow_disconnected [C238 127.0.0.1:8080 cancelled socket-flow ((null))] Output protocol disconnected
+2026-10-26 15:02:51.966 Df OpenVillage[4737:5447] [com.apple.network:connection] nw_connection_report_state_with_handler_on_nw_queue [C238] reporting state cancelled
+2026-10-26 15:02:51.966 Df OpenVillage[4737:5447] [com.apple.CFNetwork:Default] Task <0EB19D8E-C15B-425D-9CB0-E48CB289EFA4>.<238> response ended
+2026-10-26 15:02:51.966 Df OpenVillage[4737:5447] [com.apple.CFNetwork:Default] Task <0EB19D8E-C15B-425D-9CB0-E48CB289EFA4>.<238> done using Connection 238
+2026-10-26 15:02:51.966 Df OpenVillage[4737:5447] [com.apple.CFNetwork:Default] Connection 238: done
+2026-10-26 15:02:51.966 Df OpenVillage[4737:5444] [com.apple.CFNetwork:Summary] Task <0EB19D8E-C15B-425D-9CB0-E48CB289EFA4>.<238> summary for task success {transaction_duration_ms=20, response_status=200, connection=238, protocol="http/1.1", domain_lookup_duration_ms=0, connect_duration_ms=0, secure_connection_duration_ms=0, private_relay=false, request_start_ms=1, request_duration_ms=0, response_start_ms=18, response_duration_ms=1, request_bytes=330, request_throughput_kbps=2640, response_bytes=666, response_throughput_kbps=360, cache_hit=false}
+2026-10-26 15:02:51.966 Df OpenVillage[4737:5444] [com.apple.CFNetwork:Default] Task <0EB19D8E-C15B-425D-9CB0-E48CB289EFA4>.<238> finished successfully
+2026-10-26 15:02:52.946 Df OpenVillage[4737:5441] [com.apple.CFNetwork:Default] Task <C0AE0F2F-EC76-40BC-98C6-6D275F81A611>.<239> resuming, timeouts(300.0, 604800.0) qos(0x19) voucher((null)) activity(00000000-0000-0000-0000-000000000000)
+2026-10-26 15:02:52.947 A  OpenVillage[4737:5447] (Security) SecTrustReportNetworkingAnalytics
+2026-10-26 15:02:52.948 Df OpenVillage[4737:5441] [com.apple.CFNetwork:Default] Connection 239: starting, TC(0x0)
+2026-10-26 15:02:52.948 Df OpenVillage[4737:5441] [com.apple.network:connection] [C239 E3F6D55E-A6D8-48C8-838A-9F015150ACEA 127.0.0.1:8080 tcp, url: http://127.0.0.1:8080/__openvillage/tick, definite, attribution: developer, context: com.apple.CFNetwork.NSURLSession.{A9C61C80-4ED5-4D41-AAF9-83B43D134F42}{(null)}{Y}{2}{0x0} (private), proc: 463387AC-F3E0-3204-9EF3-28E095D18FC0] start
+2026-10-26 15:02:52.948 Df OpenVillage[4737:5441] [com.apple.network:connection] [C239 127.0.0.1:8080 initial parent-flow ((null))] event: path:start @0.000s
+2026-10-26 15:02:52.948 Df OpenVillage[4737:5441] [com.apple.network:connection] [C239 127.0.0.1:8080 waiting parent-flow (satisfied (Path is satisfied), interface: lo0)] event: path:satisfied @0.000s, uuid: 4C1F3AE5-14CF-48B8-B5EE-A20C738178D4
+2026-10-26 15:02:52.948 Df OpenVillage[4737:5447] [com.apple.securityd:SecError] SecTrustReportNetworkingAnalytics failed with error: -4
+2026-10-26 15:02:52.949 Df OpenVillage[4737:5441] [com.apple.network:connection] [C239 127.0.0.1:8080 in_progress socket-flow (satisfied (Path is satisfied), interface: lo0)] event: flow:start_connect @0.000s
+2026-10-26 15:02:52.949 Df OpenVillage[4737:5441] [com.apple.network:connection] nw_connection_report_state_with_handler_on_nw_queue [C239] reporting state preparing
+2026-10-26 15:02:52.949 Df OpenVillage[4737:5441] [com.apple.CFNetwork:Default] Task <C0AE0F2F-EC76-40BC-98C6-6D275F81A611>.<239> setting up Connection 239
+2026-10-26 15:02:52.949 Df OpenVillage[4737:5441] [com.apple.network:connection] nw_socket_handle_socket_event [C239:2] Socket received CONNECTED event
+2026-10-26 15:02:52.949 Df OpenVillage[4737:5441] [com.apple.network:connection] nw_flow_connected [C239 127.0.0.1:8080 in_progress socket-flow (satisfied (Path is satisfied), interface: lo0)] Transport protocol connected (socket)
+2026-10-26 15:02:52.949 Df OpenVillage[4737:5441] [com.apple.network:connection] [C239 127.0.0.1:8080 in_progress socket-flow (satisfied (Path is satisfied), interface: lo0)] event: flow:finish_transport @0.000s
+2026-10-26 15:02:52.949 Df OpenVillage[4737:5441] [com.apple.network:connection] nw_flow_connected [C239 127.0.0.1:8080 in_progress socket-flow (satisfied (Path is satisfied), interface: lo0)] Output protocol connected (CFNetworkConnection-2485504240)
+2026-10-26 15:02:52.949 Df OpenVillage[4737:5441] [com.apple.network:connection] [C239 127.0.0.1:8080 ready socket-flow (satisfied (Path is satisfied), interface: lo0)] event: flow:finish_connect @0.000s
+2026-10-26 15:02:52.949 Df OpenVillage[4737:5441] [com.apple.network:connection] nw_connection_report_state_with_handler_on_nw_queue [C239] reporting state ready
+2026-10-26 15:02:52.949 Df OpenVillage[4737:5441] [com.apple.network:connection] [C239 127.0.0.1:8080 ready socket-flow (satisfied (Path is satisfied), interface: lo0)] event: flow:changed_viability @0.001s
+2026-10-26 15:02:52.949 Df OpenVillage[4737:5441] [com.apple.network:connection] nw_connection_send_viability_changed_on_nw_queue [C239] viability_changed_handler(true)
+2026-10-26 15:02:52.949 Df OpenVillage[4737:5441] [com.apple.CFNetwork:Default] Connection 239: connected successfully
+2026-10-26 15:02:52.949 Df OpenVillage[4737:5441] [com.apple.CFNetwork:Default] Connection 239: ready C(N) E(N)
+2026-10-26 15:02:52.949 Df OpenVillage[4737:5441] [com.apple.CFNetwork:Default] Task <C0AE0F2F-EC76-40BC-98C6-6D275F81A611>.<239> now using Connection 239
+2026-10-26 15:02:52.949 Df OpenVillage[4737:5441] [com.apple.CFNetwork:Default] Connection 239: received viability advisory(Y)
+2026-10-26 15:02:52.949 Df OpenVillage[4737:5441] [com.apple.CFNetwork:Default] Task <C0AE0F2F-EC76-40BC-98C6-6D275F81A611>.<239> sent request, body N 0
+2026-10-26 15:02:52.974 Df OpenVillage[4737:5447] [com.apple.CFNetwork:Default] Task <C0AE0F2F-EC76-40BC-98C6-6D275F81A611>.<239> received response, status 200 content U
+2026-10-26 15:02:52.974 Df OpenVillage[4737:5447] [com.apple.CFNetwork:Default] Connection 239: read-side closed
+2026-10-26 15:02:52.974 Df OpenVillage[4737:5447] [com.apple.network:connection] nw_socket_handle_socket_event [C239:2] Socket received READ_CLOSE event
+2026-10-26 15:02:52.974 Df OpenVillage[4737:5447] [com.apple.CFNetwork:Default] Connection 239: final read 0:0, complete[Y], final[N]
+2026-10-26 15:02:52.974 Df OpenVillage[4737:5447] [com.apple.CFNetwork:Default] Connection 239: cleaning up
+2026-10-26 15:02:52.974 Df OpenVillage[4737:5447] [com.apple.network:connection] [C239 E3F6D55E-A6D8-48C8-838A-9F015150ACEA 127.0.0.1:8080 tcp, url: http://127.0.0.1:8080/__openvillage/tick, definite, attribution: developer] cancel
+2026-10-26 15:02:52.975 Df OpenVillage[4737:5447] [com.apple.network:connection] [C239 E3F6D55E-A6D8-48C8-838A-9F015150ACEA 127.0.0.1:8080 tcp, url: http://127.0.0.1:8080/__openvillage/tick, definite, attribution: developer] cancelled
+	[C239 4C1F3AE5-14CF-48B8-B5EE-A20C738178D4 127.0.0.1:51498<->127.0.0.1:8080]
+	Connected Path: satisfied (Path is satisfied), viable, interface: lo0
+	Privacy Stance: Not Eligible
+	Duration: 0.026s, TCP @0.000s took 0.000s
+	bytes in/out: 823/330, packets in/out: 3/1, rtt: 0.001s, retransmitted bytes: 0, out-of-order bytes: 0
+	ecn packets sent/acked/marked/lost: 0/0/0/0
+2026-10-26 15:02:52.975 E  OpenVillage[4737:5447] [com.apple.network:connection] nw_protocol_socket_set_no_wake_from_sleep [C239:2] setsockopt SO_NOWAKEFROMSLEEP failed [22: Invalid argument]
+2026-10-26 15:02:52.975 E  OpenVillage[4737:5447] [com.apple.network:] nw_protocol_socket_set_no_wake_from_sleep setsockopt SO_NOWAKEFROMSLEEP failed [22: Invalid argument]
+2026-10-26 15:02:52.975 Df OpenVillage[4737:5447] [com.apple.network:connection] nw_flow_disconnected [C239 127.0.0.1:8080 cancelled socket-flow ((null))] Output protocol disconnected
+2026-10-26 15:02:52.975 Df OpenVillage[4737:5447] [com.apple.network:connection] nw_connection_report_state_with_handler_on_nw_queue [C239] reporting state cancelled
+2026-10-26 15:02:52.975 Df OpenVillage[4737:5447] [com.apple.CFNetwork:Default] Task <C0AE0F2F-EC76-40BC-98C6-6D275F81A611>.<239> response ended
+2026-10-26 15:02:52.975 Df OpenVillage[4737:5447] [com.apple.CFNetwork:Default] Task <C0AE0F2F-EC76-40BC-98C6-6D275F81A611>.<239> done using Connection 239
+2026-10-26 15:02:52.975 Df OpenVillage[4737:5447] [com.apple.CFNetwork:Default] Connection 239: done
+2026-10-26 15:02:52.975 Df OpenVillage[4737:5441] [com.apple.CFNetwork:Summary] Task <C0AE0F2F-EC76-40BC-98C6-6D275F81A611>.<239> summary for task success {transaction_duration_ms=28, response_status=200, connection=239, protocol="http/1.1", domain_lookup_duration_ms=0, connect_duration_ms=0, secure_connection_duration_ms=0, private_relay=false, request_start_ms=2, request_duration_ms=0, response_start_ms=26, response_duration_ms=1, request_bytes=330, request_throughput_kbps=6186, response_bytes=823, response_throughput_kbps=611, cache_hit=false}
+2026-10-26 15:02:52.975 Df OpenVillage[4737:5441] [com.apple.CFNetwork:Default] Task <C0AE0F2F-EC76-40BC-98C6-6D275F81A611>.<239> finished successfully
+2026-10-26 15:02:53.946 Df OpenVillage[4737:5444] [com.apple.CFNetwork:Default] Task <2B633B00-B6D9-473C-A513-3C862EF7C23D>.<240> resuming, timeouts(300.0, 604800.0) qos(0x19) voucher((null)) activity(00000000-0000-0000-0000-000000000000)
+2026-10-26 15:02:53.947 A  OpenVillage[4737:5448] (Security) SecTrustReportNetworkingAnalytics
+2026-10-26 15:02:53.947 Df OpenVillage[4737:5444] [com.apple.CFNetwork:Default] Connection 240: starting, TC(0x0)
+2026-10-26 15:02:53.947 Df OpenVillage[4737:5448] [com.apple.securityd:SecError] SecTrustReportNetworkingAnalytics failed with error: -4
+2026-10-26 15:02:53.947 Df OpenVillage[4737:5444] [com.apple.network:connection] [C240 E2DDC8A7-E971-4CDE-845E-EDE7B1CBB4A5 127.0.0.1:8080 tcp, url: http://127.0.0.1:8080/__openvillage/tick, definite, attribution: developer, context: com.apple.CFNetwork.NSURLSession.{A9C61C80-4ED5-4D41-AAF9-83B43D134F42}{(null)}{Y}{2}{0x0} (private), proc: 463387AC-F3E0-3204-9EF3-28E095D18FC0] start
+2026-10-26 15:02:53.947 Df OpenVillage[4737:5444] [com.apple.network:connection] [C240 127.0.0.1:8080 initial parent-flow ((null))] event: path:start @0.000s
+2026-10-26 15:02:53.947 Df OpenVillage[4737:5444] [com.apple.network:connection] [C240 127.0.0.1:8080 waiting parent-flow (satisfied (Path is satisfied), interface: lo0)] event: path:satisfied @0.000s, uuid: 4C1F3AE5-14CF-48B8-B5EE-A20C738178D4
+2026-10-26 15:02:53.948 Df OpenVillage[4737:5444] [com.apple.network:connection] [C240 127.0.0.1:8080 in_progress socket-flow (satisfied (Path is satisfied), interface: lo0)] event: flow:start_connect @0.001s
+2026-10-26 15:02:53.948 Df OpenVillage[4737:5444] [com.apple.network:connection] nw_connection_report_state_with_handler_on_nw_queue [C240] reporting state preparing
+2026-10-26 15:02:53.949 Df OpenVillage[4737:5444] [com.apple.CFNetwork:Default] Task <2B633B00-B6D9-473C-A513-3C862EF7C23D>.<240> setting up Connection 240
+2026-10-26 15:02:53.949 Df OpenVillage[4737:5444] [com.apple.network:connection] nw_socket_handle_socket_event [C240:2] Socket received CONNECTED event
+2026-10-26 15:02:53.949 Df OpenVillage[4737:5444] [com.apple.network:connection] nw_flow_connected [C240 127.0.0.1:8080 in_progress socket-flow (satisfied (Path is satisfied), interface: lo0)] Transport protocol connected (socket)
+2026-10-26 15:02:53.949 Df OpenVillage[4737:5444] [com.apple.network:connection] [C240 127.0.0.1:8080 in_progress socket-flow (satisfied (Path is satisfied), interface: lo0)] event: flow:finish_transport @0.001s
+2026-10-26 15:02:53.949 Df OpenVillage[4737:5444] [com.apple.network:connection] nw_flow_connected [C240 127.0.0.1:8080 in_progress socket-flow (satisfied (Path is satisfied), interface: lo0)] Output protocol connected (CFNetworkConnection-2485504240)
+2026-10-26 15:02:53.949 Df OpenVillage[4737:5444] [com.apple.network:connection] [C240 127.0.0.1:8080 ready socket-flow (satisfied (Path is satisfied), interface: lo0)] event: flow:finish_connect @0.001s
+2026-10-26 15:02:53.949 Df OpenVillage[4737:5444] [com.apple.network:connection] nw_connection_report_state_with_handler_on_nw_queue [C240] reporting state ready
+2026-10-26 15:02:53.949 Df OpenVillage[4737:5444] [com.apple.network:connection] [C240 127.0.0.1:8080 ready socket-flow (satisfied (Path is satisfied), interface: lo0)] event: flow:changed_viability @0.001s
+2026-10-26 15:02:53.949 Df OpenVillage[4737:5444] [com.apple.network:connection] nw_connection_send_viability_changed_on_nw_queue [C240] viability_changed_handler(true)
+2026-10-26 15:02:53.949 Df OpenVillage[4737:5444] [com.apple.CFNetwork:Default] Connection 240: connected successfully
+2026-10-26 15:02:53.949 Df OpenVillage[4737:5444] [com.apple.CFNetwork:Default] Connection 240: ready C(N) E(N)
+2026-10-26 15:02:53.949 Df OpenVillage[4737:5444] [com.apple.CFNetwork:Default] Task <2B633B00-B6D9-473C-A513-3C862EF7C23D>.<240> now using Connection 240
+2026-10-26 15:02:53.949 Df OpenVillage[4737:5444] [com.apple.CFNetwork:Default] Connection 240: received viability advisory(Y)
+2026-10-26 15:02:53.950 Df OpenVillage[4737:5444] [com.apple.CFNetwork:Default] Task <2B633B00-B6D9-473C-A513-3C862EF7C23D>.<240> sent request, body N 0
+2026-10-26 15:02:53.968 Df OpenVillage[4737:5448] [com.apple.CFNetwork:Default] Task <2B633B00-B6D9-473C-A513-3C862EF7C23D>.<240> received response, status 200 content U
+2026-10-26 15:02:53.968 Df OpenVillage[4737:5448] [com.apple.CFNetwork:Default] Connection 240: read-side closed
+2026-10-26 15:02:53.968 Df OpenVillage[4737:5448] [com.apple.CFNetwork:Default] Connection 240: final read 0:0, complete[Y], final[N]
+2026-10-26 15:02:53.968 Df OpenVillage[4737:5448] [com.apple.CFNetwork:Default] Connection 240: cleaning up
+2026-10-26 15:02:53.968 Df OpenVillage[4737:5448] [com.apple.network:connection] [C240 E2DDC8A7-E971-4CDE-845E-EDE7B1CBB4A5 127.0.0.1:8080 tcp, url: http://127.0.0.1:8080/__openvillage/tick, definite, attribution: developer] cancel
+2026-10-26 15:02:53.968 Df OpenVillage[4737:5448] [com.apple.network:connection] [C240 E2DDC8A7-E971-4CDE-845E-EDE7B1CBB4A5 127.0.0.1:8080 tcp, url: http://127.0.0.1:8080/__openvillage/tick, definite, attribution: developer] cancelled
+	[C240 4C1F3AE5-14CF-48B8-B5EE-A20C738178D4 127.0.0.1:51506<->127.0.0.1:8080]
+	Connected Path: satisfied (Path is satisfied), viable, interface: lo0
+	Privacy Stance: Not Eligible
+	Duration: 0.020s, TCP @0.001s took 0.000s
+	bytes in/out: 666/330, packets in/out: 3/1, rtt: 0.001s, retransmitted bytes: 0, out-of-order bytes: 0
+	ecn packets sent/acked/marked/lost: 0/0/0/0
+2026-10-26 15:02:53.968 E  OpenVillage[4737:5448] [com.apple.network:connection] nw_protocol_socket_set_no_wake_from_sleep [C240:2] setsockopt SO_NOWAKEFROMSLEEP failed [22: Invalid argument]
+2026-10-26 15:02:53.968 E  OpenVillage[4737:5448] [com.apple.network:] nw_protocol_socket_set_no_wake_from_sleep setsockopt SO_NOWAKEFROMSLEEP failed [22: Invalid argument]
+2026-10-26 15:02:53.968 Df OpenVillage[4737:5448] [com.apple.network:connection] nw_flow_disconnected [C240 127.0.0.1:8080 cancelled socket-flow ((null))] Output protocol disconnected
+2026-10-26 15:02:53.968 Df OpenVillage[4737:5448] [com.apple.network:connection] nw_connection_report_state_with_handler_on_nw_queue [C240] reporting state cancelled
+2026-10-26 15:02:53.968 Df OpenVillage[4737:5448] [com.apple.CFNetwork:Default] Task <2B633B00-B6D9-473C-A513-3C862EF7C23D>.<240> response ended
+2026-10-26 15:02:53.968 Df OpenVillage[4737:5448] [com.apple.CFNetwork:Default] Task <2B633B00-B6D9-473C-A513-3C862EF7C23D>.<240> done using Connection 240
+2026-10-26 15:02:53.968 Df OpenVillage[4737:5448] [com.apple.CFNetwork:Summary] Task <2B633B00-B6D9-473C-A513-3C862EF7C23D>.<240> summary for task success {transaction_duration_ms=21, response_status=200, connection=240, protocol="http/1.1", domain_lookup_duration_ms=0, connect_duration_ms=0, secure_connection_duration_ms=0, private_relay=false, request_start_ms=2, request_duration_ms=0, response_start_ms=21, response_duration_ms=0, request_bytes=330, request_throughput_kbps=6861, response_bytes=666, response_throughput_kbps=933, cache_hit=false}
+2026-10-26 15:02:53.968 Df OpenVillage[4737:5448] [com.apple.CFNetwork:Default] Task <2B633B00-B6D9-473C-A513-3C862EF7C23D>.<240> finished successfully
+2026-10-26 15:02:54.946 Df OpenVillage[4737:5441] [com.apple.CFNetwork:Default] Task <CFB24A24-56AD-420C-A5CE-CF2219B9CB8C>.<241> resuming, timeouts(300.0, 604800.0) qos(0x19) voucher((null)) activity(00000000-0000-0000-0000-000000000000)
+2026-10-26 15:02:54.947 A  OpenVillage[4737:5447] (Security) SecTrustReportNetworkingAnalytics
+2026-10-26 15:02:54.947 Df OpenVillage[4737:5441] [com.apple.CFNetwork:Default] Connection 241: starting, TC(0x0)
+2026-10-26 15:02:54.947 Df OpenVillage[4737:5441] [com.apple.network:connection] [C241 E5E4E253-2813-432A-B181-7C753F246B71 127.0.0.1:8080 tcp, url: http://127.0.0.1:8080/__openvillage/tick, definite, attribution: developer, context: com.apple.CFNetwork.NSURLSession.{A9C61C80-4ED5-4D41-AAF9-83B43D134F42}{(null)}{Y}{2}{0x0} (private), proc: 463387AC-F3E0-3204-9EF3-28E095D18FC0] start
+2026-10-26 15:02:54.947 Df OpenVillage[4737:5441] [com.apple.network:connection] [C241 127.0.0.1:8080 initial parent-flow ((null))] event: path:start @0.000s
+2026-10-26 15:02:54.947 Df OpenVillage[4737:5441] [com.apple.network:connection] [C241 127.0.0.1:8080 waiting parent-flow (satisfied (Path is satisfied), interface: lo0)] event: path:satisfied @0.000s, uuid: 4C1F3AE5-14CF-48B8-B5EE-A20C738178D4
+2026-10-26 15:02:54.948 Df OpenVillage[4737:5441] [com.apple.network:connection] [C241 127.0.0.1:8080 in_progress socket-flow (satisfied (Path is satisfied), interface: lo0)] event: flow:start_connect @0.000s
+2026-10-26 15:02:54.948 Df OpenVillage[4737:5441] [com.apple.network:connection] nw_connection_report_state_with_handler_on_nw_queue [C241] reporting state preparing
+2026-10-26 15:02:54.948 Df OpenVillage[4737:5447] [com.apple.securityd:SecError] SecTrustReportNetworkingAnalytics failed with error: -4
+2026-10-26 15:02:54.948 Df OpenVillage[4737:5441] [com.apple.CFNetwork:Default] Task <CFB24A24-56AD-420C-A5CE-CF2219B9CB8C>.<241> setting up Connection 241
+2026-10-26 15:02:54.948 Df OpenVillage[4737:5441] [com.apple.network:connection] nw_socket_handle_socket_event [C241:2] Socket received CONNECTED event
+2026-10-26 15:02:54.948 Df OpenVillage[4737:5441] [com.apple.network:connection] nw_flow_connected [C241 127.0.0.1:8080 in_progress socket-flow (satisfied (Path is satisfied), interface: lo0)] Transport protocol connected (socket)
+2026-10-26 15:02:54.948 Df OpenVillage[4737:5441] [com.apple.network:connection] [C241 127.0.0.1:8080 in_progress socket-flow (satisfied (Path is satisfied), interface: lo0)] event: flow:finish_transport @0.000s
+2026-10-26 15:02:54.948 Df OpenVillage[4737:5441] [com.apple.network:connection] nw_flow_connected [C241 127.0.0.1:8080 in_progress socket-flow (satisfied (Path is satisfied), interface: lo0)] Output protocol connected (CFNetworkConnection-2485504240)
+2026-10-26 15:02:54.948 Df OpenVillage[4737:5441] [com.apple.network:connection] [C241 127.0.0.1:8080 ready socket-flow (satisfied (Path is satisfied), interface: lo0)] event: flow:finish_connect @0.001s
+2026-10-26 15:02:54.948 Df OpenVillage[4737:5441] [com.apple.network:connection] nw_connection_report_state_with_handler_on_nw_queue [C241] reporting state ready
+2026-10-26 15:02:54.948 Df OpenVillage[4737:5441] [com.apple.network:connection] [C241 127.0.0.1:8080 ready socket-flow (satisfied (Path is satisfied), interface: lo0)] event: flow:changed_viability @0.001s
+2026-10-26 15:02:54.948 Df OpenVillage[4737:5441] [com.apple.network:connection] nw_connection_send_viability_changed_on_nw_queue [C241] viability_changed_handler(true)
+2026-10-26 15:02:54.948 Df OpenVillage[4737:5441] [com.apple.CFNetwork:Default] Connection 241: connected successfully
+2026-10-26 15:02:54.948 Df OpenVillage[4737:5441] [com.apple.CFNetwork:Default] Connection 241: ready C(N) E(N)
+2026-10-26 15:02:54.948 Df OpenVillage[4737:5441] [com.apple.CFNetwork:Default] Task <CFB24A24-56AD-420C-A5CE-CF2219B9CB8C>.<241> now using Connection 241
+2026-10-26 15:02:54.948 Df OpenVillage[4737:5441] [com.apple.CFNetwork:Default] Connection 241: received viability advisory(Y)
+2026-10-26 15:02:54.948 Df OpenVillage[4737:5441] [com.apple.CFNetwork:Default] Task <CFB24A24-56AD-420C-A5CE-CF2219B9CB8C>.<241> sent request, body N 0
+2026-10-26 15:02:54.969 Df OpenVillage[4737:5447] [com.apple.CFNetwork:Default] Task <CFB24A24-56AD-420C-A5CE-CF2219B9CB8C>.<241> received response, status 200 content U
+2026-10-26 15:02:54.970 Df OpenVillage[4737:5447] [com.apple.CFNetwork:Default] Connection 241: read-side closed
+2026-10-26 15:02:54.970 Df OpenVillage[4737:5447] [com.apple.CFNetwork:Default] Connection 241: final read 0:0, complete[Y], final[N]
+2026-10-26 15:02:54.970 Df OpenVillage[4737:5447] [com.apple.CFNetwork:Default] Connection 241: cleaning up
+2026-10-26 15:02:54.970 Df OpenVillage[4737:5447] [com.apple.network:connection] [C241 E5E4E253-2813-432A-B181-7C753F246B71 127.0.0.1:8080 tcp, url: http://127.0.0.1:8080/__openvillage/tick, definite, attribution: developer] cancel
+2026-10-26 15:02:54.970 Df OpenVillage[4737:5447] [com.apple.network:connection] [C241 E5E4E253-2813-432A-B181-7C753F246B71 127.0.0.1:8080 tcp, url: http://127.0.0.1:8080/__openvillage/tick, definite, attribution: developer] cancelled
+	[C241 4C1F3AE5-14CF-48B8-B5EE-A20C738178D4 127.0.0.1:51513<->127.0.0.1:8080]
+	Connected Path: satisfied (Path is satisfied), viable, interface: lo0
+	Privacy Stance: Not Eligible
+	Duration: 0.022s, TCP @0.000s took 0.000s
+	bytes in/out: 761/330, packets in/out: 3/1, rtt: 0.001s, retransmitted bytes: 0, out-of-order bytes: 0
+	ecn packets sent/acked/marked/lost: 0/0/0/0
+2026-10-26 15:02:54.970 E  OpenVillage[4737:5447] [com.apple.network:connection] nw_protocol_socket_set_no_wake_from_sleep [C241:2] setsockopt SO_NOWAKEFROMSLEEP failed [22: Invalid argument]
+2026-10-26 15:02:54.970 E  OpenVillage[4737:5447] [com.apple.network:] nw_protocol_socket_set_no_wake_from_sleep setsockopt SO_NOWAKEFROMSLEEP failed [22: Invalid argument]
+2026-10-26 15:02:54.970 Df OpenVillage[4737:5447] [com.apple.network:connection] nw_flow_disconnected [C241 127.0.0.1:8080 cancelled socket-flow ((null))] Output protocol disconnected
+2026-10-26 15:02:54.970 Df OpenVillage[4737:5447] [com.apple.network:connection] nw_connection_report_state_with_handler_on_nw_queue [C241] reporting state cancelled
+2026-10-26 15:02:54.970 Df OpenVillage[4737:5447] [com.apple.CFNetwork:Default] Task <CFB24A24-56AD-420C-A5CE-CF2219B9CB8C>.<241> response ended
+2026-10-26 15:02:54.970 Df OpenVillage[4737:5447] [com.apple.CFNetwork:Default] Task <CFB24A24-56AD-420C-A5CE-CF2219B9CB8C>.<241> done using Connection 241
+2026-10-26 15:02:54.970 Df OpenVillage[4737:5447] [com.apple.network:connection] nw_socket_handle_socket_event [C241:2] Socket received READ_CLOSE event
+2026-10-26 15:02:54.970 Df OpenVillage[4737:5447] [com.apple.CFNetwork:Summary] Task <CFB24A24-56AD-420C-A5CE-CF2219B9CB8C>.<241> summary for task success {transaction_duration_ms=23, response_status=200, connection=241, protocol="http/1.1", domain_lookup_duration_ms=0, connect_duration_ms=1, secure_connection_duration_ms=0, private_relay=false, request_start_ms=1, request_duration_ms=0, response_start_ms=22, response_duration_ms=0, request_bytes=330, request_throughput_kbps=9195, response_bytes=761, response_throughput_kbps=1363, cache_hit=false}
+2026-10-26 15:02:54.970 Df OpenVillage[4737:5447] [com.apple.CFNetwork:Default] Task <CFB24A24-56AD-420C-A5CE-CF2219B9CB8C>.<241> finished successfully
+2026-10-26 15:02:55.946 Df OpenVillage[4737:5448] [com.apple.CFNetwork:Default] Task <5EAF7CB4-D97A-4441-8F00-7FA3A82A3C35>.<242> resuming, timeouts(300.0, 604800.0) qos(0x19) voucher((null)) activity(00000000-0000-0000-0000-000000000000)
+2026-10-26 15:02:55.946 A  OpenVillage[4737:5444] (Security) SecTrustReportNetworkingAnalytics
+2026-10-26 15:02:55.947 Df OpenVillage[4737:5447] [com.apple.CFNetwork:Default] Connection 242: starting, TC(0x0)
+2026-10-26 15:02:55.947 Df OpenVillage[4737:5447] [com.apple.network:connection] [C242 79C28402-00BF-4779-BFA5-5F57FCC84199 127.0.0.1:8080 tcp, url: http://127.0.0.1:8080/__openvillage/tick, definite, attribution: developer, context: com.apple.CFNetwork.NSURLSession.{A9C61C80-4ED5-4D41-AAF9-83B43D134F42}{(null)}{Y}{2}{0x0} (private), proc: 463387AC-F3E0-3204-9EF3-28E095D18FC0] start
+2026-10-26 15:02:55.947 Df OpenVillage[4737:5447] [com.apple.network:connection] [C242 127.0.0.1:8080 initial parent-flow ((null))] event: path:start @0.000s
+2026-10-26 15:02:55.947 Df OpenVillage[4737:5447] [com.apple.network:connection] [C242 127.0.0.1:8080 waiting parent-flow (satisfied (Path is satisfied), interface: lo0)] event: path:satisfied @0.000s, uuid: 4C1F3AE5-14CF-48B8-B5EE-A20C738178D4
+2026-10-26 15:02:55.947 Df OpenVillage[4737:5444] [com.apple.securityd:SecError] SecTrustReportNetworkingAnalytics failed with error: -4
+2026-10-26 15:02:55.947 Df OpenVillage[4737:5447] [com.apple.network:connection] [C242 127.0.0.1:8080 in_progress socket-flow (satisfied (Path is satisfied), interface: lo0)] event: flow:start_connect @0.000s
+2026-10-26 15:02:55.947 Df OpenVillage[4737:5447] [com.apple.network:connection] nw_connection_report_state_with_handler_on_nw_queue [C242] reporting state preparing
+2026-10-26 15:02:55.947 Df OpenVillage[4737:5447] [com.apple.CFNetwork:Default] Task <5EAF7CB4-D97A-4441-8F00-7FA3A82A3C35>.<242> setting up Connection 242
+2026-10-26 15:02:55.947 Df OpenVillage[4737:5447] [com.apple.network:connection] nw_socket_handle_socket_event [C242:2] Socket received CONNECTED event
+2026-10-26 15:02:55.948 Df OpenVillage[4737:5447] [com.apple.network:connection] nw_flow_connected [C242 127.0.0.1:8080 in_progress socket-flow (satisfied (Path is satisfied), interface: lo0)] Transport protocol connected (socket)
+2026-10-26 15:02:55.948 Df OpenVillage[4737:5447] [com.apple.network:connection] [C242 127.0.0.1:8080 in_progress socket-flow (satisfied (Path is satisfied), interface: lo0)] event: flow:finish_transport @0.000s
+2026-10-26 15:02:55.948 Df OpenVillage[4737:5447] [com.apple.network:connection] nw_flow_connected [C242 127.0.0.1:8080 in_progress socket-flow (satisfied (Path is satisfied), interface: lo0)] Output protocol connected (CFNetworkConnection-2485504240)
+2026-10-26 15:02:55.948 Df OpenVillage[4737:5447] [com.apple.network:connection] [C242 127.0.0.1:8080 ready socket-flow (satisfied (Path is satisfied), interface: lo0)] event: flow:finish_connect @0.000s
+2026-10-26 15:02:55.948 Df OpenVillage[4737:5447] [com.apple.network:connection] nw_connection_report_state_with_handler_on_nw_queue [C242] reporting state ready
+2026-10-26 15:02:55.948 Df OpenVillage[4737:5447] [com.apple.network:connection] [C242 127.0.0.1:8080 ready socket-flow (satisfied (Path is satisfied), interface: lo0)] event: flow:changed_viability @0.000s
+2026-10-26 15:02:55.948 Df OpenVillage[4737:5447] [com.apple.network:connection] nw_connection_send_viability_changed_on_nw_queue [C242] viability_changed_handler(true)
+2026-10-26 15:02:55.948 Df OpenVillage[4737:5447] [com.apple.CFNetwork:Default] Connection 242: connected successfully
+2026-10-26 15:02:55.948 Df OpenVillage[4737:5447] [com.apple.CFNetwork:Default] Connection 242: ready C(N) E(N)
+2026-10-26 15:02:55.948 Df OpenVillage[4737:5447] [com.apple.CFNetwork:Default] Task <5EAF7CB4-D97A-4441-8F00-7FA3A82A3C35>.<242> now using Connection 242
+2026-10-26 15:02:55.948 Df OpenVillage[4737:5447] [com.apple.CFNetwork:Default] Connection 242: received viability advisory(Y)
+2026-10-26 15:02:55.948 Df OpenVillage[4737:5447] [com.apple.CFNetwork:Default] Task <5EAF7CB4-D97A-4441-8F00-7FA3A82A3C35>.<242> sent request, body N 0
+2026-10-26 15:02:55.962 Df OpenVillage[4737:5447] [com.apple.CFNetwork:Default] Task <5EAF7CB4-D97A-4441-8F00-7FA3A82A3C35>.<242> received response, status 200 content U
+2026-10-26 15:02:55.962 Df OpenVillage[4737:5447] [com.apple.CFNetwork:Default] Connection 242: read-side closed
+2026-10-26 15:02:55.962 Df OpenVillage[4737:5447] [com.apple.CFNetwork:Default] Connection 242: final read 0:0, complete[Y], final[N]
+2026-10-26 15:02:55.962 Df OpenVillage[4737:5447] [com.apple.CFNetwork:Default] Connection 242: cleaning up
+2026-10-26 15:02:55.962 Df OpenVillage[4737:5447] [com.apple.network:connection] [C242 79C28402-00BF-4779-BFA5-5F57FCC84199 127.0.0.1:8080 tcp, url: http://127.0.0.1:8080/__openvillage/tick, definite, attribution: developer] cancel
+2026-10-26 15:02:55.962 Df OpenVillage[4737:5447] [com.apple.network:connection] [C242 79C28402-00BF-4779-BFA5-5F57FCC84199 127.0.0.1:8080 tcp, url: http://127.0.0.1:8080/__openvillage/tick, definite, attribution: developer] cancelled
+	[C242 4C1F3AE5-14CF-48B8-B5EE-A20C738178D4 127.0.0.1:51520<->127.0.0.1:8080]
+	Connected Path: satisfied (Path is satisfied), viable, interface: lo0
+	Privacy Stance: Not Eligible
+	Duration: 0.015s, TCP @0.000s took 0.000s
+	bytes in/out: 666/330, packets in/out: 3/1, rtt: 0.001s, retransmitted bytes: 0, out-of-order bytes: 0
+	ecn packets sent/acked/marked/lost: 0/0/0/0
+2026-10-26 15:02:55.962 E  OpenVillage[4737:5447] [com.apple.network:connection] nw_protocol_socket_set_no_wake_from_sleep [C242:2] setsockopt SO_NOWAKEFROMSLEEP failed [22: Invalid argument]
+2026-10-26 15:02:55.962 E  OpenVillage[4737:5447] [com.apple.network:] nw_protocol_socket_set_no_wake_from_sleep setsockopt SO_NOWAKEFROMSLEEP failed [22: Invalid argument]
+2026-10-26 15:02:55.962 Df OpenVillage[4737:5447] [com.apple.network:connection] nw_flow_disconnected [C242 127.0.0.1:8080 cancelled socket-flow ((null))] Output protocol disconnected
+2026-10-26 15:02:55.962 Df OpenVillage[4737:5447] [com.apple.network:connection] nw_connection_report_state_with_handler_on_nw_queue [C242] reporting state cancelled
+2026-10-26 15:02:55.962 Df OpenVillage[4737:5447] [com.apple.CFNetwork:Default] Task <5EAF7CB4-D97A-4441-8F00-7FA3A82A3C35>.<242> response ended
+2026-10-26 15:02:55.962 Df OpenVillage[4737:5447] [com.apple.CFNetwork:Default] Task <5EAF7CB4-D97A-4441-8F00-7FA3A82A3C35>.<242> done using Connection 242
+2026-10-26 15:02:55.963 Df OpenVillage[4737:5447] [com.apple.CFNetwork:Summary] Task <5EAF7CB4-D97A-4441-8F00-7FA3A82A3C35>.<242> summary for task success {transaction_duration_ms=16, response_status=200, connection=242, protocol="http/1.1", domain_lookup_duration_ms=0, connect_duration_ms=0, secure_connection_duration_ms=0, private_relay=false, request_start_ms=1, request_duration_ms=0, response_start_ms=15, response_duration_ms=0, request_bytes=330, request_throughput_kbps=5562, response_bytes=666, response_throughput_kbps=1062, cache_hit=false}
+2026-10-26 15:02:55.963 Df OpenVillage[4737:5447] [com.apple.CFNetwork:Default] Task <5EAF7CB4-D97A-4441-8F00-7FA3A82A3C35>.<242> finished successfully
