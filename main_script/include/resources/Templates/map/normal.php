@@ -580,227 +580,276 @@
                 close[0].click();
             }
         });
-        // the map fills the window's content below its title; the rulers (25 and 16 px) lie inside that box
+        // the title in the window's title bar, as on the small map (Legends places it there by itself)
         var content = mapWindow.find('#content'), title = content.children('.titleInHeader');
-        var box = {
-            left: content.offset().left + parseInt(content.css('padding-left'), 10),
-            top: title.length && title.is(':visible') ? title.offset().top + title.outerHeight(true)
-                : content.offset().top + parseInt(content.css('padding-top'), 10),
-            right: content.offset().left + content.outerWidth() - parseInt(content.css('padding-right'), 10),
-            bottom: content.offset().top + content.outerHeight() - parseInt(content.css('padding-bottom'), 10)
+        if (!jQuery('body').hasClass('legendsV2')) {
+            title.addClass('ovMapTitle').appendTo(mapWindow.find('.contentTitle'));
+        }
+        // the map fills the window's content; the rulers (25 and 16 px) lie inside that box
+        window.ovPlaceLargeMap = function () {
+            var at = content[0].getBoundingClientRect();
+            var box = {
+                left: at.left + parseInt(content.css('padding-left'), 10),
+                top: at.top + parseInt(content.css('padding-top'), 10),
+                right: at.right - parseInt(content.css('padding-right'), 10),
+                bottom: at.bottom - parseInt(content.css('padding-bottom'), 10)
+            };
+            var size = {
+                width: Math.max(100, Math.floor(box.right - box.left - 25)), // 25 is ruler width
+                height: Math.max(100, Math.floor(box.bottom - box.top - 16)) // 16 is ruler width
+            };
+            jQuery('#mapContainer').css({
+                position: 'fixed',
+                width: size.width,
+                height: size.height,
+                top: Math.round(box.top),
+                left: Math.round(box.left)<?=getDirection() == "LTR" ? ' + 25' : '';?>
+            });
+            return size;
         };
         // Mind the order, first, the windows size should be adjusted by applying class, and then container view size determined
-        var containerViewSize = {
-            width: box.right - box.left - 25, // 25 is ruler width
-            height: box.bottom - box.top - 16 // 16 is ruler width
-        };
-        jQuery('#mapContainer')
-            .remove()
-            .css({
-                position: 'absolute',
-                width: containerViewSize.width,
-                height: containerViewSize.height,
-                top: box.top,
-                left: box.left<?=getDirection() == "LTR" ? ' + 25' : '';?>
-            })
-            .appendTo('body');
-        <?php else:?>
-        var containerViewSize = {
-            width: 543,
-            height: 401
-        };
+        jQuery('#mapContainer').remove().appendTo('body');
+        window.ovPlaceLargeMap();
         <?php endif;?>
-        Travian.Game.Map.Options.Rulers.steps = Travian.Helpers.deepmergeObject({}, Travian.Game.Map.Options.Rulers.steps, {
-            "x": {
-                "1": 1,
-                "2": 1,
-                "3": 10,
-                "4": 20
-            }, "y": {"1": 1, "2": 1, "3": 10, "4": 20}
-        });
-        Travian.Game.Map.Options.Default.dataStore = Travian.Helpers.deepmergeObject({}, Travian.Game.Map.Options.Default.dataStore, {
-            "cachingTimeForType": {
-                "blocks": 1800000,
-                "symbol": 600000,
-                "tile": 600000,
-                "tooltip": 300000
-            },
-            "persistentStorage": false,
-            "useStorageForType": {"blocks": false, "symbol": false, "tile": false, "tooltip": false},
-            "clearStorageForType": {"blocks": false, "symbol": false, "tile": false, "tooltip": false}
-        });
-        Travian.Game.Map.Options.Default.updater = Travian.Helpers.deepmergeObject({}, Travian.Game.Map.Options.Default.updater, {
-            "maxRequestCount": 5,
-            "requestDelayTime": {"multiple": 100, "position": 300},
-            "url": "ajax.php",
-            "positionOptions": {
-                "areaAroundPosition": {
-                    "1": {"left": -5, "bottom": -4, "right": 5, "top": 4},
-                    "2": {"left": -10, "bottom": -8, "right": 10, "top": 8},
-                    "3": {"left": -15, "bottom": -15, "right": 15, "top": 15},
-                    "4": {"left": -15, "bottom": -15, "right": 15, "top": 15}
-                }
-            }
-        });
-        Travian.Game.Map.Options.Default.tileDisplayInformation.type = 'dialog';
-
-        Travian.Game.Map.Options.MapMark.Flag.dialog.html = '<div class=\"mapMarkField\">\n	<div class=\"flag {select}\"><\/div>\n	<div class=\"{coord}\">\n		\n			<div class=\"coordinatesInput\">\n				<div class=\"xCoord\">\n					<label for=\"coordinateDialogX\">X:<\/label>\n					<input maxlength=\"4\" value=\"\" name=\"x\" id=\"coordinateDialogX\" class=\"text coordinates x {inputX}\"   />\n				<\/div>\n				<div class=\"yCoord\">\n					<label for=\"coordinateDialogY\">Y:<\/label>\n					<input maxlength=\"4\" value=\"\" name=\"y\" id=\"coordinateDialogY\" class=\"text coordinates y {inputY}\"   />\n				<\/div>\n				<div class=\"clear\"><\/div>\n			<\/div>\n			<\/div>\n	<div class=\"{textDisplay}\">\n		<input id=\"coordinateDialogText\" class=\"text {inputText}\" type=\"text\" />\n	<\/div>\n	<p class=\"error errorMessage\"><\/p>\n<\/div>';
-        Travian.Game.Map.Options.MapMark.Mark.dialog.html = '<div class=\"mapMarkMark\">\n	<div class=\"color {select}\"><\/div>\n	<div class=\"{coord}\">\n		\n			<div class=\"coordinatesInput\">\n				<div class=\"xCoord\">\n					<label for=\"coordinateDialogX\">X:<\/label>\n					<input maxlength=\"4\" value=\"\" name=\"x\" id=\"coordinateDialogX\" class=\"text coordinates x {inputX}\"   />\n				<\/div>\n				<div class=\"yCoord\">\n					<label for=\"coordinateDialogY\">Y:<\/label>\n					<input maxlength=\"4\" value=\"\" name=\"y\" id=\"coordinateDialogY\" class=\"text coordinates y {inputY}\"   />\n				<\/div>\n				<div class=\"clear\"><\/div>\n			<\/div>\n			<\/div>\n	<div class=\"{textDisplay}\"><\/div>\n	<p class=\"error errorMessage\"><\/p>\n<\/div>';
-
-        Travian.Game.Map.Options.Default.mapMarks.player.layers.alliance.dialog.html = '<div class=\"mapMarkMark\">\n	<div class=\"color {select}\"><\/div>\n	<div class=\"{coord}\">\n		\n			<div class=\"coordinatesInput\">\n				<div class=\"xCoord\">\n					<label for=\"coordinateDialogX\">X:<\/label>\n					<input maxlength=\"4\" value=\"\" name=\"x\" id=\"coordinateDialogX\" class=\"text coordinates x {inputX}\"   />\n				<\/div>\n				<div class=\"yCoord\">\n					<label for=\"coordinateDialogY\">Y:<\/label>\n					<input maxlength=\"4\" value=\"\" name=\"y\" id=\"coordinateDialogY\" class=\"text coordinates y {inputY}\"   />\n				<\/div>\n				<div class=\"clear\"><\/div>\n			<\/div>\n			<\/div>\n	<div class=\"{textDisplay}\"><\/div>\n	<p class=\"error errorMessage\"><\/p>\n<\/div>';
-        Travian.Game.Map.Options.Default.mapMarks.player.layers.player.dialog.html = '<div class=\"mapMarkMark\">\n	<div class=\"color {select}\"><\/div>\n	<div class=\"{coord}\">\n		\n			<div class=\"coordinatesInput\">\n				<div class=\"xCoord\">\n					<label for=\"coordinateDialogX\">X:<\/label>\n					<input maxlength=\"4\" value=\"\" name=\"x\" id=\"coordinateDialogX\" class=\"text coordinates x {inputX}\"   />\n				<\/div>\n				<div class=\"yCoord\">\n					<label for=\"coordinateDialogY\">Y:<\/label>\n					<input maxlength=\"4\" value=\"\" name=\"y\" id=\"coordinateDialogY\" class=\"text coordinates y {inputY}\"   />\n				<\/div>\n				<div class=\"clear\"><\/div>\n			<\/div>\n			<\/div>\n	<div class=\"{textDisplay}\"><\/div>\n	<p class=\"error errorMessage\"><\/p>\n<\/div>';
-        Travian.Game.Map.Options.Default.mapMarks.alliance.layers.alliance.dialog.html = '<div class=\"mapMarkMark\">\n	<div class=\"color {select}\"><\/div>\n	<div class=\"{coord}\">\n		\n			<div class=\"coordinatesInput\">\n				<div class=\"xCoord\">\n					<label for=\"coordinateDialogX\">X:<\/label>\n					<input maxlength=\"4\" value=\"\" name=\"x\" id=\"coordinateDialogX\" class=\"text coordinates x {inputX}\"   />\n				<\/div>\n				<div class=\"yCoord\">\n					<label for=\"coordinateDialogY\">Y:<\/label>\n					<input maxlength=\"4\" value=\"\" name=\"y\" id=\"coordinateDialogY\" class=\"text coordinates y {inputY}\"   />\n				<\/div>\n				<div class=\"clear\"><\/div>\n			<\/div>\n			<\/div>\n	<div class=\"{textDisplay}\"><\/div>\n	<p class=\"error errorMessage\"><\/p>\n<\/div>';
-        Travian.Game.Map.Options.Default.mapMarks.alliance.layers.player.dialog.html = '<div class=\"mapMarkMark\">\n	<div class=\"color {select}\"><\/div>\n	<div class=\"{coord}\">\n		\n			<div class=\"coordinatesInput\">\n				<div class=\"xCoord\">\n					<label for=\"coordinateDialogX\">X:<\/label>\n					<input maxlength=\"4\" value=\"\" name=\"x\" id=\"coordinateDialogX\" class=\"text coordinates x {inputX}\"   />\n				<\/div>\n				<div class=\"yCoord\">\n					<label for=\"coordinateDialogY\">Y:<\/label>\n					<input maxlength=\"4\" value=\"\" name=\"y\" id=\"coordinateDialogY\" class=\"text coordinates y {inputY}\"   />\n				<\/div>\n				<div class=\"clear\"><\/div>\n			<\/div>\n			<\/div>\n	<div class=\"{textDisplay}\"><\/div>\n	<p class=\"error errorMessage\"><\/p>\n<\/div>';
-
-        Travian.Game.Map.Options.Default.mapMarks.player.layers.flag.dialog.html = '<div class=\"mapMarkField\">\n	<div class=\"flag {select}\"><\/div>\n	<div class=\"{coord}\">\n		\n			<div class=\"coordinatesInput\">\n				<div class=\"xCoord\">\n					<label for=\"coordinateDialogX\">X:<\/label>\n					<input maxlength=\"4\" value=\"\" name=\"x\" id=\"coordinateDialogX\" class=\"text coordinates x {inputX}\"   />\n				<\/div>\n				<div class=\"yCoord\">\n					<label for=\"coordinateDialogY\">Y:<\/label>\n					<input maxlength=\"4\" value=\"\" name=\"y\" id=\"coordinateDialogY\" class=\"text coordinates y {inputY}\"   />\n				<\/div>\n				<div class=\"clear\"><\/div>\n			<\/div>\n			<\/div>\n	<div class=\"{textDisplay}\">\n		<input id=\"coordinateDialogText\" class=\"text {inputText}\" type=\"text\" />\n	<\/div>\n	<p class=\"error errorMessage\"><\/p>\n<\/div>';
-        Travian.Game.Map.Options.Default.mapMarks.alliance.layers.flag.dialog.html = '<div class=\"mapMarkField\">\n	<div class=\"flag {select}\"><\/div>\n	<div class=\"{coord}\">\n		\n			<div class=\"coordinatesInput\">\n				<div class=\"xCoord\">\n					<label for=\"coordinateDialogX\">X:<\/label>\n					<input maxlength=\"4\" value=\"\" name=\"x\" id=\"coordinateDialogX\" class=\"text coordinates x {inputX}\"   />\n				<\/div>\n				<div class=\"yCoord\">\n					<label for=\"coordinateDialogY\">Y:<\/label>\n					<input maxlength=\"4\" value=\"\" name=\"y\" id=\"coordinateDialogY\" class=\"text coordinates y {inputY}\"   />\n				<\/div>\n				<div class=\"clear\"><\/div>\n			<\/div>\n			<\/div>\n	<div class=\"{textDisplay}\">\n		<input id=\"coordinateDialogText\" class=\"text {inputText}\" type=\"text\" />\n	<\/div>\n	<p class=\"error errorMessage\"><\/p>\n<\/div>';
-
-        Travian.Game.Map.Tips.tooltipHtml = '‏&#x202e;<span class=\"coordinates coordinatesWrapper\"><span class=\"coordinateX\">({x}<\/span><span class=\"coordinatePipe\">|<\/span><span class=\"coordinateY\">{y})<\/span><\/span>&#x202c;‏';
-        Travian.Game.Map.Options.Default.block.tooltipHtml = '‏&#x202e;<span class=\"coordinates coordinatesWrapper\"><span class=\"coordinateX\">({x}<\/span><span class=\"coordinatePipe\">|<\/span><span class=\"coordinateY\">{y})<\/span><\/span>&#x202c;‏<br />{k.loadingData}';
-        Travian.Game.Map.Options.MiniMap.tooltipHtml = '‏&#x202e;<span class=\"coordinates coordinatesWrapper\"><span class=\"coordinateX\">({x}<\/span><span class=\"coordinatePipe\">|<\/span><span class=\"coordinateY\">{y})<\/span><\/span>&#x202c;‏';
-
-
-        new Travian.Game.Map.Container(Travian.Helpers.deepmergeObject({}, Travian.Game.Map.Options.Default,
-            {
-                blockOverflow: 1,
-                blockSize:
-                    {
-                        width: 600,
-                        height: 600
-                    },
-                containerViewSize: containerViewSize,
-                mapInitialPosition: {
-                    x: <?=$vars['Map']['mapInitialPosition']['x'];?>,
-                    y: <?=$vars['Map']['mapInitialPosition']['y'];?>
+        // builds the map; the large map waits until the page layout has settled (see below)
+        var startMap = function () {
+            <?php if($vars['fullscreen']):?>
+            var containerViewSize = window.ovPlaceLargeMap();
+            <?php else:?>
+            var containerViewSize = {
+                width: 543,
+                height: 401
+            };
+            <?php endif;?>
+            Travian.Game.Map.Options.Rulers.steps = Travian.Helpers.deepmergeObject({}, Travian.Game.Map.Options.Rulers.steps, {
+                "x": {
+                    "1": 1,
+                    "2": 1,
+                    "3": 10,
+                    "4": 20
+                }, "y": {"1": 1, "2": 1, "3": 10, "4": 20}
+            });
+            Travian.Game.Map.Options.Default.dataStore = Travian.Helpers.deepmergeObject({}, Travian.Game.Map.Options.Default.dataStore, {
+                "cachingTimeForType": {
+                    "blocks": 1800000,
+                    "symbol": 600000,
+                    "tile": 600000,
+                    "tooltip": 300000
                 },
-                transition: {
-                    zoomOptions: {
-                        level: <?=$vars['Map']['zoomLevel'];?>,
-                        sizes: [{"x": 10, "y": 10}, {
-                            "x": 20,
-                            "y": 20
-                        } <?=($vars['smallMapEnabled'] ? ',{"x": 120, "y": 120}' : '');?>]
+                "persistentStorage": false,
+                "useStorageForType": {"blocks": false, "symbol": false, "tile": false, "tooltip": false},
+                "clearStorageForType": {"blocks": false, "symbol": false, "tile": false, "tooltip": false}
+            });
+            Travian.Game.Map.Options.Default.updater = Travian.Helpers.deepmergeObject({}, Travian.Game.Map.Options.Default.updater, {
+                "maxRequestCount": 5,
+                "requestDelayTime": {"multiple": 100, "position": 300},
+                "url": "ajax.php",
+                "positionOptions": {
+                    "areaAroundPosition": {
+                        "1": {"left": -5, "bottom": -4, "right": 5, "top": 4},
+                        "2": {"left": -10, "bottom": -8, "right": 10, "top": 8},
+                        "3": {"left": -15, "bottom": -15, "right": 15, "top": 15},
+                        "4": {"left": -15, "bottom": -15, "right": 15, "top": 15}
                     }
-                },
-                data: <?=$vars['Map']['data'];?>,
-                mapMarks:
-                    {
-                        player: {
-                            data: <?=$vars['Map']['Marks']['player']['data'];?>,
-                            layers: {
-                                alliance: {
-                                    title: '<?=T("map", "alliance");?>',
-                                    dialog: {
-                                        title: '<?=T("map", "ownAllianceMarks");?>',
-                                        textOkay: '<?=T("map", "save");?>',
-                                        textCancel: '<?=T("map", "cancel");?>'
+                }
+            });
+            Travian.Game.Map.Options.Default.tileDisplayInformation.type = 'dialog';
+
+            Travian.Game.Map.Options.MapMark.Flag.dialog.html = '<div class=\"mapMarkField\">\n	<div class=\"flag {select}\"><\/div>\n	<div class=\"{coord}\">\n		\n			<div class=\"coordinatesInput\">\n				<div class=\"xCoord\">\n					<label for=\"coordinateDialogX\">X:<\/label>\n					<input maxlength=\"4\" value=\"\" name=\"x\" id=\"coordinateDialogX\" class=\"text coordinates x {inputX}\"   />\n				<\/div>\n				<div class=\"yCoord\">\n					<label for=\"coordinateDialogY\">Y:<\/label>\n					<input maxlength=\"4\" value=\"\" name=\"y\" id=\"coordinateDialogY\" class=\"text coordinates y {inputY}\"   />\n				<\/div>\n				<div class=\"clear\"><\/div>\n			<\/div>\n			<\/div>\n	<div class=\"{textDisplay}\">\n		<input id=\"coordinateDialogText\" class=\"text {inputText}\" type=\"text\" />\n	<\/div>\n	<p class=\"error errorMessage\"><\/p>\n<\/div>';
+            Travian.Game.Map.Options.MapMark.Mark.dialog.html = '<div class=\"mapMarkMark\">\n	<div class=\"color {select}\"><\/div>\n	<div class=\"{coord}\">\n		\n			<div class=\"coordinatesInput\">\n				<div class=\"xCoord\">\n					<label for=\"coordinateDialogX\">X:<\/label>\n					<input maxlength=\"4\" value=\"\" name=\"x\" id=\"coordinateDialogX\" class=\"text coordinates x {inputX}\"   />\n				<\/div>\n				<div class=\"yCoord\">\n					<label for=\"coordinateDialogY\">Y:<\/label>\n					<input maxlength=\"4\" value=\"\" name=\"y\" id=\"coordinateDialogY\" class=\"text coordinates y {inputY}\"   />\n				<\/div>\n				<div class=\"clear\"><\/div>\n			<\/div>\n			<\/div>\n	<div class=\"{textDisplay}\"><\/div>\n	<p class=\"error errorMessage\"><\/p>\n<\/div>';
+
+            Travian.Game.Map.Options.Default.mapMarks.player.layers.alliance.dialog.html = '<div class=\"mapMarkMark\">\n	<div class=\"color {select}\"><\/div>\n	<div class=\"{coord}\">\n		\n			<div class=\"coordinatesInput\">\n				<div class=\"xCoord\">\n					<label for=\"coordinateDialogX\">X:<\/label>\n					<input maxlength=\"4\" value=\"\" name=\"x\" id=\"coordinateDialogX\" class=\"text coordinates x {inputX}\"   />\n				<\/div>\n				<div class=\"yCoord\">\n					<label for=\"coordinateDialogY\">Y:<\/label>\n					<input maxlength=\"4\" value=\"\" name=\"y\" id=\"coordinateDialogY\" class=\"text coordinates y {inputY}\"   />\n				<\/div>\n				<div class=\"clear\"><\/div>\n			<\/div>\n			<\/div>\n	<div class=\"{textDisplay}\"><\/div>\n	<p class=\"error errorMessage\"><\/p>\n<\/div>';
+            Travian.Game.Map.Options.Default.mapMarks.player.layers.player.dialog.html = '<div class=\"mapMarkMark\">\n	<div class=\"color {select}\"><\/div>\n	<div class=\"{coord}\">\n		\n			<div class=\"coordinatesInput\">\n				<div class=\"xCoord\">\n					<label for=\"coordinateDialogX\">X:<\/label>\n					<input maxlength=\"4\" value=\"\" name=\"x\" id=\"coordinateDialogX\" class=\"text coordinates x {inputX}\"   />\n				<\/div>\n				<div class=\"yCoord\">\n					<label for=\"coordinateDialogY\">Y:<\/label>\n					<input maxlength=\"4\" value=\"\" name=\"y\" id=\"coordinateDialogY\" class=\"text coordinates y {inputY}\"   />\n				<\/div>\n				<div class=\"clear\"><\/div>\n			<\/div>\n			<\/div>\n	<div class=\"{textDisplay}\"><\/div>\n	<p class=\"error errorMessage\"><\/p>\n<\/div>';
+            Travian.Game.Map.Options.Default.mapMarks.alliance.layers.alliance.dialog.html = '<div class=\"mapMarkMark\">\n	<div class=\"color {select}\"><\/div>\n	<div class=\"{coord}\">\n		\n			<div class=\"coordinatesInput\">\n				<div class=\"xCoord\">\n					<label for=\"coordinateDialogX\">X:<\/label>\n					<input maxlength=\"4\" value=\"\" name=\"x\" id=\"coordinateDialogX\" class=\"text coordinates x {inputX}\"   />\n				<\/div>\n				<div class=\"yCoord\">\n					<label for=\"coordinateDialogY\">Y:<\/label>\n					<input maxlength=\"4\" value=\"\" name=\"y\" id=\"coordinateDialogY\" class=\"text coordinates y {inputY}\"   />\n				<\/div>\n				<div class=\"clear\"><\/div>\n			<\/div>\n			<\/div>\n	<div class=\"{textDisplay}\"><\/div>\n	<p class=\"error errorMessage\"><\/p>\n<\/div>';
+            Travian.Game.Map.Options.Default.mapMarks.alliance.layers.player.dialog.html = '<div class=\"mapMarkMark\">\n	<div class=\"color {select}\"><\/div>\n	<div class=\"{coord}\">\n		\n			<div class=\"coordinatesInput\">\n				<div class=\"xCoord\">\n					<label for=\"coordinateDialogX\">X:<\/label>\n					<input maxlength=\"4\" value=\"\" name=\"x\" id=\"coordinateDialogX\" class=\"text coordinates x {inputX}\"   />\n				<\/div>\n				<div class=\"yCoord\">\n					<label for=\"coordinateDialogY\">Y:<\/label>\n					<input maxlength=\"4\" value=\"\" name=\"y\" id=\"coordinateDialogY\" class=\"text coordinates y {inputY}\"   />\n				<\/div>\n				<div class=\"clear\"><\/div>\n			<\/div>\n			<\/div>\n	<div class=\"{textDisplay}\"><\/div>\n	<p class=\"error errorMessage\"><\/p>\n<\/div>';
+
+            Travian.Game.Map.Options.Default.mapMarks.player.layers.flag.dialog.html = '<div class=\"mapMarkField\">\n	<div class=\"flag {select}\"><\/div>\n	<div class=\"{coord}\">\n		\n			<div class=\"coordinatesInput\">\n				<div class=\"xCoord\">\n					<label for=\"coordinateDialogX\">X:<\/label>\n					<input maxlength=\"4\" value=\"\" name=\"x\" id=\"coordinateDialogX\" class=\"text coordinates x {inputX}\"   />\n				<\/div>\n				<div class=\"yCoord\">\n					<label for=\"coordinateDialogY\">Y:<\/label>\n					<input maxlength=\"4\" value=\"\" name=\"y\" id=\"coordinateDialogY\" class=\"text coordinates y {inputY}\"   />\n				<\/div>\n				<div class=\"clear\"><\/div>\n			<\/div>\n			<\/div>\n	<div class=\"{textDisplay}\">\n		<input id=\"coordinateDialogText\" class=\"text {inputText}\" type=\"text\" />\n	<\/div>\n	<p class=\"error errorMessage\"><\/p>\n<\/div>';
+            Travian.Game.Map.Options.Default.mapMarks.alliance.layers.flag.dialog.html = '<div class=\"mapMarkField\">\n	<div class=\"flag {select}\"><\/div>\n	<div class=\"{coord}\">\n		\n			<div class=\"coordinatesInput\">\n				<div class=\"xCoord\">\n					<label for=\"coordinateDialogX\">X:<\/label>\n					<input maxlength=\"4\" value=\"\" name=\"x\" id=\"coordinateDialogX\" class=\"text coordinates x {inputX}\"   />\n				<\/div>\n				<div class=\"yCoord\">\n					<label for=\"coordinateDialogY\">Y:<\/label>\n					<input maxlength=\"4\" value=\"\" name=\"y\" id=\"coordinateDialogY\" class=\"text coordinates y {inputY}\"   />\n				<\/div>\n				<div class=\"clear\"><\/div>\n			<\/div>\n			<\/div>\n	<div class=\"{textDisplay}\">\n		<input id=\"coordinateDialogText\" class=\"text {inputText}\" type=\"text\" />\n	<\/div>\n	<p class=\"error errorMessage\"><\/p>\n<\/div>';
+
+            Travian.Game.Map.Tips.tooltipHtml = '‏&#x202e;<span class=\"coordinates coordinatesWrapper\"><span class=\"coordinateX\">({x}<\/span><span class=\"coordinatePipe\">|<\/span><span class=\"coordinateY\">{y})<\/span><\/span>&#x202c;‏';
+            Travian.Game.Map.Options.Default.block.tooltipHtml = '‏&#x202e;<span class=\"coordinates coordinatesWrapper\"><span class=\"coordinateX\">({x}<\/span><span class=\"coordinatePipe\">|<\/span><span class=\"coordinateY\">{y})<\/span><\/span>&#x202c;‏<br />{k.loadingData}';
+            Travian.Game.Map.Options.MiniMap.tooltipHtml = '‏&#x202e;<span class=\"coordinates coordinatesWrapper\"><span class=\"coordinateX\">({x}<\/span><span class=\"coordinatePipe\">|<\/span><span class=\"coordinateY\">{y})<\/span><\/span>&#x202c;‏';
+
+
+            new Travian.Game.Map.Container(Travian.Helpers.deepmergeObject({}, Travian.Game.Map.Options.Default,
+                {
+                    blockOverflow: 1,
+                    blockSize:
+                        {
+                            width: 600,
+                            height: 600
+                        },
+                    containerViewSize: containerViewSize,
+                    mapInitialPosition: {
+                        x: <?=$vars['Map']['mapInitialPosition']['x'];?>,
+                        y: <?=$vars['Map']['mapInitialPosition']['y'];?>
+                    },
+                    transition: {
+                        zoomOptions: {
+                            level: <?=$vars['Map']['zoomLevel'];?>,
+                            sizes: [{"x": 10, "y": 10}, {
+                                "x": 20,
+                                "y": 20
+                            } <?=($vars['smallMapEnabled'] ? ',{"x": 120, "y": 120}' : '');?>]
+                        }
+                    },
+                    data: <?=$vars['Map']['data'];?>,
+                    mapMarks:
+                        {
+                            player: {
+                                data: <?=$vars['Map']['Marks']['player']['data'];?>,
+                                layers: {
+                                    alliance: {
+                                        title: '<?=T("map", "alliance");?>',
+                                        dialog: {
+                                            title: '<?=T("map", "ownAllianceMarks");?>',
+                                            textOkay: '<?=T("map", "save");?>',
+                                            textCancel: '<?=T("map", "cancel");?>'
+                                        },
+                                        optionsData: {
+                                            urlLink: 'allianz.php?aid={markId}'
+                                        }
                                     },
-                                    optionsData: {
-                                        urlLink: 'allianz.php?aid={markId}'
-                                    }
-                                },
-                                player: {
-                                    title: '<?=T("map", "users");?>',
-                                    dialog: {
-                                        title: '<?=T("map", "ownPlayerMarkTitle");?>',
-                                        textOkay: '<?=T("map", "save");?>',
-                                        textCancel: '<?=T("map", "cancel");?>'
+                                    player: {
+                                        title: '<?=T("map", "users");?>',
+                                        dialog: {
+                                            title: '<?=T("map", "ownPlayerMarkTitle");?>',
+                                            textOkay: '<?=T("map", "save");?>',
+                                            textCancel: '<?=T("map", "cancel");?>'
+                                        },
+                                        optionsData: {
+                                            urlLink: 'spieler.php?uid={markId}'
+                                        }
                                     },
-                                    optionsData: {
-                                        urlLink: 'spieler.php?uid={markId}'
-                                    }
-                                },
-                                flag: {
-                                    title: '<?=T("map", "flags");?>',
-                                    dialog: {
-                                        title: '<?=T("map", "ownFlags");?>.',
-                                        textOkay: '<?=T("map", "save");?>',
-                                        textCancel: '<?=T("map", "cancel");?>'
+                                    flag: {
+                                        title: '<?=T("map", "flags");?>',
+                                        dialog: {
+                                            title: '<?=T("map", "ownFlags");?>.',
+                                            textOkay: '<?=T("map", "save");?>',
+                                            textCancel: '<?=T("map", "cancel");?>'
+                                        }
                                     }
                                 }
-                            }
-                        },
-                        alliance: {
-                            enabled: <?=$vars['hasAlliance'] ? 'true' : 'false';?>,
-                            data: <?=$vars['Map']['Marks']['alliance']['data'];?>,
-                            layers: {
-                                alliance: {
-                                    <?=$vars['hasPermission'] == 0 ? 'editable: false,' : '';?>
-                                    title: '<?=T("map", "alliance");?>',
-                                    dialog: {
-                                        title: '<?=T("map", "allianceMarkTitle");?>',
-                                        textOkay: '<?=T("map", "save");?>',
-                                        textCancel: '<?=T("map", "cancel");?>'
+                            },
+                            alliance: {
+                                enabled: <?=$vars['hasAlliance'] ? 'true' : 'false';?>,
+                                data: <?=$vars['Map']['Marks']['alliance']['data'];?>,
+                                layers: {
+                                    alliance: {
+                                        <?=$vars['hasPermission'] == 0 ? 'editable: false,' : '';?>
+                                        title: '<?=T("map", "alliance");?>',
+                                        dialog: {
+                                            title: '<?=T("map", "allianceMarkTitle");?>',
+                                            textOkay: '<?=T("map", "save");?>',
+                                            textCancel: '<?=T("map", "cancel");?>'
+                                        },
+                                        optionsData: {
+                                            urlLink: 'allianz.php?aid={markId}'
+                                        }
                                     },
-                                    optionsData: {
-                                        urlLink: 'allianz.php?aid={markId}'
-                                    }
-                                },
-                                player: {
-                                    <?=$vars['hasPermission'] == 0 ? 'editable: false,' : '';?>
-                                    title: '<?=T("map", "users");?>',
-                                    dialog: {
-                                        title: '<?=T("map", "playerMarksTitle");?>',
-                                        textOkay: '<?=T("map", "save");?>',
-                                        textCancel: '<?=T("map", "cancel");?>'
+                                    player: {
+                                        <?=$vars['hasPermission'] == 0 ? 'editable: false,' : '';?>
+                                        title: '<?=T("map", "users");?>',
+                                        dialog: {
+                                            title: '<?=T("map", "playerMarksTitle");?>',
+                                            textOkay: '<?=T("map", "save");?>',
+                                            textCancel: '<?=T("map", "cancel");?>'
+                                        },
+                                        optionsData: {
+                                            urlLink: 'spieler.php?uid={markId}'
+                                        }
                                     },
-                                    optionsData: {
-                                        urlLink: 'spieler.php?uid={markId}'
-                                    }
-                                },
-                                flag: {
-                                    <?=$vars['hasPermission'] == 0 ? 'editable: false,' : '';?>
-                                    title: '<?=T("map", "flags");?>',
-                                    dialog: {
-                                        title: '<?=T("map", 'allianceFlags');?>',
-                                        textOkay: '<?=T("map", "save");?>',
-                                        textCancel: '<?=T("map", "cancel");?>'
+                                    flag: {
+                                        <?=$vars['hasPermission'] == 0 ? 'editable: false,' : '';?>
+                                        title: '<?=T("map", "flags");?>',
+                                        dialog: {
+                                            title: '<?=T("map", 'allianceFlags');?>',
+                                            textOkay: '<?=T("map", "save");?>',
+                                            textCancel: '<?=T("map", "cancel");?>'
+                                        }
                                     }
                                 }
                             }
                         }
-                    }
-            }));
-        // The map remembers where it sits on the page and turns clicks into fields with it. Its own update
-        // (positionChange) is never called: it is bound to jQuery("window"), a selector, and uses MooTools calls that
-        // no longer exist. So after the page layout changed (a resized window, the iOS app setting its viewport after
-        // loading) clicks hit a field beside the right one. Measure again on a resize and before each click or touch.
-        var refreshMapPosition = function () {
-            var map = Travian.Game.Map._map;
-            if (!map || !map.containerViewSize) {
-                return;
-            }
-            var offset = map.containerRender.offset();
-            var size = {x: offset.left, y: offset.top, width: map.containerRender.width(), height: map.containerRender.height()};
-            var view = map.containerViewSize;
-            if (size.x === view.x && size.y === view.y && size.width === view.width && size.height === view.height) {
-                return;
-            }
-            map.setContainerSizes(size);
-            if (map.miniMap && map.miniMap.container) {
-                var miniOffset = jQuery(map.miniMap.container).offset();
-                map.miniMap.containerPosition = {x: miniOffset.left, y: miniOffset.top};
-            }
-            // keep the fields where they are drawn: the origin moves with the container (its y counts upwards,
-            // the original positionChange had the y sign wrong and drew the next blocks a few rows off)
-            map.transition.containerPositionChange({x: view.x - size.x, y: size.y - view.y});
-        };
-        // The map moves its blocks and its origin by each drag step and finds the fields of a block by rounding their
-        // difference down. On a zoomed page (the iOS app) touches come in fractions of a pixel, the two sums drift
-        // apart by rounding errors and a block gets the fields of the row (or column) beside it: rows shown twice or
-        // shifted after the map loads new blocks. Move by whole pixels and keep the fraction for the next step.
-        if (Travian.Game.Map._map) {
-            var map = Travian.Game.Map._map, moveBy = map.move, rest = {x: 0, y: 0};
-            map.move = function (delta) {
-                var x = delta.x + rest.x, y = delta.y + rest.y;
-                var step = {x: Math.round(x), y: Math.round(y)};
-                rest = {x: x - step.x, y: y - step.y};
-                return step.x === 0 && step.y === 0 ? this : moveBy.call(this, step);
+                }));
+            // The map remembers where it sits on the page and turns clicks into fields with it. Its own update
+            // (positionChange) is never called: it is bound to jQuery("window"), a selector, and uses MooTools calls that
+            // no longer exist. So after the page layout changed (a resized window, the iOS app setting its viewport after
+            // loading) clicks hit a field beside the right one. Measure again on a resize and before each click or touch.
+            var refreshMapPosition = function () {
+                var map = Travian.Game.Map._map;
+                if (!map || !map.containerViewSize) {
+                    return;
+                }
+                var offset = map.containerRender.offset();
+                var size = {x: offset.left, y: offset.top, width: map.containerRender.width(), height: map.containerRender.height()};
+                var view = map.containerViewSize;
+                if (size.x === view.x && size.y === view.y && size.width === view.width && size.height === view.height) {
+                    return;
+                }
+                map.setContainerSizes(size);
+                if (map.miniMap && map.miniMap.container) {
+                    var miniOffset = jQuery(map.miniMap.container).offset();
+                    map.miniMap.containerPosition = {x: miniOffset.left, y: miniOffset.top};
+                }
+                // keep the fields where they are drawn: the origin moves with the container (its y counts upwards,
+                // the original positionChange had the y sign wrong and drew the next blocks a few rows off)
+                map.transition.containerPositionChange({x: view.x - size.x, y: size.y - view.y});
             };
-        }
-        jQuery(window).on('resize', refreshMapPosition);
-        ['mousedown', 'touchstart'].forEach(function (type) {
-            document.getElementById('mapContainer').addEventListener(type, refreshMapPosition, true);
+            // The map moves its blocks and its origin by each drag step and finds the fields of a block by rounding their
+            // difference down. On a zoomed page (the iOS app) touches come in fractions of a pixel, the two sums drift
+            // apart by rounding errors and a block gets the fields of the row (or column) beside it: rows shown twice or
+            // shifted after the map loads new blocks. Move by whole pixels and keep the fraction for the next step.
+            if (Travian.Game.Map._map) {
+                var map = Travian.Game.Map._map, moveBy = map.move, rest = {x: 0, y: 0};
+                map.move = function (delta) {
+                    var x = delta.x + rest.x, y = delta.y + rest.y;
+                    var step = {x: Math.round(x), y: Math.round(y)};
+                    rest = {x: x - step.x, y: y - step.y};
+                    return step.x === 0 && step.y === 0 ? this : moveBy.call(this, step);
+                };
+            }
+            jQuery(window).on('resize', refreshMapPosition);
+            ['mousedown', 'touchstart'].forEach(function (type) {
+                document.getElementById('mapContainer').addEventListener(type, refreshMapPosition, true);
+            });
+        };
+        <?php if($vars['fullscreen']):?>
+        // The large map takes the size of the screen when it is built and cannot change it later (its rulers and
+        // views are laid out once). The iOS app sets its viewport only after the page has loaded: build the map
+        // when the layout has stopped changing, and reload it when the screen size changes afterwards (a turned
+        // phone).
+        var settled = null, started = false, ready = function () {
+            clearTimeout(settled);
+            settled = setTimeout(function () {
+                if (!started) {
+                    started = true;
+                    startMap();
+                }
+            }, 400);
+        };
+        jQuery(window).on('resize', function () {
+            if (!started) {
+                ready();
+                return;
+            }
+            var map = Travian.Game.Map._map, size = window.ovPlaceLargeMap();
+            if (map && map.containerViewSize && (Math.abs(size.width - map.containerViewSize.width) > 2
+                || Math.abs(size.height - map.containerViewSize.height) > 2)) {
+                clearTimeout(window.ovMapReload);
+                window.ovMapReload = setTimeout(function () {
+                    location.reload();
+                }, 500);
+            }
         });
+        if (document.readyState === 'complete') {
+            ready();
+        } else {
+            jQuery(window).on('load', ready);
+        }
+        setTimeout(ready, 0);
+        <?php else:?>
+        startMap();
+        <?php endif;?>
     });
 </script>
