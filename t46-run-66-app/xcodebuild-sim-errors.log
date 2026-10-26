@@ -1,0 +1,52 @@
+344-    cd /Users/runner/work/Travian/Travian/ios/app
+345-    /Applications/Xcode_26.3.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/clang -Xlinker -reproducible -target arm64-apple-ios16.0-simulator -dynamiclib -isysroot /Applications/Xcode_26.3.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/SDKs/iPhoneSimulator26.2.sdk -O0 -L/Users/runner/work/Travian/Travian/ios/app/build/Build/Intermediates.noindex/EagerLinkingTBDs/Debug-iphonesimulator -L/Users/runner/work/Travian/Travian/ios/app/build/Build/Products/Debug-iphonesimulator -F/Users/runner/work/Travian/Travian/ios/app/build/Build/Intermediates.noindex/EagerLinkingTBDs/Debug-iphonesimulator -F/Users/runner/work/Travian/Travian/ios/app/build/Build/Products/Debug-iphonesimulator -F../mariadb/build -F../php/build -filelist /Users/runner/work/Travian/Travian/ios/app/build/Build/Intermediates.noindex/OpenVillage.build/Debug-iphonesimulator/OpenVillage.build/Objects-normal/arm64/OpenVillage.LinkFileList -install_name @rpath/OpenVillage.debug.dylib -Xlinker -rpath -Xlinker /usr/lib/swift -Xlinker -rpath -Xlinker @executable_path/Frameworks -dead_strip -Xlinker -object_path_lto -Xlinker /Users/runner/work/Travian/Travian/ios/app/build/Build/Intermediates.noindex/OpenVillage.build/Debug-iphonesimulator/OpenVillage.build/Objects-normal/arm64/OpenVillage_lto.o -rdynamic -Xlinker -no_deduplicate -Xlinker -objc_abi_version -Xlinker 2 -Xlinker -dependency_info -Xlinker /Users/runner/work/Travian/Travian/ios/app/build/Build/Intermediates.noindex/OpenVillage.build/Debug-iphonesimulator/OpenVillage.build/Objects-normal/arm64/OpenVillage_dependency_info.dat -fobjc-link-runtime -L/Applications/Xcode_26.3.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/swift/iphonesimulator -L/usr/lib/swift -Xlinker -add_ast_path -Xlinker /Users/runner/work/Travian/Travian/ios/app/build/Build/Intermediates.noindex/OpenVillage.build/Debug-iphonesimulator/OpenVillage.build/Objects-normal/arm64/OpenVillage.swiftmodule @/Users/runner/work/Travian/Travian/ios/app/build/Build/Intermediates.noindex/OpenVillage.build/Debug-iphonesimulator/OpenVillage.build/Objects-normal/arm64/OpenVillage-linker-args.resp -ObjC -lc++ -Xlinker -alias -Xlinker _main -Xlinker ___debug_main_executable_dylib_entry_point -lphpcore -lmariadbcore -lz -liconv -lresolv -lc++ -o /Users/runner/work/Travian/Travian/ios/app/build/Build/Products/Debug-iphonesimulator/OpenVillage.app/OpenVillage.debug.dylib
+346:ld: warning: ignoring duplicate libraries: '-lc++'
+347:ld: warning: duplicate symbol '__pcre2_check_escape_8' in:
+348-    /Users/runner/work/Travian/Travian/ios/app/build/Build/Products/Debug-iphonesimulator/libmariadbcore.a[754](pcre2_compile.c.o)
+349-    /Users/runner/work/Travian/Travian/ios/app/build/Build/Products/Debug-iphonesimulator/libphpcore.a[15](pcre2_compile.o)
+350:ld: warning: duplicate symbol '__pcre2_ucd_script_sets_8' in:
+351-    /Users/runner/work/Travian/Travian/ios/app/build/Build/Products/Debug-iphonesimulator/libmariadbcore.a[777](pcre2_ucd.c.o)
+352-    /Users/runner/work/Travian/Travian/ios/app/build/Build/Products/Debug-iphonesimulator/libphpcore.a[33](pcre2_ucd.o)
+353:ld: warning: duplicate symbol '__pcre2_default_compile_context_8' in:
+354-    /Users/runner/work/Travian/Travian/ios/app/build/Build/Products/Debug-iphonesimulator/libmariadbcore.a[757](pcre2_context.c.o)
+355-    /Users/runner/work/Travian/Travian/ios/app/build/Build/Products/Debug-iphonesimulator/libphpcore.a[17](pcre2_context.o)
+356:ld: warning: duplicate symbol '__pcre2_ucd_stage2_8' in:
+357-    /Users/runner/work/Travian/Travian/ios/app/build/Build/Products/Debug-iphonesimulator/libmariadbcore.a[777](pcre2_ucd.c.o)
+358-    /Users/runner/work/Travian/Travian/ios/app/build/Build/Products/Debug-iphonesimulator/libphpcore.a[33](pcre2_ucd.o)
+359:ld: warning: duplicate symbol '__pcre2_ucd_caseless_sets_8' in:
+360-    /Users/runner/work/Travian/Travian/ios/app/build/Build/Products/Debug-iphonesimulator/libmariadbcore.a[777](pcre2_ucd.c.o)
+361-    /Users/runner/work/Travian/Travian/ios/app/build/Build/Products/Debug-iphonesimulator/libphpcore.a[33](pcre2_ucd.o)
+362:ld: warning: duplicate symbol '__pcre2_ucd_records_8' in:
+363-    /Users/runner/work/Travian/Travian/ios/app/build/Build/Products/Debug-iphonesimulator/libmariadbcore.a[777](pcre2_ucd.c.o)
+364-    /Users/runner/work/Travian/Travian/ios/app/build/Build/Products/Debug-iphonesimulator/libphpcore.a[33](pcre2_ucd.o)
+365:ld: warning: duplicate symbol '_pcre2_get_match_data_size_8' in:
+366-    /Users/runner/work/Travian/Travian/ios/app/build/Build/Products/Debug-iphonesimulator/libmariadbcore.a[766](pcre2_match_data.c.o)
+367-    /Users/runner/work/Travian/Travian/ios/app/build/Build/Products/Debug-iphonesimulator/libphpcore.a[23](pcre2_match_data.o)
+368:ld: warning: duplicate symbol '__pcre2_default_match_context_8' in:
+369-    /Users/runner/work/Travian/Travian/ios/app/build/Build/Products/Debug-iphonesimulator/libmariadbcore.a[757](pcre2_context.c.o)
+370-    /Users/runner/work/Travian/Travian/ios/app/build/Build/Products/Debug-iphonesimulator/libphpcore.a[17](pcre2_context.o)
+371:ld: warning: duplicate symbol '__pcre2_ucd_boolprop_sets_8' in:
+372-    /Users/runner/work/Travian/Travian/ios/app/build/Build/Products/Debug-iphonesimulator/libphpcore.a[33](pcre2_ucd.o)
+373-    /Users/runner/work/Travian/Travian/ios/app/build/Build/Products/Debug-iphonesimulator/libmariadbcore.a[777](pcre2_ucd.c.o)
+374:ld: warning: duplicate symbol '__pcre2_default_convert_context_8' in:
+375-    /Users/runner/work/Travian/Travian/ios/app/build/Build/Products/Debug-iphonesimulator/libmariadbcore.a[757](pcre2_context.c.o)
+376-    /Users/runner/work/Travian/Travian/ios/app/build/Build/Products/Debug-iphonesimulator/libphpcore.a[17](pcre2_context.o)
+377:ld: warning: duplicate symbol '_pcre2_set_substitute_callout_8' in:
+378-    /Users/runner/work/Travian/Travian/ios/app/build/Build/Products/Debug-iphonesimulator/libmariadbcore.a[757](pcre2_context.c.o)
+379-    /Users/runner/work/Travian/Travian/ios/app/build/Build/Products/Debug-iphonesimulator/libphpcore.a[17](pcre2_context.o)
+380:ld: warning: duplicate symbol '__pcre2_ucd_stage1_8' in:
+381-    /Users/runner/work/Travian/Travian/ios/app/build/Build/Products/Debug-iphonesimulator/libmariadbcore.a[777](pcre2_ucd.c.o)
+382-    /Users/runner/work/Travian/Travian/ios/app/build/Build/Products/Debug-iphonesimulator/libphpcore.a[33](pcre2_ucd.o)
+383:ld: warning: duplicate symbol '__pcre2_unicode_version_8' in:
+384-    /Users/runner/work/Travian/Travian/ios/app/build/Build/Products/Debug-iphonesimulator/libmariadbcore.a[777](pcre2_ucd.c.o)
+385-    /Users/runner/work/Travian/Travian/ios/app/build/Build/Products/Debug-iphonesimulator/libphpcore.a[33](pcre2_ucd.o)
+386:ld: warning: duplicate symbol '__pcre2_ucd_digit_sets_8' in:
+387-    /Users/runner/work/Travian/Travian/ios/app/build/Build/Products/Debug-iphonesimulator/libmariadbcore.a[777](pcre2_ucd.c.o)
+388-    /Users/runner/work/Travian/Travian/ios/app/build/Build/Products/Debug-iphonesimulator/libphpcore.a[33](pcre2_ucd.o)
+389:ld: warning: duplicate symbol '__pcre2_memctl_malloc_8' in:
+390-    /Users/runner/work/Travian/Travian/ios/app/build/Build/Products/Debug-iphonesimulator/libmariadbcore.a[757](pcre2_context.c.o)
+391-    /Users/runner/work/Travian/Travian/ios/app/build/Build/Products/Debug-iphonesimulator/libphpcore.a[17](pcre2_context.o)
+392-
+393-ConstructStubExecutorLinkFileList /Users/runner/work/Travian/Travian/ios/app/build/Build/Intermediates.noindex/OpenVillage.build/Debug-iphonesimulator/OpenVillage.build/OpenVillage-ExecutorLinkFileList-normal-arm64.txt (in target 'OpenVillage' from project 'OpenVillage')
+394-    cd /Users/runner/work/Travian/Travian/ios/app
+395-    construct-stub-executor-link-file-list /Users/runner/work/Travian/Travian/ios/app/build/Build/Products/Debug-iphonesimulator/OpenVillage.app/OpenVillage.debug.dylib /Applications/Xcode_26.3.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/usr/lib/libPreviewsJITStubExecutor_no_swift_entry_point.a /Applications/Xcode_26.3.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/usr/lib/libPreviewsJITStubExecutor.a --output /Users/runner/work/Travian/Travian/ios/app/build/Build/Intermediates.noindex/OpenVillage.build/Debug-iphonesimulator/OpenVillage.build/OpenVillage-ExecutorLinkFileList-normal-arm64.txt

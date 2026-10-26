@@ -1,0 +1,43 @@
+307-    cd /Users/runner/work/Travian/Travian/ios/app
+308-    /Applications/Xcode_26.3.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/clang -Xlinker -reproducible -target arm64-apple-ios16.0 -isysroot /Applications/Xcode_26.3.app/Contents/Developer/Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS26.2.sdk -Os -L/Users/runner/work/Travian/Travian/ios/app/build-device/Build/Intermediates.noindex/EagerLinkingTBDs/Release-iphoneos -L/Users/runner/work/Travian/Travian/ios/app/build-device/Build/Products/Release-iphoneos -F/Users/runner/work/Travian/Travian/ios/app/build-device/Build/Intermediates.noindex/EagerLinkingTBDs/Release-iphoneos -F/Users/runner/work/Travian/Travian/ios/app/build-device/Build/Products/Release-iphoneos -F../mariadb/build -F../php/build -filelist /Users/runner/work/Travian/Travian/ios/app/build-device/Build/Intermediates.noindex/OpenVillage.build/Release-iphoneos/OpenVillage.build/Objects-normal/arm64/OpenVillage.LinkFileList -Xlinker -rpath -Xlinker /usr/lib/swift -Xlinker -rpath -Xlinker @executable_path/Frameworks -dead_strip -Xlinker -object_path_lto -Xlinker /Users/runner/work/Travian/Travian/ios/app/build-device/Build/Intermediates.noindex/OpenVillage.build/Release-iphoneos/OpenVillage.build/Objects-normal/arm64/OpenVillage_lto.o -Xlinker -dependency_info -Xlinker /Users/runner/work/Travian/Travian/ios/app/build-device/Build/Intermediates.noindex/OpenVillage.build/Release-iphoneos/OpenVillage.build/Objects-normal/arm64/OpenVillage_dependency_info.dat -fobjc-link-runtime -L/Applications/Xcode_26.3.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/swift/iphoneos -L/usr/lib/swift -Xlinker -add_ast_path -Xlinker /Users/runner/work/Travian/Travian/ios/app/build-device/Build/Intermediates.noindex/OpenVillage.build/Release-iphoneos/OpenVillage.build/Objects-normal/arm64/OpenVillage.swiftmodule @/Users/runner/work/Travian/Travian/ios/app/build-device/Build/Intermediates.noindex/OpenVillage.build/Release-iphoneos/OpenVillage.build/Objects-normal/arm64/OpenVillage-linker-args.resp -ObjC -lc++ -lphpcore -lmariadbcore -lz -liconv -lresolv -lc++ -o /Users/runner/work/Travian/Travian/ios/app/build-device/Build/Products/Release-iphoneos/OpenVillage.app/OpenVillage
+309:ld: warning: ignoring duplicate libraries: '-lc++'
+310:ld: warning: duplicate symbol '__pcre2_check_escape_8' in:
+311-    /Users/runner/work/Travian/Travian/ios/app/build-device/Build/Products/Release-iphoneos/libmariadbcore.a[754](pcre2_compile.c.o)
+312-    /Users/runner/work/Travian/Travian/ios/app/build-device/Build/Products/Release-iphoneos/libphpcore.a[15](pcre2_compile.o)
+313:ld: warning: duplicate symbol '__pcre2_ucd_script_sets_8' in:
+314-    /Users/runner/work/Travian/Travian/ios/app/build-device/Build/Products/Release-iphoneos/libmariadbcore.a[777](pcre2_ucd.c.o)
+315-    /Users/runner/work/Travian/Travian/ios/app/build-device/Build/Products/Release-iphoneos/libphpcore.a[33](pcre2_ucd.o)
+316:ld: warning: duplicate symbol '__pcre2_default_compile_context_8' in:
+317-    /Users/runner/work/Travian/Travian/ios/app/build-device/Build/Products/Release-iphoneos/libmariadbcore.a[757](pcre2_context.c.o)
+318-    /Users/runner/work/Travian/Travian/ios/app/build-device/Build/Products/Release-iphoneos/libphpcore.a[17](pcre2_context.o)
+319:ld: warning: duplicate symbol '__pcre2_ucd_stage2_8' in:
+320-    /Users/runner/work/Travian/Travian/ios/app/build-device/Build/Products/Release-iphoneos/libmariadbcore.a[777](pcre2_ucd.c.o)
+321-    /Users/runner/work/Travian/Travian/ios/app/build-device/Build/Products/Release-iphoneos/libphpcore.a[33](pcre2_ucd.o)
+322:ld: warning: duplicate symbol '__pcre2_ucd_caseless_sets_8' in:
+323-    /Users/runner/work/Travian/Travian/ios/app/build-device/Build/Products/Release-iphoneos/libmariadbcore.a[777](pcre2_ucd.c.o)
+324-    /Users/runner/work/Travian/Travian/ios/app/build-device/Build/Products/Release-iphoneos/libphpcore.a[33](pcre2_ucd.o)
+325:ld: warning: duplicate symbol '__pcre2_ucd_records_8' in:
+326-    /Users/runner/work/Travian/Travian/ios/app/build-device/Build/Products/Release-iphoneos/libmariadbcore.a[777](pcre2_ucd.c.o)
+327-    /Users/runner/work/Travian/Travian/ios/app/build-device/Build/Products/Release-iphoneos/libphpcore.a[33](pcre2_ucd.o)
+328:ld: warning: duplicate symbol '__pcre2_default_match_context_8' in:
+329-    /Users/runner/work/Travian/Travian/ios/app/build-device/Build/Products/Release-iphoneos/libmariadbcore.a[757](pcre2_context.c.o)
+330-    /Users/runner/work/Travian/Travian/ios/app/build-device/Build/Products/Release-iphoneos/libphpcore.a[17](pcre2_context.o)
+331:ld: warning: duplicate symbol '__pcre2_ucd_boolprop_sets_8' in:
+332-    /Users/runner/work/Travian/Travian/ios/app/build-device/Build/Products/Release-iphoneos/libphpcore.a[33](pcre2_ucd.o)
+333-    /Users/runner/work/Travian/Travian/ios/app/build-device/Build/Products/Release-iphoneos/libmariadbcore.a[777](pcre2_ucd.c.o)
+334:ld: warning: duplicate symbol '__pcre2_ucd_stage1_8' in:
+335-    /Users/runner/work/Travian/Travian/ios/app/build-device/Build/Products/Release-iphoneos/libmariadbcore.a[777](pcre2_ucd.c.o)
+336-    /Users/runner/work/Travian/Travian/ios/app/build-device/Build/Products/Release-iphoneos/libphpcore.a[33](pcre2_ucd.o)
+337:ld: warning: duplicate symbol '__pcre2_unicode_version_8' in:
+338-    /Users/runner/work/Travian/Travian/ios/app/build-device/Build/Products/Release-iphoneos/libmariadbcore.a[777](pcre2_ucd.c.o)
+339-    /Users/runner/work/Travian/Travian/ios/app/build-device/Build/Products/Release-iphoneos/libphpcore.a[33](pcre2_ucd.o)
+340:ld: warning: duplicate symbol '__pcre2_ucd_digit_sets_8' in:
+341-    /Users/runner/work/Travian/Travian/ios/app/build-device/Build/Products/Release-iphoneos/libmariadbcore.a[777](pcre2_ucd.c.o)
+342-    /Users/runner/work/Travian/Travian/ios/app/build-device/Build/Products/Release-iphoneos/libphpcore.a[33](pcre2_ucd.o)
+343:ld: warning: duplicate symbol '__pcre2_memctl_malloc_8' in:
+344-    /Users/runner/work/Travian/Travian/ios/app/build-device/Build/Products/Release-iphoneos/libmariadbcore.a[757](pcre2_context.c.o)
+345-    /Users/runner/work/Travian/Travian/ios/app/build-device/Build/Products/Release-iphoneos/libphpcore.a[17](pcre2_context.o)
+346-
+347-PhaseScriptExecution Bundle\ game\ files,\ MariaDB\ share\ and\ data\ template /Users/runner/work/Travian/Travian/ios/app/build-device/Build/Intermediates.noindex/OpenVillage.build/Release-iphoneos/OpenVillage.build/Script-50AB13115F0808D33A85EBDD.sh (in target 'OpenVillage' from project 'OpenVillage')
+348-    cd /Users/runner/work/Travian/Travian/ios/app
+349-    export ACTION\=build
