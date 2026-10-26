@@ -19,7 +19,7 @@
         <div class="boxes-contents cf">
             <div class="content">
                 <form method="post" action="activate.php?page=vid">
-                    <input type="hidden" name="vid" value="">
+                    <input type="hidden" name="vid" value="3">
 
                     <div class="container">
                         <div class="vidDescription"><?=T("activation", "pleaseChooseATribe");?>
@@ -121,20 +121,33 @@
     </div>
 </div>
 <script type="text/javascript">
-    var vid = new Travian.Game.Vid('vid3');
-</script>
-<div id="tpixeliframe_loading" style="display: none; z-index: 1000; position: absolute; top: 0px; left: 0px; width: 100%; height: 100%; background-color:#000; opacity:0.4; -moz-opacity:0.4; FILTER:progid:DXImageTransform.Microsoft.Alpha(opacity=40);"></div>
-<script type="text/javascript">
-    //<!--
-    var tg_load_handler = function() {
-        document.getElementById("tpixeliframe_loading").style.display = "none";
-    };
-    setTimeout(tg_load_handler, 1000);
+    // picking a tribe: the icon of the chosen tribe stays lit and its description is shown, the hidden field
+    // carries the tribe to the server (the original pages did this with Travian.Game.Vid, which the game has not kept)
+    jQuery(function () {
+        var icons = jQuery('#vid .kind .vid'), descriptions = jQuery('#vid .description-container .description');
+        var field = jQuery('#vid input[name=vid]');
 
-    window.onload = function() {
-        tg_iframe = document.getElementById("tpixeliframe");
-        tg_iframe.onload = tg_load_handler;
-    };
-    document.getElementById("tpixeliframe_loading").style.display = "block";
-    //-->
+        function select(tribe) {
+            field.val(tribe);
+            icons.each(function () {
+                var own = this.id.replace('vid', '');
+                jQuery(this).toggleClass('vid' + own + 'Active', own === tribe).removeClass('vid' + own + 'Highlight');
+            });
+            descriptions.each(function () {
+                jQuery(this).toggle(jQuery(this).hasClass('vid' + tribe));
+            });
+        }
+
+        icons.on('click', function () {
+            select(this.id.replace('vid', ''));
+        }).on('mouseenter mouseleave', function (event) {
+            var own = this.id.replace('vid', '');
+            if (field.val() !== own) {
+                jQuery(this).toggleClass('vid' + own + 'Highlight', event.type === 'mouseenter');
+            }
+        });
+
+        select(field.val());
+    });
 </script>
+<?php /* the tracking pixel of the original page is gone, and with it the dark overlay that waited for it */ ?>

@@ -181,15 +181,25 @@
 <?=$vars['onLoadBuildings']; ?>
 <?php if (is_t40_layout()): ?>
     <script type="text/javascript">
-        // 4.0: a resource field lights up while the pointer is on it (its circle of the image map), under the level circles
+        // 4.0 has no shapes for the resource fields: light up the circle of the image map under the pointer, in the
+        // colours of the Legends look (white fill with a lighter ring), below the level circles
         jQuery(function () {
-            var glow = jQuery('<div class="fieldGlow"></div>').prependTo('#village_map');
+            var map = jQuery('#village_map'), field = jQuery('#resfeld');
+            var glow = jQuery('<div class="fieldGlow"></div>').prependTo(map);
             jQuery('#rx area[data-index]').on('mouseenter', function () {
-                var circle = jQuery('#village_map .aid' + this.getAttribute('data-index'));
-                if (circle.length) {
-                    var position = circle.position();
-                    glow.css({left: position.left + circle.outerWidth() / 2, top: position.top + circle.outerHeight() / 2}).addClass('shown');
+                var circle = (this.getAttribute('coords') || '').split(',');
+                if (circle.length < 3) {
+                    return;
                 }
+                // the image map counts from the top left corner of the picture of the fields
+                var picture = field[0].getBoundingClientRect(), box = map[0].getBoundingClientRect();
+                var radius = parseInt(circle[2], 10);
+                glow.css({
+                    left: picture.left - box.left + parseInt(circle[0], 10) - radius,
+                    top: picture.top - box.top + parseInt(circle[1], 10) - radius,
+                    width: 2 * radius,
+                    height: 2 * radius
+                }).addClass('shown');
             }).on('mouseleave', function () {
                 glow.removeClass('shown');
             });
