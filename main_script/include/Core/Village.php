@@ -657,32 +657,7 @@ class Village
             if ($building['level'] >= $maxLevel) { //building has reached max
                 $HTML .= '<span class="notice">' . T("Buildings", "{$building['item_id']}.title") . ' ' . T("Buildings", "upgradeNotices.reachedMaxLvL") . '</span>';
             } else { //show up level
-                $cost = Formulas::buildingUpgradeCosts($building['item_id'], $building['level'] + 1);
-                $lang = T("Buildings", "upgradeNotices.upCostsToLevel") . ' ' . ($building['level'] + 1) . ':';
-                foreach ($cost as &$r) {
-                    $r = number_format_x($r);
-                }
-                $HTML .= <<<HTML
-                {$lang}
-                <br />
-	            <div class="inlineIconList resourceWrapper">
-                    <div class="inlineIcon resources" title="">
-                        <i class="r1"></i><span class="value ">{$cost[0]}</span>
-                    </div>
-                    <div class="inlineIcon resources" title="">
-                        <i class="r2"></i>
-                        <span class="value ">{$cost[1]}</span>
-                    </div>
-                    <div class="inlineIcon resources" title="">
-                        <i class="r3"></i>
-                        <span class="value ">{$cost[2]}</span>
-                    </div>
-	                <div class="inlineIcon resources" title="">
-	                    <i class="r4"></i>
-	                    <span class="value ">{$cost[3]}</span>
-	                </div>
-	            </div>
-HTML;
+                $HTML .= $this->upgradeTitleHtml($building['item_id'], $building['level'] + 1);
             }
 
             return $data;
@@ -700,14 +675,21 @@ HTML;
             ++$k;
         } while ($k <= $building['upgrade_state']);
         if ($building['level'] + $building['upgrade_state'] < $maxLevel) {
-            $cost = Formulas::buildingUpgradeCosts($building['item_id'],
-                $building['level'] + $building['upgrade_state'] + 1);
-            $lang = T("Buildings",
-                    "upgradeNotices.upCostsToLevel") . ' ' . ($building['level'] + $building['upgrade_state'] + 1) . ':';
-            foreach ($cost as &$r) {
-                $r = number_format_x($r);
-            }
-            $HTML .= <<<HTML
+            $HTML .= $this->upgradeTitleHtml($building['item_id'], $building['level'] + $building['upgrade_state'] + 1);
+        }
+        return $data;
+    }
+
+    /** Tooltip part of a field or building: what the next level costs and how long it takes to build. */
+    private function upgradeTitleHtml($itemId, $level)
+    {
+        $cost = Formulas::buildingUpgradeCosts($itemId, $level);
+        $lang = T("Buildings", "upgradeNotices.upCostsToLevel") . ' ' . $level . ':';
+        foreach ($cost as &$r) {
+            $r = number_format_x($r);
+        }
+        $time = secondsToString(Formulas::buildingUpgradeTime($itemId, $level, $this->getMainBuildingLvl(), $this->isWW()));
+        return <<<HTML
                 {$lang}
                 <br />
 	            <div class="inlineIconList resourceWrapper">
@@ -727,9 +709,8 @@ HTML;
 	                    <span class="value ">{$cost[3]}</span>
 	                </div>
 	            </div>
+	            <div class="inlineIcon duration"><i class="clock_medium"></i><span class="value ">{$time}</span></div>
 HTML;
-        }
-        return $data;
     }
 
     public function isWW()

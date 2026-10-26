@@ -14,11 +14,11 @@
 </map>
 <img id="resfeld" usemap="#rx" src="img/x.gif" alt=""/>
 <div id="village_map" class="f<?=$vars['fieldType']; ?>">
-    <?php if (is_t40_layout()): ?>
+    <?php if (has_field_shapes()): ?>
         <?php
-        // the fields of the 4.0 picture lie where the Legends picture has them: its outlines (LegendsUi::fieldShape),
-        // moved onto the 4.0 picture of #village_map by the matrix that lays them best over the forests, pits, mountains
-        // and crop of all 12 4.0 layouts; the right-to-left picture is the mirror image
+        // the fields of the 4.0 / T4.4 Classic picture lie where the Legends picture has them: its outlines
+        // (LegendsUi::fieldShape), moved onto the picture of #village_map by the matrix that lays them best over the
+        // forests, pits, mountains and crop of all 12 layouts; the right-to-left picture is the mirror image
         ?>
         <svg class="fieldShapes" width="500" height="370" viewBox="0 0 500 370">
             <g<?=getDirection() == 'RTL' ? ' transform="matrix(-1 0 0 1 500 0)"' : ''; ?>>
@@ -197,7 +197,7 @@
     <div class="clear"></div>
 </div>
 <?=$vars['onLoadBuildings']; ?>
-<?php if (is_t40_layout()): ?>
+<?php if (has_field_shapes()): ?>
     <script type="text/javascript">
         // light up the outline of the field under the pointer in the colours of the Legends look (white fill with a
         // lighter border), below the level circles; a field without an outline gets the circle of the image map

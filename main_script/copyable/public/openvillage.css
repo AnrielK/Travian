@@ -35,3 +35,57 @@ div#header #logo::before {
     cursor: pointer;
     font: inherit;
 }
+
+/* Looks whose village pictures take the Legends field outlines (gpack.php 'fieldShapes', dorf1/main.php): the field
+   under the pointer (or the first tap on a phone) lights up like a Legends field; a field without an outline gets a
+   ring of the image map's circle */
+div.village1 #village_map svg.fieldShapes {
+    position: absolute;
+    left: 0;
+    top: 0;
+    pointer-events: none;
+    z-index: 1;
+}
+
+div.village1 #village_map svg.fieldShapes path {
+    fill: none;
+    stroke: none;
+}
+
+div.village1 #village_map svg.fieldShapes path.shown {
+    fill: rgba(255, 255, 255, 0.2);
+    stroke: rgba(255, 255, 255, 0.5);
+    stroke-width: 2;
+    stroke-linejoin: round;
+}
+
+div.village1 #village_map .fieldGlow {
+    position: absolute;
+    box-sizing: border-box;
+    border: 2px solid rgba(255, 255, 255, 0.5);
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.2);
+    pointer-events: none;
+    z-index: 1;
+    display: none;
+}
+
+div.village1 #village_map .fieldGlow.shown {
+    display: block;
+}
+
+/* build time in the tooltip of a field or building (Core/Village.php upgradeTitleHtml) */
+.tip .inlineIcon.duration {
+    display: block;
+    margin-top: 2px;
+}
+
+.tip .inlineIcon.duration i.clock_medium {
+    display: inline-block;
+    width: 16px;
+    height: 16px;
+    margin-right: 4px;
+    background-size: contain;
+    background-repeat: no-repeat;
+    vertical-align: middle;
+}

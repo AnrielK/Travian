@@ -126,6 +126,36 @@ def selectors_of(items):
             yield from prelude.split(',')
 
 
+def script_buttons(pack: str):
+    """Buttons the game scripts build without the T4.4 inner boxes (the OK button of the dialogs, e.g. for using a
+    hero item): drawn from the pack's own green button picture (ends and middle as three backgrounds), or a
+    green gradient where the pack has none."""
+    plain = 'button.green:not(:has(.button-container))'
+    box = ('{height:25px;padding:0 20px;border:0;outline:none;color:#fff;font-weight:bold;font-size:11px;'
+           'line-height:25px;text-align:center;cursor:pointer}')
+    picture = 'img/round/button/background/green%s.png'
+    if os.path.isfile(os.path.join(GPACK, pack, 'mainPage', picture % 'Normal')):
+        layers = lambda state: ('{background:url(../%s) left top no-repeat,url(../%s) right bottom no-repeat,'
+                                'url(../%s) left center repeat-x;background-clip:border-box,border-box,content-box}'
+                                % ((picture % state,) * 3))
+        return [plain + box, plain + layers('Normal'), plain + ':hover' + layers('Hover') + '',
+                plain + ':hover{color:#506030}', plain + ':disabled' + layers('Disabled'), plain + ':disabled{color:#7f7f7f}']
+    return [plain + box, plain + '{border-radius:4px;background:linear-gradient(#c4d983,#abc558 46%,#7a9d0e 54%,#708f11)}',
+            plain + ':hover{color:#506030;background:linear-gradient(#e2ecc0,#cfe09a 46%,#b4cb6e 54%,#a9c25c)}',
+            plain + ':disabled{color:#7f7f7f;background:linear-gradient(#f0f0f0,#d6d6d6)}']
+
+
+def own_toggle(pack: str):
+    """The open/close button of the sidebar boxes holds the SVG caret of T4.6. Packs that style that caret
+    (68597666, d11cb434) keep it; the older ones draw their own arrow picture on the button, and the unstyled
+    caret covered it as a black box with a triangle that never turned: hide the caret there."""
+    lang = os.path.join(GPACK, pack, 'mainPage', 'lang', 'en-US')
+    for name in os.listdir(lang):
+        if name.endswith('.css') and 'toggle-caret' in open(os.path.join(lang, name), encoding='utf-8').read():
+            return []
+    return ['div.sidebarBox.toggleable div.footer button.toggle svg.toggle-caret{display:none}']
+
+
 def build(pack: str) -> str:
     items = rules(read_css(os.path.join(GPACK, pack, 'mainPage', 'lang', 'en-US', 'compact.css')))
     keep = lambda body: body
@@ -183,6 +213,8 @@ def build(pack: str) -> str:
         # report header: T4.4 floats its own "div.reports .header" and its report buttons hold no <i> icons
         'div.reports #reportWrapper>.header{float:none;margin:-4px 0 0}',
         '#reportWrapper .iconButton i,#reportWrapper button.icon i{display:inline-block;vertical-align:middle}',
+        *script_buttons(pack),
+        *own_toggle(pack),
         '',
     ])
     # The file lives in <pack>/mainPage/lang/. Pictures of a17a8f72 are copied into the pack (mainPage/t46/), so

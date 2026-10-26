@@ -7798,3 +7798,10 @@ div.village2 div#village_map div.buildingSlot .colorLayer.underConstruction .lab
 ul#stockBar .stockBarButton .middle>i{position:absolute;left:3px;top:4px}
 div.reports #reportWrapper>.header{float:none;margin:-4px 0 0}
 #reportWrapper .iconButton i,#reportWrapper button.icon i{display:inline-block;vertical-align:middle}
+button.green:not(:has(.button-container)){height:25px;padding:0 20px;border:0;outline:none;color:#fff;font-weight:bold;font-size:11px;line-height:25px;text-align:center;cursor:pointer}
+button.green:not(:has(.button-container)){background:url(../img/round/button/background/greenNormal.png) left top no-repeat,url(../img/round/button/background/greenNormal.png) right bottom no-repeat,url(../img/round/button/background/greenNormal.png) left center repeat-x;background-clip:border-box,border-box,content-box}
+button.green:not(:has(.button-container)):hover{background:url(../img/round/button/background/greenHover.png) left top no-repeat,url(../img/round/button/background/greenHover.png) right bottom no-repeat,url(../img/round/button/background/greenHover.png) left center repeat-x;background-clip:border-box,border-box,content-box}
+button.green:not(:has(.button-container)):hover{color:#506030}
+button.green:not(:has(.button-container)):disabled{background:url(../img/round/button/background/greenDisabled.png) left top no-repeat,url(../img/round/button/background/greenDisabled.png) right bottom no-repeat,url(../img/round/button/background/greenDisabled.png) left center repeat-x;background-clip:border-box,border-box,content-box}
+button.green:not(:has(.button-container)):disabled{color:#7f7f7f}
+div.sidebarBox.toggleable div.footer button.toggle svg.toggle-caret{display:none}
