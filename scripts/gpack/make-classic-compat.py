@@ -197,6 +197,9 @@ def build(pack: str) -> str:
         '.buildingsV1 .buildingSlot.a39.g0{left:356px;top:171px}',
         # its hover outline is the a17a8f72 shape: light up the T4.4 picture itself instead
         '.buildingsV1 .buildingSlot.a39.g0 svg.buildingShape path{fill:transparent !important}',
+        # the tutorial marks the site with the T4.4 red outline picture; the a17a8f72 shape would add a second,
+        # lower one
+        '.buildingsV1 .buildingSlot.a39.g0 svg.buildingShape path{stroke:none !important}',
         '.buildingsV1 .buildingSlot.a39.g0:has(.clickShape:hover) img.g16e{filter:brightness(1.25)}',
         '.buildingsV1 .buildingSlot.a39.g0:has(.clickShape:active) img.g16e{filter:brightness(1.45)}',
         # T4.4 places the rally point / Wonder of the World on the village map itself; here the slot does it

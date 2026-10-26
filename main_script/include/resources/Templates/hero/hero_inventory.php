@@ -440,7 +440,7 @@ use Game\Hero\SessionHero;
                     jQuery('.hero_inventory #attributes .openCloseSwitchBar').click(function (e) {
                         Travian.Game.Preferences.set('flagAttributesBoxOpen', !(Travian.Game.Preferences.get('flagAttributesBoxOpen')), false);
                         Travian.toggleSwitch(jQuery('.hero_inventory #attributes .heroPropertiesContent')[0], jQuery('.hero_inventory #attributes .openCloseSwitchBar .openedClosedSwitch')[0]);
-                        jQuery('.hero_inventory #attributes .openCloseSwitchBar .availablePoints')[0].toggleClass('hide');
+                        jQuery('.hero_inventory #attributes .openCloseSwitchBar .availablePoints').toggleClass('hide');
                     });
 
                     var attributeForm = new Travian.Game.Hero.Properties.PropertyForm();
