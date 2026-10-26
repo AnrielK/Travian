@@ -14,6 +14,24 @@
 </map>
 <img id="resfeld" usemap="#rx" src="img/x.gif" alt=""/>
 <div id="village_map" class="f<?=$vars['fieldType']; ?>">
+    <?php if (is_t40_layout()): ?>
+        <?php
+        // the fields of the 4.0 picture lie where the Legends picture has them: its outlines (LegendsUi::fieldShape),
+        // moved onto the 4.0 picture of #village_map by the matrix that lays them best over the forests, pits, mountains
+        // and crop of all 12 4.0 layouts; the right-to-left picture is the mirror image
+        ?>
+        <svg class="fieldShapes" width="500" height="370" viewBox="0 0 500 370">
+            <g<?=getDirection() == 'RTL' ? ' transform="matrix(-1 0 0 1 500 0)"' : ''; ?>>
+                <g transform="matrix(0.9676 -0.0299 0.0265 0.9646 18.23 70.87)">
+                    <?php for ($field = 1; $field <= 18; ++$field): ?>
+                        <?php if ($shape = \resources\View\LegendsUi::fieldShape((int)$vars['fieldType'], $field)): ?>
+                            <path data-field="<?=$field; ?>" d="<?=$shape; ?>"/>
+                        <?php endif; ?>
+                    <?php endfor; ?>
+                </g>
+            </g>
+        </svg>
+    <?php endif; ?>
     <?php if ($vars['showColored']): ?>
         <?php $index = 0; ?>
         <?php foreach ($vars['maps'] as $index => $map):++$index; ?>
@@ -181,16 +199,32 @@
 <?=$vars['onLoadBuildings']; ?>
 <?php if (is_t40_layout()): ?>
     <script type="text/javascript">
-        // 4.0: a resource field lights up while the pointer is on it (its circle of the image map), under the level circles
+        // light up the outline of the field under the pointer in the colours of the Legends look (white fill with a
+        // lighter border), below the level circles; a field without an outline gets the circle of the image map
         jQuery(function () {
-            var glow = jQuery('<div class="fieldGlow"></div>').prependTo('#village_map');
+            var map = jQuery('#village_map'), field = jQuery('#resfeld');
+            var glow = jQuery('<div class="fieldGlow"></div>').prependTo(map);
             jQuery('#rx area[data-index]').on('mouseenter', function () {
-                var circle = jQuery('#village_map .aid' + this.getAttribute('data-index'));
-                if (circle.length) {
-                    var position = circle.position();
-                    glow.css({left: position.left + circle.outerWidth() / 2, top: position.top + circle.outerHeight() / 2}).addClass('shown');
+                var shape = map.find('svg.fieldShapes path[data-field="' + this.getAttribute('data-index') + '"]');
+                if (shape.length) {
+                    shape.addClass('shown');
+                    return;
                 }
+                var circle = (this.getAttribute('coords') || '').split(',');
+                if (circle.length < 3) {
+                    return;
+                }
+                // the image map counts from the top left corner of the picture of the fields
+                var picture = field[0].getBoundingClientRect(), box = map[0].getBoundingClientRect();
+                var radius = parseInt(circle[2], 10);
+                glow.css({
+                    left: picture.left - box.left + parseInt(circle[0], 10) - radius,
+                    top: picture.top - box.top + parseInt(circle[1], 10) - radius,
+                    width: 2 * radius,
+                    height: 2 * radius
+                }).addClass('shown');
             }).on('mouseleave', function () {
+                map.find('svg.fieldShapes path').removeClass('shown');
                 glow.removeClass('shown');
             });
         });

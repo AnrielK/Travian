@@ -314,8 +314,14 @@ div.village1 #village_map .level.colorLayer.maxLevel{border-color:#0d648e;backgr
 div.village1 #village_map .level.colorLayer .labelLayer,div.village1 #village_map .level.colorLayer.underConstruction .labelLayer{position:absolute;top:4px;left:4px;right:auto;width:18px;height:18px;border-radius:50%;background:#fff;line-height:18px;font-size:11px;font-family:Verdana,sans-serif;text-align:center;color:#333}
 div.village1 #village_map .level.colorLayer.underConstruction .labelLayer{background:#ffa84f}
 /* light on the resource field under the pointer (dorf1/main.php) */
-div.village1 #village_map .fieldGlow{position:absolute;width:120px;height:76px;margin:-38px 0 0 -60px;border-radius:50%;background:radial-gradient(closest-side,rgba(255,255,255,.55),rgba(255,255,255,.25) 60%,rgba(255,255,255,0));pointer-events:none;z-index:1;display:none}
+div.village1 #village_map .fieldGlow{position:absolute;box-sizing:border-box;border:2px solid rgba(255,255,255,.5);border-radius:50%;background:rgba(255,255,255,.2);pointer-events:none;z-index:1;display:none}
 div.village1 #village_map .fieldGlow.shown{display:block}
+/* outlines of the fields (the Legends outlines, dorf1/main.php), lit like the Legends fields */
+div.village1 #village_map svg.fieldShapes{position:absolute;left:0;top:0;pointer-events:none;z-index:1}
+div.village1 #village_map svg.fieldShapes path{fill:none;stroke:none}
+div.village1 #village_map svg.fieldShapes path.shown{fill:rgba(255,255,255,.2);stroke:rgba(255,255,255,.5);stroke-width:2;stroke-linejoin:round}
+/* the village name on the sign stays one line with the loyalty below it (dorf3 on a click, rename on a double click) */
+#villageName #villageNameField{display:inline;position:static;top:auto;left:auto;width:auto;height:auto;padding:0;overflow:visible}
 /* 4.0 resource line: green bars, red once the store is full */
 #res li .bar{background-color:#046802}
 #res li .bar.stockFull{background-color:#d40000}

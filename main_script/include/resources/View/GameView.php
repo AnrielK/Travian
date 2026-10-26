@@ -1045,6 +1045,9 @@ class GameView
     {
         $village = Village::getInstance();
         $this->vars['t40']['villageName'] = $village->getName();
+        $this->vars['t40']['villageId'] = $village->getKid();
+        // renaming the village by a double click on its sign (LayoutT40.php); a sitter may not rename it
+        $this->vars['t40']['canRename'] = !$this->session->isSitter();
         $this->vars['t40']['loyalty'] = $village->getLoyalty();
         $aid = $this->session->getAllianceId();
         $this->vars['t40']['allianceId'] = $aid;

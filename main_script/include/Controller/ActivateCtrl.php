@@ -128,7 +128,8 @@ class ActivateCtrl extends OutOfGameCtrl
             $this->legendsPage('tribe');
             return;
         }
-        if ($this->useNewActivation) {
+        // the Travian 4.0 layout keeps the 4.0 page, with the tribe pictures of the pack (as in T4.4 Classic)
+        if ($this->useNewActivation && !is_t40_layout()) {
             $this->view->vars['titleInHeader'] = T("ActivationNew", "Select your tribe");
             $this->view->vars['content'] = PHPBatchView::render('activationNew/race', ['tribes' => $this->availableTribes]);
         } else {

@@ -115,13 +115,35 @@ $stock = $vars['stockBar'] ?? null;
                         class="question" src="img/x.gif" alt=""/></a>
             <?php if (isset($t40['villageName'])): ?>
                 <div id="villageName">
-                    <div class="clickable" onclick="window.location.href='dorf3.php';"
-                         title="<?=htmlspecialchars($t40['villageName']); ?>">
-                        <?=$t40['villageName']; ?><br/>
+                    <div class="clickable"
+                         title="<?=htmlspecialchars($t40['villageName'] . ($t40['canRename'] ? "\n" . T("inGame", "DoubleClickToChangeVillageName") : '')); ?>">
+                        <?php /* a div, because the rename dialog of the game reads it as div#villageNameField; the CSS keeps it inline */ ?>
+                        <div id="villageNameField"><?=$t40['villageName']; ?></div><br/>
                         <span class="loyalty <?=$t40['loyalty'] > 100 ? 'high' : ($t40['loyalty'] >= 50 ? 'medium' : 'low'); ?>"><?=T("inGame",
                                 "loyalty"); ?>: <?=round($t40['loyalty']); ?>%</span>
                     </div>
                 </div>
+                <script type="text/javascript">
+                    // the sign opens the village overview, a double click on it renames the village (as in T4.4, where
+                    // the village box of the sidebar has the pencil): wait a moment with the overview for a second click
+                    jQuery(function () {
+                        var sign = jQuery('#villageName .clickable'), timer = null;
+                        sign.on('click', function (event) {
+                            if (event.detail > 1) {
+                                return;
+                            }
+                            timer = window.setTimeout(function () { window.location.href = 'dorf3.php'; }, 250);
+                        });
+                        <?php if ($t40['canRename']): ?>
+                        sign.on('dblclick', function () {
+                            window.clearTimeout(timer);
+                            Travian.Game.showEditVillageDialog('<?=addslashes(T("inGame", "changeVillageName")); ?>',
+                                '<?=addslashes(T("inGame", "newVillageName")); ?>:',
+                                '<?=addslashes(T("Global", "General.save")); ?>', <?=(int)$t40['villageId']; ?>);
+                        });
+                        <?php endif; ?>
+                    });
+                </script>
             <?php endif; ?>
             <?php if (!empty($t40['questmaster'])): ?>
                 <div class="questMaster">
