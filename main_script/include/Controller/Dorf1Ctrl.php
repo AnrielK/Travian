@@ -208,7 +208,7 @@ class Dorf1Ctrl extends GameCtrl
         $direction = getDirection();
         $village = $this->session->village;
         $this->dorf1View->vars['fieldType'] = $village->getFieldType();
-        $this->dorf1View->vars['showColored'] = PreferencesHelper::getPreference("t4level") == 0;
+        $this->dorf1View->vars['showColored'] = is_t40_layout() || PreferencesHelper::getPreference("t4level") == 0;
         for ($i = 1; $i <= 18; ++$i) {
             $max = Formulas::buildingMaxLvl($village->getField($i)['item_id'], $village->isCapital());
             $this->dorf1View->vars['areas'][] = [

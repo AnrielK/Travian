@@ -97,8 +97,17 @@ body.layoutT40{--ov-portrait-zoom-out:1.45;--ov-portrait-align:left}
 @media (max-width:1060px){body.layoutT40{min-width:1020px}body.layoutT40 #wrapper{box-sizing:border-box;padding-left:30px;background-origin:content-box}body.layoutT40 #wrapper #staticElements{background-position:calc(50% - 15px) top}}
 /* the image map of the resource fields uses the 400px wide T4.4 coordinates: centre it on the 500px wide 4.0 fields */
 div.village1 img#resfeld{left:56px;margin-top:4px}
-div.village1 #village_map .colorLayer,div.village1 #village_map .colorLayer.good,div.village1 #village_map .colorLayer.notNow,div.village1 #village_map .colorLayer.maxLevel{border:0;margin:2px 0 0 2px;width:24px;height:23px;border-radius:0;box-shadow:none;background:url(../img/g/circle.png) 0 0 no-repeat}
-div.village1 #village_map .colorLayer.underConstruction{background-position:0 -33px}
+/* level circles as in the Legends look: coloured ring by state (green can be built, yellow not now, blue max),
+ white middle, orange while building */
+div.village1 #village_map .level.colorLayer,div.village1 #village_map .level.colorLayer.good,div.village1 #village_map .level.colorLayer.notNow,div.village1 #village_map .level.colorLayer.maxLevel{box-sizing:content-box;width:26px;height:26px;margin:0;border-radius:50%;box-shadow:inset 0 0 2px 0 #fff;border:1px solid #333;background:linear-gradient(to top,#606060,#c8c8c8 100%)}
+div.village1 #village_map .level.colorLayer.good{border-color:#506d00;background:linear-gradient(to top,#7da100,#c7e94f 100%)}
+div.village1 #village_map .level.colorLayer.notNow{border-color:#988b42;background:linear-gradient(to top,#988b42,#fdf15f 100%)}
+div.village1 #village_map .level.colorLayer.maxLevel{border-color:#0d648e;background:linear-gradient(to top,#0d648e,#b1e4ff 100%)}
+div.village1 #village_map .level.colorLayer .labelLayer,div.village1 #village_map .level.colorLayer.underConstruction .labelLayer{position:absolute;top:4px;left:4px;right:auto;width:18px;height:18px;border-radius:50%;background:#fff;line-height:18px;font-size:11px;font-family:Verdana,sans-serif;text-align:center;color:#333}
+div.village1 #village_map .level.colorLayer.underConstruction .labelLayer{background:#ffa84f}
+/* light on the resource field under the pointer (dorf1/main.php) */
+div.village1 #village_map .fieldGlow{position:absolute;width:120px;height:76px;margin:-38px 0 0 -60px;border-radius:50%;background:radial-gradient(closest-side,rgba(255,255,255,.55),rgba(255,255,255,.25) 60%,rgba(255,255,255,0));pointer-events:none;z-index:1;display:none}
+div.village1 #village_map .fieldGlow.shown{display:block}
 /* 4.0 resource line: green bars, red once the store is full */
 #res li .bar{background-color:#046802}
 #res li .bar.stockFull{background-color:#d40000}
@@ -108,15 +117,19 @@ div.village1 #village_map .colorLayer.underConstruction{background-position:0 -3
 div.village1 #village_map .level.highlighted.background{background:none;margin:2px 0 0 2px}
 div.village1 #village_map .level.highlighted.background::after{content:"";position:absolute;left:0;top:0;width:31px;height:31px;box-sizing:border-box;border:2.5px solid red;border-radius:50%;pointer-events:none}
 .colorBlind div.village1 #village_map .level.highlighted.background::after{border-color:#0024d8}
-div.village1 #village_map .colorLayer .labelLayer,div.village1 #village_map .colorLayer.underConstruction .labelLayer{top:0;left:0;right:auto;width:23px;height:23px;background:none;border-radius:0;line-height:23px;font-size:13px;font-family:Arial,Helvetica,Verdana,sans-serif;color:#252525}
 .contentNavi.subNavi{display:flex;align-items:flex-start;width:auto;margin-right:-46px;overflow:visible}
 #content>a#tabFavorButton{position:absolute}
 .tabNavi .container.active .content .tabItem{color:#252525}
 .contentNavi.subNavi .container{flex:none}
 .subNavi .container .content .tabItem{padding:11px 6px 0}
-div.village2 div#village_map div.buildingSlot div.colorLayer,div.village2 div#village_map div.buildingSlot div.colorLayer.good,div.village2 div#village_map div.buildingSlot div.colorLayer.notNow,div.village2 div#village_map div.buildingSlot div.colorLayer.maxLevel{border:0;margin:2px 0 0 2px;width:24px;height:23px;border-radius:0;box-shadow:none;background:url(../img/g/circle.png) 0 0 no-repeat}
-div.village2 div#village_map div.buildingSlot div.colorLayer.underConstruction{background-position:0 -33px}
-div.village2 div#village_map div.buildingSlot div.colorLayer .labelLayer,div.village2 div#village_map div.buildingSlot div.colorLayer.underConstruction .labelLayer{top:0;left:0;right:auto;width:23px;height:23px;background:none;border-radius:0;line-height:23px;font-size:13px;font-family:Arial,Helvetica,Verdana,sans-serif;color:#252525}
+div.village2 div#village_map div.buildingSlot .level.colorLayer,div.village2 div#village_map div.buildingSlot .level.colorLayer.good,div.village2 div#village_map div.buildingSlot .level.colorLayer.notNow,div.village2 div#village_map div.buildingSlot .level.colorLayer.maxLevel{box-sizing:content-box;width:26px;height:26px;margin:0;border-radius:50%;box-shadow:inset 0 0 2px 0 #fff;border:1px solid #333;background:linear-gradient(to top,#606060,#c8c8c8 100%)}
+div.village2 div#village_map div.buildingSlot .level.colorLayer.good{border-color:#506d00;background:linear-gradient(to top,#7da100,#c7e94f 100%)}
+div.village2 div#village_map div.buildingSlot .level.colorLayer.notNow{border-color:#988b42;background:linear-gradient(to top,#988b42,#fdf15f 100%)}
+div.village2 div#village_map div.buildingSlot .level.colorLayer.maxLevel{border-color:#0d648e;background:linear-gradient(to top,#0d648e,#b1e4ff 100%)}
+div.village2 div#village_map div.buildingSlot .level.colorLayer .labelLayer,div.village2 div#village_map div.buildingSlot .level.colorLayer.underConstruction .labelLayer{position:absolute;top:4px;left:4px;right:auto;width:18px;height:18px;border-radius:50%;background:#fff;line-height:18px;font-size:11px;font-family:Verdana,sans-serif;text-align:center;color:#333}
+div.village2 div#village_map div.buildingSlot .level.colorLayer.underConstruction .labelLayer{background:#ffa84f}
+/* the level switch ("+" / "-") hides the level circles of the buildings */
+div.village2 div#village_map.levelsHidden .level{display:none}
 #content.build h1.titleInHeader .level{text-transform:capitalize}
 #build .roundedCornersBox.big{background:none;border:0;box-shadow:none;padding:0;margin:15px 0 0}
 #build .roundedCornersBox.big>h4{display:none}

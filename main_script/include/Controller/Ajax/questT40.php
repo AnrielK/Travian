@@ -46,6 +46,7 @@ class questT40 extends AjaxBase
             'wrong' => $wrong,
         ]);
         $this->response['data']['reward'] = $quest->hasReward();
-        $this->response['data']['declined'] = $quest->isDeclined();
+        // declined, or all tasks done: the quest master goes away
+        $this->response['data']['declined'] = $quest->isDeclined() || $quest->isFinished();
     }
 }
