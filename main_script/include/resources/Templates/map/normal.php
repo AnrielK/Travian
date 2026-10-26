@@ -726,13 +726,14 @@
             if (size.x === view.x && size.y === view.y && size.width === view.width && size.height === view.height) {
                 return;
             }
-            var change = {x: view.x - size.x, y: view.y - size.y};
             map.setContainerSizes(size);
             if (map.miniMap && map.miniMap.container) {
                 var miniOffset = jQuery(map.miniMap.container).offset();
                 map.miniMap.containerPosition = {x: miniOffset.left, y: miniOffset.top};
             }
-            map.transition.containerPositionChange(change);
+            // keep the fields where they are drawn: the origin moves with the container (its y counts upwards,
+            // the original positionChange had the y sign wrong and drew the next blocks a few rows off)
+            map.transition.containerPositionChange({x: view.x - size.x, y: size.y - view.y});
         };
         jQuery(window).on('resize', refreshMapPosition);
         ['mousedown', 'touchstart'].forEach(function (type) {

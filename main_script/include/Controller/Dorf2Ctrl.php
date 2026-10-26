@@ -25,7 +25,8 @@ class Dorf2Ctrl extends GameCtrl
         if ($quest->getTutorial() == '7-0') {
             $quest->setTutorial("8-0");
         }
-        $showColored = PreferencesHelper::getPreference("t4level") == 0;
+        // T40: the level switch hides the levels instead (see dorf2/main2.php), the circles stay coloured
+        $showColored = is_t40_layout() || PreferencesHelper::getPreference("t4level") == 0;
         $village = $this->session->village;
         $maps = [];
         $non_fast_upgrade_buildings = [13, 15, 16, 17, 18, 19, 20, 21, 22, 24, 25, 26, 27, 29, 30, 36, 37, 40];
@@ -140,7 +141,8 @@ class Dorf2Ctrl extends GameCtrl
     {
         $village = $this->session->village;
         $max = Formulas::buildingMaxLvl($village->getField($i)['item_id'], $village->isCapital());
-        $showColored = PreferencesHelper::getPreference("t4level") == 0;
+        // T40: the level switch hides the levels instead (see dorf2/main2.php), the circles stay coloured
+        $showColored = is_t40_layout() || PreferencesHelper::getPreference("t4level") == 0;
         if ($village->getField($i)['level'] >= $max || ($village->getField($i)['level'] + $village->getField($i)['upgrade_state']) == $max) {
             $color = 'maxLevel';
         } else {

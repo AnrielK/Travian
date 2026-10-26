@@ -125,6 +125,12 @@ class QuestT40
         return $this->getState() === self::DECLINED;
     }
 
+    /** Every task done and every optional reward collected: the quest master leaves the village sign. */
+    public function isFinished(): bool
+    {
+        return $this->getState() === self::OPTIONAL && $this->row()['optional'] === (1 << 11) - 1;
+    }
+
     public function isOptionalCollected(int $task): bool
     {
         return ($this->row()['optional'] & (1 << ($task - 30))) !== 0;

@@ -179,3 +179,20 @@
     <div class="clear"></div>
 </div>
 <?=$vars['onLoadBuildings']; ?>
+<?php if (is_t40_layout()): ?>
+    <script type="text/javascript">
+        // 4.0: a resource field lights up while the pointer is on it (its circle of the image map), under the level circles
+        jQuery(function () {
+            var glow = jQuery('<div class="fieldGlow"></div>').prependTo('#village_map');
+            jQuery('#rx area[data-index]').on('mouseenter', function () {
+                var circle = jQuery('#village_map .aid' + this.getAttribute('data-index'));
+                if (circle.length) {
+                    var position = circle.position();
+                    glow.css({left: position.left + circle.outerWidth() / 2, top: position.top + circle.outerHeight() / 2}).addClass('shown');
+                }
+            }).on('mouseleave', function () {
+                glow.removeClass('shown');
+            });
+        });
+    </script>
+<?php endif; ?>

@@ -97,5 +97,17 @@ use Core\Helper\PreferencesHelper;
             return '<?=isset($vars['ajaxToken']) ? $vars['ajaxToken'] : null;?>';
         };
         Travian.Game.Preferences.initialize(<?=json_encode($preferences);?>);
+        // the resource counters write with Travian.Formatter, which groups thousands the German way ("74.529"):
+        // group them like the numbers from the server (number_format_x), "74 529" in Czech
+        (function (Formatter, separator) {
+            Travian.Formatter = function (options) {
+                Formatter.call(this, options);
+                var format = this.getFormattedNumber;
+                this.getFormattedNumber = function (number) {
+                    return String(format.call(this, number)).replace(/\./g, separator);
+                };
+            };
+            Travian.Formatter.prototype = Formatter.prototype;
+        })(Travian.Formatter, <?=json_encode(getDisplay("separateNumbers3By3") ? number_thousands_separator() : '');?>);
     </script>
 </head>

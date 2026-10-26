@@ -1031,7 +1031,7 @@ class GameView
     private function renderQuestT40()
     {
         $quest = new \Model\QuestT40();
-        if ($quest->isDeclined()) {
+        if ($quest->isDeclined() || $quest->isFinished()) {
             return;
         }
         $this->vars['t40']['questmaster'] = PHPBatchView::render('layout/t40Questmaster', [
