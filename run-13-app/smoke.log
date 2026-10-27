@@ -1,0 +1,14 @@
+login page 200 78201
+register alfa: http://127.0.0.1:8080/dorf1.php
+register beta: http://127.0.0.1:8080/dorf1.php
+login alfa: http://127.0.0.1:8080/dorf1.php
+build queue: 1
+training rows: 1
+movements: [(0, 0), (3, 0)]
+state: {'alliances': 1, 'messages': 1, 'reports': 4, 'pending_builds': 0, 'pending_training': 0, 'units_alfa': (210, 50)}
+crawled 250 player pages
+map tile 200 image/jpeg 219510
+login Multihunter: http://127.0.0.1:8080/dorf1.php
+crawled 80 admin pages
+
+=== 40s, problems: 0
