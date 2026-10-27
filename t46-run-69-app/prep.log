@@ -1,0 +1,57 @@
+ios/mariadb/build:
+total 0
+drwxr-xr-x   5 runner  staff  160 Oct 27 01:42 .
+drwxr-xr-x  10 runner  staff  320 Oct 27 01:42 ..
+drwxr-xr-x   4 runner  staff  128 Oct 27 01:42 iphoneos
+drwxr-xr-x   4 runner  staff  128 Oct 27 01:42 iphonesimulator
+drwxr-xr-x  31 runner  staff  992 Oct 27 01:42 share
+
+ios/mariadb/build/iphoneos:
+total 66984
+drwxr-xr-x  4 runner  staff       128 Oct 27 01:42 .
+drwxr-xr-x  5 runner  staff       160 Oct 27 01:42 ..
+drwxr-xr-x  4 runner  staff       128 Oct 27 01:42 include
+-rw-r--r--  1 runner  staff  33482960 Oct 27 01:42 libmariadbcore.a
+
+ios/mariadb/build/iphonesimulator:
+total 65960
+drwxr-xr-x  4 runner  staff       128 Oct 27 01:42 .
+drwxr-xr-x  5 runner  staff       160 Oct 27 01:42 ..
+drwxr-xr-x  4 runner  staff       128 Oct 27 01:42 include
+-rw-r--r--  1 runner  staff  33450080 Oct 27 01:42 libmariadbcore.a
+
+ios/mariadb/build/share:
+total 0
+drwxr-xr-x  31 runner  staff  992 Oct 27 01:42 .
+drwxr-xr-x   5 runner  staff  160 Oct 27 01:42 ..
+drwxr-xr-x   3 runner  staff   96 Oct 27 01:42 bulgarian
+drwxr-xr-x  29 runner  staff  928 Oct 27 01:42 charsets
+drwxr-xr-x   3 runner  staff   96 Oct 27 01:42 chinese
+drwxr-xr-x   3 runner  staff   96 Oct 27 01:42 czech
+drwxr-xr-x   3 runner  staff   96 Oct 27 01:42 danish
+drwxr-xr-x   3 runner  staff   96 Oct 27 01:42 dutch
+drwxr-xr-x   3 runner  staff   96 Oct 27 01:42 english
+drwxr-xr-x   3 runner  staff   96 Oct 27 01:42 estonian
+drwxr-xr-x   3 runner  staff   96 Oct 27 01:42 french
+drwxr-xr-x   3 runner  staff   96 Oct 27 01:42 georgian
+drwxr-xr-x   3 runner  staff   96 Oct 27 01:42 german
+drwxr-xr-x   3 runner  staff   96 Oct 27 01:42 greek
+drwxr-xr-x   3 runner  staff   96 Oct 27 01:42 hindi
+drwxr-xr-x   3 runner  staff   96 Oct 27 01:42 hungarian
+xcframework successfully written out to: /Users/runner/work/Travian/Travian/ios/mariadb/build/MariaDBCore.xcframework
+/Users/runner/work/Travian/Travian/ios/mariadb/build/MariaDBCore.xcframework
+/Users/runner/work/Travian/Travian/ios/mariadb/build/MariaDBCore.xcframework/ios-arm64-simulator
+/Users/runner/work/Travian/Travian/ios/mariadb/build/MariaDBCore.xcframework/ios-arm64-simulator/libmariadbcore.a
+/Users/runner/work/Travian/Travian/ios/mariadb/build/MariaDBCore.xcframework/ios-arm64-simulator/Headers
+/Users/runner/work/Travian/Travian/ios/mariadb/build/MariaDBCore.xcframework/ios-arm64-simulator/Headers/MariaDBCore
+/Users/runner/work/Travian/Travian/ios/mariadb/build/MariaDBCore.xcframework/ios-arm64-simulator/Headers/MariaDBCore/MariaDBCore.h
+/Users/runner/work/Travian/Travian/ios/mariadb/build/MariaDBCore.xcframework/ios-arm64-simulator/Headers/MariaDBCore/module.modulemap
+/Users/runner/work/Travian/Travian/ios/mariadb/build/MariaDBCore.xcframework/ios-arm64
+/Users/runner/work/Travian/Travian/ios/mariadb/build/MariaDBCore.xcframework/ios-arm64/libmariadbcore.a
+/Users/runner/work/Travian/Travian/ios/mariadb/build/MariaDBCore.xcframework/ios-arm64/Headers
+/Users/runner/work/Travian/Travian/ios/mariadb/build/MariaDBCore.xcframework/ios-arm64/Headers/MariaDBCore
+/Users/runner/work/Travian/Travian/ios/mariadb/build/MariaDBCore.xcframework/ios-arm64/Headers/MariaDBCore/MariaDBCore.h
+/Users/runner/work/Travian/Travian/ios/mariadb/build/MariaDBCore.xcframework/ios-arm64/Headers/MariaDBCore/module.modulemap
+/Users/runner/work/Travian/Travian/ios/mariadb/build/MariaDBCore.xcframework/Info.plist
+154M	/Users/runner/work/Travian/Travian/ios/mariadb/build/template/data
+Template ready: /Users/runner/work/Travian/Travian/ios/mariadb/build/template/data (11.4.13-MariaDB)
