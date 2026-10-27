@@ -1,0 +1,4 @@
+# security: the installer lock file
+<Files "install.lock">
+    Require all denied
+</Files>
