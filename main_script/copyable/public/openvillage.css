@@ -193,11 +193,11 @@ div.village1 #village_map .fieldGlow.shown {
 }
 
 /* the manual (manual.php in the window of Travian.Game.iPopup, layout/head.php), laid out as in Travian Legends */
-/* the manual window's title on the left, in bold (layout/head.php) */
+/* the manual window (layout/head.php: the pack's white dialog) with its title on the left, in bold */
 .ovManualDialog .title {
     padding-left: 12px;
     text-align: left !important;
-    font-weight: bold;
+    font-weight: bold !important;
 }
 
 /* the manual's content stays put in its window: nothing wider than the window (a touch could move it sideways) */
