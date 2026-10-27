@@ -5,9 +5,9 @@
                     | <a href="gods.php?s=3" class="">Athena</a>
                     | <a href="gods.php?s=4" class="">Artemis</a>
 
-                </div><?php if($session->lang == 'ar'){ echo 'Yeni bir Tanrı seçerek tüm ilahi gücü kaybedeceksiniz'; }else{ echo 'By choosing a new God you will lose all divine power'; } ?></a> <img src="https://gpack.newtravian.com/gpack/0/travian_default/img/a/Favor.png" alt="Favour" height="15">.
+                </div><?php if($session->lang == 'ar'){ echo 'Yeni bir Tanrı seçerek tüm ilahi gücü kaybedeceksiniz'; }else{ echo 'By choosing a new God you will lose all divine power'; } ?></a> <img src="gpack/travian_default/img/gods/Favor.png" alt="Favour" height="15">.
                 <br>
-                <?php if($session->lang == 'ar'){ echo 'Şu anda sahip olduğunuz:'; }else{ 'You currently have:'; } ?> <b><?php echo $session->favor; ?></b> <?php if($session->lang == 'ar'){ echo 'İlahi Güç'; }else{ echo 'Divine Power'; } ?> <img src="https://gpack.newtravian.com/gpack/0/travian_default/img/a/Favor.png" alt="Favour" height="15">
+                <?php if($session->lang == 'ar'){ echo 'Şu anda sahip olduğunuz:'; }else{ 'You currently have:'; } ?> <b><?php echo $session->favor; ?></b> <?php if($session->lang == 'ar'){ echo 'İlahi Güç'; }else{ echo 'Divine Power'; } ?> <img src="gpack/travian_default/img/gods/Favor.png" alt="Favour" height="15">
                 <table id="overview" cellpadding="1" cellspacing="1">
                     <thead>
                         <tr>
@@ -25,11 +25,11 @@
                             <?php
                                 if ($session->god != 1) {
                                 ?>
-                                <img src="https://gpack.newtravian.com/gpack/0/travian_default/img/gods/Hera.png" height="100">
+                                <img src="gpack/travian_default/img/gods/Hera.png" height="100">
                                  <?php
                                 } else {
                                 ?>
-                                 <img src="https://gpack.newtravian.com/gpack/0/travian_default/img/gods/Hera.png" height="100" style="border: 4px solid #094D9C;border-radius: 50%;">
+                                 <img src="gpack/travian_default/img/gods/Hera.png" height="100" style="border: 4px solid #094D9C;border-radius: 50%;">
                                 <?php
                                 }
                                 ?>
@@ -53,11 +53,11 @@
                                 <?php
                                 if ($session->god != 2) {
                                 ?>
-                                <img src="https://gpack.newtravian.com/gpack/0/travian_default/img/gods/Ares.png" height="100">
+                                <img src="gpack/travian_default/img/gods/Ares.png" height="100">
                                  <?php
                                 } else {
                                 ?>
-                                 <img src="https://gpack.newtravian.com/gpack/0/travian_default/img/gods/Ares.png" height="100" style="border: 4px solid #094D9C;border-radius: 50%;">
+                                 <img src="gpack/travian_default/img/gods/Ares.png" height="100" style="border: 4px solid #094D9C;border-radius: 50%;">
                                 <?php
                                 }
                                 ?>
@@ -81,11 +81,11 @@
                                 <?php
                                 if ($session->god != 3) {
                                 ?>
-                                <img src="https://gpack.newtravian.com/gpack/0/travian_default/img/gods/Athena.png" height="100">
+                                <img src="gpack/travian_default/img/gods/Athena.png" height="100">
                                  <?php
                                 } else {
                                 ?>
-                                 <img src="https://gpack.newtravian.com/gpack/0/travian_default/img/gods/Athena.png" height="100" style="border: 4px solid #094D9C;border-radius: 50%;">
+                                 <img src="gpack/travian_default/img/gods/Athena.png" height="100" style="border: 4px solid #094D9C;border-radius: 50%;">
                                 <?php
                                 }
                                 ?>
@@ -109,11 +109,11 @@
                                 <?php
                                 if ($session->god != 4) {
                                 ?>
-                                <img src="https://gpack.newtravian.com/gpack/0/travian_default/img/gods/Artemis.png" height="100">
+                                <img src="gpack/travian_default/img/gods/Artemis.png" height="100">
                                  <?php
                                 } else {
                                 ?>
-                                 <img src="https://gpack.newtravian.com/gpack/0/travian_default/img/gods/Artemis.png" height="100" style="border: 4px solid #094D9C;border-radius: 50%;">
+                                 <img src="gpack/travian_default/img/gods/Artemis.png" height="100" style="border: 4px solid #094D9C;border-radius: 50%;">
                                 <?php
                                 }
                                 ?>

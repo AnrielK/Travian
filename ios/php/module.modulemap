@@ -1,0 +1,8 @@
+module PHPCore {
+    header "PHPCore.h"
+    link "sqlite3"
+    link "z"
+    link "iconv"
+    link "resolv"
+    export *
+}

@@ -3086,8 +3086,9 @@ private function calculateBattle($residence,$stonemason,$walllevel,$brewery){
 
     function reviveHero($uid,$vref){
         global $database;
-        $q ="UPDATE hero, units SET hero.dead = '0', hero.health = '100', hero.revivetime = '0', hero.lastupdate = '".time()."', units.u11 = 1 WHERE hero.uid = '".sql_esc($uid)."' AND units.vref = '".sql_esc($vref)."'";
-        $database->query($q);
+        // one table per UPDATE (multi-table UPDATE is MySQL-only; the iOS build uses SQLite)
+        $database->query("UPDATE hero SET dead = '0', health = '100', revivetime = '0', lastupdate = '".time()."' WHERE uid = '".sql_esc($uid)."'");
+        $database->query("UPDATE units SET u11 = 1 WHERE vref = '".sql_esc($vref)."'");
     return true;
     }
 

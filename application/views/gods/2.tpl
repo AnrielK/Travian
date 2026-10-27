@@ -6,7 +6,7 @@
                     | <a href="gods.php?s=4" class="">Artemis</a>
 
 </div>
-<?php if($session->lang == 'ar'){ echo 'Şu anda sahip olduğunuz:'; }else{ echo 'You currently have:'; } ?> <b><?php echo $session->favor; ?></b> <?php if($session->lang == 'ar'){ echo 'İlahi Güç'; }else{ echo 'Divine Power'; } ?> <img src="https://gpack.newtravian.com/gpack/0/travian_default/img/a/Favor.png" alt="Favour" height="15"><br><br>
+<?php if($session->lang == 'ar'){ echo 'Şu anda sahip olduğunuz:'; }else{ echo 'You currently have:'; } ?> <b><?php echo $session->favor; ?></b> <?php if($session->lang == 'ar'){ echo 'İlahi Güç'; }else{ echo 'Divine Power'; } ?> <img src="gpack/travian_default/img/gods/Favor.png" alt="Favour" height="15"><br><br>
 <table id="overview" cellpadding="1" cellspacing="1">
 <thead>
 	<tr>
@@ -20,7 +20,7 @@
 	<tbody class="hoverable">
 
                         <tr class="hover">
-		<td><img src="https://gpack.newtravian.com/gpack/0/travian_default/img/gods/arestroops.png" height="100"></td>
+		<td><img src="gpack/travian_default/img/gods/arestroops.png" height="100"></td>
 		<td>
 			<b>+800</b>
             
@@ -40,7 +40,7 @@
             <br>
 			
 		</td>
-		<td><b>-1000</b> <img src="https://gpack.newtravian.com/gpack/0/travian_default/img/a/Favor.png" alt="Favour" height="15"></td>
+		<td><b>-1000</b> <img src="gpack/travian_default/img/gods/Favor.png" alt="Favour" height="15"></td>
 		<td>
 
             <?php
@@ -51,7 +51,7 @@
                                 <?php
                                 } else {
                                 ?>
-<span class="none"> (-1000 <img src="https://gpack.newtravian.com/gpack/0/travian_default/img/a/Favor.png" alt="Favour" height="15">) </span>	
+<span class="none"> (-1000 <img src="gpack/travian_default/img/gods/Favor.png" alt="Favour" height="15">) </span>	
                                 <?php
                                 }
 

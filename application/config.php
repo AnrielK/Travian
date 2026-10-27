@@ -8,19 +8,9 @@ error_reporting(E_ALL & ~E_WARNING & ~E_NOTICE & ~E_DEPRECATED); // PHP 8: hide 
 //////////////////////////////////
 //   ****  SQL SETTINGS  ****   //
 //////////////////////////////////
-define("SQL_SERVER", "localhost");
-define("SQL_USER", "root");
-define("SQL_PASS", "");
-define("SQL_DB", "travian");
-try {
-  $baglanDB = new PDO("mysql:host=".SQL_SERVER.";dbname=".SQL_DB, SQL_USER, SQL_PASS, 
-  [ 
-    PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION,
-    PDO::MYSQL_ATTR_INIT_COMMAND => "SET NAMES utf8"
-  ]);
-} catch(PDOException $e) {
-    $baglanDB=false;
-}
+// Local / iOS build: database settings come from environment variables (application/db_settings.php).
+require_once __DIR__ . "/db_settings.php";
+$baglanDB = travian_pdo();
 
 define('APP_MAIN_PATH', dirname(realpath(__DIR__)));
 define('APP_BASE_PATH', realpath(__DIR__));

@@ -42,7 +42,7 @@ if(isset($id))
 
 				$sql = "SELECT * FROM palevo WHERE `uid` = '" . sql_esc($id) . "' and `type` = '0'";
 
-				$result = $database->queryFetch($sql);
+				$result = $database->query($sql) ?: array();
 
 				foreach($result as $row)
 

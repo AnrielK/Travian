@@ -141,7 +141,7 @@ class Account {
 		if(!isset($_POST['agb'])) {
 			$form->addError("agree",AGREE_ERROR);
 		}
-        if($database->CheckUniqueIP($_SERVER['REMOTE_ADDR'])){$form->addError("agree","ONLY IS ONE ACCOUNT PER SERVER!");}
+        if(!LOCAL_MULTI_ACCOUNTS && $database->CheckUniqueIP($_SERVER['REMOTE_ADDR'])){$form->addError("agree","ONLY IS ONE ACCOUNT PER SERVER!");}
 		if($form->returnErrors() > 0) {
 			$_SESSION['errorarray'] = $form->getErrors();
 			$_SESSION['valuearray'] = $_POST;

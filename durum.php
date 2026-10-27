@@ -1,11 +1,8 @@
 <?php
 require_once 'application/config.php';
 try {
-    $baglanDB = new PDO("mysql:host=".SQL_SERVER.";dbname=".SQL_DB, SQL_USER, SQL_PASS, 
-    [ 
-        PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION,
-        PDO::MYSQL_ATTR_INIT_COMMAND => "SET NAMES utf8"
-    ]);
+    $baglanDB = travian_pdo();   // shared connection (MySQL or SQLite)
+    if (!$baglanDB) throw new PDOException('no database');
     header('Content-Type: application/json; charset=utf-8',true,200);
     $data['users']=safe_count($baglanDB->query('SELECT * FROM `users` WHERE `id` > 4')->fetchAll(PDO::FETCH_ASSOC));
     $data['online']=safe_count($baglanDB->query("SELECT * FROM `users` WHERE " . time() . "-`timestamp` < (120*120) AND tribe!=5 AND tribe!=0")->fetchAll(PDO::FETCH_ASSOC));

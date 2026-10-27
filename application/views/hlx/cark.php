@@ -42,7 +42,7 @@
 
     <div class="clear"></div>
 
-    <script src="https://d3js.org/d3.v3.min.js" charset="utf-8"></script>
+    <script src="js/d3.v3.min.js" charset="utf-8"></script>
     <script type="text/javascript" charset="utf-8">
         const sleep = (milliseconds) => {
             return new Promise(resolve => setTimeout(resolve, milliseconds))

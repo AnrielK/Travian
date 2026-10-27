@@ -1,0 +1,19 @@
+# runtime data
+local/logs/
+local/data/
+setup/install.lock
+mcache/*.jpg
+mmark/*
+!mmark/.keep
+hcache/body/*
+# iOS build products
+ios/php/build/
+ios/php/work/
+ios/app/build/
+ios/app/build-device/
+ios/app/Generated/
+ios/app/*.xcodeproj/
+ios/app/Payload/
+*.ipa
+.DS_Store
+__pycache__/

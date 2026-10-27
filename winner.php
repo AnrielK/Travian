@@ -16,16 +16,15 @@ $q = "
     SELECT users.id userid, users.username username,users.alliance alliance, (
     SELECT SUM( vdata.pop )
     FROM vdata
-    WHERE vdata.owner = userid
+    WHERE vdata.owner = users.id
     )totalpop, (
         SELECT COUNT( vdata.wref )
     FROM vdata
-    WHERE vdata.owner = userid AND type != 99
+    WHERE vdata.owner = users.id AND type != 99
     )totalvillages, (
     SELECT alidata.tag
-    FROM alidata, users
+    FROM alidata
     WHERE alidata.id = users.alliance
-    AND users.id = userid
     )allitag
     FROM users
     WHERE users.access < " . (INCLUDE_ADMIN ? "10" : "8") . " and id>5
@@ -41,11 +40,11 @@ $q = "
     SELECT users.id userid, users.username username, users.apall,  (
     SELECT COUNT( vdata.wref )
     FROM vdata
-    WHERE vdata.owner = userid AND type != 99
+    WHERE vdata.owner = users.id AND type != 99
     )totalvillages, (
     SELECT SUM( vdata.pop )
     FROM vdata
-            WHERE vdata.owner = userid
+            WHERE vdata.owner = users.id
     )pop
     FROM users
     WHERE users.apall >=0 AND users.access < " . (INCLUDE_ADMIN ? "10" : "8") . " AND users.tribe <= 3
@@ -61,11 +60,11 @@ $q = "
     SELECT users.id userid, users.username username, users.dpall,  (
     SELECT COUNT( vdata.wref )
     FROM vdata
-    WHERE vdata.owner = userid AND type != 99
+    WHERE vdata.owner = users.id AND type != 99
     )totalvillages, (
     SELECT SUM( vdata.pop )
     FROM vdata
-    WHERE vdata.owner = userid
+    WHERE vdata.owner = users.id
     )pop
     FROM users
     WHERE users.dpall >=0 AND users.access < " . (INCLUDE_ADMIN ? "10" : "8") . " and id>5

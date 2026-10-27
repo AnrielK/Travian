@@ -47,7 +47,13 @@ class DB
            // echo "lol<br/>";
            // $this->settings = parse_ini_file("settings.ini.php");
             //$dsn = 'mysql:dbname='.$this->settings["dbname"].';host='.$this->settings["host"].'';
-              $dsn = 'mysql:dbname='.SQL_DB.';host='.SQL_SERVER;
+            if (!defined('SQL_DRIVER')) require_once __DIR__ . '/db_settings.php';
+            if (SQL_DRIVER === 'sqlite') {
+                $this->pdo = travian_pdo();
+                $this->bConnected = true;
+                return;
+            }
+              $dsn = 'mysql:dbname='.SQL_DB.';host='.SQL_SERVER.';port='.SQL_PORT;
 
                 # Read settings from INI file
                // $this->pdo = new PDO($dsn, $this->settings["user"], $this->settings["password"]);
@@ -82,6 +88,13 @@ class DB
         if(!$this->bConnected) { $this->Connect(); }
         try {
 
+                if (SQL_DRIVER === 'sqlite') {
+                    // MySQL dialect -> SQLite (needs the parameters: '' for numeric columns, auto ids)
+                    if (!is_array($parameters)) $parameters = array();
+                    $query = SqliteCompat::translate($this->pdo, $query, $parameters);
+                    if ($query === null) { $this->parameters = array(); $this->sQuery = $this->pdo->prepareRaw('SELECT 1 WHERE 0'); $this->sQuery->execute(); return; }
+                    $this->sQuery = $this->pdo->prepareRaw($query);
+                } else
                 # Prepare query
                 $this->sQuery = $this->pdo->prepare($query);
 
@@ -121,6 +134,7 @@ class DB
                     'query' => $query,
                     'params' => is_array($parameters) ? array_keys($parameters) : null,
                 );
+                if (function_exists('travian_log_sql_error')) travian_log_sql_error($e->getMessage(), $query);
                 if (defined('SQL_DEBUG') && SQL_DEBUG) {
                     echo htmlspecialchars($query . ' : ' . $e->getMessage(), ENT_QUOTES) . '<br/>';
                 }
@@ -235,6 +249,9 @@ class DB
             $query = trim($query);
 
             $this->Init($query,$params);
+            if (SQL_DRIVER === 'sqlite' && stripos($query, 'SELECT') === 0) {
+                return count($this->sQuery->fetchAll());   // SQLite cannot report the row count of a SELECT
+            }
             return $this->sQuery->rowCount();
 
         }

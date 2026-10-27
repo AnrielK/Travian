@@ -10,44 +10,19 @@
  */
 require_once __DIR__ . '/application/php8_compat.php';
 
-if (!function_exists('baglanti_config')) {
-    function baglanti_config()
-    {
-        if (defined('SQL_SERVER')) {
-            return array(SQL_SERVER, SQL_USER, SQL_PASS, SQL_DB);
-        }
-        // read the SQL_* defines without executing config.php (it also connects and sends headers)
-        $cfg = array('SQL_SERVER' => 'localhost', 'SQL_USER' => 'root', 'SQL_PASS' => '', 'SQL_DB' => 'travian');
-        $src = @file_get_contents(__DIR__ . '/application/config.php');
-        if ($src !== false) {
-            foreach ($cfg as $k => $v) {
-                if (preg_match('/define\(\s*["\']' . $k . '["\']\s*,\s*["\']([^"\']*)["\']\s*\)/', $src, $m)) {
-                    $cfg[$k] = $m[1];
-                }
-            }
-        }
-        return array($cfg['SQL_SERVER'], $cfg['SQL_USER'], $cfg['SQL_PASS'], $cfg['SQL_DB']);
-    }
-}
-
-list($DBHOST, $DBUSER, $DBPASS, $DBNAME) = baglanti_config();
+// Local / iOS build: settings from environment variables (MySQL or SQLite), shared PDO connection.
+require_once __DIR__ . '/application/db_settings.php';
+$DBHOST = SQL_SERVER; $DBUSER = SQL_USER; $DBPASS = SQL_PASS; $DBNAME = SQL_DB;
 
 if (!isset($baglanDB) || !($baglanDB instanceof PDO)) {
-    try {
-        $baglanDB = new PDO("mysql:host=$DBHOST;dbname=$DBNAME", $DBUSER, $DBPASS,
-            array(
-                PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION,
-                PDO::MYSQL_ATTR_INIT_COMMAND => "SET NAMES utf8"
-            ));
-    } catch (PDOException $e) {
-        // do not leak connection details to visitors
-        error_log('baglanti.php: DB connection failed: ' . $e->getMessage());
-        die("Veritabanı Bağlantısı Başarısız");
+    $baglanDB = travian_pdo();
+    if (!$baglanDB) {
+        die("Veritabanı Bağlantısı Başarısız");   // do not leak connection details to visitors
     }
 }
 
 // one mysqli connection is enough; the old code opened three identical ones
-$connection = mysqli_connect($DBHOST, $DBUSER, $DBPASS, $DBNAME);
+$connection = mysqli_connect($DBHOST, $DBUSER, $DBPASS, $DBNAME, (int)SQL_PORT);
 if ($connection) {
     mysqli_set_charset($connection, 'utf8');
 }

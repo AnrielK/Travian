@@ -96,13 +96,13 @@ if ($_GET['uid'] != 2) {
                                     } ?></b>⚡</th>
 
     <td><?php if ($displayarray['god'] == 1) {
-            echo '<img src="https://gpack.newtravian.com/gpack/0/travian_default/img/gods/Hera.png" height="15"> Hera';
+            echo '<img src="gpack/travian_default/img/gods/Hera.png" height="15"> Hera';
         } elseif ($displayarray['god'] == 2) {
-            echo '<img src="https://gpack.newtravian.com/gpack/0/travian_default/img/gods/Ares.png" height="15"> Ares';
+            echo '<img src="gpack/travian_default/img/gods/Ares.png" height="15"> Ares';
         } elseif ($displayarray['god'] == 3) {
-            echo '<img src="https://gpack.newtravian.com/gpack/0/travian_default/img/gods/Athena.png" height="15"> Athena';
+            echo '<img src="gpack/travian_default/img/gods/Athena.png" height="15"> Athena';
         } elseif ($displayarray['god'] == 4) {
-            echo '<img src="https://gpack.newtravian.com/gpack/0/travian_default/img/gods/Artemis.png" height="15"> Artemis';
+            echo '<img src="gpack/travian_default/img/gods/Artemis.png" height="15"> Artemis';
         } elseif (php7_is_zero($displayarray['god'])) {
             echo '✘';
         } ?></td>

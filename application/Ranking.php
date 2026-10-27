@@ -213,7 +213,7 @@ class Ranking
 
 			SELECT SUM( vdata.pop )
 			FROM vdata
-			WHERE vdata.owner = userid
+			WHERE vdata.owner = users.id
 			)totalpop
 
 			FROM users
@@ -240,18 +240,17 @@ class Ranking
 
 			SELECT SUM( vdata.pop )
 			FROM vdata
-			WHERE vdata.owner = userid
+			WHERE vdata.owner = users.id
 			)totalpop, (
 
 			SELECT COUNT( vdata.wref )
 			FROM vdata
-			WHERE vdata.owner = userid AND type != 99
+			WHERE vdata.owner = users.id AND type != 99
 			)totalvillages, (
 
 			SELECT alidata.tag
-			FROM alidata, users
+			FROM alidata
 			WHERE alidata.id = users.alliance
-			AND users.id = userid
 			)allitag
 			FROM users
 			WHERE users.access <> 8 AND id>4
@@ -286,18 +285,17 @@ class Ranking
 
 			SELECT SUM( vdata.pop )
 			FROM vdata
-			WHERE vdata.owner = userid
+			WHERE vdata.owner = users.id
 			)totalpop, (
 
 			SELECT COUNT( vdata.wref )
 			FROM vdata
-			WHERE vdata.owner = userid AND type != 99
+			WHERE vdata.owner = users.id AND type != 99
 			)totalvillages, (
 
 			SELECT alidata.tag
-			FROM alidata, users
+			FROM alidata
 			WHERE alidata.id = users.alliance
-			AND users.id = userid
 			)allitag
 			FROM users
 			WHERE users.tribe = '".$race."' AND users.access < " . (INCLUDE_ADMIN ? "10" : "8") . "  and id>4
@@ -333,7 +331,7 @@ class Ranking
 
 			SELECT SUM( vdata.pop )
 			FROM vdata
-			WHERE vdata.owner = userid
+			WHERE vdata.owner = users.id
 			)pop
 			FROM users
 			WHERE users.apall >=0 AND users.access < " . (INCLUDE_ADMIN ? "10" : "8") . "   and id>4
@@ -367,12 +365,12 @@ class Ranking
 
 			SELECT COUNT( vdata.wref )
 			FROM vdata
-			WHERE vdata.owner = userid AND type != 99
+			WHERE vdata.owner = users.id AND type != 99
 			)totalvillages, (
 
 			SELECT SUM( vdata.pop )
 			FROM vdata
-			WHERE vdata.owner = userid
+			WHERE vdata.owner = users.id
 			)pop
 			FROM users
 			WHERE users.dpall >=0 AND users.access < " . (INCLUDE_ADMIN ? "10" : "8") . " and id>4

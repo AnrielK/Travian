@@ -171,9 +171,9 @@ foreach ($queue as $block) {
 }
 //  die;
 
-imagegif($img, null, IMGQUALITY);
-safe_imagedestroy($img);
 header('Content-type: image/gif');
+imagegif($img);   // PHP 8: imagegif() takes no quality argument (ArgumentCountError)
+safe_imagedestroy($img);
 //echo file_get_contents($file);
 
 

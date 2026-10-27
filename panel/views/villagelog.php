@@ -42,7 +42,7 @@ if(isset($id))
 
 				$sql = "SELECT * FROM movement WHERE `to` = ".sql_num($_GET['did'])." and `sort_type`='0' LIMIT 20";
 
-				$result = $database->queryFetch($sql);
+				$result = $database->query($sql) ?: array();
 
 				foreach($result as $row)
 
@@ -106,7 +106,7 @@ if(isset($id))
 
 				$sql = "SELECT * FROM movement WHERE `from` = ".sql_num($_GET['did'])." and `sort_type`='0' LIMIT 20";
 
-				$result = $database->queryFetch($sql);
+				$result = $database->query($sql) ?: array();
 
 				foreach($result as $row)
 
