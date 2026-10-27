@@ -70,7 +70,7 @@ if (isset($_GET['s'])) {
 
                 <div class="contentContainer">
                     <div id="content" class="options">
-                        <h1 class="titleInHeader">Preferences</h1>
+                        <h1 class="titleInHeader"><?php echo defined('UI_PREFERENCES') ? UI_PREFERENCES : 'Preferences'; ?></h1>
 
                         <div class="contentNavi subNavi tabFavorWrapper">
                             <button type="button" class="scrollFrom" disabled="disabled"></button>

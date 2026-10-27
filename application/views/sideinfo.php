@@ -382,26 +382,26 @@ if (php7_is_zero($herodata['dead'])) {
             </div>
 
             <div class="content">
-                <div class="boxTitle">Link list</div>
+                <div class="boxTitle"><?php echo defined('dorf1_links') ? dorf1_links : 'Link list'; ?></div>
                 <ul>
                     <li class=""><a href="gods.php">
                             ► <span class="name">
                                 <?php
-                                if ($session->lang == 'en') {
-                                    echo '<b><font color="#094D9C">Divinity⚡</font></b>';
-                                } else {
+                                if ($session->lang == 'ar') {
                                     echo '<b><font color="#094D9C">İlahiyat⚡</font></b>';
+                                } else {
+                                    echo '<b><font color="#094D9C">' . (defined('UI_DIVINITY') ? UI_DIVINITY : 'Divinity') . '⚡</font></b>';
                                 }
                                 ?></span>
                         </a>
                     </li>
-                    <li class=""><a href="/build.php?t=99&amp;id=39">► <span class="name">Farmlist</span></a></li>
+                    <li class=""><a href="/build.php?t=99&amp;id=39">► <span class="name"><?php echo defined('UI_FARMLIST') ? UI_FARMLIST : 'Farmlist'; ?></span></a></li>
                     <li class="newTab">
                         <a tyle="color: red; font-weight: bold" href="/nachrichten.php?t=1&id=6"">
                         <svg viewBox=" 0 0 20 19.6" class="link">
                             <path d="M15.31 10.86v3.94a2.62 2.62 0 0 1-2.63 2.62H4.8a2.62 2.62 0 0 1-2.63-2.62V6.92A2.63 2.63 0 0 1 4.8 4.29h5.12V2.12H4a4 4 0 0 0-4 4v9.42a4 4 0 0 0 4 4h9.42a4 4 0 0 0 4-4v-4.68zM19.51 0H12.1a.48.48 0 0 0-.2.81l1.28 1.29.42.42a.49.49 0 0 1 0 .69l-.49.5-1 1L10 6.79l-3 3a.49.49 0 0 0 0 .69L9.53 13a.51.51 0 0 0 .69 0l2.7-2.71 1.57-1.57 1.62-1.62.66-.65a.47.47 0 0 1 .69 0l1.71 1.7a.48.48 0 0 0 .83-.39V.49a.49.49 0 0 0-.49-.49z"></path>
                             </svg>
-                            <span class="name">Contact Support</span>
+                            <span class="name"><?php echo defined('UI_CONTACT_SUPPORT') ? UI_CONTACT_SUPPORT : 'Contact Support'; ?></span>
                         </a>
                     </li>
 
@@ -431,47 +431,42 @@ if (php7_is_zero($herodata['dead'])) {
 
 
 
-            <div id="sidebarBoxLinklist" class="sidebarBox   ">
+            <?php
+            // Settings box: language, look of the game (graphic pack) and look of the hero.
+            if (isset($_POST['sideSettings'])) {
+                if (Languages::valid($_POST['language'] ?? null)) {
+                    $database->query("UPDATE users SET lang = '" . sql_esc($_POST['language']) . "' WHERE id = '" . sql_esc($session->uid) . "'");
+                }
+                if (isset($_POST['gpack'])) Skin::choose($_POST['gpack'] === 'world' ? null : $_POST['gpack']);
+                if (isset($_POST['heroLook']) && class_exists('HeroLegends')) HeroLegends::setStyle((int)$session->uid, $_POST['heroLook']);
+                echo '<script>window.location.replace(window.location.href);</script>';
+            }
+            $sbPack = isset($_COOKIE[Skin::COOKIE]) ? Skin::current() : 'world';
+            $sbHero = class_exists('HeroLegends') ? HeroLegends::storedStyle((int)$session->uid) : 'auto';
+            ?>
+            <style>
+                #sidebarBoxSettings form.sideSettings label { display: grid; grid-template-columns: 70px 1fr; align-items: center; gap: 4px; margin: 3px 0; }
+                #sidebarBoxSettings form.sideSettings select { width: 100%; max-width: 170px; box-sizing: border-box; }
+                #sidebarBoxSettings form.sideSettings .sideSettingsButton { text-align: right; margin-top: 4px; }
+            </style>
+            <div id="sidebarBoxSettings" class="sidebarBox   ">
                 <div class="header"></div>
                 <div class="content">
-                    <div class="boxTitle">Ayarlar</div>
-
-                    <center>
-                        <form action="" method="post">
-                            <tr>
-                                <td>Dil:</td>
-                                <td>
-
-                                    <select name="language">
-
-                                        <?php
-                                        if ($session->lang == 'en') {
-                                            echo '<option value="en" selected="selected">English</option>';
-                                        } else {
-                                            echo '<option value="en">English</option>';
-                                        }
-                                        if ($session->lang == 'ar') {
-                                            echo '<option value="ar" selected="selected">Turkish</option>';
-                                        } else {
-                                            echo '<option value="ar">Turkish</option>';
-                                        }
-                                        ?>
-                                    </select>
-                                    <input type="submit" value="Select" name="yolla">
-                        </form>
-                        <?php
-                        if (isset($_POST['yolla'])) {
-                            $database->query("UPDATE users SET lang = '" . sql_esc($_POST['language']) . "' WHERE id = '" . sql_esc($session->uid) . "'");
-                            header("refresh:0");
-                        }
-                        ?>
-                        </td>
-                        </tr>
-                        </form>
-                    </center>
-
-
-
+                    <div class="boxTitle"><?php echo defined('SETTINGS_BOX') ? SETTINGS_BOX : 'Settings'; ?></div>
+                    <form action="" method="post" class="sideSettings">
+                        <input type="hidden" name="sideSettings" value="1">
+                        <label><span><?php echo defined('SETTINGS_LANGUAGE') ? SETTINGS_LANGUAGE : 'Language'; ?>:</span>
+                            <select name="language"><?php echo Languages::options($session->lang); ?></select></label>
+                        <?php if (count(Skin::available()) > 1) { ?>
+                        <label><span><?php echo defined('SETTINGS_GPACK') ? SETTINGS_GPACK : 'Look'; ?>:</span>
+                            <select name="gpack"><?php echo Skin::options($sbPack); ?></select></label>
+                        <?php } ?>
+                        <?php if (class_exists('HeroLegends') && HeroLegends::available()) { ?>
+                        <label><span><?php echo defined('SETTINGS_HERO') ? SETTINGS_HERO : 'Hero'; ?>:</span>
+                            <select name="heroLook"><?php echo HeroLegends::styleOptions($sbHero); ?></select></label>
+                        <?php } ?>
+                        <div class="sideSettingsButton"><input type="submit" value="<?php echo defined('SETTINGS_SAVE') ? SETTINGS_SAVE : 'Save'; ?>"></div>
+                    </form>
                 </div>
             </div>
 

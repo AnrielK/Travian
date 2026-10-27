@@ -37,6 +37,16 @@ define("CRANNY_CAP",$sData['CRANNY_CAP']); // cranny
 define("ADV_TIME",safe_div(86400, $sData['ADV_TIME'])); // adventure
 define("TRAPPER_CAPACITY",$sData['TRAPPER_CAPACITY']); 
 define("LANG", $sData['Lang']); // speed server
+// Graphic pack of the world ('' = original T4.6 look, 'legends655' = Travian Legends 655.3), see Skin.php.
+if (is_array($sData) && !array_key_exists('gpack', $sData)) {
+    try { $db->query("ALTER TABLE config ADD COLUMN gpack VARCHAR(32) NOT NULL DEFAULT ''"); } catch (Throwable $e) {}
+    $sData['gpack'] = '';
+}
+define("GAME_GPACK", (string)($sData['gpack'] ?? ''));
+require_once __DIR__ . "/Skin.php";
+require_once __DIR__ . "/Languages.php";
+require_once __DIR__ . "/HeroLegends.php";
+if (PHP_SAPI !== 'cli') ob_start(['Skin', 'filter']);
 define("CATAPULT_C", $sData['catapult_c']); // 999999xden fazla ise mancınık açılır 
 
 define("TRI5BES", TRUE); // TRUE OR FALSE

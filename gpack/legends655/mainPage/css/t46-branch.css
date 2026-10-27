@@ -1,0 +1,55 @@
+@charset "UTF-8";
+/*
+ * Adapter: the markup of the T4.6 branch under the Travian Legends 655.3 stylesheet (compact.css + the
+ * OpenVillage t46Layout adapter taken over from the main branch). application/Skin.php adds the body classes
+ * (t46Layout t46-<tribe> legendsV2 legends655), moves the stock bar into the header, makes the windows
+ * "content pages" and turns the resource view boxes into Legends info boxes; this file covers the rest.
+ */
+
+/* ---- Village list: T4.6 entries are <li><a><span.iconAndNameWrapper>… (Legends 655 uses .listEntry) ---- */
+body.legends655 .sidebar #sidebarBoxVillagelist .content ul li a {
+    display: inline-grid;
+    grid-template-columns: 165px 85px;
+    grid-template-rows: 20px;
+    padding: 0;
+}
+body.legends655 .sidebar #sidebarBoxVillagelist .content ul li a .iconAndNameWrapper {
+    display: inline-grid;
+    grid-template-columns: 15px 150px;
+    grid-column-start: 1;
+    position: relative;
+    padding: 2px 0;
+    align-items: center;
+}
+body.legends655 .sidebar #sidebarBoxVillagelist .content ul li a .iconAndNameWrapper > * { grid-row-start: 1; }
+body.legends655 .sidebar #sidebarBoxVillagelist .content ul li a .iconAndNameWrapper svg.attack {
+    grid-column-start: 1;
+    width: 12px;
+    height: 12px;
+    fill: #b83a38;
+}
+body.legends655 .sidebar #sidebarBoxVillagelist .content ul li:not(.attack) svg.attack { display: none; }
+body.legends655 .sidebar #sidebarBoxVillagelist .content ul li a .iconAndNameWrapper .name {
+    grid-column-start: 2;
+    width: 150px;
+    display: inline-block;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    overflow: hidden;
+}
+body.legends655 .sidebar #sidebarBoxVillagelist .content ul li a .coordinatesGrid {
+    font-family: Arial, Helvetica, Verdana, sans-serif;
+    grid-column-start: 2;
+    border-left: 1px solid rgba(191, 179, 155, .6);
+    padding-top: 2px;
+    display: inline-block;
+}
+body.legends655 .sidebar #sidebarBoxVillagelist .content ul li.active { background-color: #fff9eb; }
+
+/* ---- Logo: the T4.6 emblem on its plate (top left of the Legends top bar) ---- */
+body.legends655 #topBar #logo {
+    position: absolute; top: 4px; left: 14px; display: block; width: 128px; height: 40px; text-align: center; opacity: 1;
+    border: solid 1px #5c4134; border-radius: 4px; background-color: #dacebb;
+    box-shadow: 1px 0 1px rgba(0, 0, 0, .35) inset, -1px 0 1px rgba(0, 0, 0, .35) inset, 0 1px 2px rgba(0, 0, 0, .5);
+}
+body.legends655 #topBar #logo svg { width: 112px; height: 38px; margin-top: -2px; opacity: 1; filter: none; }

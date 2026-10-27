@@ -1,0 +1,5 @@
+@charset "UTF-8";
+/* Travian Legends 655.3 for the T4.6 branch: the pack's bundle (Legends CSS + OpenVillage t46Layout adapter, from main)
+   and the adapter of this branch's markup (application/Skin.php adds the body classes and moves a few blocks). */
+@import url("compact.css");
+@import url("../../css/t46-branch.css");

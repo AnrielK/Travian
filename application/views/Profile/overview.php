@@ -20,7 +20,7 @@ foreach ($varray as $vil) {
 <h4 class="round"><?= PROFM1 ?></h4>
 <?php
 if ($_GET['uid'] != 2) {
-    echo '<img class="heroImage" style="width:160px;height:205px;" src="' . $database->heroBody($uid) . '" alt="hero">';
+    echo '<img class="heroImage" style="width:160px;height:205px;" src="' . (HeroLegends::active((int)$uid) ? HeroLegends::imageUrl((int)$uid, 'body_profile') : $database->heroBody($uid)) . '" alt="hero">';
 }
 
 ?>
@@ -92,7 +92,7 @@ if ($_GET['uid'] != 2) {
     <th><b style="color:#094D9C;"><?php if ($session->lang == 'ar') {
                                         echo 'Tanrı';
                                     } else {
-                                        echo 'Divinity';
+                                        echo defined('UI_DIVINITY') ? UI_DIVINITY : 'Divinity';
                                     } ?></b>⚡</th>
 
     <td><?php if ($displayarray['god'] == 1) {
@@ -138,7 +138,7 @@ if ($_GET['uid'] != 2) {
         <th><?php if ($session->lang == 'ar') {
                 echo 'Koruma';
             } else {
-                echo 'Protection';
+                echo defined('UI_PROTECTION') ? UI_PROTECTION : 'Protection';
             } ?></th>
         <td><?php
             if ($displayarray['protect'] > 0) {

@@ -104,7 +104,7 @@ $rp = 3 * SPEED * $session->heroD['product'];
 
     <a id="heroImageButton" href="hero_inventory.php" class="heroImageButton" type="button">
         <div class="heroImageHover">
-            <img class="heroImage" src="hero_image.php?uid=<?php echo $session->uid; ?>&size=sideinfo&<?php echo $heroF->heroHash(); ?>" alt="">
+            <img class="heroImage" src="<?php echo HeroLegends::active((int)$session->uid) ? HeroLegends::imageUrl((int)$session->uid, 'sideinfo') : 'hero_image.php?uid=' . $session->uid . '&size=sideinfo&' . $heroF->heroHash(); ?>" alt="">
         </div>
     </a>
 

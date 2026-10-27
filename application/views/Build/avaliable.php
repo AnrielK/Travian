@@ -58,18 +58,18 @@ switch ($session->tribe) {
 
         <div class="content favor favorKey0">
             <a id="buttonx1" href="build.php?id=<?php echo $id; ?>&category=1" class="tabItem <?php if($t==1){echo 'active';}else{echo 'normal';}?>" >
-                Infrastructure
+                <?php echo defined('UI_TAB_INFRASTRUCTURE') ? UI_TAB_INFRASTRUCTURE : 'Infrastructure'; ?>
             </a>
         </div>
 
         <div class="content favor favorKey2 ">
             <a id="buttonw2" href="build.php?id=<?php echo $id; ?>&category=2" class="tabItem <?php if($t=2){echo 'active';}else{echo 'normal';}?>" >
-                Army buildings
+                <?php echo defined('UI_TAB_MILITARY') ? UI_TAB_MILITARY : 'Army buildings'; ?>
             </a>
         </div>
         <div class="content favor favorKey3 ">
             <a id="buttonL3" href="build.php?id=<?php echo $id; ?>&category=3" class="tabItem <?php if($t=3){echo 'active';}else{echo 'normal';}?>" >
-                Resource buildings
+                <?php echo defined('UI_TAB_RESOURCES') ? UI_TAB_RESOURCES : 'Resource buildings'; ?>
             </a>
         </div>
     </div>
@@ -80,13 +80,13 @@ switch ($session->tribe) {
             jQuery('#buttonx1').click(function (event) {
                 jQuery(window).trigger('tabClicked', [this, {
                     "class": "infrastructure active",
-                    "title": "Infrastructure",
+                    "title": <?php echo json_encode(defined('UI_TAB_INFRASTRUCTURE') ? UI_TAB_INFRASTRUCTURE : 'Infrastructure'); ?>,
                     "target": false,
                     "id": "buttonx1",
                     "href": "build.php?id=<?php echo $id; ?>&category=1",
                     "onclick": false,
                     "enabled": true,
-                    "text": "Infrastructure",
+                    "text": <?php echo json_encode(defined('UI_TAB_INFRASTRUCTURE') ? UI_TAB_INFRASTRUCTURE : 'Infrastructure'); ?>,
                     "dialog": false,
                     "plusDialog": false,
                     "goldclubDialog": false,
@@ -103,13 +103,13 @@ switch ($session->tribe) {
             jQuery('#buttonw2').click(function (event) {
                 jQuery(window).trigger('tabClicked', [this, {
                     "class": "military normal",
-                    "title": "Army buildings",
+                    "title": <?php echo json_encode(defined('UI_TAB_MILITARY') ? UI_TAB_MILITARY : 'Army buildings'); ?>,
                     "target": false,
                     "id": "buttonw2",
                     "href": "build.php?id=<?php echo $id; ?>&category=2",
                     "onclick": false,
                     "enabled": true,
-                    "text": "Army buildings",
+                    "text": <?php echo json_encode(defined('UI_TAB_MILITARY') ? UI_TAB_MILITARY : 'Army buildings'); ?>,
                     "dialog": false,
                     "plusDialog": false,
                     "goldclubDialog": false,
@@ -126,13 +126,13 @@ switch ($session->tribe) {
             jQuery('#buttonL3').click(function (event) {
                 jQuery(window).trigger('tabClicked', [this, {
                     "class": "resources normal",
-                    "title": "Resource buildings",
+                    "title": <?php echo json_encode(defined('UI_TAB_RESOURCES') ? UI_TAB_RESOURCES : 'Resource buildings'); ?>,
                     "target": false,
                     "id": "buttonL3",
                     "href": "build.php?id=<?php echo $id; ?>&category=3",
                     "onclick": false,
                     "enabled": true,
-                    "text": "Resource buildings",
+                    "text": <?php echo json_encode(defined('UI_TAB_RESOURCES') ? UI_TAB_RESOURCES : 'Resource buildings'); ?>,
                     "dialog": false,
                     "plusDialog": false,
                     "goldclubDialog": false,

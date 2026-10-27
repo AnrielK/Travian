@@ -16,7 +16,9 @@
             is_numeric($_POST['PROTECTIOND']) &&
             is_numeric($_POST['ADV_TIME']) &&
             is_numeric($_POST['AUCTIONTIME']) &&
-            is_numeric($_POST['CATAPULT_C']) 
+            is_numeric($_POST['CATAPULT_C']) &&
+            (!isset($_POST['Lang']) || Languages::valid($_POST['Lang'])) &&
+            (!isset($_POST['gpack']) || Skin::valid($_POST['gpack']))
             ){
                 foreach($_POST as $key => $value){
                     if($key!='update'){
@@ -132,6 +134,21 @@
                  </select>
                 </div>
                
+            </div>
+        <hr>
+        <div class="form-group row">
+                <div class="col-md-6">
+                    <label>Language / Jazyk</label>
+                    <select name="Lang" class="form-control"><?php echo Languages::options(Languages::sanitize(LANG)); ?></select>
+                </div>
+                <div class="col-md-6">
+                    <label>Look of the world / Vzhled světa</label>
+                    <select name="gpack" class="form-control">
+                    <?php foreach (Skin::available() as $gpId => $gp) { ?>
+                        <option value="<?php echo $gpId; ?>"<?php if ($gpId === Skin::worldDefault()) echo ' selected'; ?>><?php echo htmlspecialchars($gp['name']); ?></option>
+                    <?php } ?>
+                    </select>
+                </div>
             </div>
         <hr>
         <div class="form-group">

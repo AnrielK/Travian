@@ -6,6 +6,7 @@ mcache/*.jpg
 mmark/*
 !mmark/.keep
 hcache/body/*
+hcache/legends/
 # iOS build products
 ios/php/build/
 ios/php/work/

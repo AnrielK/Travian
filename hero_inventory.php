@@ -233,7 +233,7 @@ if (isset($_GET['inventory']) && !$dis) {
                                 <div id="hero_body">
 
                                     <img class="heroBodyImage heroBodyImage-<?php echo strtoupper(DIRECTION); ?>"
-                                         src="<?= $database->heroBody($session->uid) ?>">
+                                         src="<?= HeroLegends::active((int)$session->uid) ? HeroLegends::imageUrl((int)$session->uid, 'body_inventory') : $database->heroBody($session->uid) ?>">
                                     <div class="clear"></div>
                                 </div>
 

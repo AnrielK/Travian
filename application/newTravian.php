@@ -1461,7 +1461,7 @@ Class newTravian
 	}
 	
 	public function setLang($lang){
-		if(in_array($lang, array("ar","en"))){
+		if(Languages::valid($lang)){
 			$_SESSION['language'] = $lang;
 			header("Location: dorf1.php");
 

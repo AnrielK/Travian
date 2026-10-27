@@ -12,6 +12,7 @@ require_once('UI/Plus.php');
 require_once('UI/Options.php');
 require_once('UI/Manual.php');
 require_once('UI/svg.php');
+require_once('UI/Skin.php');
 
 define("BUILDING_BUILDING", "Buildings:");
 define("BUILDING_COMPLETE", "complete construction immediately");

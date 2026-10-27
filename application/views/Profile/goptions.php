@@ -193,16 +193,24 @@
                 <?php echo $lang['main']['options'][3]; ?>:
             </th>
             <td>
-                <select name="languageNew">
-                    <option value="en" <?php if ($session->lang == 'en') {
-                        echo 'selected="selected"';
-                    } ?>><?php echo $lang['main']['options'][4]; ?></option>
-                    <option value="ar" <?php if ($session->lang == 'ar') {
-                        echo 'selected="selected"';
-                    } ?>><?php echo $lang['main']['options'][5]; ?></option>
-                </select>
+                <select name="languageNew"><?php echo Languages::options($session->lang); ?></select>
             </td>
         </tr>
+        </tbody>
+    </table>
+    <h4 class="round spacer"><?php echo defined('SETTINGS_GPACK') ? SETTINGS_GPACK : 'Look'; ?></h4>
+    <table class="transparent set" cellpadding="1" cellspacing="1" id="lookSettings">
+        <tbody>
+        <tr>
+            <th><?php echo defined('SETTINGS_GPACK') ? SETTINGS_GPACK : 'Look'; ?>:</th>
+            <td><select name="gpack"><?php echo Skin::options(isset($_COOKIE[Skin::COOKIE]) ? Skin::current() : 'world'); ?></select></td>
+        </tr>
+        <?php if (HeroLegends::available()) { ?>
+        <tr>
+            <th><?php echo defined('SETTINGS_HERO') ? SETTINGS_HERO : 'Hero'; ?>:</th>
+            <td><select name="heroLook"><?php echo HeroLegends::styleOptions(HeroLegends::storedStyle((int)$session->uid)); ?></select></td>
+        </tr>
+        <?php } ?>
         </tbody>
     </table>
     <div class="submitButtonContainer">

@@ -1,7 +1,12 @@
 <?php
 include("application/Account.php");
 
-if ($_POST) {
+if ($_POST && isset($_POST['heroLook']) && !isset($_POST['sideSettings'])) {
+    HeroLegends::setStyle((int)$session->uid, $_POST['heroLook']);
+    header("Location: hero.php");
+    exit;
+}
+if ($_POST && (isset($_POST['HeroGender']) || isset($_POST['Random']))) {
     if ($_POST['Random'] == "random") {
         $_POST['HeroFace'] = rand(0, 4);
         $_POST['color'] = rand(0, 4);
@@ -134,6 +139,7 @@ if ($_POST) {
                         $getface = $herodetail['face'];
                         if (php7_is_zero($gender)) $getface %= 5;
                         ?>
+                        <?php if (HeroLegends::active((int)$session->uid)) { include("application/views/Hero/legendsEditor.php"); } else { ?>
                         <div id="heroEditor" class="genderSwitch <?php echo $gstr; ?>">
                             <div class="hero_head head">
                                 <div class="tl">
@@ -679,6 +685,7 @@ if ($_POST) {
                                     elementHeroImage: 'heroImage'
                                 });
                         </script>
+                        <?php } include("application/views/Hero/heroLookSwitch.php"); ?>
 
 
                         <div class="clear">&nbsp;</div>

@@ -34,7 +34,7 @@ class Profile {
 
 	private function updateGame($post){
 		global $database,$session;
-		if(in_array($post['languageNew'], array('ar', 'en'))){
+		if(Languages::valid($post['languageNew'] ?? null)){
 			if(in_array($post['timezone'], array(441,99,495,496,497,570,328,562,0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23))){
 				$database->query('UPDATE `users` SET `stime` = "'.sql_esc($post['timezone']).'" WHERE `users`.`id` = '.sql_num($session->uid).'');
 			}
@@ -42,6 +42,8 @@ class Profile {
 				$database->query('UPDATE `users` SET `tformat` = "'.sql_esc($post['tformat']).'" WHERE `users`.`id` = '.sql_num($session->uid).'');
 			}
 			$newLang = $post['languageNew'];
+			if (isset($post['gpack'])) Skin::choose($post['gpack'] === 'world' ? null : $post['gpack']);
+			if (isset($post['heroLook']) && class_exists('HeroLegends')) HeroLegends::setStyle((int)$session->uid, $post['heroLook']);
 			$database->query('UPDATE `users` SET `lang` = "'.sql_esc($newLang).'" WHERE `users`.`id` = '.sql_num($session->uid).'');
 
 			header('Location: options.php');

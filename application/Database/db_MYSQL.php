@@ -1712,7 +1712,8 @@ function InsertUniqueIP($ip,$email){
 
         $c=0; // количестinо файлоin. Считаем с нуля
 
-        $d=dir($dir); //
+        $d=is_dir($dir) ? dir($dir) : false; //
+        if(!$d) return 0;
 
         while($str=$d->read()){
 

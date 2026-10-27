@@ -197,7 +197,7 @@ class Session {
         }
 
         $this->username = $_SESSION['username'];
-        $this->lang = $u['lang'] ? $u['lang'] : LANG;
+        $this->lang = Languages::sanitize($u['lang'] ? $u['lang'] : LANG);
         $this->tformat = $u['tformat'];
         $this->stime = $u['stime'];
         $this->refer = $u['invited'];
