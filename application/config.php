@@ -164,7 +164,12 @@ $config = array(
     'resources03A' => $sData['resources03A'], // quantity Resources 
 );
 $packages=[];
-$paketler=$baglanDB->query('SELECT * FROM paketler')->fetchAll(PDO::FETCH_ASSOC);
+// gold packages; an unfinished installation has no table yet – the game must still load (installer, error page)
+try {
+    $paketler = $baglanDB ? $baglanDB->query('SELECT * FROM paketler')->fetchAll(PDO::FETCH_ASSOC) : [];
+} catch (Throwable $e) {
+    $paketler = [];
+}
 if(safe_count($paketler)){
     foreach($paketler as $paket){
         $packages[$paket['id']]=[

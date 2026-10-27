@@ -6,16 +6,22 @@
  *   TRAVIAN_DB_DRIVER    mysql (default) | sqlite (iOS app)
  *   TRAVIAN_SQLITE_PATH  SQLite database file (sqlite driver)
  *   TRAVIAN_DB_HOST / _PORT / _USER / _PASS / _NAME   MySQL / MariaDB
+ * Without environment variables the MySQL credentials come from application/db_local.php, which the installer
+ * (setup/) writes – config.php itself is never rewritten.
  *   TRAVIAN_SINGLE_ACCOUNT_PER_IP=1   restore the live-server rule "one account per IP"
  */
 if (defined('SQL_DRIVER')) {
     return;
 }
-define("SQL_SERVER", getenv("TRAVIAN_DB_HOST") ?: "127.0.0.1");
-define("SQL_PORT",   getenv("TRAVIAN_DB_PORT") ?: "3306");
-define("SQL_USER",   getenv("TRAVIAN_DB_USER") ?: "travian");
-define("SQL_PASS",   getenv("TRAVIAN_DB_PASS") !== false ? getenv("TRAVIAN_DB_PASS") : "travian");
-define("SQL_DB",     getenv("TRAVIAN_DB_NAME") ?: "travian46");
+// Credentials written by the installer (setup/) into application/db_local.php – environment variables win.
+$travianDbLocal = is_file(__DIR__ . '/db_local.php') ? (include __DIR__ . '/db_local.php') : [];
+if (!is_array($travianDbLocal)) $travianDbLocal = [];
+define("SQL_SERVER", getenv("TRAVIAN_DB_HOST") ?: ($travianDbLocal['host'] ?? "127.0.0.1"));
+define("SQL_PORT",   getenv("TRAVIAN_DB_PORT") ?: ($travianDbLocal['port'] ?? "3306"));
+define("SQL_USER",   getenv("TRAVIAN_DB_USER") ?: ($travianDbLocal['user'] ?? "travian"));
+define("SQL_PASS",   getenv("TRAVIAN_DB_PASS") !== false ? getenv("TRAVIAN_DB_PASS") : ($travianDbLocal['pass'] ?? "travian"));
+define("SQL_DB",     getenv("TRAVIAN_DB_NAME") ?: ($travianDbLocal['name'] ?? "travian46"));
+unset($travianDbLocal);
 define("SQL_DRIVER",  getenv("TRAVIAN_DB_DRIVER") ?: "mysql");
 define("SQLITE_PATH", getenv("TRAVIAN_SQLITE_PATH") ?: dirname(__DIR__) . "/local/travian.sqlite");
 // Local testing: several accounts from 127.0.0.1 (the live server allowed one account per IP)

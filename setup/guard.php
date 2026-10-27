@@ -14,17 +14,27 @@ if (!function_exists('setup_is_locked')) {
         if (is_file(__DIR__ . '/install.lock')) {
             return true;
         }
-        $cfg = __DIR__ . '/../application/config.php';
-        $src = @file_get_contents($cfg);
-        if ($src === false) {
-            return false;
-        }
+        // credentials of the installer (application/db_local.php); older installs kept them in config.php
         $c = array();
-        foreach (array('SQL_SERVER', 'SQL_USER', 'SQL_PASS', 'SQL_DB') as $k) {
-            if (!preg_match('/define\(\s*["\']' . $k . '["\']\s*,\s*["\']([^"\']*)["\']\s*\)/', $src, $m)) {
-                return false; // template / not configured yet
+        $local = __DIR__ . '/../application/db_local.php';
+        if (is_file($local)) {
+            $d = include $local;
+            if (is_array($d)) {
+                $c = array('SQL_SERVER' => ($d['host'] ?? '') . (!empty($d['port']) ? ';port=' . $d['port'] : ''),
+                    'SQL_USER' => $d['user'] ?? '', 'SQL_PASS' => $d['pass'] ?? '', 'SQL_DB' => $d['name'] ?? '');
             }
-            $c[$k] = $m[1];
+        }
+        if (!$c) {
+            $src = @file_get_contents(__DIR__ . '/../application/config.php');
+            if ($src === false) {
+                return false;
+            }
+            foreach (array('SQL_SERVER', 'SQL_USER', 'SQL_PASS', 'SQL_DB') as $k) {
+                if (!preg_match('/define\(\s*["\']' . $k . '["\']\s*,\s*["\']([^"\']*)["\']\s*\)/', $src, $m)) {
+                    return false; // not configured yet
+                }
+                $c[$k] = $m[1];
+            }
         }
         try {
             $pdo = new PDO('mysql:host=' . $c['SQL_SERVER'] . ';dbname=' . $c['SQL_DB'], $c['SQL_USER'], $c['SQL_PASS'],
