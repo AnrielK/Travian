@@ -16,6 +16,17 @@ final class BrowserModel: NSObject, ObservableObject, WKNavigationDelegate, WKUI
         config.websiteDataStore = ephemeral ? .nonPersistent() : .default()
         config.preferences.javaScriptCanOpenWindowsAutomatically = true
         config.allowsInlineMediaPlayback = true
+        // The game is a desktop layout (~1280 px) but its pages declare width=device-width,
+        // which shows it at 1:1 on a phone. Lay it out at desktop width and let the user zoom.
+        let viewport = """
+        (function () {
+          var m = document.querySelector('meta[name=viewport]');
+          if (!m) { m = document.createElement('meta'); m.name = 'viewport'; (document.head || document.documentElement).appendChild(m); }
+          m.content = 'width=1280';
+        })();
+        """
+        config.userContentController.addUserScript(
+            WKUserScript(source: viewport, injectionTime: .atDocumentEnd, forMainFrameOnly: true))
         webView = WKWebView(frame: .zero, configuration: config)
         super.init()
         webView.navigationDelegate = self
