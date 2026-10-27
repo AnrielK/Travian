@@ -1,0 +1,400 @@
+[Tue Oct 27 14:29:22 2026] 127.0.0.1:50635 Closing
+[Tue Oct 27 14:29:22 2026] 127.0.0.1:50637 Accepted
+[Tue Oct 27 14:29:22 2026] 127.0.0.1:50637 [200]: GET /build.php?newdid=24195&s=17
+[Tue Oct 27 14:29:22 2026] 127.0.0.1:50637 Closing
+[Tue Oct 27 14:29:22 2026] 127.0.0.1:50638 Accepted
+[Tue Oct 27 14:29:22 2026] 127.0.0.1:50638 [200]: GET /statistiken.php?id=41
+[Tue Oct 27 14:29:22 2026] 127.0.0.1:50638 Closing
+[Tue Oct 27 14:29:23 2026] 127.0.0.1:50641 Accepted
+[Tue Oct 27 14:29:23 2026] 127.0.0.1:50641 [200]: GET /statistiken.php?id=42
+[Tue Oct 27 14:29:23 2026] 127.0.0.1:50641 Closing
+[Tue Oct 27 14:29:23 2026] 127.0.0.1:50644 Accepted
+[Tue Oct 27 14:29:23 2026] 127.0.0.1:50644 [200]: GET /statistiken.php?id=43
+[Tue Oct 27 14:29:23 2026] 127.0.0.1:50644 Closing
+[Tue Oct 27 14:29:23 2026] 127.0.0.1:50646 Accepted
+[Tue Oct 27 14:29:23 2026] 127.0.0.1:50646 [200]: GET /statistiken.php?newdid=24195&id=4
+[Tue Oct 27 14:29:23 2026] 127.0.0.1:50646 Closing
+[Tue Oct 27 14:29:23 2026] 127.0.0.1:50648 Accepted
+[Tue Oct 27 14:29:23 2026] 127.0.0.1:50648 [200]: GET /statistiken.php?newdid=24195&id=2
+[Tue Oct 27 14:29:23 2026] 127.0.0.1:50648 Closing
+[Tue Oct 27 14:29:23 2026] 127.0.0.1:50650 Accepted
+[Tue Oct 27 14:29:23 2026] 127.0.0.1:50650 [200]: GET /spieler.php?uid=3
+[Tue Oct 27 14:29:23 2026] 127.0.0.1:50650 Closing
+[Tue Oct 27 14:29:23 2026] 127.0.0.1:50652 Accepted
+[Tue Oct 27 14:29:23 2026] 127.0.0.1:50652 [200]: GET /statistiken.php?newdid=24195&id=8
+[Tue Oct 27 14:29:23 2026] 127.0.0.1:50652 Closing
+[Tue Oct 27 14:29:23 2026] 127.0.0.1:50655 Accepted
+[Tue Oct 27 14:29:23 2026] 127.0.0.1:50655 [200]: GET /statistiken.php?newdid=24195&id=0
+[Tue Oct 27 14:29:23 2026] 127.0.0.1:50655 Closing
+[Tue Oct 27 14:29:24 2026] 127.0.0.1:50657 Accepted
+[Tue Oct 27 14:29:24 2026] 127.0.0.1:50657 [200]: GET /karte.php?d=1&c=23
+[Tue Oct 27 14:29:24 2026] 127.0.0.1:50657 Closing
+[Tue Oct 27 14:29:24 2026] 127.0.0.1:50659 Accepted
+[Tue Oct 27 14:29:24 2026] 127.0.0.1:50659 [200]: GET /allianz.php?aid=
+[Tue Oct 27 14:29:24 2026] 127.0.0.1:50659 Closing
+[Tue Oct 27 14:29:24 2026] 127.0.0.1:50661 Accepted
+[Tue Oct 27 14:29:24 2026] 127.0.0.1:50661 [200]: GET /karte.php?d=101&c=ff
+[Tue Oct 27 14:29:24 2026] 127.0.0.1:50661 Closing
+[Tue Oct 27 14:29:24 2026] 127.0.0.1:50662 Accepted
+[Tue Oct 27 14:29:24 2026] 127.0.0.1:50662 [200]: GET /karte.php?d=201&c=05
+[Tue Oct 27 14:29:24 2026] 127.0.0.1:50662 Closing
+[Tue Oct 27 14:29:24 2026] 127.0.0.1:50664 Accepted
+[Tue Oct 27 14:29:24 2026] 127.0.0.1:50664 [200]: GET /karte.php?d=16362&c=a8
+[Tue Oct 27 14:29:24 2026] 127.0.0.1:50664 Closing
+[Tue Oct 27 14:29:24 2026] 127.0.0.1:50666 Accepted
+[Tue Oct 27 14:29:24 2026] 127.0.0.1:50666 [200]: GET /karte.php?d=16766&c=e7
+[Tue Oct 27 14:29:24 2026] 127.0.0.1:50666 Closing
+[Tue Oct 27 14:29:24 2026] 127.0.0.1:50668 Accepted
+[Tue Oct 27 14:29:24 2026] 127.0.0.1:50668 [200]: GET /karte.php?d=16803&c=40
+[Tue Oct 27 14:29:24 2026] 127.0.0.1:50668 Closing
+[Tue Oct 27 14:29:24 2026] 127.0.0.1:50670 Accepted
+[Tue Oct 27 14:29:24 2026] 127.0.0.1:50670 [200]: GET /karte.php?d=17408&c=4a
+[Tue Oct 27 14:29:24 2026] 127.0.0.1:50670 Closing
+[Tue Oct 27 14:29:24 2026] 127.0.0.1:50672 Accepted
+[Tue Oct 27 14:29:24 2026] 127.0.0.1:50672 [200]: GET /karte.php?d=20101&c=d1
+[Tue Oct 27 14:29:24 2026] 127.0.0.1:50672 Closing
+[Tue Oct 27 14:29:24 2026] 127.0.0.1:50674 Accepted
+[Tue Oct 27 14:29:25 2026] 127.0.0.1:50674 [200]: GET /karte.php?d=20301&c=be
+[Tue Oct 27 14:29:25 2026] 127.0.0.1:50674 Closing
+[Tue Oct 27 14:29:25 2026] 127.0.0.1:50676 Accepted
+[Tue Oct 27 14:29:25 2026] 127.0.0.1:50676 [200]: GET /karte.php?d=22233&c=90
+[Tue Oct 27 14:29:25 2026] 127.0.0.1:50676 Closing
+[Tue Oct 27 14:29:25 2026] 127.0.0.1:50678 Accepted
+[Tue Oct 27 14:29:25 2026] 127.0.0.1:50678 [200]: GET /karte.php?d=40201&c=c3
+[Tue Oct 27 14:29:25 2026] 127.0.0.1:50678 Closing
+[Tue Oct 27 14:29:25 2026] 127.0.0.1:50680 Accepted
+[Tue Oct 27 14:29:25 2026] 127.0.0.1:50680 [200]: GET /karte.php?d=40301&c=5a
+[Tue Oct 27 14:29:25 2026] 127.0.0.1:50680 Closing
+[Tue Oct 27 14:29:25 2026] 127.0.0.1:50682 Accepted
+[Tue Oct 27 14:29:25 2026] 127.0.0.1:50682 [200]: GET /karte.php?d=40401&c=04
+[Tue Oct 27 14:29:25 2026] 127.0.0.1:50682 Closing
+[Tue Oct 27 14:29:25 2026] 127.0.0.1:50684 Accepted
+[Tue Oct 27 14:29:25 2026] 127.0.0.1:50684 [200]: GET /statistiken.php?newdid=24195&id=99
+[Tue Oct 27 14:29:25 2026] 127.0.0.1:50684 Closing
+[Tue Oct 27 14:29:25 2026] 127.0.0.1:50686 Accepted
+[Tue Oct 27 14:29:25 2026] 127.0.0.1:50686 [200]: GET /statistiken.php?newdid=24195&id=31
+[Tue Oct 27 14:29:25 2026] 127.0.0.1:50686 Closing
+[Tue Oct 27 14:29:26 2026] 127.0.0.1:50689 Accepted
+[Tue Oct 27 14:29:26 2026] 127.0.0.1:50689 [200]: GET /statistiken.php?newdid=24195&id=32
+[Tue Oct 27 14:29:26 2026] 127.0.0.1:50689 Closing
+[Tue Oct 27 14:29:26 2026] 127.0.0.1:50691 Accepted
+[Tue Oct 27 14:29:26 2026] 127.0.0.1:50691 [200]: GET /statistiken.php?newdid=24195&id=7
+[Tue Oct 27 14:29:26 2026] 127.0.0.1:50691 Closing
+[Tue Oct 27 14:29:26 2026] 127.0.0.1:50693 Accepted
+[Tue Oct 27 14:29:26 2026] 127.0.0.1:50693 [200]: GET /allianz.php?aid=1&action=description
+[Tue Oct 27 14:29:26 2026] 127.0.0.1:50693 Closing
+[Tue Oct 27 14:29:26 2026] 127.0.0.1:50695 Accepted
+[Tue Oct 27 14:29:26 2026] 127.0.0.1:50695 [200]: GET /allianz.php?aid=1&action=members
+[Tue Oct 27 14:29:26 2026] 127.0.0.1:50695 Closing
+[Tue Oct 27 14:29:26 2026] 127.0.0.1:50696 Accepted
+[Tue Oct 27 14:29:26 2026] 127.0.0.1:50696 [200]: GET /allianz.php?newdid=24195&aid=1
+[Tue Oct 27 14:29:26 2026] 127.0.0.1:50696 Closing
+[Tue Oct 27 14:29:26 2026] 127.0.0.1:50698 Accepted
+[Tue Oct 27 14:29:26 2026] 127.0.0.1:50698 [200]: GET /nachrichten.php?t=1&id=8
+[Tue Oct 27 14:29:26 2026] 127.0.0.1:50698 Closing
+[Tue Oct 27 14:29:26 2026] 127.0.0.1:50700 Accepted
+[Tue Oct 27 14:29:26 2026] 127.0.0.1:50700 [200]: GET /karte.php?d=15802
+[Tue Oct 27 14:29:26 2026] 127.0.0.1:50700 Closing
+[Tue Oct 27 14:29:26 2026] 127.0.0.1:50702 Accepted
+[Tue Oct 27 14:29:26 2026] 127.0.0.1:50702 [200]: GET /karte.php?x=23&y=22
+[Tue Oct 27 14:29:26 2026] 127.0.0.1:50702 Closing
+[Tue Oct 27 14:29:26 2026] 127.0.0.1:50704 Accepted
+[Tue Oct 27 14:29:27 2026] 127.0.0.1:50704 [200]: GET /spieler.php?newdid=24195&uid=8
+[Tue Oct 27 14:29:27 2026] 127.0.0.1:50704 Closing
+[Tue Oct 27 14:29:27 2026] 127.0.0.1:50706 Accepted
+[Tue Oct 27 14:29:27 2026] 127.0.0.1:50706 [200]: GET /karte.php?d=20001
+[Tue Oct 27 14:29:27 2026] 127.0.0.1:50706 Closing
+[Tue Oct 27 14:29:27 2026] 127.0.0.1:50708 Accepted
+[Tue Oct 27 14:29:27 2026] 127.0.0.1:50708 [200]: GET /karte.php?x=1&y=1
+[Tue Oct 27 14:29:27 2026] 127.0.0.1:50708 Closing
+[Tue Oct 27 14:29:27 2026] 127.0.0.1:50710 Accepted
+[Tue Oct 27 14:29:27 2026] 127.0.0.1:50710 [200]: GET /spieler.php?newdid=24195&uid=6
+[Tue Oct 27 14:29:27 2026] 127.0.0.1:50710 Closing
+[Tue Oct 27 14:29:27 2026] 127.0.0.1:50712 Accepted
+[Tue Oct 27 14:29:27 2026] 127.0.0.1:50712 [200]: GET /berichte.php?newdid=24195&t=3
+[Tue Oct 27 14:29:27 2026] 127.0.0.1:50712 Closing
+[Tue Oct 27 14:29:27 2026] 127.0.0.1:50714 Accepted
+[Tue Oct 27 14:29:27 2026] 127.0.0.1:50714 [200]: GET /berichte.php?newdid=24195&t=1
+[Tue Oct 27 14:29:27 2026] 127.0.0.1:50714 Closing
+[Tue Oct 27 14:29:27 2026] 127.0.0.1:50716 Accepted
+[Tue Oct 27 14:29:27 2026] 127.0.0.1:50716 [200]: GET /berichte.php?newdid=24195&t=4
+[Tue Oct 27 14:29:27 2026] 127.0.0.1:50716 Closing
+[Tue Oct 27 14:29:27 2026] 127.0.0.1:50718 Accepted
+[Tue Oct 27 14:29:27 2026] 127.0.0.1:50718 [200]: GET /berichte.php?newdid=24195&t=2
+[Tue Oct 27 14:29:27 2026] 127.0.0.1:50718 Closing
+[Tue Oct 27 14:29:27 2026] 127.0.0.1:50720 Accepted
+[Tue Oct 27 14:29:27 2026] 127.0.0.1:50720 [200]: GET /karte.php?d=24195&c=4d
+[Tue Oct 27 14:29:27 2026] 127.0.0.1:50720 Closing
+[Tue Oct 27 14:29:27 2026] 127.0.0.1:50721 Accepted
+[Tue Oct 27 14:29:27 2026] 127.0.0.1:50721 [200]: GET /berichte.php?newdid=24195&id=2
+[Tue Oct 27 14:29:27 2026] 127.0.0.1:50721 Closing
+[Tue Oct 27 14:29:27 2026] 127.0.0.1:50723 Accepted
+[Tue Oct 27 14:29:27 2026] 127.0.0.1:50723 [200]: GET /build.php?t=2&id=39&z=15802&nid=4&re
+[Tue Oct 27 14:29:27 2026] 127.0.0.1:50723 Closing
+[Tue Oct 27 14:29:28 2026] 127.0.0.1:50725 Accepted
+[Tue Oct 27 14:29:28 2026] 127.0.0.1:50725 [200]: GET /karte.php?d=15802&c=38
+[Tue Oct 27 14:29:28 2026] 127.0.0.1:50725 Closing
+[Tue Oct 27 14:29:28 2026] 127.0.0.1:50727 Accepted
+[Tue Oct 27 14:29:28 2026] 127.0.0.1:50727 [200]: GET /berichte.php?newdid=24195&id=4
+[Tue Oct 27 14:29:28 2026] 127.0.0.1:50727 Closing
+[Tue Oct 27 14:29:28 2026] 127.0.0.1:50729 Accepted
+[Tue Oct 27 14:29:28 2026] 127.0.0.1:50729 [200]: GET /nachrichten.php?newdid=24195&t=1
+[Tue Oct 27 14:29:28 2026] 127.0.0.1:50729 Closing
+[Tue Oct 27 14:29:28 2026] 127.0.0.1:50731 Accepted
+[Tue Oct 27 14:29:28 2026] 127.0.0.1:50731 [200]: GET /nachrichten.php?id=1
+[Tue Oct 27 14:29:28 2026] 127.0.0.1:50731 Closing
+[Tue Oct 27 14:29:28 2026] 127.0.0.1:50733 Accepted
+[Tue Oct 27 14:29:28 2026] 127.0.0.1:50733 [200]: GET /nachrichten.php?newdid=24195&t=2
+[Tue Oct 27 14:29:28 2026] 127.0.0.1:50733 Closing
+[Tue Oct 27 14:29:28 2026] 127.0.0.1:50735 Accepted
+[Tue Oct 27 14:29:28 2026] 127.0.0.1:50735 [200]: GET /map_block.php?tx0=-20&ty0=-20&tx1=-11&ty1=-11&w=600&h=600&version=0
+[Tue Oct 27 14:29:28 2026] 127.0.0.1:50735 Closing
+[Tue Oct 27 14:29:28 2026] 127.0.0.1:50737 Accepted
+[Tue Oct 27 14:29:28 2026] 127.0.0.1:50737 [302]: POST /login.php
+[Tue Oct 27 14:29:28 2026] 127.0.0.1:50737 Closing
+[Tue Oct 27 14:29:28 2026] 127.0.0.1:50738 Accepted
+[Tue Oct 27 14:29:28 2026] 127.0.0.1:50738 [302]: GET /login.php
+[Tue Oct 27 14:29:28 2026] 127.0.0.1:50738 Closing
+[Tue Oct 27 14:29:28 2026] 127.0.0.1:50739 Accepted
+[Tue Oct 27 14:29:28 2026] 127.0.0.1:50739 [200]: GET /dorf1.php
+[Tue Oct 27 14:29:28 2026] 127.0.0.1:50739 Closing
+[Tue Oct 27 14:29:28 2026] 127.0.0.1:50741 Accepted
+[Tue Oct 27 14:29:29 2026] 127.0.0.1:50741 [200]: GET /panel/index.php
+[Tue Oct 27 14:29:29 2026] 127.0.0.1:50741 Closing
+[Tue Oct 27 14:29:29 2026] 127.0.0.1:50742 Accepted
+[Tue Oct 27 14:29:29 2026] 127.0.0.1:50742 [200]: GET /panel/index.php?p=acikartirma
+[Tue Oct 27 14:29:29 2026] 127.0.0.1:50742 Closing
+[Tue Oct 27 14:29:29 2026] 127.0.0.1:50744 Accepted
+[Tue Oct 27 14:29:29 2026] 127.0.0.1:50744 [200]: GET /panel/index.php?p=acikartirmav1
+[Tue Oct 27 14:29:29 2026] 127.0.0.1:50744 Closing
+[Tue Oct 27 14:29:29 2026] 127.0.0.1:50745 Accepted
+[Tue Oct 27 14:29:29 2026] 127.0.0.1:50745 [200]: GET /panel/index.php?p=acikartirmatopluV1
+[Tue Oct 27 14:29:29 2026] 127.0.0.1:50745 Closing
+[Tue Oct 27 14:29:29 2026] 127.0.0.1:50747 Accepted
+[Tue Oct 27 14:29:29 2026] 127.0.0.1:50747 [200]: GET /panel/index.php?p=acikartirmatopluV2
+[Tue Oct 27 14:29:29 2026] 127.0.0.1:50747 Closing
+[Tue Oct 27 14:29:29 2026] 127.0.0.1:50748 Accepted
+[Tue Oct 27 14:29:29 2026] 127.0.0.1:50748 [200]: GET /panel/index.php?p=kafes
+[Tue Oct 27 14:29:29 2026] 127.0.0.1:50748 Closing
+[Tue Oct 27 14:29:29 2026] 127.0.0.1:50750 Accepted
+[Tue Oct 27 14:29:29 2026] 127.0.0.1:50750 [200]: GET /panel/index.php?p=depodoldur
+[Tue Oct 27 14:29:29 2026] 127.0.0.1:50750 Closing
+[Tue Oct 27 14:29:29 2026] 127.0.0.1:50751 Accepted
+[Tue Oct 27 14:29:29 2026] 127.0.0.1:50751 [200]: GET /panel/index.php?p=vahadoldur
+[Tue Oct 27 14:29:29 2026] 127.0.0.1:50751 Closing
+[Tue Oct 27 14:29:29 2026] 127.0.0.1:50753 Accepted
+[Tue Oct 27 14:29:29 2026] 127.0.0.1:50753 [200]: GET /panel/index.php?p=odemeler
+[Tue Oct 27 14:29:29 2026] 127.0.0.1:50753 Closing
+[Tue Oct 27 14:29:29 2026] 127.0.0.1:50754 Accepted
+[Tue Oct 27 14:29:29 2026] 127.0.0.1:50754 [200]: GET /panel/index.php?p=cark
+[Tue Oct 27 14:29:29 2026] 127.0.0.1:50754 Closing
+[Tue Oct 27 14:29:29 2026] 127.0.0.1:50756 Accepted
+[Tue Oct 27 14:29:29 2026] 127.0.0.1:50756 [200]: GET /panel/index.php?p=carkhakki
+[Tue Oct 27 14:29:29 2026] 127.0.0.1:50756 Closing
+[Tue Oct 27 14:29:29 2026] 127.0.0.1:50757 Accepted
+[Tue Oct 27 14:29:29 2026] 127.0.0.1:50757 [200]: GET /panel/index.php?p=paketler
+[Tue Oct 27 14:29:29 2026] 127.0.0.1:50757 Closing
+[Tue Oct 27 14:29:29 2026] 127.0.0.1:50759 Accepted
+[Tue Oct 27 14:29:29 2026] 127.0.0.1:50759 [200]: GET /panel/index.php?p=vahalaV1
+[Tue Oct 27 14:29:29 2026] 127.0.0.1:50759 Closing
+[Tue Oct 27 14:29:29 2026] 127.0.0.1:50760 Accepted
+[Tue Oct 27 14:29:29 2026] 127.0.0.1:50760 [200]: GET /panel/index.php?p=vahalaV2
+[Tue Oct 27 14:29:29 2026] 127.0.0.1:50760 Closing
+[Tue Oct 27 14:29:29 2026] 127.0.0.1:50762 Accepted
+[Tue Oct 27 14:29:29 2026] 127.0.0.1:50762 [200]: GET /panel/index.php?p=players
+[Tue Oct 27 14:29:29 2026] 127.0.0.1:50762 Closing
+[Tue Oct 27 14:29:29 2026] 127.0.0.1:50763 Accepted
+[Tue Oct 27 14:29:29 2026] 127.0.0.1:50763 [200]: GET /panel/index.php?p=online
+[Tue Oct 27 14:29:29 2026] 127.0.0.1:50763 Closing
+[Tue Oct 27 14:29:30 2026] 127.0.0.1:50765 Accepted
+[Tue Oct 27 14:29:30 2026] 127.0.0.1:50765 [200]: GET /panel/index.php?p=notregistered
+[Tue Oct 27 14:29:30 2026] 127.0.0.1:50765 Closing
+[Tue Oct 27 14:29:30 2026] 127.0.0.1:50767 Accepted
+[Tue Oct 27 14:29:30 2026] 127.0.0.1:50767 [200]: GET /panel/index.php?p=multi
+[Tue Oct 27 14:29:30 2026] 127.0.0.1:50767 Closing
+[Tue Oct 27 14:29:30 2026] 127.0.0.1:50768 Accepted
+[Tue Oct 27 14:29:30 2026] 127.0.0.1:50768 [200]: GET /panel/index.php?p=pmails
+[Tue Oct 27 14:29:30 2026] 127.0.0.1:50768 Closing
+[Tue Oct 27 14:29:30 2026] 127.0.0.1:50770 Accepted
+[Tue Oct 27 14:29:30 2026] 127.0.0.1:50770 [200]: GET /panel/index.php?p=search
+[Tue Oct 27 14:29:30 2026] 127.0.0.1:50770 Closing
+[Tue Oct 27 14:29:30 2026] 127.0.0.1:50771 Accepted
+[Tue Oct 27 14:29:30 2026] 127.0.0.1:50771 [200]: GET /panel/index.php?p=message
+[Tue Oct 27 14:29:30 2026] 127.0.0.1:50771 Closing
+[Tue Oct 27 14:29:30 2026] 127.0.0.1:50773 Accepted
+[Tue Oct 27 14:29:30 2026] 127.0.0.1:50773 [200]: GET /panel/index.php?p=gold
+[Tue Oct 27 14:29:30 2026] 127.0.0.1:50773 Closing
+[Tue Oct 27 14:29:30 2026] 127.0.0.1:50774 Accepted
+[Tue Oct 27 14:29:30 2026] 127.0.0.1:50774 [200]: GET /panel/index.php?p=usergold
+[Tue Oct 27 14:29:30 2026] 127.0.0.1:50774 Closing
+[Tue Oct 27 14:29:30 2026] 127.0.0.1:50776 Accepted
+[Tue Oct 27 14:29:30 2026] 127.0.0.1:50776 [200]: GET /panel/index.php?p=mgold
+[Tue Oct 27 14:29:30 2026] 127.0.0.1:50776 Closing
+[Tue Oct 27 14:29:30 2026] 127.0.0.1:50777 Accepted
+[Tue Oct 27 14:29:30 2026] 127.0.0.1:50777 [200]: GET /panel/index.php?p=recharge
+[Tue Oct 27 14:29:30 2026] 127.0.0.1:50777 Closing
+[Tue Oct 27 14:29:30 2026] 127.0.0.1:50779 Accepted
+[Tue Oct 27 14:29:30 2026] 127.0.0.1:50779 [200]: GET /panel/index.php?p=codes
+[Tue Oct 27 14:29:30 2026] 127.0.0.1:50779 Closing
+[Tue Oct 27 14:29:30 2026] 127.0.0.1:50780 Accepted
+[Tue Oct 27 14:29:30 2026] 127.0.0.1:50780 [200]: GET /panel/index.php?p=register
+[Tue Oct 27 14:29:30 2026] 127.0.0.1:50780 Closing
+[Tue Oct 27 14:29:30 2026] 127.0.0.1:50782 Accepted
+[Tue Oct 27 14:29:30 2026] 127.0.0.1:50782 [200]: GET /panel/index.php?p=empoasis
+[Tue Oct 27 14:29:30 2026] 127.0.0.1:50782 Closing
+[Tue Oct 27 14:29:30 2026] 127.0.0.1:50783 Accepted
+[Tue Oct 27 14:29:30 2026] 127.0.0.1:50783 [200]: GET /panel/index.php?p=farms
+[Tue Oct 27 14:29:30 2026] 127.0.0.1:50783 Closing
+[Tue Oct 27 14:29:30 2026] 127.0.0.1:50785 Accepted
+[Tue Oct 27 14:29:30 2026] 127.0.0.1:50785 [200]: GET /panel/index.php?p=allmsgs
+[Tue Oct 27 14:29:30 2026] 127.0.0.1:50785 Closing
+[Tue Oct 27 14:29:30 2026] 127.0.0.1:50786 Accepted
+[Tue Oct 27 14:29:30 2026] 127.0.0.1:50786 [200]: GET /panel/index.php?p=setting
+[Tue Oct 27 14:29:30 2026] 127.0.0.1:50786 Closing
+[Tue Oct 27 14:29:31 2026] 127.0.0.1:50788 Accepted
+[Tue Oct 27 14:29:31 2026] 127.0.0.1:50788 [200]: GET /panel/index.php?p=natars
+[Tue Oct 27 14:29:31 2026] 127.0.0.1:50788 Closing
+[Tue Oct 27 14:29:31 2026] 127.0.0.1:50790 Accepted
+[Tue Oct 27 14:29:31 2026] 127.0.0.1:50790 [200]: GET /panel/index.php?p=plus
+[Tue Oct 27 14:29:31 2026] 127.0.0.1:50790 Closing
+[Tue Oct 27 14:29:31 2026] 127.0.0.1:50791 Accepted
+[Tue Oct 27 14:29:31 2026] 127.0.0.1:50791 [200]: GET /panel/index.php?p=payments
+[Tue Oct 27 14:29:31 2026] 127.0.0.1:50791 Closing
+[Tue Oct 27 14:29:31 2026] 127.0.0.1:50793 Accepted
+[Tue Oct 27 14:29:31 2026] 127.0.0.1:50793 [200]: GET /panel/index.php?p=news
+[Tue Oct 27 14:29:31 2026] 127.0.0.1:50793 Closing
+[Tue Oct 27 14:29:31 2026] 127.0.0.1:50795 Accepted
+[Tue Oct 27 14:29:31 2026] 127.0.0.1:50795 [200]: GET /panel/index.php?p=global
+[Tue Oct 27 14:29:31 2026] 127.0.0.1:50795 Closing
+[Tue Oct 27 14:29:31 2026] 127.0.0.1:50796 Accepted
+[Tue Oct 27 14:29:31 2026] 127.0.0.1:50796 [200]: GET /panel/index.php?p=install
+[Tue Oct 27 14:29:31 2026] 127.0.0.1:50796 Closing
+[Tue Oct 27 14:29:31 2026] 127.0.0.1:50798 Accepted
+[Tue Oct 27 14:29:31 2026] 127.0.0.1:50798 [200]: GET /panel/index.php?p=support
+[Tue Oct 27 14:29:31 2026] 127.0.0.1:50798 Closing
+[Tue Oct 27 14:29:31 2026] 127.0.0.1:50799 Accepted
+[Tue Oct 27 14:29:31 2026] 127.0.0.1:50799 [200]: GET /panel/index.php?p=player&uid=6
+[Tue Oct 27 14:29:31 2026] 127.0.0.1:50799 Closing
+[Tue Oct 27 14:29:31 2026] 127.0.0.1:50801 Accepted
+[Tue Oct 27 14:29:31 2026] 127.0.0.1:50801 [200]: GET /panel/index.php?p=player&uid=7
+[Tue Oct 27 14:29:31 2026] 127.0.0.1:50801 Closing
+[Tue Oct 27 14:29:31 2026] 127.0.0.1:50803 Accepted
+[Tue Oct 27 14:29:31 2026] 127.0.0.1:50803 [200]: GET /panel/index.php?p=player&uid=8
+[Tue Oct 27 14:29:31 2026] 127.0.0.1:50803 Closing
+[Tue Oct 27 14:29:31 2026] 127.0.0.1:50804 Accepted
+[Tue Oct 27 14:29:31 2026] 127.0.0.1:50804 [200]: GET /panel/index.php?p=player&uid=3
+[Tue Oct 27 14:29:31 2026] 127.0.0.1:50804 Closing
+[Tue Oct 27 14:29:31 2026] 127.0.0.1:50806 Accepted
+[Tue Oct 27 14:29:31 2026] 127.0.0.1:50806 [200]: GET /panel/index.php?p=allmsgs&pp=1
+[Tue Oct 27 14:29:31 2026] 127.0.0.1:50806 Closing
+[Tue Oct 27 14:29:31 2026] 127.0.0.1:50808 Accepted
+[Tue Oct 27 14:29:32 2026] 127.0.0.1:50808 [200]: GET /panel/index.php?p=allmsgs&id=1
+[Tue Oct 27 14:29:32 2026] 127.0.0.1:50808 Closing
+[Tue Oct 27 14:29:32 2026] 127.0.0.1:50810 Accepted
+[Tue Oct 27 14:29:32 2026] 127.0.0.1:50810 [302]: GET /panel/index.php?action=recountPopUsr&uid=6
+[Tue Oct 27 14:29:32 2026] 127.0.0.1:50810 Closing
+[Tue Oct 27 14:29:32 2026] 127.0.0.1:50811 Accepted
+[Tue Oct 27 14:29:32 2026] 127.0.0.1:50811 [200]: GET /panel/index.php?p=Newmessage&uid=6
+[Tue Oct 27 14:29:32 2026] 127.0.0.1:50811 Closing
+[Tue Oct 27 14:29:32 2026] 127.0.0.1:50813 Accepted
+[Tue Oct 27 14:29:32 2026] 127.0.0.1:50813 [200]: GET /panel/index.php?p=userlogin&uid=6
+[Tue Oct 27 14:29:32 2026] 127.0.0.1:50813 Closing
+[Tue Oct 27 14:29:32 2026] 127.0.0.1:50814 Accepted
+[Tue Oct 27 14:29:32 2026] 127.0.0.1:50814 [200]: GET /panel/index.php?p=player&uid=6&cp
+[Tue Oct 27 14:29:32 2026] 127.0.0.1:50814 Closing
+[Tue Oct 27 14:29:32 2026] 127.0.0.1:50816 Accepted
+[Tue Oct 27 14:29:32 2026] 127.0.0.1:50816 [200]: GET /panel/index.php?p=village&did=20001
+[Tue Oct 27 14:29:32 2026] 127.0.0.1:50816 Closing
+[Tue Oct 27 14:29:32 2026] 127.0.0.1:50818 Accepted
+[Tue Oct 27 14:29:32 2026] 127.0.0.1:50818 [302]: GET /panel/index.php?action=recountPop&did=20001
+[Tue Oct 27 14:29:32 2026] 127.0.0.1:50818 Closing
+[Tue Oct 27 14:29:32 2026] 127.0.0.1:50820 Accepted
+[Tue Oct 27 14:29:32 2026] 127.0.0.1:50820 [200]: GET /panel/index.php?p=alliance&aid=1
+[Tue Oct 27 14:29:32 2026] 127.0.0.1:50820 Closing
+[Tue Oct 27 14:29:32 2026] 127.0.0.1:50821 Accepted
+[Tue Oct 27 14:29:32 2026] 127.0.0.1:50821 [302]: GET /panel/index.php?action=recountPopUsr&uid=7
+[Tue Oct 27 14:29:32 2026] 127.0.0.1:50821 Closing
+[Tue Oct 27 14:29:32 2026] 127.0.0.1:50823 Accepted
+[Tue Oct 27 14:29:32 2026] 127.0.0.1:50823 [200]: GET /panel/index.php?p=Newmessage&uid=7
+[Tue Oct 27 14:29:32 2026] 127.0.0.1:50823 Closing
+[Tue Oct 27 14:29:32 2026] 127.0.0.1:50824 Accepted
+[Tue Oct 27 14:29:32 2026] 127.0.0.1:50824 [200]: GET /panel/index.php?p=userlogin&uid=7
+[Tue Oct 27 14:29:32 2026] 127.0.0.1:50824 Closing
+[Tue Oct 27 14:29:32 2026] 127.0.0.1:50826 Accepted
+[Tue Oct 27 14:29:32 2026] 127.0.0.1:50826 [200]: GET /panel/index.php?p=player&uid=7&cp
+[Tue Oct 27 14:29:32 2026] 127.0.0.1:50826 Closing
+[Tue Oct 27 14:29:32 2026] 127.0.0.1:50827 Accepted
+[Tue Oct 27 14:29:33 2026] 127.0.0.1:50827 [200]: GET /panel/index.php?p=village&did=24195
+[Tue Oct 27 14:29:33 2026] 127.0.0.1:50827 Closing
+[Tue Oct 27 14:29:33 2026] 127.0.0.1:50829 Accepted
+[Tue Oct 27 14:29:33 2026] 127.0.0.1:50829 [302]: GET /panel/index.php?action=recountPop&did=24195
+[Tue Oct 27 14:29:33 2026] 127.0.0.1:50829 Closing
+[Tue Oct 27 14:29:33 2026] 127.0.0.1:50830 Accepted
+[Tue Oct 27 14:29:33 2026] 127.0.0.1:50830 [302]: GET /panel/index.php?action=recountPopUsr&uid=8
+[Tue Oct 27 14:29:33 2026] 127.0.0.1:50830 Closing
+[Tue Oct 27 14:29:33 2026] 127.0.0.1:50832 Accepted
+[Tue Oct 27 14:29:33 2026] 127.0.0.1:50832 [200]: GET /panel/index.php?p=Newmessage&uid=8
+[Tue Oct 27 14:29:33 2026] 127.0.0.1:50832 Closing
+[Tue Oct 27 14:29:33 2026] 127.0.0.1:50833 Accepted
+[Tue Oct 27 14:29:33 2026] 127.0.0.1:50833 [200]: GET /panel/index.php?p=userlogin&uid=8
+[Tue Oct 27 14:29:33 2026] 127.0.0.1:50833 Closing
+[Tue Oct 27 14:29:33 2026] 127.0.0.1:50835 Accepted
+[Tue Oct 27 14:29:33 2026] 127.0.0.1:50835 [200]: GET /panel/index.php?p=player&uid=8&cp
+[Tue Oct 27 14:29:33 2026] 127.0.0.1:50835 Closing
+[Tue Oct 27 14:29:33 2026] 127.0.0.1:50836 Accepted
+[Tue Oct 27 14:29:33 2026] 127.0.0.1:50836 [200]: GET /panel/index.php?p=village&did=15802
+[Tue Oct 27 14:29:33 2026] 127.0.0.1:50836 Closing
+[Tue Oct 27 14:29:33 2026] 127.0.0.1:50838 Accepted
+[Tue Oct 27 14:29:33 2026] 127.0.0.1:50838 [302]: GET /panel/index.php?action=recountPop&did=15802
+[Tue Oct 27 14:29:33 2026] 127.0.0.1:50838 Closing
+[Tue Oct 27 14:29:33 2026] 127.0.0.1:50839 Accepted
+[Tue Oct 27 14:29:33 2026] 127.0.0.1:50839 [302]: GET /panel/index.php?action=recountPopUsr&uid=3
+[Tue Oct 27 14:29:33 2026] 127.0.0.1:50839 Closing
+[Tue Oct 27 14:29:33 2026] 127.0.0.1:50842 Accepted
+[Tue Oct 27 14:29:33 2026] 127.0.0.1:50842 [200]: GET /panel/index.php?p=Newmessage&uid=3
+[Tue Oct 27 14:29:33 2026] 127.0.0.1:50842 Closing
+[Tue Oct 27 14:29:33 2026] 127.0.0.1:50843 Accepted
+[Tue Oct 27 14:29:33 2026] 127.0.0.1:50843 [200]: GET /panel/index.php?p=userlogin&uid=3
+[Tue Oct 27 14:29:33 2026] 127.0.0.1:50843 Closing
+[Tue Oct 27 14:29:33 2026] 127.0.0.1:50845 Accepted
+[Tue Oct 27 14:29:33 2026] 127.0.0.1:50845 [200]: GET /panel/index.php?p=player&uid=3&cp
+[Tue Oct 27 14:29:33 2026] 127.0.0.1:50845 Closing
+[Tue Oct 27 14:29:33 2026] 127.0.0.1:50846 Accepted
+[Tue Oct 27 14:29:33 2026] 127.0.0.1:50846 [200]: GET /panel/index.php?p=village&did=20202
+[Tue Oct 27 14:29:33 2026] 127.0.0.1:50846 Closing
+[Tue Oct 27 14:29:33 2026] 127.0.0.1:50848 Accepted
+[Tue Oct 27 14:29:33 2026] 127.0.0.1:50848 [302]: GET /panel/index.php?action=recountPop&did=20202
+[Tue Oct 27 14:29:33 2026] 127.0.0.1:50848 Closing
+[Tue Oct 27 14:29:33 2026] 127.0.0.1:50850 Accepted
+[Tue Oct 27 14:29:33 2026] 127.0.0.1:50850 [200]: GET /panel/index.php?p=village&did=1
+[Tue Oct 27 14:29:33 2026] 127.0.0.1:50850 Closing
+[Tue Oct 27 14:29:33 2026] 127.0.0.1:50851 Accepted
+[Tue Oct 27 14:29:33 2026] 127.0.0.1:50851 [302]: GET /panel/index.php?action=recountPop&did=1
+[Tue Oct 27 14:29:33 2026] 127.0.0.1:50851 Closing
+[Tue Oct 27 14:29:34 2026] 127.0.0.1:50853 Accepted
+[Tue Oct 27 14:29:34 2026] 127.0.0.1:50853 [200]: GET /panel/index.php?p=village&did=101
+[Tue Oct 27 14:29:34 2026] 127.0.0.1:50853 Closing
+[Tue Oct 27 14:29:34 2026] 127.0.0.1:50854 Accepted
+[Tue Oct 27 14:29:34 2026] 127.0.0.1:50854 [302]: GET /panel/index.php?action=recountPop&did=101
+[Tue Oct 27 14:29:34 2026] 127.0.0.1:50854 Closing
+[Tue Oct 27 14:29:34 2026] 127.0.0.1:50856 Accepted
+[Tue Oct 27 14:29:34 2026] 127.0.0.1:50856 [200]: GET /panel/index.php?p=village&did=201
+[Tue Oct 27 14:29:34 2026] 127.0.0.1:50856 Closing
+[Tue Oct 27 14:29:34 2026] 127.0.0.1:50857 Accepted
+[Tue Oct 27 14:29:34 2026] 127.0.0.1:50857 [302]: GET /panel/index.php?action=recountPop&did=201
+[Tue Oct 27 14:29:34 2026] 127.0.0.1:50857 Closing
+[Tue Oct 27 14:29:34 2026] 127.0.0.1:50859 Accepted
+[Tue Oct 27 14:29:34 2026] 127.0.0.1:50859 [200]: GET /panel/index.php?p=village&did=16362
+[Tue Oct 27 14:29:34 2026] 127.0.0.1:50859 Closing
+[Tue Oct 27 14:29:34 2026] 127.0.0.1:50860 Accepted
+[Tue Oct 27 14:29:34 2026] 127.0.0.1:50860 [302]: GET /panel/index.php?action=recountPop&did=16362
+[Tue Oct 27 14:29:34 2026] 127.0.0.1:50860 Closing
+[Tue Oct 27 14:29:34 2026] 127.0.0.1:50863 Accepted
+[Tue Oct 27 14:29:34 2026] 127.0.0.1:50863 [200]: GET /panel/index.php?p=village&did=16766
+[Tue Oct 27 14:29:34 2026] 127.0.0.1:50863 Closing
+[Tue Oct 27 14:29:34 2026] 127.0.0.1:50864 Accepted
+[Tue Oct 27 14:29:34 2026] 127.0.0.1:50864 [302]: GET /panel/index.php?action=recountPop&did=16766
+[Tue Oct 27 14:29:34 2026] 127.0.0.1:50864 Closing
+[Tue Oct 27 14:29:34 2026] 127.0.0.1:50866 Accepted
+[Tue Oct 27 14:29:34 2026] 127.0.0.1:50866 [200]: GET /panel/index.php?p=village&did=16803
+[Tue Oct 27 14:29:34 2026] 127.0.0.1:50866 Closing
