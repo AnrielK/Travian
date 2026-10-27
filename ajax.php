@@ -4,6 +4,18 @@
 //include_once('application/Session.php');
 include_once "application/Account.php";
 switch($_GET['cmd']) {
+    case 'tabFavorite':
+        // Travian Legends look: favourite tab of a page (title button "Select this tab as favourite"), kept in a cookie
+        $favName = preg_replace('/[^a-zA-Z0-9_]/', '', (string)($_POST['name'] ?? ''));
+        $favNumber = preg_replace('/[^a-zA-Z0-9_-]/', '', (string)($_POST['number'] ?? ''));
+        header('Content-Type: application/json; charset=utf-8');
+        if ($favName === '' || $favNumber === '' || strlen($favName) > 40) {
+            echo '{"response":{"error":true,"errorMsg":"Tab name is not valid!","data":{}}}';
+            break;
+        }
+        setcookie('t46fav_' . $favName, $favNumber, ['expires' => time() + 31536000, 'path' => '/', 'samesite' => 'Lax']);
+        echo '{"response":{"error":false,"errorMsg":null,"data":{"success":true,"result":false}}}';
+        break;
     case 'productionBoostPopup':
 	//echo $session->bonus1; die();
                 if ($session->bonus1 > time()) {

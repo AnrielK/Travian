@@ -76,7 +76,7 @@ $hlGolden = static function (bool $withFilter) use ($hlExchange, $hlFilter, $hlA
 <script type="text/javascript">document.getElementById('content').className = 'auctions <?php echo ['buy' => 'auctionsBuy', 'sell' => 'auctionsSell', 'bids' => 'auctionsOverview'][$hlAction]; ?>';</script>
 <div class="contentNavi subNavi">
     <?php foreach (['buy' => $t('HEROL_AUCTION_BUY', defined('HEROAC30') ? HEROAC30 : 'Buy'), 'sell' => $t('HEROL_AUCTION_SELL', defined('HEROAC31') ? HEROAC31 : 'Sell'), 'bids' => $t('HEROL_AUCTION_OVERVIEW', 'Auction overview')] as $hlKey => $hlLabel) { ?>
-        <div class="container <?php echo $hlKey === $hlAction ? 'active' : 'normal'; ?>"><div class="content favor"><a class="tabItem" href="hero_auction.php?action=<?php echo $hlKey; ?>"><?php echo $e($hlLabel); ?></a></div></div>
+        <div class="container <?php echo $hlKey === $hlAction ? 'active' : 'normal'; ?>"><div class="content favor favorKey<?php echo ['buy' => 0, 'sell' => 1, 'bids' => 2][$hlKey]; ?>"><a class="tabItem" href="hero_auction.php?action=<?php echo $hlKey; ?>"><?php echo $e($hlLabel); ?></a></div></div>
     <?php } ?>
 </div>
 <div id="auctions">
@@ -96,6 +96,9 @@ $hlGolden = static function (bool $withFilter) use ($hlExchange, $hlFilter, $hlA
             <?php echo LegendsUi::button($e(defined('exchange1') ? exchange1 : 'Exchange'), ['type' => 'submit']); ?></div>
     </form>
     <?php if ($hlAction === 'buy') {
+        LegendsUi::helpStep('#auctions .goldenWrapper .heroItemSlotFilter', 'below', 'HELP_AUCTION_FILTER_T', 'Filter', 'HELP_AUCTION_FILTER', 'Show only the items for one equipment slot.');
+        LegendsUi::helpStep('#auctions .exchangeWidget', 'below', 'HELP_AUCTION_SILVER_T', 'Silver', 'HELP_AUCTION_SILVER', 'Auctions are paid with silver. Use the exchange to convert gold and silver.');
+        LegendsUi::helpStep('#auctions .auctionListWrapper thead', 'above', 'HELP_AUCTION_LIST_T', 'Offers', 'HELP_AUCTION_LIST', 'Bid the maximum you are willing to pay; you only pay one silver more than the second highest bid.');
         echo $hlGolden(true);
         $hlTotal = $database->query("SELECT COUNT(*) AS c FROM auction WHERE finish = 0 AND owner != '" . sql_esc($session->uid) . "'" . $hlWhere);
         $hlTotal = (int)($hlTotal[0]['c'] ?? 0);

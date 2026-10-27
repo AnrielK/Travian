@@ -1,4 +1,7 @@
 <?php
+LegendsUi::helpStep('#heroV2Attributes .stats', 'below', 'HELP_HERO_STATS_T', 'Hero status', 'HELP_HERO_STATS', 'Health, experience and speed of your hero. Health regenerates every day; if it drops to zero the hero dies and has to be revived. Experience from battles and adventures raises the hero level.');
+LegendsUi::helpStep('#heroV2Attributes .heroProduction', 'below', 'HELP_HERO_PRODUCTION_T', 'Hero production', 'HELP_HERO_PRODUCTION', 'Choose which resource your hero produces in his home village. "All resources" gives a smaller amount of every resource.');
+LegendsUi::helpStep('#heroV2Attributes .heroAttributes', 'above', 'HELP_HERO_ATTRIBUTES_T', 'Attribute points', 'HELP_HERO_ATTRIBUTES', 'Every level gives you new points. Spend them on fighting strength, offence and defence bonus or resource production and confirm them with Save.');
 /*
  * Hero attributes in the Travian Legends 655 look (Templates/hero/v2/attributes.php of the main branch) with the T4.6
  * hero data: health / experience / speed, hero production, attribute points with +/- buttons, the hide switch.

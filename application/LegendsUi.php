@@ -20,11 +20,36 @@ class LegendsUi
      * Legends "set as favourite tab" title button: stores the tab through the tabFavorite ajax command and moves the
      * favourite marker (.favor.favorActive) to the tab content with class favorKey{$number}.
      */
+    /** Steps of the contextual help ("light bulb" title button) of the current page, set by the Legends views. */
+    public static array $help = [];
+
+    /** Adds a contextual help step: css selector of the described part, placement (after|before|below|above), title and text. */
+    public static function helpStep(string $selector, string $placement, string $titleKey, string $title, string $textKey, string $text): void
+    {
+        self::$help[] = ['selector' => $selector, 'placement' => $placement, 'title' => self::t($titleKey, $title), 'text' => self::t($textKey, $text)];
+    }
+
+    /** Script of the contextual help tour (needs the #contextualHelpButton title button). */
+    public static function helpScript(): string
+    {
+        if (!self::$help) return '';
+        $f = JSON_HEX_TAG | JSON_HEX_AMP | JSON_HEX_APOS | JSON_HEX_QUOT | JSON_UNESCAPED_UNICODE;
+        return '<script type="text/javascript">' . file_get_contents(__DIR__ . '/legends/contextualHelp.js')
+            . '(' . json_encode(self::$help, $f) . ', ' . json_encode(self::t('HELP_CLOSE', 'Got it'), $f) . ');</script>';
+    }
+
+    /** The light bulb title button of the contextual help. */
+    public static function helpButton(): string
+    {
+        return '<a id="contextualHelpButton" class="contentTitleButton buttonFramed green withIcon rectangle" href="#" title="'
+            . self::e(self::t('HELP_BUTTON', 'Show contextual help on this page')) . '">&nbsp;</a>';
+    }
+
     public static function favorButton(string $name, $number): string
     {
         $js = "Travian.ajax({data:{cmd:'tabFavorite',name:" . json_encode($name) . ",number:" . json_encode((string)$number) . "},"
-            . "onSuccess:function(d){if(d.success){jQuery('.favor').removeClass('favorActive');"
-            . "jQuery('.favor.favorKey" . preg_replace('/[^a-zA-Z0-9_-]/', '', (string)$number) . "').addClass('favorActive');}}});return false;";
+            . "onSuccess:function(d){if(d&&d.success){document.querySelectorAll('.favor').forEach(function(e){e.classList.remove('favorActive');});"
+            . "document.querySelectorAll('.favor.favorKey" . preg_replace('/[^a-zA-Z0-9_-]/', '', (string)$number) . "').forEach(function(e){e.classList.add('favorActive');});}}});return false;";
         return '<a id="tabFavorButton" class="icon contentTitleButton buttonFramed green withIcon rectangle" href="#"'
             . ' title="' . self::e(self::t('UI_TAB_FAVOR', 'Select this tab as favourite')) . '" onclick="' . self::e($js) . '">&nbsp;</a>';
     }

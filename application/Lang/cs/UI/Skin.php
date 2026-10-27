@@ -82,3 +82,27 @@ define('HEROL_AUCTION_BUY', 'Koupit');
 define('HEROL_AUCTION_SELL', 'Prodat');
 define('HEROL_AUCTION_OVERVIEW', 'Přehled aukcí');
 define('UI_TAB_FAVOR', 'Nastavit tuto záložku jako oblíbenou');
+
+// Travian Legends look: contextual help (light bulb title button)
+define('HELP_BUTTON', 'Zobrazit kontextovou nápovědu na této stránce');
+define('HELP_CLOSE', 'Rozumím');
+define('HELP_HERO_STATS_T', 'Stav hrdiny');
+define('HELP_HERO_STATS', 'Zdraví, zkušenosti a rychlost tvého hrdiny. Zdraví se každý den obnovuje; když klesne na nulu, hrdina zemře a musí být oživen. Zkušenosti z bitev a dobrodružství zvyšují úroveň hrdiny.');
+define('HELP_HERO_PRODUCTION_T', 'Produkce hrdiny');
+define('HELP_HERO_PRODUCTION', 'Vyber, kterou surovinu bude hrdina produkovat ve své domovské vesnici. „Všechny suroviny“ dávají menší množství od každé suroviny.');
+define('HELP_HERO_ATTRIBUTES_T', 'Body vlastností');
+define('HELP_HERO_ATTRIBUTES', 'S každou úrovní získáš nové body. Rozděl je mezi sílu, útočný a obranný bonus nebo produkci surovin a potvrď je tlačítkem Uložit.');
+define('HELP_HERO_EQUIPMENT_T', 'Vybavení');
+define('HELP_HERO_EQUIPMENT', 'Helma, zbroj, boty, obě ruce, kůň a brašna. Předmět nasadíš kliknutím v inventáři, nasazený předmět sundáš kliknutím na něj.');
+define('HELP_HERO_FILTERS_T', 'Filtry');
+define('HELP_HERO_FILTERS', 'Zobrazí jen předměty, které patří do vybraného slotu vybavení.');
+define('HELP_HERO_INVENTORY_T', 'Inventář');
+define('HELP_HERO_INVENTORY', 'Všechny předměty, které hrdina nese. Spotřební předmět, například mast nebo svitek, použiješ kliknutím.');
+define('HELP_HERO_TRADE_T', 'Obchodovat');
+define('HELP_HERO_TRADE', 'Otevře aukce, kde můžeš prodat nepotřebné předměty a koupit lepší za stříbro.');
+define('HELP_AUCTION_FILTER_T', 'Filtr');
+define('HELP_AUCTION_FILTER', 'Zobrazí jen předměty pro jeden slot vybavení.');
+define('HELP_AUCTION_SILVER_T', 'Stříbro');
+define('HELP_AUCTION_SILVER', 'Aukce se platí stříbrem. Ve směnárně si vyměníš zlato a stříbro.');
+define('HELP_AUCTION_LIST_T', 'Nabídky');
+define('HELP_AUCTION_LIST', 'Nabídni maximum, které jsi ochoten zaplatit; zaplatíš jen o jedno stříbro víc než druhá nejvyšší nabídka.');

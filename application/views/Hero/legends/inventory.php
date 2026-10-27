@@ -1,4 +1,8 @@
 <?php
+LegendsUi::helpStep('#heroV2Inventory .equipmentSlots', 'after', 'HELP_HERO_EQUIPMENT_T', 'Equipment', 'HELP_HERO_EQUIPMENT', 'Helmet, body armour, boots, both hands, horse and bag. Click an item in the inventory to equip it, click an equipped item to take it off.');
+LegendsUi::helpStep('#heroV2Inventory .inventoryFilters .heroItemSlotFilter', 'above', 'HELP_HERO_FILTERS_T', 'Filters', 'HELP_HERO_FILTERS', 'Show only the items that fit the chosen equipment slot.');
+LegendsUi::helpStep('#heroV2Inventory .heroItems', 'above', 'HELP_HERO_INVENTORY_T', 'Inventory', 'HELP_HERO_INVENTORY', 'All items your hero carries. Click a consumable such as an ointment or a scroll to use it.');
+LegendsUi::helpStep('#heroV2Inventory .tradeItems', 'above', 'HELP_HERO_TRADE_T', 'Trade', 'HELP_HERO_TRADE', 'Opens the auctions where you can sell items you do not need and buy better ones for silver.');
 /*
  * Hero inventory in the Travian Legends 655 look (Templates/hero/v2/inventory.php of the main branch) with the data
  * and actions of the T4.6 inventory: clicking a bag item uses the classic Travian.Game.Hero.Inventory (form

@@ -141,8 +141,11 @@ final class Skin
         self::tabs($html);
         self::sidebars($html);
         self::buildPage($html, $tribe);
-        // window title buttons like LayoutT46: knowledge base button id, button count class on the title bar
+        // window title buttons like LayoutT46: knowledge base button id, contextual help, favourite tab, button count class on the title bar
         $html = str_replace('id="answersButton"', 'id="knowledgeBaseButton"', $html);
+        self::titleButtons($html);
+        // no empty line under the window (the frame ends right under the content like in the main branch)
+        $html = str_replace('<div class="contentFooter">&nbsp;</div>', '<div class="contentFooter"></div>', $html);
         $html = preg_replace_callback('#<div class="contentTitle">(.*?)</div>#s', function ($m) {
             $n = substr_count($m[1], 'contentTitleButton') - (strpos($m[1], 'closeContentButton') !== false ? 1 : 0);
             return '<div class="contentTitle buttonCount' . max(0, $n) . '">' . $m[1] . '</div>';
@@ -235,6 +238,54 @@ final class Skin
     }
 
     /** Tabs (contentNavi) in the Legends markup: div.container.active|normal around each tab. */
+    /**
+     * Title bar buttons of the window like the main branch: the light bulb (contextual help tour of the page, steps set
+     * by the Legends views through LegendsUi::helpStep) and the "favourite tab" button next to the title of pages with
+     * tabs. The favourite tab is kept in a cookie (ajax.php?cmd=tabFavorite) and opened when the page is opened plainly.
+     */
+    private static function titleButtons(string &$html): void
+    {
+        if (LegendsUi::$help && strpos($html, 'id="contextualHelpButton"') === false
+            && preg_match('#<div class="contentTitle">(.*?)</div>#s', $html, $m, PREG_OFFSET_CAPTURE)) {
+            $pos = $m[1][1] + strlen($m[1][0]);
+            $html = substr($html, 0, $pos) . LegendsUi::helpButton() . substr($html, $pos);
+            $html = preg_replace('#</body>#i', LegendsUi::helpScript() . '</body>', $html, 1);
+        }
+        $content = strpos($html, '<div id="content"');
+        if ($content === false || strpos($html, 'id="tabFavorButton"') !== false) return;
+        $from = strpos($html, '<div class="contentNavi subNavi', $content);
+        if ($from === false) return;
+        $end = self::blockEnd(substr($html, $from), '<div class="contentNavi subNavi');
+        if ($end === null) return;
+        $end += $from + 6;
+        $block = substr($html, $from, $end - $from);
+        if (!preg_match('#<div class="container active">.*?class="content[^"]*\bfavorKey([0-9]+)\b#s', $block, $a)) return;
+        $script = basename($_SERVER['SCRIPT_NAME'] ?? 'page', '.php');
+        $name = preg_replace('/[^a-zA-Z0-9_]/', '', $script . (preg_match('#<div id="build" class="gid(\d+)#', $html, $g) ? '_g' . $g[1] : ''));
+        $fav = isset($_COOKIE['t46fav_' . $name]) ? preg_replace('/[^0-9]/', '', (string)$_COOKIE['t46fav_' . $name]) : '';
+        if ($fav !== '' && strpos($block, 'favorKey' . $fav . '"') === false && !preg_match('#favorKey' . $fav . '[ "]#', $block)) $fav = '';
+        if ($fav !== '') {
+            $block = str_replace(' favorActive', '', $block);
+            $block = preg_replace('#(class="content[^"]*\bfavorKey' . $fav . ')([ "])#', '$1 favorActive$2', $block, 1);
+            // opened without a tab: go to the favourite tab
+            $query = $_GET;
+            unset($query['id']);
+            if ($fav !== $a[1] && !$query && ($_SERVER['REQUEST_METHOD'] ?? 'GET') === 'GET'
+                && preg_match('#class="content[^"]*\bfavorKey' . $fav . '\b[^"]*">\s*<a\b[^>]*href="([^"]+)"#', $block, $h)) {
+                $html = preg_replace('#<head>#i', '<head><script type="text/javascript">location.replace(' . json_encode(html_entity_decode($h[1])) . ');</script>', $html, 1);
+            }
+        }
+        $html = substr($html, 0, $from) . $block . substr($html, $end);
+        // the button sits next to the title (in #content, positioned into the title bar by the Legends CSS)
+        $button = LegendsUi::favorButton($name, $a[1]);
+        if (preg_match('#<h1 class="titleInHeader">.*?</h1>#s', $html, $t, PREG_OFFSET_CAPTURE, $content)) {
+            $pos = $t[0][1] + strlen($t[0][0]);
+            $html = substr($html, 0, $pos) . $button . substr($html, $pos);
+        } else {
+            $html = substr($html, 0, $from) . $button . substr($html, $from);
+        }
+    }
+
     private static function tabs(string &$html): void
     {
         $offset = 0;

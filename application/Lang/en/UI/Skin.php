@@ -82,3 +82,27 @@ define('HEROL_AUCTION_BUY', 'Buy');
 define('HEROL_AUCTION_SELL', 'Sell');
 define('HEROL_AUCTION_OVERVIEW', 'Auction overview');
 define('UI_TAB_FAVOR', 'Select this tab as favourite');
+
+// Travian Legends look: contextual help (light bulb title button)
+define('HELP_BUTTON', 'Show contextual help on this page');
+define('HELP_CLOSE', 'Got it');
+define('HELP_HERO_STATS_T', 'Hero status');
+define('HELP_HERO_STATS', 'Health, experience and speed of your hero. Health regenerates every day; if it drops to zero the hero dies and has to be revived. Experience from battles and adventures raises the hero level.');
+define('HELP_HERO_PRODUCTION_T', 'Hero production');
+define('HELP_HERO_PRODUCTION', 'Choose which resource your hero produces in his home village. "All resources" gives a smaller amount of every resource.');
+define('HELP_HERO_ATTRIBUTES_T', 'Attribute points');
+define('HELP_HERO_ATTRIBUTES', 'Every level gives you new points. Spend them on fighting strength, offence and defence bonus or resource production and confirm them with Save.');
+define('HELP_HERO_EQUIPMENT_T', 'Equipment');
+define('HELP_HERO_EQUIPMENT', 'Helmet, body armour, boots, both hands, horse and bag. Click an item in the inventory to equip it, click an equipped item to take it off.');
+define('HELP_HERO_FILTERS_T', 'Filters');
+define('HELP_HERO_FILTERS', 'Show only the items that fit the chosen equipment slot.');
+define('HELP_HERO_INVENTORY_T', 'Inventory');
+define('HELP_HERO_INVENTORY', 'All items your hero carries. Click a consumable such as an ointment or a scroll to use it.');
+define('HELP_HERO_TRADE_T', 'Trade');
+define('HELP_HERO_TRADE', 'Opens the auctions where you can sell items you do not need and buy better ones for silver.');
+define('HELP_AUCTION_FILTER_T', 'Filter');
+define('HELP_AUCTION_FILTER', 'Show only the items for one equipment slot.');
+define('HELP_AUCTION_SILVER_T', 'Silver');
+define('HELP_AUCTION_SILVER', 'Auctions are paid with silver. Use the exchange to convert gold and silver.');
+define('HELP_AUCTION_LIST_T', 'Offers');
+define('HELP_AUCTION_LIST', 'Bid the maximum you are willing to pay; you only pay one silver more than the second highest bid.');

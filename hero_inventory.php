@@ -509,11 +509,11 @@ if (isset($_GET['inventory']) && !$dis) {
                                         if($heroF->getHeroStatus() == 100){
                                         if($num == 1){
                                         ?>
-                                        $('item_<?php echo $id; ?>').addEvent('click', function () {
+                                        if ($('item_<?php echo $id; ?>')) $('item_<?php echo $id; ?>').addEvent('click', function () {
                                             $this.showItem(<?php echo $id; ?>,<?php echo $num; ?>,<?php echo $btype; ?>,<?php echo $type; ?>);
                                         });
                                         <?php        }else{ ?>
-                                        $('item_<?php echo $id; ?>').addEvent('click', function () {
+                                        if ($('item_<?php echo $id; ?>')) $('item_<?php echo $id; ?>').addEvent('click', function () {
                                             $this.sellItem(<?php echo $id; ?>,<?php echo $num; ?>,<?php echo $btype; ?>,<?php echo $type; ?>);
                                         });
                                         <?php
@@ -521,7 +521,7 @@ if (isset($_GET['inventory']) && !$dis) {
                                         }
                                         }else{
                                         ?>
-                                        $('item_<?php echo $id; ?>').addEvent('click', function () {
+                                        if ($('item_<?php echo $id; ?>')) $('item_<?php echo $id; ?>').addEvent('click', function () {
                                             $this.sellItem(<?php echo $id; ?>,<?php echo $num; ?>,<?php echo $btype; ?>,<?php echo $type; ?>);
                                         });
                                         <?php
