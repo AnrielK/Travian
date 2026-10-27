@@ -22,7 +22,7 @@ final class Skin
     ];
     const COOKIE = 't46_gpack';
     /** Cache buster of the pack's stylesheet. */
-    const VERSION = 7;
+    const VERSION = 8;
 
     private static $current = null;
 

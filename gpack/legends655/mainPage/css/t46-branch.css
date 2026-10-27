@@ -205,3 +205,5 @@ body.legends655 .legendsPlusDialog .featureBooking .featureButton { padding: 3px
 body.legends655 .legendsPlusDialog .featureBooking .featureButton button.plusActivate { min-width: 200px; display: block; margin: 0; }
 body.legends655 .legendsPlusDialog .featureBooking .featureButton button.plusActivate > div { display: flex; justify-content: center; align-items: center; gap: 6px;
     width: 100%; text-align: center; font-weight: 700; font-size: 16px; }
+body.legends655 .legendsPlusDialog .featureBooking .featureButton button.plusActivate { display: grid; place-items: center; height: 38px; padding: 0 20px; box-sizing: border-box; }
+body.legends655 .legendsPlusDialog .featureBooking .featureButton button.plusActivate > div { padding: 0; margin: 0; line-height: 1; height: auto; position: relative; top: 0; }
