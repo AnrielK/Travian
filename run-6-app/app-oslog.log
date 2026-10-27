@@ -1,0 +1,300 @@
+2026-10-27 17:06:13.053 Df TravianT46Local[6441:5cb4] [com.apple.UIKit:EventBus] Event Timing Profile for Touch: not found, path="/System/Library/EventTimingProfiles/Sim.Touch.plist"
+2026-10-27 17:06:13.053 Df TravianT46Local[6441:5cb4] [com.apple.UIKit:EventBus] Event Timing Profile for Pencil: not found, path="/System/Library/EventTimingProfiles/Sim.Pencil.plist"
+2026-10-27 17:06:13.053 Df TravianT46Local[6441:5cb4] [com.apple.UIKit:UpdateScheduler] Selected display: name=LCD (PurpleMain), id=1
+2026-10-27 17:06:13.065 Df TravianT46Local[6441:5ccc] [com.apple.FrontBoard:SceneExtension] Realizing settings extension <_UISceneHostingSheetPresentationSettings> on FBSSceneSettings
+2026-10-27 17:06:13.082 Df TravianT46Local[6441:5ccc] [com.apple.FrontBoard:SceneExtension] Realizing settings extension <_UISceneHostingSheetPresentationClientSettings> on FBSSceneClientSettings
+2026-10-27 17:06:13.100 Df TravianT46Local[6441:5ccc] [com.apple.FrontBoard:SceneExtension] Realizing settings extension <_UISceneHostingEventDeferringSettings> on FBSSceneSettings
+2026-10-27 17:06:13.110 Df TravianT46Local[6441:5ccc] [com.apple.FrontBoard:SceneExtension] Realizing settings extension <UIKit__UITypedKeyValueSceneSettings> on FBSSceneSettings
+2026-10-27 17:06:13.110 E  TravianT46Local[6441:5cb4] [com.apple.os_eligibility:library] load_eligibility_plist: Failed to open /Users/runner/Library/Developer/CoreSimulator/Devices/DC4CD8B3-4457-4153-9087-A0D7A2F9BFD9/data/Containers/Data/Application/5E51473B-BB9E-4F76-8176-9BD7A3B67847/private/var/db/eligibilityd/eligibility.plist: No such file or directory(2)
+2026-10-27 17:06:13.116 Df TravianT46Local[6441:5ccc] [com.apple.FrontBoard:SceneExtension] Realizing settings extension <UIKit__UITypedKeyValueSceneSettings> on FBSSceneClientSettings
+2026-10-27 17:06:13.118 Df TravianT46Local[6441:5cd1] [com.apple.FrontBoard:SceneExtension] Realizing settings extension FBSSceneSettingsCore on FBSSceneSettings
+2026-10-27 17:06:13.119 Df TravianT46Local[6441:5cb4] [com.apple.xpc:connection] [0x10130b2b0] activating connection: mach=false listener=false peer=false name=(anonymous)
+2026-10-27 17:06:13.139 A  TravianT46Local[6441:5cb4] (CoreFoundation) Updating Key-Value Observers Of Preferences
+2026-10-27 17:06:13.166 Df TravianT46Local[6441:5cd1] [com.apple.FrontBoard:SceneExtension] Realizing settings extension FBSSceneClientSettingsCore on FBSSceneClientSettings
+2026-10-27 17:06:13.181 Df TravianT46Local[6441:5cd1] [com.apple.FrontBoard:SceneExtension] UIMutableApplicationSceneSettings setting counterpart class: UIApplicationSceneSettings
+2026-10-27 17:06:13.181 Df TravianT46Local[6441:5cd1] [com.apple.FrontBoard:SceneExtension] UIMutableApplicationSceneClientSettings setting counterpart class: UIApplicationSceneClientSettings
+2026-10-27 17:06:13.245 Df TravianT46Local[6441:5cb4] [com.apple.UIKit:BackgroundTask] Will add backgroundTask with taskName: Persistent SceneSession Map Update, expirationHandler: <__NSGlobalBlock__: 0x1e6965d48>
+2026-10-27 17:06:13.246 Df TravianT46Local[6441:5cb4] [com.apple.UIKit:BackgroundTask] Reusing background assertion <BKSProcessAssertion: 0x60000210b610>
+2026-10-27 17:06:13.246 Df TravianT46Local[6441:5cb4] [com.apple.UIKit:BackgroundTask] Incrementing reference count for background assertion <BKSProcessAssertion: 0x60000210b610>
+2026-10-27 17:06:13.246 Df TravianT46Local[6441:5cb4] [com.apple.UIKit:BackgroundTask] Created background task <_UIBackgroundTaskInfo: 0x600001719cc0>: taskID = 2, taskName = Persistent SceneSession Map Update, creationTime = 474 (elapsed = 0).
+2026-10-27 17:06:13.247 Df TravianT46Local[6441:5cb4] [com.apple.UIKit:Application] Deactivation reason added: 5; deactivation reasons: 2048 -> 2080; animating application lifecycle event: 1
+2026-10-27 17:06:13.248 Df TravianT46Local[6441:5cb4] [com.apple.UIKit:InterfaceStyle] Should send trait collection or coordinate space update, interface style 1 -> 1, <UIWindowScene: 0x10120dd60> (DA2671EB-8201-4043-8131-4394EBBD6CBF)
+2026-10-27 17:06:13.249 Df TravianT46Local[6441:5cb4] [com.apple.UIKit:InterfaceStyle] Not push traits update to screen for new style 1, <UIWindowScene: 0x10120dd60> (DA2671EB-8201-4043-8131-4394EBBD6CBF)
+2026-10-27 17:06:13.250 Df TravianT46Local[6441:5cb4] [com.apple.UIKit:HomeAffordanceObservation] Initializing: <_UIHomeAffordanceSceneNotifier: 0x60000290da40>; with scene: <UIWindowScene: 0x10120dd60>
+2026-10-27 17:06:13.251 Df TravianT46Local[6441:5cb4] [com.apple.BacklightServices:scenes] 0x600000c15d70 setDelegate:<0x600000c161f0 _UIBacklightEnvironment> hasDelegate:YES for environment:sceneID:local.travian.T46Local-default
+2026-10-27 17:06:13.253 Df TravianT46Local[6441:5cb4] [com.apple.UIKit:InterfaceStyle] Not push traits update to screen for new style 1, <UIWindowScene: 0x10120dd60> (DA2671EB-8201-4043-8131-4394EBBD6CBF)
+2026-10-27 17:06:13.253 Df TravianT46Local[6441:5cb4] [com.apple.UIKit:EventDeferring] [0x600002910a80] Initialized with scene: <UIWindowScene: 0x10120dd60>; behavior: <_UIEventDeferringBehavior_iOS: 0x60000021d3e0>; availableForProcess: 1, systemShellManagesKeyboardFocus: 1
+2026-10-27 17:06:13.260 Df TravianT46Local[6441:5cb4] [com.apple.BackBoard:EventDelivery] policyStatus:<BKSHIDEventDeliveryPolicyObserver: 0x60000210ef80; process scope; status: target> was:none
+2026-10-27 17:06:13.261 Df TravianT46Local[6441:5cb4] [com.apple.UIKit:KeyWindow] Setting default evaluation strategy for UIUserInterfaceIdiomPhone to LastOneWins
+2026-10-27 17:06:13.261 Df TravianT46Local[6441:5cb4] [com.apple.UIKit:KeyWindow] Scene target of keyboard event deferring environment did change: 1; scene: UIWindowScene: 0x10120dd60; scene identity: com.apple.frontboard.systemappservices/FBSceneManager:sceneID%3Alocal.travian.T46Local-default
+2026-10-27 17:06:13.261 Df TravianT46Local[6441:5cb4] [com.apple.UIKit:EventDeferring] [0x600002910a80] Scene target of event deferring environments did update: scene: 0x10120dd60; current systemShellManagesKeyboardFocus: 1; systemShellManagesKeyboardFocusForScene: 1; eligibleForRecordRemoval: 1;
+2026-10-27 17:06:13.261 Df TravianT46Local[6441:5cb4] [com.apple.UIKit:KeyWindow] Scene became target of keyboard event deferring environment: UIWindowScene: 0x10120dd60; scene identity: com.apple.frontboard.systemappservices/FBSceneManager:sceneID%3Alocal.travian.T46Local-default
+2026-10-27 17:06:13.261 Df TravianT46Local[6441:5cb4] [com.apple.UIKit:KeyWindow] Setting default evaluation strategy for UIUserInterfaceIdiomPhone to SystemShellManaged
+2026-10-27 17:06:13.261 Df TravianT46Local[6441:5cb4] [com.apple.UIKit:KeyWindow] Key window needs update: 0; currentKeyWindowScene: 0x0; evaluatedKeyWindowScene: 0x10120dd60; currentApplicationKeyWindow: 0x0; evaluatedApplicationKeyWindow: 0x0; reason: UIWindowScene: 0x10120dd60: Window scene became target of keyboard environment
+2026-10-27 17:06:13.261 Df TravianT46Local[6441:5cb4] [com.apple.UIKit:InterfaceStyle] Not push traits update to screen for new style 1, <UIWindowScene: 0x10120dd60> (DA2671EB-8201-4043-8131-4394EBBD6CBF)
+2026-10-27 17:06:13.261 Df TravianT46Local[6441:5cb4] [com.apple.UIKit:InterfaceStyle] Not push traits update to screen for new style 1, <UIWindowScene: 0x10120dd60> (DA2671EB-8201-4043-8131-4394EBBD6CBF)
+2026-10-27 17:06:13.262 Df TravianT46Local[6441:5cb4] [com.apple.UIKit:InterfaceStyle] Not push traits update to screen for new style 1, <UIWindowScene: 0x10120dd60> (DA2671EB-8201-4043-8131-4394EBBD6CBF)
+2026-10-27 17:06:13.349 Df TravianT46Local[6441:5cb4] [com.apple.FrontBoard:SceneExtension] Realizing settings extension <_UIApplicationSceneDisplaySettings> on FBSSceneSettings
+2026-10-27 17:06:13.367 Df TravianT46Local[6441:5cb4] [com.apple.UIKit:Orientation] <UIWindowScene: 0x10120dd60> (DA2671EB-8201-4043-8131-4394EBBD6CBF) Scene updated orientation preferences: none -> ( Pu Ll Lr )
+2026-10-27 17:06:13.368 Df TravianT46Local[6441:5cb4] [com.apple.UIKit:KeyWindow] Key window API is scene-level: YES
+2026-10-27 17:06:13.368 Df TravianT46Local[6441:5cb4] [com.apple.UIKit:KeyWindow] UIWindowScene: 0x10120dd60: Window became key in scene: UIWindow: 0x10130e5e0; contextId: 0x29A06961: reason: UIWindowScene: 0x10120dd60: Window requested to become key in scene: 0x10130e5e0
+2026-10-27 17:06:13.369 Df TravianT46Local[6441:5cb4] [com.apple.UIKit:KeyWindow] Key window needs update: 1; currentKeyWindowScene: 0x0; evaluatedKeyWindowScene: 0x10120dd60; currentApplicationKeyWindow: 0x0; evaluatedApplicationKeyWindow: 0x10130e5e0; reason: UIWindowScene: 0x10120dd60: Window requested to become key in scene: 0x10130e5e0
+2026-10-27 17:06:13.369 Df TravianT46Local[6441:5cb4] [com.apple.UIKit:KeyWindow] Window did become application key: UIWindow: 0x10130e5e0; contextId: 0x29A06961; scene identity: com.apple.frontboard.systemappservices/FBSceneManager:sceneID%3Alocal.travian.T46Local-default
+2026-10-27 17:06:13.369 Df TravianT46Local[6441:5cb4] [com.apple.UIKit:EventDeferring] [0x600002910a80] Begin local event deferring requested for token: 0x6000026014a0; environments: 1; reason: UIWindowScene: 0x10120dd60: Begin event deferring in keyboardFocus for window: 0x10130e5e0
+2026-10-27 17:06:13.371 Df TravianT46Local[6441:5cb4] [com.apple.UIKit:InterfaceStyle] Not push traits update to screen for new style 1, <UIWindowScene: 0x10120dd60> (DA2671EB-8201-4043-8131-4394EBBD6CBF)
+2026-10-27 17:06:13.372 Df TravianT46Local[6441:5cd1] [com.apple.BackBoard:EventDelivery] policyStatus:<BKSHIDEventDeliveryPolicyObserver: 0x60000210ef80; token: com.apple.frontboard.systemappservices/FBSceneManager:sceneID%3Alocal.travian.T46Local-default; status: ancestor> was:target
+2026-10-27 17:06:13.372 Df TravianT46Local[6441:5cd1] [com.apple.BackBoard:EventDelivery] observerPolicyDidChange: 0x60000210ef80 -> <_UIKeyWindowSceneObserver: 0x600000c0e010>
+2026-10-27 17:06:13.379 Df TravianT46Local[6441:5cb4] [com.apple.UIKit:AppLifecycle] sceneOfRecord: sceneID: sceneID:local.travian.T46Local-default  persistentID: DA2671EB-8201-4043-8131-4394EBBD6CBF
+2026-10-27 17:06:13.379 Df TravianT46Local[6441:5cb4] [com.apple.UIKit:Application] Ignoring already applied deactivation reason: 5; deactivation reasons: 2080
+2026-10-27 17:06:13.380 Df TravianT46Local[6441:5cb4] [com.apple.UIKit:Application] Deactivation reason added: 12; deactivation reasons: 2080 -> 6176; animating application lifecycle event: 1
+2026-10-27 17:06:13.380 Df TravianT46Local[6441:5cb4] [com.apple.UIKit:Application] Deactivation reason removed: 11; deactivation reasons: 6176 -> 4128; animating application lifecycle event: 1
+2026-10-27 17:06:13.382 Df TravianT46Local[6441:5cb4] [com.apple.UIKit:InterfaceStyle] Not push traits update to screen for new style 1, <UIWindowScene: 0x10120dd60> (DA2671EB-8201-4043-8131-4394EBBD6CBF)
+2026-10-27 17:06:13.385 Df TravianT46Local[6441:5cd1] [com.apple.UIIntelligenceSupport:xpc] establishing connection to agent
+2026-10-27 17:06:13.386 Df TravianT46Local[6441:5cd1] [com.apple.xpc:session] [0x6000021120d0] Session created.
+2026-10-27 17:06:13.386 Df TravianT46Local[6441:5cd1] [com.apple.xpc:session] [0x6000021120d0] Session created from connection [0x600003d04690]
+2026-10-27 17:06:13.387 Df TravianT46Local[6441:5cd1] [com.apple.xpc:connection] [0x600003d04690] activating connection: mach=true listener=false peer=false name=com.apple.uiintelligencesupport.agent
+2026-10-27 17:06:13.388 Df TravianT46Local[6441:5cd1] [com.apple.xpc:session] [0x6000021120d0] Session activated
+2026-10-27 17:06:13.449 A  TravianT46Local[6441:5cb4] (CoreFoundation) Updating Key-Value Observers Of Preferences
+2026-10-27 17:06:13.649 Df TravianT46Local[6441:5cb4] (WebCore) 0x101214e60 - ResourceMonitorThrottler::Initialized with count: 5, duration: 86400, maxHosts: 100
+2026-10-27 17:06:13.650 Df TravianT46Local[6441:5cb4] (WebKit) 0x101214c68 - WebsiteDataStore::WebsiteDataStore sessionID=1
+2026-10-27 17:06:13.657 A  TravianT46Local[6441:5cb4] (TCC) TCCAccessRequest() IPC
+2026-10-27 17:06:13.657 Df TravianT46Local[6441:5cb4] [com.apple.xpc:connection] [0x600003d082d0] activating connection: mach=true listener=false peer=false name=com.apple.tccd
+2026-10-27 17:06:13.665 A  TravianT46Local[6441:5ccc] (libsystem_containermanager.dylib) container_system_group_path_for_identifier
+2026-10-27 17:06:13.666 Df TravianT46Local[6441:5ccc] [com.apple.containermanager:xpc] Requesting container lookup; class = 13, identifier = (null), group_identifier = systemgroup.com.apple.configurationprofiles, create = 1, temp = 0, euid = 501, uid = 501
+2026-10-27 17:06:13.666 A  TravianT46Local[6441:5ccc] (libsystem_containermanager.dylib) container_query_t
+2026-10-27 17:06:13.666 Df TravianT46Local[6441:5ccc] [com.apple.containermanager:xpc] Query; euid = 501, uid = 501, class = 13, identifier = [(null)](0), flags = 900000003
+2026-10-27 17:06:13.685 Df TravianT46Local[6441:5ccc] [com.apple.containermanager:unspecified] container_query_get_single_result: success
+2026-10-27 17:06:13.685 A  TravianT46Local[6441:5ccc] (libsystem_containermanager.dylib) container_copy_object
+2026-10-27 17:06:13.685 Df TravianT46Local[6441:5ccc] [com.apple.containermanager:unspecified] container_system_group_path_for_identifier: success
+2026-10-27 17:06:13.685 Df TravianT46Local[6441:5ccc] [com.apple.ManagedConfiguration:MC] Got system group container path from MCM for systemgroup.com.apple.configurationprofiles: /Users/runner/Library/Developer/CoreSimulator/Devices/DC4CD8B3-4457-4153-9087-A0D7A2F9BFD9/data/Containers/Shared/SystemGroup/systemgroup.com.apple.configurationprofiles
+2026-10-27 17:06:13.688 Df TravianT46Local[6441:5cb4] [com.apple.xpc:connection] [0x600003d082d0] invalidated after the last release of the connection object
+2026-10-27 17:06:13.690 A  TravianT46Local[6441:5cb4] (TCC) TCCAccessRequest() IPC
+2026-10-27 17:06:13.690 Df TravianT46Local[6441:5cb4] [com.apple.xpc:connection] [0x600003d082d0] activating connection: mach=true listener=false peer=false name=com.apple.tccd
+2026-10-27 17:06:13.695 Df TravianT46Local[6441:5cb4] [com.apple.xpc:connection] [0x600003d082d0] invalidated after the last release of the connection object
+2026-10-27 17:06:13.731 Df TravianT46Local[6441:5cb4] (WebKit) 0x111000840 - [PID=0] WebProcessCache::updateCapacity: Cache is disabled because process swap on navigation is disabled
+2026-10-27 17:06:13.751 Df TravianT46Local[6441:5cb4] (libMobileGestalt.dylib) No persisted cache on this platform.
+2026-10-27 17:06:13.755 Df TravianT46Local[6441:5cd1] [com.apple.UIKit:BackgroundTask] Ending background task with UIBackgroundTaskIdentifier: 2
+2026-10-27 17:06:13.755 Df TravianT46Local[6441:5cd1] [com.apple.UIKit:BackgroundTask] Ending task with identifier 2 and description: <_UIBackgroundTaskInfo: 0x600001719cc0>: taskID = 2, taskName = Persistent SceneSession Map Update, creationTime = 474 (elapsed = 1), _expireHandler: <__NSGlobalBlock__: 0x1e6965d48>
+2026-10-27 17:06:13.755 Df TravianT46Local[6441:5cd1] [com.apple.UIKit:BackgroundTask] Decrementing reference count for assertion <BKSProcessAssertion: 0x60000210b610> (used by background task with identifier 2: <_UIBackgroundTaskInfo: 0x600001719cc0>: taskID = 2, taskName = Persistent SceneSession Map Update, creationTime = 474 (elapsed = 1))
+2026-10-27 17:06:13.783 Df TravianT46Local[6441:5cd1] [com.apple.xpc:connection] [0x600003d00a50] activating connection: mach=true listener=false peer=false name=com.apple.webprivacyd
+2026-10-27 17:06:13.794 Df TravianT46Local[6441:5cb4] [com.apple.WebKit:Process] 0x101109188 - PageConfiguration::delaysWebProcessLaunchUntilFirstLoad() -> false because of associated processPool value
+2026-10-27 17:06:13.794 Df TravianT46Local[6441:5cb4] [com.apple.WebKit:Process] 0x102849e08 - WebProcessPool::createWebPage: Not delaying WebProcess launch
+2026-10-27 17:06:13.798 Df TravianT46Local[6441:5cb4] [com.apple.WebKit:Process] 0x111000d00 - [PID=0] WebProcessProxy::constructor:
+2026-10-27 17:06:13.805 Df TravianT46Local[6441:5cd1] [com.apple.BackBoard:MousePointer] Activating Connection: <(null):0x600002116760>
+2026-10-27 17:06:13.819 Df TravianT46Local[6441:5ccc] [com.apple.xpc:connection] [0x10130b7d0] activating connection: mach=true listener=false peer=false name=com.apple.lsd.mapdb
+2026-10-27 17:06:13.825 Df TravianT46Local[6441:5cd1] [com.apple.UIKit:BackgroundTask] Ending background task with UIBackgroundTaskIdentifier: 1
+2026-10-27 17:06:13.825 Df TravianT46Local[6441:5cd1] [com.apple.UIKit:BackgroundTask] Ending task with identifier 1 and description: <_UIBackgroundTaskInfo: 0x6000017097c0>: taskID = 1, taskName = Launch Background Task for Coalescing, creationTime = 474 (elapsed = 1), _expireHandler: (null)
+2026-10-27 17:06:13.825 Df TravianT46Local[6441:5cd1] [com.apple.UIKit:BackgroundTask] Decrementing reference count for assertion <BKSProcessAssertion: 0x60000210b610> (used by background task with identifier 1: <_UIBackgroundTaskInfo: 0x6000017097c0>: taskID = 1, taskName = Launch Background Task for Coalescing, creationTime = 474 (elapsed = 1))
+2026-10-27 17:06:13.825 Df TravianT46Local[6441:5cd1] [com.apple.UIKit:BackgroundTask] Will invalidate assertion: <BKSProcessAssertion: 0x60000210b610> for task identifier: 1
+2026-10-27 17:06:13.828 Df TravianT46Local[6441:5ccc] [com.apple.extensionkit:launch] Launching process with config: bundleID: com.apple.WebKit.WebContent instance ID: Optional([_EXExtensionInstanceIdentifier: 75080F3E-5B5E-4D37-ACA1-57142867B09F])
+2026-10-27 17:06:13.837 A  TravianT46Local[6441:5cd1] (RunningBoardServices) didChangeInheritances
+2026-10-27 17:06:13.907 Df TravianT46Local[6441:5cb4] [com.apple.avkit:AVKit] +[AVPictureInPicturePlatformAdapter isPictureInPictureSupported]_block_invoke isPictureInPictureSupported NO
+2026-10-27 17:06:13.922 Df TravianT46Local[6441:5cb4] (libMobileGestalt.dylib) No persisted cache on this platform.
+2026-10-27 17:06:13.922 Df TravianT46Local[6441:5cb4] [com.apple.xpc:connection] [0x600003d054a0] activating connection: mach=true listener=false peer=false name=com.apple.IOSurface.Remote
+2026-10-27 17:06:13.926 Df TravianT46Local[6441:5cb4] [com.apple.WebKit:ProcessSuspension] 0x111001410 - [PID=0, throttler=0x111000d90] ProcessThrottler::Activity::Activity: Starting foreground activity / 'Process initialization'
+2026-10-27 17:06:13.933 A  TravianT46Local[6441:5cd1] (RunningBoardServices) didChangeInheritances
+2026-10-27 17:06:13.941 Df TravianT46Local[6441:5cd1] [com.apple.xpc:connection] [0x600003d00b40] activating connection: mach=true listener=false peer=false name=com.apple.accessibility.mediaaccessibilityd
+2026-10-27 17:06:13.957 Df TravianT46Local[6441:5cb4] [com.apple.WebKit:Loading] 0x103011018 - [pageProxyID=8, webPageID=9, PID=0] WebPageProxy::constructor:
+2026-10-27 17:06:13.961 Df TravianT46Local[6441:5cb4] [com.apple.WebKit:Media] PlaybackSessionManagerProxy::PlaybackSessionManagerProxy(9434422C)
+2026-10-27 17:06:13.963 Df TravianT46Local[6441:5cb4] [com.apple.WebKit:Fullscreen] PlaybackSessionManagerProxy::VideoPresentationManagerProxy(9434422C)
+2026-10-27 17:06:13.971 Df TravianT46Local[6441:5cb4] [com.apple.WebKit:Process] 0x111000d00 - [PID=0] WebProcessProxy::addExistingWebPage: webPage=0x103011018, pageProxyID=8, webPageID=9
+2026-10-27 17:06:13.974 Df TravianT46Local[6441:5cb4] [com.apple.WebKit:ProcessSwapping] 0x111000840 - [PID=0] WebProcessCache::updateCapacity: Cache is disabled by client
+2026-10-27 17:06:13.975 Df TravianT46Local[6441:5cb4] (libMobileGestalt.dylib) No persisted cache on this platform.
+2026-10-27 17:06:13.975 Df TravianT46Local[6441:5cb4] [com.apple.WebKit:ProcessSuspension] 0x111001470 - [PID=0, throttler=0x111002390] ProcessThrottler::Activity::Activity: Starting foreground activity / 'Process initialization'
+2026-10-27 17:06:13.990 Df TravianT46Local[6441:5cb4] [com.apple.WebKit:TextInteraction] Conforming to BrowserEngineKit text input protocol
+2026-10-27 17:06:14.070 Df TravianT46Local[6441:5ccf] [com.apple.xpc:connection] [0x101311290] activating connection: mach=true listener=false peer=false name=com.apple.fontservicesd
+2026-10-27 17:06:14.174 Df TravianT46Local[6441:5ccc] [com.apple.runningboard:process] Starting death monitoring for handle [xpcservice<com.apple.WebKit.WebContent([app<local.travian.T46Local((null))>:6441])>{vt hash: 71395982}[uuid:75080F3E-5B5E-4D37-ACA1-57142867B09F]:6449]
+2026-10-27 17:06:14.225 Df TravianT46Local[6441:5ccc] [com.apple.extensionkit:launch] Created new process ExtensionProcess: bundleID: com.apple.WebKit.WebContent instance ID: Optional([_EXExtensionInstanceIdentifier: 75080F3E-5B5E-4D37-ACA1-57142867B09F]) pid: 6449.
+2026-10-27 17:06:14.225 Df TravianT46Local[6441:5ccc] [com.apple.extensionkit:launch] Launching process with config: bundleID: com.apple.WebKit.GPU instance ID: Optional([_EXExtensionInstanceIdentifier: E26313F7-528C-4B28-BCD2-9B04055979D6])
+2026-10-27 17:06:14.227 Df TravianT46Local[6441:5ccf] [com.apple.WebKit:Process] AssertionCapability::AssertionCapability: taking assertion Foreground
+2026-10-27 17:06:14.335 Df TravianT46Local[6441:5cb4] [com.apple.UIKit:_UIVisualStyleRegistry] Note: no default visual style class registered as fallback for stylable class UIActivityIndicatorView
+2026-10-27 17:06:14.335 Df TravianT46Local[6441:5cb4] [com.apple.UIKit:_UIVisualStyleRegistry] Note: no default visual style class registered as fallback for stylable class UIActivityIndicatorView
+2026-10-27 17:06:14.335 Df TravianT46Local[6441:5cb4] [PrototypeTools:domain] Not observing PTDefaults on customer install.
+2026-10-27 17:06:14.485 Df TravianT46Local[6441:5cb4] [com.apple.WebKit:ViewState] 0x111000b00 - ApplicationStateTracker::ApplicationStateTracker(): m_isInBackground=0
+2026-10-27 17:06:14.486 Df TravianT46Local[6441:5cb4] [com.apple.WebKit:ViewState] 0x103040c00 - WKApplicationStateTrackingView: View with page [0x103011018, pageProxyID=8] was added to a window, _lastObservedStateWasBackground=0, isNowBackground=0
+2026-10-27 17:06:14.654 Df TravianT46Local[6441:5cb4] [com.apple.WebKit:ViewState] 0x103011018 - [pageProxyID=8, webPageID=9, PID=0] WebPageProxy::updateActivityState: view visibility state changed 0 -> 1
+2026-10-27 17:06:14.663 Df TravianT46Local[6441:5cb4] [com.apple.BackBoard:Keyboard] Activating connection to server: (null)
+2026-10-27 17:06:14.663 Df TravianT46Local[6441:5cb4] [com.apple.BackBoard:Keyboard] server remote target <BSXPCServiceConnectionProxy<BKSKeyboardServiceClientToServerIPC>: 0x600002921dc0>
+2026-10-27 17:06:14.663 Df TravianT46Local[6441:5cb4] [com.apple.BackBoard:Keyboard] currently observing: YES
+2026-10-27 17:06:14.665 Df TravianT46Local[6441:5cb4] [com.apple.BackBoard:Keyboard] connected: (
+    "<BKSHIDKeyboardDevice: 0x60000025be60> {\134n    senderID: 0xACEFADE00000003;\134n    transport: <nil>;\134n    language: <nil>;\134n    layout: US;\134n    countryCode: 0;\134n    standardType: 4294967295;\134n    subinterfaceID: 0;\134n    capsLockKeyHasLanguageSwitchLabel: NO;\134n    globeKeyLabelHasGlobeSymbol: NO;\134n}"
+)
+2026-10-27 17:06:14.665 Df TravianT46Local[6441:5cb4] [com.apple.BackBoard:Keyboard] currently observing: NO
+2026-10-27 17:06:14.665 Df TravianT46Local[6441:5cb4] [com.apple.BackBoard:Keyboard] disconnected: (
+    "<BKSHIDKeyboardDevice: 0x60000025be60> {\134n    senderID: 0xACEFADE00000003;\134n    transport: <nil>;\134n    language: <nil>;\134n    layout: US;\134n    countryCode: 0;\134n    standardType: 4294967295;\134n    subinterfaceID: 0;\134n    capsLockKeyHasLanguageSwitchLabel: NO;\134n    globeKeyLabelHasGlobeSymbol: NO;\134n}"
+)
+2026-10-27 17:06:14.665 Df TravianT46Local[6441:5cb4] [com.apple.BackBoard:Keyboard] currently observing: YES
+2026-10-27 17:06:14.666 Df TravianT46Local[6441:5cb4] [com.apple.BackBoard:Keyboard] connected: (
+    "<BKSHIDKeyboardDevice: 0x600000255080> {\134n    senderID: 0xACEFADE00000003;\134n    transport: <nil>;\134n    language: <nil>;\134n    layout: US;\134n    countryCode: 0;\134n    standardType: 4294967295;\134n    subinterfaceID: 0;\134n    capsLockKeyHasLanguageSwitchLabel: NO;\134n    globeKeyLabelHasGlobeSymbol: NO;\134n}"
+)
+2026-10-27 17:06:14.666 Df TravianT46Local[6441:5cb4] [com.apple.BackBoard:Keyboard] currently observing: NO
+2026-10-27 17:06:14.666 Df TravianT46Local[6441:5cb4] [com.apple.BackBoard:Keyboard] disconnected: (
+    "<BKSHIDKeyboardDevice: 0x600000255080> {\134n    senderID: 0xACEFADE00000003;\134n    transport: <nil>;\134n    language: <nil>;\134n    layout: US;\134n    countryCode: 0;\134n    standardType: 4294967295;\134n    subinterfaceID: 0;\134n    capsLockKeyHasLanguageSwitchLabel: NO;\134n    globeKeyLabelHasGlobeSymbol: NO;\134n}"
+)
+2026-10-27 17:06:14.669 Df TravianT46Local[6441:5ccc] [com.apple.runningboard:process] Starting death monitoring for handle [xpcservice<com.apple.WebKit.GPU([app<local.travian.T46Local((null))>:6441])>{vt hash: 223737757}[uuid:E26313F7-528C-4B28-BCD2-9B04055979D6]:6451]
+2026-10-27 17:06:14.674 Df TravianT46Local[6441:5cb4] [com.apple.UIKit:HardwareKeyboard] -[UIApplication GSKeyboardForHWLayout:senderID:forceRebuild:createIfNeeded:], New hardware layout is created with US layout and 0 standardType.
+2026-10-27 17:06:14.678 Df TravianT46Local[6441:5cb4] [com.apple.BackBoard:Keyboard] currently observing: YES
+2026-10-27 17:06:14.679 Df TravianT46Local[6441:5cb4] [com.apple.BackBoard:Keyboard] connected: (
+    "<BKSHIDKeyboardDevice: 0x600000264560> {\134n    senderID: 0xACEFADE00000003;\134n    transport: <nil>;\134n    language: <nil>;\134n    layout: US;\134n    countryCode: 0;\134n    standardType: 4294967295;\134n    subinterfaceID: 0;\134n    capsLockKeyHasLanguageSwitchLabel: NO;\134n    globeKeyLabelHasGlobeSymbol: NO;\134n}"
+)
+2026-10-27 17:06:14.679 Df TravianT46Local[6441:5cb4] [com.apple.BackBoard:Keyboard] currently observing: NO
+2026-10-27 17:06:14.679 Df TravianT46Local[6441:5cb4] [com.apple.BackBoard:Keyboard] disconnected: (
+    "<BKSHIDKeyboardDevice: 0x600000264560> {\134n    senderID: 0xACEFADE00000003;\134n    transport: <nil>;\134n    language: <nil>;\134n    layout: US;\134n    countryCode: 0;\134n    standardType: 4294967295;\134n    subinterfaceID: 0;\134n    capsLockKeyHasLanguageSwitchLabel: NO;\134n    globeKeyLabelHasGlobeSymbol: NO;\134n}"
+)
+2026-10-27 17:06:14.680 Df TravianT46Local[6441:5cb4] [com.apple.WebKit:ViewState] 0x103011018 - [pageProxyID=8, webPageID=9, PID=0] WebPageProxy::viewIsBecomingVisible:
+2026-10-27 17:06:14.680 Df TravianT46Local[6441:5cb4] [com.apple.WebKit:ProcessSuspension] 0x103011018 - [pageProxyID=8, webPageID=9, PID=0] WebPageProxy::updateThrottleState: UIProcess is taking a foreground assertion because the view is visible
+2026-10-27 17:06:14.681 Df TravianT46Local[6441:5cb4] [com.apple.WebKit:ProcessSuspension] 0x111006950 - [PID=0, throttler=0x111000d90] ProcessThrottler::Activity::Activity: Starting foreground activity / 'View is visible'
+2026-10-27 17:06:14.683 Df TravianT46Local[6441:5cb4] [com.apple.WebKit:ViewState] 0x102020600 (pageProxyID=8) -[WKWebView _endLiveResize]
+2026-10-27 17:06:14.737 Df TravianT46Local[6441:5cb4] [com.apple.network:activity] Create activity from XPC object <nw_activity 50:1 [23F06D55-66D2-4228-A50C-93CFB3518135] (reporting strategy default)>
+2026-10-27 17:06:14.737 Df TravianT46Local[6441:5cb4] [com.apple.network:activity] Create activity from XPC object <nw_activity 50:2 [2AA864A3-DB50-4CB4-8AA8-789B7F004C61] (reporting strategy default)>
+2026-10-27 17:06:14.737 Df TravianT46Local[6441:5cb4] [com.apple.network:activity] Set activity <nw_activity 50:1 [23F06D55-66D2-4228-A50C-93CFB3518135] (reporting strategy default)> as the global parent
+2026-10-27 17:06:14.747 Df TravianT46Local[6441:5cb4] [com.apple.UIKit:EventDeferring] [0x600002910a80] Scene target of event deferring environments did update: scene: 0x10120dd60; current systemShellManagesKeyboardFocus: 1; systemShellManagesKeyboardFocusForScene: 1; eligibleForRecordRemoval: 1;
+2026-10-27 17:06:14.747 Df TravianT46Local[6441:5cb4] [com.apple.UIKit:KeyWindow] Scene became target of keyboard event deferring environment: UIWindowScene: 0x10120dd60; scene identity: com.apple.frontboard.systemappservices/FBSceneManager:sceneID%3Alocal.travian.T46Local-default
+2026-10-27 17:06:14.753 Df TravianT46Local[6441:5cb4] [com.apple.UIKit:InterfaceStyle] Not push traits update to screen for new style 1, <UIWindowScene: 0x10120dd60> (DA2671EB-8201-4043-8131-4394EBBD6CBF)
+2026-10-27 17:06:14.755 Df TravianT46Local[6441:5cb4] [com.apple.UIKit:AppLifecycle] sceneOfRecord: sceneID: sceneID:local.travian.T46Local-default  persistentID: DA2671EB-8201-4043-8131-4394EBBD6CBF
+2026-10-27 17:06:14.755 Df TravianT46Local[6441:5cb4] [com.apple.UIKit:Application] Deactivation reason removed: 12; deactivation reasons: 4128 -> 32; animating application lifecycle event: 1
+2026-10-27 17:06:14.757 Df TravianT46Local[6441:5cb4] [com.apple.KeyboardArbiter:Client] Send setDeactivating: N (-DeactivationReason:SuspendedEventsOnly)
+2026-10-27 17:06:14.758 Df TravianT46Local[6441:5cb4] [com.apple.UIKit:Application] Deactivation reason removed: 5; deactivation reasons: 32 -> 0; animating application lifecycle event: 0
+2026-10-27 17:06:14.759 Df TravianT46Local[6441:5cb4] [com.apple.WebKit:Fullscreen] PlaybackSessionManagerProxy::applicationDidBecomeActive(9434422C)
+2026-10-27 17:06:14.762 Df TravianT46Local[6441:5cb4] [com.apple.UIKit:UpdateScheduler] Target list changed: <CADisplay:LCD PurpleMain>
+2026-10-27 17:06:14.789 Df TravianT46Local[6441:5cb4] [com.apple.xpc:connection] [0x10110b910] activating connection: mach=false listener=false peer=false name=(anonymous)
+2026-10-27 17:06:14.790 Df TravianT46Local[6441:5cb4] [com.apple.UIKit:AppLifecycle] sceneOfRecord: sceneID: sceneID:local.travian.T46Local-default  persistentID: DA2671EB-8201-4043-8131-4394EBBD6CBF
+2026-10-27 17:06:14.790 Df TravianT46Local[6441:5cb4] [com.apple.KeyboardArbiter:Client] startConnection
+2026-10-27 17:06:14.792 Df TravianT46Local[6441:5cb4] [com.apple.xpc:connection] [0x10121ad40] activating connection: mach=true listener=false peer=false name=com.apple.UIKit.KeyboardManagement.hosted
+2026-10-27 17:06:14.800 A  TravianT46Local[6441:5cd1] (CoreFoundation) Updating Key-Value Observers Of Preferences
+2026-10-27 17:06:14.802 Df TravianT46Local[6441:5cb4] [com.apple.UIKit:AppLifecycle] sceneOfRecord: sceneID: sceneID:local.travian.T46Local-default  persistentID: DA2671EB-8201-4043-8131-4394EBBD6CBF
+2026-10-27 17:06:14.804 Df TravianT46Local[6441:5cb4] [com.apple.UIKit:AppLifecycle] sceneOfRecord: sceneID: sceneID:local.travian.T46Local-default  persistentID: DA2671EB-8201-4043-8131-4394EBBD6CBF
+2026-10-27 17:06:14.806 Df TravianT46Local[6441:5cb4] [com.apple.KeyboardArbiter:Client] handleKeyboardChange: set currentKeyboard:N (wasKeyboard:N)
+2026-10-27 17:06:14.807 Df TravianT46Local[6441:5cb4] [com.apple.UIKit:KeyboardSceneDelegate] forceReloadInputViews
+2026-10-27 17:06:14.807 Df TravianT46Local[6441:5cb4] [com.apple.UIKit:KeyboardSceneDelegate] Reloading input views for: <(null): 0x0; > force: 1
+2026-10-27 17:06:14.818 Df TravianT46Local[6441:5cb4] [com.apple.UIKit:KeyboardArbiterClientLog] isWritingToolsHandlingKeyboardTracking:Y (WT ready:Y, Arbiter ready:Y)
+2026-10-27 17:06:14.867 A  TravianT46Local[6441:5cd1] (CoreFoundation) Updating Key-Value Observers Of Preferences
+2026-10-27 17:06:14.873 Df TravianT46Local[6441:5cb4] [com.apple.WebKit:Process] 0x111000d00 - [PID=6449] WebProcessProxy::didFinishLaunching:
+2026-10-27 17:06:14.874 F  TravianT46Local[6441:5cb4] [com.apple.WebKit:Process] WebContent process (0x111000d00) took 1.071323 seconds to launch
+2026-10-27 17:06:14.874 A  TravianT46Local[6441:5cb4] (libsystem_trace.dylib) Activity for state dumps
+2026-10-27 17:06:14.877 Df TravianT46Local[6441:5cb4] [com.apple.WebKit:ProcessSuspension] 0x111000d90 - [PID=6449] ProcessThrottler::didConnectToProcess
+2026-10-27 17:06:14.879 Df TravianT46Local[6441:5cb4] [com.apple.WebKit:ProcessSuspension] 0x111000d90 - [PID=6449] ProcessThrottler::setThrottleState: Updating process assertion type to 3 (foregroundActivities=2, backgroundActivities=4)
+2026-10-27 17:06:14.880 Df TravianT46Local[6441:5cb4] [com.apple.WebKit:Process] AssertionCapability::AssertionCapability: taking assertion Foreground
+2026-10-27 17:06:14.884 Df TravianT46Local[6441:5cb4] [com.apple.WebKit:ProcessSuspension] 0x60000173fa40 - WKProcessAssertionBackgroundTaskManager: beginBackgroundTaskWithName
+2026-10-27 17:06:14.886 Df TravianT46Local[6441:5cb4] [com.apple.WebKit:ProcessSuspension] WKProcessAssertionBackgroundTaskManager: Took a FinishTaskInterruptable assertion for own process
+2026-10-27 17:06:14.886 Df TravianT46Local[6441:5cb4] [com.apple.WebKit:ProcessSuspension] 0x111000d00 - [PID=6449] WebProcessProxy::didChangeThrottleState: type=2
+2026-10-27 17:06:14.887 Df TravianT46Local[6441:5cb4] [com.apple.WebKit:ProcessSuspension] 0x111000d00 - [PID=6449] WebProcessProxy::didChangeThrottleState(Foreground) Taking foreground assertion for network process
+2026-10-27 17:06:14.887 Df TravianT46Local[6441:5cb4] [com.apple.WebKit:ProcessSuspension] 0x111006980 - [PID=0, throttler=0x111002390] ProcessThrottler::Activity::Activity: Starting foreground activity / 'GPU for foreground view(s)'
+2026-10-27 17:06:14.887 Df TravianT46Local[6441:5cb4] [com.apple.WebKit:Process] 0x111007d90 - NetworkProcessProxy::NetworkProcessProxy
+2026-10-27 17:06:14.893 Df TravianT46Local[6441:5cb4] [com.apple.CFNetwork:Default] Initializing CFHTTPCookieStorage singleton
+2026-10-27 17:06:14.893 Df TravianT46Local[6441:5cb4] [com.apple.CFNetwork:Default] Creating default cookie storage with process/bundle identifier
+2026-10-27 17:06:14.900 Df TravianT46Local[6441:5cb4] [com.apple.network:] networkd_settings_read_from_file initialized networkd settings by reading plist directly
+2026-10-27 17:06:14.902 Df TravianT46Local[6441:5cb4] [com.apple.network:] networkd_settings_read_from_file initialized networkd settings by reading plist directly
+2026-10-27 17:06:14.906 Df TravianT46Local[6441:5ccf] [com.apple.WebKit:ProcessSuspension] 0x111007c10 - ProcessAssertion::acquireSync Trying to take RBS assertion 'WebProcess Foreground Assertion' for process with PID=6449
+2026-10-27 17:06:14.909 Df TravianT46Local[6441:5cb4] [com.apple.WebKit:ProcessSuspension] 0x1110069b0 - [PID=0, throttler=0x111007e20] ProcessThrottler::Activity::Activity: Starting foreground activity / 'Process initialization'
+2026-10-27 17:06:14.911 Df TravianT46Local[6441:5cb4] [com.apple.WebKit:ProcessSuspension] 0x1110082f0 - [PID=0, throttler=0x111007e20] ProcessThrottler::Activity::Activity: Starting foreground activity / 'Networking for foreground view(s)'
+2026-10-27 17:06:14.912 Df TravianT46Local[6441:5cb4] [com.apple.WebKit:Process] 0x111007d90 - NetworkProcessProxy::sendXPCEndpointToProcess(0x111000d00) state = 1 has connection = 1 XPC endpoint message = 0x0
+2026-10-27 17:06:14.912 A  TravianT46Local[6441:5cd1] (CoreFoundation) Updating Key-Value Observers Of Preferences
+2026-10-27 17:06:14.928 Sd TravianT46Local[6441:0] (451CB857-4259-3303-973D-959F1D2618C2) UAUserActivity
+UAUserActivityManager supportsActivityContinuation=YES isEnabled=YES serverPid=0 PROJECT:UserActivity-551
+2026-10-27 17:06:14.928 Sd TravianT46Local[6441:0] (451CB857-4259-3303-973D-959F1D2618C2) UAUserActivity
+[8780F1EF-8DF3-4C50-87B6-DD6DF5EE4FE0 userInfo.count=1 dirty 
+2026-10-27 17:06:14.932 A  TravianT46Local[6441:5cd1] (CoreFoundation) Updating Key-Value Observers Of Preferences
+2026-10-27 17:06:14.949 A  TravianT46Local[6441:5cd1] (CoreFoundation) Updating Key-Value Observers Of Preferences
+2026-10-27 17:06:14.951 A  TravianT46Local[6441:5cee] (RunningBoardServices) didChangeInheritances
+2026-10-27 17:06:14.953 Df TravianT46Local[6441:5ccc] [com.apple.extensionkit:launch] Created new process ExtensionProcess: bundleID: com.apple.WebKit.GPU instance ID: Optional([_EXExtensionInstanceIdentifier: E26313F7-528C-4B28-BCD2-9B04055979D6]) pid: 6451.
+2026-10-27 17:06:14.956 A  TravianT46Local[6441:5cd1] (CoreFoundation) Updating Key-Value Observers Of Preferences
+2026-10-27 17:06:14.957 Df TravianT46Local[6441:5ccc] [com.apple.extensionkit:launch] Launching process with config: bundleID: com.apple.WebKit.Networking instance ID: Optional([_EXExtensionInstanceIdentifier: F580B1B7-2C6F-4E08-AB4D-F4EF9D899AD0])
+2026-10-27 17:06:14.957 Df TravianT46Local[6441:5cd6] [com.apple.WebKit:Process] AssertionCapability::AssertionCapability: taking assertion Foreground
+2026-10-27 17:06:14.958 E  TravianT46Local[6441:5ccc] [com.apple.extensionkit:default] Failed to resolve host network app id to config: bundleID: com.apple.WebKit.Networking instance ID: Optional([_EXExtensionInstanceIdentifier: F580B1B7-2C6F-4E08-AB4D-F4EF9D899AD0])
+2026-10-27 17:06:14.959 Df TravianT46Local[6441:5ccf] [com.apple.WebKit:ProcessSuspension] 0x111007c10 - ProcessAssertion() Successfully granted capability
+2026-10-27 17:06:14.961 A  TravianT46Local[6441:5cd1] (CoreFoundation) Updating Key-Value Observers Of Preferences
+2026-10-27 17:06:14.964 Df TravianT46Local[6441:5cb4] [com.apple.network:activity] <nw_activity 50:1 [23F06D55-66D2-4228-A50C-93CFB3518135] (global parent) (reporting strategy default) complete (reason success)> complete with reason 2 (success), duration 3617ms
+2026-10-27 17:06:14.964 Df TravianT46Local[6441:5cb4] [com.apple.network:activity] <nw_activity 50:2 [2AA864A3-DB50-4CB4-8AA8-789B7F004C61] (reporting strategy default) complete (reason success)> complete with reason 2 (success), duration 3616ms
+2026-10-27 17:06:14.964 Df TravianT46Local[6441:5cb4] [com.apple.network:activity] Unsetting the global parent activity <nw_activity 50:1 [23F06D55-66D2-4228-A50C-93CFB3518135] (global parent) (reporting strategy default) complete (reason success)>
+2026-10-27 17:06:14.964 Df TravianT46Local[6441:5cb4] [com.apple.network:activity] Unset the global parent activity
+2026-10-27 17:06:14.968 A  TravianT46Local[6441:5cd1] (CoreFoundation) Updating Key-Value Observers Of Preferences
+2026-10-27 17:06:14.973 A  TravianT46Local[6441:5cd1] (CoreFoundation) Updating Key-Value Observers Of Preferences
+2026-10-27 17:06:14.975 Df TravianT46Local[6441:5cb4] [com.apple.xpc:connection] [0x10120ba70] activating connection: mach=false listener=false peer=false name=(anonymous)
+2026-10-27 17:06:14.980 Df TravianT46Local[6441:5cb4] [com.apple.WebKit:Process] 0x111002300 - GPUProcessProxy::didFinishLaunching:
+2026-10-27 17:06:14.980 F  TravianT46Local[6441:5cb4] [com.apple.WebKit:Process] GPU process (0x111002300) took 1.005423 seconds to launch
+2026-10-27 17:06:14.980 A  TravianT46Local[6441:5cb4] (libsystem_trace.dylib) Activity for state dumps
+2026-10-27 17:06:14.980 Df TravianT46Local[6441:5cb4] [com.apple.WebKit:Process] 0x111002300 - GPUProcessProxy::connectionWillOpen:
+2026-10-27 17:06:14.980 Df TravianT46Local[6441:5cb4] [com.apple.WebKit:ProcessSuspension] 0x111002390 - [PID=6451] ProcessThrottler::didConnectToProcess
+2026-10-27 17:06:14.980 Df TravianT46Local[6441:5cb4] [com.apple.WebKit:ProcessSuspension] 0x111002390 - [PID=6451] ProcessThrottler::setThrottleState: Updating process assertion type to 3 (foregroundActivities=2, backgroundActivities=1)
+2026-10-27 17:06:14.980 Df TravianT46Local[6441:5cb4] [com.apple.WebKit:Process] AssertionCapability::AssertionCapability: taking assertion Foreground
+2026-10-27 17:06:14.981 Df TravianT46Local[6441:5cb4] [com.apple.WebKit:Process] 0x111007d90 - NetworkProcessProxy::sendXPCEndpointToProcess(0x111002300) state = 1 has connection = 1 XPC endpoint message = 0x0
+2026-10-27 17:06:14.981 Df TravianT46Local[6441:5cd6] [com.apple.WebKit:ProcessSuspension] 0x111007cd0 - ProcessAssertion::acquireSync Trying to take RBS assertion 'GPUProcess Foreground Assertion' for process with PID=6451
+2026-10-27 17:06:14.981 A  TravianT46Local[6441:5cd1] (CoreServicesInternal) CFURLCreateBookmarkData
+2026-10-27 17:06:14.988 Df TravianT46Local[6441:5cd6] [com.apple.WebKit:ProcessSuspension] 0x111007cd0 - ProcessAssertion() Successfully granted capability
+2026-10-27 17:06:15.007 Df TravianT46Local[6441:5cb4] [com.apple.WebKit:ProcessSuspension] 0x111001410 - [PID=6449, throttler=0x111000d90] ProcessThrottler::Activity::invalidate: Ending foreground activity / 'Process initialization'
+2026-10-27 17:06:15.008 Df TravianT46Local[6441:5cb4] [com.apple.WebKit:ProcessSuspension] 0x111007d90 - NetworkProcessProxy::getNetworkProcessConnection: Taking a background assertion because web process pid 6449 (core identifier 7) is requesting a connection
+2026-10-27 17:06:15.131 Df TravianT46Local[6441:5cb4] [com.apple.WebKit:ProcessSuspension] 0x111001470 - [PID=6451, throttler=0x111002390] ProcessThrottler::Activity::invalidate: Ending foreground activity / 'Process initialization'
+2026-10-27 17:06:15.415 Df TravianT46Local[6441:5ccc] [com.apple.runningboard:process] Starting death monitoring for handle [xpcservice<com.apple.WebKit.Networking([app<local.travian.T46Local((null))>:6441])>{vt hash: 114736818}[uuid:F580B1B7-2C6F-4E08-AB4D-F4EF9D899AD0]:6453]
+2026-10-27 17:06:15.426 Df TravianT46Local[6441:5ccc] [com.apple.extensionkit:launch] Created new process ExtensionProcess: bundleID: com.apple.WebKit.Networking instance ID: Optional([_EXExtensionInstanceIdentifier: F580B1B7-2C6F-4E08-AB4D-F4EF9D899AD0]) pid: 6453.
+2026-10-27 17:06:15.427 Df TravianT46Local[6441:5ccc] [com.apple.WebKit:Process] AssertionCapability::AssertionCapability: taking assertion Foreground
+2026-10-27 17:06:15.428 Df TravianT46Local[6441:5cb4] [com.apple.xpc:connection] [0x10138abf0] activating connection: mach=false listener=false peer=false name=(anonymous)
+2026-10-27 17:06:15.613 Df TravianT46Local[6441:5cb4] [com.apple.WebKit:Process] 0x111007d90 - NetworkProcessProxy::didFinishLaunching
+2026-10-27 17:06:15.613 Df TravianT46Local[6441:5cb4] [com.apple.WebKit:ProcessSuspension] 0x111007e20 - [PID=6453] ProcessThrottler::didConnectToProcess
+2026-10-27 17:06:15.613 Df TravianT46Local[6441:5cb4] [com.apple.WebKit:ProcessSuspension] 0x111007e20 - [PID=6453] ProcessThrottler::setThrottleState: Updating process assertion type to 3 (foregroundActivities=2, backgroundActivities=2)
+2026-10-27 17:06:15.613 Df TravianT46Local[6441:5cb4] [com.apple.WebKit:Process] AssertionCapability::AssertionCapability: taking assertion Foreground
+2026-10-27 17:06:15.613 Df TravianT46Local[6441:5ccc] [com.apple.WebKit:ProcessSuspension] 0x111008a40 - ProcessAssertion::acquireSync Trying to take RBS assertion 'NetworkProcess Foreground Assertion' for process with PID=6453
+2026-10-27 17:06:15.614 Df TravianT46Local[6441:5ccc] [com.apple.WebKit:ProcessSuspension] 0x111008a40 - ProcessAssertion() Successfully granted capability
+2026-10-27 17:06:15.622 Df TravianT46Local[6441:5cb4] [com.apple.WebKit:Process] 0x111007d90 - NetworkProcessProxy::sendXPCEndpointToProcess(0x111000d00) state = 1 has connection = 1 XPC endpoint message = 0x600003d74690
+2026-10-27 17:06:15.623 Df TravianT46Local[6441:5cb4] [com.apple.WebKit:Process] 0x111007d90 - NetworkProcessProxy::sendXPCEndpointToProcess(0x111002300) state = 1 has connection = 1 XPC endpoint message = 0x600003d74690
+2026-10-27 17:06:15.682 Df TravianT46Local[6441:5cb4] [com.apple.WebKit:ProcessSuspension] 0x1110069b0 - [PID=6453, throttler=0x111007e20] ProcessThrottler::Activity::invalidate: Ending foreground activity / 'Process initialization'
+2026-10-27 17:06:15.774 Df TravianT46Local[6441:5ccc] [com.apple.xpc:connection] [0x10110b910] Re-initialization successful; calling out to event handler with XPC_ERROR_CONNECTION_INTERRUPTED
+2026-10-27 17:06:16.197 E  TravianT46Local[6441:5cb4] [com.apple.WebKit:ResourceLoadStatistics] Failed to request storage access quirks from WebPrivacy.
+2026-10-27 17:06:16.197 E  TravianT46Local[6441:5cb4] [com.apple.WebKit:ResourceLoadStatistics] Failed to request storage access user agent string quirks from WebPrivacy.
+2026-10-27 17:06:16.499 Df TravianT46Local[6441:5cb4] [com.apple.WebKit:ProcessSuspension] 0x111002300 - GPUProcessProxy is taking a background assertion because a web process is requesting a connection
+2026-10-27 17:06:16.515 Df TravianT46Local[6441:5cb4] [com.apple.WebKit:Process] 0x111002300 - GPUProcessProxy::didCreateContextForVisibilityPropagation: webPageProxyID: 8, pagePID: 9, contextID: 2234547430
+2026-10-27 17:06:16.519 Df TravianT46Local[6441:5cb4] [com.apple.WebKit:Process] Created visibility propagation interaction <_UIVisibilityPropagationInteraction: 0x600002670960> for process with PID=6451
+2026-10-27 17:06:17.735 Df TravianT46Local[6441:5cb4] [com.apple.WebKit:ResourceLoadStatistics] StorageAccessPromptQuirkController::didUpdateCachedListData: Loaded 1 storage access prompt(s) quirks from WebPrivacy.
+2026-10-27 17:06:18.211 Df TravianT46Local[6441:5cb4] [com.apple.WebKit:Loading] 0x103011018 - [pageProxyID=8, webPageID=9, PID=6449] WebPageProxy::loadRequest:
+2026-10-27 17:06:18.213 Df TravianT46Local[6441:5cb4] [com.apple.WebKit:Loading] 0x103011018 - [pageProxyID=8, webPageID=9, PID=6449] WebPageProxy::loadRequestWithNavigationShared:
+2026-10-27 17:06:18.215 Df TravianT46Local[6441:5cb4] [com.apple.WebKit:ProcessSuspension] 0x111004770 - NavigationState is taking a process network assertion because a page load started
+2026-10-27 17:06:18.215 Df TravianT46Local[6441:5cb4] [com.apple.WebKit:ProcessSuspension] 0x111001410 - [PID=6449, throttler=0x111000d90] ProcessThrottler::Activity::Activity: Starting background activity / 'Page Load'
+2026-10-27 17:06:18.250 Df TravianT46Local[6441:5cb4] [com.apple.WebKit:Loading] 0x103011018 - [pageProxyID=8, webPageID=9, PID=6449] WebPageProxy::decidePolicyForNavigationAction: frameID=12, isMainFrame=1, navigationID=15
+2026-10-27 17:06:18.266 A  TravianT46Local[6441:5cce] (CoreFoundation) Loading Preferences From User Session CFPrefsD
+2026-10-27 17:06:18.281 Df TravianT46Local[6441:5cce] [com.apple.xpc:connection] [0x600007d382d0] activating connection: mach=true listener=false peer=false name=com.apple.Safari.SafeBrowsing.Service
+2026-10-27 17:06:18.282 Df TravianT46Local[6441:5cb4] [com.apple.WebKit:AppSSO] 0x111001990 - SOAuthorizationCoordinator::tryAuthorize
+2026-10-27 17:06:18.290 A  TravianT46Local[6441:5cb4] (AppSSO) canPerformAuthorizationWithURL
+2026-10-27 17:06:18.295 A  TravianT46Local[6441:5cb4] (AppSSOCore) canPerformAuthorizationWithURL
+2026-10-27 17:06:18.296 A  TravianT46Local[6441:5cb4] (AppSSOCore) canPerformAuthorizationWithURL
+2026-10-27 17:06:18.296 A  TravianT46Local[6441:5cb4] (AppSSOCore) canPerformAuthorizationWithURL
+2026-10-27 17:06:18.297 Df TravianT46Local[6441:5cb4] [com.apple.authkit:siwa] Should process URL called
+2026-10-27 17:06:18.298 Df TravianT46Local[6441:5cb4] [com.apple.authkit:siwa] Fetching native takeover URLs
+2026-10-27 17:06:18.306 Df TravianT46Local[6441:5cb4] [com.apple.xpc:connection] [0x10112a760] activating connection: mach=true listener=false peer=false name=com.apple.ak.authorizationservices.xpc
+2026-10-27 17:06:18.340 Df TravianT46Local[6441:5cb4] [com.apple.authkit:siwa] Native takeover URLs fetched
+2026-10-27 17:06:18.341 Df TravianT46Local[6441:5cb4] [com.apple.authkit:siwa] URL shouldn't be processed
+2026-10-27 17:06:18.341 Df TravianT46Local[6441:5cb4] [com.apple.AppSSO:SOConfigurationClient] -[SOConfigurationClient init]  on <SOConfigurationClient: 0x60000033dde0>
+2026-10-27 17:06:18.343 Df TravianT46Local[6441:5cb4] [com.apple.xpc:connection] [0x101236470] activating connection: mach=true listener=false peer=false name=com.apple.AppSSO.service-xpc
+2026-10-27 17:06:18.343 Df TravianT46Local[6441:5cb4] [com.apple.AppSSO:SOServiceConnection] <SOServiceConnection: 0x60000033dfa0>: new XPC connection
+2026-10-27 17:06:18.344 Df TravianT46Local[6441:5cb4] [com.apple.AppSSO:SOConfigurationClient] -[SOConfigurationClient _reloadConfig]  on <SOConfigurationClient: 0x60000033dde0>
+2026-10-27 17:06:18.344 Df TravianT46Local[6441:5cb4] [com.apple.AppSSO:SOClient] -[SOClient configurationWithCompletion:]  on <SOClient: 0x600000010390>
+2026-10-27 17:06:19.281 Df TravianT46Local[6441:5cb4] [com.apple.AppSSO:SOClient] configurationWithCompletion: success = YES, error = (null)
+2026-10-27 17:06:19.282 Df TravianT46Local[6441:5cb4] [com.apple.WebKit:AppSSO] 0x111001990 - SOAuthorizationCoordinator::tryAuthorize: The requested URL is not registered for AppSSO handling. No further action needed.
+2026-10-27 17:06:19.289 A  TravianT46Local[6441:5cb4] (libsystem_containermanager.dylib) container_system_group_path_for_identifier
+2026-10-27 17:06:19.290 Df TravianT46Local[6441:5cb4] [com.apple.containermanager:xpc] Requesting container lookup; class = 13, identifier = com.apple.nsurlsessiond, group_identifier = systemgroup.com.apple.nsurlstoragedresources, create = 1, temp = 0, euid = 501, uid = 501
+2026-10-27 17:06:19.290 A  TravianT46Local[6441:5cb4] (libsystem_containermanager.dylib) container_query_t
+2026-10-27 17:06:19.290 Df TravianT46Local[6441:5cb4] [com.apple.containermanager:xpc] Query; euid = 501, uid = 501, class = 13, identifier = [com.apple.nsurlsessiond](1), flags = 900000003
+2026-10-27 17:06:19.291 Df TravianT46Local[6441:5cb4] [com.apple.containermanager:unspecified] container_query_get_single_result: success
+2026-10-27 17:06:19.291 A  TravianT46Local[6441:5cb4] (libsystem_containermanager.dylib) container_copy_object
+2026-10-27 17:06:19.291 Df TravianT46Local[6441:5cb4] [com.apple.containermanager:unspecified] container_system_group_path_for_identifier: success
+2026-10-27 17:06:19.292 E  TravianT46Local[6441:5cb4] [com.apple.WebKit:ResourceLoadStatistics] Failed to request query parameters from WebPrivacy.
+2026-10-27 17:06:19.471 Df TravianT46Local[6441:5cb4] [com.apple.WebKit:Loading] 0x103011018 - [pageProxyID=8, webPageID=9, PID=6449] WebPageProxy::decidePolicyForNavigationAction: listener called: frameID=12, isMainFrame=1, navigationID=15, policyAction=0, safeBrowsingWarning=0, isAppBoundDomain=0, wasNavigationIntercepted=0
+2026-10-27 17:06:19.472 Df TravianT46Local[6441:5cb4] [com.apple.WebKit:Loading] 0x103011018 - [pageProxyID=8, webPageID=9, PID=6449] WebPageProxy::receivedNavigationActionPolicyDecision: frameID=12, isMainFrame=1, navigationID=15, policyAction=0
+2026-10-27 17:06:19.473 Df TravianT46Local[6441:5cb4] [com.apple.WebKit:ProcessSwapping] 0x103011018 - [pageProxyID=8, webPageID=9, PID=6449] WebPageProxy::decidePolicyForNavigationAction: keep using process 6449 for navigation, reason=Process has not yet committed any provisional loads
+2026-10-27 17:06:19.473 Df TravianT46Local[6441:5cb4] [com.apple.WebKit:Process] 0x111000d00 - [PID=6449] WebProcessProxy::canTerminateAuxiliaryProcess: returns false (pageCount=1, provisionalPageCount=0, suspendedPageCount=0, m_isInProcessCache=0, m_shutdownPreventingScopeCounter=0)
+2026-10-27 17:06:19.477 Df TravianT46Local[6441:5cb4] [com.apple.WebKit:Loading] 0x103011018 - [pageProxyID=8, webPageID=9, PID=6449] WebPageProxy::didStartProvisionalLoadForFrame: frameID=12, isMainFrame=1
+2026-10-27 17:06:19.477 Df TravianT46Local[6441:5cb4] [com.apple.WebKit:Loading] 0x111000d00 - [PID=6449] WebProcessProxy::didStartProvisionalLoadForMainFrame:
+2026-10-27 17:06:19.628 Df TravianT46Local[6441:5cb4] [com.apple.WebKit:Loading] 0x103011018 - [pageProxyID=8, webPageID=9, PID=6449] WebPageProxy::didNavigateWithNavigationDataShared:
+2026-10-27 17:06:19.638 Df TravianT46Local[6441:5cb4] [com.apple.WebKit:Loading] 0x103011018 - [pageProxyID=8, webPageID=9, PID=6449] WebPageProxy::didCommitLoadForFrame: frameID=12, isMainFrame=1
+2026-10-27 17:06:19.696 E  TravianT46Local[6441:5cb4] [com.apple.WebKit:ResourceLoadStatistics] Failed to request allowed query parameters from WebPrivacy.
+2026-10-27 17:06:19.704 Df TravianT46Local[6441:5cb4] [com.apple.WebKit:ViewState] 0x102020600 (pageProxyID=8) -[WKWebView _updateVisibleContentRects:] - scroll view state is non-stable, bailing (shouldDeferGeometryUpdates 0, dynamicViewportUpdateMode 0, needsResetViewStateAfterCommitLoadForMainFrame 1, sizeChangedSinceLastVisibleContentRectUpdate 0, [_scrollView isZoomBouncing] 0, currentlyAdjustingScrollViewInsetsForKeyboard 0)
+2026-10-27 17:06:20.282 Df TravianT46Local[6441:5cb4] [com.apple.WebKit:Loading] 0x103011018 - [pageProxyID=8, webPageID=9, PID=6449] WebPageProxy::didFinishDocumentLoadForFrame: frameID=12, isMainFrame=1
+2026-10-27 17:06:20.477 Df TravianT46Local[6441:5cb4] [com.apple.WebKit:ViewState] 0x102020600 (pageProxyID=8) -[WKWebView _didCommitLayerTree:] - received a commit (4) while deferring visible content rect updates (dynamicViewportUpdateMode 0, needsResetViewStateAfterCommitLoadForMainFrame 1 (wants commit 4), sizeChangedSinceLastVisibleContentRectUpdate 0, [_scrollView isZoomBouncing] 0, currentlyAdjustingScrollViewInsetsForKeyboard 0)
+2026-10-27 17:06:20.478 Df TravianT46Local[6441:5cb4] [com.apple.WebKit:ViewState] 0x102020600 (pageProxyID=8) -[WKWebView _updateVisibleContentRects:] - performing first visible content rect update after deferring updates
+2026-10-27 17:06:20.846 Df TravianT46Local[6441:5cb4] [com.apple.WebKit:Loading] 0x103011018 - [pageProxyID=8, webPageID=9, PID=6449] WebPageProxy::didFinishLoadForFrame: frameID=12, isMainFrame=1
+2026-10-27 17:06:20.846 Df TravianT46Local[6441:5cb4] [com.apple.WebKit:ProcessSuspension] 0x111004770 - NavigationState will release its process network assertion soon because the page load completed
+2026-10-27 17:06:20.855 E  TravianT46Local[6441:5cb4] [com.apple.WebKit:ResourceLoadStatistics] Failed to request restricted opener domains from WebPrivacy
+2026-10-27 17:06:23.848 Df TravianT46Local[6441:5cb4] [com.apple.WebKit:ProcessSuspension] 0x111004770 NavigationState is releasing background process assertion because a page load completed
+2026-10-27 17:06:23.848 Df TravianT46Local[6441:5cb4] [com.apple.WebKit:ProcessSuspension] 0x111001410 - [PID=6449, throttler=0x111000d90] ProcessThrottler::Activity::invalidate: Ending background activity / 'Page Load'
+2026-10-27 17:07:37.694 Df TravianT46Local[6441:5ccc] [com.apple.CoreAnalytics:client] No XPC connection in Simulator
+2026-10-27 17:09:51.066 Df TravianT46Local[6441:5ccd] [com.apple.Safari.SafeBrowsing:Database] Service did finish database update with protection type 1 and provider 1
+2026-10-27 17:09:51.066 Df TravianT46Local[6441:5ccd] [com.apple.Safari.SafeBrowsing:Database] Service did finish database update with protection type 1 and provider 1
