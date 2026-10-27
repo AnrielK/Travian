@@ -46,6 +46,7 @@ define("GAME_GPACK", (string)($sData['gpack'] ?? ''));
 require_once __DIR__ . "/Skin.php";
 require_once __DIR__ . "/Languages.php";
 require_once __DIR__ . "/HeroLegends.php";
+require_once __DIR__ . "/LegendsUi.php";
 if (PHP_SAPI !== 'cli') ob_start(['Skin', 'filter']);
 define("CATAPULT_C", $sData['catapult_c']); // 999999xden fazla ise mancınık açılır 
 

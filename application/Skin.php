@@ -22,7 +22,7 @@ final class Skin
     ];
     const COOKIE = 't46_gpack';
     /** Cache buster of the pack's stylesheet. */
-    const VERSION = 1;
+    const VERSION = 2;
 
     private static $current = null;
 
@@ -135,6 +135,19 @@ final class Skin
                 $html = str_replace('<div id="contentOuterContainer"', $stock . '<div id="contentOuterContainer"', $html);
             }
         }
+        // #background like the main branch: the tribe only (no showWall – the Legends CSS draws a gradient for it)
+        $html = preg_replace('#<div id="background" class="[^"]*"#', '<div id="background" class="' . $tribe . '"', $html, 1);
+        self::header($html);
+        self::tabs($html);
+        self::sidebars($html);
+        self::buildPage($html, $tribe);
+        // window title buttons like LayoutT46: knowledge base button id, button count class on the title bar
+        $html = str_replace('id="answersButton"', 'id="knowledgeBaseButton"', $html);
+        $html = preg_replace_callback('#<div class="contentTitle">(.*?)</div>#s', function ($m) {
+            $n = substr_count($m[1], 'contentTitleButton') - (strpos($m[1], 'closeContentButton') !== false ? 1 : 0);
+            return '<div class="contentTitle buttonCount' . max(0, $n) . '">' . $m[1] . '</div>';
+        }, $html, 1);
+
         // Legends: village views fill the page (no window), every other page is a "content page" window.
         if (preg_match('#<div id="content" class="([^"]*)"#i', $html, $c) && preg_match('#\bvillage[12]\b#', $c[1])) {
             self::cutBlock($html, '<div class="contentTitle"');
@@ -172,6 +185,119 @@ final class Skin
         while (strpos($html, '<div class="boxes-contents cf">') !== false) self::unwrap($html, '<div class="boxes-contents cf">');
         $html = preg_replace('#<div class="boxes villageList (production|units)"#', '<div class="villageInfobox $1"', $html);
         $html = preg_replace('#<div class="movements"#', '<div class="villageInfobox movements"', $html, 1);
+    }
+
+    /** Top bar like LayoutT46 of the main branch: Legends logo, server time box, round framed buttons. */
+    private static function header(string &$html): void
+    {
+        $logo = '<a id="logo" class="legendsLogo" href="dorf1.php" title="Travian"><svg viewBox="0 0 172 40" aria-label="Travian">'
+            . '<path class="emblem" d="M4 3h18v18c0 8-5 13-9 16-4-3-9-8-9-16z"/>'
+            . '<circle class="coin" cx="13" cy="17" r="6.5"/><path class="coinMark" d="M10 13.5h6v1.6h-2.2v6.4h-1.6v-6.4H10z"/>'
+            . '<text class="title" x="30" y="23">TRAVIAN</text><text class="subtitle" x="31" y="35">L E G E N D S</text></svg></a>';
+        $from = strpos($html, '<a id="logo"');
+        if ($from !== false && ($end = strpos($html, '</a>', $from)) !== false) {
+            $html = substr($html, 0, $from) . $logo . substr($html, $end + 4);
+        }
+        // <ul id="outOfGame"> (T4.6) -> <nav id="outOfGame"> with the four round buttons
+        if (preg_match('#<ul id="outOfGame"[^>]*>.*?</ul>#s', $html, $m, PREG_OFFSET_CAPTURE)) {
+            $ul = $m[0][0];
+            $href = static function (string $class, string $default) use ($ul): string {
+                return preg_match('#<li class="' . $class . '[^"]*">\s*<a[^>]*href="([^"]*)"#', $ul, $h) ? $h[1] : $default;
+            };
+            $title = static function (string $class) use ($ul): string {
+                return preg_match('#<li class="' . $class . '[^"]*">\s*<a[^>]*title="([^"]*)"#', $ul, $h) ? ' title="' . $h[1] . '"' : '';
+            };
+            $icon = static function (string $d): string {
+                return '<g class="outline"><path d="' . $d . '"/></g><g class="icon"><path d="' . $d . '"/></g>';
+            };
+            $paths = [
+                'profile' => 'M8 1.5a3.5 3.5 0 1 1 0 7 3.5 3.5 0 0 1 0-7zM1.5 15c0-3.3 2.9-5.2 6.5-5.2s6.5 1.9 6.5 5.2z',
+                'options' => 'M6.8 1h2.4l.4 2 1.4.6 1.7-1.2 1.7 1.7-1.2 1.7.6 1.4 2 .4v2.4l-2 .4-.6 1.4 1.2 1.7-1.7 1.7-1.7-1.2-1.4.6-.4 2H6.8l-.4-2-1.4-.6-1.7 1.2-1.7-1.7 1.2-1.7-.6-1.4-2-.4V6.8l2-.4.6-1.4-1.2-1.7 1.7-1.7 1.7 1.2 1.4-.6zM8 5.6a2.4 2.4 0 1 0 0 4.8 2.4 2.4 0 0 0 0-4.8z',
+                'help' => 'M4.6 5.4C4.6 3.3 6.1 2 8.1 2s3.4 1.2 3.4 3c0 1.5-.9 2.2-1.9 2.9-.8.5-1 .9-1 1.8v.6H6.7v-.8c0-1.4.5-2.1 1.5-2.8.8-.5 1.1-.9 1.1-1.5 0-.7-.5-1.2-1.3-1.2-.9 0-1.4.6-1.4 1.4zM6.6 11.6h2.2V14H6.6z',
+                'logout' => 'M3.2 1.5 8 6.3l4.8-4.8 1.7 1.7L9.7 8l4.8 4.8-1.7 1.7L8 9.7l-4.8 4.8-1.7-1.7L6.3 8 1.5 3.2z',
+            ];
+            $defaults = ['profile' => 'spieler.php', 'options' => 'options.php', 'help' => 'manual.php', 'logout' => 'logout.php'];
+            $nav = '<nav id="outOfGame" class="LTR">';
+            foreach ($paths as $name => $d) {
+                $nav .= '<a class="layoutButton buttonFramed withIcon round ' . $name . '" href="' . $href($name, $defaults[$name]) . '"' . $title($name) . '>'
+                    . '<svg class="' . $name . '" viewBox="0 0 16 16">' . $icon($d) . '</svg></a>';
+            }
+            $nav .= '</nav>';
+            $html = substr($html, 0, $m[0][1]) . $nav . substr($html, $m[0][1] + strlen($ul));
+        }
+        // server time: a box under the logo (Legends), at the top of #center
+        if (preg_match('#<div id="servertime" class="stime">\s*(.*?)\s*(<span class="timer"[^>]*>[^<]*</span>)\s*</div>#s', $html, $m, PREG_OFFSET_CAPTURE)) {
+            $label = trim(str_replace('&nbsp;', ' ', strip_tags($m[1][0])), " :\t\n");
+            $box = '<div id="servertime" class="stime"><span>' . $label . ':</span><span>' . $m[2][0] . '&nbsp;(UTC&nbsp;' . date('P') . ')</span></div>';
+            $html = substr($html, 0, $m[0][1]) . substr($html, $m[0][1] + strlen($m[0][0]));
+            $html = preg_replace('#(<div id="center"[^>]*>)#', '$1' . $box, $html, 1);
+        }
+    }
+
+    /** Tabs (contentNavi) in the Legends markup: div.container.active|normal around each tab. */
+    private static function tabs(string &$html): void
+    {
+        $offset = 0;
+        while (($from = strpos($html, '<div class="contentNavi subNavi', $offset)) !== false) {
+            $end = self::blockEnd(substr($html, $from), '<div class="contentNavi subNavi');
+            if ($end === null) break;
+            $end += $from + 6;   // after "</div>"
+            $block = substr($html, $from, $end - $from);
+            if (strpos($block, 'class="container') === false) {
+                $block = preg_replace('#<button type="button" class="scroll(?:From|To)"[^>]*></button>#', '', $block);
+                if (strpos($block, '<div class="scrollingContainer">') !== false) {
+                    self::unwrap($block, '<div class="scrollingContainer">');
+                }
+                $block = preg_replace_callback('#<div(?: title="[^"]*")? class="content((?: [a-zA-Z]+)*? favor[^"]*)">\s*(<a\b[^>]*class="tabItem\s*(active|normal)?[^"]*"[^>]*>.*?</a>)\s*</div>#s', function ($t) {
+                    $state = ($t[3] ?? '') === 'active' ? 'active' : 'normal';
+                    return '<div class="container ' . $state . '"><div class="background-start">&nbsp;</div><div class="background-end">&nbsp;</div>'
+                        . '<div class="content' . $t[1] . '">' . $t[2] . '</div></div>';
+                }, $block);
+                $html = substr($html, 0, $from) . $block . substr($html, $end);
+            }
+            $offset = $from + strlen($block);
+        }
+    }
+
+    /**
+     * Building page header like the main branch: building picture with the level values (upgradeHeader) and a
+     * collapsible description, instead of the T4.6 text + small picture.
+     */
+    private static function buildPage(string &$html, string $tribe): void
+    {
+        if (strpos($html, '<div id="descriptionAndInfo">') === false || !preg_match('#<div id="build" class="gid(\d+)#', $html, $g)) return;
+        $from = strpos($html, '<div id="descriptionAndInfo">');
+        $end = self::blockEnd(substr($html, $from), '<div id="descriptionAndInfo">');
+        if ($end === null) return;
+        $end = $from + $end + 6;
+        $info = substr($html, $from, $end - $from);
+        $desc = preg_match('#<div class="build_desc">(.*?)</div>#s', $info, $d) ? trim($d[1]) : '';
+        $table = preg_match('#<table[^>]*id="build_value".*?</table>#s', $info, $tb) ? $tb[0] : '';
+        $label = defined('UI_DESCRIPTION') ? UI_DESCRIPTION : 'Description';
+        $new = '<div class="upgradeHeader">' . $table . '<div class="buildingIllustration g' . (int)$g[1] . ' ' . $tribe . '"></div></div>'
+            . ($desc !== '' ? '<div class="buildingDescription"><div class="headline"><button type="button" class="openedClosedSwitch switchOpened"'
+                . ' onclick="this.classList.toggle(\'switchOpened\');this.classList.toggle(\'switchClosed\');var d=this.parentNode.nextElementSibling;d.style.display=d.style.display===\'none\'?\'\':\'none\';"></button>'
+                . '<h4>' . $label . '</h4></div><div class="description">' . $desc . '</div></div>' : '');
+        $html = substr($html, 0, $from) . $new . substr($html, $end);
+        // the contract box: no small picture and headline (the picture is in the header now)
+        $html = preg_replace('#<div class="stickyImage">.*?</div>\s*<h4>[^<]*</h4>#s', '', $html, 1);
+        $html = preg_replace('#<div class="roundedCornersBox big ">(\s*<div id="contractSpacer"></div>)?#', '<div class="upgradeBuilding">', $html, 1);
+        $html = str_replace('class="culturePointsAndPopulation ', 'class="buildingBenefits ', $html);
+    }
+
+    /** Sidebar box buttons like the main branch (LegendsUi::framedSidebarButtons): building buttons gold with Legends icons. */
+    private static function sidebars(string &$html): void
+    {
+        $icons = ['workshop' => 'sbWorkshop', 'stable' => 'sbStable', 'barracks' => 'sbBarracks', 'market' => 'sbMarket'];
+        $start = strpos($html, 'id="sidebarBoxActiveVillage"');
+        if ($start === false) return;
+        $end = strpos($html, 'class="content"', $start);
+        if ($end === false) return;
+        $part = substr($html, $start, $end - $start);
+        $part = preg_replace_callback('#<a class="layoutButton buttonFramed withIcon round (workshop|stable|barracks|market) green([^"]*)"([^>]*)>\s*<svg.*?</svg>#s', function ($m) use ($icons) {
+            return '<a class="layoutButton buttonFramed withIcon round ' . $m[1] . ' gold' . $m[2] . '"' . $m[3] . '>' . LegendsUi::svg($icons[$m[1]]);
+        }, $part);
+        $html = substr($html, 0, $start) . $part . substr($html, $end);
     }
 
     /** Village view: the Legends stylesheet places the building slots inside #villageContent.<tribe>. */

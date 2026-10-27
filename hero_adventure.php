@@ -60,6 +60,11 @@ if (isset($_GET['active']) and $session->gold >= 10) {
 
                 <div class="contentContainer">
                     <div id="content" class="hero hero_adventure">
+                        <?php if (Skin::isLegends()) { ?>
+                        <h1 class="titleInHeader"><?php echo SIDEINFO_HERO9; ?></h1>
+                        <script type="text/javascript">document.getElementById('content').className = 'heroAdventure';</script>
+                        <?php include("application/views/Hero/legends/adventures.php"); ?>
+                        <?php } else { ?>
                         <h1 class="titleInHeader"><?= $session->username ?> - <?php echo U0; ?> <?= LVL . "  " . $session->heroD['level'] ?></h1>
                         <div class="contentNavi subNavi tabFavorWrapper">
 
@@ -188,6 +193,7 @@ if (isset($_GET['active']) and $session->gold >= 10) {
 
                             </tbody>
                         </table>
+                        <?php } ?>
 
                         <div class="clear">&nbsp;</div>
                     </div>

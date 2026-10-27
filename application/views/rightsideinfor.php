@@ -175,6 +175,10 @@ for ($i = 19; $i <= 40; $i++) {
 				<div class="playerName"><?php echo $session->username; ?></div>
 				<div id="villageNameField" class="boxTitle"><?php echo $village->vname; ?></div>
 				<?php
+				if (Skin::isLegends()) {
+					// Legends (main branch): population on the left, loyalty on the right
+					echo '<div class="population">' . POPULATION . ': ' . (int)$village->pop . '</div>';
+				}
 				if ($village->loyalty < 30) {
 					echo "<div class=\"loyalty low\">" . LOYALTY . ": <span> $village->loyalty%</span></div>";
 				} elseif ($village->loyalty < 90) {

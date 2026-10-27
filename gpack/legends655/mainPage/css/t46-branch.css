@@ -46,10 +46,11 @@ body.legends655 .sidebar #sidebarBoxVillagelist .content ul li a .coordinatesGri
 }
 body.legends655 .sidebar #sidebarBoxVillagelist .content ul li.active { background-color: #fff9eb; }
 
-/* ---- Logo: the T4.6 emblem on its plate (top left of the Legends top bar) ---- */
-body.legends655 #topBar #logo {
-    position: absolute; top: 4px; left: 14px; display: block; width: 128px; height: 40px; text-align: center; opacity: 1;
-    border: solid 1px #5c4134; border-radius: 4px; background-color: #dacebb;
-    box-shadow: 1px 0 1px rgba(0, 0, 0, .35) inset, -1px 0 1px rgba(0, 0, 0, .35) inset, 0 1px 2px rgba(0, 0, 0, .5);
-}
-body.legends655 #topBar #logo svg { width: 112px; height: 38px; margin-top: -2px; opacity: 1; filter: none; }
+/* ---- Logo: the Legends logo (Skin.php replaces the T4.6 one); also on pages without #topBar ---- */
+body.legends655 #logo.legendsLogo { position: absolute; top: 1px; left: 14px; width: 150px; height: 29px; margin: 0; padding: 0; z-index: 3; text-decoration: none; }
+body.legends655 #logo.legendsLogo svg { width: 150px; height: 29px; display: block; overflow: visible; }
+body.legends655 #logo.legendsLogo .emblem { fill: #b5302b; stroke: #f2f2f2; stroke-width: 1.4; }
+body.legends655 #logo.legendsLogo .coin { fill: #e5b75b; stroke: #6d4a1d; stroke-width: 1; }
+body.legends655 #logo.legendsLogo .coinMark { fill: #6d4a1d; }
+body.legends655 #logo.legendsLogo .title { fill: #f2f2f2; font: 700 16.5px "Noto Serif", Georgia, serif; letter-spacing: .5px; }
+body.legends655 #logo.legendsLogo .subtitle { fill: #f2f2f2; font: 600 7.5px Arial, sans-serif; letter-spacing: 1.2px; }

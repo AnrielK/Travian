@@ -44,7 +44,7 @@ if ($session->heroD['dead'] && isset($_GET['revive']) == 1 && $village->awood > 
 
 $gi = $database->getHeroInventory($session->uid);
 include("application/Inventory.php");
-if (!empty($_POST) || !empty($_GET)) {
+if (!empty($_POST) || (!empty($_GET) && !(count($_GET) === 1 && isset($_GET['view'])))) {
     header("Location: hero_inventory.php");//exit;
 }
 
@@ -221,9 +221,22 @@ if (isset($_GET['inventory']) && !$dis) {
                 <div class="contentContainer">
                     <div id="content" class="hero_inventory">
                         <h1 class="titleInHeader">
-                            <?= $session->username ?> - <?php echo U0; ?> <?= LVL . "  " . $session->heroD['level'] ?>
+                            <?php if (Skin::isLegends()) { echo $session->username . ' - ' . LVL . ' ' . $session->heroD['level']; } else { ?><?= $session->username ?> - <?php echo U0; ?> <?= LVL . "  " . $session->heroD['level'] ?><?php } ?>
                         </h1>
                         <?php
+                        if (Skin::isLegends()) {
+                            // Travian Legends look: Inventory and Attributes are two tabs of the hero window (main branch).
+                            $hlTab = (isset($_GET['view']) && $_GET['view'] === 'attributes') ? 'attributes' : 'inventory';
+                            include("application/views/Hero/legends/menu.php");
+                            if ($hlTab === 'attributes') {
+                                if (($session->qData['quest'] == 6 || $session->qData['quest'] == 13) && php7_is_zero($session->qData['step1'])) {
+                                    $database->query("UPDATE quests SET step1 = 1 WHERE userid = " . sql_num($session->uid) . "");
+                                }
+                                include("application/views/Hero/legends/attributes.php");
+                            } else {
+                                include("application/views/Hero/legends/inventory.php");
+                            }
+                        } else {
                         include_once("application/views/Hero/heroMenu.php");
                          include_once("application/views/hero_attr.php");
 
@@ -462,6 +475,7 @@ if (isset($_GET['inventory']) && !$dis) {
                                 </div>
                             </div>
                         </div>
+                        <?php } // classic look ?>
                         <div class="clear"></div>
                         <div id="placeHolder"></div>
                         <form id="HeroInventory" method="post" action="hero_inventory.php">

@@ -70,7 +70,9 @@ if ($_POST && (isset($_POST['HeroGender']) || isset($_POST['Random']))) {
                     <a id="answersButton" class="contentTitleButton buttonFramed withIcon rectangle green" href="https://t4answers.tralord.com/?lang=en&amp;aid=1#go2answer" target="_blank">&nbsp;</a>
                 </div>
                 <div class="contentContainer">
-                    <div id="content" class="hero_editor"><h1 class="titleInHeader"><?php echo U0; ?></h1>
+                    <div id="content" class="hero_editor"><?php if (Skin::isLegends()) { ?><h1 class="titleInHeader"><?php echo $session->username . ' - ' . LVL . ' ' . $session->heroD['level']; ?></h1>
+                        <?php $hlTab = 'appearance'; include("application/views/Hero/legends/menu.php"); ?>
+                        <?php } else { ?><h1 class="titleInHeader"><?php echo U0; ?></h1>
 
                         <div class="contentNavi subNavi tabFavorWrapper">
                             <button type="button" class="scrollFrom" disabled="disabled"></button>
@@ -98,6 +100,7 @@ if ($_POST && (isset($_POST['HeroGender']) || isset($_POST['Random']))) {
                             });
 
                         </script>
+                        <?php } ?>
                         <?php
                         $herodetail = $session->heroD;
                         $gender = $herodetail['gender'];
@@ -139,7 +142,7 @@ if ($_POST && (isset($_POST['HeroGender']) || isset($_POST['Random']))) {
                         $getface = $herodetail['face'];
                         if (php7_is_zero($gender)) $getface %= 5;
                         ?>
-                        <?php if (HeroLegends::active((int)$session->uid)) { include("application/views/Hero/legendsEditor.php"); } else { ?>
+                        <?php if (HeroLegends::active((int)$session->uid)) { include(Skin::isLegends() ? "application/views/Hero/legends/appearance.php" : "application/views/Hero/legendsEditor.php"); } else { ?>
                         <div id="heroEditor" class="genderSwitch <?php echo $gstr; ?>">
                             <div class="hero_head head">
                                 <div class="tl">
