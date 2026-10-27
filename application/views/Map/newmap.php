@@ -665,6 +665,17 @@ if (isset($_GET['fullscreen'])) {
             fnDelayMe();
         });
     </script>
+    <style>#mapContainer, #mapContainer * { touch-action: none; -webkit-user-select: none; user-select: none; -webkit-touch-callout: none; }</style>
+    <script type="text/javascript">
+        // touch: one finger drags the map (the map script follows touchmove), it must not scroll the page as well
+        (function () {
+            var map = document.getElementById('mapContainer');
+            if (!map) return;
+            map.addEventListener('touchmove', function (e) {
+                if (e.touches.length === 1 && !(e.target.closest && e.target.closest('input, select, textarea, .toolbar'))) e.preventDefault();
+            }, {passive: false});
+        })();
+    </script>
     <div class="clear"></div>
     </div>
 <?php } ?>

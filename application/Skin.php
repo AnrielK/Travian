@@ -22,7 +22,7 @@ final class Skin
     ];
     const COOKIE = 't46_gpack';
     /** Cache buster of the pack's stylesheet. */
-    const VERSION = 3;
+    const VERSION = 6;
 
     private static $current = null;
 
@@ -146,7 +146,17 @@ final class Skin
         self::buildPage($html, $tribe);
         // window title buttons like LayoutT46: knowledge base button id, contextual help, favourite tab, button count class on the title bar
         $html = str_replace('id="answersButton"', 'id="knowledgeBaseButton"', $html);
+        // pages with the old plain title buttons (map, …): framed buttons, the close button with its X
+        $html = preg_replace_callback('#<a id="(closeContentButton|knowledgeBaseButton)" class="contentTitleButton"([^>]*)>\s*(?:&nbsp;)?\s*</a>#', function ($m) {
+            $x = 'M0 17.01L7.01 10 .14 3.13 3.13.14 10 7.01 17.01 0 20 2.99 12.99 10l6.87 6.87-2.99 2.99L10 12.99 2.99 20 0 17.01z';
+            $inner = $m[1] === 'closeContentButton'
+                ? '<svg viewBox="0 0 20 20"><g class="outline"><path d="' . $x . '"></path></g><g class="icon"><path d="' . $x . '"></path></g></svg>'
+                : '&nbsp;';
+            return '<a id="' . $m[1] . '" class="contentTitleButton buttonFramed withIcon rectangle green"' . $m[2] . '>' . $inner . '</a>';
+        }, $html);
         self::titleButtons($html);
+        // Legends dialogs (Travian PLUS, confirmations) on every page
+        $html = preg_replace('#</body>#i', self::dialogScripts() . '</body>', $html, 1);
         // no empty line under the window (the frame ends right under the content like in the main branch)
         $html = str_replace('<div class="contentFooter">&nbsp;</div>', '<div class="contentFooter"></div>', $html);
         $html = preg_replace_callback('#<div class="contentTitle">(.*?)</div>#s', function ($m) {
@@ -164,6 +174,43 @@ final class Skin
             $html = preg_replace('#<div id="contentOuterContainer"( class="([^"]*)")?#i', '<div id="contentOuterContainer" class="$2 contentPage"', $html, 1);
         }
         return $html;
+    }
+
+    /** Texts and script of the Legends dialogs (application/legends/legendsDialogs.js). */
+    private static function dialogScripts(): string
+    {
+        $t = function (string $c, string $d) { return LegendsUi::t($c, $d); };
+        $features = [];
+        foreach ([
+            'directLinks' => ['Quick links', 'Improve your game with personalised quick links. Set up unique shortcuts for every village and reach your most important buildings quickly.'],
+            'attackWarning' => ['Attack warning', 'Incoming attacks are shown in the village list.'],
+            'buildingQueue' => ['Waiting loop', 'The waiting loop lets you queue the construction of one more building.'],
+            'linkList' => ['Link list', 'Lets you set up direct links that take you to any page of the game with one click.'],
+            'villageStatistics' => ['Village overview', 'Overviews of production, storage, culture points and units of all villages.'],
+            'fullScreen' => ['Larger map', 'A larger map gives you a better overview of your surroundings.'],
+            'tradeMulti' => ['Merchants can run 2x', 'After returning from their first delivery, merchants set off again automatically.'],
+        ] as $key => [$title, $text]) {
+            $c = 'LP_' . strtoupper(preg_replace('/([a-z])([A-Z])/', '$1_$2', $key));
+            $features[$key] = ['title' => $t($c, $title), 'text' => $t($c . '_TEXT', $text)];
+        }
+        $texts = [
+            'close' => $t('UI_CLOSE', 'Close'),
+            'goldCoin' => LegendsUi::goldCoin('goldCoin'),
+            'plus' => [
+                'title' => 'Travian PLUS',
+                'gold' => $t('LP_GOLD', 'Gold'),
+                'notice' => $t('LP_NOTICE', 'You need an active Travian PLUS account to use this feature!'),
+                'extra' => $t('LP_EXTRA', 'You also get the following advantages:'),
+                'durationDays' => $t('LP_DURATION_DAYS', 'Bonus duration (days)'),
+                'durationHours' => $t('LP_DURATION_HOURS', 'Bonus duration (hours)'),
+                'activate' => $t('LP_ACTIVATE', 'Activate'),
+                'extend' => $t('LP_EXTEND', 'Extend'),
+                'notEnough' => $t('LP_NOT_ENOUGH', 'You do not have enough gold.'),
+                'features' => $features,
+            ],
+        ];
+        return '<script type="text/javascript">window.LegendsTexts = ' . json_encode($texts, JSON_UNESCAPED_UNICODE | JSON_HEX_TAG) . ';</script>'
+            . '<script type="text/javascript" src="application/legends/legendsDialogs.js?v=' . self::VERSION . '"></script>';
     }
 
     /** Offset of the closing tag of the element starting with $start (balanced <div>s), before "</div>". */

@@ -16,9 +16,11 @@ for ($i = 19; $i <= 40; $i++) {
 }
 $shortcut = function (string $name, int $gid, string $svg) use ($slotOf, $session, $lang, $e): string {
     $has = isset($slotOf[$gid]);
-    $href = !$has ? '#' : ($session->plus ? 'build.php?id=' . $slotOf[$gid] : 'plus.php?id=3');
+    $href = $has && $session->plus ? 'build.php?id=' . $slotOf[$gid] : '#';
+    $onclick = !$has ? 'return false;' : ($session->plus ? '' : "LegendsPlus.open('directLinks');return false;");
     $title = (string)($lang['buildings'][$gid] ?? $name);
-    return '<a class="layoutButton buttonFramed withIcon round ' . $name . ' gold' . ($has ? '' : ' disabled') . '" href="' . $e($href) . '" title="' . $e($title) . '">'
+    return '<a class="layoutButton buttonFramed withIcon round ' . $name . ' gold' . ($has ? '' : ' disabled') . '" href="' . $e($href) . '" title="' . $e($title) . '"'
+        . ($onclick !== '' ? ' onclick="' . $onclick . '"' : '') . '>'
         . LegendsUi::svg($svg) . '</a>';
 };
 $moreBuildings = [16, 15, 22, 12, 24, 25, 26, 27, 28, 29, 30, 37, 44];
@@ -80,18 +82,15 @@ $villageEntry = function (array $vil) use ($village, $attacks, $villageLink, $co
         . '<span class="coordinateX">(' . $coord($vil['vx']) . '</span><span class="coordinatePipe">|</span><span class="coordinateY">' . $coord($vil['vy']) . ')</span>'
         . '</span></span></div>';
 };
-$groups = VillageGroups::groups($uid);
-$members = VillageGroups::members($uid);
-$byGroup = [];
-$ungrouped = [];
-foreach ($session->vvillages as $vil) {
-    $g = $members[(int)$vil['wref']] ?? 0;
-    if ($g && isset($groups[$g])) $byGroup[$g][] = $vil; else $ungrouped[] = $vil;
-}
-$icon = function (string $viewBox, string $path, string $class = ''): string {
-    return '<svg viewBox="' . $viewBox . '"' . ($class ? ' class="' . $class . '"' : '') . '><g class="outline"><path d="' . $path . '"></path></g><g class="icon"><path d="' . $path . '"></path></g></svg>';
-};
-$cultureIcon = $icon('0 0 20 20', 'M10 3.2a2.1 2.1 0 1 1 0 4.2 2.1 2.1 0 0 1 0-4.2zM4.4 3.6C2.3 5.4 1.3 8.2 2 11c.7 2.8 2.9 4.9 5.6 5.6l.4-1.5C5.8 14.6 4.1 13 3.5 10.7 3 8.4 3.8 6.1 5.5 4.7zm11.2 0-1.1 1.1c1.7 1.4 2.5 3.7 2 6-.6 2.3-2.3 3.9-4.5 4.4l.4 1.5c2.7-.7 4.9-2.8 5.6-5.6.7-2.8-.3-5.6-2.4-7.4zM6.9 8.5 9 10.6V18h2v-7.4l2.1-2.1-1.4-1.4L10 8.8 8.3 7.1z');
+$villagesByWref = [];
+foreach ($session->vvillages as $vil) $villagesByWref[(int)$vil['wref']] = $vil;
+$listStructure = VillageGroups::structure($uid, array_keys($villagesByWref));
+$groupCount = count(VillageGroups::groups($uid));
+$groupHandle = str_replace('class="handle"', 'class="handle"', $handle);
+$quickLinks = LegendsQuickLinks::all($village->resarray);
+$quickSlots = VillageGroups::quickLinks($uid);
+$slotIndicator = '<svg class="editSlotIndicator" viewBox="0 0 44 44"><circle cx="22" cy="22" r="21" fill="none" stroke-width="1.5" stroke-dasharray="4 3"/></svg>';
+$plusSmall = '<svg viewBox="0 0 18 18"><path d="M16 10h-6v6H8v-6H2V8h6V2h2v6h6z"/></svg>';
 $taskModel = new LegendsTasks();
 $claimable = $taskModel->hasCollectable();
 ?>
@@ -130,18 +129,16 @@ $claimable = $taskModel->hasCollectable();
 
         <div id="sidebarBoxVillageList" class="sidebarBox">
             <div class="header">
-                <div class="buttonsWrapper villageListButtons">
-                    <a class="layoutButton buttonFramed withIcon round troops green" href="dorf3.php?s=5" title="<?php echo $e($t('SB_TROOPS', 'Troops in your villages')); ?>"><?php echo str_replace('class="attack"', 'class="troops"', $icon('0 0 20 19.06', 'M16.22 13.08l2.14-2.14-1.37-1.36-1.63 1.63-2.15-2.15 4.74-4.73L19.06 0l-4.32 1.11L10 5.85 5.26 1.11.94 0l1.11 4.33 4.74 4.73-2.15 2.15-1.63-1.63-1.37 1.36 2.14 2.14L0 16.86l2.21 2.2 3.78-3.77 2.13 2.13 1.37-1.37-1.63-1.63L10 12.28l2.14 2.14-1.63 1.63 1.37 1.37 2.14-2.13 3.77 3.77 2.21-2.2-3.78-3.78z')); ?></a>
-                    <a class="layoutButton buttonFramed withIcon round culture green" href="dorf3.php?s=4" title="<?php echo $e($t('SB_CULTURE', 'Culture points')); ?>"><?php echo $cultureIcon; ?></a>
+                <div class="buttonsWrapper quickLinks">
+                    <?php foreach ($quickSlots as $i => $key) { ?>
+                        <div class="quickLinkSlot" data-slot="<?php echo $i; ?>"><?php echo $slotIndicator; ?><div class="slot"><?php echo $plusSmall; ?></div><?php
+                            if ($key !== '') echo LegendsQuickLinks::button($key, $quickLinks[$key], (bool)$session->plus);
+                        ?></div>
+                    <?php } ?>
                     <span class="spacer"></span>
-                    <a class="layoutButton buttonFramed withIcon round overview green" href="dorf3.php" title="<?php echo $e($t('SB_OVERVIEW', 'Village overview')); ?>"><?php echo LegendsUi::svg('sbOverview'); ?></a>
-                    <button type="button" class="layoutButton buttonFramed withIcon round more gold small" title="<?php echo $e($t('SB_MORE', 'More')); ?>"
-                            onclick="var m=document.getElementById('villageListMore');m.hidden=!m.hidden;"><?php echo LegendsUi::svg('sbMore'); ?></button>
-                </div>
-                <div id="villageListMore" class="sidebarPopup" hidden>
-                    <a href="dorf3.php?s=2"><?php echo $e($t('SB_RESOURCES', 'Resources')); ?></a>
-                    <a href="dorf3.php?s=3"><?php echo $e($t('SB_WAREHOUSE', 'Warehouse')); ?></a>
-                    <a href="#" onclick="VillageGroupsUi.add();return false;"><?php echo $e($t('VG_ADD', 'New village group')); ?></a>
+                    <a class="layoutButton buttonFramed withIcon round villageStatistics green" href="dorf3.php" title="<?php echo $e($t('SB_OVERVIEW', 'Village overview')); ?>"><?php echo LegendsUi::svg('sbOverview'); ?></a>
+                    <button type="button" class="layoutButton buttonFramed withIcon round settings gold" title="<?php echo $e($t('QL_EDIT', 'Edit quick links')); ?>"
+                            onclick="VillageListUi.toggleQuickLinks();"><?php echo LegendsUi::svg('sbMore'); ?><svg class="closeIcon" viewBox="0 0 20 20"><path d="M0 17.01L7.01 10 .14 3.13 3.13.14 10 7.01 17.01 0 20 2.99 12.99 10l6.87 6.87-2.99 2.99L10 12.99 2.99 20 0 17.01z"/></svg></button>
                 </div>
             </div>
             <div class="content">
@@ -151,34 +148,37 @@ $claimable = $taskModel->hasCollectable();
                 </div>
                 <div class="villageList" data-max="<?php echo VillageGroups::MAX; ?>">
                     <div class="groupsHeader">
-                        <span><?php echo $e($t('VG_GROUPS', 'Village groups')); ?> (<?php echo count($groups); ?>/<?php echo VillageGroups::MAX; ?>)</span>
+                        <span><?php echo $e($t('VG_GROUPS', 'Village groups')); ?> (<span class="groupCount"><?php echo $groupCount; ?></span>/<?php echo VillageGroups::MAX; ?>)</span>
                         <span></span>
                         <button type="button" class="secondaryIconButton addGroup" title="<?php echo $e($t('VG_ADD', 'New village group')); ?>"
-                                onclick="VillageGroupsUi.add();"<?php echo count($groups) >= VillageGroups::MAX ? ' disabled' : ''; ?>>
-                            <svg viewBox="0 0 20 16"><path d="M0 2.2C0 1 1 0 2.2 0h5.3l2 2.2h8.3C19 2.2 20 3.2 20 4.4v9.4c0 1.2-1 2.2-2.2 2.2H2.2C1 16 0 15 0 13.8zm9.1 4.4v2.3H6.8v1.8h2.3V13h1.8v-2.3h2.3V8.9h-2.3V6.6z"/></svg>
+                                onclick="VillageListUi.addGroup();"<?php echo $groupCount >= VillageGroups::MAX ? ' disabled' : ''; ?>>
+                            <svg viewBox="0 0 20 16"><path d="M1 2.2C1 1.5 1.5 1 2.2 1h5l2 2.2h8.6c.7 0 1.2.5 1.2 1.2v9.4c0 .7-.5 1.2-1.2 1.2H2.2C1.5 15 1 14.5 1 13.8zM10 6.3v5.4M7.3 9h5.4"/></svg>
                         </button>
                     </div>
-                    <?php foreach ($groups as $g) { ?>
+                    <?php foreach ($listStructure as $entry) {
+                        if ($entry['type'] === 'group') {
+                            $g = $entry['group']; ?>
                         <div class="groupWrapper<?php echo $g['collapsed'] ? ' collapsed' : ''; ?>" data-gid="<?php echo $g['gid']; ?>">
                             <div class="listEntry group <?php echo $g['color']; ?>" data-gid="<?php echo $g['gid']; ?>" data-color="<?php echo $g['color']; ?>">
+                                <span class="dragAndDrop" title="<?php echo $e($t('VG_DRAG_GROUP', 'Drag to move the group')); ?>"><?php echo $handle; ?></span>
                                 <span class="name"><?php echo $e($g['name']); ?></span>
                                 <div class="actions">
-                                    <button type="button" class="secondaryIconButton edit" title="<?php echo $e($t('VG_EDIT', 'Edit group')); ?>" onclick="VillageGroupsUi.edit(this);">
+                                    <button type="button" class="secondaryIconButton edit" title="<?php echo $e($t('VG_EDIT', 'Edit group')); ?>" onclick="VillageListUi.editGroup(this);">
                                         <svg viewBox="0 0 15.59 20"><path d="M15.59 18.55V20H0v-1.45zM11.52 0L1.05 13.47.92 17.4l3.65-1.21L15 2.73zm.25 7L8.16 4.33 9 3.2l3.6 2.62z"></path></svg>
                                     </button>
-                                    <button type="button" class="secondaryIconButton expand" title="<?php echo $e($t('VG_EXPAND', 'Show / hide villages')); ?>" onclick="VillageGroupsUi.toggle(this);">
-                                        <svg viewBox="0 0 12 7" class="arrowExpand<?php echo $g['collapsed'] ? '' : ' expanded'; ?>"><path d="M1 1l5 5 5-5" fill="none"></path></svg>
+                                    <button type="button" class="secondaryIconButton expand" title="<?php echo $e($t('VG_EXPAND', 'Show / hide villages')); ?>" onclick="VillageListUi.toggleGroup(this);">
+                                        <svg viewBox="0 0 12 7" class="arrowExpand<?php echo $g['collapsed'] ? '' : ' expanded'; ?>"><path d="M1 6l5-5 5 5" fill="none"></path></svg>
                                     </button>
                                 </div>
                             </div>
                             <div class="groupContainer"><div class="dropContainer" data-gid="<?php echo $g['gid']; ?>"><?php
-                                foreach ($byGroup[$g['gid']] ?? [] as $vil) echo $villageEntry($vil);
+                                foreach ($entry['villages'] as $w) if (isset($villagesByWref[$w])) echo $villageEntry($villagesByWref[$w]);
                             ?></div></div>
                         </div>
-                    <?php } ?>
-                    <div class="dropContainer ungrouped" data-gid="0"><?php
-                        foreach ($ungrouped as $vil) echo $villageEntry($vil);
-                    ?></div>
+                    <?php } elseif (isset($villagesByWref[$entry['wref']])) { ?>
+                        <div class="dropContainer topLevel" data-gid="0"><?php echo $villageEntry($villagesByWref[$entry['wref']]); ?></div>
+                    <?php }
+                    } ?>
                 </div>
             </div>
         </div>
@@ -208,150 +208,25 @@ $claimable = $taskModel->hasCollectable();
     </div>
 </div>
 <script type="text/javascript">
-var VillageGroupsUi = (function () {
-    var T = <?php echo json_encode([
+var VillageListConfig = <?php echo json_encode([
+    'T' => [
         'name' => $t('VG_NAME_PROMPT', 'Name of the group:'),
         'newGroup' => $t('VG_NEW_GROUP', 'New group'),
         'del' => $t('VG_DELETE', 'Delete group'),
-        'delConfirm' => $t('VG_DELETE_CONFIRM', 'Delete this group? Its villages stay in the list.'),
+        'delConfirm' => $t('VG_DELETE_CONFIRM', 'Delete this group? Your villages will not be affected.'),
+        'cancel' => $t('VG_CANCEL', 'Cancel'),
+        'delete' => $t('VG_DELETE_BUTTON', 'Delete'),
         'color' => $t('VG_COLOR', 'Colour'),
-        'save' => $t('VG_SAVE', 'Save'),
         'max' => $t('VG_MAX', 'You can have at most 20 village groups.'),
-    ], JSON_UNESCAPED_UNICODE); ?>;
-    var COLORS = <?php echo json_encode(VillageGroups::COLORS); ?>;
-    function post(data, reload) {
-        var body = Object.keys(data).map(function (k) { return encodeURIComponent(k) + '=' + encodeURIComponent(data[k]); }).join('&');
-        return fetch('ajax.php?cmd=villageGroups', {method: 'POST', credentials: 'same-origin',
-            headers: {'Content-Type': 'application/x-www-form-urlencoded'}, body: body})
-            .then(function (r) { return r.json(); })
-            .then(function (j) { if (reload !== false) location.reload(); return j; })
-            .catch(function () { if (reload !== false) location.reload(); });
-    }
-    function add() {
-        var list = document.querySelector('#sidebarBoxVillageList .villageList');
-        if (list && list.querySelectorAll('.groupWrapper').length >= +list.getAttribute('data-max')) { alert(T.max); return; }
-        var name = prompt(T.name, T.newGroup);
-        if (name !== null) post({action: 'add', name: name});
-    }
-    function toggle(btn) {
-        var w = btn.closest('.groupWrapper');
-        var collapsed = w.classList.toggle('collapsed');
-        btn.querySelector('svg').classList.toggle('expanded', !collapsed);
-        post({action: 'collapse', gid: w.getAttribute('data-gid'), collapsed: collapsed ? 1 : 0}, false);
-    }
-    function edit(btn) {
-        var row = btn.closest('.listEntry.group');
-        if (row.classList.contains('editMode')) return;
-        var gid = row.getAttribute('data-gid'), color = row.getAttribute('data-color');
-        var name = row.querySelector('.name').textContent.trim();
-        row.classList.add('editMode');
-        row.innerHTML = '<div class="editModeOverlay"></div><input type="text" class="name" maxlength="40">'
-            + '<div class="colorSelection"><div class="color ' + color + '" title="' + T.color + '"><div class="selectedIndicator"></div></div></div>'
-            + '<div class="actions"><button type="button" class="secondaryIconButton delete" title="' + T.del + '">'
-            + '<svg viewBox="0 0 14 16"><path d="M1 3h12v1.5H1zM5 0h4v1.5h4V3H1V1.5h4zM2.5 5h9l-.8 11H3.3zM5 7v7h1.2V7zm2.8 0v7H9V7z"/></svg></button></div>';
-        var input = row.querySelector('input.name');
-        input.value = name;
-        input.focus();
-        input.select();
-        var swatch = row.querySelector('.color');
-        swatch.addEventListener('click', function () {
-            swatch.classList.remove(color);
-            color = COLORS[(COLORS.indexOf(color) + 1) % COLORS.length];
-            swatch.classList.add(color);
-            row.className = row.className.replace(/\b(grey|yellow|green|turquoise|blue|violet|magenta|red|orange)\b/, color);
-        });
-        function save() {
-            post({action: 'color', gid: gid, color: color}, false).then(function () {
-                post({action: 'rename', gid: gid, name: input.value});
-            });
-        }
-        input.addEventListener('keydown', function (ev) {
-            if (ev.key === 'Enter') save();
-            if (ev.key === 'Escape') location.reload();
-        });
-        row.querySelector('.editModeOverlay').addEventListener('click', save);
-        row.querySelector('.delete').addEventListener('click', function () {
-            if (confirm(T.delConfirm)) post({action: 'delete', gid: gid});
-        });
-    }
-    // drag & drop of villages into groups (pointer events: mouse and touch)
-    function initDrag() {
-        var box = document.getElementById('sidebarBoxVillageList');
-        if (!box) return;
-        var drag = null;
-        function target(x, y) {
-            var el = document.elementFromPoint(x, y);
-            if (!el) return null;
-            var w = el.closest('#sidebarBoxVillageList .groupWrapper');
-            if (w) return w;
-            return el.closest('#sidebarBoxVillageList .dropContainer.ungrouped');
-        }
-        box.addEventListener('pointerdown', function (ev) {
-            var h = ev.target.closest('.dragAndDrop');
-            if (!h) return;
-            var entry = h.closest('.listEntry.village');
-            ev.preventDefault();
-            var r = entry.getBoundingClientRect();
-            var ghost = document.createElement('div');
-            ghost.className = 'dragObject';
-            ghost.appendChild(entry.cloneNode(true));
-            ghost.style.left = r.left + 'px';
-            ghost.style.top = r.top + 'px';
-            ghost.style.width = r.width + 'px';
-            box.querySelector('.villageList').appendChild(ghost);
-            entry.classList.add('dragged');
-            drag = {entry: entry, ghost: ghost, dx: ev.clientX - r.left, dy: ev.clientY - r.top, over: null};
-            try { h.setPointerCapture(ev.pointerId); } catch (e) {}
-        });
-        box.addEventListener('pointermove', function (ev) {
-            if (!drag) return;
-            drag.ghost.style.left = (ev.clientX - drag.dx) + 'px';
-            drag.ghost.style.top = (ev.clientY - drag.dy) + 'px';
-            drag.ghost.style.display = 'none';
-            var over = target(ev.clientX, ev.clientY);
-            drag.ghost.style.display = '';
-            if (drag.over !== over) {
-                if (drag.over) drag.over.classList.remove('highlightDropSection');
-                if (over) over.classList.add('highlightDropSection');
-                drag.over = over;
-            }
-        });
-        function end(ev) {
-            if (!drag) return;
-            var d = drag;
-            drag = null;
-            d.ghost.remove();
-            d.entry.classList.remove('dragged');
-            if (d.over) d.over.classList.remove('highlightDropSection');
-            if (!d.over || ev.type === 'pointercancel') return;
-            var gid = d.over.getAttribute('data-gid') || '0';
-            var current = d.entry.closest('[data-gid]');
-            if (current && current.getAttribute('data-gid') === gid) return;
-            post({action: 'assign', gid: gid, wref: d.entry.getAttribute('data-wref')});
-        }
-        box.addEventListener('pointerup', end);
-        box.addEventListener('pointercancel', end);
-    }
-    // village name: edited in the box (Legends), saved by ajax.php?cmd=changeVillageName
-    function initRename() {
-        var input = document.querySelector('#sidebarBoxActiveVillage .villageInput');
-        if (!input) return;
-        var old = input.value;
-        function save() {
-            var v = input.value.trim();
-            if (!v || v === old) { input.value = old; return; }
-            var body = 'name=' + encodeURIComponent(v) + '&did=' + encodeURIComponent(input.getAttribute('data-did'));
-            fetch('ajax.php?cmd=changeVillageName', {method: 'POST', credentials: 'same-origin',
-                headers: {'Content-Type': 'application/x-www-form-urlencoded'}, body: body}).then(function () { location.reload(); });
-        }
-        input.addEventListener('keydown', function (ev) {
-            if (ev.key === 'Enter') { ev.preventDefault(); input.blur(); }
-            if (ev.key === 'Escape') { input.value = old; input.blur(); }
-        });
-        input.addEventListener('blur', save);
-    }
-    function init() { initDrag(); initRename(); }
-    if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', init); else init();
-    return {add: add, toggle: toggle, edit: edit};
-})();
+        'qlTitle' => $t('QL_TITLE', 'Available quick links for the village list'),
+        'qlText' => $t('QL_TEXT', 'Drag up to 4 buttons into the slots of the village list to customise your quick links. The quick links are the same for all villages, but state and tooltip follow the active village.'),
+        'qlRemove' => $t('QL_REMOVE', 'Tap a slot to empty it.'),
+    ],
+    'colors' => VillageGroups::COLORS,
+    'links' => array_map(function ($k) use ($quickLinks, $session) {
+        return ['key' => $k, 'title' => $quickLinks[$k]['title'], 'sub' => $quickLinks[$k]['sub'],
+            'html' => LegendsQuickLinks::button($k, $quickLinks[$k], (bool)$session->plus)];
+    }, array_keys($quickLinks)),
+], JSON_UNESCAPED_UNICODE); ?>;
 </script>
+<script type="text/javascript" src="application/legends/villageList.js?v=<?php echo Skin::VERSION; ?>"></script>

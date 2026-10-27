@@ -104,7 +104,7 @@ if ($aantal > 0) {
             }
         }
         echo '<tr><td class="typ"><a href="build.php?t=1&id=39"><img src="img/x.gif" class="' . $action . '" alt="' . $title . '" title="' . $title . '" /></a><span class="' . $aclass . '">&raquo;</span></td>
-	<td><div class="mov"><span class="' . $aclass . '">' . $aantal . '&nbsp;' . $short . '</span></div><div class="dur_r">in a&nbsp;<span class="timer" counting="down" value="' . (safe_min($NextArrival) - time()) . '">' . $generator->getTimeFormat(safe_min($NextArrival) - time()) . '</span>&nbsp;' . HOURS . '</div></div></td></tr>';
+	<td><div class="mov"><span class="' . $aclass . '">' . $aantal . '&nbsp;' . $short . '</span></div><div class="dur_r">in a&nbsp;<span class="timer" counting="down" value="' . (safe_min($NextArrival) - time()) . '">' . $generator->getTimeFormat(safe_min($NextArrival) - time()) . '</span>&nbsp;' . HOURS . '</div></td></tr>';
         $timer += 1;
     }
 
@@ -138,7 +138,7 @@ if ($aantal > 0) {
             }
         }
         echo '<tr><td class="typ"><a href="build.php?t=1&id=39"><img src="img/x.gif" class="' . $action . '" alt="' . $title . '" title="' . $title . '" /></a><span class="' . $aclass . '">&raquo;</span></td>
-	<td><div class="mov"><span class="' . $aclass . '">' . $aantal . '&nbsp;' . $short . '</span></div><div class="dur_r">in a&nbsp;<span class="timer" counting="down" value="' . (safe_min($NextArrival1) - time()) . '">' . $generator->getTimeFormat(safe_min($NextArrival1) - time()) . '</span>&nbsp;' . HOURS . '</div></div></td></tr>';
+	<td><div class="mov"><span class="' . $aclass . '">' . $aantal . '&nbsp;' . $short . '</span></div><div class="dur_r">in a&nbsp;<span class="timer" counting="down" value="' . (safe_min($NextArrival1) - time()) . '">' . $generator->getTimeFormat(safe_min($NextArrival1) - time()) . '</span>&nbsp;' . HOURS . '</div></td></tr>';
         $timer += 1;
     }
 
@@ -171,7 +171,7 @@ if ($aantal > 0) {
                 }
         }
         echo '<tr><td class="typ"><a href="build.php?t=1&id=39"><img src="img/x.gif" class="' . $action . '" alt="' . $title . '" title="' . $title . '" /></a><span class="' . $aclass . '">&raquo;</span></td>
-	<td><div class="mov"><span class="' . $aclass . '">' . $aantal . '&nbsp;' . $short . '</span></div><div class="dur_r">in a&nbsp;<span class="timer" counting="down" value="' . (safe_min($NextArrival2) - time()) . '">' . $generator->getTimeFormat(safe_min($NextArrival2) - time()) . '</span>&nbsp;' . HOURS . '</div></div></td></tr>';
+	<td><div class="mov"><span class="' . $aclass . '">' . $aantal . '&nbsp;' . $short . '</span></div><div class="dur_r">in a&nbsp;<span class="timer" counting="down" value="' . (safe_min($NextArrival2) - time()) . '">' . $generator->getTimeFormat(safe_min($NextArrival2) - time()) . '</span>&nbsp;' . HOURS . '</div></td></tr>';
         $timer += 1;
     }
 
@@ -193,7 +193,7 @@ if ($aantal > 0) {
 
         }
         echo '<tr><td class="typ"><a href="build.php?t=1&id=39"><img src="img/x.gif" class="' . $action . '" alt="' . $title . '" title="' . $title . '" /></a><span class="' . $aclass . '">&raquo;</span></td>
-	<td><div class="mov"><span class="' . $aclass . '">' . $countoas . '&nbsp;' . $short . '</span></div><div class="dur_r">in a&nbsp;<span class="timer" counting="down" value="' . (safe_min($NextArrival7) - time()) . '">' . $generator->getTimeFormat(safe_min($NextArrival7) - time()) . '</span>&nbsp;' . HOURS . '</div></div></td></tr>';
+	<td><div class="mov"><span class="' . $aclass . '">' . $countoas . '&nbsp;' . $short . '</span></div><div class="dur_r">in a&nbsp;<span class="timer" counting="down" value="' . (safe_min($NextArrival7) - time()) . '">' . $generator->getTimeFormat(safe_min($NextArrival7) - time()) . '</span>&nbsp;' . HOURS . '</div></td></tr>';
         $timer += 1;
     }
 
@@ -221,7 +221,7 @@ if ($aantal > 0) {
             }
         }
         echo '<tr><td class="typ"><a href="build.php?t=1&id=39"><img src="img/x.gif" class="' . $action . '" alt="' . $title . '" title="' . $title . '" /></a><span class="' . $aclass . '">&raquo;</span></td>
-	<td><div class="mov"><span class="' . $aclass . '">' . $lala . '&nbsp;' . $short . '</span></div><div class="dur_r">in a&nbsp;<span class="timer" counting="down" value="' . (safe_min($NextArrival3) - time()) . '">' . $generator->getTimeFormat(safe_min($NextArrival3) - time()) . '</span>&nbsp;' . HOURS . '</div></div></td></tr>';
+	<td><div class="mov"><span class="' . $aclass . '">' . $lala . '&nbsp;' . $short . '</span></div><div class="dur_r">in a&nbsp;<span class="timer" counting="down" value="' . (safe_min($NextArrival3) - time()) . '">' . $generator->getTimeFormat(safe_min($NextArrival3) - time()) . '</span>&nbsp;' . HOURS . '</div></td></tr>';
         $timer += 1;
     }
 
@@ -239,7 +239,7 @@ if ($aantal > 0) {
         echo '
 		<tr>
 			<td class="typ"><a href="build.php?t=1&id=39"><img src="img/x.gif" class="' . $action . '" alt="' . $title . '" title="' . $title . '" /></a><span class="' . $aclass . '">&raquo;</span></td>
-			<td><div class="mov"><span class="' . $aclass . '">' . $aantal . '&nbsp;' . $short . '</span></div><div class="dur_r">&nbsp;<span class="timer" counting="down" value="' . ($receive['endtime'] - time()) . '">' . $generator->getTimeFormat($receive['endtime'] - time()) . '</span>&nbsp;' . HOURS . '</div></div></td>
+			<td><div class="mov"><span class="' . $aclass . '">' . $aantal . '&nbsp;' . $short . '</span></div><div class="dur_r">&nbsp;<span class="timer" counting="down" value="' . ($receive['endtime'] - time()) . '">' . $generator->getTimeFormat($receive['endtime'] - time()) . '</span>&nbsp;' . HOURS . '</div></td>
 		</tr>';
 
         $timer += 1;

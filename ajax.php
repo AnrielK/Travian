@@ -1677,6 +1677,27 @@ Travian.Tip.refresh();
         $html = ob_get_clean(); // retrieve output from myfile.php, stop buffering
         echo json_encode( array('response' => array('data'=>array('html' => $html))) );
         break;
+    case 'legendsPlus':
+        // Travian PLUS dialog of the Legends look (application/legends/legendsDialogs.js): state, activation
+        header('Content-Type: application/json; charset=utf-8');
+        $plusCost = (int)$config['Plus'];
+        $plusDays = PLUS_TIME >= 86400;
+        $plusOut = ['gold' => (int)$session->gold, 'cost' => $plusCost, 'active' => $session->plus ? true : false,
+            'duration' => $plusDays ? floor(PLUS_TIME / 86400) : floor(PLUS_TIME / 3600), 'unit' => $plusDays ? 'days' : 'hours'];
+        if (($_POST['action'] ?? '') === 'activate') {
+            $goldNow = (int)$database->single("SELECT gold FROM users WHERE id = " . (int)$session->uid);
+            if ($goldNow >= $plusCost) {
+                $database->modifyGold($session->uid, $plusCost, 0);
+                $p->updatePlus(1);
+                $plusOut['activated'] = true;
+                $plusOut['gold'] = $goldNow - $plusCost;
+            } else {
+                $plusOut['error'] = 'notEnoughGold';
+            }
+        }
+        echo json_encode(['response' => ['error' => false, 'data' => $plusOut]]);
+        break;
+
     case 'villageGroups':
         // village groups of the Legends village list (application/VillageGroups.php)
         header('Content-Type: application/json; charset=utf-8');

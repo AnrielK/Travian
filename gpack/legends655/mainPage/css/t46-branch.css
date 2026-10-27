@@ -70,11 +70,6 @@ body.legends655 .sidebar .sidebarBox .header .sidebarPopup a:hover { background:
 body.legends655 .sidebar #sidebarBoxActiveVillage .content #villageName { position: relative; margin-bottom: 4px; }
 body.legends655 .sidebar #sidebarBoxActiveVillage .content #villageName .villageInput { box-sizing: border-box; font-family: 'Noto Serif', Georgia, serif; }
 body.legends655 .sidebar #sidebarBoxActiveVillage .content #villageName .rename { top: 50%; transform: translateY(-50%); }
-/* village list: two buttons on the left, overview and "more" on the right */
-body.legends655 .sidebar #sidebarBoxVillageList .header .buttonsWrapper.villageListButtons { grid-template-columns: auto auto 1fr auto auto; justify-content: stretch; }
-body.legends655 .sidebar #sidebarBoxVillageList .header .buttonsWrapper .layoutButton { order: 0; }
-body.legends655 .sidebar #sidebarBoxVillageList .header .buttonsWrapper .layoutButton svg.troops,
-body.legends655 .sidebar #sidebarBoxVillageList .header .buttonsWrapper .layoutButton.culture > svg { width: 20px; height: 20px; }
 body.legends655 .sidebar #sidebarBoxVillageList .content .expansionSlotInfo .boxTitle { margin-top: 0; }
 body.legends655 .sidebar #sidebarBoxVillageList .content .villageList .groupsHeader > span:first-child { align-self: center; color: #3f2a14; }
 body.legends655 .sidebar #sidebarBoxVillageList .content .villageList .groupsHeader .addGroup svg { width: 18px; height: 16px; fill: none; stroke: #5e463a; stroke-width: 1.3; }
@@ -99,7 +94,7 @@ body.legends655 .sidebar #sidebarBoxAlliance .content .boxTitle.withBanner svg.a
 body.legends655 .sidebar #sidebarBoxAlliance .content .noAlliance { padding: 4px 0 2px; }
 /* task overview: the mentor stands on the top edge of the box, the whole box opens the task list */
 body.legends655 .sidebar #sidebarBoxQuestmaster .header { margin-bottom: -26px; }
-body.legends655 .sidebar #sidebarBoxQuestmaster .header #questmasterButton { display: inline-grid; pointer-events: auto; cursor: pointer; line-height: 0; text-decoration: none; position: relative; }
+body.legends655 .sidebar #sidebarBoxQuestmaster .header #questmasterButton { display: inline-grid; overflow: visible; pointer-events: auto; cursor: pointer; line-height: 0; text-decoration: none; position: relative; }
 body.legends655 .sidebar #sidebarBoxQuestmaster .header #questmasterButton .mentor { filter: drop-shadow(2px 0 0 #6aa83a) drop-shadow(-2px 0 0 #6aa83a) drop-shadow(0 -2px 0 #6aa83a) drop-shadow(0 2px 0 #6aa83a); }
 body.legends655 .sidebar #sidebarBoxQuestmaster .header #questmasterButton:hover .mentor { filter: brightness(1.08) drop-shadow(2px 0 0 #86c64f) drop-shadow(-2px 0 0 #86c64f) drop-shadow(0 -2px 0 #86c64f) drop-shadow(0 2px 0 #86c64f); }
 body.legends655 .sidebar #sidebarBoxQuestmaster .header #questmasterButton.claimable .mentor { animation: mentorAnimation 2s ease-out infinite alternate; }
@@ -107,3 +102,93 @@ body.legends655 .sidebar #sidebarBoxQuestmaster .content .progressiveTasksTitle 
 body.legends655 .sidebar #sidebarBoxQuestmaster .content .progressiveTasksTitle .boxTitle { padding: 8px 5px; }
 body.legends655 .sidebar #sidebarBoxQuestmaster .content .progressiveTasksTitle .boxTitle:after { display: none; }
 body.legends655 .sidebar #sidebarBoxAdmin .content p { margin: 4px 0 8px; }
+
+/* ---- Village list header: four quick link slots, overview, settings ("…" / X while editing) ---- */
+body.legends655 .sidebar #sidebarBoxVillageList .header .buttonsWrapper.quickLinks { grid-template-columns: repeat(4, auto) 1fr auto auto; justify-content: stretch;
+    margin-inline: 10px; column-gap: 1px; }
+body.legends655 .sidebar #sidebarBoxVillageList .quickLinks .quickLinkSlot { box-sizing: border-box; display: grid; place-items: center; }
+body.legends655 .sidebar #sidebarBoxVillageList .quickLinks .quickLinkSlot > * { grid-area: 1 / 1; }
+body.legends655 .sidebar #sidebarBoxVillageList .quickLinks .quickLinkSlot .editSlotIndicator { position: absolute; inset: 0; width: 44px; height: 44px; fill: none; stroke: #f4efe4; }
+body.legends655 .sidebar #sidebarBoxVillageList .quickLinks .quickLinkSlot .slot svg { width: 14px; height: 14px; }
+body.legends655 .sidebar #sidebarBoxVillageList .quickLinks .quickLinkSlot.highlightDropTarget .editSlotIndicator { stroke: #38f4f4; }
+body.legends655 .sidebar #sidebarBoxVillageList .quickLinks .quickLinkSlot.highlightDragSource .editSlotIndicator { stroke: #ff8c4d; }
+body.legends655 .sidebar #sidebarBoxVillageList .quickLinks .layoutButton.quickLink > svg { width: 22px; height: 22px; }
+body.legends655 .sidebar #sidebarBoxVillageList .quickLinks .settings { align-self: center; }
+body.legends655 .sidebar #sidebarBoxVillageList .quickLinks .settings .closeIcon { display: none; }
+body.legends655 .sidebar #sidebarBoxVillageList .quickLinks .settings.editMode > svg:not(.closeIcon) { display: none; }
+body.legends655 .sidebar #sidebarBoxVillageList .quickLinks .settings.editMode .closeIcon { display: block; width: 10px; height: 10px; fill: #fff9eb; position: relative; z-index: 3; }
+body.legends655 .sidebar #sidebarBoxVillageList.editQuickLinks .content { pointer-events: none; }
+body.legends655 #center .sidebar.afterContent.editQuickLinks { z-index: 32; position: relative; }
+body.legends655 .sidebar .sidebarBox.editQuickLinks .editQuickLinksOverlay { z-index: 0; }
+body.legends655 .sidebar .sidebarBox.editQuickLinks > .content { position: relative; z-index: 1; }
+body.legends655 .sidebar .sidebarBox.editQuickLinks > .header { position: relative; z-index: 2; }
+body.legends655 .quickLinkDragObject { position: fixed !important; z-index: 1000; pointer-events: none; margin: 0 !important; }
+
+/* ---- Village groups: drag handle on groups too, edit mode, drop line ---- */
+body.legends655 .sidebar #sidebarBoxVillageList .content .villageList .listEntry.group { grid-template-columns: 1fr auto auto; }
+body.legends655 .sidebar #sidebarBoxVillageList .content .villageList .listEntry.group .dragAndDrop { height: 20px; }
+body.legends655 .sidebar #sidebarBoxVillageList .content .villageList .listEntry.group.editMode { grid-template-columns: 1fr auto auto; column-gap: 6px; padding-inline-start: 10px; }
+body.legends655 .sidebar #sidebarBoxVillageList .content .villageList .listEntry.group.editMode input.name { width: 100%; box-sizing: border-box; margin-top: 0; padding: 0 4px; font: inherit; background: #fff9eb; }
+body.legends655 .sidebar #sidebarBoxVillageList .content .villageList .listEntry.group .colorSelection { position: relative; }
+body.legends655 .sidebar #sidebarBoxVillageList .content .villageList .listEntry.group .colorSelection .color { margin: 0; border: 1px solid #5e463a; box-sizing: border-box; }
+body.legends655 .sidebar #sidebarBoxVillageList .content .villageList .listEntry.group .colorSelection .color:before { content: ""; position: absolute; }
+body.legends655 .sidebar #sidebarBoxVillageList .content .villageList .listEntry.group .colorSelection .availableColors { right: 0; background: #fff9eb; border: 1px solid #bfb39b; padding: 2px; gap: 2px; z-index: 40; }
+body.legends655 .sidebar #sidebarBoxVillageList .content .villageList .listEntry.group .colorSelection .availableColors[hidden] { display: none; }
+body.legends655 .sidebar #sidebarBoxVillageList .content .villageList .listEntry.group .colorSelection .color .selectedIndicator { display: none; }
+body.legends655 .sidebar #sidebarBoxVillageList .content .villageList .listEntry.group .colorSelection .color.selected .selectedIndicator { display: block; }
+body.legends655 .sidebar #sidebarBoxVillageList .content .villageList .listEntry.group.editMode .actions .secondaryIconButton.delete svg { width: 13px; height: 15px; }
+body.legends655 .sidebar #sidebarBoxVillageList .content .villageList .dropContainer.topLevel { min-height: 0; }
+body.legends655 .sidebar #sidebarBoxVillageList .content .villageList .groupWrapper .dropContainer { min-height: 22px; }
+body.legends655 .villageListDropLine { position: absolute; z-index: 1000; height: 2px; background: #088885; pointer-events: none; display: none; box-shadow: 0 0 0 1px rgba(56, 244, 244, .4); }
+body.legends655 .villageListDropLine:after { content: ""; position: absolute; right: -4px; top: -2px; width: 6px; height: 6px; border-radius: 50%; background: #088885; }
+body.legends655 .sidebar #sidebarBoxVillageList .content .villageList .dragObject { width: 260px; }
+
+/* ---- Dialogs (application/legends/legendsDialogs.js) ---- */
+body.legends655 .legendsDialogOverlay { z-index: 40; }
+body.legends655 .legendsDialogOverlay .dialogWrapper { position: relative; }
+body.legends655 .legendsDialogOverlay .dialog.basic .dialogContents { padding: 20px 24px 14px; border-radius: 4px; }
+body.legends655 .legendsDialogOverlay .dialog.basic form > .content { margin: 0; padding: 0; background: none; }
+body.legends655 .legendsDialogOverlay .legendsConfirm .confirmText { margin: 0 0 18px; text-align: center; font-size: 13px; line-height: 18px; max-width: 300px; }
+body.legends655 .legendsDialogOverlay .legendsConfirm .buttons { display: flex; justify-content: space-between; gap: 40px; margin: 0; }
+body.legends655 .legendsDialogOverlay .legendsConfirm .buttons button { min-width: 110px; }
+body.legends655 .textButtonV2.buttonFramed.red:before { background-image: linear-gradient(to bottom, #e06a4a, #b7341d 50%, #8e2210); border-color: #6b190c; }
+body.legends655 .textButtonV2.buttonFramed.red { color: #fff; }
+/* Travian PLUS */
+body.legends655 .legendsPlusDialog .dialogGold { position: absolute; z-index: 3; top: 33px; right: 92px; display: flex; align-items: center; gap: 4px; color: #fff;
+    font-weight: 700; font-size: 16px; padding-right: 10px; border-right: 1px solid rgba(255, 255, 255, .5); text-shadow: 0 1px 1px #000; }
+body.legends655 .legendsPlusDialog .dialogGold .goldCoin { width: 22px; height: 22px; }
+body.legends655 .legendsPlusDialog .featureCollection { display: block; }
+body.legends655 .legendsPlusDialog .featureCollection .feature { margin-bottom: 6px; }
+body.legends655 .legendsPlusDialog .featureCollection .packageFeatures .featureContent { background: #fff9eb; }
+body.legends655 .legendsPlusDialog .featureCollection .packageFeatures .featureContent .featureTitle { font-weight: 700; }
+body.legends655 .legendsPlusDialog .plusNotice { text-align: center; font-weight: 700; margin: 2px 0 8px; }
+body.legends655 .legendsPlusDialog .plusExtra { margin: 6px 4px; }
+body.legends655 .legendsPlusDialog .featureBooking .featureContent { grid-template-columns: 90px 1fr auto !important; grid-template-rows: 60px !important; align-items: center;
+    padding: 6px 4px !important; margin-top: 8px; }
+body.legends655 .legendsPlusDialog .featureBooking .featureImage.bookingScroll { width: 84px; height: 56px; background: url('../img_ltr/legacy/views/waveBuilderDialog/scroll.png') no-repeat center / contain; }
+body.legends655 .legendsPlusDialog .featureBooking .featureDuration { grid-column: 2; grid-row: 1; font-size: 14px; }
+body.legends655 .legendsPlusDialog .featureBooking .featureButton { grid-column: 3; grid-row: 1; }
+body.legends655 .legendsPlusDialog .featureBooking .featureButton button div { display: flex; align-items: center; gap: 6px; font-size: 15px; }
+body.legends655 .legendsPlusDialog .featureBooking .featureButton .goldCoin { width: 18px; height: 18px; }
+body.legends655 .legendsPlusDialog .plusError { color: #d40000; text-align: center; margin: 6px 0 0; }
+/* quick links dialog */
+body.legends655 .legendsDialogOverlay .quickLinksDialog .quickLinksText { margin: 0 4px; font-size: 13px; line-height: 18px; }
+body.legends655 .legendsDialogOverlay .quickLinksDialog .quickLinksWrapper { margin-top: 18px; }
+body.legends655 .legendsDialogOverlay .quickLinksDialog .quickLinkItem { display: grid; justify-items: center; text-align: center; touch-action: none; }
+body.legends655 .legendsDialogOverlay .quickLinksDialog .quickLinkItem.used .layoutButton { opacity: .45; }
+body.legends655 .legendsDialogOverlay .quickLinksDialog .quickLinkItem .layoutButton { cursor: move; }
+body.legends655 .legendsDialogOverlay .quickLinksDialog .quickLinkItem .layoutButton > svg { width: 22px; height: 22px; position: relative; z-index: 3; }
+body.legends655 .legendsDialogOverlay .quickLinksDialog .quickLinkTitle { font-weight: 700; margin: 8px 0 2px; }
+body.legends655 .legendsDialogOverlay .quickLinksDialog .quickLinkSubtitle { font-size: 12px; color: #7a6a5a; }
+body.legends655 .legendsDialogOverlay .quickLinksDialog .layoutButton.disabled { filter: grayscale(1); opacity: .5; }
+@media (max-width: 700px) { body.legends655 .legendsDialogOverlay .dialogContents { width: calc(100vw - 30px) !important; } }
+body.legends655 .sidebar #sidebarBoxVillageList .quickLinks .layoutButton.buttonFramed.withIcon.round.settings { width: 26px; height: 26px; margin: 2px; }
+body.legends655 .sidebar #sidebarBoxVillageList .quickLinks .layoutButton.buttonFramed.withIcon.round.settings > svg { width: 14px; height: 4px; }
+body.legends655 .legendsDialogOverlay .dialog.basic .dialogCancelButton { top: 8px; right: 8px; inset-block-start: 8px; inset-inline-end: 8px; }
+body.legends655 .legendsDialogOverlay .quickLinksDialog .dialogContents { width: 600px; box-sizing: border-box; padding: 18px 22px 22px; }
+body.legends655 .legendsDialogOverlay .quickLinksDialog .dialogHeading { margin: 0 44px 10px 0; font-size: 15px; font-weight: 700; color: #3f2a14; }
+body.legends655 .legendsPlusDialog .featureCollection .packageFeatures .featureContent .featureTitle { font-size: 14px; }
+body.legends655 .legendsPlusDialog .featureCollection .packageFeatures .featureContent .featureDescription { font-size: 13px; line-height: 17px; }
+body.legends655 .legendsPlusDialog .plusNotice, body.legends655 .legendsPlusDialog .plusExtra { font-size: 13px; }
+body.legends655 .sidebar .sidebarBox.editQuickLinks .editQuickLinksOverlay { position: fixed; inset: 0; background-color: rgba(0, 0, 0, .5) !important; opacity: 1; }
+body.legends655 .legendsDialogOverlay.enabled { background-color: rgba(0, 0, 0, .55); }
