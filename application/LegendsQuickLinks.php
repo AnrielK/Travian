@@ -44,7 +44,14 @@ final class LegendsQuickLinks
     public static function icon(string $name): string
     {
         $legends = ['overview' => 'sbOverview', 'market' => 'sbMarket', 'barracks' => 'sbBarracks', 'stable' => 'sbStable', 'workshop' => 'sbWorkshop'];
-        if (isset($legends[$name])) return LegendsUi::svg($legends[$name], $name);
+        if (isset($legends[$name])) {
+            // the sidebar icons are nested svgs (outline + icon); one svg with the inner viewBox centres in the button
+            $svg = LegendsUi::svg($legends[$name]);
+            if (preg_match('#<svg viewBox="([^"]+)" class="outline">(.*?)</svg>#s', $svg, $m)) {
+                return LegendsUi::icon($m[1], $m[2], $name);
+            }
+            return LegendsUi::svg($legends[$name], $name);
+        }
         [$box, $path] = self::ICONS[$name] ?? self::ICONS['swords'];
         return LegendsUi::icon($box, '<path d="' . $path . '"/>', $name);
     }

@@ -192,3 +192,16 @@ body.legends655 .legendsPlusDialog .featureCollection .packageFeatures .featureC
 body.legends655 .legendsPlusDialog .plusNotice, body.legends655 .legendsPlusDialog .plusExtra { font-size: 13px; }
 body.legends655 .sidebar .sidebarBox.editQuickLinks .editQuickLinksOverlay { position: fixed; inset: 0; background-color: rgba(0, 0, 0, .5) !important; opacity: 1; }
 body.legends655 .legendsDialogOverlay.enabled { background-color: rgba(0, 0, 0, .55); }
+/* quick link icons centred in their circle (dialog and slots) */
+body.legends655 .layoutButton.buttonFramed.withIcon.round.quickLink { display: grid !important; place-items: center; padding: 0; }
+body.legends655 .layoutButton.buttonFramed.withIcon.round.quickLink > svg { position: relative !important; inset: auto !important; top: auto !important; left: auto !important;
+    margin: 0 !important; transform: none !important; width: 22px; height: 22px; z-index: 3; grid-area: 1 / 1; }
+body.legends655 .layoutButton.buttonFramed.withIcon.round.quickLink > svg svg { position: absolute; inset: 0; width: 100%; height: 100%; }
+/* Travian PLUS: duration picture, activate button with a gold frame and centred text */
+body.legends655 .legendsPlusDialog .featureBooking .featureImage.bookingScroll { width: 84px; height: 56px;
+    background: url('../img_ltr/legacy/global/premiumFeatures/plusDuration.svg') no-repeat center / contain; }
+body.legends655 .legendsPlusDialog .featureBooking .featureButton { padding: 3px; border-radius: 5px;
+    background: linear-gradient(to bottom, #f7e08b, #c9962c 45%, #8a5e12); box-shadow: 0 0 0 1px #5e3c08, 0 2px 4px rgba(0, 0, 0, .35); }
+body.legends655 .legendsPlusDialog .featureBooking .featureButton button.plusActivate { min-width: 200px; display: block; margin: 0; }
+body.legends655 .legendsPlusDialog .featureBooking .featureButton button.plusActivate > div { display: flex; justify-content: center; align-items: center; gap: 6px;
+    width: 100%; text-align: center; font-weight: 700; font-size: 16px; }
