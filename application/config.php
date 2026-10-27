@@ -47,6 +47,9 @@ require_once __DIR__ . "/Skin.php";
 require_once __DIR__ . "/Languages.php";
 require_once __DIR__ . "/HeroLegends.php";
 require_once __DIR__ . "/LegendsUi.php";
+require_once __DIR__ . "/VillageGroups.php";
+require_once __DIR__ . "/LegendsTasks.php";
+require_once __DIR__ . "/DailyQuests.php";
 if (PHP_SAPI !== 'cli') ob_start(['Skin', 'filter']);
 define("CATAPULT_C", $sData['catapult_c']); // 999999xden fazla ise mancınık açılır 
 

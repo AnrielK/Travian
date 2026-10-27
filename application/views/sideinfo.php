@@ -66,6 +66,7 @@ if (php7_is_zero($herodata['dead'])) {
         $fff[$f['vref']] = $f;
         for ($i = 19; $i < 40; $i++) {
             if ($f['f' . $i . 't'] == 18) {
+                if (!isset($embassySlot)) $embassySlot = [$i, $f['vref']];
                 $new = $database->getTypeLevel(18, $f['vref'], $f);
                 $posolstvo = $posolstvo < $new ? $new : $posolstvo;
                 if (!php7_is_zero($session->alliance)) {
@@ -77,7 +78,9 @@ if (php7_is_zero($herodata['dead'])) {
     }
     ?>
     <div class="sidebarBoxWrapper">
-        <?php if (!php7_is_zero($session->alliance)) { ?>
+        <?php if (Skin::isLegends()) {
+            include __DIR__ . '/Legends/sidebarAlliance.php';
+        } elseif (!php7_is_zero($session->alliance)) { ?>
             <div id="sidebarBoxAlliance" class="sidebarBox   ">
                 <div class="header ">
                     <div class="buttonsWrapper">
@@ -208,7 +211,7 @@ if (php7_is_zero($herodata['dead'])) {
                         <svg viewBox="0 0 20 14.28" class="messageNew">
                             <path d="M.72.93A1.69 1.69 0 0 1 .33.21L.54 0h19a1.56 1.56 0 0 1 .16.2 1.73 1.73 0 0 1-.39.73l-7.2 7.78a2.79 2.79 0 0 1-4.18 0zm13.59 7.89l3.55 2.5-4.92-1.06a4.31 4.31 0 0 1-5.84 0l-4.89 1.06 3.53-2.49L0 2.62v10.06a1.54 1.54 0 0 0 1.47 1.6h17.06a1.54 1.54 0 0 0 1.47-1.6v-10z"></path>
                         </svg>
-                        <span class="value"><?php echo $news->nSum(); ?></span>
+                        <span class="value"><?php echo $news->nSum() . (Skin::isLegends() ? '×' : ''); ?></span>
                     </div>
 
                     <ul>
@@ -443,6 +446,7 @@ if (php7_is_zero($herodata['dead'])) {
             }
             $sbPack = isset($_COOKIE[Skin::COOKIE]) ? Skin::current() : 'world';
             $sbHero = class_exists('HeroLegends') ? HeroLegends::storedStyle((int)$session->uid) : 'auto';
+            if (!Skin::isLegends()) { // Legends: language / look / hero are chosen in Preferences
             ?>
             <style>
                 #sidebarBoxSettings form.sideSettings label { display: grid; grid-template-columns: 70px 1fr; align-items: center; gap: 4px; margin: 3px 0; }
@@ -469,6 +473,7 @@ if (php7_is_zero($herodata['dead'])) {
                     </form>
                 </div>
             </div>
+            <?php } ?>
 
 
 

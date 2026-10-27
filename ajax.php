@@ -1677,9 +1677,18 @@ Travian.Tip.refresh();
         $html = ob_get_clean(); // retrieve output from myfile.php, stop buffering
         echo json_encode( array('response' => array('data'=>array('html' => $html))) );
         break;
+    case 'villageGroups':
+        // village groups of the Legends village list (application/VillageGroups.php)
+        header('Content-Type: application/json; charset=utf-8');
+        $ownVillages = array_map(function ($v) { return (int)$v['wref']; }, (array)$session->vvillages);
+        echo json_encode(['response' => ['error' => false, 'data' => VillageGroups::ajax((int)$session->uid, $ownVillages, $_POST)]]);
+        break;
+
     case 'changeVillageName':
         $_POST['name']=$database->RemoveXSS($_POST['name']);
-        if(str_replace(" ","",$_POST['name'])!=''){
+        // only the player's own villages can be renamed
+        $ownVillage = in_array((int)($_POST['did'] ?? 0), array_map(function ($v) { return (int)$v['wref']; }, (array)$session->vvillages), true);
+        if($ownVillage && str_replace(" ","",$_POST['name'])!=''){
             $_POST['name'] = str_replace( ',', ' ', $_POST['name'] );
             $p=array('N'=>$_POST['name'],'D'=>$_POST['did']);
             $database->query("UPDATE vdata SET `name` = :N where `wref` = :D",$p);

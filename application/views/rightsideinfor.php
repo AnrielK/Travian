@@ -1,4 +1,8 @@
 <?php
+if (Skin::isLegends()) {
+	include __DIR__ . '/Legends/sidebarRight.php';
+	return;
+}
 $baracks = "disabled";
 $workshop = "disabled";
 $stable = "disabled";

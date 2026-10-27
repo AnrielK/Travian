@@ -22,7 +22,7 @@ final class Skin
     ];
     const COOKIE = 't46_gpack';
     /** Cache buster of the pack's stylesheet. */
-    const VERSION = 2;
+    const VERSION = 3;
 
     private static $current = null;
 
@@ -138,6 +138,9 @@ final class Skin
         // #background like the main branch: the tribe only (no showWall – the Legends CSS draws a gradient for it)
         $html = preg_replace('#<div id="background" class="[^"]*"#', '<div id="background" class="' . $tribe . '"', $html, 1);
         self::header($html);
+        // the "Q" button opens the Legends daily quests page instead of the classic dialog
+        $html = preg_replace('#<a class="dailyQuests" href="\#"([^>]*?) onclick="Travian\.Game\.Quest\.openTodoListDialog\(\'\', true\); return false;"#',
+            '<a class="dailyQuests" href="dailyquests.php"$1', $html);
         self::tabs($html);
         self::sidebars($html);
         self::buildPage($html, $tribe);
@@ -153,7 +156,7 @@ final class Skin
 
         // Legends: village views fill the page (no window), every other page is a "content page" window.
         if (preg_match('#<div id="content" class="([^"]*)"#i', $html, $c) && preg_match('#\bvillage[12]\b#', $c[1])) {
-            self::cutBlock($html, '<div class="contentTitle"');
+            self::cutBlock($html, '<div class="contentTitle');
             self::unwrap($html, '<div class="contentContainer"');
             if (strpos($c[1], 'village1') !== false) self::resourceView($html);
             else self::villageView($html, $tribe);
