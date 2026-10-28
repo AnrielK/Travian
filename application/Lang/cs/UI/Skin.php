@@ -398,3 +398,6 @@ define('HEROL_AMOUNT_2', 'Množství hlíny');
 define('HEROL_AMOUNT_3', 'Množství železa');
 define('HEROL_AMOUNT_4', 'Množství obilí');
 define('HEROL_OK', 'OK');
+define('BQ_TITLE', 'Ve výstavbě:');
+define('BQ_FINISH', 'okamžitě dokončit');
+define('BQ_LEVEL', 'Úroveň');

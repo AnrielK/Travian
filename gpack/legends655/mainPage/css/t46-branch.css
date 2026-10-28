@@ -459,5 +459,18 @@ body.legends655 .legendsDialogOverlay .quickLinksDialog .quickLinkItem.used .qui
 body.legends655 .legendsDialogOverlay .dialogContents > form > .content { max-height: calc(100vh - 230px); overflow-y: auto; -webkit-overflow-scrolling: touch; overscroll-behavior: contain; touch-action: pan-y; }
 body.legends655 .legendsDialogOverlay .quickLinksDialog .quickLinkItem { touch-action: pan-y; }
 
-/* dorf1 construction list: the same box on the same screen position as in dorf2 (village2: left 327px, 646px from the top). */
-body.legends655 #contentOuterContainer #content.village1 > .buildingList { position: absolute; top: 517px; left: 327px; width: 400px; margin: 0; z-index: 1001; }
+/* Construction list (dorf1 + dorf2) like Travian Legends: "Ve výstavbě:" and the gold "okamžitě dokončit" on one line,
+   no separator, name + orange "Úroveň N", duration right. Same horizontal place in both views; dorf1 right under the field. */
+body.legends655 #contentOuterContainer #content.village1 > .buildingList { position: absolute; top: 416px; left: 327px; margin: 0; z-index: 1001; }
+body.legends655 #contentOuterContainer #content .buildingList { width: 400px; padding: 7px 8px 0; border-radius: 7px; background-color: rgba(255, 255, 255, .9); box-shadow: 0 0 3px rgba(0, 0, 0, .5); }
+body.legends655 #contentOuterContainer #content .buildingList .boxes-contents { padding: 0; }
+body.legends655 #contentOuterContainer #content .buildingList h5 { clear: none; margin: 0; padding: 4px 0 0; border: 0; font-size: 13px; font-weight: 400; line-height: 18px; color: #000; }
+body.legends655 #contentOuterContainer #content .buildingList .finishNow { position: absolute; top: 4px; right: 4px; float: none; margin: 0; }
+body.legends655 #contentOuterContainer #content .buildingList .finishNow button .button-content { padding: 0 16px; font-size: 12px; font-weight: 700; }
+body.legends655 #contentOuterContainer #content .buildingList ul { clear: both; margin: 11px 0 0; padding: 0; }
+body.legends655 #contentOuterContainer #content .buildingList ul:last-child { margin-bottom: 15px; }
+body.legends655 #contentOuterContainer #content .buildingList li { display: flex; align-items: baseline; gap: 0; margin: 0 0 5px; padding: 0; }
+body.legends655 #contentOuterContainer #content .buildingList li > a { flex: none; float: none; padding: 0 4px 0 0; }
+body.legends655 #contentOuterContainer #content .buildingList li .name { flex: 1 1 auto; font-size: 13px; color: #000; }
+body.legends655 #contentOuterContainer #content .buildingList li .name .lvl { color: #f88c1f; font-weight: 700; font-size: 12px; }
+body.legends655 #contentOuterContainer #content .buildingList li .buildDuration { margin-inline-start: auto; color: #6b6b6b; font-size: 11px; }

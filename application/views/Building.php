@@ -1,6 +1,10 @@
+<?php
+$bqLegends = class_exists('Skin') && Skin::isLegends();
+$bqLevel = $bqLegends ? LegendsUi::t('BQ_LEVEL', 'Level') : BUILDING_LEVEL;
+?>
 <div class="boxes buildingList">
     <div class="boxes-contents cf">
-        <h5><?= BUILDING_BUILDING; ?></h5>
+        <h5><?= $bqLegends ? LegendsUi::t('BQ_TITLE', 'Under construction:') : BUILDING_BUILDING; ?></h5>
         <div class="finishNow">
             <button type="button" class="gold textButtonV1" id="buttonTdNYVlGP9Z7EJ">
                 <div class="button-container addHoverClick">
@@ -11,7 +15,7 @@
                             </div>
                         </div>
                     </div>
-                    <div class="button-content"><?= BUILDING_COMPLETE; ?></div>
+                    <div class="button-content"><?= $bqLegends ? LegendsUi::t('BQ_FINISH', 'Finish immediately') : BUILDING_COMPLETE; ?></div>
                 </div>
             </button>
             <script type="text/javascript" id="buttonTdNYVlGP9Z7EJ_script">
@@ -67,7 +71,7 @@
             }
 
             if (php7_is_zero($jobs['master'])) {
-                echo $building->procResType($jobs['type']) . " <span class=\"lvl\">" . BUILDING_LEVEL . " " . $jobs['level'] . "</span>";
+                echo $building->procResType($jobs['type']) . " <span class=\"lvl\">" . $bqLevel . " " . $jobs['level'] . "</span>";
                 if (php7_is_zero($jobs['loopcon'])) {
                     $BuildingList[] = $jobs['field'];
                 }

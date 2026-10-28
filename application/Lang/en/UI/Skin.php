@@ -379,3 +379,6 @@ define('HEROL_AMOUNT_2', 'Amount of clay');
 define('HEROL_AMOUNT_3', 'Amount of iron');
 define('HEROL_AMOUNT_4', 'Amount of crop');
 define('HEROL_OK', 'OK');
+define('BQ_TITLE', 'Under construction:');
+define('BQ_FINISH', 'Finish immediately');
+define('BQ_LEVEL', 'Level');
