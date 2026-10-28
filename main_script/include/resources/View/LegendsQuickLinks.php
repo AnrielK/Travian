@@ -20,9 +20,9 @@ class LegendsQuickLinks
     public const TABLE = 'ov_quick_links';
     public const LIST_SLOTS = 4;
     public const VILLAGE_SLOTS = 5;
-    public const DEFAULT_LIST = ['rallySend', 'marketSend', '', ''];
-    /** The four building buttons the active village box had before (marketplace, barracks, stable, workshop). */
-    public const DEFAULT_VILLAGE = ['', 'marketSend', 'barracks', 'stable', 'workshop'];
+    /** As in Travian Legends a new account starts without quick links (only the fixed overview button of the list). */
+    public const DEFAULT_LIST = ['', '', '', ''];
+    public const DEFAULT_VILLAGE = ['', '', '', '', ''];
 
     /**
      * key => [building ids, subtitle key, url (%d = building slot, null = the building), icon, title key, gold]

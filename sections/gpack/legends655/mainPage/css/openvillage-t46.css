@@ -2023,3 +2023,34 @@ body.legendsV2 .legendsPlusDialog .featureBooking .featureButton button.plusActi
     box-shadow: inset 0 -4px 0 -2px #9d6513, inset 0 4px 0 -2px #fff0c6; }
 body.legendsV2 .legendsPlusDialog .featureBooking .featureButton button.plusActivate:hover:not([disabled]):before { background: linear-gradient(180deg, #f6e45a, #e3ad35); }
 body.legendsV2 .legendsPlusDialog .featureBooking .featureButton button.plusActivate > div { position: relative; z-index: 1; }
+
+/* Quick link editor as in Travian Legends: a compact dialog left of the edited box, the links without dashed rings,
+   the lifted link leaves an orange disc, the place it would go is a cyan disc; the "…" / X button is silver. */
+body.legendsV2 .legendsDialogOverlay.quickLinksOverlay .quickLinksDialog .dialogContents { width: 450px !important; padding: 16px 18px 18px !important; box-sizing: border-box; }
+body.legendsV2 .legendsDialogOverlay.quickLinksOverlay .quickLinksDialog .dialogHeading { font-size: 14px !important; line-height: 18px; margin: 0 40px 6px 0 !important; color: #3f2a14 !important; font-weight: 700; }
+body.legendsV2 .legendsDialogOverlay.quickLinksOverlay .quickLinksDialog .quickLinksText { font-size: 12px !important; line-height: 16px !important; color: #5e463a !important; }
+body.legendsV2 .legendsDialogOverlay.quickLinksOverlay .quickLinksDialog .quickLinksWrapper { display: grid; grid-template-columns: repeat(4, 1fr); margin-top: 16px !important; row-gap: 14px !important; column-gap: 4px; }
+body.legendsV2 .legendsDialogOverlay.quickLinksOverlay .quickLinksDialog .quickLinkIcon { width: 44px; height: 44px; }
+body.legendsV2 .legendsDialogOverlay.quickLinksOverlay .quickLinksDialog .quickLinkIcon::before { display: none !important; }
+body.legendsV2 .legendsDialogOverlay.quickLinksOverlay .quickLinksDialog .quickLinkTitle { font-size: 12px !important; font-weight: 700; color: #3f2a14 !important; margin: 4px 0 1px !important; line-height: 15px; }
+body.legendsV2 .legendsDialogOverlay.quickLinksOverlay .quickLinksDialog .quickLinkSubtitle { font-size: 12px !important; color: #5e463a !important; line-height: 15px; }
+body.legendsV2 .legendsDialogOverlay.quickLinksOverlay .quickLinksDialog .dialogCancelButton { top: 10px !important; right: 10px !important; }
+/* a link already in a slot: a pale disc in the dialog */
+body.legendsV2 .legendsDialogOverlay.quickLinksOverlay .quickLinksDialog .quickLinkItem.used .layoutButton { filter: grayscale(1) brightness(1.55); opacity: .75 !important; }
+/* drag: orange where the link was lifted, cyan where it would go */
+body.legendsV2 .sidebar .quickLinks .quickLinkSlot.highlightDragSource .layoutButton.quickLink,
+body.legendsV2 .legendsDialogOverlay .quickLinksDialog .quickLinkItem.highlightDragSource .quickLinkIcon .layoutButton { visibility: hidden; }
+body.legendsV2 .sidebar .quickLinks .quickLinkSlot.highlightDragSource .slot { display: grid !important; background: #ff8c4d !important; box-shadow: none !important; }
+body.legendsV2 .sidebar .quickLinks .quickLinkSlot.highlightDropTarget .slot { display: grid !important; background: #1ba5a0 !important; box-shadow: 0 0 0 2px #7fe9e5 !important; }
+body.legendsV2 .sidebar .quickLinks .quickLinkSlot.highlightDropTarget .layoutButton.quickLink { visibility: hidden; }
+body.legendsV2 .legendsDialogOverlay .quickLinksDialog .quickLinkItem.highlightDragSource .quickLinkIcon,
+body.legendsV2 .legendsDialogOverlay .quickLinksDialog .quickLinkItem.highlightDropTarget .quickLinkIcon { border-radius: 50%; }
+body.legendsV2 .legendsDialogOverlay .quickLinksDialog .quickLinkItem.highlightDragSource .quickLinkIcon { background: radial-gradient(circle, #ff8c4d 0 19px, transparent 20px); }
+body.legendsV2 .legendsDialogOverlay .quickLinksDialog .quickLinkItem.highlightDropTarget .quickLinkIcon { background: radial-gradient(circle, #1ba5a0 0 19px, transparent 20px); }
+body.legendsV2 .legendsDialogOverlay .quickLinksDialog .quickLinkItem.highlightDropTarget .quickLinkIcon .layoutButton { visibility: hidden; }
+body.legendsV2 .sidebar .quickLinks .quickLinkSlot.editMode::before { border-color: rgba(94, 70, 58, .55) !important; }
+/* the "…" button (and its X while editing) is silver like in Legends */
+body.legendsV2 .sidebar .buttonsWrapper.quickLinks > .layoutButton.buttonFramed.withIcon.round.settings:not(.editMode) { filter: grayscale(1) brightness(1.18) contrast(.95); }
+body.legendsV2 .legendsDialogOverlay.quickLinksOverlay .dialogWrapper,
+body.legendsV2 .legendsDialogOverlay.quickLinksOverlay .dialog.quickLinksDialog,
+body.legendsV2 .legendsDialogOverlay.quickLinksOverlay .dialog.quickLinksDialog .dialogContainer { width: 450px !important; max-width: calc(100vw - 16px); }

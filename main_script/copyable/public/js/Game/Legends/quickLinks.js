@@ -98,8 +98,27 @@ var LegendsQuickLinks = (function () {
         dialog = LegendsDialog.open({cls: 'basic quickLinksDialog', heading: sc.title(), html: html, modal: false, closeText: T.close,
             onClose: function () { if (dialog) { dialog = null; toggle(false); } }});
         dialog.classList.add('quickLinksOverlay');
+        place();
         markUsed(slots().map(function (s) { var a = s.querySelector('.layoutButton'); return a ? a.getAttribute('data-key') : ''; }));
     }
+
+    // as in Legends the dialog stands left of the edited box (centred when there is no room for it)
+    function place() {
+        if (!dialog || !scope) return;
+        var w = dialog.querySelector('.dialogWrapper'), b = SCOPES[scope].box();
+        if (!w || !b) return;
+        w.style.position = ''; w.style.left = ''; w.style.top = '';
+        var r = b.getBoundingClientRect(), dw = w.offsetWidth, dh = w.offsetHeight;
+        var left = r.left - dw - 14;
+        if (left < 8) { dialog.classList.remove('besideBox'); return; }
+        dialog.classList.add('besideBox');
+        w.style.position = 'fixed';
+        w.style.left = left + 'px';
+        w.style.top = Math.max(8, Math.min(r.top - 20, window.innerHeight - dh - 8)) + 'px';
+    }
+    window.addEventListener('resize', place);
+    window.addEventListener('scroll', place, {passive: true});
+    function dialogItem(key) { return dialog ? dialog.querySelector('.quickLinkItem[data-key="' + key + '"]') : null; }
 
     function init() {
         // edit mode: links do not navigate; a tap on a dialog link fills the first empty slot, a tap on a slot empties it
@@ -134,6 +153,7 @@ var LegendsQuickLinks = (function () {
             drag = {a: a, key: a.getAttribute('data-key'), from: from, ghost: ghost,
                 dx: ev.clientX - r.left, dy: ev.clientY - r.top, x: ev.clientX, y: ev.clientY, moved: false, over: null};
             if (from) from.classList.add('highlightDragSource');
+            else if (a.closest('.quickLinkItem')) a.closest('.quickLinkItem').classList.add('highlightDragSource');
         }, true);
         document.addEventListener('pointermove', function (ev) {
             if (!drag) return;
@@ -145,6 +165,13 @@ var LegendsQuickLinks = (function () {
             drag.ghost.style.display = '';
             var over = el && el.closest('.quickLinkSlot');
             if (over && slots().indexOf(over) === -1) over = null;
+            // a link of a slot dragged back over the dialog goes back to its place there
+            var back = drag.from && !over && el && el.closest('.quickLinksDialog') ? dialogItem(drag.key) : null;
+            if (drag.back !== back) {
+                if (drag.back) drag.back.classList.remove('highlightDropTarget');
+                if (back) back.classList.add('highlightDropTarget');
+                drag.back = back;
+            }
             if (drag.over !== over) {
                 if (drag.over) drag.over.classList.remove('highlightDropTarget');
                 if (over) over.classList.add('highlightDropTarget');
@@ -157,6 +184,8 @@ var LegendsQuickLinks = (function () {
             d.ghost.parentNode.removeChild(d.ghost);
             if (d.from) d.from.classList.remove('highlightDragSource');
             if (d.over) d.over.classList.remove('highlightDropTarget');
+            if (d.back) d.back.classList.remove('highlightDropTarget');
+            if (dialog) dialog.querySelectorAll('.quickLinkItem.highlightDragSource').forEach(function (i) { i.classList.remove('highlightDragSource'); });
             if (!d.moved) { setTimeout(function () { drag = null; }, 0); return; }
             if (d.over && d.over !== d.from) {
                 var other = d.over.querySelector('.layoutButton');
