@@ -22,7 +22,7 @@ final class Skin
     ];
     const COOKIE = 't46_gpack';
     /** Cache buster of the pack's stylesheet. */
-    const VERSION = 16;
+    const VERSION = 17;
 
     private static $current = null;
 
@@ -257,15 +257,14 @@ final class Skin
         // Legends shows the wall behind windows only, not behind the resource fields.
         $html = preg_replace('#(<div id="background" class="[^"]*?)\bshowWall\b#', '$1', $html, 1);
         $html = str_replace('<div class="village1Content">', '<div class="villageInfoWrapper">', $html);
-        // Legends: the construction list is a grid item of villageInfoWrapper (under the field, left of the info boxes).
+        // The construction list stays as in dorf2 (same markup, same place): kept out of the info box rewrite below.
         $queue = self::cutBlock($html, '<div class="boxes buildingList">');
-        if ($queue !== null && ($at = strpos($html, '<div class="villageInfoWrapper">')) !== false) {
-            $at += strlen('<div class="villageInfoWrapper">');
-            $html = substr($html, 0, $at) . $queue . substr($html, $at);
-        }
         self::unwrap($html, '<div id="map_details"');
         $html = preg_replace('#<div class="boxes-(?:tl|tr|tc|ml|mr|mc|bl|br|bc)">\s*</div>\s*#', '', $html);
         while (strpos($html, '<div class="boxes-contents cf">') !== false) self::unwrap($html, '<div class="boxes-contents cf">');
+        if ($queue !== null && ($at = strpos($html, '<div class="villageInfoWrapper">')) !== false) {
+            $html = substr($html, 0, $at) . $queue . substr($html, $at);
+        }
         $html = preg_replace('#<div class="boxes villageList (production|units)"#', '<div class="villageInfobox $1"', $html);
         $html = preg_replace('#<div class="movements"#', '<div class="villageInfobox movements"', $html, 1);
     }

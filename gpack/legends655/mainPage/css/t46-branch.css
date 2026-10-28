@@ -458,3 +458,6 @@ body.legends655 .legendsDialogOverlay .quickLinksDialog .quickLinkItem.used .qui
 /* dialogs taller than the window scroll inside (the page under a dialog does not move) */
 body.legends655 .legendsDialogOverlay .dialogContents > form > .content { max-height: calc(100vh - 230px); overflow-y: auto; -webkit-overflow-scrolling: touch; overscroll-behavior: contain; touch-action: pan-y; }
 body.legends655 .legendsDialogOverlay .quickLinksDialog .quickLinkItem { touch-action: pan-y; }
+
+/* dorf1 construction list: the same box on the same screen position as in dorf2 (village2: left 327px, 646px from the top). */
+body.legends655 #contentOuterContainer #content.village1 > .buildingList { position: absolute; top: 517px; left: 327px; width: 400px; margin: 0; z-index: 1001; }
