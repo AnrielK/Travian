@@ -1,0 +1,29 @@
+/Users/runner/Library/Developer/CoreSimulator/Devices/DC4CD8B3-4457-4153-9087-A0D7A2F9BFD9/data/Containers/Data/Application/B06FA47B-AF2D-4FA8-95D5-319A4E7B2714/Documents/logs:
+total 184
+drwxr-xr-x  6 runner  staff    192 Oct 28 20:03 .
+drwxr-xr-x  3 runner  staff     96 Oct 28 20:03 ..
+-rw-rw----  1 runner  staff  38111 Oct 28 20:08 automation.log
+-rw-rw----  1 runner  staff  41790 Oct 28 20:08 mariadb.log
+-rw-r--r--  1 runner  staff    393 Oct 28 20:03 server.log
+-rw-rw----  1 runner  staff    668 Oct 28 20:03 setup.log
+
+/Users/runner/Library/Developer/CoreSimulator/Devices/DC4CD8B3-4457-4153-9087-A0D7A2F9BFD9/data/Containers/Data/Application/B06FA47B-AF2D-4FA8-95D5-319A4E7B2714/Library/Application Support/OpenVillage:
+total 16
+drwxr-xr-x   8 runner  staff  256 Oct 28 20:03 .
+drwxr-xr-x   3 runner  staff   96 Oct 28 20:03 ..
+drwxr-xr-x  23 runner  staff  736 Oct 28 20:03 mariadb
+drwxr-xr-x   3 runner  staff   96 Oct 28 20:03 run
+-rw-r--r--   1 runner  staff  145 Oct 28 20:03 secrets.json
+drwxr-xr-x  13 runner  staff  416 Oct 28 20:05 sessions
+drwxr-xr-x   7 runner  staff  224 Oct 28 20:03 www
+-rw-r--r--@  1 runner  staff   19 Oct 28 20:03 www.build-id
+
+/Users/runner/Library/Developer/CoreSimulator/Devices/DC4CD8B3-4457-4153-9087-A0D7A2F9BFD9/data/Containers/Data/Application/B06FA47B-AF2D-4FA8-95D5-319A4E7B2714/Library/Application Support/OpenVillage/www:
+total 0
+drwxr-xr-x  7 runner  staff  224 Oct 28 20:03 .
+drwxr-xr-x  8 runner  staff  256 Oct 28 20:03 ..
+lrwxr-xr-x  1 runner  staff  188 Oct 28 20:03 data -> /Users/runner/Library/Developer/CoreSimulator/Devices/DC4CD8B3-4457-4153-9087-A0D7A2F9BFD9/data/Containers/Bundle/Application/20B71050-58E2-4FF1-88FA-6B9915656A46/OpenVillage.app/game/data
+drwxr-xr-x  4 runner  staff  128 Oct 28 20:03 main_script
+drwxr-xr-x  3 runner  staff   96 Oct 28 20:03 scripts
+drwxr-xr-x  4 runner  staff  128 Oct 28 20:03 sections
+drwxr-xr-x  4 runner  staff  128 Oct 28 20:03 web
