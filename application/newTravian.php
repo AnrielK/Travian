@@ -2509,6 +2509,12 @@ Class newTravian
 			$name = ITEM110;
 			$title = IEFF110;
 			$item = 111;
+		}elseif($btype==16){
+			// resources from task rewards (Legends): type = picture 145 lumber, 146 clay, 147 iron, 148 crop
+			$res = [145 => 'WOOD', 146 => 'CLAY', 147 => 'IRON', 148 => 'CROP'][(int)$type] ?? 'WOOD';
+			$name = defined('HRES_' . $res) ? constant('HRES_' . $res) : ucfirst(strtolower($res));
+			$title = defined('HRES_TEXT') ? HRES_TEXT : 'Click to move the resources into the active village.';
+			$item = (int)$type;
 		}	
 		
 		return array(

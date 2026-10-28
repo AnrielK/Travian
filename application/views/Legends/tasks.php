@@ -28,7 +28,7 @@ $progress = function (array $task, string $collectUrl, string $prefix = '') use 
         return LegendsUi::button($e($collectedText) . '<i class="collectedCheckmark"></i>',
             ['class' => 'collect collected preventAnimation', 'disabled' => true, 'appearance' => 'grey', 'data' => ['text-collected' => $collectedText]]);
     }
-    if ($task['state'] === 'open') {
+    if ($task['state'] === 'open' || $task['state'] === 'future') {   // future = a later step: its progress only
         return '<div class="progressBar"><div class="bar"><div class="filling" style="width:' . round(min(1, $task['ratio']) * 100) . '%"></div><div class="decoration"></div></div>'
             . '<div class="label">' . $label($task, $prefix) . '</div></div>';
     }
@@ -36,7 +36,7 @@ $progress = function (array $task, string $collectUrl, string $prefix = '') use 
         'data' => ['collect' => $collectUrl, 'text-collected' => $collectedText]]);
 };
 $rewards = function (array $task) use ($valueBox, $t) {
-    return $valueBox('allResources', $task['rewardResources'], $t('TASKS_REWARD_RESOURCES', 'Resources of each type'))
+    return $valueBox('allResources', $task['rewardResources'], $t('TASKS_REWARD_RESOURCES_HERO', 'Resources of each type – into the hero\'s inventory'))
         . $valueBox('xp', $task['rewardExperience'], $t('TASKS_REWARD_XP', 'Hero experience'));
 };
 $rewardBonus = function () use ($vars, $e, $t) {

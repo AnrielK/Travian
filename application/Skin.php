@@ -22,7 +22,7 @@ final class Skin
     ];
     const COOKIE = 't46_gpack';
     /** Cache buster of the pack's stylesheet. */
-    const VERSION = 13;
+    const VERSION = 14;
 
     private static $current = null;
 
@@ -336,7 +336,8 @@ final class Skin
         if (!preg_match('#<div class="container active">.*?class="content[^"]*\bfavorKey([0-9]+)\b#s', $block, $a)) return;
         $script = basename($_SERVER['SCRIPT_NAME'] ?? 'page', '.php');
         $name = preg_replace('/[^a-zA-Z0-9_]/', '', $script . (preg_match('#<div id="build" class="gid(\d+)#', $html, $g) ? '_g' . $g[1] : ''));
-        $fav = isset($_COOKIE['t46fav_' . $name]) ? preg_replace('/[^0-9]/', '', (string)$_COOKIE['t46fav_' . $name]) : '';
+        global $session;
+        $fav = self::favorite($name);
         if ($fav !== '' && strpos($block, 'favorKey' . $fav . '"') === false && !preg_match('#favorKey' . $fav . '[ "]#', $block)) $fav = '';
         if ($fav !== '') {
             $block = str_replace(' favorActive', '', $block);
@@ -358,6 +359,16 @@ final class Skin
         } else {
             $html = substr($html, 0, $from) . $button . substr($html, $from);
         }
+    }
+
+    /** Favourite tab of a page (ajax.php?cmd=tabFavorite): the player's saved preference, else the cookie. */
+    public static function favorite(string $name): string
+    {
+        global $session;
+        $v = null;
+        if (!empty($session->uid) && class_exists('VillageGroups')) $v = VillageGroups::pref((int)$session->uid, 'fav_' . $name);
+        if ($v === null && isset($_COOKIE['t46fav_' . $name])) $v = (string)$_COOKIE['t46fav_' . $name];
+        return preg_replace('/[^a-zA-Z0-9_-]/', '', (string)$v);
     }
 
     private static function tabs(string &$html): void

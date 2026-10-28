@@ -48,7 +48,8 @@ if ($detail !== null) {
     $pages = max(1, (int)ceil(count($detail['history']) / $detailPerPage));
     $vars['detail'] = $detail;
     $vars['detailPages'] = $pages;
-    $vars['detailPage'] = max(1, min($pages, (int)($_GET['dp'] ?? 1)));
+    // without &dp the details open on the page with the current step
+    $vars['detailPage'] = max(1, min($pages, (int)($_GET['dp'] ?? (intdiv((int)$detail['currentIndex'], $detailPerPage) + 1))));
     $vars['steps'] = array_slice($detail['history'], ($vars['detailPage'] - 1) * $detailPerPage, $detailPerPage);
 } else {
     $all = $model->getTasks($scope);

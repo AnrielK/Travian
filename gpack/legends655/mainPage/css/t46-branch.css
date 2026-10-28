@@ -441,3 +441,20 @@ body.legends655 .sidebar .quickLinks .layoutButton.settings.editMode { width: 26
     background: radial-gradient(circle at 50% 40%, #ffffff 0, #e9e9e9 60%, #cfcfcf 100%) !important; border: none !important;
     box-shadow: 0 0 0 2px #c9a75f, 0 0 0 3px #7a5a2a, 0 1px 3px rgba(0, 0, 0, .45) !important; }
 body.legends655 .sidebar .quickLinks .layoutButton.settings.editMode .closeIcon { fill: #8c8c8c !important; width: 12px !important; height: 12px !important; max-height: none !important; filter: drop-shadow(0 1px 0 #fff); }
+/* the dashed ring of a quick link slot drawn by CSS on the slot itself (exactly centred also in WebKit / the iOS app) */
+body.legends655 .sidebar .quickLinks .quickLinkSlot .editSlotIndicator { display: none !important; }
+body.legends655 .sidebar .quickLinks .quickLinkSlot { position: relative; width: 44px !important; height: 44px !important; display: grid !important; place-items: center; }
+body.legends655 .sidebar .quickLinks .quickLinkSlot.editMode::before { content: ""; position: absolute; left: 0; top: 0; width: 44px; height: 44px; box-sizing: border-box;
+    border: 1.5px dashed #5e463a; border-radius: 50%; pointer-events: none; z-index: 0; }
+body.legends655 .sidebar .quickLinks .quickLinkSlot.highlightDropTarget::before { border-color: #38f4f4; }
+body.legends655 .sidebar .quickLinks .quickLinkSlot.highlightDragSource::before { border-color: #ff8c4d; }
+body.legends655 .sidebar .quickLinks .quickLinkSlot .slot, body.legends655 .sidebar .quickLinks .quickLinkSlot .layoutButton.quickLink { grid-area: 1 / 1; margin: 0 !important; position: relative; z-index: 1; }
+body.legends655 .sidebar .quickLinks .quickLinkSlot .slot { width: 38px !important; height: 38px !important; }
+/* same ring in the dialog */
+body.legends655 .legendsDialogOverlay .quickLinksDialog .quickLinkIcon .editSlotIndicator { display: none; }
+body.legends655 .legendsDialogOverlay .quickLinksDialog .quickLinkIcon::before { content: ""; position: absolute; left: 0; top: 0; width: 48px; height: 48px; box-sizing: border-box;
+    border: 1.5px dashed #5e463a; border-radius: 50%; pointer-events: none; }
+body.legends655 .legendsDialogOverlay .quickLinksDialog .quickLinkItem.used .quickLinkIcon::before { border-color: #a99a83; }
+/* dialogs taller than the window scroll inside (the page under a dialog does not move) */
+body.legends655 .legendsDialogOverlay .dialogContents > form > .content { max-height: calc(100vh - 230px); overflow-y: auto; -webkit-overflow-scrolling: touch; overscroll-behavior: contain; touch-action: pan-y; }
+body.legends655 .legendsDialogOverlay .quickLinksDialog .quickLinkItem { touch-action: pan-y; }

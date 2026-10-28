@@ -14,6 +14,8 @@ switch($_GET['cmd']) {
             break;
         }
         setcookie('t46fav_' . $favName, $favNumber, ['expires' => time() + 31536000, 'path' => '/', 'samesite' => 'Lax']);
+        // also kept on the server: some web views (the iOS app) do not keep cookies set by ajax answers
+        if ($session->uid) VillageGroups::setPref((int)$session->uid, 'fav_' . $favName, $favNumber);
         echo '{"response":{"error":false,"errorMsg":null,"data":{"success":true,"result":false}}}';
         break;
     case 'productionBoostPopup':

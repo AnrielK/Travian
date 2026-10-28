@@ -3,7 +3,8 @@
  * Task list of the Travian Legends look ("Přehled úkolů", tasks.php) – port of Model\TaskListModel of the main branch.
  *
  * Every task is a chain of steps ("reach 50 population", "100", …). The current step is the first one not collected
- * yet; once its goal is reached the player collects resources (each of the four types, into the active village) and
+ * yet; once its goal is reached the player collects resources (each of the four types, as resource items into the
+ * hero's inventory – used from there into a village, like Travian Legends) and
  * hero experience. Progress comes from the live game data, only the number of collected steps is stored
  * (table ov_task_progress, created on first use). Village tasks belong to the active village (kid), general tasks to
  * the account (kid = 0).
@@ -150,8 +151,9 @@ final class LegendsTasks
     }
 
     /**
-     * One task with its description and the steps reached so far (Legends task details): the current step first, then the
-     * collected ones from the newest; null for an unknown task.
+     * One task with its description and all its steps (Legends task details), from the highest level down: the
+     * steps still ahead ("future", with their own progress), the current one and the collected ones; null for an
+     * unknown task. 'currentIndex' = position of the current step in that list.
      */
     public function details(string $scope, string $key): ?array
     {
@@ -161,23 +163,45 @@ final class LegendsTasks
         $task = $this->describe($scope, $key, $definition);
         $bonus = 1 + self::bonusPercent(self::heroLevel()) / 100;
         $steps = [];
-        $last = min($task['step'], count($definition['steps']) - 1);
-        for ($i = $last; $i >= 0; $i--) {
+        $current = 0;
+        for ($i = count($definition['steps']) - 1; $i >= 0; $i--) {
             $step = $definition['steps'][$i];
             [$resources, $experience] = $definition['type'] === 'fields' ? [$step[2], $step[3]] : [$step[1], $step[2]];
             $entry = ['index' => $i, 'title' => $this->stepTitle($key, $definition, $step),
                 'rewardResources' => (int)round($resources * $bonus), 'rewardExperience' => (int)round($experience * $bonus)];
-            if ($i === $task['step'] && $task['state'] !== 'collected') {
-                $entry += ['state' => $task['state'], 'value' => $task['value'], 'goal' => $task['goal'], 'ratio' => $task['ratio'],
-                    'type' => $task['type'], 'level' => $task['level'] ?? 0];
-            } else {
+            if ($i < $task['step']) {
                 $entry['state'] = 'collected';
+            } else {
+                if ($i === $task['step']) $current = count($steps);
+                $entry += $this->progress($key, $definition, $step) + ['type' => $definition['type']];
+                $entry['state'] = $i === $task['step'] ? $task['state'] : 'future';
             }
             $steps[] = $entry;
         }
         $task['description'] = $this->description($key, $definition);
         $task['history'] = $steps;
+        $task['currentIndex'] = $task['state'] === 'collected' ? 0 : $current;
         return $task;
+    }
+
+    /** Progress of a task towards one of its steps: value, goal, ratio (and the level of resource field steps). */
+    private function progress(string $key, array $definition, array $step): array
+    {
+        if ($definition['type'] === 'fields') {
+            [$count, $level] = $step;
+            $fields = $this->levels($definition['gid'], 1, 18);
+            $goal = $count ?: count($fields);
+            $value = count(array_filter($fields, function ($l) use ($level) { return $l >= $level; }));
+            $out = ['value' => min($value, $goal), 'goal' => $goal, 'level' => $level];
+        } elseif ($definition['type'] === 'level') {
+            $goal = $step[0];
+            $out = ['value' => min(max($this->levels($definition['gid'], 19, 40) ?: [0]), $goal), 'goal' => $goal, 'level' => 0];
+        } else {
+            $goal = $step[0];
+            $out = ['value' => min($this->countValue($key), $goal), 'goal' => $goal, 'level' => 0];
+        }
+        $out['ratio'] = $out['goal'] > 0 ? $out['value'] / $out['goal'] : 0;
+        return $out;
     }
 
     private function stepTitle(string $key, array $definition, array $step): string
@@ -239,11 +263,30 @@ final class LegendsTasks
             return null;
         }
         $res = (int)$task['rewardResources'];
-        $database->modifyResource($this->kid, $res, $res, $res, $res, 1);
+        self::addResourceItems($this->uid, $res);
         $exp = (int)$task['rewardExperience'];
         if ($exp > 0) $database->query('UPDATE hero SET experience = experience + ' . $exp . ' WHERE uid = ' . $this->uid);
         $this->collected = null;
         return ['resources' => $res, 'experience' => $exp];
+    }
+
+    /** Hero items holding resources (Legends: rewards go to the hero's inventory): btype 16, type = item picture. */
+    const RESOURCE_ITEM_BTYPE = 16;
+    const RESOURCE_ITEMS = [145 => 'wood', 146 => 'clay', 147 => 'iron', 148 => 'crop'];
+
+    /** Adds $amount of each resource to the hero's inventory (one stack per resource). */
+    public static function addResourceItems(int $uid, int $amount): void
+    {
+        global $database;
+        if ($amount <= 0) return;
+        foreach (array_keys(self::RESOURCE_ITEMS) as $type) {
+            $row = $database->query('SELECT id FROM heroitems WHERE uid = ' . $uid . ' AND btype = ' . self::RESOURCE_ITEM_BTYPE . ' AND type = ' . $type . ' AND proc = 0 LIMIT 1');
+            if (is_array($row) && isset($row[0]['id'])) {
+                $database->editHeroNum((int)$row[0]['id'], $amount, 1);
+            } else {
+                $database->addHeroItem($uid, self::RESOURCE_ITEM_BTYPE, $type, $amount, 0);
+            }
+        }
     }
 
     /** Bonus on all rewards from the hero level (Legends: rewards grow with the hero). */

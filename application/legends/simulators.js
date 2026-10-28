@@ -40,8 +40,7 @@
     function show(name) {
         Array.prototype.forEach.call(tabs, function (a) { a.classList.toggle('active', a.getAttribute('data-sim-tab') === name); });
         Array.prototype.forEach.call(root.querySelectorAll('[data-sim-pane]'), function (p) { p.hidden = p.getAttribute('data-sim-pane') !== name; });
-        var fav = null;
-        try { fav = localStorage.getItem('legendsSimFavor'); } catch (e) {}
+        var fav = favorite();
         Array.prototype.forEach.call(tabs, function (a) {
             var old = a.querySelector('svg.star');
             if (old) old.parentNode.removeChild(old);
@@ -52,11 +51,21 @@
     Array.prototype.forEach.call(tabs, function (a) {
         a.addEventListener('click', function (ev) { ev.preventDefault(); show(a.getAttribute('data-sim-tab')); history.replaceState(null, '', '#' + a.getAttribute('data-sim-tab')); });
     });
+    // favourite simulator: saved on the server like the favourite tabs (ajax.php?cmd=tabFavorite), browser storage as fallback
+    function favorite() {
+        if (D.favor === 'combat' || D.favor === 'travel') return D.favor;
+        var f = null;
+        try { f = localStorage.getItem('legendsSimFavor'); } catch (e) {}
+        return f === 'travel' ? 'travel' : 'combat';
+    }
     root.querySelector('[data-sim-favor]').addEventListener('click', function (ev) {
         ev.preventDefault();
-        var active = root.querySelector('[data-sim-tab].active');
-        try { localStorage.setItem('legendsSimFavor', active.getAttribute('data-sim-tab')); } catch (e) {}
-        show(active.getAttribute('data-sim-tab'));
+        var name = root.querySelector('[data-sim-tab].active').getAttribute('data-sim-tab');
+        D.favor = name;
+        try { localStorage.setItem('legendsSimFavor', name); } catch (e) {}
+        fetch('ajax.php?cmd=tabFavorite', {method: 'POST', credentials: 'same-origin', headers: {'Content-Type': 'application/x-www-form-urlencoded'},
+            body: 'name=rallySimulators&number=' + encodeURIComponent(name)}).catch(function () {});
+        show(name);
     });
 
     /* ------------------------------------------------------------------ combat simulator */
@@ -473,8 +482,6 @@
     /* ------------------------------------------------------------------ start */
     updateCalc();
     render();
-    var fav = null;
-    try { fav = localStorage.getItem('legendsSimFavor'); } catch (e) {}
     var start = (location.hash || '').replace('#', '');
-    show(start === 'travel' || start === 'combat' ? start : (fav || 'combat'));
+    show(start === 'travel' || start === 'combat' ? start : favorite());
 })();

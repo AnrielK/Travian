@@ -3,8 +3,8 @@
  *  - a click on a task opens its details;
  *  - "Vyzvednout" collects the reward without leaving the page, with the Legends animation: the button turns into the
  *    spinning checkmark and then into the greyed "Vyzvednuto" (CSS: #tasks .task .progress button.collected), the
- *    resource reward splits into lumber / clay / iron / crop which burst out of the row and fly into the stock bar,
- *    the experience flies to the hero; then the list shows the next step of the task.
+ *    resource reward splits into lumber / clay / iron / crop which burst out of the row and fly to the hero (they go
+ *    to the hero's inventory), like the experience; then the list shows the next step of the task.
  */
 (function () {
     var root = document.getElementById('tasks');
@@ -22,34 +22,18 @@
         d.innerHTML = '<i class="' + cls + '"></i><span>' + amount + '</span>';
         return d;
     }
-    function stockTarget(i) {
-        var v = document.getElementById('l' + (i + 1));
-        return v ? (v.closest('.stockBarButton') || v) : null;
-    }
     function heroTarget() {
         return document.getElementById('heroImageButton') || document.querySelector('#topBarHero, .heroImageButton');
     }
-    function addToStock(i, amount) {
-        var key = 'l' + (i + 1), el = document.getElementById(key);
-        var res = window.resources;
-        if (res && res.storage && key in res.storage) {
-            var max = res.maxStorage && res.maxStorage[key] ? res.maxStorage[key] : Infinity;
-            res.storage[key] = Math.min(max, (parseFloat(res.storage[key]) || 0) + amount);
-            if (el) el.textContent = Math.floor(res.storage[key]);
-        } else if (el) {
-            el.textContent = (parseInt(String(el.textContent).replace(/\D/g, ''), 10) || 0) + amount;
-        }
-        var btn = el && el.closest('.stockBarButton');
-        if (btn && btn.animate) btn.animate([{filter: 'brightness(1.6)'}, {filter: 'none'}], {duration: 450, easing: 'ease-out'});
+    function pulseHero() {
+        var h = heroTarget();
+        if (h && h.animate) h.animate([{filter: 'brightness(1.5)'}, {filter: 'none'}], {duration: 400, easing: 'ease-out'});
     }
 
     /* reward boxes burst out of the row and fly to their target */
     function fly(row, reward) {
         var all = row.querySelector('.iconValueBox.allResources'), xp = row.querySelector('.iconValueBox.xp');
-        if (!all || reduced || !document.body.animate) {
-            for (var r = 0; r < 4; r++) addToStock(r, reward.resources);
-            return;
-        }
+        if (!all || reduced || !document.body.animate) return;
         all.classList.add('animated');
         var layer = document.createElement('div');
         layer.className = 'animationObject animated legendsRewardFlight';
@@ -57,8 +41,9 @@
         layer.style.top = '0px';
         document.body.appendChild(layer);
         var start = pageRect(all), xpStart = xp ? pageRect(xp) : start;
-        var items = RES.map(function (cls, i) { return {el: entity(cls, reward.resources), from: start, to: stockTarget(i), done: function () { addToStock(i, reward.resources); }}; });
-        if (reward.experience > 0) items.push({el: entity('xp', reward.experience), from: xpStart, to: heroTarget(), done: function () {}});
+        // the resources go to the hero's inventory (like Legends), so everything flies to the hero
+        var items = RES.map(function (cls) { return {el: entity(cls, reward.resources), from: start, to: heroTarget(), done: pulseHero}; });
+        if (reward.experience > 0) items.push({el: entity('xp', reward.experience), from: xpStart, to: heroTarget(), done: pulseHero});
         // burst: the boxes spread around the reward before they fly away (like the four resources in Legends)
         var spread = [[-62, -38], [16, -46], [-58, 30], [22, 34], [10, -40]];
         items.forEach(function (it, i) {

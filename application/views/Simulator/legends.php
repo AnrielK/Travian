@@ -63,6 +63,7 @@ usort($simVillages, function ($a, $b) { return [$b['active'], $a['name']] <=> [$
 
 $simHero = (array)$database->getHero((int)$session->uid);
 $simData = [
+    'favor' => Skin::favorite('rallySimulators'),
     'tribe' => (int)$session->tribe,
     'hero' => ['health' => (int)round((float)($simHero['health'] ?? 100)), 'power' => (int)($simHero['power'] ?? 0),
         'itempower' => (int)($simHero['itempower'] ?? 0), 'offBonus' => (int)($simHero['offBonus'] ?? 0), 'defBonus' => (int)($simHero['defBonus'] ?? 0)],
