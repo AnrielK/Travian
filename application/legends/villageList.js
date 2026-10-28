@@ -1,7 +1,7 @@
 /*
  * Village list of the Travian Legends look (application/views/Legends/sidebarRight.php): village groups (add, edit
  * name and colour, delete, collapse, drag villages and groups to a new place) and the four quick link slots with their
- * dialog. Config: window.VillageListConfig; dialogs: LegendsDialog (application/legends/legendsDialogs.js).
+ * dialog, and the five quick links of the active village box. Config: window.VillageListConfig; dialogs: LegendsDialog (application/legends/legendsDialogs.js).
  */
 var VillageListUi = (function () {
     var C = window.VillageListConfig || {T: {}, colors: [], links: []};
@@ -208,16 +208,26 @@ var VillageListUi = (function () {
         b.addEventListener('pointercancel', end);
     }
 
-    /* ---------------- quick links ---------------- */
-    var qlDialog = null, dragLink = null;
-    function slots() { return Array.prototype.slice.call(box().querySelectorAll('.quickLinkSlot')); }
+    /* ---------------- quick links ----------------
+     * two sets with the same editor: 'list' = the four slots of the village list (one set for all villages),
+     * 'village' = the five slots of the active village box (one set per village). */
+    var SCOPES = {
+        list: {box: function () { return box(); }, max: 4, title: function () { return T.qlTitle; }, text: function () { return T.qlText; }},
+        village: {box: function () { return document.getElementById('sidebarBoxActiveVillage'); }, max: 5,
+            title: function () { return T.qlVillageTitle || T.qlTitle; }, text: function () { return T.qlVillageText || T.qlText; }}
+    };
+    var qlDialog = null, dragLink = null, scope = null;   // scope = the set being edited
+    function scopeBox(name) { return SCOPES[name || scope || 'list'].box(); }
+    function slots(name) { var b = scopeBox(name); return b ? Array.prototype.slice.call(b.querySelectorAll('.quickLinkSlot')) : []; }
     function linkHtml(key) {
         for (var i = 0; i < C.links.length; i++) if (C.links[i].key === key) return C.links[i].html;
         return '';
     }
     function saveSlots() {
         var keys = slots().map(function (s) { var a = s.querySelector('.layoutButton'); return a ? a.getAttribute('data-key') : ''; });
-        post({action: 'quickLinks', links: JSON.stringify(keys)});
+        var data = {action: 'quickLinks', links: JSON.stringify(keys)};
+        if (scope === 'village') data.kid = scopeBox().querySelector('.quickLinks').getAttribute('data-kid');
+        post(data);
         if (qlDialog) qlDialog.querySelectorAll('.quickLinkItem').forEach(function (it) {
             it.classList.toggle('used', keys.indexOf(it.getAttribute('data-key')) !== -1);
         });
@@ -233,37 +243,49 @@ var VillageListUi = (function () {
             slot.insertAdjacentHTML('beforeend', linkHtml(key));
         }
     }
-    function editing() { return box().classList.contains('editQuickLinks'); }
-    function toggleQuickLinks(force) {
-        var b = box(), on = typeof force === 'boolean' ? force : !editing();
+    function editing() { return scope !== null; }
+    function toggleQuickLinks(force, name) {
+        name = name || 'list';
+        var on = typeof force === 'boolean' ? force : !(editing() && scope === name);
+        if (on && editing() && scope !== name) toggleQuickLinks(false, scope);   // one set at a time
+        if (!on && !editing()) return;
+        if (!on) name = scope;
+        var b = SCOPES[name].box();
+        if (!b) return;
         b.classList.toggle('editQuickLinks', on);
         b.closest('.sidebar').classList.toggle('editQuickLinks', on);
-        slots().forEach(function (s) { s.classList.toggle('editMode', on); });
+        document.body.classList.toggle('legendsQuickLinksEditing', on);
+        slots(name).forEach(function (s) { s.classList.toggle('editMode', on); });
         b.querySelector('.quickLinks .settings').classList.toggle('editMode', on);
-        var ov = b.querySelector('.editQuickLinksOverlay');
+        var ov = document.getElementById('legendsQuickLinksOverlay');
         if (on && !ov) {
+            // dims the whole page; the edited box and the dialog stay above it
             ov = document.createElement('div');
-            ov.className = 'editQuickLinksOverlay';
+            ov.id = 'legendsQuickLinksOverlay';
             ov.addEventListener('click', function () { toggleQuickLinks(false); });
-            b.insertBefore(ov, b.firstChild);
+            // inside #background (its own stacking context) so the edited sidebar box can stay above it
+            (document.getElementById('background') || document.body).appendChild(ov);
         } else if (!on && ov) {
             ov.remove();
         }
+        scope = on ? name : null;
         if (on) openQuickLinksDialog(); else if (qlDialog) { var d = qlDialog; qlDialog = null; LegendsDialog.close(d); }
     }
     function openQuickLinksDialog() {
-        var html = '<p class="quickLinksText">' + T.qlText + '</p><div class="quickLinksWrapper">'
+        var sc = SCOPES[scope];
+        var indicator = '<svg class="editSlotIndicator" viewBox="0 0 44 44"><circle cx="22" cy="22" r="21" fill="none" stroke-width="1.5" stroke-dasharray="4 3"/></svg>';
+        var html = '<p class="quickLinksText">' + sc.text() + '</p><div class="quickLinksWrapper">'
             + C.links.map(function (l) {
-                return '<div class="quickLinkItem" data-key="' + l.key + '">' + l.html
+                return '<div class="quickLinkItem" data-key="' + l.key + '"><div class="quickLinkIcon">' + indicator + l.html + '</div>'
                     + '<div class="quickLinkTitle">' + l.title + '</div><div class="quickLinkSubtitle">' + l.sub + '</div></div>';
             }).join('') + '</div>';
-        qlDialog = LegendsDialog.open({cls: 'basic quickLinksDialog', heading: T.qlTitle, html: html, modal: false,
+        qlDialog = LegendsDialog.open({cls: 'basic quickLinksDialog', heading: sc.title(), html: html, modal: false,
             onClose: function () { if (qlDialog) { qlDialog = null; toggleQuickLinks(false); } }});
+        qlDialog.classList.add('quickLinksOverlay');
         saveSlots.call(null);
     }
     function initQuickLinks() {
-        var b = box();
-        if (!b) return;
+        if (!box() && !SCOPES.village.box()) return;
         // edit mode: links do not navigate; a tap on a dialog link fills the first empty slot, a tap on a slot empties it
         document.addEventListener('click', function (ev) {
             if (!editing()) return;
@@ -273,7 +295,7 @@ var VillageListUi = (function () {
             ev.stopPropagation();
             if (dragLink && dragLink.moved) return;
             var inSlot = a.closest('.quickLinkSlot');
-            if (inSlot) { a.remove(); saveSlots(); return; }
+            if (inSlot) { if (slots().indexOf(inSlot) !== -1) { a.remove(); saveSlots(); } return; }
             var free = slots().filter(function (s) { return !s.querySelector('.layoutButton'); })[0];
             if (free) { setSlot(free, a.getAttribute('data-key')); saveSlots(); }
         }, true);
@@ -281,6 +303,8 @@ var VillageListUi = (function () {
             if (!editing()) return;
             var a = ev.target.closest('.quickLink');
             if (!a) return;
+            var from = a.closest('.quickLinkSlot');
+            if (from && slots().indexOf(from) === -1) return;   // the other set is not being edited
             ev.preventDefault();
             var r = a.getBoundingClientRect();
             var ghost = a.cloneNode(true);
@@ -288,7 +312,7 @@ var VillageListUi = (function () {
             ghost.style.left = r.left + 'px';
             ghost.style.top = r.top + 'px';
             document.body.appendChild(ghost);
-            dragLink = {a: a, key: a.getAttribute('data-key'), from: a.closest('.quickLinkSlot'), ghost: ghost,
+            dragLink = {a: a, key: a.getAttribute('data-key'), from: from, ghost: ghost,
                 dx: ev.clientX - r.left, dy: ev.clientY - r.top, x: ev.clientX, y: ev.clientY, moved: false, over: null};
             if (dragLink.from) dragLink.from.classList.add('highlightDragSource');
         }, true);
@@ -300,7 +324,8 @@ var VillageListUi = (function () {
             dragLink.ghost.style.display = 'none';
             var el = document.elementFromPoint(ev.clientX, ev.clientY);
             dragLink.ghost.style.display = '';
-            var over = el && el.closest('#sidebarBoxVillageList .quickLinkSlot');
+            var over = el && el.closest('.quickLinkSlot');
+            if (over && slots().indexOf(over) === -1) over = null;
             if (dragLink.over !== over) {
                 if (dragLink.over) dragLink.over.classList.remove('highlightDropTarget');
                 if (over) over.classList.add('highlightDropTarget');

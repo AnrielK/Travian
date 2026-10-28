@@ -61,4 +61,5 @@ include("application/views/Legends/tasks.php");
 $pageBody = ob_get_clean();
 $pageTitle = LegendsUi::t('TASKS_TITLE', 'Your tasks');
 $pageContentClass = 'tasks';
+$pageInfo = LegendsUi::t('TASKS_INFO', '');
 include("application/views/Legends/page.php");

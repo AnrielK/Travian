@@ -74,30 +74,56 @@
         });
         return html + '</div></div>';
     }
+    var TROOPS_ICON = '<svg class="troopsIcon" viewBox="0 0 14 16"><path d="M1 1h12v10l-6 4-6-4z" fill="#b8261f" stroke="#6e130e" stroke-width="1"/><path d="M1 3.5h12" stroke="#f2c14e" stroke-width="1.2"/></svg>';
+    var SMITHY_ICON = '<svg class="smithyIcon" viewBox="0 0 18 14"><path d="M1 2h10c0 2 1.6 3.2 6 3.4V7.4c-2.6 0-4 .6-4.6 1.8V10H14v2.5H5V10h1.6v-.8C5.8 7.8 4 6.8 1 6.4z" fill="#8d8d8d" stroke="#555" stroke-width=".8"/></svg>';
+    function options(values, suffix) {
+        return values.map(function (v) { return '<option value="' + v + '">' + v + suffix + '</option>'; }).join('');
+    }
     function troopsTable(role, tribe, side) {
-        var icons = '<tr class="troopIcons"><th></th>', counts = '<tr class="count"><th><i class="troopsIcon"></i></th>', ups = '<tr class="upgrades"><th><i class="smithyIcon" title="' + esc(T.upgrades) + '"></i></th>';
+        var icons = '<tr class="troopIcons"><th></th>', counts = '<tr class="count"><th title="' + esc(T.troops) + '">' + TROOPS_ICON + '</th>',
+            ups = '<tr class="upgrades"><th title="' + esc(T.upgrades) + '">' + SMITHY_ICON + '</th>';
+        var animals = tribe === 4 || tribe === 5;
         for (var i = 1; i <= 10; i++) {
             var id = unitId(tribe, i);
             icons += '<td><i class="unit u' + id + '" title="' + esc(D.names[id] || '') + '" data-unit="' + i + '"></i></td>';
-            counts += '<td><input type="text" class="text unit' + i + '" name="' + role + 'U' + i + '" value="" inputmode="numeric"></td>';
-            ups += i <= 8 && tribe !== 4 && tribe !== 5
-                ? '<td><input type="text" class="text unit' + i + '" name="' + role + 'A' + i + '" value="" maxlength="2" inputmode="numeric"></td>' : '<td></td>';
+            counts += '<td><input type="text" class="text unit' + i + '" name="' + role + 'U' + i + '" value="0" inputmode="numeric"></td>';
+            if (i <= 8) ups += animals ? '<td></td>' : '<td><input type="text" class="text unit' + i + '" name="' + role + 'A' + i + '" value="" maxlength="2" inputmode="numeric"></td>';
         }
-        var hero = tribe !== 4 && tribe !== 5;
-        icons += '<td class="hero' + (hero ? '' : ' hidden') + '"><i class="unit uhero" title="' + esc(T.hero) + '"></i></td></tr>';
-        counts += '<td class="hero' + (hero ? '' : ' hidden') + '"><input type="checkbox" name="' + role + 'Hero"></td></tr>';
+        ups += animals ? '<td colspan="2"></td>' : '<td class="celebration" colspan="2" title="' + esc(T.celebration) + '"><i class="celebration_small"></i><input type="checkbox" name="' + role + 'Celebration"></td>';
+        icons += '<td class="hero' + (animals ? ' hidden' : '') + '"><i class="unit uhero" title="' + esc(T.hero) + '"></i></td></tr>';
+        counts += '<td class="hero' + (animals ? ' hidden' : '') + '"><input type="checkbox" name="' + role + 'Hero"></td></tr>';
         ups += '<td></td></tr>';
         return '<div class="troops"><table>' + icons + counts + ups + '</table></div>';
     }
+    /* hero like the Legends simulator: health, fighting strength points (→ strength), bonus points (→ %), horse, equipment */
     function heroRow(role, side) {
-        return '<div class="heroAttributes"><div class="stats">'
-            + '<label title="' + esc(T.heroStrength) + '"><i class="hero_strength"></i><input type="text" name="' + role + 'HeroStrength" value="0"></label>'
-            + '<label title="' + esc(side === 'attacker' ? T.heroOff : T.heroDef) + '"><i class="' + (side === 'attacker' ? 'hero_offBonus' : 'hero_defBonus') + '"></i><input type="text" name="' + role + 'HeroBonus" value="0"> %</label>'
+        var off = side === 'attacker';
+        return '<div class="heroAttributes hidden" data-hero="' + role + '"><div class="stats">'
+            + '<span class="heroTitle">' + esc(T.hero) + '</span>'
+            + '<label title="' + esc(T.heroHealth) + '"><i class="hero_health"></i><input type="text" name="' + role + 'HeroHealth" value="100"></label>'
+            + '<label title="' + esc(T.heroStrength) + '"><i class="hero_strength"></i><input type="text" name="' + role + 'HeroPower" value="0"></label>'
+            + '<span class="calculated heroStrength">0</span>'
+            + '<label title="' + esc(off ? T.heroOff : T.heroDef) + '"><i class="' + (off ? 'hero_offBonus' : 'hero_defBonus') + '"></i><input type="text" name="' + role + 'HeroBonus" value="0"></label>'
+            + '<span class="calculated heroBonus">0,0%</span>'
+            + (off ? '<label title="' + esc(T.heroHorse) + '"><i class="hero_horse"></i><input type="checkbox" name="' + role + 'HeroHorse"></label>' : '')
+            + '<input type="hidden" name="' + role + 'HeroItems" value="0">'
+            + '</div><div class="equipment"><span class="title">' + esc(T.equipment) + '</span>'
+            + '<span class="slot" title="' + esc(T.rightHand) + '"><i class="hero_handR"></i></span><span class="slot" title="' + esc(T.torso) + '"><i class="hero_torso"></i></span>'
             + '</div></div>';
+    }
+    function heroStrength(role) {
+        return num((field(role + 'HeroPower') || {}).value || 0) * 100 + num((field(role + 'HeroItems') || {}).value || 0);
+    }
+    function updateHero(role) {
+        var row = rolesEl.querySelector('.heroAttributes[data-hero="' + role + '"]'), h = field(role + 'Hero');
+        if (!row) return;
+        row.classList.toggle('hidden', !(h && h.checked));
+        row.querySelector('.heroStrength').textContent = heroStrength(role);
+        row.querySelector('.heroBonus').textContent = (Math.min(100, num(field(role + 'HeroBonus').value)) * 0.2).toFixed(1).replace('.', ',') + '%';
     }
     function villageSelect(role) {
         return '<div class="villageSelection"><select name="' + role + 'Village">'
-            + D.villages.map(function (v) { return '<option value="' + v.id + '">' + esc(v.name) + ' (' + v.x + '|' + v.y + ')</option>'; }).join('')
+            + D.villages.map(function (v) { return '<option value="' + v.id + '">' + esc(v.name) + '</option>'; }).join('')
             + '</select>' + button(RELOAD_ICON, 'reload', T.reload) + '</div>';
     }
     function roleHtml(side, tribe, you) {
@@ -108,23 +134,23 @@
             + '<div class="header' + (you ? ' you' : '') + '">' + icon
             + '<h2>' + esc(you ? T.you : (side === 'attacker' ? T.attacker : T.defender)) + '</h2>'
             + (you ? villageSelect(role) : '')
-            + '<div class="rolePopulation" title="' + esc(T.population) + '"><i class="population_medium"></i><input type="text" name="' + role + 'Pop" value=""></div>'
             + button(CLEAR_ICON, 'clear', T.clear) + '</div>'
             + tribeSelection(side === 'attacker' ? 'attack' : 'defence', side === 'attacker' ? ATTACK_TRIBES : (you ? ATTACK_TRIBES : DEFENCE_TRIBES), tribe)
             + '<div class="content">';
+        var ally = '<label title="' + esc(T.allyBonus) + '"><i class="allyBonus"></i><select name="' + role + 'Ally">' + options([0, 1, 2, 3, 4, 5], '%') + '</select></label>';
+        var spy = '<label title="' + esc(T.spyArtefact) + '"><i class="artefact_spy"></i><select name="' + role + 'Spy">' + options([0, 2, 3, 4, 5], '×') + '</select></label>';
         if (side === 'attacker') {
             html += '<div class="movement"><label><input type="radio" name="attType" value="normal"> ' + esc(T.attack) + '</label>'
                 + '<label><input type="radio" name="attType" value="raid" checked> ' + esc(T.raid) + '</label></div>'
-                + '<div class="bonus"><div class="buildings"></div><div class="artefacts">'
-                + '<label title="' + esc(T.allyBonus) + '"><i class="allyBonus"></i><select name="attAlly">' + [0, 1, 2, 3, 4, 5].map(function (p) { return '<option value="' + p + '">' + p + '%</option>'; }).join('') + '</select></label>'
-                + '</div></div>';
+                + '<div class="bonus"><div class="buildings"></div><div class="artefacts">' + ally + spy + '</div></div>';
         } else {
             html += '<div class="bonus"><div class="buildings">'
                 + '<label title="' + esc(T.wall) + '"><i class="simWallIcon"></i><input type="text" name="defWall" value="0" maxlength="2"></label>'
                 + '<label title="' + esc(T.residence) + '"><i class="simResidenceIcon"></i><input type="text" name="defResidence" value="0" maxlength="2"></label>'
-                + '</div><div class="artefacts">'
-                + '<label title="' + esc(T.allyBonus) + '"><i class="allyBonus"></i><select name="defAlly">' + [0, 1, 2, 3, 4, 5].map(function (p) { return '<option value="' + p + '">' + p + '%</option>'; }).join('') + '</select></label>'
-                + '</div></div>';
+                + '<label title="' + esc(T.stonemason) + '"><i class="simStonemasonIcon"></i><input type="text" name="defStonemason" value="0" maxlength="2"></label>'
+                + '</div><div class="artefacts">' + ally
+                + '<label title="' + esc(T.architectArtefact) + '"><i class="artefact_buildingMaster"></i><select name="defArchitect">' + options([0, 2, 3, 4, 5], '×') + '</select></label>'
+                + spy + '</div></div>';
         }
         html += troopsTable(role, tribe, side) + heroRow(role, side) + '</div></div>';
         return html;
@@ -146,6 +172,8 @@
             + tribeSelection('reinforcement', DEFENCE_TRIBES.filter(function (t) { return t !== 4 && t !== 5; }), 0).replace('tribeSelection reinforcement', 'tribeSelection reinforcement roleReinforcement" title="' + esc(T.addReinforcement));
         restore(keep);
         if (!keep.loaded) loadVillage(youDefend ? 'def' : 'att', D.villages[0] && D.villages[0].id);
+        updateHero('att');
+        updateHero('def');
     }
     function collect() {
         var out = {values: {}, loaded: !!rolesEl.querySelector('input')};
@@ -174,17 +202,26 @@
         var sel = field(role + 'Village');
         if (sel) sel.value = v.id;
         for (var i = 1; i <= 10; i++) {
-            setVal(role + 'U' + i, v.units[i - 1] || '');
+            setVal(role + 'U' + i, v.units[i - 1] || 0);
             if (i <= 8) setVal(role + 'A' + i, (role === 'att' ? v.att[i - 1] : v.def[i - 1]) || '');
         }
         var hero = field(role + 'Hero');
         if (hero) hero.checked = (v.units[10] || 0) > 0;
-        setVal(role + 'Pop', v.pop || '');
+        if (D.hero) {
+            setVal(role + 'HeroHealth', D.hero.health);
+            setVal(role + 'HeroPower', D.hero.power);
+            setVal(role + 'HeroItems', D.hero.itempower);
+            setVal(role + 'HeroBonus', role === 'att' ? D.hero.offBonus : D.hero.defBonus);
+        }
         if (role === 'def') { setVal('defWall', v.wall || 0); setVal('defResidence', v.residence || 0); }
+        updateHero(role);
     }
     function clearRole(roleEl) {
-        Array.prototype.forEach.call(roleEl.querySelectorAll('input[type=text]'), function (el) { el.value = el.name.indexOf('Hero') !== -1 || /Wall|Residence/.test(el.name) ? '0' : ''; });
+        Array.prototype.forEach.call(roleEl.querySelectorAll('input[type=text]'), function (el) {
+            el.value = /U\d+$|Wall|Residence|Stonemason|HeroPower|HeroBonus/.test(el.name) ? '0' : (/HeroHealth/.test(el.name) ? '100' : '');
+        });
         Array.prototype.forEach.call(roleEl.querySelectorAll('input[type=checkbox]'), function (el) { el.checked = false; });
+        updateHero(roleEl.getAttribute('data-role'));
     }
 
     rolesEl.addEventListener('click', function (ev) {
@@ -206,6 +243,7 @@
             tmp.innerHTML = roleHtml(side, tribe, false);
             r.parentNode.replaceChild(tmp.firstChild, r);
             restore(keep);
+            updateHero(side === 'attacker' ? 'att' : 'def');
             return;
         }
         if (btn && roleEl) {
@@ -223,6 +261,12 @@
     });
     rolesEl.addEventListener('change', function (ev) {
         if (/Village$/.test(ev.target.name)) loadVillage(ev.target.name.replace('Village', ''), ev.target.value);
+        var m = /^(att|def)Hero/.exec(ev.target.name);
+        if (m) updateHero(m[1]);
+    });
+    rolesEl.addEventListener('input', function (ev) {
+        var m = /^(att|def)Hero/.exec(ev.target.name);
+        if (m) updateHero(m[1]);
     });
     cs.querySelector('[data-sim-switch]').addEventListener('click', function () {
         youDefend = !youDefend;
@@ -247,9 +291,11 @@
             g.units.push({id: unitId(tribe, i), n: num((field(role + 'U' + i) || {}).value || 0), level: Math.min(20, lvlEl ? num(lvlEl.value) : 0)});
         }
         var h = field(role + 'Hero');
-        g.hero = !!(h && h.checked);
-        g.heroStrength = num((field(role + 'HeroStrength') || {}).value || 0);
-        g.heroBonus = num((field(role + 'HeroBonus') || {}).value || 0);
+        g.hero = !!(h && h.checked) && num((field(role + 'HeroHealth') || {value: 100}).value) > 0;
+        g.heroStrength = heroStrength(role);
+        g.heroBonus = Math.min(100, num((field(role + 'HeroBonus') || {}).value || 0)) * 0.2;   // 0.2 % a point, like the game
+        var horse = field(role + 'HeroHorse');
+        g.heroHorse = !!(horse && horse.checked);
         return g;
     }
     function simulate() {
@@ -266,7 +312,7 @@
             if (CAVALRY.indexOf(u.id) !== -1) cav += a; else inf += a;
             attCount += u.n;
         });
-        if (att.hero) { inf += att.heroStrength; attCount += 1; }
+        if (att.hero) { if (att.heroHorse) cav += att.heroStrength; else inf += att.heroStrength; attCount += 1; }
         var attMul = (1 + (att.hero ? att.heroBonus : 0) / 100) * attAlly;
         inf *= attMul; cav *= attMul;
         var A = inf + cav;
@@ -286,9 +332,6 @@
         var wall = Math.min(20, num(field('defWall').value)), residence = Math.min(20, num(field('defResidence').value));
         var Dv = A > 0 ? (di * inf + dc * cav) / A : di;
         Dv = (Dv * defMul + 10 + 2 * residence * residence) * Math.pow(WALL[main.tribe] || 1, wall);
-        // morale: a bigger attacker loses effectiveness against a smaller defender
-        var pa = num(field('attPop').value), pd = num(field('defPop').value);
-        if (pa > 0 && pd > 0 && pa > pd && main.tribe !== 4 && main.tribe !== 5) A *= Math.max(2 / 3, Math.pow(pd / pa, 0.2));
         var N = attCount + defCount;
         var K = N > 0 ? Math.min(1.5, Math.max(1.2578, 2 * (1.8592 - Math.pow(N, 0.015)))) : 1.5;
         var attWins = A > Dv;
@@ -367,9 +410,11 @@
     /* ------------------------------------------------------------------ travel simulator */
     var tr = root.querySelector('.travelSimulator');
     function tf(name) { return tr.querySelector('[name="' + name + '"]'); }
-    var speedSel = tf('speed');
-    if (speedSel && D.defaultSpeed) speedSel.value = String(D.defaultSpeed);
-    if (D.villages[0]) tf('arena').value = String(D.villages[0].ts || 0);
+    var calcButton = tr.querySelector('button.calculate');
+    function coordsValid() {
+        return ['sourceX', 'sourceY', 'targetX', 'targetY'].every(function (n) { return coord(n) !== null; });
+    }
+    function updateCalc() { calcButton.disabled = !coordsValid(); calcButton.classList.toggle('disabled', calcButton.disabled); }
     function coord(name) {
         var v = String(tf(name).value).trim().replace(/[−–]/g, '-');
         if (!/^-?\d+$/.test(v)) return null;
@@ -400,11 +445,11 @@
         if (horse) speed = Math.min(speed, horse);
         speed *= parseFloat(tf('artefact').value) || 1;
         speed *= 1 + num(tf('skills').value) / 100;
-        if (tf('item').value) speed *= 1 + num(tf('itemSize').value) / 100;
+        speed *= 1 + num(tf('item').value) / 100;
         // tournament square (and the hero's spurs) from TS_THRESHOLD fields on – the same rule as the game's movements
         // (Database::procDistanceTime: the bonus applies to the whole journey once it is that long)
         var ts = (D.tsLevels[num(tf('arena').value)] || 100) / 100 - 1;
-        if (tf('boots').value) ts += num(tf('bootsSize').value) / 100;
+        ts += num(tf('boots').value) / 100;
         var hours = dist / (dist >= D.tsThreshold ? speed * (1 + ts) : speed);
         var loading = tr.querySelector('.loadingIndicator');
         loading.hidden = false;
@@ -419,8 +464,10 @@
     tr.querySelector('button.calculate').addEventListener('click', calculate);
     tr.querySelector('button.switchSourceAndTarget').addEventListener('click', function () {
         ['X', 'Y'].forEach(function (c) { var a = tf('source' + c), b = tf('target' + c), v = a.value; a.value = b.value; b.value = v; });
+        updateCalc();
     });
     tr.addEventListener('input', function () {
+        updateCalc();
         tr.querySelector('.duration').classList.add('outdated');
         tr.querySelector('.distance').classList.add('outdated');
     });
@@ -432,6 +479,7 @@
     Array.prototype.forEach.call(tr.querySelectorAll('label.select'), function (l) { l.classList.add('fixedLabel'); });
 
     /* ------------------------------------------------------------------ start */
+    updateCalc();
     render();
     var fav = null;
     try { fav = localStorage.getItem('legendsSimFavor'); } catch (e) {}

@@ -264,27 +264,31 @@ final class VillageGroups
         self::run('INSERT INTO ov_user_prefs (uid, name, value) VALUES (?, ?, ?)', [$uid, $name, $value]);
     }
 
-    /** Keys of the four slots ('' = empty slot). */
-    public static function quickLinks(int $uid): array
+    /**
+     * Keys of the quick link slots ('' = empty slot): the four of the village list ($kid = 0) or the five of the
+     * active village box of village $kid.
+     */
+    public static function quickLinks(int $uid, int $kid = 0): array
     {
-        $v = self::pref($uid, 'quickLinks');
-        $keys = $v === null ? LegendsQuickLinks::DEFAULT_SLOTS : (json_decode($v, true) ?: []);
+        $v = self::pref($uid, $kid ? 'quickLinksV' . $kid : 'quickLinks');
+        $count = $kid ? 5 : 4;
+        $keys = $v === null ? ($kid ? LegendsQuickLinks::DEFAULT_VILLAGE_SLOTS : LegendsQuickLinks::DEFAULT_SLOTS) : (json_decode($v, true) ?: []);
         $out = [];
-        for ($i = 0; $i < 4; $i++) {
+        for ($i = 0; $i < $count; $i++) {
             $k = (string)($keys[$i] ?? '');
             $out[] = isset(LegendsQuickLinks::LINKS[$k]) ? $k : '';
         }
         return $out;
     }
 
-    public static function setQuickLinks(int $uid, array $keys): void
+    public static function setQuickLinks(int $uid, array $keys, int $kid = 0): void
     {
         $out = [];
-        for ($i = 0; $i < 4; $i++) {
+        for ($i = 0; $i < ($kid ? 5 : 4); $i++) {
             $k = (string)($keys[$i] ?? '');
             $out[] = isset(LegendsQuickLinks::LINKS[$k]) && !in_array($k, $out, true) ? $k : '';
         }
-        self::setPref($uid, 'quickLinks', json_encode($out));
+        self::setPref($uid, $kid ? 'quickLinksV' . $kid : 'quickLinks', json_encode($out));
     }
 
     /** ajax.php?cmd=villageGroups: action add|rename|color|collapse|delete|order|quickLinks. */
@@ -298,7 +302,12 @@ final class VillageGroups
             case 'collapse':   self::collapse($uid, $gid, !empty($post['collapsed'])); break;
             case 'delete':     self::delete($uid, $gid, $ownVillages); break;
             case 'order':      self::saveOrder($uid, (array)json_decode((string)($post['items'] ?? '[]'), true), $ownVillages); break;
-            case 'quickLinks': self::setQuickLinks($uid, (array)json_decode((string)($post['links'] ?? '[]'), true)); break;
+            case 'quickLinks':
+                // kid > 0: the five links of the active village box (only for own villages)
+                $kid = (int)($post['kid'] ?? 0);
+                if ($kid && !in_array($kid, array_map('intval', $ownVillages), true)) break;
+                self::setQuickLinks($uid, (array)json_decode((string)($post['links'] ?? '[]'), true), $kid);
+                break;
         }
         return ['gid' => $gid, 'groups' => array_values(self::groups($uid)), 'quickLinks' => self::quickLinks($uid)];
     }

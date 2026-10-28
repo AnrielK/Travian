@@ -300,3 +300,105 @@ body.legends655 #tasks .task .progress button.collect.collected.preventAnimation
 body.legends655 #tasks .task .progress button.collect { overflow: visible; }
 body.legends655 .legendsRewardFlight { position: absolute; left: 0; top: 0; width: 0; height: 0; z-index: 10000; pointer-events: none; }
 body.legends655 .legendsRewardFlight .entity { position: absolute; z-index: 37; filter: drop-shadow(0 0 5px #000); white-space: nowrap; will-change: transform, opacity; }
+/* ---- quick links like Travian Legends: five per village in the active village box, four in the village list ---- */
+body.legends655 .sidebar #sidebarBoxActiveVillage .header .buttonsWrapper.quickLinks { display: flex; justify-content: flex-end; align-items: center; gap: 1px; margin-inline: 10px; }
+body.legends655 .sidebar #sidebarBoxActiveVillage .quickLinks .quickLinkSlot { position: relative; box-sizing: border-box; display: grid; place-items: center; width: 44px; height: 44px; }
+body.legends655 .sidebar #sidebarBoxActiveVillage .quickLinks .quickLinkSlot > * { grid-area: 1 / 1; }
+body.legends655 .sidebar #sidebarBoxActiveVillage .quickLinks .quickLinkSlot .editSlotIndicator { position: absolute; inset: 0; width: 44px; height: 44px; fill: none; stroke: #f4efe4; }
+body.legends655 .sidebar #sidebarBoxActiveVillage .quickLinks .layoutButton.quickLink > svg { width: 22px; height: 22px; }
+body.legends655 .sidebar #sidebarBoxActiveVillage .quickLinks .settings { align-self: center; margin-left: 2px; }
+body.legends655 .sidebar #sidebarBoxActiveVillage .quickLinks .settings .closeIcon { display: none; }
+body.legends655 .sidebar #sidebarBoxActiveVillage .quickLinks .settings.editMode > svg:not(.closeIcon) { display: none; }
+body.legends655 .sidebar #sidebarBoxActiveVillage .quickLinks .settings.editMode .closeIcon { display: block; width: 10px; height: 10px; fill: #fff9eb; position: relative; z-index: 3; }
+body.legends655 .sidebar #sidebarBoxActiveVillage .quickLinks .quickLinkSlot.highlightDropTarget .editSlotIndicator { stroke: #38f4f4; }
+body.legends655 .sidebar #sidebarBoxActiveVillage .quickLinks .quickLinkSlot.highlightDragSource .editSlotIndicator { stroke: #ff8c4d; }
+body.legends655 .sidebar #sidebarBoxActiveVillage.editQuickLinks .content { pointer-events: none; }
+/* outside the edit mode only the filled slots show; while editing an empty slot is a white circle in a dashed ring */
+body.legends655 .sidebar .quickLinks .quickLinkSlot:not(.editMode):not(:has(.layoutButton)) { display: none; }
+body.legends655 .sidebar .quickLinks .quickLinkSlot:not(.editMode) .editSlotIndicator { display: none; }
+body.legends655 .sidebar .quickLinks .quickLinkSlot .slot { width: 34px; height: 34px; border-radius: 50%; background: #fff; box-shadow: inset 0 1px 3px rgba(0, 0, 0, .25); display: grid; place-items: center; }
+body.legends655 .sidebar .quickLinks .quickLinkSlot .slot svg { display: none; }
+body.legends655 .sidebar .quickLinks .quickLinkSlot:has(.layoutButton) .slot { display: none; }
+/* the page is dimmed while editing; the edited box and the dialog stay bright */
+body.legends655 #legendsQuickLinksOverlay { position: fixed; inset: 0; z-index: 31; background: rgba(0, 0, 0, .5); }
+body.legends655.legendsQuickLinksEditing #center .sidebar.editQuickLinks { position: relative; z-index: 3200; }
+body.legends655 #legendsQuickLinksOverlay { z-index: 3100; }
+body.legends655.legendsQuickLinksEditing #center .sidebar.editQuickLinks .sidebarBox:not(.editQuickLinks),
+body.legends655.legendsQuickLinksEditing #center .sidebar.editQuickLinks #sidebarBoxQuestmaster { filter: brightness(.5); pointer-events: none; }
+body.legends655 .legendsDialogOverlay.quickLinksOverlay { z-index: 40; }
+/* dialog: Legends typography, every link in a dashed ring, gold Gold Club links */
+body.legends655 .legendsDialogOverlay .quickLinksDialog .dialogContents { width: 640px; padding: 26px 30px 28px; }
+body.legends655 .legendsDialogOverlay .quickLinksDialog .dialogHeading { font-size: 17px; line-height: 22px; margin: 0 50px 10px 0; color: #5e463a; }
+body.legends655 .legendsDialogOverlay .quickLinksDialog .quickLinksText { margin: 0; font-size: 13.5px; line-height: 19px; color: #5e463a; }
+body.legends655 .legendsDialogOverlay .quickLinksDialog .quickLinksWrapper { margin-top: 26px; row-gap: 24px; }
+body.legends655 .legendsDialogOverlay .quickLinksDialog .quickLinkIcon { position: relative; width: 48px; height: 48px; display: grid; place-items: center; }
+body.legends655 .legendsDialogOverlay .quickLinksDialog .quickLinkIcon .editSlotIndicator { position: absolute; inset: 0; width: 48px; height: 48px; fill: none; stroke: #5e463a; }
+body.legends655 .legendsDialogOverlay .quickLinksDialog .quickLinkIcon .layoutButton { grid-area: 1 / 1; }
+body.legends655 .legendsDialogOverlay .quickLinksDialog .quickLinkTitle { font-size: 13.5px; color: #5e463a; margin: 8px 0 2px; }
+body.legends655 .legendsDialogOverlay .quickLinksDialog .quickLinkSubtitle { font-size: 13.5px; color: #5e463a; }
+body.legends655 .legendsDialogOverlay .quickLinksDialog .quickLinkItem.used .layoutButton { opacity: 1; }
+body.legends655 .legendsDialogOverlay .quickLinksDialog .quickLinkItem.used .quickLinkIcon .editSlotIndicator { stroke: #a99a83; }
+body.legends655 .legendsDialogOverlay .quickLinksDialog .layoutButton.disabled,
+body.legends655 .sidebar .quickLinks .layoutButton.quickLink.disabled { filter: saturate(.35) brightness(1.1); opacity: 1; }
+/* travel simulator like Travian Legends: fields framed with the label on the frame, own dropdown arrow */
+body.legends655 #rallyPointSimulators .travelSimulator label.select { display: block !important; position: relative !important; padding: 0 !important; margin: 0 0 22px !important; }
+body.legends655 #rallyPointSimulators .travelSimulator label.select select { -webkit-appearance: none; appearance: none; width: 100% !important; height: 40px !important;
+    box-sizing: border-box; padding: 0 34px 0 14px !important; border: 1px solid #6b5a4c !important; border-radius: 2px !important; font-size: 14px !important; color: #3f2a14 !important;
+    background: #fff url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 10 6'%3E%3Cpath d='M0 0h10L5 6z' fill='%23252525'/%3E%3C/svg%3E") no-repeat right 12px center / 10px 6px !important;
+    box-shadow: none !important; cursor: pointer; }
+body.legends655 #rallyPointSimulators .travelSimulator label.select .label,
+body.legends655 #rallyPointSimulators .travelSimulator label.select .label.pinned { position: absolute !important; top: -8px !important; left: 14px !important; right: auto !important;
+    transform: none !important; padding: 0 6px !important; margin: 0 !important; background: #fff !important; font-size: 11.5px !important; line-height: 15px !important;
+    color: #5e463a !important; font-weight: 400 !important; pointer-events: none; white-space: nowrap; }
+body.legends655 #rallyPointSimulators .travelSimulator .description { margin: 10px 0 28px; font-size: 13px; line-height: 17px; }
+body.legends655 #rallyPointSimulators .travelSimulator .coordinatesWrapper { margin-bottom: 30px; }
+body.legends655 #rallyPointSimulators .travelSimulator .coordinatesWrapper .name { font-size: 14px; color: #5e463a; }
+body.legends655 #rallyPointSimulators .travelSimulator .coordinatesWrapper input { width: 58px !important; height: 40px !important; border: 1px solid #6b5a4c !important; border-radius: 2px !important;
+    padding: 0 14px !important; font-size: 14px !important; color: #3f2a14; background: #fff; box-shadow: none !important; }
+body.legends655 #rallyPointSimulators .travelSimulator .coordinatesWrapper input::placeholder { color: #9b8f84; }
+body.legends655 #rallyPointSimulators .travelSimulator .coordinatesWrapper button.switchSourceAndTarget { width: 36px; height: 36px; }
+body.legends655 #rallyPointSimulators .travelSimulator .coordinatesWrapper button.switchSourceAndTarget svg { width: 18px; height: 18px; }
+body.legends655 #rallyPointSimulators .travelSimulator .calculationWrapper { align-items: center; margin-top: 6px; }
+body.legends655 #rallyPointSimulators .travelSimulator .calculationWrapper button.calculate { min-width: 110px; }
+body.legends655 #rallyPointSimulators .travelSimulator .calculationWrapper button.calculate:disabled { filter: grayscale(.75) brightness(1.05); cursor: default; }
+body.legends655 #rallyPointSimulators .travelSimulator .calculationWrapper .duration, body.legends655 #rallyPointSimulators .travelSimulator .calculationWrapper .distance { font-weight: 700; font-size: 14px; color: #5e463a; }
+/* combat simulator like Travian Legends (header without population, artefacts, row icons, hero row) */
+body.legends655 #combatSimulator .role.attacker .header.you, body.legends655 #combatSimulator .role.defender .header.you { grid-template-columns: 65px auto 1fr 60px; }
+body.legends655 #combatSimulator .role.attacker .header.you .iconButtonV2.clear, body.legends655 #combatSimulator .role.defender .header.you .iconButtonV2.clear { grid-column-start: 4; }
+body.legends655 #combatSimulator .role.attacker .header:not(.you) .iconButtonV2.clear, body.legends655 #combatSimulator .role.defender .header:not(.you) .iconButtonV2.clear { grid-column-start: 4; }
+body.legends655 #combatSimulator .role .header .villageSelection select { height: 24px; font-size: 13px; padding: 0 4px; border: 1px solid #c9bda4; background: #fff; }
+body.legends655 #combatSimulator .role .header .iconButtonV2 { width: 30px; height: 28px; }
+body.legends655 #combatSimulator .troops table th svg.troopsIcon { width: 14px; height: 16px; vertical-align: middle; }
+body.legends655 #combatSimulator .troops table th svg.smithyIcon { width: 18px; height: 14px; vertical-align: middle; }
+body.legends655 #combatSimulator .troops table th i.troopsIcon, body.legends655 #combatSimulator .troops table th i.smithyIcon { display: none; }
+body.legends655 #combatSimulator .troops td.celebration { white-space: nowrap; text-align: left; }
+body.legends655 #combatSimulator .troops td.celebration i.celebration_small { display: inline-block; width: 16px; height: 16px; vertical-align: middle; margin-right: 3px;
+    background: url('../img_ltr/global/misc/celebration_small.png') no-repeat center / contain; }
+body.legends655 #combatSimulator i.simStonemasonIcon { display: inline-block; width: 18px; height: 18px; background: url('../img_ltr/global/buildings/roman/icon/type34_small.png') no-repeat center / contain; }
+body.legends655 #combatSimulator i.simResidenceIcon { background-image: url('../img_ltr/global/buildings/roman/icon/type26_small.png'); }
+body.legends655 #combatSimulator .bonus .artefacts { display: flex; gap: 12px; align-items: center; }
+body.legends655 #combatSimulator .bonus .artefacts label { margin-left: 0; gap: 4px; }
+body.legends655 #combatSimulator .bonus .artefacts select { width: 58px; height: 24px; border: 1px solid #c9bda4; border-radius: 2px; background: #fff; }
+body.legends655 #combatSimulator .bonus .buildings { display: flex; gap: 10px; align-items: center; }
+body.legends655 #combatSimulator .bonus .buildings label { margin-right: 0; }
+body.legends655 #combatSimulator .heroAttributes { min-height: 33px; }
+body.legends655 #combatSimulator .heroAttributes .stats { display: flex; align-items: center; gap: 6px; }
+body.legends655 #combatSimulator .heroAttributes .stats .heroTitle { margin-right: 4px; }
+body.legends655 #combatSimulator .heroAttributes .stats label { padding-left: 4px; gap: 3px; }
+body.legends655 #combatSimulator .heroAttributes .stats input[type=text] { width: 36px; }
+body.legends655 #combatSimulator .heroAttributes .calculated { margin-left: 2px; }
+body.legends655 #combatSimulator .heroAttributes .equipment { display: flex; align-items: center; gap: 4px; }
+body.legends655 #combatSimulator .heroAttributes .equipment .slot i { display: inline-block; }
+body.legends655 #combatSimulator .tribeSelection.reinforcement .tribeWrapper div i[class*="smallTribe"] { border-radius: 50%; box-shadow: 0 0 0 2px #c3dff0; }
+/* swap button and the golden Farmlist tab (no Gold Club) like in Legends */
+body.legends655 #rallyPointSimulators .travelSimulator .coordinatesWrapper button.switchSourceAndTarget { background: linear-gradient(#7d9471, #5f7756) !important; border: 1px solid #3f5236 !important;
+    border-radius: 2px; box-shadow: inset 0 1px 0 rgba(255, 255, 255, .25); display: grid; place-items: center; }
+body.legends655 #rallyPointSimulators .travelSimulator .coordinatesWrapper button.switchSourceAndTarget:before,
+body.legends655 #rallyPointSimulators .travelSimulator .coordinatesWrapper button.switchSourceAndTarget:after { display: none !important; }
+body.legends655 #rallyPointSimulators .travelSimulator .coordinatesWrapper button.switchSourceAndTarget svg { fill: #fff !important; width: 18px; height: 15px; position: static; margin: 0; }
+body.legends655 #build.gid16 .contentNavi .content.gold .tabItem { background: linear-gradient(#f3dd9a, #dcb560) !important; color: #3f2a14 !important; text-shadow: none !important; }
+body.legends655 #combatSimulator .bonus select, body.legends655 #combatSimulator .role .header .villageSelection select { -webkit-appearance: none; appearance: none; padding: 0 22px 0 6px;
+    background: #fff url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 10 6'%3E%3Cpath d='M0 0h10L5 6z' fill='%23252525'/%3E%3C/svg%3E") no-repeat right 7px center / 9px 5px; }
+body.legends655 #combatSimulator .role .header .villageSelection select { min-width: 200px; }
+/* Bonifácův klub: the farm list shows the letters picture like in Legends */
+body.legends655 .dialogV2.dialogWrapper .dialog.legendsGoldClubDialog .packageFeatures .featureContent .featureImage.raidList { background-position: 0 0 !important; }

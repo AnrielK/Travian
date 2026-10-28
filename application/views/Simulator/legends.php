@@ -61,8 +61,11 @@ foreach ((array)$database->getProfileVillages((int)$session->uid) as $simVi) {
 }
 usort($simVillages, function ($a, $b) { return [$b['active'], $a['name']] <=> [$a['active'], $b['name']]; });
 
+$simHero = (array)$database->getHero((int)$session->uid);
 $simData = [
     'tribe' => (int)$session->tribe,
+    'hero' => ['health' => (int)round((float)($simHero['health'] ?? 100)), 'power' => (int)($simHero['power'] ?? 0),
+        'itempower' => (int)($simHero['itempower'] ?? 0), 'offBonus' => (int)($simHero['offBonus'] ?? 0), 'defBonus' => (int)($simHero['defBonus'] ?? 0)],
     'units' => $simUnits,
     'names' => $simNames,
     'villages' => $simVillages,
@@ -91,12 +94,17 @@ foreach ([
     'playAttacker' => ['SIM_PLAY_ATTACKER', 'Play as attacker'], 'fields' => ['SIM_FIELDS', 'fields'],
     'invalidCoords' => ['SIM_INVALID_COORDS', 'Enter valid coordinates.'], 'hero' => ['SIM_HERO', 'Hero'],
     'bounty' => ['SIM_BOUNTY', 'Carrying capacity'],
+    'celebration' => ['SIM_CELEBRATION', 'Great celebration'], 'heroHealth' => ['SIM_HERO_HEALTH', 'Health'],
+    'heroHorse' => ['SIM_HERO_HORSE', 'Hero on a horse'], 'equipment' => ['SIM_EQUIPMENT', 'Equipment'],
+    'rightHand' => ['SIM_RIGHT_HAND', 'Right hand'], 'torso' => ['SIM_TORSO', 'Body'],
+    'spyArtefact' => ['SIM_SPY_ARTEFACT', 'Artefact of the scouts'], 'architectArtefact' => ['SIM_ARCHITECT_ARTEFACT', 'Artefact of the architects'],
+    'stonemason' => ['SIM_STONEMASON', 'Stonemason level'],
 ] as $simKey => [$simConst, $simDefault]) {
     $simData['texts'][$simKey] = $st($simConst, $simDefault);
 }
 $simTribes = [1 => 'roman', 2 => 'teuton', 3 => 'gaul', 4 => 'nature', 5 => 'natar', 6 => 'egyptian', 7 => 'hun'];
 $simStar = '<svg viewBox="0 0 20 19" class="star"><path d="M10 0l3.09 6.26L20 7.27l-5 4.87 1.18 6.88L10 15.77l-6.18 3.25L5 12.14 0 7.27l6.91-1.01L10 0z"></path></svg>';
-$simSwap = '<svg viewBox="0 0 16 16"><path d="M11 1l4 4-4 4V6H4V4h7V1zM5 7v3h7v2H5v3l-4-4 4-4z"></path></svg>';
+$simSwap = '<svg viewBox="0 0 20 16"><path d="M14 0l5 4-5 4V5H2V3h12zM6 8v3h12v2H6v3l-5-4z"/></svg>';
 $simNone = $se($st('SIM_NONE', 'None'));
 $simSelect = function (string $name, string $label, array $options, string $extra = '') use ($se) {
     $html = '<label class="select' . ($extra ? ' ' . $extra : '') . '"><select name="' . $se($name) . '">';
@@ -142,12 +150,12 @@ $simCurrent = $simVillages[0] ?? ['x' => 0, 'y' => 0];
         <p class="description"><?php echo $se($st('SIM_TRAVEL_TEXT', '')); ?></p>
         <div class="coordinatesWrapper">
             <span class="name"><?php echo $se($st('SIM_START', 'Start')); ?></span>
-            <label class="input coordinateX"><input type="text" name="sourceX" placeholder="X" value="<?php echo (int)$simCurrent['x']; ?>"></label>
-            <label class="input coordinateY"><input type="text" name="sourceY" placeholder="Y" value="<?php echo (int)$simCurrent['y']; ?>"></label>
+            <label class="input coordinateX"><input type="text" name="sourceX" placeholder="X" inputmode="numeric"></label>
+            <label class="input coordinateY"><input type="text" name="sourceY" placeholder="Y" inputmode="numeric"></label>
             <?php echo LegendsUi::button($simSwap, ['icon' => true, 'class' => 'switchSourceAndTarget', 'title' => $st('SIM_SWITCH', 'Switch start and target')]); ?>
             <span class="name"><?php echo $se($st('SIM_TARGET', 'Target')); ?></span>
-            <label class="input coordinateX"><input type="text" name="targetX" placeholder="X"></label>
-            <label class="input coordinateY"><input type="text" name="targetY" placeholder="Y"></label>
+            <label class="input coordinateX"><input type="text" name="targetX" placeholder="X" inputmode="numeric"></label>
+            <label class="input coordinateY"><input type="text" name="targetY" placeholder="Y" inputmode="numeric"></label>
             <span class="sourceCoordinatesValidation" hidden></span>
             <span class="targetCoordinatesValidation" hidden></span>
         </div>
@@ -155,32 +163,18 @@ $simCurrent = $simVillages[0] ?? ['x' => 0, 'y' => 0];
         echo $simSelect('speed', $st('SIM_SLOWEST', 'Speed of the slowest unit'), $simSpeedOptions);
         echo $simSelect('arena', $st('SIM_ARENA', 'Tournament square level'), $simArena);
         echo $simSelect('artefact', $st('SIM_ARTEFACT', 'Artefact effect (faster troops)'), ['1' => $simNone, '1.5' => '×1,5', '2' => '×2', '3' => '×3']);
-        ?>
-        <div class="simulatorHeroEffectSelect">
-            <div class="simulatorHeroEffectSelectRow">
-                <?php
-                echo $simSelect('boots', $st('SIM_BOOTS', 'Select boots effect'), ['' => $simNone, 'spurs' => $st('SIM_BOOTS_SPURS', 'Spurs (speed beyond 20 fields)')]);
-                echo $simSelect('bootsSize', $st('SIM_MAGNITUDE', 'Magnitude'), ['' => $simNone, '25' => '+25 %', '50' => '+50 %', '75' => '+75 %'], 'effectMagnitude');
-                ?>
-            </div>
-            <div class="simulatorHeroEffectSelectRow">
-                <?php
-                echo $simSelect('item', $st('SIM_ITEM', 'Select item effect'), ['' => $simNone, 'map' => $st('SIM_ITEM_MAP', 'Map (faster journey)')]);
-                echo $simSelect('itemSize', $st('SIM_MAGNITUDE', 'Magnitude'), ['' => $simNone, '30' => '+30 %', '40' => '+40 %', '50' => '+50 %'], 'effectMagnitude');
-                ?>
-            </div>
-        </div>
-        <?php
+        echo $simSelect('boots', $st('SIM_BOOTS', 'Hero\'s boots'), ['0' => $simNone, '25' => $st('SIM_BOOTS_1', 'Spurs (+25 %)'), '50' => $st('SIM_BOOTS_2', 'Spurs (+50 %)'), '75' => $st('SIM_BOOTS_3', 'Spurs (+75 %)')]);
+        echo $simSelect('item', $st('SIM_ITEM', 'Hero\'s items'), ['0' => $simNone, '30' => $st('SIM_ITEM_1', 'Map (+30 %)'), '40' => $st('SIM_ITEM_2', 'Map (+40 %)'), '50' => $st('SIM_ITEM_3', 'Map (+50 %)')]);
         echo $simSelect('horse', $st('SIM_HORSE', 'Hero\'s horse'), ['0' => $simNone, '14' => $st('SIM_HORSE_1', 'Gelding (14 fields/h)'), '17' => $st('SIM_HORSE_2', 'Thoroughbred (17 fields/h)'), '20' => $st('SIM_HORSE_3', 'Warhorse (20 fields/h)')]);
         echo $simSelect('skills', $st('SIM_HERO_SKILLS', 'Hero skills'), ['0' => $simNone, '5' => '+5 %', '10' => '+10 %', '15' => '+15 %', '20' => '+20 %']);
         ?>
         <div class="calculationWrapper">
-            <?php echo LegendsUi::button($se($st('SIM_CALCULATE', 'Calculate')), ['class' => 'calculate']); ?>
+            <?php echo LegendsUi::button($se($st('SIM_CALCULATE', 'Calculate')), ['class' => 'calculate', 'disabled' => true]); ?>
             <div class="loadingIndicator" hidden><div class="spinner"></div></div>
             <div class="duration"><?php echo $se($st('SIM_DURATION', 'Duration')); ?>: <span>-</span></div>
             <div class="distance"><?php echo $se($st('SIM_DISTANCE', 'Distance')); ?>: <span>-</span></div>
         </div>
     </div>
 </div>
-<script type="text/javascript">window.LegendsSimData = <?php echo json_encode($simData, JSON_UNESCAPED_UNICODE | JSON_HEX_TAG | JSON_HEX_AMP); ?>; window.LegendsSimData.defaultSpeed = <?php echo $simOwnSpeed; ?>;</script>
+<script type="text/javascript">window.LegendsSimData = <?php echo json_encode($simData, JSON_UNESCAPED_UNICODE | JSON_HEX_TAG | JSON_HEX_AMP); ?>; window.LegendsSimData.defaultSpeed = 0;</script>
 <script type="text/javascript" src="application/legends/simulators.js?v=<?php echo Skin::VERSION; ?>"></script>

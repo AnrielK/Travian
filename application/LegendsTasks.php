@@ -72,44 +72,54 @@ final class LegendsTasks
         if ($scope === 'general') {
             return [
                 'villages' => ['type' => 'count', 'image' => 'populationProgress', 'title' => self::t('TASKS_VILLAGES', 'Villages'),
-                    'steps' => [[2, 600, 40], [3, 1200, 60], [5, 2500, 100], [10, 5000, 200], [20, 10000, 400]]],
+                    'stepTitle' => 'TASKS_STEP_VILLAGES',
+                'steps' => [[2, 600, 40], [3, 1200, 60], [5, 2500, 100], [10, 5000, 200], [20, 10000, 400]]],
                 'populationTotal' => ['type' => 'count', 'image' => 'populationProgress', 'title' => self::t('TASKS_POPULATION_TOTAL', 'Population of all villages'),
-                    'steps' => [[100, 375, 25], [250, 750, 40], [500, 1500, 60], [1000, 2500, 100], [2500, 5000, 150], [5000, 10000, 250]]],
+                    'stepTitle' => 'TASKS_STEP_POPULATION_TOTAL',
+                'steps' => [[100, 375, 25], [250, 750, 40], [500, 1500, 60], [1000, 2500, 100], [2500, 5000, 150], [5000, 10000, 250]]],
                 'culturePointsTotal' => ['type' => 'count', 'image' => 'culturePointsProductionProgress', 'title' => self::t('TASKS_CULTURE_TOTAL', 'Culture points production of all villages'),
-                    'steps' => [[100, 375, 25], [250, 750, 40], [500, 1500, 60], [1000, 2500, 100], [2500, 5000, 150]]],
+                    'stepTitle' => 'TASKS_STEP_CULTURE_TOTAL',
+                'steps' => [[100, 375, 25], [250, 750, 40], [500, 1500, 60], [1000, 2500, 100], [2500, 5000, 150]]],
             ];
         }
         // resource fields: like Travian Legends one task for a single field ("Železné doly") and one for all of them
         // ("Všechny železné doly"); steps [fields (0 = all), level, resources, experience]
         $resource = function (int $gid) {
             return ['type' => 'fields', 'gid' => $gid, 'image' => 'building g' . $gid, 'title' => self::t('TASKS_RES_' . $gid, self::building($gid)),
-                'steps' => [[1, 2, 120, 8], [1, 4, 240, 16], [1, 7, 400, 26], [1, 10, 570, 38]]];
+                'steps' => [[1, 2, 120, 8], [1, 4, 240, 16], [1, 7, 400, 26], [1, 10, 600, 39]]];
         };
         $resourceAll = function (int $gid) {
             return ['type' => 'fields', 'gid' => $gid, 'image' => 'building g' . $gid, 'title' => self::t('TASKS_RES_ALL_' . $gid, self::building($gid)),
                 'steps' => [[0, 2, 240, 16], [0, 3, 385, 25], [0, 5, 590, 39], [0, 8, 900, 60], [0, 10, 1300, 85]]];
         };
-        $building = function (int $gid, array $levels, int $base = 150) {
+        // building levels: rewards like Travian Legends (level 1 = 300 of each resource / 20 XP … level 12 = 600 / 39)
+        $building = function (int $gid, array $levels, int $base = 300) {
             return ['type' => 'level', 'gid' => $gid, 'image' => 'building g' . $gid, 'title' => self::building($gid),
-                'steps' => array_map(function ($level) use ($base) { return [$level, $base * max(1, $level), (int)round(10 + $level * 4)]; }, $levels)];
+                'steps' => array_map(function ($level) use ($base) {
+                    $res = (int)round($base * (1 + max(0, $level - 1) * 0.09) / 5) * 5;
+                    return [$level, $res, (int)round($res / 15.2)];
+                }, $levels)];
         };
         $wall = self::WALLS[$this->tribe] ?? 31;
         return [
+            // the order of the Travian Legends list
             'population' => ['type' => 'count', 'image' => 'populationProgressInVillage', 'title' => self::t('TASKS_POPULATION', 'Population'),
-                'steps' => [[50, 375, 25], [100, 750, 40], [200, 1200, 60], [350, 2000, 80], [500, 3000, 100], [750, 4500, 140], [1000, 6000, 200]]],
+                'stepTitle' => 'TASKS_STEP_POPULATION',
+                'steps' => [[50, 350, 23], [100, 710, 47], [150, 1105, 73], [250, 1500, 100], [400, 2200, 145], [600, 3000, 200], [800, 3800, 250], [1000, 4500, 300]]],
             'culturePoints' => ['type' => 'count', 'image' => 'culturePointsProductionProgressInVillage', 'title' => self::t('TASKS_CULTURE', 'Culture points production'),
-                'steps' => [[50, 375, 25], [100, 750, 40], [200, 1200, 60], [350, 2000, 80], [500, 3000, 100]]],
-            'embassy' => $building(18, [1, 5, 10, 20], 300),
+                'stepTitle' => 'TASKS_STEP_CULTURE',
+                'steps' => [[50, 375, 25], [100, 750, 50], [150, 1125, 75], [250, 1500, 100], [400, 2250, 150], [600, 3000, 200]]],
+            'embassy' => $building(18, [1, 5, 10, 20]),
             'woodcutter' => $resource(1),
+            'mainBuilding' => $building(15, [3, 5, 7, 10, 12, 15, 20]),
             'claypit' => $resource(2),
-            'wall' => $building($wall, [1, 5, 10, 15, 20]),
             'cropland' => $resource(4),
             'ironmine' => $resource(3),
             'woodcutterAll' => $resourceAll(1),
             'claypitAll' => $resourceAll(2),
             'ironmineAll' => $resourceAll(3),
             'croplandAll' => $resourceAll(4),
-            'mainBuilding' => $building(15, [3, 5, 10, 15, 20]),
+            'wall' => $building($wall, [1, 5, 10, 15, 20]),
             'warehouse' => $building(10, [1, 3, 7, 12, 20]),
             'granary' => $building(11, [1, 3, 7, 12, 20]),
             'rallyPoint' => $building(16, [1, 5, 10]),
@@ -130,9 +140,11 @@ final class LegendsTasks
         foreach ($this->definitions($scope) as $key => $definition) {
             $tasks[] = $this->describe($scope, $key, $definition);
         }
+        // tasks to collect first, then the list order of Legends, the finished ones last
         $order = ['achieved' => 0, 'open' => 1, 'collected' => 2];
-        usort($tasks, function ($a, $b) use ($order) {
-            return [$order[$a['state']], -$a['ratio']] <=> [$order[$b['state']], -$b['ratio']];
+        $position = array_flip(array_keys($this->definitions($scope)));
+        usort($tasks, function ($a, $b) use ($order, $position) {
+            return [$order[$a['state']], $position[$a['key']]] <=> [$order[$b['state']], $position[$b['key']]];
         });
         return $tasks;
     }
@@ -178,7 +190,9 @@ final class LegendsTasks
         if ($definition['type'] === 'level') {
             return sprintf(self::t('TASKS_STEP_LEVEL', 'Building "%s" to level %d'), self::building($definition['gid']), $step[0]);
         }
-        return sprintf(self::t('TASKS_STEP_COUNT', '%s: %s'), $definition['title'], number_format((int)$step[0], 0, ',', ' '));
+        $n = (int)$step[0] < 10000 ? (string)(int)$step[0] : number_format((int)$step[0], 0, ',', ' ');
+        if (!empty($definition['stepTitle']) && defined($definition['stepTitle'])) return sprintf(constant($definition['stepTitle']), $n);
+        return sprintf(self::t('TASKS_STEP_COUNT', '%s: %s'), $definition['title'], $n);
     }
 
     private function description(string $key, array $definition): string

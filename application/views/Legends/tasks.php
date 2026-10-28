@@ -7,30 +7,30 @@
 $e = [LegendsUi::class, 'e'];
 $t = [LegendsUi::class, 't'];
 $base = 'tasks.php?s=' . $vars['scope'];
-$num = function ($n) { return number_format((int)$n, 0, ',', ' '); };
+$num = function ($n) { $n = (int)$n; return abs($n) < 10000 ? (string)$n : number_format($n, 0, ',', ' '); };   // Legends: 1680, 12 500
 $valueBox = function (string $icon, $value, string $title) use ($e, $num) {
     return '<div class="iconValueBoxWrapper" title="' . $e($title) . '"><div class="iconValueBox ' . $icon . '"><i class="' . $icon . '"></i><span>' . $num($value) . '</span></div></div>';
 };
-$label = function (array $task) use ($e, $t, $num) {
+$label = function (array $task, string $prefix = '') use ($e, $t, $num) {
     if ($task['type'] === 'level') {
         return $e($t('TASKS_LEVEL', 'Level')) . ' <span>' . $task['value'] . '</span>/<span>' . $task['goal'] . '</span>';
     }
     if ($task['type'] === 'fields') {
         return '<span>' . $task['value'] . '</span>/<span>' . $task['goal'] . '</span> ' . $e(sprintf($t('TASKS_TO_LEVEL', 'to level %d'), $task['level']));
     }
-    // the pack hides the first span for population / culture point tasks (Legends puts a prefix there)
-    return '<span></span><span>' . $num($task['value']) . '</span>/<span>' . $num($task['goal']) . '</span>';
+    // the first span is the prefix of the task details ("Obyvatelé 197/250"); the overview hides it
+    return '<span>' . $e($prefix) . ($prefix !== '' ? ' ' : '') . '</span><span>' . $num($task['value']) . '</span>/<span>' . $num($task['goal']) . '</span>';
 };
 $collectedText = $t('TASKS_COLLECTED', 'Collected');
 /** Progress cell: bar while open, "Vyzvednout" when reached, the greyed "Vyzvednuto" once collected. */
-$progress = function (array $task, string $collectUrl) use ($e, $t, $label, $collectedText) {
+$progress = function (array $task, string $collectUrl, string $prefix = '') use ($e, $t, $label, $collectedText) {
     if ($task['state'] === 'collected') {
         return LegendsUi::button($e($collectedText) . '<i class="collectedCheckmark"></i>',
             ['class' => 'collect collected preventAnimation', 'disabled' => true, 'appearance' => 'grey', 'data' => ['text-collected' => $collectedText]]);
     }
     if ($task['state'] === 'open') {
         return '<div class="progressBar"><div class="bar"><div class="filling" style="width:' . round(min(1, $task['ratio']) * 100) . '%"></div><div class="decoration"></div></div>'
-            . '<div class="label">' . $label($task) . '</div></div>';
+            . '<div class="label">' . $label($task, $prefix) . '</div></div>';
     }
     return LegendsUi::button($e($t('TASKS_COLLECT', 'Collect')) . '<i class="collectedCheckmark"></i>', ['class' => 'collect',
         'data' => ['collect' => $collectUrl, 'text-collected' => $collectedText]]);
@@ -84,7 +84,7 @@ $collectUrl = function (string $key, array $extra = []) use ($base, $vars) {
                     <div class="taskImage level"><img src="img/x.gif" class="<?php echo $e($d['image']); ?>" alt=""></div>
                     <div class="title"><?php echo $e($step['title']); ?></div>
                     <div class="rewards"><?php echo $rewards($step); ?></div>
-                    <div class="progress"><?php echo $progress($step, $collectUrl($d['key'], ['t' => $d['key'], 'dp' => $vars['detailPage']])); ?></div>
+                    <div class="progress"><?php echo $progress($step, $collectUrl($d['key'], ['t' => $d['key'], 'dp' => $vars['detailPage']]), $d['title']); ?></div>
                 </div>
             <?php } ?>
             <?php echo $vars['detailPages'] > 1 ? LegendsUi::pagination($vars['detailPage'], $vars['detailPages'], $detailBase . '&dp=') : '<div class="divider"></div>'; ?>

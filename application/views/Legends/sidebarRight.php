@@ -1,29 +1,12 @@
 <?php
 /*
  * Right sidebar of the Travian Legends look (included by rightsideinfor.php when Skin::isLegends()):
- * active village (four building shortcuts + "more"), village list with expansion slots and village groups,
+ * active village (five quick links chosen per village), village list with expansion slots and village groups,
  * admin box and the task overview with the tribe's mentor – markup of Travian Legends 655, styled by legends_ltr.css.
  */
 $e = [LegendsUi::class, 'e'];
 $t = [LegendsUi::class, 't'];
 $uid = (int)$session->uid;
-
-// building shortcuts of the active village
-$slotOf = [];
-for ($i = 19; $i <= 40; $i++) {
-    $gid = (int)($village->resarray['f' . $i . 't'] ?? 0);
-    if ($gid > 0 && !isset($slotOf[$gid])) $slotOf[$gid] = $i;
-}
-$shortcut = function (string $name, int $gid, string $svg) use ($slotOf, $session, $lang, $e): string {
-    $has = isset($slotOf[$gid]);
-    $href = $has && $session->plus ? 'build.php?id=' . $slotOf[$gid] : '#';
-    $onclick = !$has ? 'return false;' : ($session->plus ? '' : "LegendsPlus.open('directLinks');return false;");
-    $title = (string)($lang['buildings'][$gid] ?? $name);
-    return '<a class="layoutButton buttonFramed withIcon round ' . $name . ' gold' . ($has ? '' : ' disabled') . '" href="' . $e($href) . '" title="' . $e($title) . '"'
-        . ($onclick !== '' ? ' onclick="' . $onclick . '"' : '') . '>'
-        . LegendsUi::svg($svg) . '</a>';
-};
-$moreBuildings = [16, 15, 22, 12, 24, 25, 26, 27, 28, 29, 30, 37, 44];
 
 // expansion slots (same formula as the original box)
 $vcount = safe_count($session->vvillages);
@@ -89,6 +72,7 @@ $groupCount = count(VillageGroups::groups($uid));
 $groupHandle = str_replace('class="handle"', 'class="handle"', $handle);
 $quickLinks = LegendsQuickLinks::all($village->resarray);
 $quickSlots = VillageGroups::quickLinks($uid);
+$villageSlots = VillageGroups::quickLinks($uid, (int)$village->wid);
 $slotIndicator = '<svg class="editSlotIndicator" viewBox="0 0 44 44"><circle cx="22" cy="22" r="21" fill="none" stroke-width="1.5" stroke-dasharray="4 3"/></svg>';
 $plusSmall = '<svg viewBox="0 0 18 18"><path d="M16 10h-6v6H8v-6H2V8h6V2h2v6h6z"/></svg>';
 $taskModel = new LegendsTasks();
@@ -98,21 +82,14 @@ $claimable = $taskModel->hasCollectable();
     <div class="sidebarBoxWrapper">
         <div id="sidebarBoxActiveVillage" class="sidebarBox">
             <div class="header">
-                <div class="buttonsWrapper">
-                    <?php echo $shortcut('market', 17, 'sbMarket') . $shortcut('barracks', 19, 'sbBarracks') . $shortcut('stable', 20, 'sbStable') . $shortcut('workshop', 21, 'sbWorkshop'); ?>
-                    <button type="button" class="layoutButton buttonFramed withIcon round more gold small" title="<?php echo $e($t('SB_MORE_BUILDINGS', 'More buildings')); ?>"
-                            onclick="var m=document.getElementById('activeVillageMore');m.hidden=!m.hidden;"><?php echo LegendsUi::svg('sbMore'); ?></button>
-                </div>
-                <div id="activeVillageMore" class="sidebarPopup" hidden>
-                    <?php
-                    $any = false;
-                    foreach ($moreBuildings as $gid) {
-                        if (!isset($slotOf[$gid])) continue;
-                        $any = true;
-                        echo '<a href="build.php?id=' . $slotOf[$gid] . '">' . $e($lang['buildings'][$gid] ?? $gid) . '</a>';
-                    }
-                    if (!$any) echo '<span>' . $e($t('SB_NO_BUILDINGS', 'No further buildings yet.')) . '</span>';
-                    ?>
+                <div class="buttonsWrapper quickLinks villageQuickLinks" data-kid="<?php echo (int)$village->wid; ?>">
+                    <?php foreach ($villageSlots as $i => $key) { ?>
+                        <div class="quickLinkSlot" data-slot="<?php echo $i; ?>"><?php echo $slotIndicator; ?><div class="slot"><?php echo $plusSmall; ?></div><?php
+                            if ($key !== '') echo LegendsQuickLinks::button($key, $quickLinks[$key], (bool)$session->plus);
+                        ?></div>
+                    <?php } ?>
+                    <button type="button" class="layoutButton buttonFramed withIcon round settings more gold small" title="<?php echo $e($t('QL_VILLAGE_EDIT', 'Edit the village\'s quick links')); ?>"
+                            onclick="VillageListUi.toggleQuickLinks(undefined, 'village');"><?php echo LegendsUi::svg('sbMore'); ?><svg class="closeIcon" viewBox="0 0 20 20"><path d="M0 17.01L7.01 10 .14 3.13 3.13.14 10 7.01 17.01 0 20 2.99 12.99 10l6.87 6.87-2.99 2.99L10 12.99 2.99 20 0 17.01z"/></svg></button>
                 </div>
             </div>
             <div class="content">
@@ -221,6 +198,8 @@ var VillageListConfig = <?php echo json_encode([
         'qlTitle' => $t('QL_TITLE', 'Available quick links for the village list'),
         'qlText' => $t('QL_TEXT', 'Drag up to 4 buttons into the slots of the village list to customise your quick links. The quick links are the same for all villages, but state and tooltip follow the active village.'),
         'qlRemove' => $t('QL_REMOVE', 'Tap a slot to empty it.'),
+        'qlVillageTitle' => sprintf($t('QL_VILLAGE_TITLE', 'Available quick links for the village %s'), $village->vname),
+        'qlVillageText' => $t('QL_VILLAGE_TEXT', 'Drag up to 5 buttons into the slots of the active village to customise your quick links.'),
     ],
     'colors' => VillageGroups::COLORS,
     'links' => array_map(function ($k) use ($quickLinks, $session) {
