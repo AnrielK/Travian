@@ -1698,6 +1698,26 @@ Travian.Tip.refresh();
         echo json_encode(['response' => ['error' => false, 'data' => $plusOut]]);
         break;
 
+    case 'legendsGoldClub':
+        // Bonifácův klub (Gold Club) dialog of the Legends look (application/legends/legendsDialogs.js): state, activation
+        header('Content-Type: application/json; charset=utf-8');
+        $gcCost = (int)$config['goldClub'];
+        $gcOut = ['gold' => (int)$session->gold, 'cost' => $gcCost, 'active' => $session->goldclub == 1];
+        if (($_POST['action'] ?? '') === 'activate' && !$gcOut['active']) {
+            $goldNow = (int)$database->single("SELECT gold FROM users WHERE id = " . (int)$session->uid);
+            if ($goldNow >= $gcCost) {
+                $database->modifyGold($session->uid, $gcCost, 0);
+                $database->query("UPDATE users SET goldclub = 1 WHERE id = " . (int)$session->uid);
+                $gcOut['activated'] = true;
+                $gcOut['active'] = true;
+                $gcOut['gold'] = $goldNow - $gcCost;
+            } else {
+                $gcOut['error'] = 'notEnoughGold';
+            }
+        }
+        echo json_encode(['response' => ['error' => false, 'data' => $gcOut]]);
+        break;
+
     case 'villageGroups':
         // village groups of the Legends village list (application/VillageGroups.php)
         header('Content-Type: application/json; charset=utf-8');

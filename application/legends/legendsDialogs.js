@@ -124,3 +124,86 @@ var LegendsPlus = (function () {
     if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', hookGame);
     return {open: open};
 })();
+
+/*
+ * Bonifácův klub (Gold Club) dialog: LegendsGoldClub.open(featureKey). The game's "goldclubDialog" buttons and tabs
+ * (window.fireEvent('buttonClicked' / 'tabClicked', [el, {goldclubDialog: {featureKey}}])) open it, and so does any
+ * element with data-goldclub-feature="…".
+ */
+var LegendsGoldClub = (function () {
+    var FEATURES = ['raidList', 'troopEscape', 'tradeThreeTimes', 'tradeRoute', 'cropFinder', 'messageArchive'];
+    var aliases = {farmList: 'raidList', raidlist: 'raidList', evasion: 'troopEscape', escape: 'troopEscape', cropfinder: 'cropFinder',
+        archive: 'messageArchive', tradeRoutes: 'tradeRoute', trade3: 'tradeThreeTimes'};
+
+    function post(data) {
+        var body = Object.keys(data).map(function (k) { return encodeURIComponent(k) + '=' + encodeURIComponent(data[k]); }).join('&');
+        return fetch('ajax.php?cmd=legendsGoldClub', {method: 'POST', credentials: 'same-origin',
+            headers: {'Content-Type': 'application/x-www-form-urlencoded'}, body: body})
+            .then(function (r) { return r.json(); }).then(function (j) { return j && j.response ? j.response.data : null; });
+    }
+    function feature(key, T) {
+        var f = T.features[key] || {title: key, text: ''};
+        return '<div class="feature"><div class="featureContent"><div class="featureImage ' + key + '"></div>'
+            + '<div class="featureTitle">' + f.title + '</div><div class="featureDescription">' + f.text + '</div></div></div>';
+    }
+    function open(featureKey) {
+        var T = (window.LegendsTexts || {}).goldclub;
+        if (!T) return;
+        featureKey = aliases[featureKey] || featureKey;
+        if (FEATURES.indexOf(featureKey) === -1) featureKey = 'raidList';
+        post({action: 'info'}).then(function (s) {
+            if (!s) return;
+            var coin = (window.LegendsTexts || {}).goldCoin || '';
+            var others = FEATURES.filter(function (k) { return k !== featureKey; });
+            var html = '<div class="featureCollection">'
+                + '<div class="packageFeatures mainFeature">' + feature(featureKey, T) + '</div>'
+                + '<div class="plusNotice">' + (s.active ? T.active : T.notice) + '</div>'
+                + '<div class="plusExtra">' + T.extra + '</div>'
+                + '<div class="packageFeatures">' + others.map(function (k) { return feature(k, T); }).join('') + '</div>'
+                + '<div class="featureBooking"><div class="feature"><div class="featureContent">'
+                + '<div class="featureImage goldclubDuration"></div>'
+                + '<div class="featureDuration">' + T.duration + ': <b>' + T.durationRound + '</b></div>'
+                + (s.active ? '' : '<div class="featureButton"><button type="button" class="textButtonV2 buttonFramed rectangle withText gold plusActivate"><div>'
+                    + T.activate + ' ' + coin + '<span class="goldValue">' + s.cost + '</span></div></button></div>')
+                + '</div></div></div>'
+                + '<p class="plusError" hidden></p></div>';
+            var d = LegendsDialog.open({cls: 'paymentShopV5 premiumFeaturePackage premiumFeatureGoldclub legendsPlusDialog legendsGoldClubDialog',
+                title: T.title, html: html,
+                header: '<div class="dialogGold" title="' + T.gold + '">' + coin + '<span>' + s.gold + '</span></div>'});
+            var btn = d.querySelector('.plusActivate');
+            if (!btn) return;
+            btn.addEventListener('click', function () {
+                btn.disabled = true;
+                post({action: 'activate'}).then(function (r) {
+                    if (r && r.activated) { location.reload(); return; }
+                    var err = d.querySelector('.plusError');
+                    err.textContent = T.notEnough;
+                    err.hidden = false;
+                    btn.disabled = false;
+                });
+            });
+        });
+    }
+    function hookGame() {
+        if (window.fireEvent && !window.__legendsGoldClubHook) {
+            window.__legendsGoldClubHook = true;
+            var orig = window.fireEvent;
+            window.fireEvent = function (type, args) {
+                if ((type === 'buttonClicked' || type === 'tabClicked') && args && args[1] && args[1].goldclubDialog) {
+                    open(args[1].goldclubDialog.featureKey || 'raidList');
+                    return this;
+                }
+                return orig.apply(this, arguments);
+            };
+        }
+    }
+    document.addEventListener('click', function (ev) {
+        var el = ev.target.closest ? ev.target.closest('[data-goldclub-feature]') : null;
+        if (!el) return;
+        ev.preventDefault();
+        open(el.getAttribute('data-goldclub-feature'));
+    });
+    hookGame();
+    if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', hookGame);
+    return {open: open};
+})();

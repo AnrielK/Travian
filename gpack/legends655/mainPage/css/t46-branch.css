@@ -207,3 +207,96 @@ body.legends655 .legendsPlusDialog .featureBooking .featureButton button.plusAct
     width: 100%; text-align: center; font-weight: 700; font-size: 16px; }
 body.legends655 .legendsPlusDialog .featureBooking .featureButton button.plusActivate { display: grid; place-items: center; height: 38px; padding: 0 20px; box-sizing: border-box; }
 body.legends655 .legendsPlusDialog .featureBooking .featureButton button.plusActivate > div { padding: 0; margin: 0; line-height: 1; height: auto; position: relative; top: 0; }
+/* Bonifácův klub (Gold Club) dialog */
+body.legends655 .legendsGoldClubDialog .featureBooking .featureImage.goldclubDuration { width: 84px; height: 56px;
+    background: url('../img_ltr/legacy/views/shop/goldClub_large.png') no-repeat center; }
+body.legends655 .legendsGoldClubDialog .featureBooking .featureContent { background: none; }
+body.legends655 .legendsGoldClubDialog .featureBooking .featureDuration { color: #5e463a; }
+/* rally point → Simulátory (application/views/Simulator/legends.php, application/legends/simulators.js) */
+body.legends655 #rallyPointSimulators { margin-top: 4px; }
+body.legends655 #rallyPointSimulators .subTabs_tabs a { line-height: 30px; height: 30px; position: relative; text-decoration: none; }
+body.legends655 #rallyPointSimulators .subTabs_tabs a.active { line-height: 33px; }
+body.legends655 #rallyPointSimulators .subTabs_tabs a svg.star { position: absolute; }
+body.legends655 #combatSimulator i[class*="bigTribe"].inactive { background-position: 0 0; }
+body.legends655 #combatSimulator .tribeSelection.attack .tribeWrapper div, body.legends655 #combatSimulator .tribeSelection.defence .tribeWrapper div { align-self: flex-end; }
+body.legends655 #combatSimulator .role .header > svg.roleIcon { grid-row-start: 1; grid-column-start: 1; align-self: end; margin: 0 0 -10px 6px; position: relative; z-index: 2; }
+body.legends655 #combatSimulator .role .header h2 { margin: 0; line-height: 36px; }
+body.legends655 #combatSimulator .role .header .villageSelection select { height: 22px; font-size: 12px; }
+body.legends655 #combatSimulator .role .header .iconButtonV2 { position: relative; top: auto; right: auto; margin: 0; background: linear-gradient(#fff, #e8e8e8); }
+body.legends655 #combatSimulator .role .header .iconButtonV2 svg { width: 16px; height: 16px; }
+body.legends655 #combatSimulator .role .header .iconButtonV2 svg path { fill: #5f5f64; }
+body.legends655 #combatSimulator .role .header .rolePopulation i.population_medium { transform: scale(.75); }
+body.legends655 #combatSimulator .role .content { min-height: 30px; }
+body.legends655 #combatSimulator .role.attacker .content .movement { top: 8px; }
+body.legends655 #combatSimulator .troops table { width: 100%; border-collapse: collapse; border: none; background: none; margin: 0; }
+body.legends655 #combatSimulator .troops table td, body.legends655 #combatSimulator .troops table th { border: none !important; background: none !important; }
+body.legends655 #combatSimulator .troops table tr.troopIcons td { height: 20px; }
+body.legends655 #combatSimulator .troops table input[type=text] { box-sizing: border-box; height: 22px; padding: 1px 4px; border: 1px solid #c9bda4; border-radius: 3px; background: #fff; font-size: 12px; }
+body.legends655 #combatSimulator .troops table tr.upgrades input[type=text] { width: 30px; height: 20px; font-size: 11px; color: #7a6a5a; }
+body.legends655 #combatSimulator .troops table th { width: 20px; }
+body.legends655 #combatSimulator .troops table th i.troopsIcon { display: inline-block; width: 16px; height: 16px; background: url('../img_ltr/global/combat/troops_medium.png') no-repeat center / contain; }
+body.legends655 #combatSimulator .troops table th i.smithyIcon { display: inline-block; width: 16px; height: 16px; background: url('../img_ltr/global/buildings/roman/icon/type13_small.png') no-repeat center / contain; }
+body.legends655 #combatSimulator .bonus { min-height: 39px; }
+body.legends655 #combatSimulator .bonus label { gap: 4px; }
+body.legends655 #combatSimulator .bonus input { width: 26px; height: 20px; box-sizing: border-box; border: 1px solid #c9bda4; border-radius: 3px; text-align: center; }
+body.legends655 #combatSimulator .bonus select { height: 22px; }
+body.legends655 #combatSimulator i.simWallIcon, body.legends655 #combatSimulator i.simResidenceIcon { display: inline-block; width: 18px; height: 18px; background: no-repeat center / contain; }
+body.legends655 #combatSimulator i.simWallIcon { background-image: url('../img_ltr/global/buildings/roman/icon/type31_small.png'); }
+body.legends655 #combatSimulator i.simResidenceIcon { background-image: url('../img_ltr/global/buildings/roman/icon/type25_small.png'); }
+body.legends655 #combatSimulator .heroAttributes input[type=text] { box-sizing: border-box; height: 22px; border: 1px solid #c9bda4; border-radius: 3px; text-align: center; }
+body.legends655 #combatSimulator .heroAttributes .stats label { display: inline-flex; align-items: center; gap: 3px; }
+body.legends655 #combatSimulator .tribeSelection.reinforcement .tribeWrapper div { padding: 4px 10px 2px; }
+body.legends655 #combatSimulator .tribeSelection.reinforcement .tribeWrapper div svg { top: 5px; }
+body.legends655 #combatSimulator .role.reinforcement .header { display: grid; }
+body.legends655 #combatSimulator .role.reinforcement .header h3 { margin: 0; grid-column-start: 2; }
+body.legends655 #combatSimulator .role.reinforcement .header i[class*="smallTribe"] { grid-column-start: 1; transform: scale(.8); margin-bottom: -6px; align-self: end; }
+body.legends655 #combatSimulator #stickyPin { margin-top: 30px; height: 56px; }
+body.legends655 #combatSimulator #stickyPin #stickyWrapper { box-sizing: border-box; }
+body.legends655 #combatSimulator #stickyPin .simulate { min-width: 160px; }
+body.legends655 #combatSimulator .results[hidden] { display: none; }
+body.legends655 #combatSimulator .results .result .header { padding: 0 10px; }
+body.legends655 #combatSimulator .results .result .header h2 { margin: 0; line-height: 36px; font-size: 1.4em; }
+body.legends655 #combatSimulator .results .result .header .outcome { height: 36px; position: relative; }
+body.legends655 #combatSimulator .results .result .header .outcome .outcomeIcons svg { width: 30px; height: 34px; }
+body.legends655 #combatSimulator .results .result .header .outcome .outcomeIcons svg.svgSkull { right: 30px !important; width: 26px; height: 32px; }
+body.legends655 #combatSimulator .results .result.reinforcement .header h2 { line-height: 26px; font-size: 1.1em; }
+body.legends655 #combatSimulator .results .result .content table th, body.legends655 #combatSimulator .results .result .content table td { border: none; background: none; }
+body.legends655 #combatSimulator .results .result .content table tr.troopsCount th, body.legends655 #combatSimulator .results .result .content table tr.troopsLoss th { width: 70px; text-align: left; font-weight: 700; }
+body.legends655 #combatSimulator .results .result .content table td.none { color: #b9ad9a; }
+body.legends655 #combatSimulator .results .result .content table .additionalInfo td i.carry { display: inline-block; width: 16px; height: 14px; background: url('../img_ltr/global/combat/bounty_full_small.png') no-repeat center / contain; }
+/* travel simulator */
+body.legends655 #rallyPointSimulators .travelSimulator[hidden], body.legends655 #rallyPointSimulators #combatSimulator[hidden] { display: none; }
+body.legends655 #rallyPointSimulators .travelSimulator .coordinatesWrapper input { box-sizing: border-box; height: 40px; border: 1px solid #c9bda4; border-radius: 4px; padding: 0 8px; font-size: 14px; }
+body.legends655 #rallyPointSimulators .travelSimulator .coordinatesWrapper .switchSourceAndTarget { padding: 0; }
+body.legends655 #rallyPointSimulators .travelSimulator .coordinatesWrapper .switchSourceAndTarget svg { fill: #fff; position: relative; z-index: 3; }
+body.legends655 #rallyPointSimulators .travelSimulator > label.select, body.legends655 #rallyPointSimulators .travelSimulator .simulatorHeroEffectSelectRow label.select { display: block; position: relative; }
+body.legends655 #rallyPointSimulators .travelSimulator label.select select { width: 100%; box-sizing: border-box; height: 40px; border: 1px solid #c9bda4; border-radius: 4px; padding: 10px 8px 4px; background: #fff; font-size: 13px; color: #3f2a14; }
+body.legends655 #rallyPointSimulators .travelSimulator > label.select select { width: 100%; }
+body.legends655 #rallyPointSimulators .travelSimulator label.select .label.pinned { position: absolute; left: 8px; top: -7px; padding: 0 4px; background: #fff; font-size: 10px; line-height: 13px; color: rgba(94, 70, 58, .75); }
+body.legends655 #rallyPointSimulators .travelSimulator .simulatorHeroEffectSelectRow { grid-template-columns: 1fr 170px; margin-bottom: 18px; }
+body.legends655 #rallyPointSimulators .travelSimulator .simulatorHeroEffectSelectRow .effectMagnitude { grid-column: 2; }
+body.legends655 #rallyPointSimulators .travelSimulator > label { margin-bottom: 18px; }
+body.legends655 #rallyPointSimulators .travelSimulator .calculationWrapper { margin-top: 10px; }
+body.legends655 #rallyPointSimulators .travelSimulator .calculationWrapper .loadingIndicator[hidden] { display: none; }
+body.legends655 #rallyPointSimulators .travelSimulator .coordinatesWrapper [hidden] { display: none; }
+body.legends655 #combatSimulator .switchRoleWrapper .switch { color: #f2f2f2 !important; font-weight: 700; border-radius: 3px; cursor: pointer; text-shadow: 0 1px 1px rgba(0, 0, 0, .35); }
+body.legends655 #combatSimulator .role .header.you ~ .tribeSelection .tribeWrapper div.inactive { cursor: default; }
+body.legends655 #combatSimulator .role .header.you ~ .tribeSelection .tribeWrapper div.inactive:hover:before { height: 0; }
+body.legends655 #combatSimulator .results .result .content table, body.legends655 #combatSimulator .results .result .content table tr,
+body.legends655 #combatSimulator .results .result .content table th, body.legends655 #combatSimulator .results .result .content table td { background: transparent !important; border: none !important; }
+body.legends655 #combatSimulator .results .result .content table tr.troopsLoss td.none { color: #b9ad9a; }
+body.legends655 #combatSimulator .results .result.reinforcement .header { padding-left: 50px; }
+body.legends655 #combatSimulator .role.reinforcement .header .iconButtonV2 svg { width: 12px; height: 12px; margin: 0; }
+body.legends655 #combatSimulator .role.reinforcement .header .iconButtonV2 { width: 22px; height: 22px; }
+body.legends655 #build.gid16 .evasionInfo .goldclubButton { min-width: 110px; height: 24px; font-size: 11px; margin-top: 6px; }
+body.legends655 #build.gid16 .evasionInfo .goldclubButton > div { padding: 0 14px; line-height: 22px; }
+body.legends655 #build.gid16 .evasionOptions label { display: inline-flex; gap: 6px; align-items: center; }
+/* task details and the collect animation (tasks.php, application/legends/tasks.js) */
+body.legends655 #tasks .taskDetailview .taskDescription .imageFrame .taskImage { width: 145px; height: 145px; }
+body.legends655 #tasks .taskDetailview .taskDescription .imageFrame .taskImage img { top: auto; }
+body.legends655 #tasks .taskDetailview .taskDescription > .description .text { line-height: 18px; }
+body.legends655 #tasks .task.group[data-href] { cursor: pointer; }
+body.legends655 #tasks .task .progress button.collect.collected.preventAnimation { cursor: default; }
+body.legends655 #tasks .task .progress button.collect { overflow: visible; }
+body.legends655 .legendsRewardFlight { position: absolute; left: 0; top: 0; width: 0; height: 0; z-index: 10000; pointer-events: none; }
+body.legends655 .legendsRewardFlight .entity { position: absolute; z-index: 37; filter: drop-shadow(0 0 5px #000); white-space: nowrap; will-change: transform, opacity; }

@@ -79,9 +79,15 @@ final class LegendsTasks
                     'steps' => [[100, 375, 25], [250, 750, 40], [500, 1500, 60], [1000, 2500, 100], [2500, 5000, 150]]],
             ];
         }
+        // resource fields: like Travian Legends one task for a single field ("Železné doly") and one for all of them
+        // ("Všechny železné doly"); steps [fields (0 = all), level, resources, experience]
         $resource = function (int $gid) {
-            return ['type' => 'fields', 'gid' => $gid, 'image' => 'building g' . $gid, 'title' => self::building($gid),
-                'steps' => [[1, 2, 150, 10], [1, 4, 300, 20], [0, 4, 600, 30], [1, 7, 900, 40], [0, 7, 1500, 60], [1, 10, 2500, 80], [0, 10, 4000, 120]]];
+            return ['type' => 'fields', 'gid' => $gid, 'image' => 'building g' . $gid, 'title' => self::t('TASKS_RES_' . $gid, self::building($gid)),
+                'steps' => [[1, 2, 120, 8], [1, 4, 240, 16], [1, 7, 400, 26], [1, 10, 570, 38]]];
+        };
+        $resourceAll = function (int $gid) {
+            return ['type' => 'fields', 'gid' => $gid, 'image' => 'building g' . $gid, 'title' => self::t('TASKS_RES_ALL_' . $gid, self::building($gid)),
+                'steps' => [[0, 2, 240, 16], [0, 3, 385, 25], [0, 5, 590, 39], [0, 8, 900, 60], [0, 10, 1300, 85]]];
         };
         $building = function (int $gid, array $levels, int $base = 150) {
             return ['type' => 'level', 'gid' => $gid, 'image' => 'building g' . $gid, 'title' => self::building($gid),
@@ -99,6 +105,10 @@ final class LegendsTasks
             'wall' => $building($wall, [1, 5, 10, 15, 20]),
             'cropland' => $resource(4),
             'ironmine' => $resource(3),
+            'woodcutterAll' => $resourceAll(1),
+            'claypitAll' => $resourceAll(2),
+            'ironmineAll' => $resourceAll(3),
+            'croplandAll' => $resourceAll(4),
             'mainBuilding' => $building(15, [3, 5, 10, 15, 20]),
             'warehouse' => $building(10, [1, 3, 7, 12, 20]),
             'granary' => $building(11, [1, 3, 7, 12, 20]),
@@ -125,6 +135,62 @@ final class LegendsTasks
             return [$order[$a['state']], -$a['ratio']] <=> [$order[$b['state']], -$b['ratio']];
         });
         return $tasks;
+    }
+
+    /**
+     * One task with its description and the steps reached so far (Legends task details): the current step first, then the
+     * collected ones from the newest; null for an unknown task.
+     */
+    public function details(string $scope, string $key): ?array
+    {
+        $definitions = $this->definitions($scope);
+        if (!isset($definitions[$key])) return null;
+        $definition = $definitions[$key];
+        $task = $this->describe($scope, $key, $definition);
+        $bonus = 1 + self::bonusPercent(self::heroLevel()) / 100;
+        $steps = [];
+        $last = min($task['step'], count($definition['steps']) - 1);
+        for ($i = $last; $i >= 0; $i--) {
+            $step = $definition['steps'][$i];
+            [$resources, $experience] = $definition['type'] === 'fields' ? [$step[2], $step[3]] : [$step[1], $step[2]];
+            $entry = ['index' => $i, 'title' => $this->stepTitle($key, $definition, $step),
+                'rewardResources' => (int)round($resources * $bonus), 'rewardExperience' => (int)round($experience * $bonus)];
+            if ($i === $task['step'] && $task['state'] !== 'collected') {
+                $entry += ['state' => $task['state'], 'value' => $task['value'], 'goal' => $task['goal'], 'ratio' => $task['ratio'],
+                    'type' => $task['type'], 'level' => $task['level'] ?? 0];
+            } else {
+                $entry['state'] = 'collected';
+            }
+            $steps[] = $entry;
+        }
+        $task['description'] = $this->description($key, $definition);
+        $task['history'] = $steps;
+        return $task;
+    }
+
+    private function stepTitle(string $key, array $definition, array $step): string
+    {
+        if ($definition['type'] === 'fields') {
+            return $step[0]
+                ? sprintf(self::t('TASKS_STEP_ONE', 'One building "%s" to level %d'), self::building($definition['gid']), $step[1])
+                : sprintf(self::t('TASKS_STEP_ALL', 'All buildings "%s" to level %d'), self::t('TASKS_RES_' . $definition['gid'], self::building($definition['gid'])), $step[1]);
+        }
+        if ($definition['type'] === 'level') {
+            return sprintf(self::t('TASKS_STEP_LEVEL', 'Building "%s" to level %d'), self::building($definition['gid']), $step[0]);
+        }
+        return sprintf(self::t('TASKS_STEP_COUNT', '%s: %s'), $definition['title'], number_format((int)$step[0], 0, ',', ' '));
+    }
+
+    private function description(string $key, array $definition): string
+    {
+        $byKey = ['population' => 'TASKS_DESC_POPULATION', 'culturePoints' => 'TASKS_DESC_CULTURE', 'villages' => 'TASKS_DESC_VILLAGES',
+            'populationTotal' => 'TASKS_DESC_POPULATION_TOTAL', 'culturePointsTotal' => 'TASKS_DESC_CULTURE_TOTAL', 'wall' => 'TASKS_DESC_WALL'];
+        if (isset($byKey[$key])) return self::t($byKey[$key], '');
+        if ($definition['type'] === 'fields') {
+            return substr($key, -3) === 'All' ? self::t('TASKS_DESC_RES_ALL', '') : self::t('TASKS_DESC_RES_' . $definition['gid'], '');
+        }
+        $gid = (int)($definition['gid'] ?? 0);
+        return self::t('TASKS_DESC_G' . $gid, self::t('TASKS_DESC_BUILDING', ''));
     }
 
     /** Whether a village or general task waits to be collected (mentor's exclamation bubble). */

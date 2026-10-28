@@ -1240,7 +1240,7 @@ define("PY5", 'Jednotky ve vesnici ');
 define("PY6", 'Vesnice');
 define("PY7", 'Vlastní jednotky');
 define("PY8", 'Jednotky ');
-define("PY9", 'Údržba ');
+define("PY9", 'Výživa ');
 define("PY10", 'za hodinu ');
 define("PY11", 'Poslat zpět ');
 define("PY12", 'Jednotky v jiných vesnicích ');

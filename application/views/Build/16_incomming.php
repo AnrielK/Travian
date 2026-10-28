@@ -183,7 +183,7 @@ for ($y = 0; $y < $total_for; $y++) {
             </tbody>
             <tbody class="infos">
             <tr>
-                <th>Upkeep</th>
+                <th><?= PY9 ?></th>
                 <td colspan="<?php if (php7_is_zero($units[$y]['t11'])) {
                     echo "10";
                 } else {
@@ -247,7 +247,7 @@ for ($t = 1; $t <= 3; $t++) {
 
             <tbody class="infos">
             <tr>
-                <th>Upkeep</th>
+                <th><?= PY9 ?></th>
                 <td colspan="10">
                     <?php
                     echo "<div class=\"in small\"><span class='timer' counting='down' value='" . ($oasistroop['endtime'] - time()) . "'>" . $generator->getTimeFormat($oasistroop['endtime'] - time()) . "</span></div>";

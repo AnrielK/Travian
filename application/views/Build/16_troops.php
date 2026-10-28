@@ -16,7 +16,7 @@ if (!php7_is_zero($village->unitarray['u11'])) {
 ?>
 </tr>
 <tr>
-    <th>Troops of</th>
+    <th><?= PY8 ?></th>
     <?php
     for ($i = 1; $i <= $coolspan; $i++) {
         if (php7_is_zero($village->unitarray['u' . $i])) {
@@ -32,14 +32,14 @@ if (!php7_is_zero($village->unitarray['u11'])) {
 </tr></tbody>
 <tbody class="infos">
 <tr>
-    <th>Upkeep</th>
+    <th><?= PY9 ?></th>
     <td colspan="<?php echo $coolspan; ?>">
         <div class="sup">
             <div class="inlineIconList supplyWrapper">
                 <div class="inlineIcon resources"><span
                             class="value "><?php echo $database->getUpkeep($village->unitarray, $tribe, $village->resarray); ?></span><i
                             class="r4"></i></div>
-            </div>&nbsp;per hour
+            </div>&nbsp;<?= PY10 ?>
         </div>
     </td>
 </tr>

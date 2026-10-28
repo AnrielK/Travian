@@ -418,8 +418,12 @@ if (($village->resarray['f99t'] == 40) or ($village->resarray['f99t'] == 40) or 
 
 
                                             if (in_array($bid, array(25, 26, 16, 17, 27, 44))) {
-                                                if ((isset($_GET['t']) && is_numeric($_GET['t'])) || $_GET['show']) {
+                                                if ((isset($_GET['t']) && is_numeric($_GET['t'])) || !empty($_GET['show'])) {
                                                     $showTop = FALSE;
+                                                }
+                                                // rally point: t=0 is the management tab (description, upgrade, evasion) like no t at all
+                                                if ($bid == 16 && isset($_GET['t']) && (string)$_GET['t'] === '0' && empty($_GET['show'])) {
+                                                    $showTop = TRUE;
                                                 }
                                             }
                             ?>
@@ -450,7 +454,7 @@ if (($village->resarray['f99t'] == 40) or ($village->resarray['f99t'] == 40) or 
 
                                                     <div id="descriptionAndInfo">
                                                         <div class="build_desc">
-                                                            <?= $lang['desc'][$village->resarray['f' . $_GET['id'] . 't']][0] ?>
+                                                            <?= ($bid == 16 && Skin::isLegends()) ? LegendsUi::t('RP_DESC', $lang['desc'][16][0]) : $lang['desc'][$village->resarray['f' . $_GET['id'] . 't']][0] ?>
                                                         </div>
                                                         <div class="clear"></div>
                                     <?php

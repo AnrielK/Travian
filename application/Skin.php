@@ -22,7 +22,7 @@ final class Skin
     ];
     const COOKIE = 't46_gpack';
     /** Cache buster of the pack's stylesheet. */
-    const VERSION = 8;
+    const VERSION = 9;
 
     private static $current = null;
 
@@ -193,6 +193,18 @@ final class Skin
             $c = 'LP_' . strtoupper(preg_replace('/([a-z])([A-Z])/', '$1_$2', $key));
             $features[$key] = ['title' => $t($c, $title), 'text' => $t($c . '_TEXT', $text)];
         }
+        $goldFeatures = [];
+        foreach ([
+            'raidList' => ['Farm list', 'Set up profitable targets in the farm list of your rally point.'],
+            'troopEscape' => ['Troop evasion in the capital', 'Order the troops trained in your capital to flee into the forest when the capital is attacked.'],
+            'tradeThreeTimes' => ['Merchants can run 3x', 'Merchants can repeat one delivery up to three times.'],
+            'tradeRoute' => ['Automatic trade routes', 'Set up automatic transfers of resources between your own villages at given times.'],
+            'cropFinder' => ['Crop finder', 'Find fields with increased crop production and crop oases nearby.'],
+            'messageArchive' => ['Message and report archive', 'Archive important messages and reports and find them again easily.'],
+        ] as $key => [$title, $text]) {
+            $c = 'LG_' . strtoupper(preg_replace('/([a-z])([A-Z])/', '$1_$2', $key));
+            $goldFeatures[$key] = ['title' => $t($c, $title), 'text' => $t($c . '_TEXT', $text)];
+        }
         $texts = [
             'close' => $t('UI_CLOSE', 'Close'),
             'goldCoin' => LegendsUi::goldCoin('goldCoin'),
@@ -207,6 +219,18 @@ final class Skin
                 'extend' => $t('LP_EXTEND', 'Extend'),
                 'notEnough' => $t('LP_NOT_ENOUGH', 'You do not have enough gold.'),
                 'features' => $features,
+            ],
+            'goldclub' => [
+                'title' => $t('LG_TITLE', 'Gold Club'),
+                'gold' => $t('LP_GOLD', 'Gold'),
+                'notice' => $t('LG_NOTICE', 'You need an active Gold Club to use this feature!'),
+                'active' => $t('LG_ACTIVE', 'Your Gold Club is active.'),
+                'extra' => $t('LP_EXTRA', 'You also get the following advantages:'),
+                'duration' => $t('LG_DURATION', 'Bonus duration'),
+                'durationRound' => $t('LG_DURATION_ROUND', 'whole game round'),
+                'activate' => $t('LP_ACTIVATE', 'Activate'),
+                'notEnough' => $t('LP_NOT_ENOUGH', 'You do not have enough gold.'),
+                'features' => $goldFeatures,
             ],
         ];
         return '<script type="text/javascript">window.LegendsTexts = ' . json_encode($texts, JSON_UNESCAPED_UNICODE | JSON_HEX_TAG) . ';</script>'

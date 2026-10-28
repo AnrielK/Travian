@@ -29,23 +29,23 @@
                 $units_incoming -= 1;
         }
         if ($units_incoming >= 1) {
-            echo "<h4>" . PY15 . "</h4>";
+            echo "<h4>" . (Skin::isLegends() ? LegendsUi::e(LegendsUi::t('RP_ON_THE_WAY', 'Troops on their way')) . ' (' . $units_incoming . ')' : PY15) . "</h4>";
             include("16_walking.php");
         }
         ?>
 
-        <h4><?= PY5; ?></h4>
+        <h4><?= Skin::isLegends() ? LegendsUi::e(LegendsUi::t('RP_IN_VILLAGE', 'Troops in the village and own oases')) . ' (' . (1 + safe_count($database->getEnforceVillage($village->wid, 0))) . ')' : PY5; ?></h4>
         <table class="troop_details" cellpadding="1" cellspacing="1">
             <thead>
             <tr>
-                <td class="role"><a href="karte.php?d=<?php echo $village->wid; ?>"><?php echo $village->vname; ?></a>
+                <td class="role"><?php if (Skin::isLegends()) echo LegendsUi::e(LegendsUi::t('RP_VILLAGE', 'Village')) . ': '; ?><a href="karte.php?d=<?php echo $village->wid; ?>"><?php echo $village->vname; ?></a>
                 </td>
                 <td colspan="<?php if (php7_is_zero($village->unitarray['u11'])) {
                     echo "10";
                 } else {
                     echo "11";
                 } ?>">
-                    Own troops
+                    <?php echo defined('RP_OWN_TROOPS') ? RP_OWN_TROOPS : 'Own troops'; ?>
                 </td>
             </tr>
             </thead>
@@ -111,7 +111,7 @@
         $enforcetoyou = $database->getEnforceVillage($village->wid, 1); //подкрепы от меня
         if (safe_count($enforcetoyou) > 0) {
 
-            echo "<h4>" . PY12 . "</h4>";
+            echo "<h4>" . (Skin::isLegends() ? LegendsUi::e(LegendsUi::t('RP_IN_OTHER', 'Troops in other villages and oases')) . ' (' . safe_count($enforcetoyou) . ')' : PY12) . "</h4>";
             foreach ($enforcetoyou as $enforce) {
 
                 // echo $enforce['vref']."<br />";
@@ -376,7 +376,31 @@
                     }
                 }
     } elseif ($_GET['t'] == 3) {
-        include("application/views/Simulator/overview.php");
+        if (Skin::isLegends()) {
+            include("application/views/Simulator/legends.php");
+        } else {
+            include("application/views/Simulator/overview.php");
+        }
+    }
+    elseif (Skin::isLegends()) { // management of the Legends look: evasion settings with the Bonifácův klub (Gold Club)
+        ?>
+        <div id="raidList">
+            <div class="round spacer listTitle">
+                <div class="listTitleText"><?php echo LegendsUi::e(LegendsUi::t('RP_EVASION', 'Evasion settings')); ?></div>
+                <div class="clear"></div>
+            </div>
+            <?php if (!$session->goldclub) { ?>
+                <div class="build_desc evasionInfo"><p><?php echo LegendsUi::e(LegendsUi::t('RP_EVASION_TEXT', 'With the Gold Club you can order the troops in your capital to evade attacks automatically.')); ?></p>
+                    <?php echo LegendsUi::button(LegendsUi::e(LegendsUi::t('LG_TITLE', 'Gold Club')), ['appearance' => 'gold', 'class' => 'goldclubButton', 'data' => ['goldclub-feature' => 'troopEscape']]); ?>
+                </div>
+            <?php } else { ?>
+                <div class="options evasionOptions">
+                    <label><input type="checkbox" class="check" name="hideShow" onclick="window.location.href = '?id=39&t=100&<?php echo $session->evasion == 1 ? 'disable' : 'enable'; ?>';"<?php echo $session->evasion == 1 ? ' checked="checked"' : ''; ?>>
+                        <?php echo LegendsUi::e(LegendsUi::t('RP_EVASION_ON', 'Troops in the capital evade attacks automatically')); ?></label>
+                </div>
+            <?php } ?>
+        </div>
+        <?php
     }
     else{ // Smuggling forces
     ?>

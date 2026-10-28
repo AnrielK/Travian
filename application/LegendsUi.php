@@ -240,7 +240,7 @@ class LegendsUi
         $pages = array_values(array_unique(array_filter($pages, static function ($p) use ($count) { return $p === null || ($p >= 1 && $p <= $count); }), SORT_REGULAR));
         $go = static function (int $p) use ($url) { return ' onclick="window.location.href=\'' . self::e(addslashes($url . $p)) . '\'"'; };
         $html = '<div class="pagination">';
-        $html .= '<button type="button" class="back' . ($page <= 1 ? ' disabled' : '') . '"' . ($page > 1 ? $go($page - 1) : '') . '></button>';
+        $html .= '<button type="button" class="back' . ($page <= 1 ? ' disabled' : '') . '" title="' . self::e(self::t('UI_PREV_PAGE', 'Previous page')) . '"' . ($page > 1 ? $go($page - 1) : '') . '></button>';
         $last = 0;
         foreach ($pages as $p) {
             if ($p === null) {
@@ -253,7 +253,7 @@ class LegendsUi
             $last = $p;
             $html .= '<button type="button" class="page' . ($p === $page ? ' selected' : '') . '"' . $go($p) . '></button><div class="pageIndex">' . $p . '</div>';
         }
-        $html .= '<button type="button" class="forward' . ($page >= $count ? ' disabled' : '') . '"' . ($page < $count ? $go($page + 1) : '') . '></button>';
+        $html .= '<button type="button" class="forward' . ($page >= $count ? ' disabled' : '') . '" title="' . self::e(self::t('UI_NEXT_PAGE', 'Next page')) . '"' . ($page < $count ? $go($page + 1) : '') . '></button>';
         return $html . '</div>';
     }
 
