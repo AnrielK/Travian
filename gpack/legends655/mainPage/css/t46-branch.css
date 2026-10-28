@@ -425,3 +425,19 @@ body.legends655 .sidebar .quickLinks .layoutButton.settings.editMode .closeIcon 
 body.legends655 .sidebar .quickLinks .quickLinkSlot.editMode .slot { background: #fbfbfb; box-shadow: inset 0 0 0 1px #d6d6d6, inset 0 2px 4px rgba(0, 0, 0, .12); }
 body.legends655 #rallyPointSimulators .subTabs_tabs a:not(.favor) svg.star { position: absolute !important; top: 2px; right: 2px; width: 10px; height: 10px; fill: #f2f2f2; }
 body.legends655 #rallyPointSimulators .subTabs_tabs a.active:not(.favor) svg.star { fill: #5e463a; }
+/* marker of the favourite / active tab in the tab bar under the window header: the Legends icon, whole (not clipped) */
+body.legends655 #content .contentNavi.subNavi:has(> .container > .content.favorActive),
+body.legends655 #content.heroV2 .contentNavi.subNavi { overflow: visible !important; }
+body.legends655.t46Layout.legendsV2 #content .contentNavi.subNavi > .container:has(> .content.favorActive)::before,
+body.legends655.t46Layout.legendsV2 #content.heroV2 .contentNavi.subNavi > .container.active::after {
+    background: url('../img_ltr/hud/content/favor_medium.png') no-repeat center !important; width: 26px !important; height: 18px !important; top: -9px !important; }
+/* quick link slots while editing: grey circle in a tight dashed brown ring, like Legends */
+body.legends655 .sidebar .quickLinks .quickLinkSlot .editSlotIndicator { inset: auto !important; left: 50% !important; top: 50% !important; transform: translate(-50%, -50%);
+    width: 42px !important; height: 42px !important; stroke: #5e463a !important; }
+body.legends655 .sidebar .quickLinks .quickLinkSlot.editMode .slot { width: 38px; height: 38px; background: #ddd6c7 !important; box-shadow: none !important; }
+body.legends655 .sidebar .quickLinks .quickLinkSlot.editMode .layoutButton.quickLink { position: relative; z-index: 1; }
+/* close button while editing: framed round button with a light face and a grey X like Legends */
+body.legends655 .sidebar .quickLinks .layoutButton.settings.editMode { width: 26px !important; height: 26px !important; border-radius: 50%;
+    background: radial-gradient(circle at 50% 40%, #ffffff 0, #e9e9e9 60%, #cfcfcf 100%) !important; border: none !important;
+    box-shadow: 0 0 0 2px #c9a75f, 0 0 0 3px #7a5a2a, 0 1px 3px rgba(0, 0, 0, .45) !important; }
+body.legends655 .sidebar .quickLinks .layoutButton.settings.editMode .closeIcon { fill: #8c8c8c !important; width: 12px !important; height: 12px !important; max-height: none !important; filter: drop-shadow(0 1px 0 #fff); }
