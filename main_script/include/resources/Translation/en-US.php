@@ -5946,4 +5946,31 @@ $Definition['LegendsGoldClub']['features']['messageArchive']['text'] = 'Archive 
 $Definition['LegendsGoldClub']['evasionTitle'] = 'Evasion settings';
 $Definition['LegendsGoldClub']['evasionDesc'] = 'With the Gold Club you can order the troops of your capital to evade attacks automatically.';
 
+
+// Travian PLUS dialog of the Legends 655 look (js/Game/Legends/plus.js)
+$Definition['LegendsPlus']['title'] = 'Travian PLUS';
+$Definition['LegendsPlus']['gold'] = 'Gold';
+$Definition['LegendsPlus']['notice'] = 'You need an active Travian PLUS account to use this feature!';
+$Definition['LegendsPlus']['active'] = 'Your Travian PLUS account is active.';
+$Definition['LegendsPlus']['extra'] = 'You also get the following advantages:';
+$Definition['LegendsPlus']['durationDays'] = 'Bonus duration (days)';
+$Definition['LegendsPlus']['durationHours'] = 'Bonus duration (hours)';
+$Definition['LegendsPlus']['activate'] = 'Activate';
+$Definition['LegendsPlus']['extend'] = 'Extend';
+$Definition['LegendsPlus']['notEnough'] = 'You do not have enough gold.';
+$Definition['LegendsPlus']['features']['directLinks']['title'] = 'Quick links';
+$Definition['LegendsPlus']['features']['directLinks']['text'] = 'Improve your game with personalised quick links. Set up unique shortcuts for every village and reach your most important buildings quickly.';
+$Definition['LegendsPlus']['features']['attackWarning']['title'] = 'Attack warning';
+$Definition['LegendsPlus']['features']['attackWarning']['text'] = 'Incoming attacks are shown in the village list.';
+$Definition['LegendsPlus']['features']['buildingQueue']['title'] = 'Waiting loop';
+$Definition['LegendsPlus']['features']['buildingQueue']['text'] = 'The waiting loop lets you queue the construction of one more building.';
+$Definition['LegendsPlus']['features']['linkList']['title'] = 'Link list';
+$Definition['LegendsPlus']['features']['linkList']['text'] = 'Lets you set up direct links that take you to any page of the game with one click.';
+$Definition['LegendsPlus']['features']['villageStatistics']['title'] = 'Village overview';
+$Definition['LegendsPlus']['features']['villageStatistics']['text'] = 'Overviews of production, storage, culture points and units of all villages.';
+$Definition['LegendsPlus']['features']['fullScreen']['title'] = 'Larger map';
+$Definition['LegendsPlus']['features']['fullScreen']['text'] = 'A larger map gives you a better overview of your surroundings.';
+$Definition['LegendsPlus']['features']['tradeMulti']['title'] = 'Merchants can run 2x';
+$Definition['LegendsPlus']['features']['tradeMulti']['text'] = 'After returning from their first delivery, merchants set off again automatically.';
+
 return $Definition;

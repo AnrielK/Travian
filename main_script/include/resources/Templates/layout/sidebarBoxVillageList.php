@@ -63,7 +63,7 @@
                         });
                     }
                 </script>
-                <?php if (getDisplay("fastBuilder")):
+                <?php if (getDisplay("fastBuilder") && !$qlV2): // Legends: no fast builder toggle (a click always opens the building)
                 $builderStatus = \Core\Session::getInstance()->getDisplay()[5];
                 if ($builderStatus == 1) {
                     $title = 'Enable this button to construct by clicking on the field';

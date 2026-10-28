@@ -180,6 +180,7 @@
 				</td>
 			<?php endif; ?>
 		</tr>
+        <?php if (!is_hero_v2()): // Travian Legends has no fast upgrade ?>
         <tr>
                 <td class="sel">
                     <input
@@ -193,6 +194,7 @@
                         for="fast_upgrade"><?=T("Options", "Use fast upgrade on buildings"); ?></label>
                 </td>
         </tr>
+        <?php endif; ?>
 		</tbody>
 	</table>
 

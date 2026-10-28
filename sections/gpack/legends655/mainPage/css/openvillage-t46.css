@@ -1684,3 +1684,22 @@ body.legendsV2 .legendsGoldClubDialog .featureBooking .featureImage.goldclubDura
 body.legendsV2 .legendsGoldClubDialog .featureBooking .featureContent { background: none; }
 body.legendsV2 .legendsGoldClubDialog .featureBooking .featureDuration { color: #5e463a; }
 body.legendsV2 .dialogV2.dialogWrapper .dialog.legendsGoldClubDialog .packageFeatures .featureContent .featureImage.raidList { background-position: 0 0 !important; }
+
+/* Quick links of the right sidebar aligned like in Travian Legends: both rows end at the same place on the right of the box
+   and share one column grid – five 44px columns (village box: five slots; village list: four slots and the overview button)
+   followed by the "…" button. An empty slot keeps its column (invisible), so the links never shift; the fast builder
+   button of the classic layouts is not part of the Legends village list. */
+body.legendsV2 .sidebar #sidebarBoxActiveVillage .innerBox.header .buttonsWrapper.quickLinks,
+body.legendsV2 .sidebar #sidebarBoxVillagelist .innerBox.header .buttonsWrapper.quickLinks {
+    position: absolute; top: -8px; right: 14px; left: auto; margin: 0; display: flex; flex-direction: row; justify-content: flex-end;
+    align-items: center; gap: 1px; }
+body.legendsV2 .sidebar .buttonsWrapper.quickLinks .quickLinkSlot { position: relative; box-sizing: border-box; display: grid; place-items: center;
+    width: 44px; height: 44px; flex: 0 0 44px; margin: 0; }
+body.legendsV2 .sidebar .buttonsWrapper.quickLinks .quickLinkSlot:not(.editMode):not(:has(.layoutButton)) { display: grid; visibility: hidden; }
+body.legendsV2 .sidebar #sidebarBoxVillagelist .buttonsWrapper.quickLinks > .spacer { display: none; }
+body.legendsV2 .sidebar #sidebarBoxVillagelist .buttonsWrapper.quickLinks > button.layoutButton.overview { margin: 0 2px !important; flex: 0 0 40px; }
+body.legendsV2 .sidebar #sidebarBoxVillagelist .buttonsWrapper.quickLinks > button.buttonBuild,
+body.legendsV2 .sidebar #sidebarBoxVillagelist .buttonsWrapper.quickLinks > #buttonBuild { display: none !important; }
+body.legendsV2 .sidebar .buttonsWrapper.quickLinks > .layoutButton.buttonFramed.withIcon.round.settings { width: 26px; height: 26px; flex: 0 0 26px;
+    margin: 0 0 0 3px !important; align-self: center; }
+body.legendsV2 .sidebar .buttonsWrapper.quickLinks > .layoutButton.buttonFramed.withIcon.round.settings > svg:not(.closeIcon) { width: 14px; height: 4px; }

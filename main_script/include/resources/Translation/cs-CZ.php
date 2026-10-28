@@ -6001,4 +6001,31 @@ $Definition['LegendsGoldClub']['features']['messageArchive']['text'] = 'Důleži
 $Definition['LegendsGoldClub']['evasionTitle'] = 'Nastavení uhýbání';
 $Definition['LegendsGoldClub']['evasionDesc'] = 'S Bonifácovým klubem můžeš dát svým jednotkám v hlavní vesnici povel, aby před útokem automaticky utekly.';
 
+
+// Travian PLUS dialog of the Legends 655 look (js/Game/Legends/plus.js)
+$Definition['LegendsPlus']['title'] = 'Travian PLUS';
+$Definition['LegendsPlus']['gold'] = 'Zlato';
+$Definition['LegendsPlus']['notice'] = 'K využití této funkce musíš mít aktivovaný Travian PLUS účet!';
+$Definition['LegendsPlus']['active'] = 'Travian PLUS máš aktivovaný.';
+$Definition['LegendsPlus']['extra'] = 'Navíc získáš následující výhody:';
+$Definition['LegendsPlus']['durationDays'] = 'Trvání bonusu (dny)';
+$Definition['LegendsPlus']['durationHours'] = 'Trvání bonusu (hodiny)';
+$Definition['LegendsPlus']['activate'] = 'Aktivovat';
+$Definition['LegendsPlus']['extend'] = 'Prodloužit';
+$Definition['LegendsPlus']['notEnough'] = 'Nemáš dost zlata.';
+$Definition['LegendsPlus']['features']['directLinks']['title'] = 'Rychlé odkazy';
+$Definition['LegendsPlus']['features']['directLinks']['text'] = 'Vylepši svou hru pomocí personalizovaných rychlých odkazů. Nastav si snadno jedinečné zkratky pro každou vesnici a zajisti si tak rychlý přístup k těm nejdůležitějším budovám.';
+$Definition['LegendsPlus']['features']['attackWarning']['title'] = 'Upozornění na útok';
+$Definition['LegendsPlus']['features']['attackWarning']['text'] = 'Příchozí útoky se zobrazí v seznamu vesnic.';
+$Definition['LegendsPlus']['features']['buildingQueue']['title'] = 'Vyčkávací smyčka';
+$Definition['LegendsPlus']['features']['buildingQueue']['text'] = 'Vyčkávací smyčka umožňuje zadat do fronty stavbu další budovy.';
+$Definition['LegendsPlus']['features']['linkList']['title'] = 'Seznam odkazů';
+$Definition['LegendsPlus']['features']['linkList']['text'] = 'Umožňuje nastavení přímých odkazů, díky nimž se dostaneš na jakoukoli stránku ve hře jedním kliknutím.';
+$Definition['LegendsPlus']['features']['villageStatistics']['title'] = 'Přehled vesnic';
+$Definition['LegendsPlus']['features']['villageStatistics']['text'] = 'Přehledy produkce, stavu skladů, kulturních bodů a jednotek ze všech vesnic.';
+$Definition['LegendsPlus']['features']['fullScreen']['title'] = 'Větší mapa';
+$Definition['LegendsPlus']['features']['fullScreen']['text'] = 'Umožňuje lepší přehled o okolí díky větší velikosti mapy.';
+$Definition['LegendsPlus']['features']['tradeMulti']['title'] = 'Obchodníci můžou běžet 2x';
+$Definition['LegendsPlus']['features']['tradeMulti']['text'] = 'Obchodníci po návratu z první dodávky automaticky vyrazí znovu.';
+
 return $Definition;

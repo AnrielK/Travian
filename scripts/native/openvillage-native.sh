@@ -349,9 +349,9 @@ cmd_start() {
     php_run -r 'exit(ini_get("mysqli.default_socket")===getenv("MYSQL_UNIX_PORT")?0:1);' \
         || die "PHP ignores PHP_INI_SCAN_DIR – cannot apply the runtime php.ini"
     start_mariadb
-    grant_world_databases
     if [ "$IOS_EMU" = 1 ]; then
         init_databases
+        grant_world_databases
         start_web
         step "World setup through /__openvillage/setup"
         local i; for i in $(seq 1 40); do curl -s -o /dev/null --max-time 1 "http://127.0.0.1:$PORT/" && break; sleep 0.25; done
@@ -360,6 +360,7 @@ cmd_start() {
     else
         start_redis
         init_databases
+        grant_world_databases
         cmd_bootstrap
         start_web
     fi

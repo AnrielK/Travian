@@ -216,7 +216,7 @@ class Session
         if (getCustom("serverIsFreeGold")) {
             $this->data['gift_gold'] = 9999999999999;
         }
-        if (isset($_GET['toggleFastUp'])) {
+        if (isset($_GET['toggleFastUp']) && !is_hero_v2()) {
             if (getDisplay("fastBuilder") || $this->data['display'][5] == 1) {
                 $this->data['display'][5] = $this->data['display'][5] == 1 ? 0 : 1;
                 $dis = implode(",", $this->data['display']);
@@ -464,7 +464,8 @@ class Session
 
     public function fastUpgradeActive()
     {
-        return getDisplay('fastBuilder') && $this->getDisplay()[5] == 1;
+        // Travian Legends (heroV2) has no fast upgrade: a click on a field or building always opens its page
+        return getDisplay('fastBuilder') && !is_hero_v2() && $this->getDisplay()[5] == 1;
     }
 
     public function getDisplay()
