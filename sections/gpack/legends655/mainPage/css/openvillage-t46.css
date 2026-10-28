@@ -1959,3 +1959,32 @@ body.legendsV2 .sidebar #sidebarBoxVillagelist .content .villageList .listEntry:
 /* arrow of a group as in Legends: up (^) while the group is open, down when it is collapsed */
 body.legendsV2 .sidebar #sidebarBoxVillagelist .content .villageList .listEntry.group .actions .secondaryIconButton.expand svg.arrowExpand { transform: scaleY(-1); }
 body.legendsV2 .sidebar #sidebarBoxVillagelist .content .villageList .listEntry.group .actions .secondaryIconButton.expand svg.arrowExpand.expanded { transform: none; }
+/* Smaller menu buttons at the top right (profile, settings, help, logout): 28px instead of 34px, centred on the old line */
+body.legendsV2 #topBar nav#outOfGame { top: 7px; gap: 6px; }
+body.legendsV2 #topBar nav#outOfGame > .layoutButton { zoom: .82; }
+/* quick links: 44px columns (a little more room between the links) */
+body.legendsV2 .sidebar #sidebarBoxActiveVillage .innerBox.header .buttonsWrapper.quickLinks,
+body.legendsV2 .sidebar #sidebarBoxVillagelist .innerBox.header .buttonsWrapper.quickLinks { right: 8px; }
+body.legendsV2 .sidebar #sidebarBoxActiveVillage .buttonsWrapper.quickLinks .quickLinkSlot,
+body.legendsV2 .sidebar #sidebarBoxVillagelist .buttonsWrapper.quickLinks .quickLinkSlot { width: 44px !important; flex: 0 0 44px; }
+body.legendsV2 .sidebar #sidebarBoxActiveVillage .buttonsWrapper.quickLinks .quickLinkSlot.editMode::before,
+body.legendsV2 .sidebar #sidebarBoxVillagelist .buttonsWrapper.quickLinks .quickLinkSlot.editMode::before { width: 42px; height: 42px; top: 1px; left: 1px; }
+body.legendsV2 .sidebar #sidebarBoxVillagelist .buttonsWrapper.quickLinks > button.layoutButton.overview { margin: 0 2px !important; }
+
+/* Travian PLUS and Gold Club dialogs: the whole framed window scrolls (title, close button and all), not only its content */
+body.legendsV2 .legendsDialogOverlay:has(.legendsPlusDialog) .dialogWrapper { max-height: 100%; overflow-y: auto; overflow-x: hidden;
+    -webkit-overflow-scrolling: touch; overscroll-behavior: contain; touch-action: pan-y; box-sizing: border-box; padding: 8px 0; }
+body.legendsV2 .legendsDialogOverlay .legendsPlusDialog .dialogContents > form > .content { max-height: none !important; overflow: visible !important; }
+/* in-place rename of the active village (js/Game/Legends/villageRename.js): the whole framed field is the button;
+   while editing the name is a text field inside the same frame (normal case, like Legends) and the frame is darker */
+body.legendsV2 .sidebar #sidebarBoxActiveVillage #villageNameField[data-did] { cursor: text; }
+body.legendsV2 .sidebar #sidebarBoxActiveVillage #villageNameField.editing { border-color: #5e463a; background: rgba(255, 255, 255, .25); }
+body.legendsV2 .sidebar #sidebarBoxActiveVillage #villageNameField.editing input.villageNameInput {
+    display: block; width: 100%; height: 20px; box-sizing: border-box; margin: 0; padding: 0; border: 0; outline: none; background: transparent;
+    font: 400 16px/20px "Noto Serif", Georgia, serif; letter-spacing: 0; text-transform: none; color: #3f2a14; caret-color: #3f2a14;
+    -webkit-appearance: none; appearance: none; border-radius: 0; }
+body.legendsV2 .sidebar #sidebarBoxActiveVillage #villageNameField.editing input.villageNameInput,
+body.legendsV2 .sidebar #sidebarBoxActiveVillage #villageNameField.editing input.villageNameInput:focus {
+    font-weight: 400 !important; font-size: 16px !important; letter-spacing: 0 !important; outline: none !important; box-shadow: none !important;
+    border: 0 !important; background: transparent !important; padding: 0 !important; height: 20px !important; }
+body.legendsV2 .sidebar #sidebarBoxActiveVillage #villageNameField.editing input.villageNameInput { font-family: Georgia, "Times New Roman", serif !important; }

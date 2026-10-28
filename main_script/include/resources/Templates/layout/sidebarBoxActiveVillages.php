@@ -127,7 +127,7 @@ if ($qlV2) {
             <?php if (is_t46_layout()): ?>
                 <div class="playerName"><?=htmlspecialchars((string)($vars['playerName'] ?? '')); ?></div>
             <?php endif; ?>
-            <div id="villageNameField"
+            <div id="villageNameField"<?=$qlV2 && !\Core\Session::getInstance()->isSitter() ? ' data-did="' . (int)\Core\Village::getInstance()->getKid() . '"' : ''; ?>
                  class="boxTitle"><?=filter_var($vars['villageName'], FILTER_SANITIZE_STRING); ?></div>
         </div>
         <div class="innerBox content">
@@ -149,4 +149,5 @@ if ($qlV2) {
 <script type="text/javascript">window.LegendsQuickLinksConfig = <?=\resources\View\LegendsQuickLinks::config($qlLinks); ?>;</script>
 <script type="text/javascript" src="js/Game/Legends/dialog.js?v=1"></script>
 <script type="text/javascript" src="js/Game/Legends/quickLinks.js?v=1"></script>
+<script type="text/javascript" src="js/Game/Legends/villageRename.js?v=1"></script>
 <?php endif; ?>
