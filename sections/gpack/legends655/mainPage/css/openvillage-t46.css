@@ -2001,3 +2001,12 @@ body.legendsV2 .legendsPlusDialog .featureBooking .featureButton button.plusActi
 body.legendsV2 .legendsPlusDialog .featureBooking .featureButton button.plusActivate:hover:not([disabled]) {
     background: linear-gradient(180deg, #fff7c8 0%, #fae684 30%, #f4d257 60%, #e9b938 100%) !important; }
 body.legendsV2 .legendsPlusDialog .featureBooking .featureButton button.plusActivate[disabled] { filter: grayscale(.6); opacity: .7; }
+/* the frame of "Activate" is golden (a thin dark outline, a golden band, a light inner line) */
+body.legendsV2 .legendsPlusDialog .featureBooking .featureButton button.plusActivate {
+    border: 3px solid transparent !important;
+    background: linear-gradient(180deg, #fdf3b0 0%, #f7df6c 30%, #efc844 60%, #e2ad2c 100%) padding-box,
+                linear-gradient(180deg, #f6e3a1 0%, #d6a94e 35%, #a87a2c 65%, #e0bf72 100%) border-box !important;
+    box-shadow: 0 0 0 1px #4a3210, inset 0 0 0 1px #fff4bd, inset 0 -2px 0 1px rgba(160, 110, 20, .35) !important; }
+body.legendsV2 .legendsPlusDialog .featureBooking .featureButton button.plusActivate:hover:not([disabled]) {
+    background: linear-gradient(180deg, #fff7c8 0%, #fae684 30%, #f4d257 60%, #e9b938 100%) padding-box,
+                linear-gradient(180deg, #f6e3a1 0%, #d6a94e 35%, #a87a2c 65%, #e0bf72 100%) border-box !important; }
