@@ -154,7 +154,7 @@ class LegendsQuickLinks
                 'title' => T('QuickLinks', 'name.' . $title, $names),
                 'sub' => T('QuickLinks', 'sub.' . $sub, $sub),
                 'url' => $slot === null ? null : ($url === null ? 'build.php?id=' . $slot : sprintf($url, $slot)),
-                'icon' => self::icon($icon),
+                'icon' => LegendsQuickLinkIcons::svg($key) ?? self::icon($icon),
                 'gold' => $gold,
             ];
         }
@@ -178,7 +178,7 @@ class LegendsQuickLinks
     /** The slots of a set as markup. */
     public static function slotsHtml(array $keys, array $links): string
     {
-        $indicator = '<svg class="editSlotIndicator" viewBox="0 0 44 44"><circle cx="22" cy="22" r="21" fill="none" stroke-width="1.5" stroke-dasharray="4 3"/></svg>';
+        $indicator = LegendsQuickLinkIcons::ring();
         $plusIcon = '<svg viewBox="0 0 18 18"><path d="M16 10h-6v6H8v-6H2V8h6V2h2v6h6z"/></svg>';
         $html = '';
         foreach ($keys as $i => $key) {
@@ -208,6 +208,7 @@ class LegendsQuickLinks
                 'villageText' => T('QuickLinks', 'villageText', 'Drag up to 5 buttons into the slots of the active village to customise your quick links.'),
                 'close' => T('Global', 'General.close', 'Close'),
             ],
+            'ring' => LegendsQuickLinkIcons::ring(),
             'links' => array_map(static fn($key) => ['key' => $key, 'title' => $links[$key]['title'], 'sub' => $links[$key]['sub'],
                 'html' => self::button($key, $links[$key])], array_keys($links)),
         ], JSON_UNESCAPED_UNICODE | JSON_HEX_TAG | JSON_HEX_APOS);

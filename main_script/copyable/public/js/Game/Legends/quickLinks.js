@@ -89,7 +89,7 @@ var LegendsQuickLinks = (function () {
     }
     function openDialog() {
         var sc = SCOPES[scope];
-        var indicator = '<svg class="editSlotIndicator" viewBox="0 0 44 44"><circle cx="22" cy="22" r="21" fill="none" stroke-width="1.5" stroke-dasharray="4 3"/></svg>';
+        var indicator = C.ring || '';
         var html = '<p class="quickLinksText">' + sc.text() + '</p><div class="quickLinksWrapper">'
             + C.links.map(function (l) {
                 return '<div class="quickLinkItem" data-key="' + l.key + '"><div class="quickLinkIcon">' + indicator + l.html + '</div>'
