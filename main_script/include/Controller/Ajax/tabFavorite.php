@@ -33,6 +33,16 @@ class tabFavorite extends AjaxBase
                     return FALSE;
                 }
                 break;
+            case 'rallySimulators':
+                if (in_array($number, [0, 1])) {
+                    $x['data']['result'] = FALSE;
+                    $x['data']['success'] = TRUE;
+                    $session->setFavoriteTab($name, $number);
+                    return TRUE;
+                }
+                $x['error'] = TRUE;
+                $x['errorMsg'] = "Tab number is not valid!";
+                return FALSE;
             case 'allyPageProfile':
                 $number = $_POST['number'] == 'description' ? 0 : 1;
                 $x['data']['result'] = FALSE;

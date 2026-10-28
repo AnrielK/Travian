@@ -1,3 +1,12 @@
+<?php
+// Travian Legends 655: five quick link slots per village instead of the four building buttons (LegendsQuickLinks)
+$qlV2 = is_hero_v2();
+if ($qlV2) {
+    $qlLinks = \resources\View\LegendsQuickLinks::all();
+    $qlKid = (int)\Core\Village::getInstance()->getKid();
+    $qlSlots = \resources\View\LegendsQuickLinks::slots((int)\Core\Session::getInstance()->getPlayerId(), $qlKid);
+}
+?>
 <div id="sidebarBoxActiveVillage" class="sidebarBox   ">
     <div class="sidebarBoxBaseBox">
         <div class="baseBox baseBoxTop">
@@ -8,6 +17,11 @@
     </div>
     <div class="sidebarBoxInnerBox">
         <div class="innerBox header ">
+            <?php if ($qlV2): ?>
+            <div class="buttonsWrapper quickLinks villageQuickLinks" data-kid="<?=$qlKid; ?>">
+                <?=\resources\View\LegendsQuickLinks::slotsHtml($qlSlots, $qlLinks) . \resources\View\LegendsQuickLinks::settingsButton('village'); ?>
+            </div>
+            <?php else: ?>
             <div class="buttonsWrapper">
                 <?=$vars['workshop']; ?>
                 <?php if ($vars['showWorkshopToolTip']): ?>
@@ -108,6 +122,7 @@
                     </script>
                 <?php endif; ?>
             </div>
+            <?php endif; ?>
             <div class="clear"></div>
             <?php if (is_t46_layout()): ?>
                 <div class="playerName"><?=htmlspecialchars((string)($vars['playerName'] ?? '')); ?></div>
@@ -130,3 +145,8 @@
         </div>
     </div>
 </div>
+<?php if ($qlV2): ?>
+<script type="text/javascript">window.LegendsQuickLinksConfig = <?=\resources\View\LegendsQuickLinks::config($qlLinks); ?>;</script>
+<script type="text/javascript" src="js/Game/Legends/dialog.js?v=1"></script>
+<script type="text/javascript" src="js/Game/Legends/quickLinks.js?v=1"></script>
+<?php endif; ?>

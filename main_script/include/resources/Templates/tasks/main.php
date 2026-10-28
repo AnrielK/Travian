@@ -1,21 +1,52 @@
 <?php
-/* "Your tasks" (TasksCtrl) – markup of the Travian Legends task list, styled by the #tasks rules of 29c89d54. */
+/*
+ * "Your tasks" (TasksCtrl) – markup of the Travian Legends task list, styled by the #tasks rules of 29c89d54, and of
+ * the task details (.taskDetailview, &t=<task>). Travian Legends 655: a click on a task opens its details, "Collect"
+ * takes the reward without leaving the page with the Legends animation (js/Game/Legends/tasks.js).
+ */
+use resources\View\LegendsUi;
+
 $h = static fn($s) => htmlspecialchars((string)$s, ENT_QUOTES);
 $base = 'tasks.php?s=' . $vars['scope'];
 $v2 = is_hero_v2(); // Travian Legends 655: iconValueBox rewards, Legends progress bar and buttons, divider
-$valueBox = static fn(string $icon, $value, string $title) => '<div class="iconValueBoxWrapper" title="' . $h($title) . '"><div class="iconValueBox ' . $icon . '"><i class="' . $icon . '"></i><span>' . number_format((int)$value, 0, ',', number_thousands_separator()) . '</span></div></div>';
-$label = static function (array $task) use ($h) {
+// Legends writes numbers below 10 000 without a separator (1680, 12 500)
+$num = static fn($n) => abs((int)$n) < 10000 ? (string)(int)$n : number_format((int)$n, 0, ',', number_thousands_separator());
+$valueBox = static fn(string $icon, $value, string $title) => '<div class="iconValueBoxWrapper" title="' . $h($title) . '"><div class="iconValueBox ' . $icon . '"><i class="' . $icon . '"></i><span>' . ($v2 ? $num($value) : number_format((int)$value, 0, ',', number_thousands_separator())) . '</span></div></div>';
+$label = static function (array $task, string $prefix = '') use ($h, $num) {
     if ($task['type'] === 'level') {
         return $h(T('Buildings', 'level')) . ' <span>' . $task['value'] . '</span>/<span>' . $task['goal'] . '</span>';
     }
     if ($task['type'] === 'fields') {
         return '<span>' . $task['value'] . '</span>/<span>' . $task['goal'] . '</span> ' . $h(sprintf(T('Tasks', 'toLevel', 'to level %d'), $task['level']));
     }
-    // The pack hides the first span for population / culture point tasks (Legends puts a prefix there).
-    return '<span></span><span>' . number_format($task['value'], 0, ',', number_thousands_separator()) . '</span>/<span>' . number_format($task['goal'], 0, ',', number_thousands_separator()) . '</span>';
+    // The first span is the prefix of the task details ("Population 197/250"); the overview leaves it empty.
+    return '<span>' . $h($prefix) . ($prefix !== '' ? ' ' : '') . '</span><span>' . $num($task['value']) . '</span>/<span>' . $num($task['goal']) . '</span>';
 };
+$collectedText = T('Tasks', 'collected', 'Collected');
+$collectUrl = static function (string $key, array $extra = []) use ($base, $vars) {
+    $query = '&collect=' . rawurlencode($key) . '&c=' . rawurlencode($vars['checker']);
+    foreach ($extra as $k => $v) {
+        $query .= '&' . $k . '=' . rawurlencode((string)$v);
+    }
+    return $base . $query;
+};
+/** Progress cell (Legends 655): bar while open, "Collect" when reached, the greyed "Collected" once collected. */
+$progressV2 = static function (array $task, string $url, string $prefix = '') use ($h, $label, $collectedText) {
+    if ($task['state'] === 'collected') {
+        return LegendsUi::button($h($collectedText) . '<i class="collectedCheckmark"></i>',
+            ['class' => 'collect collected preventAnimation', 'disabled' => true, 'appearance' => 'grey', 'data' => ['text-collected' => $collectedText]]);
+    }
+    if ($task['state'] === 'open' || $task['state'] === 'future') { // future = a later step of the details: its progress only
+        return '<div class="progressBar"><div class="bar"><div class="filling" style="width:' . round(min(1, $task['ratio']) * 100) . '%"></div><div class="decoration"></div></div>'
+            . '<div class="label">' . $label($task, $prefix) . '</div></div>';
+    }
+    return LegendsUi::button($h(T('Tasks', 'collect', 'Collect')) . '<i class="collectedCheckmark"></i>', ['class' => 'collect',
+        'data' => ['collect' => $url, 'text-collected' => $collectedText]]);
+};
+$rewardsV2 = static fn(array $task) => $valueBox('allResources', $task['rewardResources'], T('Tasks', 'rewardResourcesHero', T('Tasks', 'rewardResources', 'Resources of each type')))
+    . $valueBox('xp', $task['rewardExperience'], T('Tasks', 'rewardExperience', 'Hero experience'));
 ?>
-<div id="tasks">
+<div id="tasks" data-checker="<?=$h($vars['checker']); ?>">
     <div class="contentNavi subNavi">
         <div class="container<?=$vars['scope'] === 'village' ? ' active' : ''; ?>">
             <div class="content">
@@ -29,15 +60,35 @@ $label = static function (array $task) use ($h) {
         </div>
     </div>
 
+    <?php if (isset($vars['detail'])):
+        $d = $vars['detail']; ?>
+        <div class="taskDetailview" data-task="<?=$h($d['key']); ?>">
+            <div class="taskDescription">
+                <div class="imageFrame"><div class="taskImage description"><img src="img/x.gif" class="<?=$h($d['image']); ?>" alt=""></div></div>
+                <div class="description">
+                    <div class="title"><?=$h($d['title']); ?></div>
+                    <div class="text"><?=$h($d['description']); ?></div>
+                </div>
+            </div>
+            <?php foreach ($vars['steps'] as $step): ?>
+                <div class="task level <?=$h(explode(' ', $d['image'])[0]); ?> <?=$step['state']; ?>" data-task="<?=$h($d['key']); ?>">
+                    <div class="taskImage level"><img src="img/x.gif" class="<?=$h($d['image']); ?>" alt=""></div>
+                    <div class="title"><?=$h($step['title']); ?></div>
+                    <div class="rewards"><?=$rewardsV2($step); ?></div>
+                    <div class="progress"><?=$progressV2($step, $collectUrl($d['key'], ['t' => $d['key'], 'dp' => $vars['detailPage']]), $d['type'] === 'count' ? $d['title'] : ''); ?></div>
+                </div>
+            <?php endforeach; ?>
+            <?=$vars['detailPages'] > 1 ? LegendsUi::pagination($vars['detailPage'], $vars['detailPages'], $base . '&t=' . rawurlencode($d['key']) . '&dp=') : '<div class="divider"></div>'; ?>
+            <?php $bonusAfterDetail = true; ?>
+    <?php else: ?>
     <?php foreach ($vars['tasks'] as $task): ?>
-        <div class="task group <?=$h($task['key']); ?> <?=$h(explode(' ', $task['image'])[0]); ?> <?=$task['state']; ?>">
+        <div class="task group <?=$h($task['key']); ?> <?=$h(explode(' ', $task['image'])[0]); ?> <?=$task['state']; ?>"<?php if ($v2): ?> data-task="<?=$h($task['key']); ?>" data-href="<?=$h($base . '&t=' . rawurlencode($task['key'])); ?>"<?php endif; ?>>
             <div class="taskImage group"><img src="img/x.gif" class="<?=$h($task['image']); ?>" alt=""></div>
             <div class="titleDecoration"></div>
             <div class="title"><?=$h($task['title']); ?></div>
             <div class="rewards">
                 <?php if ($task['state'] !== 'collected' && $v2): ?>
-                    <?=$valueBox('allResources', $task['rewardResources'], T('Tasks', 'rewardResources', 'Resources of each type')); ?>
-                    <?=$valueBox('xp', $task['rewardExperience'], T('Tasks', 'rewardExperience', 'Hero experience')); ?>
+                    <?=$rewardsV2($task); ?>
                 <?php elseif ($task['state'] !== 'collected'): ?>
                     <div class="reward resources" title="<?=$h(T('Tasks', 'rewardResources', 'Resources of each type')); ?>"><i class="resources_large"></i><?=number_format($task['rewardResources'], 0, ',', number_thousands_separator()); ?></div>
                     <div class="reward experience" title="<?=$h(T('Tasks', 'rewardExperience', 'Hero experience')); ?>"><i class="heroExperience_medium"></i><?=number_format($task['rewardExperience'], 0, ',', number_thousands_separator()); ?></div>
@@ -47,18 +98,7 @@ $label = static function (array $task) use ($h) {
                 <?php if ($task['state'] === 'collected'): ?>
                     <div class="allDone"><?=$h(T('Tasks', 'allDone', 'All steps completed')); ?></div>
                 <?php elseif ($v2): ?>
-                    <?php if ($task['state'] === 'open'): ?>
-                        <div class="progressBar">
-                            <div class="bar">
-                                <div class="filling" style="width:<?=round(min(1, $task['ratio']) * 100); ?>%"></div>
-                                <div class="decoration"></div>
-                            </div>
-                            <div class="label"><?=$label($task); ?></div>
-                        </div>
-                    <?php else: ?>
-                        <?=\resources\View\LegendsUi::button($h(T('Tasks', 'collect', 'Collect')) . '<i class="collectedCheckmark"></i>', ['class' => 'collect',
-                            'onclick' => "window.location.href='" . $base . '&p=' . $vars['page'] . '&collect=' . rawurlencode($task['key']) . '&c=' . rawurlencode($vars['checker']) . "'; this.disabled = true;"]); ?>
-                    <?php endif; ?>
+                    <?=$progressV2($task, $collectUrl($task['key'], ['p' => $vars['page']])); ?>
                 <?php else: ?>
                     <div class="progressBar">
                         <div class="bar">
@@ -77,7 +117,7 @@ $label = static function (array $task) use ($h) {
     <?php endforeach; ?>
 
     <?php if ($v2): ?>
-        <?=$vars['pages'] > 1 ? \resources\View\LegendsUi::pagination($vars['page'], $vars['pages'], $base . '&p=') : '<div class="divider"></div>'; ?>
+        <?=$vars['pages'] > 1 ? LegendsUi::pagination($vars['page'], $vars['pages'], $base . '&p=') : '<div class="divider"></div>'; ?>
     <?php elseif ($vars['pages'] > 1): ?>
         <div class="taskPager">
             <a class="arrow previous<?=$vars['page'] <= 1 ? ' disabled' : ''; ?>" href="<?=$h($base . '&p=' . max(1, $vars['page'] - 1)); ?>"></a>
@@ -86,6 +126,7 @@ $label = static function (array $task) use ($h) {
             <?php endfor; ?>
             <a class="arrow next<?=$vars['page'] >= $vars['pages'] ? ' disabled' : ''; ?>" href="<?=$h($base . '&p=' . min($vars['pages'], $vars['page'] + 1)); ?>"></a>
         </div>
+    <?php endif; ?>
     <?php endif; ?>
 
     <div class="rewardBonus">
@@ -102,4 +143,11 @@ $label = static function (array $task) use ($h) {
             <div class="description"><?=$h(sprintf(T('Tasks', 'nextLevel', 'Next level = %d%%'), $vars['nextBonus'])); ?></div>
         </div>
     </div>
+    <?php if (!empty($bonusAfterDetail)): ?>
+            <div class="buttonWrapper">
+                <?=LegendsUi::button($h(T('Tasks', 'backToOverview', 'Back to overview')), ['class' => 'backToOverview', 'onclick' => "window.location.href='" . $base . "'"]); ?>
+            </div>
+        </div>
+    <?php endif; ?>
 </div>
+<?php if ($v2): ?><script type="text/javascript" src="js/Game/Legends/tasks.js?v=1"></script><?php endif; ?>

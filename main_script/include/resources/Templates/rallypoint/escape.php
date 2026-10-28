@@ -7,7 +7,7 @@
     use Core\Locale;
     use Model\ProfileModel;
 
-    echo T("RallyPoint", "EvasionSettings"); ?></h4>
+    echo $vars['evasionTitle'] ?? T("RallyPoint", "EvasionSettings"); ?></h4>
 <?php if ($vars['goldClub']): ?>
     <form class="troopEscape" action="build.php#troopEscape" method="post">
         <div class="troopEscape">

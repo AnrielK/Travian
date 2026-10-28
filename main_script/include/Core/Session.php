@@ -156,6 +156,7 @@ class Session
             'messages' => 0,
             'embassyBuildingSubTabs' => 0,
             'heroAuction' => 0,
+            'rallySimulators' => 0, // Travian Legends 655 rally point: 0 = combat, 1 = travel simulator
         ];
         $index = 0;
         foreach (array_keys($data['favorTabs']) as $key) {

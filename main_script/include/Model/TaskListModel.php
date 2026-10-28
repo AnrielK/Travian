@@ -53,40 +53,54 @@ class TaskListModel
     }
 
     /**
-     * Task chains. 'type' picks the picture/label style of the pack's #tasks CSS, 'steps' are
-     * [goal, resources per type, experience] (resource tasks: [fields, level, resources, experience]).
+     * Task chains in the order of the Travian Legends list. 'type' picks the picture/label style of the pack's #tasks
+     * CSS, 'steps' are [goal, resources per type, experience] (resource field tasks: [fields (0 = all), level,
+     * resources, experience]); 'stepTitle' = translation key of a step of a counting task ("Reach %s population").
      */
     private function definitions(string $scope): array
     {
         if ($scope === 'general') {
             return [
-                'villages' => ['type' => 'count', 'image' => 'populationProgress', 'title' => T('Tasks', 'villages', 'Villages'),
+                'villages' => ['type' => 'count', 'image' => 'populationProgress', 'title' => T('Tasks', 'villages', 'Villages'), 'stepTitle' => 'stepVillages',
                     'steps' => [[2, 600, 40], [3, 1200, 60], [5, 2500, 100], [10, 5000, 200], [20, 10000, 400]]],
-                'populationTotal' => ['type' => 'count', 'image' => 'populationProgress', 'title' => T('Tasks', 'populationTotal', 'Population of all villages'),
+                'populationTotal' => ['type' => 'count', 'image' => 'populationProgress', 'title' => T('Tasks', 'populationTotal', 'Population of all villages'), 'stepTitle' => 'stepPopulationTotal',
                     'steps' => [[100, 375, 25], [250, 750, 40], [500, 1500, 60], [1000, 2500, 100], [2500, 5000, 150], [5000, 10000, 250]]],
-                'culturePointsTotal' => ['type' => 'count', 'image' => 'culturePointsProductionProgress', 'title' => T('Tasks', 'culturePointsTotal', 'Culture points production of all villages'),
+                'culturePointsTotal' => ['type' => 'count', 'image' => 'culturePointsProductionProgress', 'title' => T('Tasks', 'culturePointsTotal', 'Culture points production of all villages'), 'stepTitle' => 'stepCultureTotal',
                     'steps' => [[100, 375, 25], [250, 750, 40], [500, 1500, 60], [1000, 2500, 100], [2500, 5000, 150]]],
             ];
         }
-        $resource = static fn(int $gid, string $title) => ['type' => 'fields', 'gid' => $gid, 'image' => 'building g' . $gid, 'title' => $title,
-            'steps' => [[1, 2, 150, 10], [1, 4, 300, 20], [0, 4, 600, 30], [1, 7, 900, 40], [0, 7, 1500, 60], [1, 10, 2500, 80], [0, 10, 4000, 120]]];
-        $building = static fn(int $gid, array $levels, int $base = 150) => ['type' => 'level', 'gid' => $gid, 'image' => 'building g' . $gid,
+        // resource fields: like Travian Legends one task for a single field ("Iron mines") and one for all of them
+        $resource = static fn(int $gid) => ['type' => 'fields', 'gid' => $gid, 'image' => 'building g' . $gid,
+            'title' => T('Tasks', 'res' . $gid, T('Buildings', $gid . '.title')),
+            'steps' => [[1, 2, 120, 8], [1, 4, 240, 16], [1, 7, 400, 26], [1, 10, 600, 39]]];
+        $resourceAll = static fn(int $gid) => ['type' => 'fields', 'gid' => $gid, 'image' => 'building g' . $gid, 'all' => true,
+            'title' => T('Tasks', 'resAll' . $gid, T('Buildings', $gid . '.title')),
+            'steps' => [[0, 2, 240, 16], [0, 3, 385, 25], [0, 5, 590, 39], [0, 8, 900, 60], [0, 10, 1300, 85]]];
+        // building levels: rewards like Travian Legends (level 1 = 300 of each resource / 20 XP … level 12 = 600 / 39)
+        $building = static fn(int $gid, array $levels, int $base = 300) => ['type' => 'level', 'gid' => $gid, 'image' => 'building g' . $gid,
             'title' => T('Buildings', $gid . '.title'),
-            'steps' => array_map(static fn($level) => [$level, $base * max(1, $level), (int)round(10 + $level * 4)], $levels)];
+            'steps' => array_map(static function ($level) use ($base) {
+                $resources = (int)round($base * (1 + max(0, $level - 1) * 0.09) / 5) * 5;
+                return [$level, $resources, (int)round($resources / 15.2)];
+            }, $levels)];
         $wall = self::WALLS[$this->session->getRace()] ?? 31;
 
         return [
-            'population' => ['type' => 'count', 'image' => 'populationProgressInVillage', 'title' => T('Tasks', 'population', 'Population'),
-                'steps' => [[50, 375, 25], [100, 750, 40], [200, 1200, 60], [350, 2000, 80], [500, 3000, 100], [750, 4500, 140], [1000, 6000, 200]]],
-            'culturePoints' => ['type' => 'count', 'image' => 'culturePointsProductionProgressInVillage', 'title' => T('Tasks', 'culturePoints', 'Culture points production'),
-                'steps' => [[50, 375, 25], [100, 750, 40], [200, 1200, 60], [350, 2000, 80], [500, 3000, 100]]],
-            'embassy' => $building(18, [1, 5, 10, 20], 300),
-            'woodcutter' => $resource(1, T('Buildings', '1.title') . 's'),
-            'claypit' => $resource(2, T('Buildings', '2.title') . 's'),
+            'population' => ['type' => 'count', 'image' => 'populationProgressInVillage', 'title' => T('Tasks', 'population', 'Population'), 'stepTitle' => 'stepPopulation',
+                'steps' => [[50, 350, 23], [100, 710, 47], [150, 1105, 73], [250, 1500, 100], [400, 2200, 145], [600, 3000, 200], [800, 3800, 250], [1000, 4500, 300]]],
+            'culturePoints' => ['type' => 'count', 'image' => 'culturePointsProductionProgressInVillage', 'title' => T('Tasks', 'culturePoints', 'Culture points production'), 'stepTitle' => 'stepCulture',
+                'steps' => [[50, 375, 25], [100, 750, 50], [150, 1125, 75], [250, 1500, 100], [400, 2250, 150], [600, 3000, 200]]],
+            'embassy' => $building(18, [1, 5, 10, 20]),
+            'woodcutter' => $resource(1),
+            'mainBuilding' => $building(15, [3, 5, 7, 10, 12, 15, 20]),
+            'claypit' => $resource(2),
+            'cropland' => $resource(4),
+            'ironmine' => $resource(3),
+            'woodcutterAll' => $resourceAll(1),
+            'claypitAll' => $resourceAll(2),
+            'ironmineAll' => $resourceAll(3),
+            'croplandAll' => $resourceAll(4),
             'wall' => $building($wall, [1, 5, 10, 15, 20]),
-            'cropland' => $resource(4, T('Buildings', '4.title') . 's'),
-            'ironmine' => $resource(3, T('Buildings', '3.title') . 's'),
-            'mainBuilding' => $building(15, [3, 5, 10, 15, 20]),
             'warehouse' => $building(10, [1, 3, 7, 12, 20]),
             'granary' => $building(11, [1, 3, 7, 12, 20]),
             'rallyPoint' => $building(16, [1, 5, 10]),
@@ -103,16 +117,104 @@ class TaskListModel
     /** All tasks of a scope with their current step, progress and state (open / achieved / collected). */
     public function getTasks(string $scope): array
     {
+        $definitions = $this->definitions($scope);
         $tasks = [];
-        foreach ($this->definitions($scope) as $key => $definition) {
+        foreach ($definitions as $key => $definition) {
             $tasks[] = $this->describe($scope, $key, $definition);
         }
-        // Collectable first, then the closest ones; finished chains at the end.
-        usort($tasks, static function ($a, $b) {
-            $order = ['achieved' => 0, 'open' => 1, 'collected' => 2];
-            return [$order[$a['state']], -$a['ratio']] <=> [$order[$b['state']], -$b['ratio']];
-        });
+        // tasks to collect first, then the list order of Legends, the finished chains at the end
+        $order = ['achieved' => 0, 'open' => 1, 'collected' => 2];
+        $position = array_flip(array_keys($definitions));
+        usort($tasks, static fn($a, $b) => [$order[$a['state']], $position[$a['key']]] <=> [$order[$b['state']], $position[$b['key']]]);
         return $tasks;
+    }
+
+    /**
+     * One task with its description and all its steps (Legends task details), from the highest level down: the
+     * steps still ahead ("future", with their own progress), the current one and the collected ones; null for an
+     * unknown task. 'currentIndex' = position of the current step in 'history'.
+     */
+    public function details(string $scope, string $key): ?array
+    {
+        $definitions = $this->definitions($scope);
+        if (!isset($definitions[$key])) {
+            return null;
+        }
+        $definition = $definitions[$key];
+        $task = $this->describe($scope, $key, $definition);
+        $bonus = 1 + $this->getBonusPercent($this->getHeroLevel()) / 100;
+        $steps = [];
+        $current = 0;
+        for ($i = count($definition['steps']) - 1; $i >= 0; --$i) {
+            $step = $definition['steps'][$i];
+            [$resources, $experience] = $definition['type'] === 'fields' ? [$step[2], $step[3]] : [$step[1], $step[2]];
+            $entry = ['index' => $i, 'title' => $this->stepTitle($definition, $step), 'type' => $definition['type'],
+                'rewardResources' => (int)round($resources * $bonus), 'rewardExperience' => (int)round($experience * $bonus)];
+            if ($i < $task['step']) {
+                $entry['state'] = 'collected';
+            } else {
+                if ($i === $task['step']) {
+                    $current = count($steps);
+                }
+                $entry += $this->progress($key, $definition, $step);
+                $entry['state'] = $i === $task['step'] ? $task['state'] : 'future';
+            }
+            $steps[] = $entry;
+        }
+        $task['description'] = $this->description($key, $definition);
+        $task['history'] = $steps;
+        $task['currentIndex'] = $task['state'] === 'collected' ? 0 : $current;
+        return $task;
+    }
+
+    /** Progress of a task towards one of its steps: value, goal, ratio (and the level of resource field steps). */
+    private function progress(string $key, array $definition, array $step): array
+    {
+        if ($definition['type'] === 'fields') {
+            [$count, $level] = $step;
+            $fields = $this->village->getTypeLevel($definition['gid']);
+            $goal = $count ?: count($fields);
+            $value = count(array_filter($fields, static fn($l) => $l >= $level));
+            $out = ['value' => min($value, $goal), 'goal' => $goal, 'level' => $level];
+        } elseif ($definition['type'] === 'level') {
+            $goal = $step[0];
+            $out = ['value' => min(max($this->village->getTypeLevel($definition['gid']) ?: [0]), $goal), 'goal' => $goal, 'level' => 0];
+        } else {
+            $goal = $step[0];
+            $out = ['value' => min($this->countValue($key), $goal), 'goal' => $goal, 'level' => 0];
+        }
+        $out['ratio'] = $out['goal'] > 0 ? $out['value'] / $out['goal'] : 0;
+        return $out;
+    }
+
+    /** Title of one step in the task details ("One building "Iron mine" to level 4", "Reach 250 population"). */
+    private function stepTitle(array $definition, array $step): string
+    {
+        if ($definition['type'] === 'fields') {
+            $gid = $definition['gid'];
+            return $step[0]
+                ? sprintf(T('Tasks', 'stepOne', 'One building "%s" to level %d'), T('Buildings', $gid . '.title'), $step[1])
+                : sprintf(T('Tasks', 'stepAll', 'All buildings "%s" to level %d'), T('Tasks', 'res' . $gid, T('Buildings', $gid . '.title')), $step[1]);
+        }
+        if ($definition['type'] === 'level') {
+            return sprintf(T('Tasks', 'stepLevel', 'Building "%s" to level %d'), T('Buildings', $definition['gid'] . '.title'), $step[0]);
+        }
+        $number = (int)$step[0] < 10000 ? (string)(int)$step[0] : number_format((int)$step[0], 0, ',', ' ');
+        return sprintf(T('Tasks', $definition['stepTitle'], $definition['title'] . ': %s'), $number);
+    }
+
+    /** Text of the task details. */
+    private function description(string $key, array $definition): string
+    {
+        $byKey = ['population' => 'descPopulation', 'culturePoints' => 'descCulture', 'villages' => 'descVillages',
+            'populationTotal' => 'descPopulationTotal', 'culturePointsTotal' => 'descCultureTotal', 'wall' => 'descWall'];
+        if (isset($byKey[$key])) {
+            return T('Tasks', $byKey[$key], '');
+        }
+        if ($definition['type'] === 'fields') {
+            return !empty($definition['all']) ? T('Tasks', 'descResAll', '') : T('Tasks', 'descRes' . $definition['gid'], '');
+        }
+        return T('Tasks', 'descG' . (int)$definition['gid'], T('Tasks', 'descBuilding', ''));
     }
 
     /** Whether any village or general task waits to be collected. */

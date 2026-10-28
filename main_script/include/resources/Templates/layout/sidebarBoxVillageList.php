@@ -9,7 +9,13 @@
     </div>
     <div class="sidebarBoxInnerBox">
         <div class="innerBox header ">
-            <div class="buttonsWrapper">
+            <?php $qlV2 = is_hero_v2(); // Travian Legends 655: four quick link slots for the village list (LegendsQuickLinks)
+            if ($qlV2) {
+                $qlLinks = \resources\View\LegendsQuickLinks::all();
+                $qlSlots = \resources\View\LegendsQuickLinks::slots((int)\Core\Session::getInstance()->getPlayerId(), 0);
+            } ?>
+            <div class="buttonsWrapper<?=$qlV2 ? ' quickLinks listQuickLinks' : ''; ?>">
+                <?php if ($qlV2): ?><?=\resources\View\LegendsQuickLinks::slotsHtml($qlSlots, $qlLinks); ?><span class="spacer"></span><?php endif; ?>
                 <button type="button" id="<?=$vars['buttonToggleId']; ?>" class="layoutButton toggleCoordsWhite green  toggle" onclick="return false;" title="<?=$vars['toggle'] == "collapsed" ? T("inGame", "showCoordinates") : T("inGame", "hideCoordinates"); ?>">
                     <div class="button-container addHoverClick">
                         <i></i>
@@ -93,6 +99,7 @@
                         }
                     </script>
                 <?php endif; ?>
+                <?php if ($qlV2): ?><?=\resources\View\LegendsQuickLinks::settingsButton('list'); ?><?php endif; ?>
             </div>
             <div class="clear"></div>
             <div class="expansionSlotInfo"

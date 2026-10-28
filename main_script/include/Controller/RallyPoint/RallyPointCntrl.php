@@ -94,7 +94,8 @@ class RallyPointCntrl extends AnyCtrl
         $x['tabs'][2]['id'] = get_button_id();
         $x['tabs'][2]['text'] = T("RallyPoint", "sendTroops");
         $x['tabs'][3]['id'] = get_button_id();
-        $x['tabs'][3]['text'] = T("RallyPoint", "combatSimulator");
+        // Travian Legends 655: one "Simulators" tab with the combat and the travel simulator
+        $x['tabs'][3]['text'] = is_hero_v2() ? T("LegendsSim", "SIM_TAB", "Simulators") : T("RallyPoint", "combatSimulator");
         $x['tabs'][99]['id'] = get_button_id();
         $x['tabs'][99]['text'] = T("RallyPoint", "farmlist");
         $x['tabs'][99]['hasClub'] = $session->hasGoldClub();
@@ -110,9 +111,11 @@ class RallyPointCntrl extends AnyCtrl
                 $rallyPoint->procEvasion();
                 $l = ["goldClub" => $session->hasGoldClub(), "goldClubButton" => $session->hasGoldClub(), "evasion" => $session->evasionStatus(), "heroEvasion" => $this->session->hero->evasionStatus(),];
                 $l['evasionSaveButton'] = getButton(["type" => "submit", "class" => "green",], ["data" => ["type" => "submit", "value" => T("Global", "General.save"), "class" => "green",],], T("Global", "General.save"));
+                $legends = is_hero_v2(); // Travian Legends 655: "Bonifácův klub" (cs) and the Legends texts
+                $l['evasionTitle'] = $legends ? T("LegendsGoldClub", "evasionTitle") : T("RallyPoint", "EvasionSettings");
                 if (!$session->hasGoldClub()) {
-                    $l['goldClubEvasionDesc'] = T("RallyPoint", "goldClubEvasionDesc");
-                    $l['goldClubButton'] = getButton(["type" => "button", "class" => "gold builder ", "title" => T("RallyPoint", "evasion in capital") . '||' . T("RallyPoint", "needClubToBeActive"),], ["data" => ["type" => "button", "class" => "gold builder ", "value" => T("RallyPoint", "goldclub"), "goldclubDialog" => ["featureKey" => "troopEscape", "infoIcon" => "/docs/index.php?aid=Travian Answers#go2answer",],],], T("RallyPoint", "goldclub"));
+                    $l['goldClubEvasionDesc'] = $legends ? T("LegendsGoldClub", "evasionDesc") : T("RallyPoint", "goldClubEvasionDesc");
+                    $l['goldClubButton'] = getButton(["type" => "button", "class" => "gold builder ", "title" => T("RallyPoint", "evasion in capital") . '||' . T("RallyPoint", "needClubToBeActive"),], ["data" => ["type" => "button", "class" => "gold builder ", "value" => $legends ? T("LegendsGoldClub", "title") : T("RallyPoint", "goldclub"), "goldclubDialog" => ["featureKey" => "troopEscape", "infoIcon" => "/docs/index.php?aid=Travian Answers#go2answer",],],], $legends ? T("LegendsGoldClub", "title") : T("RallyPoint", "goldclub"));
                 }
                 $view = new PHPBatchView('rallypoint/escape');
                 $view->vars = $l;
@@ -183,6 +186,10 @@ class RallyPointCntrl extends AnyCtrl
                 $x['content'] .= $sendTroops->procContent($build);
                 break;
             case 3:
+                if (is_hero_v2()) {
+                    $x['content'] .= PHPBatchView::render('rallypoint/legendsSimulators');
+                    break;
+                }
                 $combat = new combat();
                 $x['content'] .= $combat->procContent();
                 break;

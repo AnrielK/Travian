@@ -1347,3 +1347,340 @@ body.t46Layout div.village1 #resourceFieldContainer svg > path.ovLit { fill: rgb
 body.t46Layout div.village1 #resourceFieldContainer svg.resourceField > path:active,
 body.t46Layout div.village1 #resourceFieldContainer svg.villageCenter > path:active,
 body.t46Layout div.village1 #resourceFieldContainer svg > path.ovLit.ovPressed { fill: rgba(255, 255, 255, .35); stroke: rgba(255, 255, 255, .5); }
+
+/* Task details and the collect animation (tasks.php &t=, js/Game/Legends/tasks.js). */
+body.legendsV2 #tasks .taskDetailview .taskDescription .imageFrame .taskImage { width: 145px; height: 145px; }
+body.legendsV2 #tasks .taskDetailview .taskDescription .imageFrame .taskImage img { top: auto; }
+body.legendsV2 #tasks .taskDetailview .taskDescription > .description .text { line-height: 18px; }
+body.legendsV2 #tasks .task.group[data-href] { cursor: pointer; }
+body.legendsV2 #tasks .task .progress button.collect.collected.preventAnimation { cursor: default; }
+body.legendsV2 #tasks .task .progress button.collect { overflow: visible; }
+body.legendsV2 .legendsRewardFlight { position: absolute; left: 0; top: 0; width: 0; height: 0; z-index: 10000; pointer-events: none; }
+body.legendsV2 .legendsRewardFlight .entity { position: absolute; z-index: 37; filter: drop-shadow(0 0 5px #000); white-space: nowrap; will-change: transform, opacity; }
+
+/* Quick links of the active village box and the village list, their editor dialog (js/Game/Legends/quickLinks.js) –
+   port of the travian-T4.6 branch look. */
+/* ---- Village list header: four quick link slots, overview, settings ("…" / X while editing) ---- */
+body.legendsV2 .sidebar #sidebarBoxVillagelist .header .buttonsWrapper.quickLinks { grid-template-columns: repeat(4, auto) 1fr auto auto; justify-content: stretch;
+    margin-inline: 10px; column-gap: 1px; }
+body.legendsV2 .sidebar #sidebarBoxVillagelist .quickLinks .quickLinkSlot { box-sizing: border-box; display: grid; place-items: center; }
+body.legendsV2 .sidebar #sidebarBoxVillagelist .quickLinks .quickLinkSlot > * { grid-area: 1 / 1; }
+body.legendsV2 .sidebar #sidebarBoxVillagelist .quickLinks .quickLinkSlot .editSlotIndicator { position: absolute; inset: 0; width: 44px; height: 44px; fill: none; stroke: #f4efe4; }
+body.legendsV2 .sidebar #sidebarBoxVillagelist .quickLinks .quickLinkSlot .slot svg { width: 14px; height: 14px; }
+body.legendsV2 .sidebar #sidebarBoxVillagelist .quickLinks .quickLinkSlot.highlightDropTarget .editSlotIndicator { stroke: #38f4f4; }
+body.legendsV2 .sidebar #sidebarBoxVillagelist .quickLinks .quickLinkSlot.highlightDragSource .editSlotIndicator { stroke: #ff8c4d; }
+body.legendsV2 .sidebar #sidebarBoxVillagelist .quickLinks .layoutButton.quickLink > svg { width: 22px; height: 22px; }
+body.legendsV2 .sidebar #sidebarBoxVillagelist .quickLinks .settings { align-self: center; }
+body.legendsV2 .sidebar #sidebarBoxVillagelist .quickLinks .settings .closeIcon { display: none; }
+body.legendsV2 .sidebar #sidebarBoxVillagelist .quickLinks .settings.editMode > svg:not(.closeIcon) { display: none; }
+body.legendsV2 .sidebar #sidebarBoxVillagelist .quickLinks .settings.editMode .closeIcon { display: block; width: 10px; height: 10px; fill: #fff9eb; position: relative; z-index: 3; }
+body.legendsV2 .sidebar #sidebarBoxVillagelist.editQuickLinks .innerBox.content { pointer-events: none; }
+body.legendsV2 #center .sidebar.afterContent.editQuickLinks { z-index: 32; position: relative; }
+body.legendsV2 .sidebar .sidebarBox.editQuickLinks .editQuickLinksOverlay { z-index: 0; }
+body.legendsV2 .quickLinkDragObject { position: fixed !important; z-index: 1000; pointer-events: none; margin: 0 !important; }
+/* ---- Dialogs (application/legends/legendsDialogs.js) ---- */
+body.legendsV2 .legendsDialogOverlay { z-index: 40; }
+body.legendsV2 .legendsDialogOverlay .dialogWrapper { position: relative; }
+body.legendsV2 .legendsDialogOverlay .dialog.basic .dialogContents { padding: 20px 24px 14px; border-radius: 4px; }
+body.legendsV2 .legendsDialogOverlay .dialog.basic form > .content { margin: 0; padding: 0; background: none; }
+body.legendsV2 .legendsDialogOverlay .legendsConfirm .confirmText { margin: 0 0 18px; text-align: center; font-size: 13px; line-height: 18px; max-width: 300px; }
+body.legendsV2 .legendsDialogOverlay .legendsConfirm .buttons { display: flex; justify-content: space-between; gap: 40px; margin: 0; }
+body.legendsV2 .legendsDialogOverlay .legendsConfirm .buttons button { min-width: 110px; }
+/* quick links dialog */
+body.legendsV2 .legendsDialogOverlay .quickLinksDialog .quickLinksText { margin: 0 4px; font-size: 13px; line-height: 18px; }
+body.legendsV2 .legendsDialogOverlay .quickLinksDialog .quickLinksWrapper { margin-top: 18px; }
+body.legendsV2 .legendsDialogOverlay .quickLinksDialog .quickLinkItem { display: grid; justify-items: center; text-align: center; touch-action: none; }
+body.legendsV2 .legendsDialogOverlay .quickLinksDialog .quickLinkItem.used .layoutButton { opacity: .45; }
+body.legendsV2 .legendsDialogOverlay .quickLinksDialog .quickLinkItem .layoutButton { cursor: move; }
+body.legendsV2 .legendsDialogOverlay .quickLinksDialog .quickLinkItem .layoutButton > svg { width: 22px; height: 22px; position: relative; z-index: 3; }
+body.legendsV2 .legendsDialogOverlay .quickLinksDialog .quickLinkTitle { font-weight: 700; margin: 8px 0 2px; }
+body.legendsV2 .legendsDialogOverlay .quickLinksDialog .quickLinkSubtitle { font-size: 12px; color: #7a6a5a; }
+body.legendsV2 .legendsDialogOverlay .quickLinksDialog .layoutButton.disabled { filter: grayscale(1); opacity: .5; }
+@media (max-width: 700px) { body.legendsV2 .legendsDialogOverlay .dialogContents { width: calc(100vw - 30px) !important; } }
+body.legendsV2 .sidebar #sidebarBoxVillagelist .quickLinks .layoutButton.buttonFramed.withIcon.round.settings { width: 26px; height: 26px; margin: 2px; }
+body.legendsV2 .sidebar #sidebarBoxVillagelist .quickLinks .layoutButton.buttonFramed.withIcon.round.settings > svg { width: 14px; height: 4px; }
+body.legendsV2 .legendsDialogOverlay .dialog.basic .dialogCancelButton { top: 8px; right: 8px; inset-block-start: 8px; inset-inline-end: 8px; }
+body.legendsV2 .legendsDialogOverlay .quickLinksDialog .dialogContents { width: 600px; box-sizing: border-box; padding: 18px 22px 22px; }
+body.legendsV2 .legendsDialogOverlay .quickLinksDialog .dialogHeading { margin: 0 44px 10px 0; font-size: 15px; font-weight: 700; color: #3f2a14; }
+body.legendsV2 .sidebar .sidebarBox.editQuickLinks .editQuickLinksOverlay { position: fixed; inset: 0; background-color: rgba(0, 0, 0, .5) !important; opacity: 1; }
+body.legendsV2 .legendsDialogOverlay.enabled { background-color: rgba(0, 0, 0, .55); }
+/* quick link icons centred in their circle (dialog and slots) */
+body.legendsV2 .layoutButton.buttonFramed.withIcon.round.quickLink { display: grid !important; place-items: center; padding: 0; }
+body.legendsV2 .layoutButton.buttonFramed.withIcon.round.quickLink > svg { position: relative !important; inset: auto !important; top: auto !important; left: auto !important;
+    margin: 0 !important; transform: none !important; width: 22px; height: 22px; z-index: 3; grid-area: 1 / 1; }
+body.legendsV2 .layoutButton.buttonFramed.withIcon.round.quickLink > svg svg { position: absolute; inset: 0; width: 100%; height: 100%; }
+body.legendsV2 .sidebar #sidebarBoxActiveVillage .header .buttonsWrapper.quickLinks { display: flex; justify-content: flex-end; align-items: center; gap: 1px; margin-inline: 10px; }
+body.legendsV2 .sidebar #sidebarBoxActiveVillage .quickLinks .quickLinkSlot { position: relative; box-sizing: border-box; display: grid; place-items: center; width: 44px; height: 44px; }
+body.legendsV2 .sidebar #sidebarBoxActiveVillage .quickLinks .quickLinkSlot > * { grid-area: 1 / 1; }
+body.legendsV2 .sidebar #sidebarBoxActiveVillage .quickLinks .quickLinkSlot .editSlotIndicator { position: absolute; inset: 0; width: 44px; height: 44px; fill: none; stroke: #f4efe4; }
+body.legendsV2 .sidebar #sidebarBoxActiveVillage .quickLinks .layoutButton.quickLink > svg { width: 22px; height: 22px; }
+body.legendsV2 .sidebar #sidebarBoxActiveVillage .quickLinks .settings { align-self: center; margin-left: 2px; }
+body.legendsV2 .sidebar #sidebarBoxActiveVillage .quickLinks .settings .closeIcon { display: none; }
+body.legendsV2 .sidebar #sidebarBoxActiveVillage .quickLinks .settings.editMode > svg:not(.closeIcon) { display: none; }
+body.legendsV2 .sidebar #sidebarBoxActiveVillage .quickLinks .settings.editMode .closeIcon { display: block; width: 10px; height: 10px; fill: #fff9eb; position: relative; z-index: 3; }
+body.legendsV2 .sidebar #sidebarBoxActiveVillage .quickLinks .quickLinkSlot.highlightDropTarget .editSlotIndicator { stroke: #38f4f4; }
+body.legendsV2 .sidebar #sidebarBoxActiveVillage .quickLinks .quickLinkSlot.highlightDragSource .editSlotIndicator { stroke: #ff8c4d; }
+body.legendsV2 .sidebar #sidebarBoxActiveVillage.editQuickLinks .innerBox.content { pointer-events: none; }
+/* outside the edit mode only the filled slots show; while editing an empty slot is a white circle in a dashed ring */
+body.legendsV2 .sidebar .quickLinks .quickLinkSlot:not(.editMode):not(:has(.layoutButton)) { display: none; }
+body.legendsV2 .sidebar .quickLinks .quickLinkSlot:not(.editMode) .editSlotIndicator { display: none; }
+body.legendsV2 .sidebar .quickLinks .quickLinkSlot .slot { width: 34px; height: 34px; border-radius: 50%; background: #fff; box-shadow: inset 0 1px 3px rgba(0, 0, 0, .25); display: grid; place-items: center; }
+body.legendsV2 .sidebar .quickLinks .quickLinkSlot .slot svg { display: none; }
+body.legendsV2 .sidebar .quickLinks .quickLinkSlot:has(.layoutButton) .slot { display: none; }
+/* the page is dimmed while editing; the edited box and the dialog stay bright */
+body.legendsV2 #legendsQuickLinksOverlay { position: fixed; inset: 0; z-index: 31; background: rgba(0, 0, 0, .5); }
+body.legendsV2.legendsQuickLinksEditing #center .sidebar.editQuickLinks { position: relative; z-index: 3200; }
+body.legendsV2 #legendsQuickLinksOverlay { z-index: 3100; }
+body.legendsV2.legendsQuickLinksEditing #center .sidebar.editQuickLinks .sidebarBox:not(.editQuickLinks),
+body.legendsV2.legendsQuickLinksEditing #center .sidebar.editQuickLinks #sidebarBoxQuestmaster { filter: brightness(.5); pointer-events: none; }
+body.legendsV2 .legendsDialogOverlay.quickLinksOverlay { z-index: 40; }
+/* dialog: Legends typography, every link in a dashed ring, gold Gold Club links */
+body.legendsV2 .legendsDialogOverlay .quickLinksDialog .dialogContents { width: 640px; padding: 26px 30px 28px; }
+body.legendsV2 .legendsDialogOverlay .quickLinksDialog .dialogHeading { font-size: 17px; line-height: 22px; margin: 0 50px 10px 0; color: #5e463a; }
+body.legendsV2 .legendsDialogOverlay .quickLinksDialog .quickLinksText { margin: 0; font-size: 13.5px; line-height: 19px; color: #5e463a; }
+body.legendsV2 .legendsDialogOverlay .quickLinksDialog .quickLinksWrapper { margin-top: 26px; row-gap: 24px; }
+body.legendsV2 .legendsDialogOverlay .quickLinksDialog .quickLinkIcon { position: relative; width: 48px; height: 48px; display: grid; place-items: center; }
+body.legendsV2 .legendsDialogOverlay .quickLinksDialog .quickLinkIcon .editSlotIndicator { position: absolute; inset: 0; width: 48px; height: 48px; fill: none; stroke: #5e463a; }
+body.legendsV2 .legendsDialogOverlay .quickLinksDialog .quickLinkIcon .layoutButton { grid-area: 1 / 1; }
+body.legendsV2 .legendsDialogOverlay .quickLinksDialog .quickLinkTitle { font-size: 13.5px; color: #5e463a; margin: 8px 0 2px; }
+body.legendsV2 .legendsDialogOverlay .quickLinksDialog .quickLinkSubtitle { font-size: 13.5px; color: #5e463a; }
+body.legendsV2 .legendsDialogOverlay .quickLinksDialog .quickLinkItem.used .layoutButton { opacity: 1; }
+body.legendsV2 .legendsDialogOverlay .quickLinksDialog .quickLinkItem.used .quickLinkIcon .editSlotIndicator { stroke: #a99a83; }
+body.legendsV2 .legendsDialogOverlay .quickLinksDialog .layoutButton.disabled,
+body.legendsV2 .sidebar .quickLinks .layoutButton.quickLink.disabled { filter: saturate(.35) brightness(1.1); opacity: 1; }
+/* quick links edit mode: the close button is a white circle with a blue ring */
+body.legendsV2 .sidebar .quickLinks .layoutButton.settings.editMode { background: #fff !important; box-shadow: 0 0 0 2px #4f86c9, 0 1px 3px rgba(0, 0, 0, .4) !important; border-color: #fff !important; }
+body.legendsV2 .sidebar .quickLinks .layoutButton.settings.editMode:before, body.legendsV2 .sidebar .quickLinks .layoutButton.settings.editMode:after { display: none !important; }
+body.legendsV2 .sidebar .quickLinks .layoutButton.settings.editMode .closeIcon { fill: #7d7d7d !important; width: 12px !important; height: 12px !important; display: block !important; position: relative; z-index: 3; }
+body.legendsV2 .sidebar .quickLinks .quickLinkSlot.editMode .slot { background: #fbfbfb; box-shadow: inset 0 0 0 1px #d6d6d6, inset 0 2px 4px rgba(0, 0, 0, .12); }
+body.legendsV2 .sidebar .quickLinks .quickLinkSlot .editSlotIndicator { inset: auto !important; left: 50% !important; top: 50% !important; transform: translate(-50%, -50%);
+    width: 42px !important; height: 42px !important; stroke: #5e463a !important; }
+body.legendsV2 .sidebar .quickLinks .quickLinkSlot.editMode .slot { width: 38px; height: 38px; background: #ddd6c7 !important; box-shadow: none !important; }
+body.legendsV2 .sidebar .quickLinks .quickLinkSlot.editMode .layoutButton.quickLink { position: relative; z-index: 1; }
+/* close button while editing: framed round button with a light face and a grey X like Legends */
+body.legendsV2 .sidebar .quickLinks .layoutButton.settings.editMode { width: 26px !important; height: 26px !important; border-radius: 50%;
+    background: radial-gradient(circle at 50% 40%, #ffffff 0, #e9e9e9 60%, #cfcfcf 100%) !important; border: none !important;
+    box-shadow: 0 0 0 2px #c9a75f, 0 0 0 3px #7a5a2a, 0 1px 3px rgba(0, 0, 0, .45) !important; }
+body.legendsV2 .sidebar .quickLinks .layoutButton.settings.editMode .closeIcon { fill: #8c8c8c !important; width: 12px !important; height: 12px !important; max-height: none !important; filter: drop-shadow(0 1px 0 #fff); }
+/* the dashed ring of a quick link slot drawn by CSS on the slot itself (exactly centred also in WebKit / the iOS app) */
+body.legendsV2 .sidebar .quickLinks .quickLinkSlot .editSlotIndicator { display: none !important; }
+body.legendsV2 .sidebar .quickLinks .quickLinkSlot { position: relative; width: 44px !important; height: 44px !important; display: grid !important; place-items: center; }
+body.legendsV2 .sidebar .quickLinks .quickLinkSlot.editMode::before { content: ""; position: absolute; left: 0; top: 0; width: 44px; height: 44px; box-sizing: border-box;
+    border: 1.5px dashed #5e463a; border-radius: 50%; pointer-events: none; z-index: 0; }
+body.legendsV2 .sidebar .quickLinks .quickLinkSlot.highlightDropTarget::before { border-color: #38f4f4; }
+body.legendsV2 .sidebar .quickLinks .quickLinkSlot.highlightDragSource::before { border-color: #ff8c4d; }
+body.legendsV2 .sidebar .quickLinks .quickLinkSlot .slot, body.legendsV2 .sidebar .quickLinks .quickLinkSlot .layoutButton.quickLink { grid-area: 1 / 1; margin: 0 !important; position: relative; z-index: 1; }
+body.legendsV2 .sidebar .quickLinks .quickLinkSlot .slot { width: 38px !important; height: 38px !important; }
+/* same ring in the dialog */
+body.legendsV2 .legendsDialogOverlay .quickLinksDialog .quickLinkIcon .editSlotIndicator { display: none; }
+body.legendsV2 .legendsDialogOverlay .quickLinksDialog .quickLinkIcon::before { content: ""; position: absolute; left: 0; top: 0; width: 48px; height: 48px; box-sizing: border-box;
+    border: 1.5px dashed #5e463a; border-radius: 50%; pointer-events: none; }
+body.legendsV2 .legendsDialogOverlay .quickLinksDialog .quickLinkItem.used .quickLinkIcon::before { border-color: #a99a83; }
+/* dialogs taller than the window scroll inside (the page under a dialog does not move) */
+body.legendsV2 .legendsDialogOverlay .dialogContents > form > .content { max-height: calc(100vh - 230px); overflow-y: auto; -webkit-overflow-scrolling: touch; overscroll-behavior: contain; touch-action: pan-y; }
+body.legendsV2 .legendsDialogOverlay .quickLinksDialog .quickLinkItem { touch-action: pan-y; }
+/* main layout of the two headers: slots on the left, the box's own buttons and "…" on the right (like Legends) */
+body.legendsV2 .sidebar #sidebarBoxVillagelist .innerBox.header .buttonsWrapper.quickLinks { display: flex; align-items: center; left: 6px; right: 14px; width: auto; justify-content: flex-start; gap: 1px; }
+body.legendsV2 .sidebar #sidebarBoxVillagelist .buttonsWrapper.quickLinks .spacer { flex: 1 1 auto; }
+body.legendsV2 .sidebar #sidebarBoxVillagelist .buttonsWrapper.quickLinks > .layoutButton.toggle { display: none; }
+body.legendsV2 .sidebar #sidebarBoxActiveVillage .innerBox.header .buttonsWrapper.quickLinks { left: 6px; right: 14px; width: auto; gap: 1px; }
+body.legendsV2 .sidebar .buttonsWrapper.quickLinks .layoutButton.buttonFramed.withIcon.round.settings { width: 26px; height: 26px; margin: 2px; flex: none; }
+body.legendsV2 .sidebar .buttonsWrapper.quickLinks .layoutButton.buttonFramed.withIcon.round.settings > svg:not(.closeIcon) { width: 14px; height: 4px; }
+body.legendsV2 .sidebar .buttonsWrapper.quickLinks > .layoutButton, body.legendsV2 .sidebar .buttonsWrapper.quickLinks > .quickLinkSlot { flex: none; }
+
+/* Favourite tab marker in the tab bar under the window header: the Legends icon (hud/content/favor_medium.png, 26×18), whole. */
+body.t46Layout.legendsV2 #content .contentNavi.subNavi:has(> .container > .content.favorActive) { overflow: visible !important; }
+body.t46Layout.legendsV2 #content .contentNavi.subNavi > .container:has(> .content.favorActive)::before {
+    background: url('../img_ltr/hud/content/favor_medium.png') no-repeat center !important; width: 26px !important; height: 18px !important; top: -9px !important;
+    filter: none !important; }
+
+/* Rally point → Simulators (rallypoint/legendsSimulators.php, js/Game/Legends/simulators.js) – port of the travian-T4.6 branch look. */
+body.legendsV2 #rallyPointSimulators { margin-top: 4px; }
+body.legendsV2 #rallyPointSimulators .subTabs_tabs a { line-height: 30px; height: 30px; position: relative; text-decoration: none; }
+body.legendsV2 #rallyPointSimulators .subTabs_tabs a.active { line-height: 33px; }
+body.legendsV2 #rallyPointSimulators .subTabs_tabs a svg.star { position: absolute; }
+body.legendsV2 #combatSimulator i[class*="bigTribe"].inactive { background-position: 0 0; }
+body.legendsV2 #combatSimulator .tribeSelection.attack .tribeWrapper div, body.legendsV2 #combatSimulator .tribeSelection.defence .tribeWrapper div { align-self: flex-end; }
+body.legendsV2 #combatSimulator .role .header > svg.roleIcon { grid-row-start: 1; grid-column-start: 1; align-self: end; margin: 0 0 -10px 6px; position: relative; z-index: 2; }
+body.legendsV2 #combatSimulator .role .header h2 { margin: 0; line-height: 36px; }
+body.legendsV2 #combatSimulator .role .header .villageSelection select { height: 22px; font-size: 12px; }
+body.legendsV2 #combatSimulator .role .header .iconButtonV2 { position: relative; top: auto; right: auto; margin: 0; background: linear-gradient(#fff, #e8e8e8); }
+body.legendsV2 #combatSimulator .role .header .iconButtonV2 svg { width: 16px; height: 16px; }
+body.legendsV2 #combatSimulator .role .header .iconButtonV2 svg path { fill: #5f5f64; }
+body.legendsV2 #combatSimulator .role .header .rolePopulation i.population_medium { transform: scale(.75); }
+body.legendsV2 #combatSimulator .role .content { min-height: 30px; }
+body.legendsV2 #combatSimulator .role.attacker .content .movement { top: 8px; }
+body.legendsV2 #combatSimulator .troops table { width: 100%; border-collapse: collapse; border: none; background: none; margin: 0; }
+body.legendsV2 #combatSimulator .troops table td, body.legendsV2 #combatSimulator .troops table th { border: none !important; background: none !important; }
+body.legendsV2 #combatSimulator .troops table tr.troopIcons td { height: 20px; }
+body.legendsV2 #combatSimulator .troops table input[type=text] { box-sizing: border-box; height: 22px; padding: 1px 4px; border: 1px solid #c9bda4; border-radius: 3px; background: #fff; font-size: 12px; }
+body.legendsV2 #combatSimulator .troops table tr.upgrades input[type=text] { width: 30px; height: 20px; font-size: 11px; color: #7a6a5a; }
+body.legendsV2 #combatSimulator .troops table th { width: 20px; }
+body.legendsV2 #combatSimulator .troops table th i.troopsIcon { display: inline-block; width: 16px; height: 16px; background: url('../img_ltr/global/combat/troops_medium.png') no-repeat center / contain; }
+body.legendsV2 #combatSimulator .troops table th i.smithyIcon { display: inline-block; width: 16px; height: 16px; background: url('../img_ltr/global/buildings/roman/icon/type13_small.png') no-repeat center / contain; }
+body.legendsV2 #combatSimulator .bonus { min-height: 39px; }
+body.legendsV2 #combatSimulator .bonus label { gap: 4px; }
+body.legendsV2 #combatSimulator .bonus input { width: 26px; height: 20px; box-sizing: border-box; border: 1px solid #c9bda4; border-radius: 3px; text-align: center; }
+body.legendsV2 #combatSimulator .bonus select { height: 22px; }
+body.legendsV2 #combatSimulator i.simWallIcon, body.legendsV2 #combatSimulator i.simResidenceIcon { display: inline-block; width: 18px; height: 18px; background: no-repeat center / contain; }
+body.legendsV2 #combatSimulator i.simWallIcon { background-image: url('../img_ltr/global/buildings/roman/icon/type31_small.png'); }
+body.legendsV2 #combatSimulator i.simResidenceIcon { background-image: url('../img_ltr/global/buildings/roman/icon/type25_small.png'); }
+body.legendsV2 #combatSimulator .heroAttributes input[type=text] { box-sizing: border-box; height: 22px; border: 1px solid #c9bda4; border-radius: 3px; text-align: center; }
+body.legendsV2 #combatSimulator .heroAttributes .stats label { display: inline-flex; align-items: center; gap: 3px; }
+body.legendsV2 #combatSimulator .tribeSelection.reinforcement .tribeWrapper div { padding: 4px 10px 2px; }
+body.legendsV2 #combatSimulator .tribeSelection.reinforcement .tribeWrapper div svg { top: 5px; }
+body.legendsV2 #combatSimulator .role.reinforcement .header { display: grid; }
+body.legendsV2 #combatSimulator .role.reinforcement .header h3 { margin: 0; grid-column-start: 2; }
+body.legendsV2 #combatSimulator .role.reinforcement .header i[class*="smallTribe"] { grid-column-start: 1; transform: scale(.8); margin-bottom: -6px; align-self: end; }
+body.legendsV2 #combatSimulator #stickyPin { margin-top: 30px; height: 56px; }
+body.legendsV2 #combatSimulator #stickyPin #stickyWrapper { box-sizing: border-box; }
+body.legendsV2 #combatSimulator #stickyPin .simulate { min-width: 160px; }
+body.legendsV2 #combatSimulator .results[hidden] { display: none; }
+body.legendsV2 #combatSimulator .results .result .header { padding: 0 10px; }
+body.legendsV2 #combatSimulator .results .result .header h2 { margin: 0; line-height: 36px; font-size: 1.4em; }
+body.legendsV2 #combatSimulator .results .result .header .outcome { height: 36px; position: relative; }
+body.legendsV2 #combatSimulator .results .result .header .outcome .outcomeIcons svg { width: 30px; height: 34px; }
+body.legendsV2 #combatSimulator .results .result .header .outcome .outcomeIcons svg.svgSkull { right: 30px !important; width: 26px; height: 32px; }
+body.legendsV2 #combatSimulator .results .result.reinforcement .header h2 { line-height: 26px; font-size: 1.1em; }
+body.legendsV2 #combatSimulator .results .result .content table th, body.legendsV2 #combatSimulator .results .result .content table td { border: none; background: none; }
+body.legendsV2 #combatSimulator .results .result .content table tr.troopsCount th, body.legendsV2 #combatSimulator .results .result .content table tr.troopsLoss th { width: 70px; text-align: left; font-weight: 700; }
+body.legendsV2 #combatSimulator .results .result .content table td.none { color: #b9ad9a; }
+body.legendsV2 #combatSimulator .results .result .content table .additionalInfo td i.carry { display: inline-block; width: 16px; height: 14px; background: url('../img_ltr/global/combat/bounty_full_small.png') no-repeat center / contain; }
+body.legendsV2 #rallyPointSimulators .travelSimulator[hidden], body.legendsV2 #rallyPointSimulators #combatSimulator[hidden] { display: none; }
+body.legendsV2 #rallyPointSimulators .travelSimulator .coordinatesWrapper input { box-sizing: border-box; height: 40px; border: 1px solid #c9bda4; border-radius: 4px; padding: 0 8px; font-size: 14px; }
+body.legendsV2 #rallyPointSimulators .travelSimulator .coordinatesWrapper .switchSourceAndTarget { padding: 0; }
+body.legendsV2 #rallyPointSimulators .travelSimulator .coordinatesWrapper .switchSourceAndTarget svg { fill: #fff; position: relative; z-index: 3; }
+body.legendsV2 #rallyPointSimulators .travelSimulator > label.select, body.legendsV2 #rallyPointSimulators .travelSimulator .simulatorHeroEffectSelectRow label.select { display: block; position: relative; }
+body.legendsV2 #rallyPointSimulators .travelSimulator label.select select { width: 100%; box-sizing: border-box; height: 40px; border: 1px solid #c9bda4; border-radius: 4px; padding: 10px 8px 4px; background: #fff; font-size: 13px; color: #3f2a14; }
+body.legendsV2 #rallyPointSimulators .travelSimulator > label.select select { width: 100%; }
+body.legendsV2 #rallyPointSimulators .travelSimulator label.select .label.pinned { position: absolute; left: 8px; top: -7px; padding: 0 4px; background: #fff; font-size: 10px; line-height: 13px; color: rgba(94, 70, 58, .75); }
+body.legendsV2 #rallyPointSimulators .travelSimulator .simulatorHeroEffectSelectRow { grid-template-columns: 1fr 170px; margin-bottom: 18px; }
+body.legendsV2 #rallyPointSimulators .travelSimulator .simulatorHeroEffectSelectRow .effectMagnitude { grid-column: 2; }
+body.legendsV2 #rallyPointSimulators .travelSimulator > label { margin-bottom: 18px; }
+body.legendsV2 #rallyPointSimulators .travelSimulator .calculationWrapper { margin-top: 10px; }
+body.legendsV2 #rallyPointSimulators .travelSimulator .calculationWrapper .loadingIndicator[hidden] { display: none; }
+body.legendsV2 #rallyPointSimulators .travelSimulator .coordinatesWrapper [hidden] { display: none; }
+body.legendsV2 #combatSimulator .switchRoleWrapper .switch { color: #f2f2f2 !important; font-weight: 700; border-radius: 3px; cursor: pointer; text-shadow: 0 1px 1px rgba(0, 0, 0, .35); }
+body.legendsV2 #combatSimulator .role .header.you ~ .tribeSelection .tribeWrapper div.inactive { cursor: default; }
+body.legendsV2 #combatSimulator .role .header.you ~ .tribeSelection .tribeWrapper div.inactive:hover:before { height: 0; }
+body.legendsV2 #combatSimulator .results .result .content table, body.legendsV2 #combatSimulator .results .result .content table tr,
+body.legendsV2 #combatSimulator .results .result .content table th, body.legendsV2 #combatSimulator .results .result .content table td { background: transparent !important; border: none !important; }
+body.legendsV2 #combatSimulator .results .result .content table tr.troopsLoss td.none { color: #b9ad9a; }
+body.legendsV2 #combatSimulator .results .result.reinforcement .header { padding-left: 50px; }
+body.legendsV2 #combatSimulator .role.reinforcement .header .iconButtonV2 svg { width: 12px; height: 12px; margin: 0; }
+body.legendsV2 #combatSimulator .role.reinforcement .header .iconButtonV2 { width: 22px; height: 22px; }
+body.legendsV2 #rallyPointSimulators .travelSimulator label.select { display: block !important; position: relative !important; padding: 0 !important; margin: 0 0 22px !important; }
+body.legendsV2 #rallyPointSimulators .travelSimulator label.select select { -webkit-appearance: none; appearance: none; width: 100% !important; height: 40px !important;
+    box-sizing: border-box; padding: 0 34px 0 14px !important; border: 1px solid #6b5a4c !important; border-radius: 2px !important; font-size: 14px !important; color: #3f2a14 !important;
+    background: #fff url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 10 6'%3E%3Cpath d='M0 0h10L5 6z' fill='%23252525'/%3E%3C/svg%3E") no-repeat right 12px center / 10px 6px !important;
+    box-shadow: none !important; cursor: pointer; }
+body.legendsV2 #rallyPointSimulators .travelSimulator label.select .label,
+body.legendsV2 #rallyPointSimulators .travelSimulator label.select .label.pinned { position: absolute !important; top: -8px !important; left: 14px !important; right: auto !important;
+    transform: none !important; padding: 0 6px !important; margin: 0 !important; background: #fff !important; font-size: 11.5px !important; line-height: 15px !important;
+    color: #5e463a !important; font-weight: 400 !important; pointer-events: none; white-space: nowrap; }
+body.legendsV2 #rallyPointSimulators .travelSimulator .description { margin: 10px 0 28px; font-size: 13px; line-height: 17px; }
+body.legendsV2 #rallyPointSimulators .travelSimulator .coordinatesWrapper { margin-bottom: 30px; }
+body.legendsV2 #rallyPointSimulators .travelSimulator .coordinatesWrapper .name { font-size: 14px; color: #5e463a; }
+body.legendsV2 #rallyPointSimulators .travelSimulator .coordinatesWrapper input { width: 58px !important; height: 40px !important; border: 1px solid #6b5a4c !important; border-radius: 2px !important;
+    padding: 0 14px !important; font-size: 14px !important; color: #3f2a14; background: #fff; box-shadow: none !important; }
+body.legendsV2 #rallyPointSimulators .travelSimulator .coordinatesWrapper input::placeholder { color: #9b8f84; }
+body.legendsV2 #rallyPointSimulators .travelSimulator .coordinatesWrapper button.switchSourceAndTarget { width: 36px; height: 36px; }
+body.legendsV2 #rallyPointSimulators .travelSimulator .coordinatesWrapper button.switchSourceAndTarget svg { width: 18px; height: 18px; }
+body.legendsV2 #rallyPointSimulators .travelSimulator .calculationWrapper { align-items: center; margin-top: 6px; }
+body.legendsV2 #rallyPointSimulators .travelSimulator .calculationWrapper button.calculate { min-width: 110px; }
+body.legendsV2 #rallyPointSimulators .travelSimulator .calculationWrapper button.calculate:disabled { filter: grayscale(.75) brightness(1.05); cursor: default; }
+body.legendsV2 #rallyPointSimulators .travelSimulator .calculationWrapper .duration, body.legendsV2 #rallyPointSimulators .travelSimulator .calculationWrapper .distance { font-weight: 700; font-size: 14px; color: #5e463a; }
+body.legendsV2 #combatSimulator .role.attacker .header.you, body.legendsV2 #combatSimulator .role.defender .header.you { grid-template-columns: 65px auto 1fr 60px; }
+body.legendsV2 #combatSimulator .role.attacker .header.you .iconButtonV2.clear, body.legendsV2 #combatSimulator .role.defender .header.you .iconButtonV2.clear { grid-column-start: 4; }
+body.legendsV2 #combatSimulator .role.attacker .header:not(.you) .iconButtonV2.clear, body.legendsV2 #combatSimulator .role.defender .header:not(.you) .iconButtonV2.clear { grid-column-start: 4; }
+body.legendsV2 #combatSimulator .role .header .villageSelection select { height: 24px; font-size: 13px; padding: 0 4px; border: 1px solid #c9bda4; background: #fff; }
+body.legendsV2 #combatSimulator .role .header .iconButtonV2 { width: 30px; height: 28px; }
+body.legendsV2 #combatSimulator .troops table th svg.troopsIcon { width: 14px; height: 16px; vertical-align: middle; }
+body.legendsV2 #combatSimulator .troops table th svg.smithyIcon { width: 18px; height: 14px; vertical-align: middle; }
+body.legendsV2 #combatSimulator .troops table th i.troopsIcon, body.legendsV2 #combatSimulator .troops table th i.smithyIcon { display: none; }
+body.legendsV2 #combatSimulator .troops td.celebration { white-space: nowrap; text-align: left; }
+body.legendsV2 #combatSimulator .troops td.celebration i.celebration_small { display: inline-block; width: 16px; height: 16px; vertical-align: middle; margin-right: 3px;
+    background: url('../img_ltr/global/misc/celebration_small.png') no-repeat center / contain; }
+body.legendsV2 #combatSimulator i.simStonemasonIcon { display: inline-block; width: 18px; height: 18px; background: url('../img_ltr/global/buildings/roman/icon/type34_small.png') no-repeat center / contain; }
+body.legendsV2 #combatSimulator i.simResidenceIcon { background-image: url('../img_ltr/global/buildings/roman/icon/type26_small.png'); }
+body.legendsV2 #combatSimulator .bonus .artefacts { display: flex; gap: 12px; align-items: center; }
+body.legendsV2 #combatSimulator .bonus .artefacts label { margin-left: 0; gap: 4px; }
+body.legendsV2 #combatSimulator .bonus .artefacts select { width: 58px; height: 24px; border: 1px solid #c9bda4; border-radius: 2px; background: #fff; }
+body.legendsV2 #combatSimulator .bonus .buildings { display: flex; gap: 10px; align-items: center; }
+body.legendsV2 #combatSimulator .bonus .buildings label { margin-right: 0; }
+body.legendsV2 #combatSimulator .heroAttributes { min-height: 33px; }
+body.legendsV2 #combatSimulator .heroAttributes .stats { display: flex; align-items: center; gap: 6px; }
+body.legendsV2 #combatSimulator .heroAttributes .stats .heroTitle { margin-right: 4px; }
+body.legendsV2 #combatSimulator .heroAttributes .stats label { padding-left: 4px; gap: 3px; }
+body.legendsV2 #combatSimulator .heroAttributes .stats input[type=text] { width: 36px; }
+body.legendsV2 #combatSimulator .heroAttributes .calculated { margin-left: 2px; }
+body.legendsV2 #combatSimulator .heroAttributes .equipment { display: flex; align-items: center; gap: 4px; }
+body.legendsV2 #combatSimulator .heroAttributes .equipment .slot i { display: inline-block; }
+body.legendsV2 #combatSimulator .tribeSelection.reinforcement .tribeWrapper div i[class*="smallTribe"] { border-radius: 50%; box-shadow: 0 0 0 2px #c3dff0; }
+body.legendsV2 #rallyPointSimulators .travelSimulator .coordinatesWrapper button.switchSourceAndTarget { background: linear-gradient(#7d9471, #5f7756) !important; border: 1px solid #3f5236 !important;
+    border-radius: 2px; box-shadow: inset 0 1px 0 rgba(255, 255, 255, .25); display: grid; place-items: center; }
+body.legendsV2 #rallyPointSimulators .travelSimulator .coordinatesWrapper button.switchSourceAndTarget:before,
+body.legendsV2 #rallyPointSimulators .travelSimulator .coordinatesWrapper button.switchSourceAndTarget:after { display: none !important; }
+body.legendsV2 #rallyPointSimulators .travelSimulator .coordinatesWrapper button.switchSourceAndTarget svg { fill: #fff !important; width: 18px; height: 15px; position: static; margin: 0; }
+body.legendsV2 #combatSimulator .bonus select, body.legendsV2 #combatSimulator .role .header .villageSelection select { -webkit-appearance: none; appearance: none; padding: 0 22px 0 6px;
+    background: #fff url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 10 6'%3E%3Cpath d='M0 0h10L5 6z' fill='%23252525'/%3E%3C/svg%3E") no-repeat right 7px center / 9px 5px; }
+body.legendsV2 #combatSimulator .role .header .villageSelection select { min-width: 200px; }
+body.legendsV2 #combatSimulator #stickyPin { margin-top: 24px; height: auto; position: relative; }
+body.legendsV2 #combatSimulator #stickyPin #stickyWrapper, body.legendsV2 #combatSimulator #stickyPin #stickyWrapper.floating { position: static !important; width: auto; margin: 0 -6px; left: auto !important; }
+body.legendsV2 #rallyPointSimulators .subTabs_tabs a { overflow: visible; }
+body.legendsV2 #rallyPointSimulators .subTabs_tabs a.favor { display: grid !important; place-items: center; width: 34px; min-width: 34px; padding: 0 !important; height: 33px; box-sizing: border-box; }
+body.legendsV2 #rallyPointSimulators .subTabs_tabs a.favor svg, body.legendsV2 #rallyPointSimulators .subTabs_tabs a.favor svg.star {
+    position: static !important; inset: auto !important; width: 22px !important; height: 22px !important; margin: 0 !important; fill: #f2f2f2 !important; transform: none !important; }
+body.legendsV2 #rallyPointSimulators .travelSimulator .coordinatesWrapper button.switchSourceAndTarget { width: 40px !important; height: 40px !important; padding: 0 !important;
+    background: #6c7d61 !important; border: 1px solid #47533f !important; border-radius: 2px !important; box-shadow: inset 0 0 0 1px rgba(255, 255, 255, .35) !important; }
+body.legendsV2 #rallyPointSimulators .travelSimulator .coordinatesWrapper button.switchSourceAndTarget > * { grid-area: 1 / 1; }
+body.legendsV2 #rallyPointSimulators .travelSimulator .coordinatesWrapper button.switchSourceAndTarget svg { position: static !important; inset: auto !important; transform: none !important;
+    width: 22px !important; height: 18px !important; margin: 0 !important; fill: #f4f4f4 !important; stroke: #3b4634; stroke-width: .6; paint-order: stroke; }
+body.legendsV2 #rallyPointSimulators .subTabs_tabs a:not(.favor) svg.star { position: absolute !important; top: 2px; right: 2px; width: 10px; height: 10px; fill: #f2f2f2; }
+body.legendsV2 #rallyPointSimulators .subTabs_tabs a.active:not(.favor) svg.star { fill: #5e463a; }
+body.legendsV2 #combatSimulator i.simPopulationIcon, body.legendsV2 #combatSimulator i.simCatapultIcon { display: inline-block; width: 18px; height: 18px; background: no-repeat center / contain; }
+body.legendsV2 #combatSimulator i.simPopulationIcon { background-image: url('../img_ltr/global/measure/population_medium.png'); }
+body.legendsV2 #combatSimulator i.simCatapultIcon { background-image: url('../img_ltr/global/buildings/roman/icon/type21_small.png'); }
+body.legendsV2 #combatSimulator .results .result .content { overflow: hidden; }
+body.legendsV2 #combatSimulator .results .result .content table { width: 100%; table-layout: fixed; }
+body.legendsV2 #combatSimulator .results .result .content table th:first-child { width: 64px; }
+body.legendsV2 #combatSimulator .results .result .content table td, body.legendsV2 #combatSimulator .results .result .content table th { padding-left: 0; padding-right: 0; text-align: center; }
+body.legendsV2 #combatSimulator .results .result .content table tr > th:first-child { text-align: left; }
+
+/* Dialogs (js/Game/Legends/dialog.js) and the Gold Club dialog (js/Game/Legends/goldClub.js) – port of the travian-T4.6 branch look. */
+body.legendsV2 .textButtonV2.buttonFramed.red:before { background-image: linear-gradient(to bottom, #e06a4a, #b7341d 50%, #8e2210); border-color: #6b190c; }
+body.legendsV2 .textButtonV2.buttonFramed.red { color: #fff; }
+body.legendsV2 .legendsPlusDialog .dialogGold { position: absolute; z-index: 3; top: 33px; right: 92px; display: flex; align-items: center; gap: 4px; color: #fff;
+    font-weight: 700; font-size: 16px; padding-right: 10px; border-right: 1px solid rgba(255, 255, 255, .5); text-shadow: 0 1px 1px #000; }
+body.legendsV2 .legendsPlusDialog .dialogGold .goldCoin { width: 22px; height: 22px; }
+body.legendsV2 .legendsPlusDialog .featureCollection { display: block; }
+body.legendsV2 .legendsPlusDialog .featureCollection .feature { margin-bottom: 6px; }
+body.legendsV2 .legendsPlusDialog .featureCollection .packageFeatures .featureContent { background: #fff9eb; }
+body.legendsV2 .legendsPlusDialog .featureCollection .packageFeatures .featureContent .featureTitle { font-weight: 700; }
+body.legendsV2 .legendsPlusDialog .plusNotice { text-align: center; font-weight: 700; margin: 2px 0 8px; }
+body.legendsV2 .legendsPlusDialog .plusExtra { margin: 6px 4px; }
+body.legendsV2 .legendsPlusDialog .featureBooking .featureContent { grid-template-columns: 90px 1fr auto !important; grid-template-rows: 60px !important; align-items: center;
+    padding: 6px 4px !important; margin-top: 8px; }
+body.legendsV2 .legendsPlusDialog .featureBooking .featureImage.bookingScroll { width: 84px; height: 56px; background: url('../img_ltr/legacy/views/waveBuilderDialog/scroll.png') no-repeat center / contain; }
+body.legendsV2 .legendsPlusDialog .featureBooking .featureDuration { grid-column: 2; grid-row: 1; font-size: 14px; }
+body.legendsV2 .legendsPlusDialog .featureBooking .featureButton { grid-column: 3; grid-row: 1; }
+body.legendsV2 .legendsPlusDialog .featureBooking .featureButton button div { display: flex; align-items: center; gap: 6px; font-size: 15px; }
+body.legendsV2 .legendsPlusDialog .featureBooking .featureButton .goldCoin { width: 18px; height: 18px; }
+body.legendsV2 .legendsPlusDialog .plusError { color: #d40000; text-align: center; margin: 6px 0 0; }
+body.legendsV2 .legendsPlusDialog .featureCollection .packageFeatures .featureContent .featureTitle { font-size: 14px; }
+body.legendsV2 .legendsPlusDialog .featureCollection .packageFeatures .featureContent .featureDescription { font-size: 13px; line-height: 17px; }
+body.legendsV2 .legendsPlusDialog .plusNotice, body.legendsV2 .legendsPlusDialog .plusExtra { font-size: 13px; }
+body.legendsV2 .legendsPlusDialog .featureBooking .featureImage.bookingScroll { width: 84px; height: 56px;
+    background: url('../img_ltr/legacy/global/premiumFeatures/plusDuration.svg') no-repeat center / contain; }
+body.legendsV2 .legendsPlusDialog .featureBooking .featureButton { padding: 3px; border-radius: 5px;
+    background: linear-gradient(to bottom, #f7e08b, #c9962c 45%, #8a5e12); box-shadow: 0 0 0 1px #5e3c08, 0 2px 4px rgba(0, 0, 0, .35); }
+body.legendsV2 .legendsPlusDialog .featureBooking .featureButton button.plusActivate { min-width: 200px; display: block; margin: 0; }
+body.legendsV2 .legendsPlusDialog .featureBooking .featureButton button.plusActivate > div { display: flex; justify-content: center; align-items: center; gap: 6px;
+    width: 100%; text-align: center; font-weight: 700; font-size: 16px; }
+body.legendsV2 .legendsPlusDialog .featureBooking .featureButton button.plusActivate { display: grid; place-items: center; height: 38px; padding: 0 20px; box-sizing: border-box; }
+body.legendsV2 .legendsPlusDialog .featureBooking .featureButton button.plusActivate > div { padding: 0; margin: 0; line-height: 1; height: auto; position: relative; top: 0; }
+body.legendsV2 .legendsGoldClubDialog .featureBooking .featureImage.goldclubDuration { width: 84px; height: 56px;
+    background: url('../img_ltr/legacy/views/shop/goldClub_large.png') no-repeat center; }
+body.legendsV2 .legendsGoldClubDialog .featureBooking .featureContent { background: none; }
+body.legendsV2 .legendsGoldClubDialog .featureBooking .featureDuration { color: #5e463a; }
+body.legendsV2 .dialogV2.dialogWrapper .dialog.legendsGoldClubDialog .packageFeatures .featureContent .featureImage.raidList { background-position: 0 0 !important; }
