@@ -1703,3 +1703,14 @@ body.legendsV2 .sidebar #sidebarBoxVillagelist .buttonsWrapper.quickLinks > #but
 body.legendsV2 .sidebar .buttonsWrapper.quickLinks > .layoutButton.buttonFramed.withIcon.round.settings { width: 26px; height: 26px; flex: 0 0 26px;
     margin: 0 0 0 3px !important; align-self: center; }
 body.legendsV2 .sidebar .buttonsWrapper.quickLinks > .layoutButton.buttonFramed.withIcon.round.settings > svg:not(.closeIcon) { width: 14px; height: 4px; }
+/* The round buttons sit with their centre on the top line of the box frame (line centre 9.5px below the box top),
+   in the left sidebar as in the right one. The quick link rows use a 41px column so that five links and "…" fit
+   between the top-left ornament and the right corner of the frame. */
+body.legendsV2 .sidebar .sidebarBox:not(#sidebarBoxQuestmaster) .innerBox.header .buttonsWrapper { top: -10px; }
+body.legendsV2 .sidebar #sidebarBoxActiveVillage .innerBox.header .buttonsWrapper.quickLinks,
+body.legendsV2 .sidebar #sidebarBoxVillagelist .innerBox.header .buttonsWrapper.quickLinks { top: -12.5px; right: 12px; gap: 0; }
+body.legendsV2 .sidebar #sidebarBoxActiveVillage .buttonsWrapper.quickLinks .quickLinkSlot,
+body.legendsV2 .sidebar #sidebarBoxVillagelist .buttonsWrapper.quickLinks .quickLinkSlot { width: 41px !important; height: 44px !important; flex: 0 0 41px; }
+body.legendsV2 .sidebar #sidebarBoxActiveVillage .buttonsWrapper.quickLinks .quickLinkSlot.editMode::before,
+body.legendsV2 .sidebar #sidebarBoxVillagelist .buttonsWrapper.quickLinks .quickLinkSlot.editMode::before { width: 41px; height: 41px; top: 1.5px; }
+body.legendsV2 .sidebar #sidebarBoxVillagelist .buttonsWrapper.quickLinks > button.layoutButton.overview { margin: 0 .5px !important; }
