@@ -2054,3 +2054,37 @@ body.legendsV2 .sidebar .buttonsWrapper.quickLinks > .layoutButton.buttonFramed.
 body.legendsV2 .legendsDialogOverlay.quickLinksOverlay .dialogWrapper,
 body.legendsV2 .legendsDialogOverlay.quickLinksOverlay .dialog.quickLinksDialog,
 body.legendsV2 .legendsDialogOverlay.quickLinksOverlay .dialog.quickLinksDialog .dialogContainer { width: 450px !important; max-width: calc(100vw - 16px); }
+
+/* Silver round buttons as in Travian Legends (menu at the top right, "…" of the quick links and its X while editing):
+   a golden ring around a light silver face, the symbol white with a grey outline. */
+body.legendsV2 #topBar nav#outOfGame > .layoutButton.round,
+body.legendsV2 .sidebar .buttonsWrapper.quickLinks > .layoutButton.round.settings {
+    filter: none !important;
+    border: 2.5px solid transparent !important; border-radius: 50% !important;
+    background: radial-gradient(circle at 50% 38%, #ffffff 0%, #f1f1f1 38%, #d6d6d6 72%, #b4b4b4 100%) padding-box,
+                linear-gradient(180deg, #cba467 5%, #f3e2ae 13%, #efbf7b 32%, #aa8050 48%, #835e35 72%, #ad8a54 93%, #d7b672 100%) border-box !important;
+    box-shadow: 0 0 0 1px #34220d, inset 0 0 0 1px #4f4f4f, inset 0 1px 2px rgba(255, 255, 255, .9), 0 2px 3px rgba(0, 0, 0, .4) !important; }
+body.legendsV2 #topBar nav#outOfGame > .layoutButton.round:before,
+body.legendsV2 #topBar nav#outOfGame > .layoutButton.round:after,
+body.legendsV2 .sidebar .buttonsWrapper.quickLinks > .layoutButton.round.settings:before,
+body.legendsV2 .sidebar .buttonsWrapper.quickLinks > .layoutButton.round.settings:after { display: none !important; }
+body.legendsV2 #topBar nav#outOfGame > .layoutButton.round svg .outline,
+body.legendsV2 #topBar nav#outOfGame > .layoutButton.round svg .outline path,
+body.legendsV2 .sidebar .buttonsWrapper.quickLinks > .layoutButton.round.settings svg.outline,
+body.legendsV2 .sidebar .buttonsWrapper.quickLinks > .layoutButton.round.settings svg.outline path {
+    display: inline; fill: #747474 !important; stroke: #747474 !important; stroke-width: 1.5px; stroke-linejoin: round; paint-order: stroke; }
+body.legendsV2 #topBar nav#outOfGame > .layoutButton.round svg .icon,
+body.legendsV2 #topBar nav#outOfGame > .layoutButton.round svg .icon path,
+body.legendsV2 .sidebar .buttonsWrapper.quickLinks > .layoutButton.round.settings svg.icon,
+body.legendsV2 .sidebar .buttonsWrapper.quickLinks > .layoutButton.round.settings svg.icon path { fill: #ffffff !important; stroke: none !important; }
+body.legendsV2 #topBar nav#outOfGame > .layoutButton.round:hover,
+body.legendsV2 .sidebar .buttonsWrapper.quickLinks > .layoutButton.round.settings:hover {
+    background: radial-gradient(circle at 50% 38%, #ffffff 0%, #f8f8f8 45%, #e2e2e2 75%, #c4c4c4 100%) padding-box,
+                linear-gradient(180deg, #cba467 5%, #f3e2ae 13%, #efbf7b 32%, #aa8050 48%, #835e35 72%, #ad8a54 93%, #d7b672 100%) border-box !important; }
+/* the X while editing: white with a grey outline, like the other symbols */
+body.legendsV2 .sidebar .buttonsWrapper.quickLinks > .layoutButton.round.settings.editMode .closeIcon {
+    fill: #ffffff !important; stroke: #747474 !important; stroke-width: 2.2px !important; paint-order: stroke; overflow: visible;
+    width: 12px !important; height: 12px !important; filter: none !important; }
+body.legendsV2 #topBar nav#outOfGame > .layoutButton.round > svg { width: 21px !important; height: 21px !important; }
+body.legendsV2 #topBar nav#outOfGame > .layoutButton.round svg .outline path { stroke-width: 2px; }
+body.legendsV2 .sidebar .buttonsWrapper.quickLinks > .layoutButton.round.settings svg.outline path { stroke-width: 1.2px; }
