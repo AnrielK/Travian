@@ -43,7 +43,9 @@
         var fav = null;
         try { fav = localStorage.getItem('legendsSimFavor'); } catch (e) {}
         Array.prototype.forEach.call(tabs, function (a) {
-            a.classList.toggle('favorActive', a.getAttribute('data-sim-tab') === (fav || 'combat'));
+            var old = a.querySelector('svg.star');
+            if (old) old.parentNode.removeChild(old);
+            if (a.getAttribute('data-sim-tab') === (fav || 'combat')) a.insertAdjacentHTML('beforeend', root.querySelector('[data-sim-favor] svg').outerHTML);
         });
         updateSticky();
     }

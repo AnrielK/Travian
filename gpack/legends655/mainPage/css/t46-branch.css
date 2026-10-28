@@ -405,12 +405,9 @@ body.legends655 .dialogV2.dialogWrapper .dialog.legendsGoldClubDialog .packageFe
 /* "Simulovat" at the bottom of the form, in the free space under the troops */
 body.legends655 #combatSimulator #stickyPin { margin-top: 24px; height: auto; position: relative; }
 body.legends655 #combatSimulator #stickyPin #stickyWrapper, body.legends655 #combatSimulator #stickyPin #stickyWrapper.floating { position: static !important; width: auto; margin: 0 -6px; left: auto !important; }
-/* favourite tab marker: the Legends favourite icon on every tab bar */
+/* favourite tab marker of the tab bar under the window header: the Legends favourite icon */
 body.legends655 .tabNavi .container .content.favorActive:after { background: url('../img_ltr/hud/content/favor_medium.png') no-repeat center / contain; width: 20px; height: 14px; }
 body.legends655 #rallyPointSimulators .subTabs_tabs a { overflow: visible; }
-body.legends655 #rallyPointSimulators .subTabs_tabs a.favorActive:not(.favor):after { content: ""; position: absolute; top: -10px; left: 50%; transform: translateX(-50%);
-    width: 26px; height: 18px; background: url('../img_ltr/hud/content/favor_medium.png') no-repeat center; z-index: 3; pointer-events: none; }
-body.legends655 #rallyPointSimulators .subTabs { margin-top: 12px; }
 /* "set as favourite" star button: star in the middle */
 body.legends655 #rallyPointSimulators .subTabs_tabs a.favor { display: grid !important; place-items: center; width: 34px; min-width: 34px; padding: 0 !important; height: 33px; box-sizing: border-box; }
 body.legends655 #rallyPointSimulators .subTabs_tabs a.favor svg, body.legends655 #rallyPointSimulators .subTabs_tabs a.favor svg.star {
@@ -426,3 +423,5 @@ body.legends655 .sidebar .quickLinks .layoutButton.settings.editMode { backgroun
 body.legends655 .sidebar .quickLinks .layoutButton.settings.editMode:before, body.legends655 .sidebar .quickLinks .layoutButton.settings.editMode:after { display: none !important; }
 body.legends655 .sidebar .quickLinks .layoutButton.settings.editMode .closeIcon { fill: #7d7d7d !important; width: 12px !important; height: 12px !important; display: block !important; position: relative; z-index: 3; }
 body.legends655 .sidebar .quickLinks .quickLinkSlot.editMode .slot { background: #fbfbfb; box-shadow: inset 0 0 0 1px #d6d6d6, inset 0 2px 4px rgba(0, 0, 0, .12); }
+body.legends655 #rallyPointSimulators .subTabs_tabs a:not(.favor) svg.star { position: absolute !important; top: 2px; right: 2px; width: 10px; height: 10px; fill: #f2f2f2; }
+body.legends655 #rallyPointSimulators .subTabs_tabs a.active:not(.favor) svg.star { fill: #5e463a; }
