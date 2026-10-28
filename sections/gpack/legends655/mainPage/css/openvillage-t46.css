@@ -2010,3 +2010,16 @@ body.legendsV2 .legendsPlusDialog .featureBooking .featureButton button.plusActi
 body.legendsV2 .legendsPlusDialog .featureBooking .featureButton button.plusActivate:hover:not([disabled]) {
     background: linear-gradient(180deg, #fff7c8 0%, #fae684 30%, #f4d257 60%, #e9b938 100%) padding-box,
                 linear-gradient(180deg, #f6e3a1 0%, #d6a94e 35%, #a87a2c 65%, #e0bf72 100%) border-box !important; }
+/* "Activate": the same golden frame as the other framed buttons of the Legends look (confirm dialogs, …) around the
+   game's own yellow button face */
+body.legendsV2 .legendsPlusDialog .featureBooking .featureButton button.plusActivate {
+    border: 1px solid #34220d !important; border-radius: 4px !important; box-shadow: none !important; position: relative;
+    background: linear-gradient(180deg, #cba467 5%, #f3e2ae 13%, #efbf7b 32%, #aa8050 48%, #835e35 72%, #ad8a54 93%, #d7b672 100%) !important; }
+body.legendsV2 .legendsPlusDialog .featureBooking .featureButton button.plusActivate:hover:not([disabled]) {
+    background: linear-gradient(180deg, #cba467 5%, #f3e2ae 13%, #efbf7b 32%, #aa8050 48%, #835e35 72%, #ad8a54 93%, #d7b672 100%) !important; }
+body.legendsV2 .legendsPlusDialog .featureBooking .featureButton button.plusActivate:before {
+    display: block !important; content: "" !important; position: absolute; inset: 2px; z-index: 0; border-radius: 2px;
+    border: 1px solid #3a1502; background: linear-gradient(180deg, #f1da33, #da9e25);
+    box-shadow: inset 0 -4px 0 -2px #9d6513, inset 0 4px 0 -2px #fff0c6; }
+body.legendsV2 .legendsPlusDialog .featureBooking .featureButton button.plusActivate:hover:not([disabled]):before { background: linear-gradient(180deg, #f6e45a, #e3ad35); }
+body.legendsV2 .legendsPlusDialog .featureBooking .featureButton button.plusActivate > div { position: relative; z-index: 1; }
