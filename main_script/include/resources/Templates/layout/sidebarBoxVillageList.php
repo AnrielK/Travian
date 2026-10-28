@@ -133,9 +133,13 @@
             </script>
         </div>
         <div class="innerBox content">
+            <?php if ($qlV2): ?>
+                <?=\resources\View\PHPBatchView::render('layout/legendsVillageList', ['villageRows' => $vars['villageRows'] ?? []]); ?>
+            <?php else: ?>
             <ul>
                 <?=$vars['villages']; ?>
             </ul>
+            <?php endif; ?>
         </div>
         <div class="innerBox footer">
         </div>

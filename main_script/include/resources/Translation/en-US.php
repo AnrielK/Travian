@@ -5973,4 +5973,20 @@ $Definition['LegendsPlus']['features']['fullScreen']['text'] = 'A larger map giv
 $Definition['LegendsPlus']['features']['tradeMulti']['title'] = 'Merchants can run 2x';
 $Definition['LegendsPlus']['features']['tradeMulti']['text'] = 'After returning from their first delivery, merchants set off again automatically.';
 
+// Village groups of the Legends 655 village list (js/Game/Legends/villageGroups.js)
+$Definition['VillageGroups']['attacks'] = 'Incoming attacks';
+$Definition['VillageGroups']['dragVillage'] = 'Drag the village into a group';
+$Definition['VillageGroups']['add'] = 'New village group';
+$Definition['VillageGroups']['groups'] = 'Village groups';
+$Definition['VillageGroups']['edit'] = 'Edit group';
+$Definition['VillageGroups']['expand'] = 'Show / hide villages';
+$Definition['VillageGroups']['newGroup'] = 'New group';
+$Definition['VillageGroups']['delete'] = 'Delete group';
+$Definition['VillageGroups']['deleteConfirm'] = 'Delete this group? Your villages will not be affected.';
+$Definition['VillageGroups']['color'] = 'Colour (click to change)';
+$Definition['VillageGroups']['max'] = 'You can have at most 20 village groups.';
+$Definition['VillageGroups']['dragGroup'] = 'Drag to move the group';
+$Definition['VillageGroups']['cancel'] = 'Cancel';
+$Definition['VillageGroups']['deleteButton'] = 'delete';
+
 return $Definition;

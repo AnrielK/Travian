@@ -879,6 +879,7 @@ class GameView
         $data['buttonToggleId'] = get_button_id();
         $data['buttonDorf3Id'] = get_button_id();
         $data['villages'] = '';
+        $data['villageRows'] = [];
         $prefix = http_build_query($this->newVillagePrefix);
         $db = DB::getInstance();
         $count = $this->session->get("total_villages");
@@ -926,6 +927,10 @@ class GameView
                 $x,
                 $y);
             $active = $row['kid'] == $this->session->getKid() ? 'active' : '';
+            // Travian Legends 655: the village list with village groups (layout/legendsVillageList.php)
+            $data['villageRows'][(int)$row['kid']] = ['kid' => (int)$row['kid'], 'name' => $name, 'x' => $x, 'y' => $y,
+                'active' => $active !== '', 'attacks' => (int)$attacks,
+                'href' => '?newdid=' . $row['kid'] . (!empty($prefix) ? '&' . $prefix : '')];
             $data['villages'] .= '<li class="' . $active . ($attacks ? ' attack' : '') . '" title="' . htmlspecialchars($title) . '">';
             $data['villages'] .= '<a  href="?newdid=' . $row['kid'] . (!empty($prefix) ? '&' . $prefix : '') . '" accesskey="b" class="' . $active . '">';
             $data['villages'] .= '<img src="img/x.gif" alt="" />';

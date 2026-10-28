@@ -1714,3 +1714,187 @@ body.legendsV2 .sidebar #sidebarBoxVillagelist .buttonsWrapper.quickLinks .quick
 body.legendsV2 .sidebar #sidebarBoxActiveVillage .buttonsWrapper.quickLinks .quickLinkSlot.editMode::before,
 body.legendsV2 .sidebar #sidebarBoxVillagelist .buttonsWrapper.quickLinks .quickLinkSlot.editMode::before { width: 41px; height: 41px; top: 1.5px; }
 body.legendsV2 .sidebar #sidebarBoxVillagelist .buttonsWrapper.quickLinks > button.layoutButton.overview { margin: 0 .5px !important; }
+
+/* Village groups of the Legends village list (layout/legendsVillageList.php, js/Game/Legends/villageGroups.js): the rules of
+   legends_ltr.css for #sidebarBoxVillageList, for the id of this layout (#sidebarBoxVillagelist), and the travian-T4.6 additions. */
+body.legendsV2 .sidebar #sidebarBoxVillagelist .content .villageList .listEntry.group .colorSelection .color.selected,
+body.legendsV2 .sidebar #sidebarBoxVillagelist .content .villageList .listEntry.group .colorSelection .color:hover {background-image:linear-gradient(180deg,#8fb74f 5%,#add076 13%,#add076 32%,#addd61 48%,#5b7a2a 72%,#618030 93%,#7fa246 100%)}
+body.legendsV2 .sidebar #sidebarBoxVillagelist .content .villageList .listEntry.group .colorSelection .color {background-image:linear-gradient(180deg,#cba467 5%,#f3e2ae 13%,#efbf7b 32%,#aa8050 48%,#835e35 72%,#ad8a54 93%,#d7b672 100%);border:1px solid #34220d;border-radius:4px}
+body.legendsV2 .sidebar #sidebarBoxVillagelist .content .villageList .listEntry.group .colorSelection .color:before {content:"";position:absolute;inset:2px;background-color:#664e40;border:solid 1px #44321d;border-radius:1px}
+body.legendsV2 .sidebar #sidebarBoxVillagelist .content .villageList .groupsHeader {display:grid;grid-template-columns:auto 1fr auto;grid-template-rows:22px;column-gap:3px;align-content:center}
+body.legendsV2 .sidebar #sidebarBoxVillagelist .content .villageList .groupsHeader .secondaryIconButton {margin-block-start:-2px}
+body.legendsV2 .sidebar #sidebarBoxVillagelist .content .villageList .groupsHeader svg {width:auto;height:16px}
+body.legendsV2 .sidebar #sidebarBoxVillagelist .content .villageList .listEntry {border-block:var(--border);margin-block-start:-1px}
+body.legendsV2 .sidebar #sidebarBoxVillagelist .content .villageList .dropContainer,
+body.legendsV2 .sidebar #sidebarBoxVillagelist .content .villageList .groupWrapper {position:relative}
+body.legendsV2 .sidebar #sidebarBoxVillagelist .content .villageList .dropContainer:after,
+body.legendsV2 .sidebar #sidebarBoxVillagelist .content .villageList .dropContainer:before,
+body.legendsV2 .sidebar #sidebarBoxVillagelist .content .villageList .groupWrapper:after,
+body.legendsV2 .sidebar #sidebarBoxVillagelist .content .villageList .groupWrapper:before {content:"";display:block;position:absolute;background-color:#088885;opacity:0;transition-timing-function:ease-in}
+body.legendsV2 .sidebar #sidebarBoxVillagelist .content .villageList .dropContainer:before,
+body.legendsV2 .sidebar #sidebarBoxVillagelist .content .villageList .groupWrapper:before {height:2px;inset-block-start:-2px;inset-inline:-9px -14px;transition-duration:.4s;transition-delay:0s;transform:rotateY(90deg);transform-origin:left}
+body.legendsV2 .sidebar #sidebarBoxVillagelist .content .villageList .dropContainer:after,
+body.legendsV2 .sidebar #sidebarBoxVillagelist .content .villageList .groupWrapper:after {width:5px;height:5px;border-radius:50%;inset-block-start:-3px;inset-inline-end:-14px;transition-duration:.1s;transition-delay:0.4s}
+body.legendsV2 .sidebar #sidebarBoxVillagelist .content .villageList .dropContainer.firstVillage,
+body.legendsV2 .sidebar #sidebarBoxVillagelist .content .villageList .groupWrapper.firstVillage {height:22px}
+body.legendsV2 .sidebar #sidebarBoxVillagelist .content .villageList .dropContainer.highlightDropSection:after,
+body.legendsV2 .sidebar #sidebarBoxVillagelist .content .villageList .dropContainer.highlightDropSection:before,
+body.legendsV2 .sidebar #sidebarBoxVillagelist .content .villageList .groupWrapper.highlightDropSection:after,
+body.legendsV2 .sidebar #sidebarBoxVillagelist .content .villageList .groupWrapper.highlightDropSection:before {opacity:1}
+body.legendsV2 .sidebar #sidebarBoxVillagelist .content .villageList .dropContainer.highlightDropSection:before,
+body.legendsV2 .sidebar #sidebarBoxVillagelist .content .villageList .groupWrapper.highlightDropSection:before {transform:rotateY(0);transition-delay:0.1s}
+body.legendsV2 .sidebar #sidebarBoxVillagelist .content .villageList .dropContainer.highlightDropSection:after,
+body.legendsV2 .sidebar #sidebarBoxVillagelist .content .villageList .groupWrapper.highlightDropSection:after {transition-delay:0s}
+body.legendsV2 .sidebar #sidebarBoxVillagelist .content .villageList .dropContainer.down:after,
+body.legendsV2 .sidebar #sidebarBoxVillagelist .content .villageList .dropContainer.down:before,
+body.legendsV2 .sidebar #sidebarBoxVillagelist .content .villageList .groupWrapper.down:after,
+body.legendsV2 .sidebar #sidebarBoxVillagelist .content .villageList .groupWrapper.down:before {inset-block-start:auto}
+body.legendsV2 .sidebar #sidebarBoxVillagelist .content .villageList .dropContainer.down:before,
+body.legendsV2 .sidebar #sidebarBoxVillagelist .content .villageList .groupWrapper.down:before {inset-block-end:-2px}
+body.legendsV2 .sidebar #sidebarBoxVillagelist .content .villageList .dropContainer.down:after,
+body.legendsV2 .sidebar #sidebarBoxVillagelist .content .villageList .groupWrapper.down:after {inset-block-end:-3px}
+body.legendsV2 .sidebar #sidebarBoxVillagelist .content .villageList .dropContainer.down:has(+ .groupWrapper):after,
+body.legendsV2 .sidebar #sidebarBoxVillagelist .content .villageList .dropContainer.down:has(+ .groupWrapper):before,
+body.legendsV2 .sidebar #sidebarBoxVillagelist .content .villageList .groupWrapper.down:has(+ .groupWrapper):after,
+body.legendsV2 .sidebar #sidebarBoxVillagelist .content .villageList .groupWrapper.down:has(+ .groupWrapper):before {opacity:0}
+body.legendsV2 .sidebar #sidebarBoxVillagelist .content .villageList .dropContainer.down:has(+ .groupWrapper)+.groupWrapper:after,
+body.legendsV2 .sidebar #sidebarBoxVillagelist .content .villageList .dropContainer.down:has(+ .groupWrapper)+.groupWrapper:before,
+body.legendsV2 .sidebar #sidebarBoxVillagelist .content .villageList .groupWrapper.down:has(+ .groupWrapper)+.groupWrapper:after,
+body.legendsV2 .sidebar #sidebarBoxVillagelist .content .villageList .groupWrapper.down:has(+ .groupWrapper)+.groupWrapper:before {opacity:1;inset-block-start:auto}
+body.legendsV2 .sidebar #sidebarBoxVillagelist .content .villageList .dropContainer.down:has(+ .groupWrapper)+.groupWrapper:before,
+body.legendsV2 .sidebar #sidebarBoxVillagelist .content .villageList .groupWrapper.down:has(+ .groupWrapper)+.groupWrapper:before {transform:rotateY(0);transition-delay:0.1s;inset-block-end:-2px}
+body.legendsV2 .sidebar #sidebarBoxVillagelist .content .villageList .dropContainer.down:has(+ .groupWrapper)+.groupWrapper:after,
+body.legendsV2 .sidebar #sidebarBoxVillagelist .content .villageList .groupWrapper.down:has(+ .groupWrapper)+.groupWrapper:after {transition-delay:0s;inset-block-end:-3px}
+body.legendsV2 .sidebar #sidebarBoxVillagelist .content .villageList .dropContainer:has(+ .groupWrapper .highlightDropSection) .listEntry,
+body.legendsV2 .sidebar #sidebarBoxVillagelist .content .villageList .groupWrapper:has(+ .groupWrapper .highlightDropSection) .listEntry {border-color:#088885}
+body.legendsV2 .sidebar #sidebarBoxVillagelist .content .villageList .grey {--highlightColor:#EBEBEB}
+body.legendsV2 .sidebar #sidebarBoxVillagelist .content .villageList .yellow {--highlightColor:#F5FE8D}
+body.legendsV2 .sidebar #sidebarBoxVillagelist .content .villageList .green {--highlightColor:#AEFE7E}
+body.legendsV2 .sidebar #sidebarBoxVillagelist .content .villageList .turquoise {--highlightColor:#6FFFCB}
+body.legendsV2 .sidebar #sidebarBoxVillagelist .content .villageList .blue {--highlightColor:#84D4FF}
+body.legendsV2 .sidebar #sidebarBoxVillagelist .content .villageList .violet {--highlightColor:#CBB8FF}
+body.legendsV2 .sidebar #sidebarBoxVillagelist .content .villageList .magenta {--highlightColor:#EE9ADB}
+body.legendsV2 .sidebar #sidebarBoxVillagelist .content .villageList .red {--highlightColor:#F05366}
+body.legendsV2 .sidebar #sidebarBoxVillagelist .content .villageList .orange {--highlightColor:#FF9371}
+body.legendsV2 .sidebar #sidebarBoxVillagelist .content .villageList .listEntry {display:grid;grid-template-rows:20px;position:relative;transition-duration:250ms;border-inline:1px solid rgba(8,136,133,0)}
+body.legendsV2 .sidebar #sidebarBoxVillagelist .content .villageList .listEntry:before {content:"";position:absolute;inset-block:-1px -1px;inset-inline:0;z-index:-1;background-color:var(--highlightColor);transition:background-color,inset;transition-duration:250ms}
+body.legendsV2 .sidebar #sidebarBoxVillagelist .content .villageList .listEntry:hover:before {inset-inline:-15px;border-block:1px solid #BFB39B;opacity:1}
+body.legendsV2 .sidebar #sidebarBoxVillagelist .content .villageList .listEntry.village {grid-template-columns:165px 85px;--highlightColor:#FFF9EB}
+body.legendsV2 .sidebar #sidebarBoxVillagelist .content .villageList .listEntry.village:before {opacity:0}
+body.legendsV2 .sidebar #sidebarBoxVillagelist .content .villageList .listEntry.village:hover:before {opacity:1}
+body.legendsV2 .sidebar #sidebarBoxVillagelist .content .villageList .listEntry.village:hover svg {opacity:1}
+body.legendsV2 .sidebar #sidebarBoxVillagelist .content .villageList .listEntry.village.active {--highlightColor:#DDC6A2}
+body.legendsV2 .sidebar #sidebarBoxVillagelist .content .villageList .listEntry.village.active:before {opacity:1}
+body.legendsV2 .sidebar #sidebarBoxVillagelist .content .villageList .listEntry.village.active a {font-weight:700}
+body.legendsV2 .sidebar #sidebarBoxVillagelist .content .villageList .listEntry.group {grid-template-columns:1fr auto auto}
+body.legendsV2 .sidebar #sidebarBoxVillagelist .content .villageList .listEntry.group .editModeOverlay {position:fixed;inset:0;z-index:33}
+body.legendsV2 .sidebar #sidebarBoxVillagelist .content .villageList .listEntry.group .editModeOverlay~* {z-index:34}
+body.legendsV2 .sidebar #sidebarBoxVillagelist .content .villageList .listEntry.group input.name {height:20px;margin-block-start:-3px;border:1px solid #5e463a;border-radius:2px}
+body.legendsV2 .sidebar #sidebarBoxVillagelist .content .villageList .listEntry.group .colorSelection {display:grid}
+body.legendsV2 .sidebar #sidebarBoxVillagelist .content .villageList .listEntry.group .colorSelection .color {display:grid;position:relative;width:36px;height:20px;border-radius:0;cursor:pointer}
+body.legendsV2 .sidebar #sidebarBoxVillagelist .content .villageList .listEntry.group .colorSelection .color:before {background-color:var(--highlightColor);border-radius:0;inset:1px}
+body.legendsV2 .sidebar #sidebarBoxVillagelist .content .villageList .listEntry.group .colorSelection .color .selectedIndicator {width:8px;height:8px;position:relative;inset-block-start:1px;inset-inline-start:1px;z-index:4;background-image:linear-gradient(to bottom right,#7fa246,#add076 25%,#add076 calc(50% - 1px),#34220d calc(50% - 1px),#34220d 50%,rgba(52,34,13,0) 50%,rgba(52,34,13,0));transform-origin:0 top}
+body.legendsV2 .sidebar #sidebarBoxVillagelist .content .villageList .listEntry.group .colorSelection .availableColors {position:absolute;inset-block-start:calc(100% + 2px);z-index:2;display:grid;grid-template-columns:repeat(3,auto);grid-template-rows:repeat(2,auto);justify-self:end}
+body.legendsV2 .sidebar #sidebarBoxVillagelist .content .villageList .listEntry.group .actions {display:inline-grid;grid-auto-flow:column;align-items:center}
+body.legendsV2 .sidebar #sidebarBoxVillagelist .content .villageList .listEntry.group .actions .secondaryIconButton {height:21px;padding-inline:8px;opacity:0;transition:opacity 150ms ease-out}
+body.legendsV2 .sidebar #sidebarBoxVillagelist .content .villageList .listEntry.group .actions .secondaryIconButton.edit {padding-block:2px 3px}
+body.legendsV2 .sidebar #sidebarBoxVillagelist .content .villageList .listEntry.group .actions .secondaryIconButton.expand {padding-block:6px 7px}
+body.legendsV2 .sidebar #sidebarBoxVillagelist .content .villageList .listEntry.group .actions .secondaryIconButton.expand svg.arrowExpand {stroke:#5E463A;stroke-width:1}
+body.legendsV2 .sidebar #sidebarBoxVillagelist .content .villageList .listEntry.group .actions .secondaryIconButton.expand svg.arrowExpand.expanded {transform:scaleY(-1)}
+body.legendsV2 .sidebar #sidebarBoxVillagelist .content .villageList .listEntry.group .actions .secondaryIconButton.expand:active svg {stroke:#F4EFE4}
+body.legendsV2 .sidebar #sidebarBoxVillagelist .content .villageList .listEntry.group .actions .secondaryIconButton.delete {padding-block:2px 3px}
+body.legendsV2 .sidebar #sidebarBoxVillagelist .content .villageList .listEntry.group:before {background-color:var(--highlightColor);opacity:.5}
+body.legendsV2 .sidebar #sidebarBoxVillagelist .content .villageList .listEntry.group:hover:not(.editMode):before {opacity:1}
+body.legendsV2 .sidebar #sidebarBoxVillagelist .content .villageList .listEntry.group:hover:not(.editMode) .secondaryIconButton {opacity:1}
+body.legendsV2 .sidebar #sidebarBoxVillagelist .content .villageList .listEntry.group.editMode .secondaryIconButton.delete {opacity:1}
+body.legendsV2 .sidebar #sidebarBoxVillagelist .content .villageList .listEntry.dragged {opacity:.5}
+body.legendsV2 .sidebar #sidebarBoxVillagelist .content .villageList .listEntry.dragged:before {background-color:#bfb39b}
+@media only screen and (max-device-width:1024px) {
+body.legendsV2 .sidebar #sidebarBoxVillagelist .content .villageList .listEntry {grid-template-rows:37px}
+}
+body.legendsV2 .sidebar #sidebarBoxVillagelist .content .villageList .listEntry .dragAndDrop {width:16px;height:20px;display:grid;position:absolute;cursor:move;transform:translateX(-100%);transition-duration:250ms;opacity:0}
+@media only screen and (max-device-width:1024px) {
+body.legendsV2 .sidebar #sidebarBoxVillagelist .content .villageList .listEntry .dragAndDrop {height:37px}
+}
+body.legendsV2 .sidebar #sidebarBoxVillagelist .content .villageList .listEntry .dragAndDrop svg.handle {height:calc(100% - 6px);max-height:24px;align-self:center;justify-self:center;fill:#402b13;transition-duration:250ms;pointer-events:none}
+body.legendsV2 .sidebar #sidebarBoxVillagelist .content .villageList .listEntry:hover .dragAndDrop {opacity:1}
+body.legendsV2 .sidebar #sidebarBoxVillagelist .content .villageList .listEntry a {white-space:nowrap;text-overflow:ellipsis;overflow:hidden;direction:var(--readingDirection);padding:0;display:block;overflow:hidden;font-weight:400;color:#333}
+body.legendsV2 .sidebar #sidebarBoxVillagelist .content .villageList .listEntry .iconAndNameWrapper {display:grid;grid-template-columns:15px 150px;grid-column-start:1;position:relative;padding-block:3px;padding-inline:0;align-items:center}
+@media only screen and (max-device-width:1024px) {
+body.legendsV2 .sidebar #sidebarBoxVillagelist .content .villageList .listEntry .iconAndNameWrapper {padding-block:10px;padding-inline:0}
+}
+body.legendsV2 .sidebar #sidebarBoxVillagelist .content .villageList .listEntry .iconAndNameWrapper>* {grid-row-start:1}
+body.legendsV2 .sidebar #sidebarBoxVillagelist .content .villageList .listEntry .iconAndNameWrapper svg.attack {grid-column-start:1;width:12px;height:12px;fill:#b83a38}
+body.legendsV2 .sidebar #sidebarBoxVillagelist .content .villageList .listEntry .iconAndNameWrapper .name {grid-column-start:2;white-space:nowrap;text-overflow:ellipsis;overflow:hidden;direction:var(--readingDirection);width:150px;display:inline-block}
+body.legendsV2 .sidebar #sidebarBoxVillagelist .content .villageList .listEntry .coordinatesGrid {--fontFamily:Arial,Helvetica,Verdana,sans-serif;grid-column-start:2;border-inline-start:var(--border);padding-block:3px;padding-inline:0;display:inline-block;z-index:1}
+@media only screen and (max-device-width:1024px) {
+body.legendsV2 .sidebar #sidebarBoxVillagelist .content .villageList .listEntry .coordinatesGrid {padding-block-start:10px}
+}
+body.legendsV2 .sidebar #sidebarBoxVillagelist .content .villageList .listEntry:not(.attack) .incomingTroops {pointer-events:none}
+body.legendsV2 .sidebar #sidebarBoxVillagelist .content .villageList .listEntry:not(.attack) .iconAndNameWrapper svg.attack {visibility:hidden}
+body.legendsV2 .sidebar #sidebarBoxVillagelist .content .villageList .listEntry#villageListDragElement {position:fixed;opacity:1;z-index:99;transition-duration:0s}
+body.legendsV2 .sidebar #sidebarBoxVillagelist .content .villageList .listEntry#villageListDragElement:before {background-color:#fff9eb;box-shadow:0 2px 10px rgba(0,0,0,.35);border:1px solid #ff8c4d;opacity:1}
+body.legendsV2 .sidebar #sidebarBoxVillagelist .content .villageList .listEntry#villageListDragElement svg.handle {opacity:1}
+body.legendsV2 .sidebar #sidebarBoxVillagelist .content .villageList .dragObject {position:fixed;z-index:99;cursor:move;margin-top:0;pointer-events:none;filter:none;animation:dragObjectAppear 150ms ease-out forwards}
+body.legendsV2 .sidebar #sidebarBoxVillagelist .content .villageList .dragObject .listEntry {transition-duration:0s}
+body.legendsV2 .sidebar #sidebarBoxVillagelist .content .villageList .dragObject .listEntry:before {background-color:var(--highlightColor);border:1px solid #ff8c4d;border-block:1px solid #FF8C4D;opacity:1}
+body.legendsV2 .sidebar #sidebarBoxVillagelist .content .villageList .dragObject .listEntry.group:before {inset-inline-end:-60px}
+body.legendsV2 .sidebar #sidebarBoxVillagelist .content .villageList .dragObject .listEntry svg.handle {opacity:1}
+body.legendsV2 .sidebar #sidebarBoxVillagelist .content .villageList .dragObject .listEntry .dragAndDrop {pointer-events:auto}
+@media screen and (max-width:620px) and (orientation:portrait) {
+}
+body.legendsV2 .sidebar #sidebarBoxVillagelist .content .villageList .dragObject .listEntry:hover:not(.editMode) .secondaryIconButton {opacity:0}
+body.legendsV2 .sidebar #sidebarBoxVillagelist .content .villageList.shortcutsEnabled .listEntry .coordinatesGrid:before,
+body.legendsV2 .sidebar #sidebarBoxVillagelist .content .villageList.shortcutsEnabled .listEntry .iconAndNameWrapper:before {content:"";position:absolute;inset:0;z-index:-1;background-color:transparent;transition-duration:250ms}
+body.legendsV2 .sidebar #sidebarBoxVillagelist .content .villageList.shortcutsEnabled .listEntry .coordinatesGrid {font-weight:700;position:absolute;inset-block:0;inset-inline:auto 0;z-index:2}
+body.legendsV2 .sidebar #sidebarBoxVillagelist .content .villageList.shortcutsEnabled .listEntry:not(.active) .coordinatesGrid:hover:before,
+body.legendsV2 .sidebar #sidebarBoxVillagelist .content .villageList.shortcutsEnabled .listEntry:not(.active) .iconAndNameWrapper:hover:before {background-color:#fff9eb}
+body.legendsV2 .sidebar #sidebarBoxVillagelist .content .villageList.shortcutsEnabled .listEntry:not(.active) .coordinatesGrid {color:#5a9a0a}
+body.legendsV2 .sidebar #sidebarBoxVillagelist .content .villageList.shortcutsEnabled .listEntry:not(.active) .coordinatesGrid:hover {color:#99c01a;cursor:pointer}
+body.legendsV2 .sidebar #sidebarBoxVillagelist .content .villageList.shortcutsEnabled .listEntry:not(.active):hover {background-color:transparent}
+body.legendsV2 .sidebar #sidebarBoxVillagelist .content .groupWrapper .listEntry .name {padding-inline-start:7px}
+body.legendsV2 .sidebar #sidebarBoxVillagelist .innerBox.content .villageList { --border: 1px solid #bfb39b; margin-top: 4px; }
+body.legendsV2 .sidebar #sidebarBoxVillagelist .content .villageList .groupsHeader > span:first-child { align-self: center; color: #3f2a14; }
+body.legendsV2 .sidebar #sidebarBoxVillagelist .content .villageList .secondaryIconButton { background: none; border: 0; padding: 0; cursor: pointer; display: grid; place-items: center; }
+body.legendsV2 .sidebar #sidebarBoxVillagelist .content .villageList .secondaryIconButton[disabled] { opacity: .4; cursor: default; }
+body.legendsV2 .sidebar #sidebarBoxVillagelist .content .villageList .groupsHeader .addGroup svg { width: 20px; height: 16px; fill: none; stroke: #5e463a; stroke-width: 1.3; }
+body.legendsV2 .sidebar #sidebarBoxVillagelist .content .villageList .listEntry.group { align-items: center; cursor: default; }
+body.legendsV2 .sidebar #sidebarBoxVillagelist .content .villageList .listEntry.group .name { padding-inline-start: 15px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; color: #333; }
+body.legendsV2 .sidebar #sidebarBoxVillagelist .content .villageList .listEntry.group .actions .secondaryIconButton svg { width: 12px; height: 12px; fill: #5e463a; }
+body.legendsV2 .sidebar #sidebarBoxVillagelist .content .villageList .listEntry.group .actions .secondaryIconButton.expand svg { height: 7px; }
+body.legendsV2 .sidebar #sidebarBoxVillagelist .content .villageList .groupWrapper .groupContainer { display: grid; min-height: 0; }
+body.legendsV2 .sidebar #sidebarBoxVillagelist .content .villageList .groupWrapper.collapsed .groupContainer { display: none; }
+body.legendsV2 .sidebar #sidebarBoxVillagelist .content .villageList .listEntry .dragAndDrop { touch-action: none; }
+body.legendsV2 .sidebar #sidebarBoxVillagelist .content .villageList .listEntry .coordinatesGrid .coordinates { display: inline-flex; gap: 2px; padding-inline-start: 8px; }
+body.legendsV2 .sidebar #sidebarBoxVillagelist .content .villageList .listEntry.group .dragAndDrop { height: 20px; }
+body.legendsV2 .sidebar #sidebarBoxVillagelist .content .villageList .listEntry.group.editMode { grid-template-columns: 1fr auto auto; column-gap: 6px; padding-inline-start: 10px; }
+body.legendsV2 .sidebar #sidebarBoxVillagelist .content .villageList .listEntry.group.editMode input.name { width: 100%; box-sizing: border-box; margin-top: 0; padding: 0 4px; font: inherit; background: #fff9eb; }
+body.legendsV2 .sidebar #sidebarBoxVillagelist .content .villageList .listEntry.group .colorSelection { position: relative; }
+body.legendsV2 .sidebar #sidebarBoxVillagelist .content .villageList .listEntry.group .colorSelection .color { margin: 0; border: 1px solid #5e463a; box-sizing: border-box; }
+body.legendsV2 .sidebar #sidebarBoxVillagelist .content .villageList .listEntry.group .colorSelection .availableColors { right: 0; background: #fff9eb; border: 1px solid #bfb39b; padding: 2px; gap: 2px; z-index: 40; }
+body.legendsV2 .sidebar #sidebarBoxVillagelist .content .villageList .listEntry.group .colorSelection .availableColors[hidden] { display: none; }
+body.legendsV2 .sidebar #sidebarBoxVillagelist .content .villageList .listEntry.group .colorSelection .color .selectedIndicator { display: none; }
+body.legendsV2 .sidebar #sidebarBoxVillagelist .content .villageList .listEntry.group .colorSelection .color.selected .selectedIndicator { display: block; }
+body.legendsV2 .sidebar #sidebarBoxVillagelist .content .villageList .listEntry.group.editMode .actions .secondaryIconButton.delete svg { width: 13px; height: 15px; }
+body.legendsV2 .sidebar #sidebarBoxVillagelist .content .villageList .dropContainer.topLevel { min-height: 0; }
+body.legendsV2 .sidebar #sidebarBoxVillagelist .content .villageList .groupWrapper .dropContainer { min-height: 0; }
+body.legendsV2 .villageListDropLine { position: absolute; z-index: 1000; height: 2px; background: #088885; pointer-events: none; display: none; box-shadow: 0 0 0 1px rgba(56, 244, 244, .4); }
+body.legendsV2 .villageListDropLine:after { content: ""; position: absolute; right: -4px; top: -2px; width: 6px; height: 6px; border-radius: 50%; background: #088885; }
+body.legendsV2 .sidebar #sidebarBoxVillagelist .content .villageList .dragObject { width: 260px; }
+/* a tapped group is selected: highlighted, with its handle, pencil and arrow (touch screens have no hover) */
+body.legendsV2 .sidebar #sidebarBoxVillagelist .content .villageList .listEntry.group.selected:not(.editMode):before { opacity: 1; inset-inline: -15px; border-block: 1px solid #BFB39B; }
+body.legendsV2 .sidebar #sidebarBoxVillagelist .content .villageList .listEntry.group.selected:not(.editMode) .dragAndDrop,
+body.legendsV2 .sidebar #sidebarBoxVillagelist .content .villageList .listEntry.group.selected:not(.editMode) .secondaryIconButton { opacity: 1; }
+@media (hover: none) {
+    /* no hover state that sticks after a tap: only the selected group shows its buttons */
+    body.legendsV2 .sidebar #sidebarBoxVillagelist .content .villageList .listEntry:hover .dragAndDrop { opacity: 0; }
+    body.legendsV2 .sidebar #sidebarBoxVillagelist .content .villageList .listEntry.group:hover:not(.editMode):not(.selected) .secondaryIconButton { opacity: 0; }
+    body.legendsV2 .sidebar #sidebarBoxVillagelist .content .villageList .listEntry.group.selected:not(.editMode) .dragAndDrop { opacity: 1; }
+    /* a long press on a village picks it up: no link preview / text selection */
+    body.legendsV2 .sidebar #sidebarBoxVillagelist .content .villageList .listEntry.village a { -webkit-touch-callout: none; -webkit-user-select: none; user-select: none; }
+}
+/* the highlight of a list entry is its :before only (no background or width from the classic village list rules) */
+body.legendsV2 .sidebar #sidebarBoxVillagelist .content .villageList .listEntry { background: none !important; width: auto; }
+body.legendsV2 .sidebar #sidebarBoxVillagelist .content .villageList .listEntry:before { width: auto !important; }
+/* while a group is edited (name, colour palette) the village list box lies above the quest master below it */
+body.legendsV2 .sidebar #sidebarBoxVillagelist:has(.listEntry.group.editMode) { position: relative; z-index: 35; }

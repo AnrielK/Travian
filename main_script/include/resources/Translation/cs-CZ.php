@@ -6028,4 +6028,20 @@ $Definition['LegendsPlus']['features']['fullScreen']['text'] = 'Umožňuje lepš
 $Definition['LegendsPlus']['features']['tradeMulti']['title'] = 'Obchodníci můžou běžet 2x';
 $Definition['LegendsPlus']['features']['tradeMulti']['text'] = 'Obchodníci po návratu z první dodávky automaticky vyrazí znovu.';
 
+// Village groups of the Legends 655 village list (js/Game/Legends/villageGroups.js)
+$Definition['VillageGroups']['attacks'] = 'Příchozí útoky';
+$Definition['VillageGroups']['dragVillage'] = 'Přetáhni vesnici do skupiny';
+$Definition['VillageGroups']['add'] = 'Nová skupina vesnic';
+$Definition['VillageGroups']['groups'] = 'Skupiny vesnic';
+$Definition['VillageGroups']['edit'] = 'Upravit skupinu';
+$Definition['VillageGroups']['expand'] = 'Zobrazit / skrýt vesnice';
+$Definition['VillageGroups']['newGroup'] = 'Nová skupina';
+$Definition['VillageGroups']['delete'] = 'Smazat skupinu';
+$Definition['VillageGroups']['deleteConfirm'] = 'Smazat tuto skupinu? Tvé vesnice nebudou nijak ovlivněny.';
+$Definition['VillageGroups']['color'] = 'Barva (kliknutím změníš)';
+$Definition['VillageGroups']['max'] = 'Můžeš mít nejvýše 20 skupin vesnic.';
+$Definition['VillageGroups']['dragGroup'] = 'Přetažením přesuneš skupinu';
+$Definition['VillageGroups']['cancel'] = 'Zrušit';
+$Definition['VillageGroups']['deleteButton'] = 'vymazat';
+
 return $Definition;
