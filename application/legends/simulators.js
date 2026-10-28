@@ -43,9 +43,7 @@
         var fav = null;
         try { fav = localStorage.getItem('legendsSimFavor'); } catch (e) {}
         Array.prototype.forEach.call(tabs, function (a) {
-            var old = a.querySelector('svg.star');
-            if (old) old.parentNode.removeChild(old);
-            if (a.getAttribute('data-sim-tab') === (fav || 'combat')) a.insertAdjacentHTML('beforeend', root.querySelector('[data-sim-favor] svg').outerHTML);
+            a.classList.toggle('favorActive', a.getAttribute('data-sim-tab') === (fav || 'combat'));
         });
         updateSticky();
     }
@@ -396,16 +394,8 @@
 
     /* the Simulovat bar sticks to the bottom of the window while the form is longer than the window */
     var pin = document.getElementById('stickyPin'), wrap = document.getElementById('stickyWrapper');
-    function updateSticky() {
-        if (!pin || !wrap) return;
-        if (cs.hidden) { wrap.classList.remove('floating'); return; }
-        var r = pin.getBoundingClientRect();
-        var floating = r.bottom > window.innerHeight && rolesEl.getBoundingClientRect().top < window.innerHeight - 60;
-        wrap.classList.toggle('floating', floating);
-        if (floating) wrap.style.left = (pin.getBoundingClientRect().left + 6 - 6) + 'px'; else wrap.style.left = '';
-    }
-    window.addEventListener('scroll', updateSticky, {passive: true});
-    window.addEventListener('resize', updateSticky);
+    // "Simulovat" sits at the bottom of the form, in the free white space under the troops (no floating bar)
+    function updateSticky() {}
 
     /* ------------------------------------------------------------------ travel simulator */
     var tr = root.querySelector('.travelSimulator');

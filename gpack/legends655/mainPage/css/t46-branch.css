@@ -402,3 +402,27 @@ body.legends655 #combatSimulator .bonus select, body.legends655 #combatSimulator
 body.legends655 #combatSimulator .role .header .villageSelection select { min-width: 200px; }
 /* Bonifácův klub: the farm list shows the letters picture like in Legends */
 body.legends655 .dialogV2.dialogWrapper .dialog.legendsGoldClubDialog .packageFeatures .featureContent .featureImage.raidList { background-position: 0 0 !important; }
+/* "Simulovat" at the bottom of the form, in the free space under the troops */
+body.legends655 #combatSimulator #stickyPin { margin-top: 24px; height: auto; position: relative; }
+body.legends655 #combatSimulator #stickyPin #stickyWrapper, body.legends655 #combatSimulator #stickyPin #stickyWrapper.floating { position: static !important; width: auto; margin: 0 -6px; left: auto !important; }
+/* favourite tab marker: the Legends favourite icon on every tab bar */
+body.legends655 .tabNavi .container .content.favorActive:after { background: url('../img_ltr/hud/content/favor_medium.png') no-repeat center / contain; width: 20px; height: 14px; }
+body.legends655 #rallyPointSimulators .subTabs_tabs a { overflow: visible; }
+body.legends655 #rallyPointSimulators .subTabs_tabs a.favorActive:not(.favor):after { content: ""; position: absolute; top: -10px; left: 50%; transform: translateX(-50%);
+    width: 26px; height: 18px; background: url('../img_ltr/hud/content/favor_medium.png') no-repeat center; z-index: 3; pointer-events: none; }
+body.legends655 #rallyPointSimulators .subTabs { margin-top: 12px; }
+/* "set as favourite" star button: star in the middle */
+body.legends655 #rallyPointSimulators .subTabs_tabs a.favor { display: grid !important; place-items: center; width: 34px; min-width: 34px; padding: 0 !important; height: 33px; box-sizing: border-box; }
+body.legends655 #rallyPointSimulators .subTabs_tabs a.favor svg, body.legends655 #rallyPointSimulators .subTabs_tabs a.favor svg.star {
+    position: static !important; inset: auto !important; width: 22px !important; height: 22px !important; margin: 0 !important; fill: #f2f2f2 !important; transform: none !important; }
+/* start/target switch: flat grey-green square with two white arrows like in Legends */
+body.legends655 #rallyPointSimulators .travelSimulator .coordinatesWrapper button.switchSourceAndTarget { width: 40px !important; height: 40px !important; padding: 0 !important;
+    background: #6c7d61 !important; border: 1px solid #47533f !important; border-radius: 2px !important; box-shadow: inset 0 0 0 1px rgba(255, 255, 255, .35) !important; }
+body.legends655 #rallyPointSimulators .travelSimulator .coordinatesWrapper button.switchSourceAndTarget > * { grid-area: 1 / 1; }
+body.legends655 #rallyPointSimulators .travelSimulator .coordinatesWrapper button.switchSourceAndTarget svg { position: static !important; inset: auto !important; transform: none !important;
+    width: 22px !important; height: 18px !important; margin: 0 !important; fill: #f4f4f4 !important; stroke: #3b4634; stroke-width: .6; paint-order: stroke; }
+/* quick links edit mode: the close button is a white circle with a blue ring */
+body.legends655 .sidebar .quickLinks .layoutButton.settings.editMode { background: #fff !important; box-shadow: 0 0 0 2px #4f86c9, 0 1px 3px rgba(0, 0, 0, .4) !important; border-color: #fff !important; }
+body.legends655 .sidebar .quickLinks .layoutButton.settings.editMode:before, body.legends655 .sidebar .quickLinks .layoutButton.settings.editMode:after { display: none !important; }
+body.legends655 .sidebar .quickLinks .layoutButton.settings.editMode .closeIcon { fill: #7d7d7d !important; width: 12px !important; height: 12px !important; display: block !important; position: relative; z-index: 3; }
+body.legends655 .sidebar .quickLinks .quickLinkSlot.editMode .slot { background: #fbfbfb; box-shadow: inset 0 0 0 1px #d6d6d6, inset 0 2px 4px rgba(0, 0, 0, .12); }
