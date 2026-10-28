@@ -165,12 +165,16 @@ var LegendsQuickLinks = (function () {
             drag.ghost.style.display = '';
             var over = el && el.closest('.quickLinkSlot');
             if (over && slots().indexOf(over) === -1) over = null;
-            // a link of a slot dragged back over the dialog goes back to its place there
-            var back = drag.from && !over && el && el.closest('.quickLinksDialog') ? dialogItem(drag.key) : null;
-            if (drag.back !== back) {
-                if (drag.back) drag.back.classList.remove('highlightDropTarget');
-                if (back) back.classList.add('highlightDropTarget');
-                drag.back = back;
+            // a link lifted from a slot can go back to its place in the dialog: that place is the cyan circle
+            // (shown from the start of the drag); it counts only when the link is dropped onto it
+            if (drag.from && !drag.home) {
+                drag.home = dialogItem(drag.key);
+                if (drag.home) drag.home.classList.add('highlightDropTarget');
+            }
+            drag.back = null;
+            if (drag.home && !over) {
+                var hi = drag.home.querySelector('.quickLinkIcon') || drag.home, hr = hi.getBoundingClientRect();
+                if (ev.clientX >= hr.left - 6 && ev.clientX <= hr.right + 6 && ev.clientY >= hr.top - 6 && ev.clientY <= hr.bottom + 6) drag.back = drag.home;
             }
             if (drag.over !== over) {
                 if (drag.over) drag.over.classList.remove('highlightDropTarget');
@@ -178,25 +182,56 @@ var LegendsQuickLinks = (function () {
                 drag.over = over;
             }
         }, true);
-        function end() {
+        // the dragged copy flies to a place, then disappears
+        function fly(ghost, rect, cb) {
+            if (!rect) { ghost.remove(); cb(); return; }
+            ghost.style.transition = 'left .18s ease-out, top .18s ease-out';
+            ghost.style.left = rect.left + 'px';
+            ghost.style.top = rect.top + 'px';
+            var done = false;
+            function fin() { if (done) return; done = true; ghost.remove(); cb(); }
+            ghost.addEventListener('transitionend', fin);
+            setTimeout(fin, 260);
+        }
+        function buttonRect(container) {
+            var b = container && (container.querySelector('.layoutButton') || container.querySelector('.slot') || container);
+            if (!b) return null;
+            var r = b.getBoundingClientRect(), g = drag.ghost.getBoundingClientRect();
+            return {left: r.left + (r.width - g.width) / 2, top: r.top + (r.height - g.height) / 2};
+        }
+        function end(ev) {
             if (!drag) return;
             var d = drag;
-            d.ghost.parentNode.removeChild(d.ghost);
-            if (d.from) d.from.classList.remove('highlightDragSource');
-            if (d.over) d.over.classList.remove('highlightDropTarget');
-            if (d.back) d.back.classList.remove('highlightDropTarget');
-            if (dialog) dialog.querySelectorAll('.quickLinkItem.highlightDragSource').forEach(function (i) { i.classList.remove('highlightDragSource'); });
-            if (!d.moved) { setTimeout(function () { drag = null; }, 0); return; }
-            if (d.over && d.over !== d.from) {
-                var other = d.over.querySelector('.layoutButton');
-                var otherKey = other ? other.getAttribute('data-key') : '';
-                setSlot(d.over, d.key);
-                if (d.from) setSlot(d.from, otherKey); // swap between slots
-            } else if (!d.over && d.from) {
-                d.a.parentNode.removeChild(d.a); // dragged out of the slots: empty the slot
+            function clean() {
+                if (d.from) d.from.classList.remove('highlightDragSource');
+                if (d.over) d.over.classList.remove('highlightDropTarget');
+                if (d.home) d.home.classList.remove('highlightDropTarget');
+                if (dialog) dialog.querySelectorAll('.quickLinkItem.highlightDragSource').forEach(function (i) { i.classList.remove('highlightDragSource'); });
+                setTimeout(function () { drag = null; }, 0);
             }
-            save();
-            setTimeout(function () { drag = null; }, 0);
+            if (!d.moved) { d.ghost.remove(); clean(); return; }
+            var cancelled = ev && ev.type === 'pointercancel';
+            if (!cancelled && d.over && d.over !== d.from) {
+                // dropped onto a cyan slot: the link snaps into it (a link already there swaps places)
+                fly(d.ghost, buttonRect(d.over), function () {
+                    var other = d.over.querySelector('.layoutButton');
+                    var otherKey = other ? other.getAttribute('data-key') : '';
+                    setSlot(d.over, d.key);
+                    if (d.from) setSlot(d.from, otherKey);
+                    clean();
+                    save();
+                });
+            } else if (!cancelled && d.from && d.back) {
+                // dropped onto its cyan place in the dialog: the slot is emptied
+                fly(d.ghost, buttonRect(d.back), function () {
+                    if (d.a.parentNode) d.a.parentNode.removeChild(d.a);
+                    clean();
+                    save();
+                });
+            } else {
+                // anywhere else: back to where it was lifted, nothing changes
+                fly(d.ghost, buttonRect(d.from || d.a.closest('.quickLinkIcon')), clean);
+            }
         }
         document.addEventListener('pointerup', end, true);
         document.addEventListener('pointercancel', end, true);
