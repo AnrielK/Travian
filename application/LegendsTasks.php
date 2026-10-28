@@ -271,7 +271,7 @@ final class LegendsTasks
     }
 
     /** Hero items holding resources (Legends: rewards go to the hero's inventory): btype 16, type = item picture. */
-    const RESOURCE_ITEM_BTYPE = 16;
+    const RESOURCE_ITEM_BTYPE = HeroBag::RESOURCE_BTYPE;
     const RESOURCE_ITEMS = [145 => 'wood', 146 => 'clay', 147 => 'iron', 148 => 'crop'];
 
     /** Adds $amount of each resource to the hero's inventory (one stack per resource). */

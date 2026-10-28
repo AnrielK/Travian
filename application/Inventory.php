@@ -203,22 +203,8 @@ if($_POST && $_POST['a']=='inventory'){
 
 	elseif($itemData['btype']==16 && $data['amount']>0 && (int)$itemData['uid']==(int)$uid && php7_is_zero($itemData['proc'])){
 		// resources from the task rewards (Legends): into the active village, as much as its warehouse / granary holds
-		$resKey = [145 => 'wood', 146 => 'clay', 147 => 'iron', 148 => 'crop'][(int)$itemData['type']] ?? null;
-		if ($resKey !== null) {
-			$have = ['wood' => $village->awood, 'clay' => $village->aclay, 'iron' => $village->airon, 'crop' => $village->acrop][$resKey];
-			$cap = $resKey === 'crop' ? $village->maxcrop : $village->maxstore;
-			$move = (int)min((int)$data['amount'], (int)$itemData['num'], max(0, (int)floor($cap - $have)));
-			if ($move > 0) {
-				$add = ['wood' => 0, 'clay' => 0, 'iron' => 0, 'crop' => 0];
-				$add[$resKey] = $move;
-				$database->modifyResource($village->wid, $add['wood'], $add['clay'], $add['iron'], $add['crop'], 1);
-				if ($move >= (int)$itemData['num']) {
-					$database->editProcItem($itemData['id'], 1, $uid);
-				} else {
-					$database->editHeroNum($itemData['id'], $move, 0);
-				}
-			}
-		}
+		$resIndex = array_search((int)$itemData['type'], HeroBag::RESOURCE_TYPES, true);
+		if ($resIndex !== false) HeroBag::moveResources((int)$uid, (int)$village->wid, [$resIndex => (int)$data['amount']]);
 	}
 
 	elseif($itemData['btype']==7 && $data['amount']>0){ //походу inоскрешает немного сдохших inойск 25%  $itemData['type'] тут число уже надетых поinязок/хуязок

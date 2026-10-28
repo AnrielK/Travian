@@ -1700,6 +1700,25 @@ Travian.Tip.refresh();
         echo json_encode(['response' => ['error' => false, 'data' => $plusOut]]);
         break;
 
+    case 'heroBagPlace':
+        // Legends hero inventory: sorting – put a bag item on another place (application/HeroBag.php)
+        header('Content-Type: application/json; charset=utf-8');
+        $okPlace = HeroBag::move((int)$session->uid, (int)($_POST['id'] ?? 0), (int)($_POST['place'] ?? 0));
+        echo json_encode(['response' => ['error' => !$okPlace, 'data' => ['success' => $okPlace]]]);
+        break;
+
+    case 'heroResources':
+        // Legends hero inventory: "Move resources" dialog – resource items into the active village (r1..r4 or max)
+        header('Content-Type: application/json; charset=utf-8');
+        $resAmounts = null;
+        if (empty($_POST['max'])) {
+            $resAmounts = [];
+            for ($r = 1; $r <= 4; $r++) $resAmounts[$r] = max(0, (int)($_POST['r' . $r] ?? 0));
+        }
+        $resMoved = HeroBag::moveResources((int)$session->uid, (int)$village->wid, $resAmounts);
+        echo json_encode(['response' => ['error' => false, 'data' => ['moved' => $resMoved]]]);
+        break;
+
     case 'legendsGoldClub':
         // Bonifácův klub (Gold Club) dialog of the Legends look (application/legends/legendsDialogs.js): state, activation
         header('Content-Type: application/json; charset=utf-8');
