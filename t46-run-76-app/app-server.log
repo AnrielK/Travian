@@ -1,0 +1,9 @@
+[Thu Oct 29 03:51:29 2026] PHP 8.3.35 Development Server (http://127.0.0.1:8080) started
+[Thu Oct 29 03:51:29 2026] 127.0.0.1:49764 Accepted
+[Thu Oct 29 03:51:29 2026] 127.0.0.1:49764 Closed without sending a request; it was probably just an unused speculative preconnection
+2026-10-29  3:51:29 0 [Warning] failed to retrieve the MAC address
+……
+[Thu Oct 29 03:51:29 2026] PHP 8.3.35 Development Server (http://127.0.0.1:8080) started
+[Thu Oct 29 03:51:29 2026] 127.0.0.1:49764 Accepted
+[Thu Oct 29 03:51:29 2026] 127.0.0.1:49764 Closed without sending a request; it was probably just an unused speculative preconnection
+2026-10-29  3:51:29 0 [Warning] failed to retrieve the MAC address
