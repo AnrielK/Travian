@@ -303,6 +303,11 @@ class RegisterModel
         }
         $queryArr['f26'] = 1;
         $queryArr['f26t'] = 15;
+        if (function_exists('is_hero_v2') && is_hero_v2()) {
+            // Travian Legends: every village starts with a rally point at level 1
+            $queryArr['f39'] = 1;
+            $queryArr['f39t'] = 16;
+        }
         $db->query("DELETE FROM fdata WHERE kid=$kid");
         $state = $db->query("INSERT INTO fdata (" . implode(",", array_keys($queryArr)) . ") VALUES (" . implode(",", array_values($queryArr)) . ")");
         return $state && $db->affectedRows();

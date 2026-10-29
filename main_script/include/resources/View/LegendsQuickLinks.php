@@ -20,9 +20,10 @@ class LegendsQuickLinks
     public const TABLE = 'ov_quick_links';
     public const LIST_SLOTS = 4;
     public const VILLAGE_SLOTS = 5;
-    /** As in Travian Legends a new account starts without quick links (only the fixed overview button of the list). */
+    /** As in Travian Legends: the village list starts without quick links (only its fixed overview button), a village
+        with marketplace (send resources), barracks, stable and workshop next to the "…" button. */
     public const DEFAULT_LIST = ['', '', '', ''];
-    public const DEFAULT_VILLAGE = ['', '', '', '', ''];
+    public const DEFAULT_VILLAGE = ['', 'marketSend', 'barracks', 'stable', 'workshop'];
 
     /**
      * key => [building ids, subtitle key, url (%d = building slot, null = the building), icon, title key, gold]

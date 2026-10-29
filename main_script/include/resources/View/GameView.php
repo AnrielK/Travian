@@ -253,6 +253,10 @@ class GameView
 
     private function renderAllianceBox()
     {
+        // Travian Legends: the alliance box appears once the player is in an alliance or has an embassy (gid 18)
+        if (is_hero_v2() && !$this->session->getAllianceId() && !$this->hasEmbassy()) {
+            return;
+        }
         $cache = Caching::getInstance();
         $key = sprintf('%s:AllianceBox', $this->session->getPlayerId());
         if ($cachedContent = $cache->get($key)) {
@@ -607,10 +611,21 @@ class GameView
         return $return;
     }
 
-    private
-    function renderLinkList()
+    /** Whether one of the player's villages has an embassy. */
+    private function hasEmbassy(): bool
     {
-        if (Quest::getInstance()->isTutorial() && getDisplay("dontShowLinkListBeforeTutorial") && !$this->session->isAdmin()) {
+        $uid = (int)$this->session->getPlayerId();
+        $cols = [];
+        for ($i = 19; $i <= 40; ++$i) {
+            $cols[] = "f{$i}t=18";
+        }
+        return (int)DB::getInstance()->fetchScalar('SELECT COUNT(*) FROM fdata f JOIN vdata v ON v.kid=f.kid WHERE v.owner=' . $uid . ' AND (' . implode(' OR ', $cols) . ')') > 0;
+    }
+
+    private function renderLinkList()
+    {
+        // Travian Legends shows the link list from the start (also during the tutorial)
+        if (!is_hero_v2() && Quest::getInstance()->isTutorial() && getDisplay("dontShowLinkListBeforeTutorial") && !$this->session->isAdmin()) {
             return;
         }
         $view = new PHPBatchView("layout/sidebarBoxLinklist");

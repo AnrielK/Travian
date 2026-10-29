@@ -2154,3 +2154,22 @@ body.legendsV2 .legendsDialogOverlay .quickLinksDialog .quickLinkItem,
 body.legendsV2 .sidebar .quickLinks .quickLinkSlot.editMode .layoutButton.quickLink { touch-action: manipulation !important; }
 body.legendsV2.legendsQuickLinksEditing .layoutButton.quickLink { -webkit-touch-callout: none; -webkit-user-select: none; user-select: none; -webkit-user-drag: none; }
 body.legendsV2 .layoutButton.buttonFramed.withIcon.round.quickLink.disabled { filter: saturate(.75) brightness(1.22) !important; }
+/* empty wall (palisade) site in dorf2: hidden as in Legends, a light ring only under the mouse / finger */
+body.t46Layout #contentOuterContainer #villageContent .buildingSlot.a40.legendsWall svg.traced g.clickShape path { fill: rgba(0, 0, 0, 0) !important; pointer-events: all; }
+body.t46Layout #contentOuterContainer #villageContent .buildingSlot.a40.legendsWall svg.traced:hover g.clickShape path,
+body.t46Layout #contentOuterContainer #villageContent .buildingSlot.a40.legendsWall svg.traced:active g.clickShape path { fill: rgba(222, 236, 150, .38) !important; }
+/* quick link dialog: fixed size, the content never scrolls inside it (on a small screen the whole window scrolls) */
+body.legendsV2 .legendsDialogOverlay.quickLinksOverlay .quickLinksDialog .dialogContents > form > .content { max-height: none !important; overflow: visible !important; }
+body.legendsV2 .legendsDialogOverlay.quickLinksOverlay .dialogWrapper { max-height: calc(100vh - 16px); overflow-y: auto; overflow-x: hidden; overscroll-behavior: contain; }
+/* Legends mentor: when a task can be collected a white speech bubble with "!" stands left of the figure */
+body.t46Layout.legendsV2 .sidebar #sidebarBoxQuestmaster.legendsMentor #questmasterButton .newQuestSpeechBubble {
+    display: block !important; position: absolute; left: -40px; top: 44px; width: 30px; height: 34px; z-index: 5;
+    background: #fff; border: 1px solid #9a8b77; border-radius: 4px; box-shadow: 0 1px 3px rgba(0, 0, 0, .35); pointer-events: none;
+    animation: ovMentorBubble 1.6s ease-in-out infinite; }
+body.t46Layout.legendsV2 .sidebar #sidebarBoxQuestmaster.legendsMentor #questmasterButton .newQuestSpeechBubble img { display: none; }
+body.t46Layout.legendsV2 .sidebar #sidebarBoxQuestmaster.legendsMentor #questmasterButton .newQuestSpeechBubble:before {
+    content: "!"; position: absolute; inset: 0; display: grid; place-items: center; font: 900 25px/1 Georgia, "Times New Roman", serif; color: #1f1f1f; }
+body.t46Layout.legendsV2 .sidebar #sidebarBoxQuestmaster.legendsMentor #questmasterButton .newQuestSpeechBubble:after {
+    content: ""; position: absolute; right: -7px; top: 11px; border: 6px solid transparent; border-left: 7px solid #fff; border-right: 0;
+    filter: drop-shadow(1px 0 0 #9a8b77); }
+@keyframes ovMentorBubble { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-3px); } }
