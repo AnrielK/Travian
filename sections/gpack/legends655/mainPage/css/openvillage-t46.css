@@ -2144,3 +2144,13 @@ body.legendsV2 .layoutButton.quickLink > svg > svg.icon path { vector-effect: no
 body.legendsV2 .layoutButton.buttonFramed.withIcon.round.quickLink > svg { width: 24px !important; height: 24px !important; }
 body.legendsV2 .legendsDialogOverlay.quickLinksOverlay .quickLinksDialog .quickLinksText { margin: 0 !important; padding: 0 !important; text-align: left; }
 body.legendsV2 .legendsDialogOverlay.quickLinksOverlay .quickLinksDialog .dialogCancelButton { top: 14px !important; }
+
+/* Quick link colours as in Legends: green = building there, light green = building missing, pale grey = link already
+   in a slot (dialog). Touch: a swipe scrolls, holding a link picks it up (js/Game/Legends/quickLinks.js). */
+body.legendsV2 .layoutButton.buttonFramed.withIcon.round.quickLink.disabled { filter: saturate(.45) brightness(1.17) !important; opacity: 1 !important; }
+body.legendsV2 .legendsDialogOverlay .quickLinksDialog .quickLinkItem.used .layoutButton { filter: grayscale(1) brightness(1.75) contrast(.7) !important; opacity: .85 !important; cursor: default !important; }
+body.legendsV2 .legendsDialogOverlay .quickLinksDialog .quickLinkItem.used .quickLinkIcon .editSlotIndicator { fill: #b9ae9c; }
+body.legendsV2 .legendsDialogOverlay .quickLinksDialog .quickLinkItem,
+body.legendsV2 .sidebar .quickLinks .quickLinkSlot.editMode .layoutButton.quickLink { touch-action: manipulation !important; }
+body.legendsV2.legendsQuickLinksEditing .layoutButton.quickLink { -webkit-touch-callout: none; -webkit-user-select: none; user-select: none; -webkit-user-drag: none; }
+body.legendsV2 .layoutButton.buttonFramed.withIcon.round.quickLink.disabled { filter: saturate(.75) brightness(1.22) !important; }

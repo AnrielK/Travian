@@ -171,7 +171,7 @@ class LegendsQuickLinks
         // without PLUS the game's own PLUS dialog (like the classic direct links of the active village box)
         $onclick = !$enabled ? 'return false;' : ($plus ? '' : "jQuery(window).trigger('buttonClicked', [this, {type: 'gold', plusDialog: {featureKey: 'directLinks', infoIcon: ''}}]); return false;");
         return '<a class="layoutButton buttonFramed withIcon round ' . (!empty($link['gold']) ? 'gold' : 'green') . ' quickLink' . ($enabled ? '' : ' disabled') . '"'
-            . ' data-key="' . LegendsUi::e($key) . '" href="' . LegendsUi::e($href) . '" title="' . LegendsUi::e($link['title'] . ' – ' . $link['sub']) . '"'
+            . ' data-key="' . LegendsUi::e($key) . '" href="' . LegendsUi::e($href) . '" title="' . LegendsUi::e($enabled ? $link['title'] . ' – ' . $link['sub'] : T('QuickLinks', 'notAvailable', 'The building is not available in the active village')) . '"'
             . ($onclick !== '' ? ' onclick="' . LegendsUi::e($onclick) . '"' : '') . '>' . $link['icon'] . '</a>';
     }
 
@@ -207,6 +207,7 @@ class LegendsQuickLinks
                 'villageTitle' => sprintf(T('QuickLinks', 'villageTitle', 'Available quick links for the village %s'), Village::getInstance()->getName()),
                 'villageText' => T('QuickLinks', 'villageText', 'Drag up to 5 buttons into the slots of the active village to customise your quick links.'),
                 'close' => T('Global', 'General.close', 'Close'),
+                'used' => T('QuickLinks', 'used', 'This quick link is already in use'),
             ],
             'ring' => LegendsQuickLinkIcons::ring(),
             'links' => array_map(static fn($key) => ['key' => $key, 'title' => $links[$key]['title'], 'sub' => $links[$key]['sub'],

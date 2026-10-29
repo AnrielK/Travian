@@ -38,7 +38,13 @@ var LegendsQuickLinks = (function () {
     function markUsed(keys) {
         if (!dialog) return;
         Array.prototype.forEach.call(dialog.querySelectorAll('.quickLinkItem'), function (it) {
-            it.classList.toggle('used', keys.indexOf(it.getAttribute('data-key')) !== -1);
+            var used = keys.indexOf(it.getAttribute('data-key')) !== -1;
+            it.classList.toggle('used', used);
+            var b = it.querySelector('.layoutButton');
+            if (b) {
+                if (!b.hasAttribute('data-title')) b.setAttribute('data-title', b.getAttribute('title') || '');
+                b.setAttribute('title', used ? (T.used || '') : b.getAttribute('data-title'));
+            }
         });
     }
     function setSlot(slot, key) {
@@ -127,41 +133,52 @@ var LegendsQuickLinks = (function () {
     function dialogItem(key) { return dialog ? dialog.querySelector('.quickLinkItem[data-key="' + key + '"]') : null; }
 
     function init() {
-        // edit mode: links do not navigate; a tap on a dialog link fills the first empty slot, a tap on a slot empties it
+        // edit mode: a tap / click on a link does nothing (no navigation either) – links are only moved by dragging
         document.addEventListener('click', function (ev) {
             if (!editing()) return;
             var a = ev.target.closest('.quickLink');
             if (!a) return;
             ev.preventDefault();
             ev.stopPropagation();
-            if (drag && drag.moved) return;
-            var inSlot = a.closest('.quickLinkSlot');
-            if (inSlot) {
-                if (slots().indexOf(inSlot) !== -1) { a.parentNode.removeChild(a); save(); }
-                return;
-            }
-            var free = slots().filter(function (s) { return !s.querySelector('.layoutButton'); })[0];
-            if (free) { setSlot(free, a.getAttribute('data-key')); save(); }
         }, true);
-        document.addEventListener('pointerdown', function (ev) {
-            if (!editing()) return;
-            var a = ev.target.closest('.quickLink');
-            if (!a) return;
-            var from = a.closest('.quickLinkSlot');
-            if (from && slots().indexOf(from) === -1) return; // the other set is not being edited
-            ev.preventDefault();
-            var r = a.getBoundingClientRect();
+        // a drag starts after the mouse moved a little, on a touch screen after holding the link for a moment
+        // (a plain swipe scrolls the dialog / page as usual)
+        var pending = null;
+        function startDrag(p) {
+            var a = p.a, from = p.from, r = a.getBoundingClientRect();
             var ghost = a.cloneNode(true);
             ghost.classList.add('quickLinkDragObject');
             ghost.style.left = r.left + 'px';
             ghost.style.top = r.top + 'px';
             document.body.appendChild(ghost);
             drag = {a: a, key: a.getAttribute('data-key'), from: from, ghost: ghost,
-                dx: ev.clientX - r.left, dy: ev.clientY - r.top, x: ev.clientX, y: ev.clientY, moved: false, over: null};
+                dx: p.x - r.left, dy: p.y - r.top, x: p.x, y: p.y, moved: true, over: null};
             if (from) from.classList.add('highlightDragSource');
             else if (a.closest('.quickLinkItem')) a.closest('.quickLinkItem').classList.add('highlightDragSource');
+            if (navigator.vibrate && p.touch) { try { navigator.vibrate(12); } catch (e) {} }
+        }
+        document.addEventListener('pointerdown', function (ev) {
+            if (!editing() || drag) return;
+            var a = ev.target.closest('.quickLink');
+            if (!a) return;
+            var from = a.closest('.quickLinkSlot');
+            if (from && slots().indexOf(from) === -1) return; // the other set is not being edited
+            var item = a.closest('.quickLinkItem');
+            if (item && item.classList.contains('used')) return; // already in a slot
+            var touch = ev.pointerType !== 'mouse';
+            if (!touch) ev.preventDefault();
+            pending = {a: a, from: from, x: ev.clientX, y: ev.clientY, touch: touch, timer: null};
+            if (touch) pending.timer = setTimeout(function () { if (pending) { var p = pending; pending = null; startDrag(p); } }, 280);
         }, true);
+        // while a link is dragged on a touch screen the page does not scroll
+        document.addEventListener('touchmove', function (ev) { if (drag) ev.preventDefault(); }, {passive: false, capture: true});
+        document.addEventListener('contextmenu', function (ev) { if (drag || pending) ev.preventDefault(); }, true);
         document.addEventListener('pointermove', function (ev) {
+            if (pending) {
+                var moved = Math.abs(ev.clientX - pending.x) + Math.abs(ev.clientY - pending.y);
+                if (pending.touch) { if (moved > 10) { clearTimeout(pending.timer); pending = null; } return; }
+                if (moved > 6) { var p = pending; pending = null; startDrag(p); } else return;
+            }
             if (!drag) return;
             if (Math.abs(ev.clientX - drag.x) + Math.abs(ev.clientY - drag.y) > 6) drag.moved = true;
             drag.ghost.style.left = (ev.clientX - drag.dx) + 'px';
@@ -171,16 +188,13 @@ var LegendsQuickLinks = (function () {
             drag.ghost.style.display = '';
             var over = el && el.closest('.quickLinkSlot');
             if (over && slots().indexOf(over) === -1) over = null;
-            // a link lifted from a slot can go back to its place in the dialog: that place is the cyan circle
-            // (shown from the start of the drag); it counts only when the link is dropped onto it
-            if (drag.from && !drag.home) {
-                drag.home = dialogItem(drag.key);
-                if (drag.home) drag.home.classList.add('highlightDropTarget');
-            }
-            drag.back = null;
-            if (drag.home && !over) {
-                var hi = drag.home.querySelector('.quickLinkIcon') || drag.home, hr = hi.getBoundingClientRect();
-                if (ev.clientX >= hr.left - 6 && ev.clientX <= hr.right + 6 && ev.clientY >= hr.top - 6 && ev.clientY <= hr.bottom + 6) drag.back = drag.home;
+            // a link lifted from a slot goes back to its place in the dialog: that place lights up while the link is
+            // over the dialog, and a drop anywhere on the dialog puts it back there
+            var back = drag.from && !over && el && el.closest('.quickLinksDialog') ? dialogItem(drag.key) : null;
+            if (drag.back !== back) {
+                if (drag.back) drag.back.classList.remove('highlightDropTarget');
+                if (back) back.classList.add('highlightDropTarget');
+                drag.back = back;
             }
             if (drag.over !== over) {
                 if (drag.over) drag.over.classList.remove('highlightDropTarget');
@@ -206,12 +220,13 @@ var LegendsQuickLinks = (function () {
             return {left: r.left + (r.width - g.width) / 2, top: r.top + (r.height - g.height) / 2};
         }
         function end(ev) {
+            if (pending) { clearTimeout(pending.timer); pending = null; }
             if (!drag) return;
             var d = drag;
             function clean() {
                 if (d.from) d.from.classList.remove('highlightDragSource');
                 if (d.over) d.over.classList.remove('highlightDropTarget');
-                if (d.home) d.home.classList.remove('highlightDropTarget');
+                if (d.back) d.back.classList.remove('highlightDropTarget');
                 if (dialog) dialog.querySelectorAll('.quickLinkItem.highlightDragSource').forEach(function (i) { i.classList.remove('highlightDragSource'); });
                 setTimeout(function () { drag = null; }, 0);
             }

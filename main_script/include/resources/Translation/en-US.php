@@ -5989,4 +5989,7 @@ $Definition['VillageGroups']['dragGroup'] = 'Drag to move the group';
 $Definition['VillageGroups']['cancel'] = 'Cancel';
 $Definition['VillageGroups']['deleteButton'] = 'delete';
 
+$Definition['QuickLinks']['used'] = 'This quick link is already in use';
+$Definition['QuickLinks']['notAvailable'] = 'The building is not available in the active village';
+
 return $Definition;

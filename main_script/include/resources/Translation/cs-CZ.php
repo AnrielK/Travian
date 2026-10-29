@@ -6044,4 +6044,7 @@ $Definition['VillageGroups']['dragGroup'] = 'Přetažením přesuneš skupinu';
 $Definition['VillageGroups']['cancel'] = 'Zrušit';
 $Definition['VillageGroups']['deleteButton'] = 'vymazat';
 
+$Definition['QuickLinks']['used'] = 'Rychlý odkaz už je používán';
+$Definition['QuickLinks']['notAvailable'] = 'Budova není k dispozici v aktivní vesnici';
+
 return $Definition;
