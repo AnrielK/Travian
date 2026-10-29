@@ -402,7 +402,7 @@ class LegendsUi
      * Click / hover shape traced from a Legends building picture (scripts/gpack/trace-building-shapes.py),
      * for buildings whose T4.6 hand-drawn shape no longer fits the artwork (walls, rally point). Null when missing.
      */
-    public static function traceShape(string $key, string $class, string $href): ?string
+    public static function traceShape(string $key, string $class, string $href, bool $hoverOuter = false): ?string
     {
         static $shapes = null;
         if ($shapes === null) {
@@ -413,8 +413,13 @@ class LegendsUi
         }
         ['w' => $w, 'h' => $h, 'd' => $d] = $shapes[$key];
         $path = '<path fill-rule="evenodd" d="' . $d . '" onclick="window.location.href=\'' . self::e($href) . '\'"/>';
+        // $hoverOuter: the highlight fills the whole outer contour (the wall ring lights the whole village area)
+        $hover = $path;
+        if ($hoverOuter && preg_match('/^M[^M]*/', $d, $m)) {
+            $hover = '<path d="' . $m[0] . '"/>';
+        }
         return '<svg width="' . (int)$w . '" height="' . (int)$h . '" viewBox="0 0 ' . (int)$w . ' ' . (int)$h . '" class="buildingShape traced '
-            . self::e($class) . '"><g class="clickShape">' . $path . '</g><g class="hoverShape">' . $path . '</g></svg>';
+            . self::e($class) . '"><g class="hoverShape">' . $hover . '</g><g class="clickShape">' . $path . '</g></svg>';
     }
 
     /** Switch (formV2 label.switch with checkbox). */

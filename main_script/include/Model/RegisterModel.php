@@ -205,6 +205,9 @@ class RegisterModel
         if (function_exists('is_hero_v2') && is_hero_v2()) {
             // Travian Legends has no welcome tutorial: the player starts with the task list (tasks.php)
             $db->query("UPDATE users SET qst_tut='0' WHERE id=" . (int)$uid . " AND qst_tut='1-0'");
+            if ($uid > 2) {
+                \resources\View\LegendsTutorial::start((int)$uid);   // the Legends onboarding guide instead
+            }
         }
         $this->addResourceFields($kid);
         if ($uid <> 2) {

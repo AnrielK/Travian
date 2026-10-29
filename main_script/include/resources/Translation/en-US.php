@@ -5992,4 +5992,18 @@ $Definition['VillageGroups']['deleteButton'] = 'delete';
 $Definition['QuickLinks']['used'] = 'This quick link is already in use';
 $Definition['QuickLinks']['notAvailable'] = 'The building is not available in the active village';
 
+// Onboarding guide of the Legends look (js/Game/Legends/tutorial.js)
+$Definition['LegendsTutorial']['fields'] = 'Resource fields provide the building material you need.<br><br>Upgrade one of them to increase its production.<br><br>Click on a resource field.';
+$Definition['LegendsTutorial']['production'] = 'Upgrading resource fields increases their production.';
+$Definition['LegendsTutorial']['costs'] = 'Upgrading resource fields costs time and resources.';
+$Definition['LegendsTutorial']['upgrade'] = 'Add the building to the construction queue and develop your village.';
+$Definition['LegendsTutorial']['queue'] = 'This is the construction queue of your village.<br><br>Try to add another building to it.';
+$Definition['LegendsTutorial']['second'] = 'As soon as construction is possible the resources are taken automatically and the building is added to the construction queue.';
+$Definition['LegendsTutorial']['hero'] = 'This is your hero.<br><br>You can send your hero on adventures where he can find equipment, resources or other items.';
+$Definition['LegendsTutorial']['adventure'] = 'Open this panel and find an exciting adventure.';
+$Definition['LegendsTutorial']['meanwhile'] = 'Meanwhile you can continue developing your village.';
+$Definition['LegendsTutorial']['tasks'] = 'These tasks offer further guidance in the game – and rewards! Have a look at them and find out what you can learn next.';
+$Definition['LegendsTutorial']['ok'] = 'OK';
+$Definition['LegendsTutorial']['skip'] = 'Skip the guide';
+
 return $Definition;

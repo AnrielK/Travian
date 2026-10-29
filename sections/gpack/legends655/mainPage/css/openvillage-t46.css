@@ -2173,3 +2173,30 @@ body.t46Layout.legendsV2 .sidebar #sidebarBoxQuestmaster.legendsMentor #questmas
     content: ""; position: absolute; right: -7px; top: 11px; border: 6px solid transparent; border-left: 7px solid #fff; border-right: 0;
     filter: drop-shadow(1px 0 0 #9a8b77); }
 @keyframes ovMentorBubble { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-3px); } }
+/* empty wall site: the ring is the click area; under the mouse / finger the whole village area up to the outer edge lights up */
+body.t46Layout #contentOuterContainer #villageContent .buildingSlot.a40.legendsWall svg.traced g.hoverShape path { fill: transparent !important; pointer-events: none; transition: fill 150ms ease-in; }
+body.t46Layout #contentOuterContainer #villageContent .buildingSlot.a40.legendsWall svg.traced:hover g.clickShape path,
+body.t46Layout #contentOuterContainer #villageContent .buildingSlot.a40.legendsWall svg.traced:active g.clickShape path { fill: transparent !important; }
+body.t46Layout #contentOuterContainer #villageContent .buildingSlot.a40.legendsWall svg.traced:has(g.clickShape path:hover) g.hoverShape path,
+body.t46Layout #contentOuterContainer #villageContent .buildingSlot.a40.legendsWall svg.traced:active g.hoverShape path { fill: rgba(222, 236, 150, .32) !important; }
+
+/* Onboarding guide (js/Game/Legends/tutorial.js): dimmed page, the element of the step lit, a dark speech bubble */
+body.legendsV2 .legendsTutorial { position: fixed; inset: 0; z-index: 5000; pointer-events: none; }
+body.legendsV2 .legendsTutorial .legendsTutorialShade { position: fixed; background: rgba(0, 0, 0, .5); pointer-events: auto; }
+body.legendsV2 .legendsTutorial .legendsTutorialLid { position: fixed; pointer-events: auto; background: transparent; }
+body.legendsV2 .legendsTutorial .legendsTutorialRing { position: fixed; border-radius: 6px; box-shadow: 0 0 0 2px rgba(255, 249, 235, .55), 0 0 18px rgba(255, 249, 235, .35); pointer-events: none; }
+body.legendsV2 .legendsTutorial .legendsTutorialBubble { position: fixed; width: 290px; box-sizing: border-box; padding: 14px 16px 10px; pointer-events: auto;
+    background: rgba(45, 45, 45, .94); color: #f2f2f2; border-radius: 4px; box-shadow: 0 3px 12px rgba(0, 0, 0, .45);
+    font: 13px/18px Arial, Helvetica, sans-serif; animation: ovTutorialIn .2s ease-out; }
+body.legendsV2 .legendsTutorial .legendsTutorialBubble .text { margin-bottom: 6px; }
+body.legendsV2 .legendsTutorial .legendsTutorialBubble .nav { display: flex; justify-content: space-between; align-items: center; min-height: 26px; }
+body.legendsV2 .legendsTutorial .legendsTutorialBubble .nav button { background: none; border: 0; padding: 4px 6px; cursor: pointer; color: #f2f2f2; }
+body.legendsV2 .legendsTutorial .legendsTutorialBubble .nav button svg { width: 9px; height: 15px; fill: none; stroke: #f2f2f2; stroke-width: 2; display: block; }
+body.legendsV2 .legendsTutorial .legendsTutorialBubble .nav button.next, body.legendsV2 .legendsTutorial .legendsTutorialBubble .nav button.ok { margin-left: auto; }
+body.legendsV2 .legendsTutorial .legendsTutorialBubble .nav button.ok { min-width: 46px; padding: 3px 12px; border-radius: 3px; background: #6c6c6c; font: 700 12px/16px Arial, sans-serif; }
+body.legendsV2 .legendsTutorial .legendsTutorialBubble .nav button.ok:hover { background: #828282; }
+body.legendsV2 .legendsTutorial .legendsTutorialBubble a.skip { display: block; margin-top: 4px; font-size: 11px; color: #a9a9a9; text-align: right; text-decoration: underline; }
+body.legendsV2 .legendsTutorial .legendsTutorialBubble .arrow { position: absolute; bottom: -9px; width: 0; height: 0; margin-left: -9px;
+    border-left: 9px solid transparent; border-right: 9px solid transparent; border-top: 9px solid rgba(45, 45, 45, .94); }
+body.legendsV2 .legendsTutorial .legendsTutorialBubble.below .arrow { bottom: auto; top: -9px; border-top: 0; border-bottom: 9px solid rgba(45, 45, 45, .94); }
+@keyframes ovTutorialIn { from { opacity: 0; transform: translateY(4px); } to { opacity: 1; transform: none; } }

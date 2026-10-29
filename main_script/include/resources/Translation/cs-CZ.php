@@ -6047,4 +6047,18 @@ $Definition['VillageGroups']['deleteButton'] = 'vymazat';
 $Definition['QuickLinks']['used'] = 'Rychlý odkaz už je používán';
 $Definition['QuickLinks']['notAvailable'] = 'Budova není k dispozici v aktivní vesnici';
 
+// Onboarding guide of the Legends look (js/Game/Legends/tutorial.js)
+$Definition['LegendsTutorial']['fields'] = 'Surovinová pole poskytují nezbytný stavební materiál.<br><br>Rozšiř jedno z nich a zvyš tak jeho produkci.<br><br>Klikni na surovinové pole.';
+$Definition['LegendsTutorial']['production'] = 'Rozšiřování surovinových polí zvyšuje jejich produkci.';
+$Definition['LegendsTutorial']['costs'] = 'Rozšiřování surovinových polí stojí čas a suroviny.';
+$Definition['LegendsTutorial']['upgrade'] = 'Přidej budovu do stavební fronty a rozšiřuj svou vesnici.';
+$Definition['LegendsTutorial']['queue'] = 'Toto je stavební fronta ve tvé vesnici.<br><br>Zkus do ní přidat další budovu.';
+$Definition['LegendsTutorial']['second'] = 'Ve chvíli, kdy bude stavba možná, se automaticky strhnou suroviny a budova se přidá do stavební fronty.';
+$Definition['LegendsTutorial']['hero'] = 'Toto je tvůj hrdina.<br><br>Hrdinu můžeš posílat na dobrodružné výpravy, kde může najít vybavení, suroviny nebo další předměty.';
+$Definition['LegendsTutorial']['adventure'] = 'Otevři tento panel a najdi vzrušující dobrodružství.';
+$Definition['LegendsTutorial']['meanwhile'] = 'Mezitím můžeš pokračovat s rozvíjením své vesnice.';
+$Definition['LegendsTutorial']['tasks'] = 'Tyto úkoly nabízí další vedení ve hře – a také odměny! Podívej se na ně a zjisti, co se můžeš naučit příště.';
+$Definition['LegendsTutorial']['ok'] = 'OK';
+$Definition['LegendsTutorial']['skip'] = 'Přeskočit návod';
+
 return $Definition;
