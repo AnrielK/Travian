@@ -102,19 +102,25 @@ var LegendsQuickLinks = (function () {
         markUsed(slots().map(function (s) { var a = s.querySelector('.layoutButton'); return a ? a.getAttribute('data-key') : ''; }));
     }
 
-    // as in Legends the dialog stands left of the edited box (centred when there is no room for it)
+    // as in Legends the dialog stands in the middle of the game area between the two sidebars, just below the header;
+    // when the window is too narrow it is centred and the page is dimmed under it
     function place() {
         if (!dialog || !scope) return;
         var w = dialog.querySelector('.dialogWrapper'), b = SCOPES[scope].box();
         if (!w || !b) return;
         w.style.position = ''; w.style.left = ''; w.style.top = '';
+        var before = document.getElementById('sidebarBeforeContent'), after = document.getElementById('sidebarAfterContent');
         var r = b.getBoundingClientRect(), dw = w.offsetWidth, dh = w.offsetHeight;
-        var left = r.left - dw - 14;
-        if (left < 8) { dialog.classList.remove('besideBox'); return; }
+        var from = before ? before.getBoundingClientRect().right : 0;
+        var to = after ? after.getBoundingClientRect().left : r.left;
+        if (to - from < dw + 16) { from = 8; to = r.left - 8; }
+        if (to - from < dw) { dialog.classList.remove('besideBox'); return; }
+        var header = document.getElementById('topBar');
+        var top = header ? header.getBoundingClientRect().bottom + 10 : r.top - 20;
         dialog.classList.add('besideBox');
         w.style.position = 'fixed';
-        w.style.left = left + 'px';
-        w.style.top = Math.max(8, Math.min(r.top - 20, window.innerHeight - dh - 8)) + 'px';
+        w.style.left = Math.round(from + (to - from - dw) / 2) + 'px';
+        w.style.top = Math.round(Math.max(8, Math.min(top, window.innerHeight - dh - 8))) + 'px';
     }
     window.addEventListener('resize', place);
     window.addEventListener('scroll', place, {passive: true});

@@ -777,6 +777,26 @@ function get_gpack_link_and_hash($fileName, $useLang = true)
     return $fileName;
 }
 
+/** Version of a local file for cache busting (?v=), so browsers and the iOS app load changed scripts and styles. */
+function ov_asset_version($path)
+{
+    $t = @filemtime($path);
+    return $t ? (string)$t : '1';
+}
+
+/** <link>s of the OpenVillage adapter styles of the graphic pack (css/openvillage-t46*.css), versioned by file time. */
+function ov_gpack_adapter_links()
+{
+    $out = '';
+    foreach (['openvillage-t46-tribes.css', 'openvillage-t46.css'] as $css) {
+        $file = get_gpack_mainPage_dir() . 'css/' . $css;
+        if (is_file($file)) {
+            $out .= '<link href="' . get_gpack_cdn_mainPage_url() . 'css/' . $css . '?v=' . ov_asset_version($file) . '" rel="stylesheet" type="text/css"/>' . "\n";
+        }
+    }
+    return $out;
+}
+
 function getTradeRouteTimeText($value)
 {
     if ($value < 3600) {

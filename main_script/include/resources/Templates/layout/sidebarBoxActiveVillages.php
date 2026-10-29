@@ -147,7 +147,7 @@ if ($qlV2) {
 </div>
 <?php if ($qlV2): ?>
 <script type="text/javascript">window.LegendsQuickLinksConfig = <?=\resources\View\LegendsQuickLinks::config($qlLinks); ?>;</script>
-<script type="text/javascript" src="js/Game/Legends/dialog.js?v=1"></script>
-<script type="text/javascript" src="js/Game/Legends/quickLinks.js?v=1"></script>
-<script type="text/javascript" src="js/Game/Legends/villageRename.js?v=1"></script>
+<script type="text/javascript" src="js/Game/Legends/dialog.js?v=<?=ov_asset_version(PUBLIC_PATH . 'js/Game/Legends/dialog.js'); ?>"></script>
+<script type="text/javascript" src="js/Game/Legends/quickLinks.js?v=<?=ov_asset_version(PUBLIC_PATH . 'js/Game/Legends/quickLinks.js'); ?>"></script>
+<script type="text/javascript" src="js/Game/Legends/villageRename.js?v=<?=ov_asset_version(PUBLIC_PATH . 'js/Game/Legends/villageRename.js'); ?>"></script>
 <?php endif; ?>

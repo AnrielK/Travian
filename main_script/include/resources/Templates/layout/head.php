@@ -13,6 +13,7 @@ use Core\Helper\PreferencesHelper;
     <meta name="content-language" content="<?=get_locale(); ?>"/>
     <link href="<?=get_gpack_link_and_hash("compact.css"); ?>"
           rel="stylesheet" type="text/css"/>
+    <?=ov_gpack_adapter_links(); ?>
     <link href="<?=get_gpack_link_and_hash("lang.css"); ?>"
           rel="stylesheet" type="text/css"/>
     <?php if (is_lowres()): ?>

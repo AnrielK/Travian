@@ -150,4 +150,4 @@ $rewardsV2 = static fn(array $task) => $valueBox('allResources', $task['rewardRe
         </div>
     <?php endif; ?>
 </div>
-<?php if ($v2): ?><script type="text/javascript" src="js/Game/Legends/tasks.js?v=1"></script><?php endif; ?>
+<?php if ($v2): ?><script type="text/javascript" src="js/Game/Legends/tasks.js?v=<?=ov_asset_version(PUBLIC_PATH . 'js/Game/Legends/tasks.js'); ?>"></script><?php endif; ?>

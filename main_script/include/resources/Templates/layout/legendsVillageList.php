@@ -81,6 +81,6 @@ $villageEntry = static function (array $v) use ($e, $t, $handle, $attackSvg, $ca
     ],
     'colors' => LegendsVillageGroups::COLORS,
 ], JSON_UNESCAPED_UNICODE | JSON_HEX_TAG | JSON_HEX_APOS); ?>;</script>
-<script type="text/javascript" src="js/Game/Legends/dialog.js?v=1"></script>
-<script type="text/javascript" src="js/Game/Legends/villageGroups.js?v=1"></script>
+<script type="text/javascript" src="js/Game/Legends/dialog.js?v=<?=ov_asset_version(PUBLIC_PATH . 'js/Game/Legends/dialog.js'); ?>"></script>
+<script type="text/javascript" src="js/Game/Legends/villageGroups.js?v=<?=ov_asset_version(PUBLIC_PATH . 'js/Game/Legends/villageGroups.js'); ?>"></script>
 <?php endif; ?>

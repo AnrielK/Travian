@@ -198,4 +198,4 @@ $pct = static fn($v) => '+' . rtrim(rtrim(number_format($v, 1, ',', ''), '0'), '
     </div>
 </div>
 <script type="text/javascript">window.LegendsSimData = <?=json_encode($simData, JSON_UNESCAPED_UNICODE | JSON_HEX_TAG | JSON_HEX_AMP); ?>;</script>
-<script type="text/javascript" src="js/Game/Legends/simulators.js?v=1"></script>
+<script type="text/javascript" src="js/Game/Legends/simulators.js?v=<?=ov_asset_version(PUBLIC_PATH . 'js/Game/Legends/simulators.js'); ?>"></script>
