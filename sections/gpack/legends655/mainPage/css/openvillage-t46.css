@@ -2238,3 +2238,4 @@ body.t46Layout.legendsV2 .sidebar #sidebarBoxQuestmaster.legendsMentor #questmas
     0%, 62%, 100% { filter: drop-shadow(1px 0 0 #a5d64a) drop-shadow(-1px 0 0 #a5d64a) drop-shadow(0 -1px 0 #a5d64a) drop-shadow(0 1px 0 #a5d64a); }
     75% { filter: brightness(1.08) drop-shadow(1px 0 0 #e9f7c4) drop-shadow(-1px 0 0 #e9f7c4) drop-shadow(0 -1px 0 #e9f7c4) drop-shadow(0 1px 0 #e9f7c4) drop-shadow(0 0 8px rgba(255, 255, 230, .95)); }
 }
+body.t46Layout.legendsV2 .sidebar #sidebarBoxQuestmaster.legendsMentor #questmasterButton .newQuestSpeechBubble { left: -14px !important; top: 46px !important; }
