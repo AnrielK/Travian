@@ -1,7 +1,9 @@
 <?php
 /* Onboarding guide of the Travian Legends look (resources/View/LegendsTutorial.php, js/Game/Legends/tutorial.js). */
 $session = \Core\Session::getInstance();
-if ($session->isSitter()) {
+// switched off for now (the original guide does not dim the page); turn on again by setting this to true
+$legendsTutorialEnabled = false;
+if (!$legendsTutorialEnabled || $session->isSitter()) {
     return;
 }
 $tutStep = \resources\View\LegendsTutorial::step((int)$session->getPlayerId());
