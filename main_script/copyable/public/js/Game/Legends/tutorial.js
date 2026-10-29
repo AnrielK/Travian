@@ -78,23 +78,27 @@
         root.appendChild(ring);
         var bubble = document.createElement('div');
         bubble.className = 'legendsTutorialBubble';
+        // same look as the Legends contextual help (layout/contextualHelp.php): progress bar, chevrons, rounded button
+        var chevron = function (cls, d) { return '<svg class="' + cls + '" viewBox="0 0 12 17"><path d="' + d + '"/></svg>'; };
+        var progress = '';
+        for (var i = 1; i <= 10; i++) progress += '<div' + (i <= step ? ' class="active"' : '') + '></div>';
         var nav = '';
-        if (s.prev) nav += '<button type="button" class="prev" aria-label="&lt;"><svg viewBox="0 0 8 14"><path d="M7 1 1 7l6 6"/></svg></button>';
-        if (s.next && !s.click && !s.ok) nav += '<button type="button" class="next" aria-label="&gt;"><svg viewBox="0 0 8 14"><path d="M1 1l6 6-6 6"/></svg></button>';
-        if (s.ok) nav += '<button type="button" class="ok">' + (T.ok || 'OK') + '</button>';
-        bubble.innerHTML = '<div class="text">' + (T[s.text] || '') + '</div>'
-            + (nav ? '<div class="nav">' + nav + '</div>' : '')
-            + '<a href="#" class="skip">' + (T.skip || 'Skip') + '</a><span class="arrow"></span>';
+        if (s.prev) nav += chevron('chevronBack', 'M10 2L3 8.5l7 6.5');
+        if (s.next && !s.click && !s.ok) nav += chevron('chevronForward', 'M2 2l7 6.5L2 15');
+        if (s.ok) nav += '<button type="button" class="closeHelp">' + (T.ok || 'OK') + '</button>';
+        bubble.innerHTML = '<div class="progress">' + progress + '</div><div class="helpText">' + (T[s.text] || '') + '</div>'
+            + '<nav>' + nav + '<a href="#" class="skip">' + (T.skip || 'Skip') + '</a></nav>'
+            + '<svg class="pointingArrow" viewBox="0 0 40 40"><path d="M40 1L2 20l38 19z"/></svg>';
         root.appendChild(bubble);
         document.body.appendChild(root);
         document.body.classList.add('legendsTutorialActive');
         els = {root: root, parts: parts, lid: lid, ring: ring, bubble: bubble, target: target, step: s};
         bubble.addEventListener('click', function (ev) {
-            var b = ev.target.closest('button, a.skip');
+            var b = ev.target.closest('svg.chevronBack, svg.chevronForward, button.closeHelp, a.skip');
             if (!b) return;
             ev.preventDefault();
             if (b.classList.contains('skip')) go(0);
-            else if (b.classList.contains('prev')) go(s.prev);
+            else if (b.classList.contains('chevronBack')) go(s.prev);
             else go(s.next);
         });
         place();
@@ -113,7 +117,7 @@
         set(els.parts[3], x1, y0, vw - x1, y1 - y0);
         set(els.lid, x0, y0, x1 - x0, y1 - y0);
         set(els.ring, x0, y0, x1 - x0, y1 - y0);
-        var b = els.bubble, bw = b.offsetWidth, bh = b.offsetHeight, gap = 14;
+        var b = els.bubble, bw = b.offsetWidth, bh = b.offsetHeight, gap = 40;
         var cx = (r.left + r.right) / 2;
         var above = r.top - bh - gap > 8 || r.bottom + bh + gap > vh;
         var top = above ? r.top - bh - gap : r.bottom + gap;
@@ -122,7 +126,7 @@
         b.style.left = left + 'px';
         b.style.top = Math.max(8, top) + 'px';
         b.classList.toggle('below', !above);
-        b.querySelector('.arrow').style.left = Math.min(Math.max(14, cx - left), bw - 14) + 'px';
+        b.querySelector('.pointingArrow').style.left = (Math.min(Math.max(34, cx - left), bw - 34) - 20) + 'px';
     }
     // a click on the lit element of a click step continues the guide on the next page
     document.addEventListener('click', function (ev) {
