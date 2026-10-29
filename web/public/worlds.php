@@ -19,7 +19,7 @@ $gpacks = require dirname(__DIR__, 2) . '/sections/gpack/gpack.php';
 $tribeLabels = [1 => 'Romans', 2 => 'Teutons', 3 => 'Gauls', 6 => 'Egyptians', 7 => 'Huns', 8 => 'Spartans'];
 $message = '';
 $error = '';
-$form = ['name' => '', 'gpack' => $gpacks['default'], 'speed' => 10, 'mapSize' => $firstWorld ? 25 : 50, 'roundDays' => 35,
+$form = ['name' => '', 'gpack' => $gpacks['default'], 'tribes' => 'all', 'speed' => 10, 'mapSize' => $firstWorld ? 25 : 50, 'roundDays' => 35,
     'heroSpeed' => 1];
 
 if (($_SERVER['REQUEST_METHOD'] ?? 'GET') === 'POST' && !$firstWorld) {
@@ -39,6 +39,7 @@ if (($_SERVER['REQUEST_METHOD'] ?? 'GET') === 'POST' && !$firstWorld) {
         $form = [
             'name' => trim((string)($_POST['name'] ?? '')),
             'gpack' => (string)($_POST['gpack'] ?? ''),
+            'tribes' => ($_POST['tribes'] ?? '') === 'classic' ? 'classic' : 'all',
             'speed' => max(1, min(1000, (int)($_POST['speed'] ?? 10))),
             'mapSize' => max(25, min(200, (int)($_POST['mapSize'] ?? 50))),
             'roundDays' => max(1, min(365, (int)($_POST['roundDays'] ?? 35))),
@@ -60,6 +61,7 @@ if (($_SERVER['REQUEST_METHOD'] ?? 'GET') === 'POST' && !$firstWorld) {
             try {
                 $id = ov_register_world($form);
                 ov_apply_world($id);
+                putenv('GAME_TRIBES=' . $form['tribes']);   // stored in the new world's config by the installer
                 ov_install_world($password);
                 while (ob_get_level() > 0) {
                     ob_end_clean();
@@ -139,7 +141,7 @@ header('Content-Type: text/html; charset=utf-8');
                 <tr>
                     <td><a href="/?world=<?= $w['id'] ?>&amp;open=worldDialog"><?= escape($w['id'] === 1 && $w['name'] === 'Local World' ? lt('Local world') : $w['name']) ?></a></td>
                     <td><?= escape($w['lookName']) ?></td>
-                    <td class="small"><?= escape($tribeText($look['tribes'] ?? [1, 2, 3, 6, 7])) ?></td>
+                    <td class="small"><?= escape($tribeText(array_values(array_intersect($look['tribes'] ?? [1, 2, 3, 6, 7], ($w['tribeMode'] ?? '') === 'classic' ? [1, 2, 3] : [1, 2, 3, 6, 7, 8])))) ?></td>
                     <td>×<?= escape(rtrim(rtrim(number_format($w['speed'], 2, '.', ''), '0'), '.')) ?></td>
                     <td><?= (int)$w['players'] ?></td>
                     <td>
@@ -180,6 +182,11 @@ header('Content-Type: text/html; charset=utf-8');
                         <?php endforeach; ?>
                     </select></div>
             </div>
+            <label for="tribes"><?= escape(lt('Tribes')) ?> <span class="hint">(<?= escape(lt('cannot be changed later')) ?>)</span></label>
+            <select id="tribes" name="tribes">
+                <option value="all" <?= $form['tribes'] === 'all' ? 'selected' : '' ?>><?= escape(lt('All tribes of the look (also Egyptians and Huns)')) ?></option>
+                <option value="classic" <?= $form['tribes'] === 'classic' ? 'selected' : '' ?>><?= escape(lt('Only the three original tribes (Romans, Teutons, Gauls)')) ?></option>
+            </select>
             <div class="row">
                 <div><label for="speed"><?= escape(lt('Speed')) ?></label>
                     <select id="speed" name="speed">

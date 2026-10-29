@@ -84,6 +84,7 @@ function lobby_worlds(): array
                 $world['start'] = (int)$config['startTime'];
                 $world['mapSize'] = (int)$config['map_size'];
                 $world['gpack'] = (string)($config['gpack'] ?? '') ?: $world['gpack'];
+                $world['tribeMode'] = (string)($config['tribes'] ?? '');
             }
             $world['players'] = (int)$database->query('SELECT COUNT(*) FROM users WHERE id > 2')->fetchColumn();
         } catch (Throwable $exception) {
@@ -92,7 +93,11 @@ function lobby_worlds(): array
         // The world's look (config.gpack, chosen when the world was created) and the tribes it offers.
         $look = $gpacks['styles'][$world['gpack']] ?? ($id === 1 ? $gpacks['styles'][$gpacks['mainPage']] ?? [] : []);
         $world['lookName'] = preg_replace('/\s*\(.*\)$/', '', (string)($look['name'] ?? 'OpenVillage 4.6'));
-        $world['tribes'] = array_values(array_intersect_key($tribeNames, array_flip($look['tribes'] ?? [1, 2, 3, 6, 7])));
+        $lookTribes = $look['tribes'] ?? [1, 2, 3, 6, 7];
+        if (($world['tribeMode'] ?? '') === 'classic') {
+            $lookTribes = array_intersect($lookTribes, [1, 2, 3]);
+        }
+        $world['tribes'] = array_values(array_intersect_key($tribeNames, array_flip($lookTribes)));
         // The look's own registration page (Travian 4.0) instead of the lobby's dialog.
         $world['registerUrl'] = empty($look['ownRegistration']) ? '' : $world['path'] . 'register.php';
     }

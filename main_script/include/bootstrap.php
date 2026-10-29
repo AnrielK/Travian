@@ -82,6 +82,10 @@ require(INCLUDE_PATH . "config/config.after.php");
 if (!array_intersect([6, 7], get_world_tribes())) {
     $config->game->allowNewTribes = false;
 }
+// A world created with only the three original tribes (config.tribes, chosen when the world was created).
+if (property_exists($config->dynamic, 'tribes') && $config->dynamic->tribes === 'classic') {
+    $config->game->allowNewTribes = false;
+}
 if (!$config->dynamic->installed) {
     $config->dynamic->maintenance = true;
 }

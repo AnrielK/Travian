@@ -1563,6 +1563,9 @@ class InstallerModel
         // The look chosen for the new world (GAME_GPACK) stays with it: see apply_world_gpack().
         $gpack = $db->real_escape_string(get_gpack_main_page());
         $db->query("UPDATE config SET installed=1, installationTime=" . time() . ", gpack='$gpack'");
+        // The tribes chosen for the new world (GAME_TRIBES: classic = Romans, Teutons, Gauls; all = also the new tribes).
+        $tribes = getenv('GAME_TRIBES') === 'classic' ? 'classic' : 'all';
+        $db->query("UPDATE config SET tribes='$tribes'");
         /*
         $newsletter_subject = sprintf(T("Global", "Newsletter_NewServer_subject"), Config::getProperty("settings", "serverName"), getGameSpeed());
         $newsletter_message = T("Global", "Newsletter_NewServer_content");

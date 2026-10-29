@@ -104,6 +104,8 @@ function lt(string $text): string
         'World' => 'Svět',
         'Look' => 'Vzhled',
         'Tribes' => 'Národy',
+        'All tribes of the look (also Egyptians and Huns)' => 'Všechny národy vzhledu (i Egypťané a Hunové)',
+        'Only the three original tribes (Romans, Teutons, Gauls)' => 'Jen tři původní národy (Římané, Germáni, Galové)',
         'Name of the world' => 'Název světa',
         'cannot be changed later' => 'později už nejde změnit',
         'a bigger map takes longer to create' => 'větší mapa = delší zakládání',

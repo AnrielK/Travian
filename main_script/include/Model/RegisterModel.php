@@ -202,6 +202,10 @@ class RegisterModel
         if (!$result) return false;
         $db = DB::getInstance();
         $db->query("UPDATE units SET u11=1 WHERE kid=$kid");
+        if (function_exists('is_hero_v2') && is_hero_v2()) {
+            // Travian Legends has no welcome tutorial: the player starts with the task list (tasks.php)
+            $db->query("UPDATE users SET qst_tut='0' WHERE id=" . (int)$uid . " AND qst_tut='1-0'");
+        }
         $this->addResourceFields($kid);
         if ($uid <> 2) {
             $this->populateBuildingLevels($kid, getGame("firstVillageCreationFieldsLevel"));

@@ -84,6 +84,9 @@ struct WorldSettings: Codable, Equatable {
     /// Hero movement speed multiplier (1 = normal); nil in older saved settings.
     var heroSpeed: Int?
     var heroSpeedFactor: Int { max(1, heroSpeed ?? 1) }
+    /// Tribes of a new world: "classic" = Romans, Teutons, Gauls; "all" or nil = every tribe of the look.
+    var tribes: String?
+    var tribeMode: String { tribes == "classic" ? "classic" : "all" }
     /// Name of the world (lobby, page title); nil in older saved settings.
     var name: String?
     var worldName: String { (name ?? "").trimmingCharacters(in: .whitespaces).isEmpty ? "iPhone World" : name! }
@@ -130,6 +133,7 @@ extension WorldSettings {
         }
         name = String(value("name").trimmingCharacters(in: .whitespaces).prefix(40))
         gpack = value("gpack")
+        tribes = value("tribes") == "classic" ? "classic" : "all"
         speed = number("speed", 1...1000, 10)
         mapSize = number("mapSize", 10...200, 25)
         roundDays = number("roundDays", 1...365, 35)
@@ -326,7 +330,8 @@ final class GameRuntime: ObservableObject {
         world.save()
         for (name, value) in [("GAME_SPEED", String(world.speed)), ("GAME_MAP_SIZE", String(world.mapSize)),
                               ("GAME_GPACK", world.style), ("GAME_ROUND_LENGTH_DAYS", String(world.roundDays)),
-                              ("GAME_HERO_SPEED", String(world.heroSpeedFactor)), ("GAME_SERVER_NAME", world.worldName)] {
+                              ("GAME_HERO_SPEED", String(world.heroSpeedFactor)), ("GAME_SERVER_NAME", world.worldName),
+                              ("GAME_TRIBES", world.tribeMode)] {
             setenv(name, value, 1)
         }
         state = .working("Vytvářím svět (mapa \(world.mapSize * 2 + 1)×\(world.mapSize * 2 + 1))…\nTrvá to desítky sekund.")
@@ -497,6 +502,7 @@ final class GameRuntime: ObservableObject {
             "GAME_DB_PASSWORD": Secrets.dbPassword, "GLOBAL_DB_PASSWORD": Secrets.dbPassword,
             "GAME_SPEED": String(world.speed), "GAME_MAP_SIZE": String(world.mapSize),
             "GAME_GPACK": world.style,
+            "GAME_TRIBES": world.tribeMode,
             "GAME_HERO_SPEED": String(world.heroSpeedFactor),
             "GAME_ROUND_LENGTH_DAYS": String(world.roundDays),
             "GAME_WORLD_ID": "local", "GAME_TITLE": "OpenVillage 4.6", "GAME_SERVER_NAME": world.worldName,
