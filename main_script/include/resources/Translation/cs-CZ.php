@@ -6054,11 +6054,17 @@ $Definition['LegendsTutorial']['costs'] = 'Rozšiřování surovinových polí s
 $Definition['LegendsTutorial']['upgrade'] = 'Přidej budovu do stavební fronty a rozšiřuj svou vesnici.';
 $Definition['LegendsTutorial']['queue'] = 'Toto je stavební fronta ve tvé vesnici.<br><br>Zkus do ní přidat další budovu.';
 $Definition['LegendsTutorial']['second'] = 'Ve chvíli, kdy bude stavba možná, se automaticky strhnou suroviny a budova se přidá do stavební fronty.';
-$Definition['LegendsTutorial']['hero'] = 'Toto je tvůj hrdina.<br><br>Hrdinu můžeš posílat na dobrodružné výpravy, kde může najít vybavení, suroviny nebo další předměty.';
-$Definition['LegendsTutorial']['adventure'] = 'Otevři tento panel a najdi vzrušující dobrodružství.';
-$Definition['LegendsTutorial']['meanwhile'] = 'Mezitím můžeš pokračovat s rozvíjením své vesnice.';
-$Definition['LegendsTutorial']['tasks'] = 'Tyto úkoly nabízí další vedení ve hře – a také odměny! Podívej se na ně a zjisti, co se můžeš naučit příště.';
+$Definition['LegendsTutorial']['hero'] = 'Toto je tvůj hrdina.<br><br>Hrdinu můžeš posílat na dobrodružné výpravy, kde může najít výstroj, suroviny nebo další předměty.';
+$Definition['LegendsTutorial']['adventure'] = 'Otevři tento panel a najdi vzrušující dobrodružství!';
+$Definition['LegendsTutorial']['meanwhile'] = 'Zde můžeš sledovat aktuální vývoj dobrodružství. Jakmile odpočet skončí, získáš hlášení o jeho výsledku.<br><br>Mezitím můžeš pokračovat s rozvíjením své vesnice.';
+$Definition['LegendsTutorial']['tasks'] = 'Tyto úkoly nabízí další vedení ve hře – a také odměny! Podívej se na ně a zjisti, na co se můžeš zaměřit příště.';
+$Definition['LegendsTutorial']['slots'] = 'Nové budovy můžeš umístit na tyto stavební sloty.<br><br>Klikni na jeden z nich a uvidíš, co můžeš postavit.';
+$Definition['LegendsTutorial']['description'] = 'Popis budovy vysvětluje, k čemu budova slouží.';
+$Definition['LegendsTutorial']['tabs'] = 'V ostatních panelech najdeš další budovy.';
+$Definition['LegendsTutorial']['soon'] = 'Budovy, které budou brzy k dispozici, najdeš na konci seznamu.';
+$Definition['LegendsTutorial']['duration'] = 'Tvému hrdinovi nějakou dobu potrvá, než na místo dobrodružství dojde.';
+$Definition['LegendsTutorial']['difficulty'] = 'Dobrodružství mají různé úrovně obtížnosti. Ta označená lebkou by měli podniknout pouze hrdinové s plným zdravím a dobrým výcvikem.';
+$Definition['LegendsTutorial']['explore'] = 'Zde můžeš pokračovat v posílání svého hrdiny na dobrodružné výpravy.';
 $Definition['LegendsTutorial']['ok'] = 'OK';
-$Definition['LegendsTutorial']['skip'] = 'Přeskočit návod';
 
 return $Definition;

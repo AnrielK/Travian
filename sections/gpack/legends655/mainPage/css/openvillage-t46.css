@@ -2179,51 +2179,31 @@ body.t46Layout #contentOuterContainer #villageContent .buildingSlot.a40.legendsW
 body.t46Layout #contentOuterContainer #villageContent .buildingSlot.a40.legendsWall svg.traced:hover g.clickShape path,
 body.t46Layout #contentOuterContainer #villageContent .buildingSlot.a40.legendsWall svg.traced:active g.clickShape path { fill: rgba(222, 236, 150, .42) !important; }
 
-/* Onboarding guide (js/Game/Legends/tutorial.js): dimmed page, the element of the step lit, a dark speech bubble */
-body.legendsV2 .legendsTutorial { position: fixed; inset: 0; z-index: 5000; pointer-events: none; }
-body.legendsV2 .legendsTutorial .legendsTutorialShade { position: fixed; background: rgba(0, 0, 0, .5); pointer-events: auto; }
-body.legendsV2 .legendsTutorial .legendsTutorialLid { position: fixed; pointer-events: auto; background: transparent; }
-body.legendsV2 .legendsTutorial .legendsTutorialRing { position: fixed; border-radius: 6px; box-shadow: 0 0 0 2px rgba(255, 249, 235, .55), 0 0 18px rgba(255, 249, 235, .35); pointer-events: none; }
-body.legendsV2 .legendsTutorial .legendsTutorialBubble { position: fixed; width: 290px; box-sizing: border-box; padding: 14px 16px 10px; pointer-events: auto;
-    background: rgba(45, 45, 45, .94); color: #f2f2f2; border-radius: 4px; box-shadow: 0 3px 12px rgba(0, 0, 0, .45);
-    font: 13px/18px Arial, Helvetica, sans-serif; animation: ovTutorialIn .2s ease-out; }
-body.legendsV2 .legendsTutorial .legendsTutorialBubble .text { margin-bottom: 6px; }
-body.legendsV2 .legendsTutorial .legendsTutorialBubble .nav { display: flex; justify-content: space-between; align-items: center; min-height: 26px; }
-body.legendsV2 .legendsTutorial .legendsTutorialBubble .nav button { background: none; border: 0; padding: 4px 6px; cursor: pointer; color: #f2f2f2; }
-body.legendsV2 .legendsTutorial .legendsTutorialBubble .nav button svg { width: 9px; height: 15px; fill: none; stroke: #f2f2f2; stroke-width: 2; display: block; }
-body.legendsV2 .legendsTutorial .legendsTutorialBubble .nav button.next, body.legendsV2 .legendsTutorial .legendsTutorialBubble .nav button.ok { margin-left: auto; }
-body.legendsV2 .legendsTutorial .legendsTutorialBubble .nav button.ok { min-width: 46px; padding: 3px 12px; border-radius: 3px; background: #6c6c6c; font: 700 12px/16px Arial, sans-serif; }
-body.legendsV2 .legendsTutorial .legendsTutorialBubble .nav button.ok:hover { background: #828282; }
-body.legendsV2 .legendsTutorial .legendsTutorialBubble a.skip { display: block; margin-top: 4px; font-size: 11px; color: #a9a9a9; text-align: right; text-decoration: underline; }
-body.legendsV2 .legendsTutorial .legendsTutorialBubble .arrow { position: absolute; bottom: -9px; width: 0; height: 0; margin-left: -9px;
-    border-left: 9px solid transparent; border-right: 9px solid transparent; border-top: 9px solid rgba(45, 45, 45, .94); }
-body.legendsV2 .legendsTutorial .legendsTutorialBubble.below .arrow { bottom: auto; top: -9px; border-top: 0; border-bottom: 9px solid rgba(45, 45, 45, .94); }
-@keyframes ovTutorialIn { from { opacity: 0; transform: translateY(4px); } to { opacity: 1; transform: none; } }
-/* the guide's bubble looks like the Legends contextual help (#contextualHelp .helpBody) */
-body.legendsV2 .legendsTutorial .legendsTutorialBubble { width: 350px; min-height: 80px; padding: 30px 25px 20px; border-radius: 7px;
-    background-color: rgba(51, 51, 51, .9); color: #f2f2f2; font-size: 13px; line-height: 19px; word-break: break-word;
-    border: 2px solid #caa46d; border-top-color: #ffe1aa; border-bottom-color: #907151; box-shadow: 0 0 0 1px #1b1a1a, inset 0 0 0 1px #1b1a1a; }
-body.legendsV2 .legendsTutorial .legendsTutorialBubble .progress { position: absolute; top: 1px; left: 1px; display: flex; width: calc(100% - 2px); height: 5px; }
-body.legendsV2 .legendsTutorial .legendsTutorialBubble .progress div { flex: 1 1 0; background-color: #c9b59a; }
-body.legendsV2 .legendsTutorial .legendsTutorialBubble .progress div:not(:last-of-type) { margin-right: 1px; }
-body.legendsV2 .legendsTutorial .legendsTutorialBubble .progress div:first-of-type { border-top-left-radius: 5px; }
-body.legendsV2 .legendsTutorial .legendsTutorialBubble .progress div:last-of-type { border-top-right-radius: 5px; }
-body.legendsV2 .legendsTutorial .legendsTutorialBubble .progress div.active { background-color: #f0e1cc; }
-body.legendsV2 .legendsTutorial .legendsTutorialBubble nav { position: relative; height: 35px; margin-top: 20px; }
-body.legendsV2 .legendsTutorial .legendsTutorialBubble nav svg { position: absolute; top: 0; width: 12px; height: 17px; margin-top: 7px; cursor: pointer; }
-body.legendsV2 .legendsTutorial .legendsTutorialBubble nav svg.chevronBack { left: 0; }
-body.legendsV2 .legendsTutorial .legendsTutorialBubble nav svg.chevronForward { right: 0; }
-body.legendsV2 .legendsTutorial .legendsTutorialBubble nav svg path { fill: transparent; stroke: #d2bda1; stroke-width: 4px; stroke-linecap: round; stroke-linejoin: round; }
-body.legendsV2 .legendsTutorial .legendsTutorialBubble nav svg:hover path { stroke: #f0e1cc; }
-body.legendsV2 .legendsTutorial .legendsTutorialBubble nav button.closeHelp { position: absolute; right: 0; top: 50%; transform: translateY(-50%); height: 30px;
-    padding: 0 16px; border: 0; border-radius: 15px; background-color: #d2bda1; color: #3f2f20; font: 700 13px/30px Arial, sans-serif; min-width: 0; margin: 0; }
-body.legendsV2 .legendsTutorial .legendsTutorialBubble nav button.closeHelp:hover { background-color: #f0e1cc; }
-body.legendsV2 .legendsTutorial .legendsTutorialBubble nav a.skip { position: absolute; left: 50%; top: 50%; transform: translate(-50%, -50%); margin: 0;
-    font-size: 11px; color: #a99a83; white-space: nowrap; }
-body.legendsV2 .legendsTutorial .legendsTutorialBubble .arrow { display: none; }
-body.legendsV2 .legendsTutorial .legendsTutorialBubble svg.pointingArrow { position: absolute; width: 40px; height: 40px; bottom: -40px; transform: rotate(-90deg);
-    fill: rgba(51, 51, 51, .9); stroke: #907151; stroke-width: 2px; }
-body.legendsV2 .legendsTutorial .legendsTutorialBubble.below svg.pointingArrow { bottom: auto; top: -40px; transform: rotate(90deg); stroke: #ffe1aa; }
+/* Onboarding guide (js/Game/Legends/tutorial.js), as in Legends: nothing dimmed, a dark translucent speech bubble with a
+   golden frame, an arrow at the element, a progress bar for steps that belong together, chevrons and an OK button */
+body.legendsV2 .legendsGuide { position: absolute; z-index: 5000; box-sizing: border-box; width: 350px; min-height: 70px; padding: 26px 30px 22px;
+    border-radius: 6px; background-color: rgba(51, 51, 51, .9); color: #fff; font: 14px/20px Arial, Helvetica, sans-serif; word-break: break-word;
+    border: 2px solid #cdb48e; border-top-color: #e9d6b4; border-bottom-color: #9f8462; box-shadow: 0 0 0 1px #1b1a1a, inset 0 0 0 1px #1b1a1a, 0 3px 10px rgba(0, 0, 0, .35);
+    animation: ovGuideIn .2s ease-out; text-align: left; }
+body.legendsV2 .legendsGuide .progress { position: absolute; top: 1px; left: 1px; display: flex; width: calc(100% - 2px); height: 5px; }
+body.legendsV2 .legendsGuide .progress div { flex: 1 1 0; background-color: #555; }
+body.legendsV2 .legendsGuide .progress div:not(:last-of-type) { margin-right: 1px; }
+body.legendsV2 .legendsGuide .progress div:first-of-type { border-top-left-radius: 4px; }
+body.legendsV2 .legendsGuide .progress div:last-of-type { border-top-right-radius: 4px; }
+body.legendsV2 .legendsGuide .progress div.active { background-color: #ece3d4; }
+body.legendsV2 .legendsGuide nav { position: relative; height: 36px; margin-top: 18px; }
+body.legendsV2 .legendsGuide nav svg { position: absolute; top: 50%; width: 14px; height: 22px; margin-top: -11px; padding: 6px; box-sizing: content-box; margin-left: -6px; cursor: pointer; }
+body.legendsV2 .legendsGuide nav svg.chevronBack { left: 0; }
+body.legendsV2 .legendsGuide nav svg.chevronForward { right: -6px; left: auto; }
+body.legendsV2 .legendsGuide nav svg path { fill: transparent; stroke: #d6d0c6; stroke-width: 2.6px; stroke-linecap: round; stroke-linejoin: round; }
+body.legendsV2 .legendsGuide nav svg:hover path { stroke: #fff; }
+body.legendsV2 .legendsGuide nav button.ok { position: absolute; right: 0; top: 50%; transform: translateY(-50%); height: 34px; min-width: 0; margin: 0;
+    padding: 0 30px; border: 0; border-radius: 6px; background: #e6d2b2; color: #2f6fd1; font: 400 17px/34px Arial, sans-serif; cursor: pointer; }
+body.legendsV2 .legendsGuide nav button.ok:hover { background: #f0e1cc; }
+body.legendsV2 .legendsGuide svg.pointingArrow { position: absolute; overflow: visible; pointer-events: none; }
+body.legendsV2 .legendsGuide svg.pointingArrow .fill { fill: rgba(51, 51, 51, .9); }
+body.legendsV2 .legendsGuide svg.pointingArrow .line { fill: none; stroke: #e2cfab; stroke-width: 2px; stroke-linejoin: miter; }
+@keyframes ovGuideIn { from { opacity: 0; } to { opacity: 1; } }
 /* more room between the info box (with its collapse tab) and the link list (with its edit button) */
 body.legendsV2 .sidebar #sidebarBoxInfobox + #sidebarBoxLinklist, body.legendsV2 .sidebar #sidebarBoxLinklist { margin-top: 34px; }
 /* mentor with a task to collect (as in Legends): the "!" bubble stands still, light grey; the figure flashes a light
