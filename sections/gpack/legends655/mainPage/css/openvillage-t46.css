@@ -2226,3 +2226,15 @@ body.legendsV2 .legendsTutorial .legendsTutorialBubble svg.pointingArrow { posit
 body.legendsV2 .legendsTutorial .legendsTutorialBubble.below svg.pointingArrow { bottom: auto; top: -40px; transform: rotate(90deg); stroke: #ffe1aa; }
 /* more room between the info box (with its collapse tab) and the link list (with its edit button) */
 body.legendsV2 .sidebar #sidebarBoxInfobox + #sidebarBoxLinklist, body.legendsV2 .sidebar #sidebarBoxLinklist { margin-top: 34px; }
+/* mentor with a task to collect (as in Legends): the "!" bubble stands still, light grey; the figure flashes a light
+   glow along its outline every few seconds */
+body.t46Layout.legendsV2 .sidebar #sidebarBoxQuestmaster.legendsMentor #questmasterButton .newQuestSpeechBubble {
+    animation: none !important; background: linear-gradient(#f4f4f4, #dcdcdc) !important; border-color: #8f8f8f !important; border-radius: 5px !important;
+    width: 32px !important; height: 34px !important; }
+body.t46Layout.legendsV2 .sidebar #sidebarBoxQuestmaster.legendsMentor #questmasterButton .newQuestSpeechBubble:before { color: #4a4a4a !important; font-family: Arial, sans-serif !important; font-size: 24px !important; }
+body.t46Layout.legendsV2 .sidebar #sidebarBoxQuestmaster.legendsMentor #questmasterButton .newQuestSpeechBubble:after { border-left-color: #e6e6e6 !important; }
+body.t46Layout.legendsV2 .sidebar #sidebarBoxQuestmaster.legendsMentor #questmasterButton.highlighted .mentor { animation: ovMentorGlow 3s ease-in-out infinite; }
+@keyframes ovMentorGlow {
+    0%, 62%, 100% { filter: drop-shadow(1px 0 0 #a5d64a) drop-shadow(-1px 0 0 #a5d64a) drop-shadow(0 -1px 0 #a5d64a) drop-shadow(0 1px 0 #a5d64a); }
+    75% { filter: brightness(1.08) drop-shadow(1px 0 0 #e9f7c4) drop-shadow(-1px 0 0 #e9f7c4) drop-shadow(0 -1px 0 #e9f7c4) drop-shadow(0 1px 0 #e9f7c4) drop-shadow(0 0 8px rgba(255, 255, 230, .95)); }
+}
