@@ -9,7 +9,7 @@ $legendsShapes = is_hero_v2(); ?>
         <?php endfor;?>
         <?php foreach ($vars['maps'] as $index => $map):++$index; ?>
         <?php if($map['index'] == 40):?>
-            <?php if($map['item_id'] == 0 && $legendsShapes && ($traced = \resources\View\LegendsUi::traceShape('emptyWall', 'emptyWall', 'build.php?id=40', true))):?>
+            <?php if($map['item_id'] == 0 && $legendsShapes && ($traced = \resources\View\LegendsUi::traceShape('emptyWall', 'emptyWall', 'build.php?id=40'))):?>
                 <div class="buildingSlot a40 g0 legendsWall" title="<?=htmlspecialchars($map['title']);?>"><?=$traced;?></div>
             <?php elseif($map['item_id'] == 0):?>
                 <div class="buildingSlot a<?=$map['index'];?> g<?=$map['item_id'];?> bottom" title="<?=htmlspecialchars($map['title']);?>">

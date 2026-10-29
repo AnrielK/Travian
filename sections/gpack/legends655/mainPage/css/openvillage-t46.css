@@ -2173,12 +2173,11 @@ body.t46Layout.legendsV2 .sidebar #sidebarBoxQuestmaster.legendsMentor #questmas
     content: ""; position: absolute; right: -7px; top: 11px; border: 6px solid transparent; border-left: 7px solid #fff; border-right: 0;
     filter: drop-shadow(1px 0 0 #9a8b77); }
 @keyframes ovMentorBubble { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-3px); } }
-/* empty wall site: the ring is the click area; under the mouse / finger the whole village area up to the outer edge lights up */
-body.t46Layout #contentOuterContainer #villageContent .buildingSlot.a40.legendsWall svg.traced g.hoverShape path { fill: transparent !important; pointer-events: none; transition: fill 150ms ease-in; }
+/* empty wall site: only the light ring around the village is the site; it lights up under the mouse / finger */
+body.t46Layout #contentOuterContainer #villageContent .buildingSlot.a40.legendsWall svg.traced g.hoverShape path { fill: transparent !important; pointer-events: none; }
+body.t46Layout #contentOuterContainer #villageContent .buildingSlot.a40.legendsWall svg.traced g.clickShape path { transition: fill 150ms ease-in; }
 body.t46Layout #contentOuterContainer #villageContent .buildingSlot.a40.legendsWall svg.traced:hover g.clickShape path,
-body.t46Layout #contentOuterContainer #villageContent .buildingSlot.a40.legendsWall svg.traced:active g.clickShape path { fill: transparent !important; }
-body.t46Layout #contentOuterContainer #villageContent .buildingSlot.a40.legendsWall svg.traced:has(g.clickShape path:hover) g.hoverShape path,
-body.t46Layout #contentOuterContainer #villageContent .buildingSlot.a40.legendsWall svg.traced:active g.hoverShape path { fill: rgba(222, 236, 150, .32) !important; }
+body.t46Layout #contentOuterContainer #villageContent .buildingSlot.a40.legendsWall svg.traced:active g.clickShape path { fill: rgba(222, 236, 150, .42) !important; }
 
 /* Onboarding guide (js/Game/Legends/tutorial.js): dimmed page, the element of the step lit, a dark speech bubble */
 body.legendsV2 .legendsTutorial { position: fixed; inset: 0; z-index: 5000; pointer-events: none; }
