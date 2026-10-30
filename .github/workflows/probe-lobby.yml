@@ -12,7 +12,7 @@ jobs:
           mkdir -p out/bundle; ok=0; miss=""
           for f in $(cat .github/lobby-urls.txt); do
             for h in https://www.travian.com https://lobby.legends.travian.com https://legends.travian.com; do
-              code=$(curl -s -A "$UA" -o out/bundle/$f -w '%{http_code}' "$h/bundle/$f")
+              code=$(curl -s -A "$UA" -o out/bundle/$f -w '%{http_code}' "$h/bundle/$f" || true)
               if [ "$code" = 200 ] && ! head -c 100 out/bundle/$f | grep -qi '<html\|<!doctype'; then ok=$((ok+1)); continue 2; fi
             done
             rm -f out/bundle/$f; miss="$miss $f"
