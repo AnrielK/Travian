@@ -1,0 +1,19 @@
+name: Probe lobby (temporary)
+on: workflow_dispatch
+jobs:
+  probe:
+    runs-on: ubuntu-latest
+    steps:
+      - run: |
+          UA="Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/17.0 Safari/605.1.15"
+          for u in https://www.travian.com/ https://www.travian.com/international https://lobby.legends.travian.com/bundle/lobby.408.6.css; do
+            code=$(curl -s -L -A "$UA" -o page.html -w "%{http_code} %{url_effective} %{size_download}" "$u")
+            echo "::warning::$u -> $code"
+            echo "::warning::assets: $(grep -oE '(src|href)="[^"]+\.(css|js)[^"]*"' page.html | sort -u | head -30 | tr '\n' ' ')"
+          done
+          curl -s -L -A "$UA" https://www.travian.com/ -o w.html
+          for a in $(grep -oE '(src|href)="[^"]+\.css[^"]*"' w.html | sed -E 's/.*="([^"]+)"/\1/' | sort -u | head -5); do
+            case "$a" in http*) url=$a;; //*) url=https:$a;; *) url=https://www.travian.com$a;; esac
+            curl -s -A "$UA" "$url" -o c.css
+            echo "::warning::css $url $(wc -c < c.css) lobby-rules=$(grep -o 'gameworld\|worldCard\|lobby\|joinGameworld' c.css | sort | uniq -c | tr '\n' ' ')"
+          done
