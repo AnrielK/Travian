@@ -43,7 +43,11 @@ $figures = static function (?array $of = null) use ($img, $world): string {
 };
 $view = isset($_GET['join']) ? 'join' : 'worlds';
 // Original Legends lobby look when its graphics were fetched (scripts/gpack/fetch-lobby-assets.py).
-if (is_file(__DIR__ . '/legends/lobby.css') && !isset($_GET['classic'])) {
+$legendsCss = __DIR__ . '/legends/lobby.css';
+// only a real stylesheet (a fetch that got an HTML page instead leaves the lobby unstyled)
+$legendsLobby = is_file($legendsCss) && filesize($legendsCss) > 1000
+    && !preg_match('~^\s*<~', (string)file_get_contents($legendsCss, false, null, 0, 200));
+if ($legendsLobby && !isset($_GET['classic'])) {
     require __DIR__ . '/lobby-legends.php';
     return;
 }
