@@ -6,10 +6,17 @@ jobs:
   probe:
     runs-on: ubuntu-latest
     steps:
+      - uses: actions/checkout@v4
       - run: |
-          UA="Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/17.0 Safari/605.1.15"
-          mkdir p && cd p
-          curl -s -A "$UA" https://www.travian.com/international -o index.html
-          for f in startpage.408.8.css startpage.408.8.js vendor.408.8.js 'runtime~startpage.408.8.js'; do curl -s -A "$UA" "https://www.travian.com/bundle/$f" -o "$f"; done
-          git init -q && git checkout -q -b probe-lobby && git add -A && git -c user.name=ci -c user.email=ci@x commit -qm probe
-          git push -q -f "https://x-access-token:${{ github.token }}@github.com/${{ github.repository }}.git" probe-lobby
+          for v in 408.6; do
+            for u in "https://web.archive.org/web/2026id_/https://lobby.legends.travian.com/bundle/lobby.$v.css" "https://web.archive.org/web/2025id_/https://lobby.legends.travian.com/bundle/lobby.$v.css"; do
+              echo "::warning::$u -> $(curl -s -L -o x.css -w '%{http_code} %{size_download} %{url_effective}' "$u") head=$(head -c 60 x.css | tr -d '\n')"
+            done
+          done
+          echo "::warning::cdx: $(curl -s 'https://web.archive.org/cdx/search/cdx?url=lobby.legends.travian.com/bundle/lobby.*&limit=40&fl=timestamp,original,statuscode' | tr '\n' ' ' | head -c 3000)"
+          python3 -I scripts/gpack/fetch-lobby-assets.py --out out/legends 2>&1 | tail -5 | while read l; do echo "::warning::$l"; done
+          ls out/legends 2>/dev/null | head; du -sh out 2>/dev/null
+          if [ -f out/legends/lobby.css ]; then
+            cd out && git init -q && git checkout -q -b probe-lobby2 && git add -A && git -c user.name=ci -c user.email=ci@x commit -qm probe
+            git push -q -f "https://x-access-token:${{ github.token }}@github.com/${{ github.repository }}.git" probe-lobby2
+          fi
