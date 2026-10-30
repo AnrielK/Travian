@@ -1,0 +1,45 @@
+name: Lobby graphics – save from an older build
+
+# The Travian Legends lobby (lobby.legends.travian.com) now redirects every request to www.travian.com, so its
+# stylesheet and pictures can no longer be fetched. This takes web/public/legends/ from the newest IPA artifact that
+# still has a real stylesheet and keeps it as the asset legends.zip of the release "lobby-assets", where the iOS
+# build takes it from (ios.yml, step "Legends lobby graphics").
+on:
+  workflow_dispatch:
+
+permissions:
+  contents: write
+  actions: read
+
+jobs:
+  save:
+    runs-on: ubuntu-latest
+    env:
+      GH_TOKEN: ${{ github.token }}
+      REPO: ${{ github.repository }}
+    steps:
+      - name: Find the lobby graphics in an IPA
+        run: |
+          set -e
+          gh api "repos/$REPO/actions/artifacts?per_page=100" --paginate -q '.artifacts[] | select(.expired == false) | select(.name | test("unsigned-ipa")) | .id' > ids.txt
+          cat ids.txt
+          found=""
+          for id in $(cat ids.txt); do
+            rm -rf x && mkdir x
+            gh api "repos/$REPO/actions/artifacts/$id/zip" > x/a.zip || continue
+            (cd x && unzip -q a.zip && for f in *.ipa; do unzip -q "$f" '*web/public/legends/*' || true; done) || true
+            css=$(find x -path '*web/public/legends/lobby.css' | head -1)
+            if [ -n "$css" ] && [ "$(stat -c %s "$css")" -gt 1000 ] && ! head -c 200 "$css" | grep -qi '<html\|<!doctype'; then
+              echo "artifact $id has the lobby graphics"
+              dir=$(dirname "$css")
+              (cd "$dir/.." && zip -qr "$GITHUB_WORKSPACE/legends.zip" legends)
+              found=1; break
+            fi
+            echo "artifact $id: no usable lobby graphics"
+          done
+          test -n "$found"
+          unzip -l legends.zip | tail -3
+      - name: Keep them in the release lobby-assets
+        run: |
+          gh release view lobby-assets -R "$REPO" >/dev/null 2>&1 || gh release create lobby-assets -R "$REPO" --title "Lobby graphics" --notes "Travian Legends lobby graphics for the local build (taken from an older build)." --prerelease
+          gh release upload lobby-assets legends.zip -R "$REPO" --clobber

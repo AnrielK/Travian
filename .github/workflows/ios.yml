@@ -168,7 +168,16 @@ jobs:
           if [ -n "$X" ]; then sudo xcode-select -s "$X"; fi
           xcodebuild -version
       - name: Legends lobby graphics (fetched, not in the repository)
-        run: python3 -I scripts/gpack/fetch-lobby-assets.py
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          python3 -I scripts/gpack/fetch-lobby-assets.py
+          # the lobby can no longer be fetched (it redirects to www.travian.com): the copy kept in the release
+          # lobby-assets (workflow lobby-assets.yml)
+          if [ ! -f web/public/legends/lobby.css ]; then
+            gh release download lobby-assets -R "${{ github.repository }}" -p legends.zip -D /tmp && unzip -qo /tmp/legends.zip -d web/public \
+              && echo "lobby graphics from the release lobby-assets" || echo "no lobby graphics: the lobby uses its own look"
+          fi
       - name: MariaDB xcframework + data template
         run: |
           set -o pipefail
