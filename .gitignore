@@ -33,8 +33,7 @@ ios/app/Payload/
 ios/app/*.xcodeproj/
 *.ipa
 
-# Travian Legends lobby graphics, fetched by scripts/gpack/fetch-lobby-assets.py
-web/public/legends/
+
 
 # XAMPP runtime: settings written by the installation wizard, sessions and logs
 xampp/config.local.php

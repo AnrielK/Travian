@@ -105,11 +105,74 @@ def fetch_startpage(out: str) -> int:
     return 0
 
 
+def from_files(a) -> int:
+    """The lobby from saved files (the stylesheet, the script and the /bundle/ folder), without the network."""
+    css = open(a.css, encoding='utf-8').read()
+    wanted = needed(css)
+    os.makedirs(os.path.join(a.out, 'bundle'), exist_ok=True)
+    missing = []
+    for url in sorted(wanted):
+        source = os.path.join(a.bundle or '', os.path.basename(url))
+        if os.path.isfile(source):
+            with open(source, 'rb') as src, open(os.path.join(a.out, url.lstrip('/')), 'wb') as dst:
+                dst.write(src.read())
+        else:
+            missing.append(url)
+    write_css(css, a.out)
+    if a.js:
+        write_icons(open(a.js, encoding='utf-8').read(), a.out)
+    print(f'lobby from files: {len(wanted) - len(missing)} files in {a.out}' + (f', missing: {" ".join(missing)}' if missing else ''))
+    return 0
+
+
+def needed(css: str) -> set:
+    wanted = set()
+    for m in re.finditer(r'([^{}]+)\{([^{}]*)\}', css):
+        selector, body = m.group(1), m.group(2)
+        for url in re.findall(r'url\((/bundle/[^)?#]+)', body):
+            if '@font-face' in selector:
+                if url.endswith('.woff2'):
+                    wanted.add(url)
+            elif not SKIP.search(selector) and not url.endswith('.svg'):
+                wanted.add(url)
+    return wanted
+
+
+def write_css(css: str, out: str) -> None:
+    # paths relative to the stylesheet; fonts only as woff2 (all WebKit / Chromium versions in use)
+    css = re.sub(r'url\(/bundle/', 'url(bundle/', css)
+    css = re.sub(r'src:url\(bundle/[^)]+\.eot\);', '', css)
+    css = re.sub(r'src:local\([^)]*\),local\([^)]*\),url\(bundle/[^)]+\.eot\?#iefix\) format\("embedded-opentype"\),', 'src:', css)
+    css = re.sub(r',url\(bundle/[^)]+\.(?:woff|ttf|svg)(?:#[^)]*)?\) format\("(?:woff|truetype|svg)"\)', '', css)
+    with open(os.path.join(out, 'lobby.css'), 'w', encoding='utf-8') as fh:
+        fh.write(css)
+
+
+def write_icons(js: str, out: str) -> None:
+    icons = {}
+    for key, name in ICONS.items():
+        start = js.find(f'const {name}=function')
+        if start < 0:
+            continue
+        code = js[start:js.find('};const ', start)]
+        box = re.search(r'viewBox:"([^"]+)"', code)
+        paths = re.findall(r'"path",\{(?:className:"([^"]*)",)?d:"([^"]+)"', code)
+        if box and paths:
+            icons[key] = {'viewBox': box.group(1), 'paths': [[c, d] for c, d in paths]}
+    with open(os.path.join(out, 'icons.json'), 'w', encoding='utf-8') as fh:
+        json.dump(icons, fh)
+
+
 def main() -> int:
     ap = argparse.ArgumentParser()
     ap.add_argument('--version', default='408.6')
     ap.add_argument('--out', default=os.path.join(ROOT, 'web', 'public', 'legends'))
+    ap.add_argument('--css', help='saved lobby stylesheet (lobby.<version>.css): build from files, offline')
+    ap.add_argument('--js', help='saved lobby script (lobby.<version>.js), for the icons')
+    ap.add_argument('--bundle', help='folder with the saved pictures and fonts of /bundle/')
     a = ap.parse_args()
+    if a.css:
+        return from_files(a)
     global base
     try:
         base = pick_base(a.version)
