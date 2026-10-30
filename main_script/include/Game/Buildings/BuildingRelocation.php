@@ -12,12 +12,15 @@ use Core\Database\DB;
  * and demolition tasks follow the building to its new slot, so nothing in progress is lost.
  *
  * Only the free building slots 19–38 take part. The rally point (39) and the wall (40) have fixed places,
- * and a Wonder of the World village keeps its layout (the wonder spans several slots).
+ * the Main Building cannot be moved either (nor can another building take its site), and a Wonder of the
+ * World village keeps its layout (the wonder spans several slots).
  */
 final class BuildingRelocation
 {
     public const FIRST_SLOT = 19;
     public const LAST_SLOT = 38;
+    /** Buildings that keep their site (gid): the Main Building. */
+    public const FIXED_BUILDINGS = [15];
 
     public static function isMovableSlot(int $slot): bool
     {
@@ -120,6 +123,12 @@ final class BuildingRelocation
                 return false;
             }
             $fields = $fields->fetch_assoc();
+            foreach ($placement as $source) {
+                if (in_array((int)$fields["f{$source}t"], self::FIXED_BUILDINGS, true)) {
+                    $db->rollback();
+                    return false;
+                }
+            }
 
             $set = [];
             $case = [];

@@ -77,8 +77,9 @@ The Main Building offers a relocation mode (as in Travian Legends): on the
 village map the player swaps buildings or moves them to empty building sites
 and saves the new layout in one step. Relocation is free and instant; a
 building keeps its type and level, and queued construction and demolition move
-with it. Only the free building sites 19–38 take part — the rally point and the
-wall keep their places, and a World Wonder village cannot be rearranged. The
+with it. Only the free building sites 19–38 take part — the Main Building, the rally
+point and the wall keep their places (tapping them says so), and a World
+Wonder village cannot be rearranged. The
 move takes the same locks as the construction worker, so a task that completes
 at the same moment is applied either before the move or on the new site.
 

@@ -200,7 +200,7 @@ $legendsShapes = is_hero_v2(); ?>
                 </div>
             <?php endif;?>
         <?php else:?>
-        <div class="buildingSlot a<?=$map['index'];?> g<?=$map['item_id'];?> aid<?=$map['index'];?>" data-aid="<?=$map['index'];?>" data-gid="<?=$map['item_id'];?>" title="<?=htmlspecialchars($map['title']);?>">
+        <div class="buildingSlot a<?=$map['index'];?> g<?=$map['item_id'];?> aid<?=$map['index'];?>" data-aid="<?=$map['index'];?>" data-gid="<?=$map['item_id'];?>"<?php if($relocate && $map['item_id'] > 0):?> data-name="<?=htmlspecialchars(T("Buildings", $map['item_id'] . '.title'));?>" data-level="<?=(int)$map['level'];?>"<?php endif;?> title="<?=htmlspecialchars($map['title']);?>">
             <?php if($map['item_id'] > 0):?>
                 <div class="level <?=$map['levelColor'];?>" onclick="window.location.href='build.php?id=<?= $map['index']; ?><?= ($map['fastUP'] ? "&fastUP={$map['fastUP']}" : ''); ?>'">
                     <?php if($map['showColored']):?>
@@ -783,7 +783,11 @@ $legendsShapes = is_hero_v2(); ?>
 </script>
 <?php if ($relocate): ?>
 <?php /* Main Building → "Relocate buildings": the map becomes an editor, see js/Game/Village/relocateBuildings.js */ ?>
-<div id="relocateBuildings" data-first-slot="<?=$relocate['firstSlot'];?>" data-last-slot="<?=$relocate['lastSlot'];?>">
+<div id="relocateBuildings" data-first-slot="<?=$relocate['firstSlot'];?>" data-last-slot="<?=$relocate['lastSlot'];?>"
+     data-fixed-gids="<?=implode(',', $relocate['fixedGids']);?>"
+     data-text-select="<?=htmlspecialchars(T("Buildings", "mainBuilding.relocate_select_target"));?>"
+     data-text-fixed="<?=htmlspecialchars(T("Buildings", "mainBuilding.relocate_fixed"));?>"
+     data-text-move-first="<?=htmlspecialchars(T("Buildings", "mainBuilding.relocate_move_first"));?>">
     <div class="relocateBackdrop"></div>
     <div class="relocateHeader">
         <div class="relocateTitle"><?=T("Buildings", "mainBuilding.Relocate buildings");?></div>
@@ -794,7 +798,7 @@ $legendsShapes = is_hero_v2(); ?>
         <?=$relocate['checkerInput'];?>
         <input type="hidden" name="relocate" value="1"/>
         <div class="relocatePlacement"></div>
-        <button type="submit" class="relocateSave" disabled="disabled"><?=T("Buildings", "mainBuilding.relocate_save");?></button>
+        <button type="submit" class="relocateSave disabled" aria-disabled="true"><?=T("Buildings", "mainBuilding.relocate_save");?></button>
     </form>
 </div>
 <script type="text/javascript" src="js/Game/Village/relocateBuildings.js?v=<?=ov_asset_version(PUBLIC_PATH . 'js/Game/Village/relocateBuildings.js');?>"></script>

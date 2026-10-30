@@ -69,6 +69,7 @@ class Dorf2Ctrl extends GameCtrl
             'relocate' => $relocate ? [
                 'firstSlot' => BuildingRelocation::FIRST_SLOT,
                 'lastSlot' => BuildingRelocation::LAST_SLOT,
+                'fixedGids' => BuildingRelocation::FIXED_BUILDINGS,
                 'checkerInput' => Session::getCheckerInput(),
             ] : null,
             'onLoadBuildings' => Dispatcher::getInstance()->dispatch("onLoadBuildingsDorfCtrl", FALSE),

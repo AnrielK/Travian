@@ -571,7 +571,7 @@ body.ovMapFullScreen .ovMapWindow #content > :not(.titleInHeader) {
     position: fixed;
     inset: 0;
     z-index: 9000;
-    background: rgba(12, 14, 8, 0.72);
+    background: rgba(0, 0, 0, 0.88);
     pointer-events: none;
 }
 
@@ -584,8 +584,13 @@ body.relocatingBuildings #tooltip {
     transition: left 0.25s ease, top 0.25s ease, opacity 0.2s ease, filter 0.2s ease;
 }
 
-.villageMapWrapper.relocateMode .relocateSelecting .buildingSlot.relocatable:not(.relocateSelected) {
-    opacity: 0.55;
+.villageMapWrapper.relocateMode .relocateSelecting .buildingSlot.relocatable:not(.relocateSelected),
+.villageMapWrapper.relocateMode .relocateSelecting .buildingSlot.relocateFixed {
+    opacity: 0.4;
+}
+
+.villageMapWrapper.relocateMode .buildingSlot.relocateFixed {
+    transition: opacity 0.2s ease;
 }
 
 .villageMapWrapper.relocateMode .buildingSlot.relocatable.relocateEmpty {
@@ -731,11 +736,11 @@ body.relocatingBuildings #tooltip {
     cursor: pointer;
 }
 
-#relocateBuildings .relocateSave:hover:not([disabled]) {
+#relocateBuildings .relocateSave:hover:not(.disabled) {
     background: linear-gradient(#fff1c4, #e6c97e);
 }
 
-#relocateBuildings .relocateSave[disabled] {
+#relocateBuildings .relocateSave.disabled {
     border-color: rgba(255, 255, 255, 0.18);
     background: rgba(255, 255, 255, 0.14);
     box-shadow: none;
@@ -743,7 +748,50 @@ body.relocatingBuildings #tooltip {
     cursor: default;
 }
 
+#relocateBuildings .relocateBuildingName {
+    color: #f0a84a;
+    font-weight: 700;
+}
+
+/* "This building cannot be relocated." / "Relocate a building to continue." */
+#relocateBuildings .relocateTip {
+    position: fixed;
+    z-index: 9003;
+    max-width: min(320px, calc(100vw - 32px));
+    padding: 6px 12px;
+    border: 1px solid rgba(240, 168, 74, 0.35);
+    border-radius: 4px;
+    background: rgba(28, 22, 14, 0.94);
+    box-shadow: 0 3px 10px rgba(0, 0, 0, 0.55);
+    color: #f0b25e;
+    font-size: 13px;
+    line-height: 1.35;
+    text-align: center;
+    white-space: nowrap;
+    transform: translate(-50%, 4px);
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.15s ease, transform 0.15s ease;
+}
+
+#relocateBuildings .relocateTip.shown {
+    opacity: 1;
+    transform: translate(-50%, 0);
+}
+
+#relocateBuildings .relocateTip.above {
+    transform: translate(-50%, calc(-100% + 4px));
+}
+
+#relocateBuildings .relocateTip.above.shown {
+    transform: translate(-50%, -100%);
+}
+
 @media (max-width: 700px) {
+    #relocateBuildings .relocateTip {
+        white-space: normal;
+    }
+
     #relocateBuildings .relocateTitle {
         font-size: 17px;
         padding: 0 40px;

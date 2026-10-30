@@ -82,11 +82,15 @@ try {
     $db->query("INSERT INTO demolition (kid, building_field, end_time, complete) VALUES ($kid, 22, $future, 0)");
     $demolitionTask = (int)$db->lastInsertId();
 
-    // granary → empty site 21, warehouse ↔ main building, barracks stays
-    relocation_expect_same(true, BuildingRelocation::apply($kid, [21 => 20, 20 => 21, 19 => 26, 26 => 19]), 'relocation applied');
+    // the Main Building keeps its site: neither moving it nor moving another building onto it is accepted
+    relocation_expect_same(false, BuildingRelocation::apply($kid, [19 => 26, 26 => 19]), 'main building swap refused');
+    relocation_expect_same(false, BuildingRelocation::apply($kid, [21 => 26, 26 => 21]), 'main building move to an empty site refused');
+
+    // granary → empty site 21, warehouse → empty site 25, barracks stays
+    relocation_expect_same(true, BuildingRelocation::apply($kid, [21 => 20, 20 => 21, 25 => 19, 19 => 25]), 'relocation applied');
     relocation_expect_same(
-        [19 => '15:10', 20 => '0:0', 21 => '11:3', 22 => '19:2', 26 => '10:5', 39 => '16:1', 40 => '31:2'],
-        relocation_slots($db, $kid, [19, 20, 21, 22, 26, 39, 40]),
+        [19 => '0:0', 20 => '0:0', 21 => '11:3', 22 => '19:2', 25 => '10:5', 26 => '15:10', 39 => '16:1', 40 => '31:2'],
+        relocation_slots($db, $kid, [19, 20, 21, 22, 25, 26, 39, 40]),
         'buildings moved with their levels'
     );
     relocation_expect_same(21, (int)$db->fetchScalar("SELECT building_field FROM building_upgrade WHERE id=$upgradeTask"), 'construction task follows the building');

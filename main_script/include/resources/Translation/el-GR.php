@@ -495,6 +495,9 @@ $Definition['Buildings']['mainBuilding']['Relocate buildings'] = 'Μετακίν
 $Definition['Buildings']['mainBuilding']['relocate_desc'] = 'Αναδιάταξε τα κτίριά σου στη λειτουργία μετακίνησης. Μπορείς να ανταλλάξεις τις θέσεις υπαρχόντων κτιρίων ή να τα μεταφέρεις σε κενά οικόπεδα.';
 $Definition['Buildings']['mainBuilding']['relocate_hint'] = 'Επίλεξε ή σύρε ένα κτίριο για να αλλάξεις τη θέση του.';
 $Definition['Buildings']['mainBuilding']['relocate_save'] = 'Μετακίνηση κτιρίων';
+$Definition['Buildings']['mainBuilding']['relocate_select_target'] = 'Τώρα επίλεξε νέα θέση για το κτίριο %s (επίπεδο %s)';
+$Definition['Buildings']['mainBuilding']['relocate_fixed'] = 'Αυτό το κτίριο δεν μπορεί να μετακινηθεί.';
+$Definition['Buildings']['mainBuilding']['relocate_move_first'] = 'Μετακίνησε ένα κτίριο για να συνεχίσεις.';
 
 $Definition['Buildings']['buildingQueue']['buildingQueue'] = 'buildingQueue';
 $Definition['Buildings']['buildingQueue']['name'] = 'Travian PLUS';

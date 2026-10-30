@@ -12,8 +12,12 @@
   it on another building swaps them, on an empty site moves it. The layout is
   saved with one button (POST with the session checker) by
   `Game\Buildings\BuildingRelocation`, which moves type and level together
-  with queued construction and demolition; the rally point, the wall and World
-  Wonder villages stay fixed. Covered by `tests/building-relocation-regression.php`.
+  with queued construction and demolition. The Main Building, the rally point
+  and the wall stay in place (tapping them shows "This building cannot be
+  relocated."), World Wonder villages too. After picking a building the
+  subtitle names it ("Now choose a new position for … (level …)"), and the save
+  button explains that a building has to be moved first. Covered by
+  `tests/building-relocation-regression.php`.
 - Statistics → General in the Travian Legends look ("Všeobecné"): the Legends
   page rendered on the server with real data instead of the hard-coded sample
   of the old React view — world progress timeline (with the tribe of the first
