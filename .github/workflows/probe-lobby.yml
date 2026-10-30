@@ -8,12 +8,6 @@ jobs:
     steps:
       - uses: actions/checkout@v4
       - run: |
-          for v in 408.6; do
-            for u in "https://web.archive.org/web/2026id_/https://lobby.legends.travian.com/bundle/lobby.$v.css" "https://web.archive.org/web/2025id_/https://lobby.legends.travian.com/bundle/lobby.$v.css"; do
-              echo "::warning::$u -> $(curl -s -L -o x.css -w '%{http_code} %{size_download} %{url_effective}' "$u") head=$(head -c 60 x.css | tr -d '\n')"
-            done
-          done
-          echo "::warning::cdx: $(curl -s 'https://web.archive.org/cdx/search/cdx?url=lobby.legends.travian.com/bundle/lobby.*&limit=40&fl=timestamp,original,statuscode' | tr '\n' ' ' | head -c 3000)"
           python3 -I scripts/gpack/fetch-lobby-assets.py --out out/legends 2>&1 | tail -5 | while read l; do echo "::warning::$l"; done
           ls out/legends 2>/dev/null | head; du -sh out 2>/dev/null
           if [ -f out/legends/lobby.css ]; then
