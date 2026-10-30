@@ -20,7 +20,7 @@ use Core\Helper\PreferencesHelper;
         <link href="<?=get_gpack_link_and_hash("compact-lowres.css"); ?>" rel="stylesheet" type="text/css"/>
 
     <?php endif; ?>
-    <link href="<?=get_gpack_link_and_hash("fixes.css", false); ?>?rev13" rel="stylesheet" type="text/css"/>
+    <link href="<?=get_gpack_link_and_hash("fixes.css", false); ?>?rev14" rel="stylesheet" type="text/css"/>
     <?php if (is_classic_gpack()): ?>
         <!-- T4.4 packs: icons and village centre slots for the T4.6 markup (scripts/gpack/make-classic-compat.py) -->
         <link href="<?=get_gpack_link_and_hash("openvillage-compat.css", false); ?>?rev2" rel="stylesheet" type="text/css"/>

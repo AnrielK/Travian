@@ -189,10 +189,6 @@ body.rtl div.speechBubbleContainer {
   direction: ltr;
 }
 
-#statisticsV2 #populationRank, #statisticsV2 #resourceRank, #statisticsV2 #militaryStrengthRank, #statisticsV2 #culturePointsRank {
-  display: none;
-}
-
 div.village1 table#movements div.mov {
   font-size: 12px;
 }

@@ -35,6 +35,7 @@ use Model\NatarsModel;
 use Model\OasesModel;
 use Model\OptionModel;
 use Model\RallyPoint\RallyPointModel;
+use Model\StatisticsHistoryModel;
 use Model\Units;
 use Model\VillageModel;
 use Model\WonderOfTheWorldModel;
@@ -6923,6 +6924,40 @@ try {
         $db->rollback();
     }
     $db->query("ALTER TABLE users AUTO_INCREMENT=$userAutoIncrement");
+}
+
+// Statistics → General: daily history of raids and trades (stats_history) and the server-side charts.
+$statisticsTransactionStarted = $db->begin_transaction();
+try {
+    $statsDay = StatisticsHistoryModel::today();
+    $statsA = 2000000901;
+    $statsB = 2000000902;
+    StatisticsHistoryModel::addRaid($statsA, $statsB, 1200);
+    StatisticsHistoryModel::addRaid($statsA, $statsB, 300.4);
+    StatisticsHistoryModel::addRaid($statsA, 1, 999);          // Natars lose nothing in the statistics
+    StatisticsHistoryModel::addTrade($statsA, $statsB, 500);
+    StatisticsHistoryModel::addTrade($statsA, $statsA, 700);   // own villages are no trade
+    StatisticsHistoryModel::addTrade($statsB, $statsA, 0);
+    expect_same(
+        '2499|0|0|500;0|1500|500|0',
+        (string)$db->fetchScalar(
+            "SELECT GROUP_CONCAT(CONCAT(raid_in, '|', raid_out, '|', trade_in, '|', trade_out) ORDER BY uid SEPARATOR ';')
+             FROM stats_history WHERE uid IN ($statsA, $statsB) AND day=$statsDay"
+        ),
+        'raid and trade volumes of the day'
+    );
+    $statsPie = \resources\View\StatisticsCharts::pie([
+        ['value' => 3, 'color' => '#111111', 'label' => '75%'],
+        ['value' => 1, 'color' => '#222222', 'label' => '25%'],
+    ]);
+    expect_same(2, substr_count($statsPie, 'class="recharts-sector"'), 'pie chart sectors');
+    expect_true(str_contains($statsPie, 'A 78,78,0,1,1,'), 'larger pie sector uses the large arc flag');
+    $statsArea = \resources\View\StatisticsCharts::area([0 => 10, 1 => 5, 2 => 7], ['yMin' => 1]);
+    expect_same(3, substr_count($statsArea, '<circle '), 'area chart points with tooltips');
+} finally {
+    if ($statisticsTransactionStarted) {
+        $db->rollback();
+    }
 }
 
 echo "Runtime regression checks passed.\n";

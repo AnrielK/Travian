@@ -1659,6 +1659,10 @@ class BattleModel
         if (getDisplay('topHammers')) {
             $this->handleTopDefTopOffHammerStatistics($total_off_point, $total_def_point);
         }
+        if ($total_bounty > 0) {
+            // resources won / lost by raids (Statistics → General → resource rank)
+            StatisticsHistoryModel::addRaid((int)$this->attacker['uid'], (int)($this->defender['uid'] ?? 0), $total_bounty);
+        }
         $this->startProfile('handlePointsAndBounty:setAttackerPoints');
         $this->setAttackerPoints($total_bounty, $defender['total_dead_upkeep']);
         $this->endProfile('handlePointsAndBounty:setAttackerPoints');

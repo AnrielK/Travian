@@ -100,6 +100,8 @@ class MarketPlaceProcessor
         if (!$credited) {
             throw new \RuntimeException("Merchant task $taskId could not credit destination village $destinationKid.");
         }
+        // trading volume between players (Statistics → General → resource rank)
+        StatisticsHistoryModel::addTrade((int)$sender['id'], (int)$receiver['id'], array_sum($resources));
         if (!$this->returnMerchants($row, $report['timeTaken'])) {
             throw new \RuntimeException("Merchant task $taskId could not queue its return leg.");
         }

@@ -1775,6 +1775,31 @@ CREATE TABLE `scheduled_task_failures`
 )
   ENGINE = InnoDB
   DEFAULT CHARSET = utf8mb4;
+DROP TABLE IF EXISTS `stats_history`;
+CREATE TABLE `stats_history`
+(
+  `uid`           INT(11) UNSIGNED     NOT NULL,
+  `day`           SMALLINT(5) UNSIGNED NOT NULL,
+  `pop`           INT(11)              NOT NULL DEFAULT '0',
+  `pop_rank`      INT(11) UNSIGNED     NOT NULL DEFAULT '0',
+  `ally_pop_rank` INT(11) UNSIGNED     NOT NULL DEFAULT '0',
+  `aid`           INT(11) UNSIGNED     NOT NULL DEFAULT '0',
+  `cp`            BIGINT(20)           NOT NULL DEFAULT '0',
+  `cp_prod`       INT(11)              NOT NULL DEFAULT '0',
+  `prod_r1`       BIGINT(20)           NOT NULL DEFAULT '0',
+  `prod_r2`       BIGINT(20)           NOT NULL DEFAULT '0',
+  `prod_r3`       BIGINT(20)           NOT NULL DEFAULT '0',
+  `prod_r4`       BIGINT(20)           NOT NULL DEFAULT '0',
+  `raid_in`       BIGINT(20) UNSIGNED  NOT NULL DEFAULT '0',
+  `raid_out`      BIGINT(20) UNSIGNED  NOT NULL DEFAULT '0',
+  `trade_in`      BIGINT(20) UNSIGNED  NOT NULL DEFAULT '0',
+  `trade_out`     BIGINT(20) UNSIGNED  NOT NULL DEFAULT '0',
+  `updated`       INT(10) UNSIGNED     NOT NULL DEFAULT '0',
+  PRIMARY KEY (`uid`, `day`),
+  KEY `day` (`day`)
+)
+  ENGINE = InnoDB
+  DEFAULT CHARSET = utf8mb4;
 DROP TABLE IF EXISTS `activation_progress`;
 CREATE TABLE IF NOT EXISTS `activation_progress`
 (

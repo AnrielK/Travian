@@ -4,6 +4,18 @@
 
 ### Added
 
+- Statistics → General in the Travian Legends look ("Všeobecné"): the Legends
+  page rendered on the server with real data instead of the hard-coded sample
+  of the old React view — world progress timeline (with the tribe of the first
+  player per milestone), tribe distribution of real players, population rank
+  with a day-by-day chart, resource rank (production, raid bounty and trading
+  volume per day / so far), military strength (offence per village, defence
+  per player with infantry / cavalry split) and culture points (rank,
+  distribution, progression). Charts are SVG (`resources/View/StatisticsCharts.php`),
+  sections collapse and switch views like in Legends. A new `stats_history`
+  table (migration `007_statistics_history.sql`) keeps one row per player and
+  day, refreshed by the `generalProgress:statisticsHistory` worker job; battles
+  and merchant deliveries add the raided and traded resources.
 - XAMPP runtime for Windows and Linux (`xampp/`): `start.bat` / `start.sh` run
   the game with XAMPP's PHP and MariaDB, and a web installation wizard checks
   the requirements, creates the database user and databases and installs the

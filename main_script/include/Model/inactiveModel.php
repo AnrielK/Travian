@@ -70,6 +70,7 @@ class inactiveModel
             $db->query("DELETE FROM ndata WHERE uid={$row['uid']}");
             $db->query("DELETE FROM mdata WHERE uid={$row['uid']}");
             $db->query("DELETE FROM users WHERE id={$row['uid']}");
+            StatisticsHistoryModel::deletePlayer((int)$row['uid']);
             $db->query("DELETE FROM hero WHERE uid={$row['uid']}");
             $db->query("DELETE FROM inventory WHERE uid={$row['uid']}");
             $db->query("DELETE FROM autoExtend WHERE uid={$row['uid']}");

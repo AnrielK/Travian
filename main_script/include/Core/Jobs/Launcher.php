@@ -11,6 +11,7 @@ use Model\FakeUserModel;
 use Model\inactiveModel;
 use Model\MedalsModel;
 use Model\NatarsModel;
+use Model\StatisticsHistoryModel;
 
 class Launcher
 {
@@ -146,6 +147,11 @@ class Launcher
         {
             $job = [Automation::getInstance(), 'zeroPopVillages'];
             $jobs[] = new Job('generalProgress:zeroPopVillages', 10, $job);
+        }
+        {
+            // today's row of every player in stats_history (Statistics → General: rank, culture point and production charts)
+            $job = [new StatisticsHistoryModel(), 'snapshot'];
+            $jobs[] = new Job('generalProgress:statisticsHistory', 600, $job);
         }
         new Job('gameProgress', 10, $jobs, TRUE);
     }
