@@ -190,7 +190,7 @@ class HeroInventoryCtrl extends GameCtrl
         $this->view->vars['content'] .= PHPBatchView::render('hero/v2/inventory', [
             'items' => $items,
             'inventory' => $inventory,
-            'inventorySize' => max(16, (int)ceil($vars['inventorySize'] / 8) * 8),
+            'inventorySize' => (new AuctionModel())->getLegendsBagSize(Session::getInstance()->getPlayerId()),
             'uid' => Session::getInstance()->getPlayerId(),
             'kid' => $hero->hero['kid'],
             'checker' => Session::getInstance()->getChecker(),

@@ -179,6 +179,17 @@ class AuctionModel
         return $numItems;
     }
 
+    /**
+     * Places of the Legends hero bag: whole rows of 8, at least 2 rows, and always a free place after the last
+     * used one – an item put on the last place opens a new row (as in Travian Legends).
+     */
+    public function getLegendsBagSize($uid): int
+    {
+        $uid = (int)$uid;
+        $lastPlace = (int)$this->getMaxPlaceId($uid);
+        return (int)ceil(max($lastPlace + 1, $this->getInventorySize($uid), 16) / 8) * 8;
+    }
+
     public function getMaxPlaceId($uid)
     {
         $db = DB::getInstance();
@@ -260,8 +271,8 @@ class AuctionModel
         $newPlaceId = (int)$newPlaceId;
         $inventorySize = max($this->getMaxPlaceId($uid), 12);
         if (function_exists('is_hero_v2') && is_hero_v2()) {
-            // Legends bag: whole rows of 8 places, at least 2 rows (hero/v2/inventory.php shows the same places).
-            $inventorySize = (int)ceil(max($inventorySize, $this->getInventorySize($uid), 16) / 8) * 8;
+            // Legends bag: the places hero/v2/inventory.php shows
+            $inventorySize = $this->getLegendsBagSize($uid);
         }
         if ($newPlaceId < 1 || $newPlaceId > $inventorySize) {
             return;

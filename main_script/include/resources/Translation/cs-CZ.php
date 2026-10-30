@@ -6148,4 +6148,11 @@ $Definition['StatisticsV2']['step_firstWWLevelOne_achieved'] = 'První úroveň 
 $Definition['StatisticsV2']['step_serverEnd_locked'] = 'Maximální délka tohoto serveru';
 $Definition['StatisticsV2']['step_serverEnd_achieved'] = 'Server skončil v [VALUE]';
 
+// Page footer (layout/LayoutT46.php)
+$Definition['OpenVillage']['home'] = 'Startovní stránka';
+$Definition['OpenVillage']['rules'] = 'Pravidla hry';
+$Definition['OpenVillage']['terms'] = 'VOP';
+$Definition['OpenVillage']['privacy'] = 'Ochrana soukromí';
+$Definition['OpenVillage']['copyright'] = 'OpenVillage – projekt pro zachování hry · Není spojen se společností Travian Games.';
+
 return $Definition;

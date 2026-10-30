@@ -1023,24 +1023,27 @@ body.t46Layout.legendsV2 nav#outOfGame .layoutButton { width: 34px; height: 34px
     box-shadow: 0 0 0 1px #34220d, 0 2px 3px rgba(0, 0, 0, .45); }
 body.t46Layout.legendsV2 nav#outOfGame .layoutButton:hover { background: linear-gradient(to bottom, #ffffff, #ddd3c1) padding-box,
         linear-gradient(180deg, #cba467 5%, #f3e2ae 13%, #efbf7b 32%, #aa8050 48%, #835e35 72%, #ad8a54 93%, #d7b672 100%) border-box; }
-/* Legends footer: light line, white link row, copyright, dark down to the bottom of the page */
-html body.t46Layout.legendsV2 { background-color: #1f1e1c; }
-body.t46Layout.legendsV2 div#footer { margin-top: 30px; padding: 18px 10px 40px; text-align: center; font-size: 13px; color: #fffdf8;
-    border-top: 1px solid transparent; border-image: linear-gradient(90deg, #fffdf800, #fffdf8 40%, #fffdf8 60%, #fffdf800) 1 0 0;
-    background: radial-gradient(50% 100% ellipse at 50% 0, rgba(0, 0, 0, .45), rgba(0, 0, 0, 0)), linear-gradient(rgba(31, 30, 28, 0), #1f1e1c 70%); }
+/* Legends footer (as on travian.com): thin light line fading out at both ends with a soft dark green shade under it,
+   a row of plain white links separated by thin bars, the copyright line below; the page stays green down to it. */
+html body.t46Layout.legendsV2 { background-color: rgb(84, 99, 58); }
+body.t46Layout.legendsV2 div#footer { margin: 30px auto 0; padding: 15px 10px 25px; text-align: center; font-size: 13px; line-height: 15px;
+    color: #f2f2f2; border: 0; border-image: none;
+    background-image: linear-gradient(to right, rgba(255, 255, 255, 0), #fff 40%, #fff 60%, rgba(255, 255, 255, 0)),
+        radial-gradient(50% 100% ellipse at 50% 0, rgba(46, 62, 36, .7), rgba(46, 62, 36, 0));
+    background-size: 1000px 1px, 100% 100%; background-position: top center; background-repeat: no-repeat; position: relative; z-index: 1; }
 body.t46Layout.legendsV2 div#footer #pageLinks, body.t46Layout.legendsV2 div#footer ul { display: flex; flex-wrap: wrap; justify-content: center; margin: 0; padding: 0; list-style: none; }
-body.t46Layout.legendsV2 div#footer a { color: #fffdf8; font-weight: 700; text-decoration: none; padding: 0 12px; line-height: 1.2; text-shadow: 0 1px 2px #000; }
-body.t46Layout.legendsV2 div#footer a + a, body.t46Layout.legendsV2 div#footer li + li a { border-left: 1px solid #fffdf8; }
+body.t46Layout.legendsV2 div#footer a { color: #f2f2f2; font-weight: 400; text-decoration: none; margin: 0; padding: 0 14px; line-height: 15px; text-shadow: none; }
+body.t46Layout.legendsV2 div#footer a + a, body.t46Layout.legendsV2 div#footer li + li a { border-left: 1px solid #f2f2f2; }
 body.t46Layout.legendsV2 div#footer a:hover { text-decoration: underline; }
-body.t46Layout.legendsV2 div#footer .copyright, body.t46Layout.legendsV2 div#footer p { margin-top: 10px; color: #fffdf8; text-shadow: 0 1px 2px #000; }
+body.t46Layout.legendsV2 div#footer .copyright, body.t46Layout.legendsV2 div#footer p { margin: 10px 0 0; color: #f2f2f2; text-shadow: none; }
 
-/* Below the background picture (long pages): continue its bottom colour and darken towards the footer
-   instead of the flat green edge. */
+/* Below the background picture (long pages): continue the bottom colour of the picture, as Legends does. */
 body.t46Layout.legendsV2 #background { isolation: isolate; }
 body.t46Layout.legendsV2 #background:after { content: ""; position: absolute; z-index: -1; left: 0; right: 0; bottom: 0; top: 1500px;
-    background: linear-gradient(rgb(84, 99, 58), rgb(84, 99, 58) 120px, #2c3520 calc(100% - 140px), #1f1e1c); pointer-events: none; }
+    background: rgb(84, 99, 58); pointer-events: none; }
 body.t46Layout.legendsV2.perspectiveResources #background:after { top: 890px; }
-body.t46Layout.legendsV2.perspectiveResources #background:after { background: linear-gradient(rgb(103, 119, 46), rgb(103, 119, 46) 60px, #2c3520 calc(100% - 140px), #1f1e1c); }
+body.t46Layout.legendsV2.perspectiveResources #background:after { background: rgb(103, 119, 46); }
+html body.t46Layout.legendsV2.perspectiveResources { background-color: rgb(103, 119, 46); }
 
 /* Rally point overview filters as in Legends: small grey pills on the right, no box frame */
 body.t46Layout.legendsV2 div#build.gid16 div.filterWrapper > .boxes > div:not(.boxes-contents){display:none}
