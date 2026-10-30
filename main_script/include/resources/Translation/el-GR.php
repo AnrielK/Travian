@@ -491,6 +491,10 @@ $Definition['Buildings']['mainBuilding']['demolish_desc'] = 'Εάν δεν χρ�
 $Definition['Buildings']['mainBuilding']['demolish'] = 'Κατεδάφιση';
 $Definition['Buildings']['mainBuilding']['Demolish completely'] = 'Ολοκληρωτική Κατεδάφιση';
 $Definition['Buildings']['mainBuilding']['complete_demolish_title'] = 'Άμεση κατεδάφιση του συγκεκριμένου κτηρίου; Θα αφαιρεθεί από το χωριό σου.';
+$Definition['Buildings']['mainBuilding']['Relocate buildings'] = 'Μετακίνηση κτιρίων';
+$Definition['Buildings']['mainBuilding']['relocate_desc'] = 'Αναδιάταξε τα κτίριά σου στη λειτουργία μετακίνησης. Μπορείς να ανταλλάξεις τις θέσεις υπαρχόντων κτιρίων ή να τα μεταφέρεις σε κενά οικόπεδα.';
+$Definition['Buildings']['mainBuilding']['relocate_hint'] = 'Επίλεξε ή σύρε ένα κτίριο για να αλλάξεις τη θέση του.';
+$Definition['Buildings']['mainBuilding']['relocate_save'] = 'Μετακίνηση κτιρίων';
 
 $Definition['Buildings']['buildingQueue']['buildingQueue'] = 'buildingQueue';
 $Definition['Buildings']['buildingQueue']['name'] = 'Travian PLUS';

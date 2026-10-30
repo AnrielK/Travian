@@ -95,3 +95,20 @@
     <div class="clear"></div>
 </form>
 <div class="clear"></div>
+<?php if (!empty($vars['canRelocate'])): ?>
+<h4 class="round"><?=T("Buildings", "mainBuilding.Relocate buildings"); ?></h4>
+<p><?=T("Buildings", "mainBuilding.relocate_desc"); ?></p>
+<button type="button" id="btn_relocate" class="gold relocateBuildingsButton" onclick="window.location.href = 'dorf2.php?relocate=1'; return false;">
+    <div class="button-container addHoverClick">
+        <div class="button-background">
+            <div class="buttonStart">
+                <div class="buttonEnd">
+                    <div class="buttonMiddle"></div>
+                </div>
+            </div>
+        </div>
+        <div class="button-content"><?=T("Buildings", "mainBuilding.Relocate buildings"); ?></div>
+    </div>
+</button>
+<div class="clear"></div>
+<?php endif; ?>

@@ -47,6 +47,10 @@ class MainBuildingCntrl extends AnyCtrl
         $helper = new GoldHelper();
         $this->view = new PHPBatchView("build/mainBuilding");
         $this->demolitionAction();
+        $this->view->vars['canRelocate'] = !$village->isWW()
+            && !$session->banned()
+            && !$session->isInVacationMode()
+            && !Config::getInstance()->dynamic->serverFinished;
         if ($village->getOnDemolishBuildingFieldId() > 0) {
             $this->view->vars['isDemolishing'] = TRUE;
             $this->view->vars['finishNow'] = $helper->finishNowButton();

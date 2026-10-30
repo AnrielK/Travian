@@ -71,6 +71,17 @@ attacker and defender loyalty modifiers. These rules follow the official
 [Town Hall guide](https://support.travian.com/en/articles/82-celebrations-and-town-hall)
 and [10× speed table](https://support.travian.com/en/articles/20-game-versions-and-speed).
 
+## Relocating buildings
+
+The Main Building offers a relocation mode (as in Travian Legends): on the
+village map the player swaps buildings or moves them to empty building sites
+and saves the new layout in one step. Relocation is free and instant; a
+building keeps its type and level, and queued construction and demolition move
+with it. Only the free building sites 19–38 take part — the rally point and the
+wall keep their places, and a World Wonder village cannot be rearranged. The
+move takes the same locks as the construction worker, so a task that completes
+at the same moment is applied either before the move or on the new site.
+
 ## Compatibility status
 
 Registration, activation, village creation, login, village fields, village

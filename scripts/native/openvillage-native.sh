@@ -401,6 +401,7 @@ runtime|php|runtime-regression.php|Runtime regression (transactions, workers, co
 formulas|php|formula-golden-regression.php|Formula golden values (ruleset)
 complete-round|php|complete-round-regression.php|Complete round regression
 account-export|php|account-export-regression.php|Account export isolation
+building-relocation|php|building-relocation-regression.php|Building relocation (Main Building)
 smoke|sh|smoke-game.sh|End-to-end HTTP smoke flow (creates a disposable player)
 php-lint|lint||PHP syntax of all source files
 game-actions|sh|check-game-actions.sh|Static contract: rally point actions

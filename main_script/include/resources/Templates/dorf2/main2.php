@@ -2,7 +2,8 @@
 // Legends walls: picture tribe per wall building id (shapes traced from those pictures, see LegendsUi::traceShape).
 $wallTribe = [31 => 'roman', 32 => 'teuton', 33 => 'gaul', 42 => 'egyptian', 43 => 'hun', 47 => 'spartan', 50 => 'viking'];
 $legendsShapes = is_hero_v2(); ?>
-<div class="villageMapWrapper">
+<?php $relocate = $vars['relocate'] ?? null; ?>
+<div class="villageMapWrapper<?=$relocate ? ' relocateMode' : '';?>">
     <div id="<?=$t46Tribe ? 'villageContent' : 'village_map';?>" class="<?=$t46Tribe;?><?=is_t40_layout() && $vars['levelsActive'] ? ' levelsHidden' : '';?>">
         <?php for($i = 1; $i <= 18; ++$i):?>
         <div class="buildingSlot a<?=$i;?>"></div>
@@ -199,7 +200,7 @@ $legendsShapes = is_hero_v2(); ?>
                 </div>
             <?php endif;?>
         <?php else:?>
-        <div class="buildingSlot a<?=$map['index'];?> g<?=$map['item_id'];?> aid<?=$map['index'];?>" title="<?=htmlspecialchars($map['title']);?>">
+        <div class="buildingSlot a<?=$map['index'];?> g<?=$map['item_id'];?> aid<?=$map['index'];?>" data-aid="<?=$map['index'];?>" data-gid="<?=$map['item_id'];?>" title="<?=htmlspecialchars($map['title']);?>">
             <?php if($map['item_id'] > 0):?>
                 <div class="level <?=$map['levelColor'];?>" onclick="window.location.href='build.php?id=<?= $map['index']; ?><?= ($map['fastUP'] ? "&fastUP={$map['fastUP']}" : ''); ?>'">
                     <?php if($map['showColored']):?>
@@ -780,6 +781,24 @@ $legendsShapes = is_hero_v2(); ?>
         Travian.Game.Village.initializeWallStates();
     });
 </script>
+<?php if ($relocate): ?>
+<?php /* Main Building → "Relocate buildings": the map becomes an editor, see js/Game/Village/relocateBuildings.js */ ?>
+<div id="relocateBuildings" data-first-slot="<?=$relocate['firstSlot'];?>" data-last-slot="<?=$relocate['lastSlot'];?>">
+    <div class="relocateBackdrop"></div>
+    <div class="relocateHeader">
+        <div class="relocateTitle"><?=T("Buildings", "mainBuilding.Relocate buildings");?></div>
+        <div class="relocateSubtitle"><?=T("Buildings", "mainBuilding.relocate_hint");?></div>
+        <a class="relocateClose" href="dorf2.php" title="<?=T("Global", "General.close");?>">&times;</a>
+    </div>
+    <form class="relocateFooter" method="post" action="dorf2.php">
+        <?=$relocate['checkerInput'];?>
+        <input type="hidden" name="relocate" value="1"/>
+        <div class="relocatePlacement"></div>
+        <button type="submit" class="relocateSave" disabled="disabled"><?=T("Buildings", "mainBuilding.relocate_save");?></button>
+    </form>
+</div>
+<script type="text/javascript" src="js/Game/Village/relocateBuildings.js?v=<?=ov_asset_version(PUBLIC_PATH . 'js/Game/Village/relocateBuildings.js');?>"></script>
+<?php endif; ?>
 <?php if (false): ?>
     <img class="rocket rocket_tur" src="img/x.gif" alt="">
     <img class="rocket rocket_yell" src="img/x.gif" alt="">

@@ -4,6 +4,16 @@
 
 ### Added
 
+- Relocating buildings as in Travian Legends: the Main Building has a
+  "Relocate buildings" section that opens the village centre in relocation mode
+  (`dorf2.php?relocate=1`). The page dims around the village, a building is
+  picked up by a tap or dragged, the other buildings fade and every building
+  site shows its plot (orange where it stands, blue where it would go); dropping
+  it on another building swaps them, on an empty site moves it. The layout is
+  saved with one button (POST with the session checker) by
+  `Game\Buildings\BuildingRelocation`, which moves type and level together
+  with queued construction and demolition; the rally point, the wall and World
+  Wonder villages stay fixed. Covered by `tests/building-relocation-regression.php`.
 - Statistics → General in the Travian Legends look ("Všeobecné"): the Legends
   page rendered on the server with real data instead of the hard-coded sample
   of the old React view — world progress timeline (with the tribe of the first

@@ -563,3 +563,193 @@ body.legendsV2.ovMapFullScreen .ovMapWindow #content {
 body.ovMapFullScreen .ovMapWindow #content > :not(.titleInHeader) {
     display: none;
 }
+
+/* Main Building → "Relocate buildings" (dorf2.php?relocate=1, js/Game/Village/relocateBuildings.js): the page dims,
+   the village map stays lit and becomes an editor; a picked building glows, the other buildings fade and every
+   building site shows its plot (orange = where the building stands, blue = where it would go) */
+#relocateBuildings .relocateBackdrop {
+    position: fixed;
+    inset: 0;
+    z-index: 9000;
+    background: rgba(12, 14, 8, 0.72);
+    pointer-events: none;
+}
+
+body.relocatingBuildings .legendsGuide,
+body.relocatingBuildings #tooltip {
+    display: none !important;
+}
+
+.villageMapWrapper.relocateMode .buildingSlot.relocatable {
+    transition: left 0.25s ease, top 0.25s ease, opacity 0.2s ease, filter 0.2s ease;
+}
+
+.villageMapWrapper.relocateMode .relocateSelecting .buildingSlot.relocatable:not(.relocateSelected) {
+    opacity: 0.55;
+}
+
+.villageMapWrapper.relocateMode .buildingSlot.relocatable.relocateEmpty {
+    opacity: 0;
+}
+
+.villageMapWrapper.relocateMode .buildingSlot.relocateSelected {
+    filter: drop-shadow(0 0 2px #ff9a2e) drop-shadow(0 0 6px rgba(255, 140, 30, 0.85));
+}
+
+.villageMapWrapper.relocateMode .buildingSlot.relocateDragging {
+    z-index: 600 !important;
+    transition: none;
+    filter: drop-shadow(0 0 3px #ff9a2e) drop-shadow(0 8px 10px rgba(0, 0, 0, 0.45));
+}
+
+.villageMapWrapper.relocateMode .buildingSlot.relocateMark,
+.villageMapWrapper.relocateMode .buildingSlot.relocateHit {
+    width: 120px;
+    height: 120px;
+    background: none;
+}
+
+.villageMapWrapper.relocateMode .buildingSlot.relocateMark {
+    display: block !important;
+    z-index: 1 !important;
+    pointer-events: none;
+}
+
+.villageMapWrapper.relocateMode .buildingSlot.relocateMark span {
+    position: absolute;
+    left: 50%;
+    top: 72%;
+    width: 84px;
+    height: 42px;
+    margin: -21px 0 0 -42px;
+    border-radius: 50%;
+    background: rgba(80, 110, 40, 0.35);
+    box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.12);
+    opacity: 0;
+    transition: opacity 0.2s ease, background-color 0.15s ease;
+}
+
+.villageMapWrapper.relocateMode .buildingSlot.relocateMark.free span {
+    opacity: 1;
+}
+
+.villageMapWrapper.relocateMode .relocateSelecting .buildingSlot.relocateMark span {
+    opacity: 1;
+}
+
+.villageMapWrapper.relocateMode .buildingSlot.relocateMark.origin span {
+    background: rgba(236, 120, 70, 0.75);
+    box-shadow: 0 0 0 2px rgba(255, 190, 150, 0.6);
+}
+
+.villageMapWrapper.relocateMode .buildingSlot.relocateMark.target span {
+    background: rgba(70, 160, 225, 0.8);
+    box-shadow: 0 0 0 2px rgba(180, 225, 255, 0.75);
+}
+
+.villageMapWrapper.relocateMode .buildingSlot.relocateHit {
+    display: block !important;
+    z-index: 500 !important;
+    pointer-events: auto !important;
+    cursor: grab;
+    touch-action: none;
+    -webkit-tap-highlight-color: transparent;
+}
+
+.villageMapWrapper.relocateMode .buildingSlot.relocateHit:active {
+    cursor: grabbing;
+}
+
+.villageMapWrapper.relocateMode #lswitch {
+    display: none;
+}
+
+#relocateBuildings .relocateHeader,
+#relocateBuildings .relocateFooter {
+    position: fixed;
+    left: 50%;
+    z-index: 9002;
+    transform: translateX(-50%);
+    text-align: center;
+    color: #fff;
+}
+
+#relocateBuildings .relocateHeader {
+    top: 14px;
+    width: min(640px, calc(100vw - 32px));
+    pointer-events: none;
+}
+
+#relocateBuildings .relocateTitle {
+    font-family: Georgia, "Times New Roman", serif;
+    font-size: 20px;
+    font-weight: 700;
+    text-shadow: 0 1px 3px rgba(0, 0, 0, 0.8);
+}
+
+#relocateBuildings .relocateSubtitle {
+    margin-top: 4px;
+    font-size: 13px;
+    color: #e8e2d2;
+    text-shadow: 0 1px 2px rgba(0, 0, 0, 0.8);
+}
+
+#relocateBuildings .relocateClose {
+    position: absolute;
+    top: -4px;
+    right: 0;
+    width: 40px;
+    height: 40px;
+    color: #fff;
+    font-size: 40px;
+    font-weight: 300;
+    line-height: 36px;
+    text-decoration: none;
+    text-shadow: 0 1px 3px rgba(0, 0, 0, 0.8);
+    pointer-events: auto;
+}
+
+#relocateBuildings .relocateClose:hover {
+    color: #ffd79a;
+}
+
+#relocateBuildings .relocateFooter {
+    bottom: 22px;
+    margin: 0;
+}
+
+#relocateBuildings .relocateSave {
+    min-width: 170px;
+    padding: 9px 22px;
+    border: 1px solid #8a6a2c;
+    border-radius: 6px;
+    background: linear-gradient(#f7e7b4, #ddbf72);
+    box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.6), 0 2px 6px rgba(0, 0, 0, 0.45);
+    color: #3d2b0c;
+    font-size: 14px;
+    font-weight: 700;
+    cursor: pointer;
+}
+
+#relocateBuildings .relocateSave:hover:not([disabled]) {
+    background: linear-gradient(#fff1c4, #e6c97e);
+}
+
+#relocateBuildings .relocateSave[disabled] {
+    border-color: rgba(255, 255, 255, 0.18);
+    background: rgba(255, 255, 255, 0.14);
+    box-shadow: none;
+    color: rgba(255, 255, 255, 0.45);
+    cursor: default;
+}
+
+@media (max-width: 700px) {
+    #relocateBuildings .relocateTitle {
+        font-size: 17px;
+        padding: 0 40px;
+    }
+
+    #relocateBuildings .relocateSubtitle {
+        font-size: 12px;
+    }
+}
