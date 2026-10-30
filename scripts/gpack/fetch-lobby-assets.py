@@ -15,8 +15,8 @@ import urllib.request
 
 ROOT = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 BASE = 'https://lobby.legends.travian.com'
-# the lobby now redirects every request to www.travian.com; the archived copy of the same files is the fallback
-MIRRORS = [BASE, 'https://web.archive.org/web/2026id_/' + BASE, 'https://web.archive.org/web/2025id_/' + BASE]
+# the lobby now redirects every request to www.travian.com: then the start page bundle (fetch_startpage)
+MIRRORS = [BASE]
 # rules whose pictures are not needed (country flags, special worlds, season passes, wonder of the world)
 ICONS = {'play': 'Qe', 'duals': '$e', 'close': 'R', 'clock': 'aa', 'menu': 'Na', 'chevron': 'ja', 'plus': 'Da', 'info': '_e',
          'recommended': 'We'}
@@ -36,10 +36,10 @@ OPENER = urllib.request.build_opener(NoRedirect)
 base = BASE
 
 
-def fetch(url: str) -> bytes:
+def fetch(url: str, html: bool = False) -> bytes:
     with OPENER.open(urllib.request.Request(url, headers={'User-Agent': 'Mozilla/5.0'}), timeout=60) as r:
         data = r.read()
-    if data[:200].lstrip().lower().startswith((b'<!doctype', b'<html')) and not url.endswith(('.svg', '.html')):
+    if data[:200].lstrip().lower().startswith((b'<!doctype', b'<html')) and not html and not url.endswith(('.svg', '.html')):
         raise ValueError(f'{url}: an HTML page instead of the file')
     return data
 
@@ -68,7 +68,7 @@ def fetch_startpage(out: str) -> int:
     the gameworld details) with its pictures and fonts; web/public/lobby-legends.css adds what it no longer has."""
     global base
     base = START
-    page = fetch(START + '/international').decode('utf-8', 'replace')
+    page = fetch(START + '/international', html=True).decode('utf-8', 'replace')
     m = re.search(r'/bundle/(startpage\.[0-9.]+\.css)', page)
     if not m:
         raise RuntimeError('no start page stylesheet found')
