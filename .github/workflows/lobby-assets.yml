@@ -26,7 +26,7 @@ jobs:
           found=""
           for id in $(cat ids.txt); do
             rm -rf x && mkdir x
-            gh api "repos/$REPO/actions/artifacts/$id/zip" > x/a.zip || continue
+            gh api "repos/$REPO/actions/artifacts/$id/zip" > x/a.zip || { echo "::warning::artifact $id: download failed"; continue; }
             (cd x && unzip -q a.zip && for f in *.ipa; do unzip -q "$f" '*web/public/legends/*' || true; done) || true
             css=$(find x -path '*web/public/legends/lobby.css' | head -1)
             if [ -n "$css" ] && [ "$(stat -c %s "$css")" -gt 1000 ] && ! head -c 200 "$css" | grep -qi '<html\|<!doctype'; then
@@ -35,7 +35,7 @@ jobs:
               (cd "$dir/.." && zip -qr "$GITHUB_WORKSPACE/legends.zip" legends)
               found=1; break
             fi
-            echo "artifact $id: no usable lobby graphics"
+            echo "::warning::artifact $id: $(ls x | tr '\n' ' ') | $(for f in x/*.ipa; do unzip -l "$f" | grep -i 'lobby' | head -5 | awk '{print $4, $1}' | tr '\n' ';'; done) | css=$css $( [ -n "$css" ] && head -c 80 "$css" | tr -d '\n')"
           done
           test -n "$found"
           unzip -l legends.zip | tail -3
