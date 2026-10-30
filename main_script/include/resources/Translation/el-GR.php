@@ -495,9 +495,16 @@ $Definition['Buildings']['mainBuilding']['Relocate buildings'] = 'Μετακίν
 $Definition['Buildings']['mainBuilding']['relocate_desc'] = 'Αναδιάταξε τα κτίριά σου στη λειτουργία μετακίνησης. Μπορείς να ανταλλάξεις τις θέσεις υπαρχόντων κτιρίων ή να τα μεταφέρεις σε κενά οικόπεδα.';
 $Definition['Buildings']['mainBuilding']['relocate_hint'] = 'Επίλεξε ή σύρε ένα κτίριο για να αλλάξεις τη θέση του.';
 $Definition['Buildings']['mainBuilding']['relocate_save'] = 'Μετακίνηση κτιρίων';
-$Definition['Buildings']['mainBuilding']['relocate_select_target'] = 'Τώρα επίλεξε νέα θέση για το κτίριο %s (επίπεδο %s)';
+$Definition['Buildings']['mainBuilding']['relocate_select_target'] = 'Τώρα επίλεξε νέα θέση για το κτίριο [NAME] (επίπεδο [LEVEL])';
 $Definition['Buildings']['mainBuilding']['relocate_fixed'] = 'Αυτό το κτίριο δεν μπορεί να μετακινηθεί.';
 $Definition['Buildings']['mainBuilding']['relocate_move_first'] = 'Μετακίνησε ένα κτίριο για να συνεχίσεις.';
+$Definition['Buildings']['mainBuilding']['relocate_drag_target'] = 'Τώρα σύρε και άφησε το κτίριο [NAME] (επίπεδο [LEVEL]) στη νέα του θέση.';
+$Definition['Buildings']['mainBuilding']['relocate_proceed'] = 'Επιβεβαίωσε ότι η αναδιάταξη των κτιρίων στο χωριό [VILLAGE] ολοκληρώθηκε.';
+$Definition['Buildings']['mainBuilding']['relocate_abort_title'] = 'Ακύρωση αναδιάταξης;';
+$Definition['Buildings']['mainBuilding']['relocate_abort_text'] = 'Έκανες αλλαγές που δεν θα αποθηκευτούν. Θέλεις σίγουρα να συνεχίσεις;';
+$Definition['Buildings']['mainBuilding']['relocate_abort_confirm'] = 'Ακύρωση αναδιάταξης';
+$Definition['Buildings']['mainBuilding']['relocate_unload'] = 'Έκανες αλλαγές. Θέλεις σίγουρα να φύγεις από τη σελίδα χωρίς αποθήκευση;';
+$Definition['Buildings']['mainBuilding']['relocate_cancel'] = 'Ακύρωση';
 
 $Definition['Buildings']['buildingQueue']['buildingQueue'] = 'buildingQueue';
 $Definition['Buildings']['buildingQueue']['name'] = 'Travian PLUS';

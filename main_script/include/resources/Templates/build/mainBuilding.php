@@ -98,7 +98,7 @@
 <?php if (!empty($vars['canRelocate'])): ?>
 <h4 class="round"><?=T("Buildings", "mainBuilding.Relocate buildings"); ?></h4>
 <p><?=T("Buildings", "mainBuilding.relocate_desc"); ?></p>
-<button type="button" id="btn_relocate" class="gold relocateBuildingsButton" onclick="window.location.href = 'dorf2.php?relocate=1'; return false;">
+<button type="button" id="btn_relocate" class="gold relocateBuildingsButton" onclick="window.location.href = 'dorf2.php?mode=rearrange'; return false;">
     <div class="button-container addHoverClick">
         <div class="button-background">
             <div class="buttonStart">

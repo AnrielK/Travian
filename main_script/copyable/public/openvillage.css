@@ -564,63 +564,37 @@ body.ovMapFullScreen .ovMapWindow #content > :not(.titleInHeader) {
     display: none;
 }
 
-/* Main Building → "Relocate buildings" (dorf2.php?relocate=1, js/Game/Village/relocateBuildings.js): the page dims,
-   the village map stays lit and becomes an editor; a picked building glows, the other buildings fade and every
-   building site shows its plot (orange = where the building stands, blue = where it would go) */
-#relocateBuildings .relocateBackdrop {
-    position: fixed;
-    inset: 0;
-    z-index: 9000;
-    background: rgba(0, 0, 0, 0.88);
-    pointer-events: none;
-}
-
-body.relocatingBuildings .legendsGuide,
-body.relocatingBuildings #tooltip {
-    display: none !important;
-}
-
-.villageMapWrapper.relocateMode .buildingSlot.relocatable {
-    transition: left 0.25s ease, top 0.25s ease, opacity 0.2s ease, filter 0.2s ease;
-}
-
-.villageMapWrapper.relocateMode .relocateSelecting .buildingSlot.relocatable:not(.relocateSelected),
-.villageMapWrapper.relocateMode .relocateSelecting .buildingSlot.relocateFixed {
-    opacity: 0.4;
-}
-
-.villageMapWrapper.relocateMode .buildingSlot.relocateFixed {
-    transition: opacity 0.2s ease;
-}
-
-.villageMapWrapper.relocateMode .buildingSlot.relocatable.relocateEmpty {
-    opacity: 0;
-}
-
-.villageMapWrapper.relocateMode .buildingSlot.relocateSelected {
-    filter: drop-shadow(0 0 2px #ff9a2e) drop-shadow(0 0 6px rgba(255, 140, 30, 0.85));
-}
-
-.villageMapWrapper.relocateMode .buildingSlot.relocateDragging {
-    z-index: 600 !important;
-    transition: none;
-    filter: drop-shadow(0 0 3px #ff9a2e) drop-shadow(0 8px 10px rgba(0, 0, 0, 0.45));
-}
-
-.villageMapWrapper.relocateMode .buildingSlot.relocateMark,
-.villageMapWrapper.relocateMode .buildingSlot.relocateHit {
+/* Main Building → "Relocate buildings" (dorf2.php?mode=rearrange, js/Game/Village/relocateBuildings.js). The markup is
+   the Travian Legends rearrange mode, which legends_ltr.css styles (village mask, title, steps, confirm button,
+   faded buildings); these rules add what our village markup needs on top of it in every look, and the fallback
+   look (.relocateFallback) for packs without the Legends styles. */
+.rearrangeMode .buildingSlot.relocateHit,
+.rearrangeMode .buildingSlot.relocateMark {
+    display: block !important;
     width: 120px;
     height: 120px;
     background: none;
 }
 
-.villageMapWrapper.relocateMode .buildingSlot.relocateMark {
-    display: block !important;
+.rearrangeMode .buildingSlot.relocateHit {
+    z-index: 500 !important;
+    pointer-events: auto !important;
+    cursor: pointer;
+    touch-action: none;
+    -webkit-tap-highlight-color: transparent;
+}
+
+.rearrangeMode.dragMode .buildingSlot.relocateHit {
+    cursor: grabbing;
+}
+
+.rearrangeMode .buildingSlot.relocateMark {
     z-index: 1 !important;
     pointer-events: none;
 }
 
-.villageMapWrapper.relocateMode .buildingSlot.relocateMark span {
+/* the site a dragged building comes from (Legends: orange plot) */
+.rearrangeMode .buildingSlot.relocateMark span {
     position: absolute;
     left: 50%;
     top: 72%;
@@ -628,138 +602,85 @@ body.relocatingBuildings #tooltip {
     height: 42px;
     margin: -21px 0 0 -42px;
     border-radius: 50%;
-    background: rgba(80, 110, 40, 0.35);
-    box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.12);
+    background: #ff8c4d;
     opacity: 0;
-    transition: opacity 0.2s ease, background-color 0.15s ease;
 }
 
-.villageMapWrapper.relocateMode .buildingSlot.relocateMark.free span {
-    opacity: 1;
+.rearrangeMode .buildingSlot.relocateMark.origin span {
+    opacity: 0.9;
 }
 
-.villageMapWrapper.relocateMode .relocateSelecting .buildingSlot.relocateMark span {
-    opacity: 1;
-}
-
-.villageMapWrapper.relocateMode .buildingSlot.relocateMark.origin span {
-    background: rgba(236, 120, 70, 0.75);
-    box-shadow: 0 0 0 2px rgba(255, 190, 150, 0.6);
-}
-
-.villageMapWrapper.relocateMode .buildingSlot.relocateMark.target span {
-    background: rgba(70, 160, 225, 0.8);
-    box-shadow: 0 0 0 2px rgba(180, 225, 255, 0.75);
-}
-
-.villageMapWrapper.relocateMode .buildingSlot.relocateHit {
-    display: block !important;
-    z-index: 500 !important;
-    pointer-events: auto !important;
-    cursor: grab;
-    touch-action: none;
-    -webkit-tap-highlight-color: transparent;
-}
-
-.villageMapWrapper.relocateMode .buildingSlot.relocateHit:active {
-    cursor: grabbing;
-}
-
-.villageMapWrapper.relocateMode #lswitch {
-    display: none;
-}
-
-#relocateBuildings .relocateHeader,
-#relocateBuildings .relocateFooter {
-    position: fixed;
-    left: 50%;
-    z-index: 9002;
-    transform: translateX(-50%);
-    text-align: center;
-    color: #fff;
-}
-
-#relocateBuildings .relocateHeader {
-    top: 14px;
-    width: min(640px, calc(100vw - 32px));
+.rearrangeMode .buildingSlot .level {
     pointer-events: none;
 }
 
-#relocateBuildings .relocateTitle {
-    font-family: Georgia, "Times New Roman", serif;
-    font-size: 20px;
-    font-weight: 700;
-    text-shadow: 0 1px 3px rgba(0, 0, 0, 0.8);
+.rearrangeMode .buildingSlot.movable {
+    transition: left 0.25s ease-out, top 0.25s ease-out;
 }
 
-#relocateBuildings .relocateSubtitle {
-    margin-top: 4px;
-    font-size: 13px;
-    color: #e8e2d2;
-    text-shadow: 0 1px 2px rgba(0, 0, 0, 0.8);
+/* our building shapes carry clickShape / hoverShape instead of the Legends highlightShape: the selected building
+   gets the Legends orange outline, a building it would swap with the drop-target colours */
+.rearrangeMode .buildingSlot.selected:not(.dragged) svg.buildingShape:not(.iso) .clickShape path,
+.rearrangeMode .dragContainer svg.buildingShape .clickShape path {
+    fill: rgba(255, 255, 255, 0.12) !important;
+    stroke: #ff8c4d !important;
+    stroke-width: 3px !important;
+    opacity: 1 !important;
+    visibility: visible !important;
 }
 
-#relocateBuildings .relocateClose {
+.rearrangeMode .buildingSlot.dropTarget svg.buildingShape:not(.iso) .clickShape path {
+    fill: rgba(8, 136, 133, 0.35) !important;
+    stroke: #38f4f4 !important;
+    stroke-width: 2px !important;
+    opacity: 1 !important;
+    visibility: visible !important;
+}
+
+.rearrangeMode .buildingSlot.dropTarget svg.buildingShape.iso path,
+.rearrangeMode .buildingSlot.dropTarget svg.buildingShape.iso .clickShape path {
+    fill: #088885 !important;
+    stroke: #38f4f4 !important;
+    stroke-width: 2px !important;
+    opacity: 1 !important;
+    visibility: visible !important;
+}
+
+.rearrangeMode .buildingSlot.dragged img,
+.rearrangeMode .buildingSlot.dragged .level,
+.rearrangeMode .buildingSlot.dragged svg {
+    opacity: 0 !important;
+}
+
+.rearrangeMode .dragContainer {
+    width: 120px;
+    height: 120px;
     position: absolute;
-    top: -4px;
-    right: 0;
-    width: 40px;
-    height: 40px;
-    color: #fff;
-    font-size: 40px;
-    font-weight: 300;
-    line-height: 36px;
-    text-decoration: none;
-    text-shadow: 0 1px 3px rgba(0, 0, 0, 0.8);
-    pointer-events: auto;
+    top: 0;
+    left: 0;
+    z-index: 600 !important;
+    pointer-events: none !important;
+    user-select: none;
+    display: none;
 }
 
-#relocateBuildings .relocateClose:hover {
-    color: #ffd79a;
+.rearrangeMode .dragContainer.enabled {
+    display: block;
+    filter: drop-shadow(0 8px 10px rgba(0, 0, 0, 0.45));
 }
 
-#relocateBuildings .relocateFooter {
-    bottom: 22px;
-    margin: 0;
+.rearrangeMode .dragContainer.enabled svg.buildingShape {
+    position: absolute;
+    left: 0;
+    top: 0;
 }
 
-#relocateBuildings .relocateSave {
-    min-width: 170px;
-    padding: 9px 22px;
-    border: 1px solid #8a6a2c;
-    border-radius: 6px;
-    background: linear-gradient(#f7e7b4, #ddbf72);
-    box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.6), 0 2px 6px rgba(0, 0, 0, 0.45);
-    color: #3d2b0c;
-    font-size: 14px;
-    font-weight: 700;
-    cursor: pointer;
-}
-
-#relocateBuildings .relocateSave:hover:not(.disabled) {
-    background: linear-gradient(#fff1c4, #e6c97e);
-}
-
-#relocateBuildings .relocateSave.disabled {
-    border-color: rgba(255, 255, 255, 0.18);
-    background: rgba(255, 255, 255, 0.14);
-    box-shadow: none;
-    color: rgba(255, 255, 255, 0.45);
-    cursor: default;
-}
-
-#relocateBuildings .relocateBuildingName {
-    color: #f0a84a;
-    font-weight: 700;
-}
-
-/* "This building cannot be relocated." / "Relocate a building to continue." */
-#relocateBuildings .relocateTip {
+/* "This building cannot be relocated." / "Relocate a building to continue." (Legends tooltip look) */
+.relocateTip {
     position: fixed;
-    z-index: 9003;
+    z-index: 10003;
     max-width: min(320px, calc(100vw - 32px));
     padding: 6px 12px;
-    border: 1px solid rgba(240, 168, 74, 0.35);
     border-radius: 4px;
     background: rgba(28, 22, 14, 0.94);
     box-shadow: 0 3px 10px rgba(0, 0, 0, 0.55);
@@ -774,30 +695,203 @@ body.relocatingBuildings #tooltip {
     transition: opacity 0.15s ease, transform 0.15s ease;
 }
 
-#relocateBuildings .relocateTip.shown {
+.relocateTip .notice {
+    color: inherit;
+}
+
+.relocateTip.shown {
     opacity: 1;
     transform: translate(-50%, 0);
 }
 
-#relocateBuildings .relocateTip.above {
+.relocateTip.above {
     transform: translate(-50%, calc(-100% + 4px));
 }
 
-#relocateBuildings .relocateTip.above.shown {
+.relocateTip.above.shown {
     transform: translate(-50%, -100%);
 }
 
+body.rearrangeBuildings .legendsGuide,
+body.rearrangeBuildings #tooltip {
+    display: none !important;
+}
+
+/* the overlay covers the whole page (it is moved to the end of <body>); the Legends village mask keeps its picture
+   size and is placed on the village by the script, its shadow continues the black around it */
+body.rearrangeBuildings > .rearrangeBuildings:not(.relocateFallback) {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: auto;
+    z-index: 10000;
+    overflow: hidden;
+}
+
+body.rearrangeBuildings > .rearrangeBuildings:not(.relocateFallback) .villageMask {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 4029px;
+    height: 1509px;
+    min-height: 0;
+    background-position: 0 0;
+    background-repeat: no-repeat;
+    transform-origin: 0 0;
+    box-shadow: 0 0 0 6000px rgba(0, 0, 0, 0.85);
+}
+
+body.rearrangeBuildings > .rearrangeBuildings:not(.relocateFallback) .container {
+    top: 0;
+}
+
+/* confirm / abort dialogs (LegendsDialog) as narrow as their content, like the Legends ones */
+.legendsDialogOverlay .dialogWrapper:has(.rearrangeBuildingsConfirmDialog),
+.legendsDialogOverlay .dialogWrapper:has(.rearrangeBuildingsAbortDialog) {
+    width: fit-content;
+    min-width: min(540px, calc(100vw - 32px));
+    max-width: calc(100vw - 32px);
+}
+
+.legendsDialogOverlay .rearrangeBuildingsConfirmDialog .dialogContents,
+.legendsDialogOverlay .rearrangeBuildingsAbortDialog .dialogContents,
+.legendsDialogOverlay .rearrangeBuildingsConfirmDialog .content,
+.legendsDialogOverlay .rearrangeBuildingsAbortDialog .content {
+    width: auto;
+}
+
+.legendsDialogOverlay .rearrangeBuildingsConfirmDialog .content p,
+.legendsDialogOverlay .rearrangeBuildingsAbortDialog .content p {
+    margin: 0 0 16px;
+}
+
+.legendsDialogOverlay .rearrangeBuildingsConfirmDialog .rearrangeBuildingsButtons {
+    display: grid;
+    grid-template-columns: auto auto;
+    justify-content: space-between;
+    gap: 10px;
+}
+
+.legendsDialogOverlay .rearrangeBuildingsAbortDialog .decisionButtons {
+    display: grid;
+    grid-template-columns: auto auto;
+    gap: 10px;
+    justify-content: center;
+}
+
+.legendsDialogOverlay .rearrangeBuildingsConfirmDialog h1.titleInHeader,
+.legendsDialogOverlay .rearrangeBuildingsAbortDialog h1.titleInHeader {
+    right: 80px !important;
+}
+
+/* ---- fallback look: packs without the Legends rearrange styles */
+.rearrangeBuildings.relocateFallback {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    pointer-events: none;
+}
+
+.rearrangeBuildings.relocateFallback .villageMask {
+    position: fixed;
+    inset: 0;
+    z-index: 10000;
+    background: rgba(0, 0, 0, 0.88);
+    pointer-events: none;
+}
+
+.rearrangeBuildings.relocateFallback .container {
+    position: fixed;
+    inset: 0;
+    z-index: 10001;
+    color: #f2f2f2;
+    text-align: center;
+    pointer-events: none;
+}
+
+.rearrangeBuildings.relocateFallback h1 {
+    margin: 14px 0 0;
+    font-family: Georgia, "Times New Roman", serif;
+    font-size: 24px;
+    text-shadow: 1px 0 25px #000, 1px 1px 25px #000, 0 1px 25px #000;
+}
+
+.rearrangeBuildings.relocateFallback .instructions {
+    position: relative;
+    height: 22px;
+    padding: 6px 16px;
+    font-size: 14px;
+    text-shadow: 1px 0 2px #000, 1px 1px 2px #000, 0 1px 2px #000;
+}
+
+.rearrangeBuildings.relocateFallback .instructions .step {
+    position: absolute;
+    left: 0;
+    right: 0;
+    opacity: 0;
+    transition: opacity 0.25s;
+}
+
+.rearrangeBuildings.relocateFallback .instructions .step.active {
+    opacity: 1;
+}
+
+.rearrangeBuildings.relocateFallback .instructions .step strong {
+    color: #ff8c4d;
+}
+
+.rearrangeBuildings.relocateFallback .close {
+    position: absolute;
+    top: 16px;
+    right: max(16px, calc(50% - 300px));
+    pointer-events: auto;
+}
+
+.rearrangeBuildings.relocateFallback .close svg {
+    width: 28px;
+    height: 28px;
+    fill: #fff9eb;
+    cursor: pointer;
+}
+
+.rearrangeBuildings.relocateFallback .close:hover svg {
+    fill: #b7b7b7;
+}
+
+.rearrangeBuildings.relocateFallback button.confirm {
+    position: absolute;
+    bottom: 22px;
+    left: 50%;
+    transform: translateX(-50%);
+    min-width: 170px;
+    padding: 8px 22px;
+    border: 1px solid #82631d;
+    border-radius: 4px;
+    background: linear-gradient(180deg, #fdf5cb, #f8eeb0 40%, #f0dc7c 45%, #e6ce64 85%, #caac50);
+    color: #333;
+    font-weight: 700;
+    cursor: pointer;
+    pointer-events: auto;
+}
+
+.rearrangeBuildings.relocateFallback button.confirm.disabled {
+    opacity: 0.5;
+    cursor: default;
+}
+
+body.rearrangeBuildings .rearrangeMode.selectTarget .buildingSlot.movable:not(.selected) img,
+body.rearrangeBuildings .rearrangeMode.dragMode .buildingSlot.movable:not(.dragged) img {
+    opacity: 0.5;
+}
+
+.rearrangeMode #lswitch {
+    display: none;
+}
+
 @media (max-width: 700px) {
-    #relocateBuildings .relocateTip {
+    .relocateTip {
         white-space: normal;
-    }
-
-    #relocateBuildings .relocateTitle {
-        font-size: 17px;
-        padding: 0 40px;
-    }
-
-    #relocateBuildings .relocateSubtitle {
-        font-size: 12px;
     }
 }

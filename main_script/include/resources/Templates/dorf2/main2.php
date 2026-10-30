@@ -3,8 +3,44 @@
 $wallTribe = [31 => 'roman', 32 => 'teuton', 33 => 'gaul', 42 => 'egyptian', 43 => 'hun', 47 => 'spartan', 50 => 'viking'];
 $legendsShapes = is_hero_v2(); ?>
 <?php $relocate = $vars['relocate'] ?? null; ?>
+<?php if ($relocate):
+    /* Main Building → "Relocate buildings" (dorf2.php?mode=rearrange): the markup of the Travian Legends rearrange mode
+       (styled by the Legends gpack, legends_ltr.css; other looks get openvillage.css), driven by
+       js/Game/Village/relocateBuildings.js */
+    $relocateText = static fn(string $key): string => htmlspecialchars(T("Buildings", "mainBuilding." . $key));
+?>
+<div class="rearrangeBuildings" id="relocateBuildings" data-first-slot="<?=$relocate['firstSlot'];?>" data-last-slot="<?=$relocate['lastSlot'];?>"
+     data-fixed-gids="<?=implode(',', $relocate['fixedGids']);?>"
+     data-village-name="<?=htmlspecialchars($relocate['villageName']);?>"
+     data-text-title="<?=$relocateText('Relocate buildings');?>"
+     data-text-fixed="<?=$relocateText('relocate_fixed');?>"
+     data-text-move-first="<?=$relocateText('relocate_move_first');?>"
+     data-text-proceed="<?=$relocateText('relocate_proceed');?>"
+     data-text-abort-title="<?=$relocateText('relocate_abort_title');?>"
+     data-text-abort="<?=$relocateText('relocate_abort_text');?>"
+     data-text-abort-confirm="<?=$relocateText('relocate_abort_confirm');?>"
+     data-text-cancel="<?=$relocateText('relocate_cancel');?>"
+     data-text-unload="<?=$relocateText('relocate_unload');?>">
+    <div class="villageMask"></div>
+    <div class="container">
+        <h1><?=T("Buildings", "mainBuilding.Relocate buildings");?></h1>
+        <div class="instructions">
+            <div class="step step1 active"><?=T("Buildings", "mainBuilding.relocate_hint");?></div>
+            <div class="step step2"><?=$relocateText('relocate_select_target');?></div>
+            <div class="step dragAndDrop"><?=$relocateText('relocate_drag_target');?></div>
+        </div>
+        <a class="close" href="dorf2.php" title="<?=$relocateText('relocate_cancel');?>"><svg viewBox="0 0 20 20" class="close"><g class="outline"><path d="M0 17.01L7.01 10 .14 3.13 3.13.14 10 7.01 17.01 0 20 2.99 12.99 10l6.87 6.87-2.99 2.99L10 12.99 2.99 20 0 17.01z"></path></g><g class="icon"><path d="M0 17.01L7.01 10 .14 3.13 3.13.14 10 7.01 17.01 0 20 2.99 12.99 10l6.87 6.87-2.99 2.99L10 12.99 2.99 20 0 17.01z"></path></g></svg></a>
+        <button type="button" class="textButtonV1 gold confirm disabled" version="textButtonV1"><?=T("Buildings", "mainBuilding.relocate_save");?></button>
+    </div>
+    <form class="relocateForm" method="post" action="dorf2.php">
+        <?=$relocate['checkerInput'];?>
+        <input type="hidden" name="relocate" value="1"/>
+        <div class="relocatePlacement"></div>
+    </form>
+</div>
+<?php endif; ?>
 <div class="villageMapWrapper<?=$relocate ? ' relocateMode' : '';?>">
-    <div id="<?=$t46Tribe ? 'villageContent' : 'village_map';?>" class="<?=$t46Tribe;?><?=is_t40_layout() && $vars['levelsActive'] ? ' levelsHidden' : '';?>">
+    <div id="<?=$t46Tribe ? 'villageContent' : 'village_map';?>" class="<?=$t46Tribe;?><?=is_t40_layout() && $vars['levelsActive'] ? ' levelsHidden' : '';?><?=$relocate ? ' rearrangeMode' : '';?>">
         <?php for($i = 1; $i <= 18; ++$i):?>
         <div class="buildingSlot a<?=$i;?>"></div>
         <?php endfor;?>
@@ -782,25 +818,7 @@ $legendsShapes = is_hero_v2(); ?>
     });
 </script>
 <?php if ($relocate): ?>
-<?php /* Main Building → "Relocate buildings": the map becomes an editor, see js/Game/Village/relocateBuildings.js */ ?>
-<div id="relocateBuildings" data-first-slot="<?=$relocate['firstSlot'];?>" data-last-slot="<?=$relocate['lastSlot'];?>"
-     data-fixed-gids="<?=implode(',', $relocate['fixedGids']);?>"
-     data-text-select="<?=htmlspecialchars(T("Buildings", "mainBuilding.relocate_select_target"));?>"
-     data-text-fixed="<?=htmlspecialchars(T("Buildings", "mainBuilding.relocate_fixed"));?>"
-     data-text-move-first="<?=htmlspecialchars(T("Buildings", "mainBuilding.relocate_move_first"));?>">
-    <div class="relocateBackdrop"></div>
-    <div class="relocateHeader">
-        <div class="relocateTitle"><?=T("Buildings", "mainBuilding.Relocate buildings");?></div>
-        <div class="relocateSubtitle"><?=T("Buildings", "mainBuilding.relocate_hint");?></div>
-        <a class="relocateClose" href="dorf2.php" title="<?=T("Global", "General.close");?>">&times;</a>
-    </div>
-    <form class="relocateFooter" method="post" action="dorf2.php">
-        <?=$relocate['checkerInput'];?>
-        <input type="hidden" name="relocate" value="1"/>
-        <div class="relocatePlacement"></div>
-        <button type="submit" class="relocateSave disabled" aria-disabled="true"><?=T("Buildings", "mainBuilding.relocate_save");?></button>
-    </form>
-</div>
+<script type="text/javascript" src="js/Game/Legends/dialog.js?v=<?=ov_asset_version(PUBLIC_PATH . 'js/Game/Legends/dialog.js');?>"></script>
 <script type="text/javascript" src="js/Game/Village/relocateBuildings.js?v=<?=ov_asset_version(PUBLIC_PATH . 'js/Game/Village/relocateBuildings.js');?>"></script>
 <?php endif; ?>
 <?php if (false): ?>

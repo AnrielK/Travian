@@ -1,54 +1,69 @@
 /*
- * Main Building → "Relocate buildings" (dorf2.php?relocate=1).
+ * Main Building → "Relocate buildings" (dorf2.php?mode=rearrange), modelled on the Travian Legends rearrange mode.
  *
- * Turns the village map into an editor: pick a building (tap it or drag it) and drop it on another building
- * site. An occupied site swaps both buildings, an empty one simply takes the building. The Main Building, the
- * rally point and the wall keep their places (tapping them says so). Nothing is saved until the player
- * confirms; the form then posts the layout as placement[target slot] = source slot
+ * The markup is the Legends one (.rearrangeBuildings with .villageMask, instructions step1 / step2 / dragAndDrop,
+ * #villageContent.rearrangeMode with .movable / .selected / .dragged / .dropTarget slots and .selectTarget /
+ * .dragMode on the map), so the Legends gpack (legends_ltr.css) styles it as in the original; looks without those
+ * styles get the fallback of openvillage.css (.relocateFallback).
+ *
+ * Pick a building (tap it or drag it) and drop it on another building site: an occupied site swaps both buildings,
+ * an empty one takes the building. The Main Building, the rally point and the wall keep their places. Nothing is
+ * saved until the player confirms; the form then posts placement[target slot] = source slot
  * (see Game\Buildings\BuildingRelocation).
  */
 (function () {
     'use strict';
 
     var root = document.getElementById('relocateBuildings');
-    var wrapper = document.querySelector('.villageMapWrapper.relocateMode');
-    var map = wrapper && wrapper.querySelector('#villageContent, #village_map');
+    var map = document.querySelector('#villageContent.rearrangeMode, #village_map.rearrangeMode');
     if (!root || !map) {
         return;
     }
-    document.body.classList.add('relocatingBuildings');
-    // The editor chrome lives at the top of the page: the map sits inside stacking contexts of the layout, so a
-    // backdrop there could not cover the sidebars. The backdrop leaves an elliptic window over the village instead.
-    document.body.appendChild(root);
 
     var RALLY_POINT_SLOT = 39;
     var DRAG_THRESHOLD = 6;
-    var firstSlot = parseInt(root.getAttribute('data-first-slot'), 10);
-    var lastSlot = parseInt(root.getAttribute('data-last-slot'), 10);
-    var fixedGids = (root.getAttribute('data-fixed-gids') || '').split(',').filter(Boolean);
-    var texts = {
-        hint: root.querySelector('.relocateSubtitle').textContent,
-        select: root.getAttribute('data-text-select') || '%s',
-        fixed: root.getAttribute('data-text-fixed') || '',
-        moveFirst: root.getAttribute('data-text-move-first') || ''
+    var data = function (name) {
+        return root.getAttribute('data-' + name) || '';
     };
-    var backdrop = root.querySelector('.relocateBackdrop');
-    var subtitle = root.querySelector('.relocateSubtitle');
-    var saveButton = root.querySelector('.relocateSave');
+    var firstSlot = parseInt(data('first-slot'), 10);
+    var lastSlot = parseInt(data('last-slot'), 10);
+    var fixedGids = data('fixed-gids').split(',').filter(Boolean);
+    var container = root.querySelector('.container');
+    var steps = {
+        step1: root.querySelector('.step.step1'),
+        step2: root.querySelector('.step.step2'),
+        dragAndDrop: root.querySelector('.step.dragAndDrop')
+    };
+    var templates = {step2: steps.step2.innerHTML, dragAndDrop: steps.dragAndDrop.innerHTML};
+    var confirmButton = root.querySelector('button.confirm');
+    var closeLink = root.querySelector('.close');
+    var form = root.querySelector('form.relocateForm');
     var placementBox = root.querySelector('.relocatePlacement');
+
+    document.body.classList.add('rearrangeBuildings');
+    // Without the Legends styles the editor uses the fallback look: chrome fixed on top of the page and an
+    // elliptic window over the village in place of the Legends village mask.
+    var mask = root.querySelector('.villageMask');
+    var fallback = window.getComputedStyle(mask).backgroundImage === 'none';
+    if (fallback) {
+        root.classList.add('relocateFallback');
+    }
+    // The map sits inside stacking contexts of the layout, so the overlay goes to the top of the page to cover the
+    // sidebars and the top bar as well.
+    document.body.appendChild(root);
+    window.requestAnimationFrame(function () {
+        root.classList.add('show');
+    });
+
+    // ------------------------------------------------------------------ slots
 
     var buildings = {};   // original slot -> building element
     var occupant = {};    // current slot -> original slot of the building standing there
-    var marks = {};       // slot -> site marker (ellipse under the building)
-    var hits = {};        // slot -> transparent pointer target (also for the fixed rally point)
+    var marks = {};       // slot -> orange plot shown under a building that is being dragged away
+    var hits = {};        // slot -> transparent pointer target (also for the fixed buildings)
     var slots = [];       // sites that take part in the relocation
     var hitSlots = [];    // every site with a pointer target
     var changed = 0;
-
-    function slotClass(element, from, to) {
-        element.classList.remove('a' + from);
-        element.classList.add('a' + to);
-    }
 
     function create(slot, className) {
         var element = document.createElement('div');
@@ -56,14 +71,6 @@
         element.setAttribute('data-slot', String(slot));
         map.appendChild(element);
         return element;
-    }
-
-    function isEmpty(slot) {
-        return buildings[occupant[slot]].getAttribute('data-gid') === '0';
-    }
-
-    function isFixed(slot) {
-        return slots.indexOf(slot) < 0;
     }
 
     for (var slot = firstSlot; slot <= RALLY_POINT_SLOT; ++slot) {
@@ -75,13 +82,11 @@
         occupant[slot] = slot;
         hitSlots.push(slot);
         hits[slot] = create(slot, 'relocateHit');
-        var fixed = slot > lastSlot || fixedGids.indexOf(building.getAttribute('data-gid')) >= 0;
-        if (fixed) {
-            building.classList.add('relocateFixed');
+        if (slot > lastSlot || fixedGids.indexOf(building.getAttribute('data-gid')) >= 0) {
             continue;
         }
         slots.push(slot);
-        building.classList.add('relocatable');
+        building.classList.add('movable');
         marks[slot] = create(slot, 'relocateMark');
         marks[slot].appendChild(document.createElement('span'));
     }
@@ -89,30 +94,41 @@
         return;
     }
 
-    var selected = null;   // slot whose building is picked up
-    var hovered = null;    // site under the pointer while something is picked up
-    var drag = null;
+    var dragContainer = document.createElement('div');
+    dragContainer.className = 'dragContainer buildingSlot';
+    map.appendChild(dragContainer);
+
+    function isEmpty(slot) {
+        return buildings[occupant[slot]].getAttribute('data-gid') === '0';
+    }
+
+    function isFixed(slot) {
+        return slots.indexOf(slot) < 0;
+    }
+
+    function shape(slot) {
+        return buildings[occupant[slot]].querySelector('svg.buildingShape');
+    }
 
     // ------------------------------------------------------------------ messages
 
     var tip = document.createElement('div');
     tip.className = 'relocateTip';
-    root.appendChild(tip);
+    document.body.appendChild(tip);
     var tipTimer = null;
 
     function showTip(text, x, y, above) {
         if (!text) {
             return;
         }
-        tip.textContent = text;
+        tip.innerHTML = '<span class="notice"></span>';
+        tip.firstChild.textContent = text;
         tip.classList.toggle('above', !!above);
         tip.style.left = Math.round(x) + 'px';
         tip.style.top = Math.round(y) + 'px';
         tip.classList.add('shown');
         window.clearTimeout(tipTimer);
-        tipTimer = window.setTimeout(function () {
-            tip.classList.remove('shown');
-        }, 2600);
+        tipTimer = window.setTimeout(hideTip, 2600);
     }
 
     function hideTip() {
@@ -125,36 +141,57 @@
         showTip(text, rect.left + rect.width / 2, rect.top + rect.height * 0.7);
     }
 
-    function updateSubtitle() {
-        subtitle.textContent = '';
-        if (selected === null) {
-            subtitle.textContent = texts.hint;
-            return;
+    function escapeHtml(text) {
+        var span = document.createElement('span');
+        span.textContent = text;
+        return span.innerHTML;
+    }
+
+    function fill(template, slot) {
+        var element = buildings[occupant[slot]];
+        return template
+            .split('[NAME]').join('<strong>' + escapeHtml(element.getAttribute('data-name') || '') + '</strong>')
+            .split('[LEVEL]').join(escapeHtml(element.getAttribute('data-level') || ''));
+    }
+
+    function showStep(name, slot) {
+        if (name !== 'step1') {
+            steps[name].innerHTML = fill(templates[name], slot);
         }
-        var element = buildings[occupant[selected]];
-        // "Now choose a new position for %s (level %s)" with the building name highlighted
-        var parts = texts.select.split('%s');
-        subtitle.appendChild(document.createTextNode(parts[0] || ''));
-        var name = document.createElement('span');
-        name.className = 'relocateBuildingName';
-        name.textContent = element.getAttribute('data-name') || '';
-        subtitle.appendChild(name);
-        subtitle.appendChild(document.createTextNode((parts[1] || '') + (element.getAttribute('data-level') || '') + (parts.slice(2).join('%s'))));
+        Object.keys(steps).forEach(function (key) {
+            steps[key].classList.toggle('active', key === name);
+        });
     }
 
     // ------------------------------------------------------------------ state
 
+    var selected = null;   // slot whose building is picked up
+    var hovered = null;    // site under the pointer while something is picked up
+    var drag = null;
+
     function render() {
-        map.classList.toggle('relocateSelecting', selected !== null);
-        slots.forEach(function (slot) {
+        var dragging = !!(drag && drag.moved);
+        map.classList.toggle('selectTarget', selected !== null && !dragging);
+        map.classList.toggle('dragMode', dragging);
+        hitSlots.forEach(function (slot) {
             var element = buildings[occupant[slot]];
-            element.classList.toggle('relocateSelected', slot === selected);
-            element.classList.toggle('relocateEmpty', isEmpty(slot));
-            marks[slot].classList.toggle('origin', slot === selected);
-            marks[slot].classList.toggle('target', selected !== null && slot === hovered && slot !== selected);
-            marks[slot].classList.toggle('free', isEmpty(slot));
+            var target = selected !== null && slot === hovered && slot !== selected && !isFixed(slot);
+            element.classList.toggle('selected', slot === selected);
+            element.classList.toggle('dragged', dragging && slot === selected);
+            element.classList.toggle('dropTarget', target);
+            var svg = shape(slot);
+            if (svg) {
+                svg.classList.toggle('hover', target);
+            }
+            if (marks[slot]) {
+                marks[slot].classList.toggle('origin', dragging && slot === selected);
+            }
         });
-        updateSubtitle();
+        if (selected === null) {
+            showStep('step1');
+        } else {
+            showStep(dragging ? 'dragAndDrop' : 'step2', selected);
+        }
     }
 
     function updateForm() {
@@ -166,8 +203,7 @@
         });
         placementBox.innerHTML = inputs.join('');
         changed = inputs.length;
-        saveButton.classList.toggle('disabled', changed === 0);
-        saveButton.setAttribute('aria-disabled', changed === 0 ? 'true' : 'false');
+        confirmButton.classList.toggle('disabled', changed === 0);
         if (changed) {
             hideTip();
         }
@@ -179,8 +215,10 @@
         }
         var moving = occupant[from];
         var staying = occupant[to];
-        slotClass(buildings[moving], from, to);
-        slotClass(buildings[staying], to, from);
+        buildings[moving].classList.remove('a' + from);
+        buildings[moving].classList.add('a' + to);
+        buildings[staying].classList.remove('a' + to);
+        buildings[staying].classList.add('a' + from);
         occupant[to] = moving;
         occupant[from] = staying;
         updateForm();
@@ -213,7 +251,7 @@
 
     function tap(slot) {
         if (isFixed(slot)) {
-            tipAtSlot(texts.fixed, slot);
+            tipAtSlot(data('text-fixed'), slot);
             return;
         }
         hideTip();
@@ -227,21 +265,44 @@
         }
     }
 
+    function startDrag(slot) {
+        var source = buildings[occupant[slot]];
+        dragContainer.className = 'dragContainer buildingSlot enabled a' + slot + ' ' + Array.prototype.filter.call(source.classList, function (name) {
+            return /^g\d+$/.test(name);
+        }).join(' ');
+        dragContainer.innerHTML = '';
+        // the Legends styles pin the drag container to the corner (the original script moves it), so it starts
+        // on the building's own site
+        dragContainer.style.left = source.offsetLeft + 'px';
+        dragContainer.style.top = source.offsetTop + 'px';
+        ['img', 'svg.buildingShape'].forEach(function (selector) {
+            var part = source.querySelector(selector);
+            if (part) {
+                dragContainer.appendChild(part.cloneNode(true));
+            }
+        });
+    }
+
+    function stopDrag() {
+        dragContainer.className = 'dragContainer buildingSlot';
+        dragContainer.innerHTML = '';
+        dragContainer.style.transform = '';
+    }
+
     function endDrag(event, cancelled) {
         var state = drag;
-        drag = null;
         if (!state) {
             return;
         }
         if (!state.moved) {
+            drag = null;
             if (!cancelled) {
                 tap(state.slot);
             }
         } else {
-            var element = buildings[occupant[state.slot]];
-            element.style.transform = '';
-            element.classList.remove('relocateDragging');
             var target = cancelled ? null : slotAt(event.clientX, event.clientY, true);
+            drag = null;
+            stopDrag();
             if (target !== null && target !== state.slot) {
                 swap(state.slot, target);
             }
@@ -255,7 +316,6 @@
         if (event.button > 0 || !event.target.classList || !event.target.classList.contains('relocateHit')) {
             return;
         }
-        // the hit boxes of neighbouring sites overlap, so the nearest site wins rather than the topmost box
         var slot = slotAt(event.clientX, event.clientY, false);
         if (slot === null) {
             return;
@@ -286,16 +346,15 @@
                 return;
             }
             if (isFixed(drag.slot) || isEmpty(drag.slot)) {
-                // a fixed building does not come along; the tap message explains why on release
-                return;
+                return;   // a fixed building stays; the tap message explains why on release
             }
             drag.moved = true;
             selected = drag.slot;
             hideTip();
-            buildings[occupant[drag.slot]].classList.add('relocateDragging');
+            startDrag(drag.slot);
         }
         var factor = scale();
-        buildings[occupant[drag.slot]].style.transform = 'translate(' + (dx / factor) + 'px, ' + (dy / factor) + 'px)';
+        dragContainer.style.transform = 'translate(' + (dx / factor) + 'px, ' + (dy / factor) + 'px)';
         hovered = slotAt(event.clientX, event.clientY, true);
         render();
     });
@@ -307,22 +366,127 @@
         endDrag(event, true);
     });
 
-    // Building links, level circles and tooltips stay quiet while the map is being edited; the wall says it
-    // stays where it is.
+    // Building links, level circles and tooltips stay quiet while rearranging; the wall says it stays in place.
     map.addEventListener('click', function (event) {
         event.preventDefault();
         event.stopPropagation();
-        var wall = event.target.closest && event.target.closest('.buildingSlot.a40');
-        if (wall) {
-            showTip(texts.fixed, event.clientX, event.clientY + 12);
+        if (event.target.closest && event.target.closest('.buildingSlot.a40')) {
+            showTip(data('text-fixed'), event.clientX, event.clientY + 12);
         }
     }, true);
     map.addEventListener('dragstart', function (event) {
         event.preventDefault();
     });
 
+    // ------------------------------------------------------------------ confirm / abort
+
+    var leaving = false;
+    window.addEventListener('beforeunload', function (event) {
+        if (changed && !leaving) {
+            event.preventDefault();
+            event.returnValue = data('text-unload');
+            return event.returnValue;
+        }
+    });
+
+    function leave(url) {
+        leaving = true;
+        window.location.href = url;
+    }
+
+    function button(text, cls) {
+        return '<button type="button" class="textButtonV1 ' + cls + '" version="textButtonV1">' + escapeHtml(text) + '</button>';
+    }
+
+    function dialog(cls, title, text, buttons, onOpen) {
+        if (fallback || !window.LegendsDialog) {
+            return null;
+        }
+        var overlay = window.LegendsDialog.open({
+            cls: cls,
+            title: escapeHtml(title),
+            closeText: data('text-cancel'),
+            html: '<p>' + text + '</p>' + buttons
+        });
+        onOpen(overlay);
+        return overlay;
+    }
+
+    function proceed() {
+        var village = '<strong>' + escapeHtml(data('village-name')) + '</strong>';
+        var text = escapeHtml(data('text-proceed')).split('[VILLAGE]').join(village);
+        var opened = dialog('rearrangeBuildingsConfirmDialog', data('text-title'), text,
+            '<div class="rearrangeBuildingsButtons">' + button(data('text-title'), 'gold proceedAction')
+            + button(data('text-cancel'), 'grey cancelAction') + '</div>',
+            function (overlay) {
+                overlay.querySelector('.proceedAction').addEventListener('click', submit);
+                overlay.querySelector('.cancelAction').addEventListener('click', function () {
+                    window.LegendsDialog.close(overlay);
+                });
+            });
+        if (!opened && window.confirm(text.replace(/<[^>]+>/g, ''))) {
+            submit();
+        }
+    }
+
+    function submit() {
+        leaving = true;
+        form.submit();
+    }
+
+    function abort() {
+        var url = closeLink.getAttribute('href');
+        if (!changed) {
+            leave(url);
+            return;
+        }
+        var opened = dialog('rearrangeBuildingsAbortDialog', data('text-abort-title'), escapeHtml(data('text-abort')),
+            '<div class="decisionButtons">' + button(data('text-abort-confirm'), 'green abortAction')
+            + button(data('text-cancel'), 'grey cancelAction') + '</div>',
+            function (overlay) {
+                overlay.querySelector('.abortAction').addEventListener('click', function () {
+                    leave(url);
+                });
+                overlay.querySelector('.cancelAction').addEventListener('click', function () {
+                    window.LegendsDialog.close(overlay);
+                });
+            });
+        if (!opened && window.confirm(data('text-abort-title') + '\n' + data('text-abort'))) {
+            leave(url);
+        }
+    }
+
+    closeLink.addEventListener('click', function (event) {
+        event.preventDefault();
+        abort();
+    });
+
+    function moveFirstTip() {
+        var rect = confirmButton.getBoundingClientRect();
+        showTip(data('text-move-first'), rect.left + rect.width / 2, rect.top - 8, true);
+    }
+
+    confirmButton.addEventListener('mouseenter', function () {
+        if (!changed) {
+            moveFirstTip();
+        }
+    });
+    confirmButton.addEventListener('mouseleave', function () {
+        if (!changed) {
+            hideTip();
+        }
+    });
+    confirmButton.addEventListener('click', function (event) {
+        event.preventDefault();
+        if (!changed) {
+            moveFirstTip();
+            return;
+        }
+        proceed();
+    });
+
     document.addEventListener('keydown', function (event) {
-        if (event.key !== 'Escape') {
+        if (event.key !== 'Escape' || document.querySelector('.legendsDialogOverlay')) {
             return;
         }
         if (selected !== null) {
@@ -330,27 +494,35 @@
             hovered = null;
             render();
         } else {
-            window.location.href = root.querySelector('.relocateClose').getAttribute('href');
+            abort();
         }
     });
 
-    var submitting = false;
-    saveButton.addEventListener('click', function (event) {
-        if (!changed || submitting) {
-            event.preventDefault();
-            if (!changed) {
-                var rect = saveButton.getBoundingClientRect();
-                // the button sits at the bottom of the screen, so the message goes above it
-                showTip(texts.moveFirst, rect.left + rect.width / 2, rect.top - 8, true);
-            }
+    // ------------------------------------------------------------------ village mask
+
+    // Legends village mask (villageMask.png, 4029 × 1509): black at 85 % with an elliptic window around the village
+    // walls (centre 2015 / 433.5). The window is put on the village of our map (1280 × 720, walls centred at
+    // 640 / 400 like in Legends); a shadow continues the black beyond the picture.
+    var MASK_CENTER_X = 2014.5;
+    var MASK_CENTER_Y = 433.5;
+    var VILLAGE_CENTER_X = 640;
+    var VILLAGE_CENTER_Y = 400;
+
+    function placeMask() {
+        var page = document.documentElement;
+        root.style.height = Math.max(page.scrollHeight, document.body.scrollHeight, window.innerHeight) + 'px';
+        if (fallback) {
+            placeBackdrop();
             return;
         }
-        submitting = true;
-    });
+        var rect = map.getBoundingClientRect();
+        var factor = scale();
+        var left = rect.left + window.pageXOffset + (VILLAGE_CENTER_X - MASK_CENTER_X) * factor;
+        var top = rect.top + window.pageYOffset + (VILLAGE_CENTER_Y - MASK_CENTER_Y) * factor;
+        mask.style.transform = 'translate(' + left + 'px, ' + top + 'px) scale(' + factor + ')';
+        container.style.top = Math.max(0, rect.top + window.pageYOffset) + 'px';
+    }
 
-    // ------------------------------------------------------------------ backdrop
-
-    // Light the village itself: an ellipse around all building sites (works for every look of the map).
     function placeBackdrop() {
         var box = null;
         hitSlots.forEach(function (slot) {
@@ -372,37 +544,38 @@
         var cy = (box.top + box.bottom) / 2;
         var rx = (box.right - box.left) / 2 * 1.16;
         var ry = (box.bottom - box.top) / 2 * 1.24;
-        backdrop.style.background = 'radial-gradient(ellipse ' + rx + 'px ' + ry + 'px at ' + cx + 'px ' + cy + 'px, '
+        mask.style.background = 'radial-gradient(ellipse ' + rx + 'px ' + ry + 'px at ' + cx + 'px ' + cy + 'px, '
             + 'rgba(0, 0, 0, 0.1) 0, rgba(0, 0, 0, 0.16) 78%, rgba(0, 0, 0, 0.92) 100%)';
     }
     var placing = false;
-    function schedulePlaceBackdrop() {
+    var schedule = function () {
         if (!placing) {
             placing = true;
             window.requestAnimationFrame(function () {
                 placing = false;
-                placeBackdrop();
+                placeMask();
             });
         }
-    }
-    window.addEventListener('resize', schedulePlaceBackdrop);
-    window.addEventListener('scroll', function () {
-        schedulePlaceBackdrop();
-        hideTip();
-    }, true);
-    window.addEventListener('load', schedulePlaceBackdrop);
+    };
+    window.addEventListener('resize', schedule);
+    window.addEventListener('scroll', schedule, true);
+    window.addEventListener('load', schedule);
+    placeMask();
+    window.addEventListener('scroll', hideTip, true);
 
-    // Outside the village nothing reacts while relocating (the backdrop lets the pointer through to the map).
+    // Outside the village nothing reacts while rearranging (dialogs aside).
     ['click', 'pointerdown', 'mousedown', 'touchstart'].forEach(function (type) {
         document.addEventListener(type, function (event) {
-            if (!map.contains(event.target) && !root.contains(event.target)) {
-                event.preventDefault();
-                event.stopPropagation();
+            var target = event.target;
+            if (map.contains(target) || container.contains(target)
+                || (target.closest && target.closest('.legendsDialogOverlay'))) {
+                return;
             }
+            event.preventDefault();
+            event.stopPropagation();
         }, {capture: true, passive: false});
     });
 
     render();
     updateForm();
-    placeBackdrop();
 })();

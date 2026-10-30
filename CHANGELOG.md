@@ -6,7 +6,7 @@
 
 - Relocating buildings as in Travian Legends: the Main Building has a
   "Relocate buildings" section that opens the village centre in relocation mode
-  (`dorf2.php?relocate=1`). The page dims around the village, a building is
+  (`dorf2.php?mode=rearrange`, as in Legends; `?relocate=1` still works). The page dims around the village, a building is
   picked up by a tap or dragged, the other buildings fade and every building
   site shows its plot (orange where it stands, blue where it would go); dropping
   it on another building swaps them, on an empty site moves it. The layout is
@@ -16,8 +16,15 @@
   and the wall stay in place (tapping them shows "This building cannot be
   relocated."), World Wonder villages too. After picking a building the
   subtitle names it ("Now choose a new position for … (level …)"), and the save
-  button explains that a building has to be moved first. Covered by
-  `tests/building-relocation-regression.php`.
+  button explains that a building has to be moved first. The page uses the
+  markup of the Legends rearrange mode (`.rearrangeBuildings` with the village
+  mask, instruction steps `step1` / `step2` / `dragAndDrop`,
+  `#villageContent.rearrangeMode` with `movable` / `selected` / `dragged` /
+  `dropTarget` slots), so the Legends pack styles it with its own
+  `legends_ltr.css` rules; saving asks for confirmation and leaving with unsaved
+  changes asks whether to cancel the rearrangement (Legends dialogs), other
+  looks get a fallback with browser dialogs. Unlike Legends (20 gold) the
+  relocation is free. Covered by `tests/building-relocation-regression.php`.
 - Statistics → General in the Travian Legends look ("Všeobecné"): the Legends
   page rendered on the server with real data instead of the hard-coded sample
   of the old React view — world progress timeline (with the tribe of the first

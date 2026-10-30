@@ -32,7 +32,7 @@ class Dorf2Ctrl extends GameCtrl
         // T40: the level switch hides the levels instead (see dorf2/main2.php), the circles stay coloured
         $showColored = is_t40_layout() || PreferencesHelper::getPreference("t4level") == 0;
         $village = $this->session->village;
-        $relocate = isset($_GET['relocate']) && $this->canRelocateBuildings();
+        $relocate = (isset($_GET['relocate']) || ($_GET['mode'] ?? '') === 'rearrange') && $this->canRelocateBuildings();
         $maps = [];
         $non_fast_upgrade_buildings = [13, 15, 16, 17, 18, 19, 20, 21, 22, 24, 25, 26, 27, 29, 30, 36, 37, 40];
         for ($i = 19; $i <= 40; ++$i) {
@@ -70,6 +70,7 @@ class Dorf2Ctrl extends GameCtrl
                 'firstSlot' => BuildingRelocation::FIRST_SLOT,
                 'lastSlot' => BuildingRelocation::LAST_SLOT,
                 'fixedGids' => BuildingRelocation::FIXED_BUILDINGS,
+                'villageName' => (string)$village->getName(),
                 'checkerInput' => Session::getCheckerInput(),
             ] : null,
             'onLoadBuildings' => Dispatcher::getInstance()->dispatch("onLoadBuildingsDorfCtrl", FALSE),
@@ -87,7 +88,7 @@ class Dorf2Ctrl extends GameCtrl
     }
 
     /**
-     * Main Building → "Relocate buildings": saves the layout arranged on the village map (dorf2.php?relocate=1).
+     * Main Building → "Relocate buildings": saves the layout arranged on the village map (dorf2.php?mode=rearrange).
      */
     private function relocateBuildings(): void
     {
@@ -95,7 +96,7 @@ class Dorf2Ctrl extends GameCtrl
             return;
         }
         if (!isset($_POST[Session::getCheckerName()]) || !Session::validateChecker()) {
-            $this->redirect('dorf2.php?relocate=1');
+            $this->redirect('dorf2.php?mode=rearrange');
         }
         if ($this->canRelocateBuildings()) {
             $placement = BuildingRelocation::normalizePlacement($_POST['placement'] ?? []);
