@@ -78,7 +78,7 @@ def fetch_startpage(out: str) -> int:
         selector, body = rule.group(1), rule.group(2)
         for url in re.findall(r'url\((/bundle/[^)?#]+)', body):
             if '@font-face' in selector:
-                if url.endswith('.woff2'):
+                if url.endswith(('.woff2', '.ttf')):
                     wanted.add(url)
             elif not SKIP_START.search(selector):
                 wanted.add(url)
@@ -88,8 +88,9 @@ def fetch_startpage(out: str) -> int:
         if not os.path.isfile(target):
             with open(target, 'wb') as fh:
                 fh.write(get(url))
-    css = re.sub(r'url\(/bundle/', 'url(bundle/', css)
-    css = re.sub(r'src:url\(bundle/[^)]+\.eot\);', '', css)
+    # absolute paths: custom properties (--serverImage, --iconUrl) resolve them in web/public/lobby-legends.css too
+    css = re.sub(r'url\(/bundle/', 'url(/legends/bundle/', css)
+    css = re.sub(r'src:url\(/legends/bundle/[^)]+\.eot\);', '', css)
     # the details dialog of the start page's gameworld calendar is the details dialog of the lobby
     extra = []
     for rule in re.finditer(r'([^{}@]+)\{([^{}]*)\}', css):
