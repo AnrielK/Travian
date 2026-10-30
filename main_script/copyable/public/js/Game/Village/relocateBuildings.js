@@ -398,39 +398,73 @@
         return '<button type="button" class="textButtonV1 ' + cls + '" version="textButtonV1">' + escapeHtml(text) + '</button>';
     }
 
-    function dialog(cls, title, text, buttons, onOpen) {
-        if (fallback || !window.LegendsDialog) {
-            return null;
-        }
-        var overlay = window.LegendsDialog.open({
-            cls: cls,
-            title: escapeHtml(title),
-            closeText: data('text-cancel'),
-            html: '<p>' + text + '</p>' + buttons
+    var CLOSE_ICON = '<svg viewBox="0 0 20 20"><path d="M0 17.01L7.01 10 .14 3.13 3.13.14 10 7.01 17.01 0 20 2.99 12.99 10l6.87 6.87-2.99 2.99L10 12.99 2.99 20 0 17.01z"></path></svg>';
+    var openDialog = null;
+
+    // The Legends rearrange dialogs: a plain white box, "cancel rearrangement?" at the top of the screen, the
+    // confirmation over the confirm button. place(dialog) positions it once it is in the page.
+    function dialog(cls, title, text, buttons, closable, place, onOpen) {
+        closeDialog();
+        var overlay = document.createElement('div');
+        overlay.className = 'relocateDialogOverlay';
+        overlay.innerHTML = '<div class="relocateDialog ' + cls + '">'
+            + (closable ? '<a class="relocateDialogClose" href="#" title="' + escapeHtml(data('text-cancel')) + '">' + CLOSE_ICON + '</a>' : '')
+            + '<h2>' + escapeHtml(title) + '</h2><p>' + text + '</p><div class="relocateDialogButtons">' + buttons + '</div></div>';
+        document.body.appendChild(overlay);
+        var box = overlay.firstChild;
+        overlay.addEventListener('click', function (event) {
+            if (event.target === overlay) {
+                closeDialog();
+            }
         });
-        onOpen(overlay);
-        return overlay;
+        var close = box.querySelector('.relocateDialogClose');
+        if (close) {
+            close.addEventListener('click', function (event) {
+                event.preventDefault();
+                closeDialog();
+            });
+        }
+        box.querySelector('.cancelAction').addEventListener('click', closeDialog);
+        place(box);
+        openDialog = overlay;
+        onOpen(box);
+        window.requestAnimationFrame(function () {
+            overlay.classList.add('shown');
+        });
+    }
+
+    function closeDialog() {
+        if (openDialog && openDialog.parentNode) {
+            openDialog.parentNode.removeChild(openDialog);
+        }
+        openDialog = null;
+    }
+
+    function atTop(box) {
+        box.style.top = '12px';
+    }
+
+    function overConfirmButton(box) {
+        var rect = confirmButton.getBoundingClientRect();
+        var height = box.offsetHeight;
+        var top = rect.top + rect.height / 2 - height / 2;
+        box.style.top = Math.max(12, Math.min(window.innerHeight - height - 12, top)) + 'px';
     }
 
     function proceed() {
         var village = '<strong>' + escapeHtml(data('village-name')) + '</strong>';
         var text = escapeHtml(data('text-proceed')).split('[VILLAGE]').join(village);
-        var opened = dialog('rearrangeBuildingsConfirmDialog', data('text-title'), text,
-            '<div class="rearrangeBuildingsButtons">' + button(data('text-title'), 'gold proceedAction')
-            + button(data('text-cancel'), 'grey cancelAction') + '</div>',
-            function (overlay) {
-                overlay.querySelector('.proceedAction').addEventListener('click', submit);
-                overlay.querySelector('.cancelAction').addEventListener('click', function () {
-                    window.LegendsDialog.close(overlay);
-                });
+        dialog('proceedDialog', data('text-title'), text,
+            button(data('text-title'), 'gold proceedAction') + button(data('text-cancel'), 'grey cancelAction'),
+            true, overConfirmButton,
+            function (box) {
+                box.querySelector('.proceedAction').addEventListener('click', submit);
             });
-        if (!opened && window.confirm(text.replace(/<[^>]+>/g, ''))) {
-            submit();
-        }
     }
 
     function submit() {
         leaving = true;
+        closeDialog();
         form.submit();
     }
 
@@ -440,20 +474,14 @@
             leave(url);
             return;
         }
-        var opened = dialog('rearrangeBuildingsAbortDialog', data('text-abort-title'), escapeHtml(data('text-abort')),
-            '<div class="decisionButtons">' + button(data('text-abort-confirm'), 'green abortAction')
-            + button(data('text-cancel'), 'grey cancelAction') + '</div>',
-            function (overlay) {
-                overlay.querySelector('.abortAction').addEventListener('click', function () {
+        dialog('abortDialog', data('text-abort-title'), escapeHtml(data('text-abort')),
+            button(data('text-abort-confirm'), 'green abortAction') + button(data('text-cancel'), 'grey cancelAction'),
+            false, atTop,
+            function (box) {
+                box.querySelector('.abortAction').addEventListener('click', function () {
                     leave(url);
                 });
-                overlay.querySelector('.cancelAction').addEventListener('click', function () {
-                    window.LegendsDialog.close(overlay);
-                });
             });
-        if (!opened && window.confirm(data('text-abort-title') + '\n' + data('text-abort'))) {
-            leave(url);
-        }
     }
 
     closeLink.addEventListener('click', function (event) {
@@ -486,7 +514,11 @@
     });
 
     document.addEventListener('keydown', function (event) {
-        if (event.key !== 'Escape' || document.querySelector('.legendsDialogOverlay')) {
+        if (event.key !== 'Escape') {
+            return;
+        }
+        if (openDialog) {
+            closeDialog();
             return;
         }
         if (selected !== null) {
@@ -500,17 +532,19 @@
 
     // ------------------------------------------------------------------ village mask
 
-    // Legends village mask (villageMask.png, 4029 × 1509): black at 85 % with an elliptic window around the village
-    // walls (centre 2015 / 433.5). The window is put on the village of our map (1280 × 720, walls centred at
-    // 640 / 400 like in Legends); a shadow continues the black beyond the picture.
+    // Legends village mask (villageMask.png, 4029 × 1509): black at 85 % with an elliptic window (centre
+    // 2015 / 433.5). As in Legends the picture is centred on the village map (1280 × 720) and starts at its top, so
+    // the window sits a little below the middle of the walls; a shadow continues the black beyond the picture.
     var MASK_CENTER_X = 2014.5;
     var MASK_CENTER_Y = 433.5;
     var VILLAGE_CENTER_X = 640;
-    var VILLAGE_CENTER_Y = 400;
+    var VILLAGE_CENTER_Y = 433.5;
 
     function placeMask() {
         var page = document.documentElement;
         root.style.height = Math.max(page.scrollHeight, document.body.scrollHeight, window.innerHeight) + 'px';
+        // the page can be wider than <body> (phones show the whole desktop layout)
+        root.style.width = Math.max(page.scrollWidth, document.body.scrollWidth, window.innerWidth) + 'px';
         if (fallback) {
             placeBackdrop();
             return;
@@ -568,7 +602,7 @@
         document.addEventListener(type, function (event) {
             var target = event.target;
             if (map.contains(target) || container.contains(target)
-                || (target.closest && target.closest('.legendsDialogOverlay'))) {
+                || (target.closest && target.closest('.relocateDialogOverlay'))) {
                 return;
             }
             event.preventDefault();

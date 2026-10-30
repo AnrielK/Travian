@@ -22,8 +22,10 @@
   `#villageContent.rearrangeMode` with `movable` / `selected` / `dragged` /
   `dropTarget` slots), so the Legends pack styles it with its own
   `legends_ltr.css` rules; saving asks for confirmation and leaving with unsaved
-  changes asks whether to cancel the rearrangement (Legends dialogs), other
-  looks get a fallback with browser dialogs. Unlike Legends (20 gold) the
+  changes asks whether to cancel the rearrangement — white Legends dialogs, the
+  cancel question at the top of the screen and the confirmation over the
+  confirm button. As in Legends the village mask starts at the top of the map
+  and the building queue is hidden while rearranging. Unlike Legends (20 gold) the
   relocation is free. Covered by `tests/building-relocation-regression.php`.
 - Statistics → General in the Travian Legends look ("Všeobecné"): the Legends
   page rendered on the server with real data instead of the hard-coded sample

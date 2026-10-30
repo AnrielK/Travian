@@ -818,7 +818,6 @@ $legendsShapes = is_hero_v2(); ?>
     });
 </script>
 <?php if ($relocate): ?>
-<script type="text/javascript" src="js/Game/Legends/dialog.js?v=<?=ov_asset_version(PUBLIC_PATH . 'js/Game/Legends/dialog.js');?>"></script>
 <script type="text/javascript" src="js/Game/Village/relocateBuildings.js?v=<?=ov_asset_version(PUBLIC_PATH . 'js/Game/Village/relocateBuildings.js');?>"></script>
 <?php endif; ?>
 <?php if (false): ?>

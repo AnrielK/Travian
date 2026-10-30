@@ -723,7 +723,7 @@ body.rearrangeBuildings > .rearrangeBuildings:not(.relocateFallback) {
     position: absolute;
     top: 0;
     left: 0;
-    right: 0;
+    right: auto;
     bottom: auto;
     z-index: 10000;
     overflow: hidden;
@@ -746,43 +746,157 @@ body.rearrangeBuildings > .rearrangeBuildings:not(.relocateFallback) .container 
     top: 0;
 }
 
-/* confirm / abort dialogs (LegendsDialog) as narrow as their content, like the Legends ones */
-.legendsDialogOverlay .dialogWrapper:has(.rearrangeBuildingsConfirmDialog),
-.legendsDialogOverlay .dialogWrapper:has(.rearrangeBuildingsAbortDialog) {
-    width: fit-content;
-    min-width: min(540px, calc(100vw - 32px));
-    max-width: calc(100vw - 32px);
+/* the building queue stays out of sight while rearranging, as in Legends */
+body.rearrangeBuildings .buildingList {
+    visibility: hidden;
 }
 
-.legendsDialogOverlay .rearrangeBuildingsConfirmDialog .dialogContents,
-.legendsDialogOverlay .rearrangeBuildingsAbortDialog .dialogContents,
-.legendsDialogOverlay .rearrangeBuildingsConfirmDialog .content,
-.legendsDialogOverlay .rearrangeBuildingsAbortDialog .content {
-    width: auto;
+/* rearrange dialogs (Legends look): a white box in a dark frame, "Cancel rearrangement?" at the top of the screen,
+   the confirmation over the confirm button */
+.relocateDialogOverlay {
+    position: fixed;
+    inset: 0;
+    z-index: 10010;
 }
 
-.legendsDialogOverlay .rearrangeBuildingsConfirmDialog .content p,
-.legendsDialogOverlay .rearrangeBuildingsAbortDialog .content p {
-    margin: 0 0 16px;
+.relocateDialog {
+    position: absolute;
+    left: 50%;
+    width: max-content;
+    max-width: min(640px, calc(100vw - 40px));
+    box-sizing: border-box;
+    padding: 20px 20px 22px;
+    border-radius: 3px;
+    background: #fff;
+    box-shadow: 0 0 0 8px #141414, 0 0 0 10px #5a5a5a, 0 6px 24px 10px rgba(0, 0, 0, 0.5);
+    color: #333;
+    font-family: Arial, Helvetica, sans-serif;
+    text-align: left;
+    transform: translate(-50%, 8px);
+    opacity: 0;
+    transition: opacity 0.15s ease-out, transform 0.15s ease-out;
 }
 
-.legendsDialogOverlay .rearrangeBuildingsConfirmDialog .rearrangeBuildingsButtons {
-    display: grid;
-    grid-template-columns: auto auto;
-    justify-content: space-between;
-    gap: 10px;
+.relocateDialogOverlay.shown .relocateDialog {
+    transform: translate(-50%, 0);
+    opacity: 1;
 }
 
-.legendsDialogOverlay .rearrangeBuildingsAbortDialog .decisionButtons {
-    display: grid;
-    grid-template-columns: auto auto;
-    gap: 10px;
+.relocateDialog h2 {
+    margin: 14px 46px 12px 0;
+    padding: 0;
+    color: #3a3a3a !important;
+    font-family: Arial, Helvetica, sans-serif !important;
+    font-size: 22px !important;
+    font-weight: 700 !important;
+    line-height: 1.25 !important;
+    text-transform: none !important;
+    letter-spacing: 0 !important;
+}
+
+.relocateDialog.abortDialog h2 {
+    margin-top: 6px;
+}
+
+.relocateDialog p {
+    margin: 0 0 18px;
+    color: #333;
+    font-size: 15px !important;
+    line-height: 1.55;
+}
+
+.relocateDialog p strong {
+    font-weight: 700;
+}
+
+.relocateDialog .relocateDialogButtons {
+    display: flex;
+    gap: 18px;
     justify-content: center;
 }
 
-.legendsDialogOverlay .rearrangeBuildingsConfirmDialog h1.titleInHeader,
-.legendsDialogOverlay .rearrangeBuildingsAbortDialog h1.titleInHeader {
-    right: 80px !important;
+.relocateDialog.proceedDialog .relocateDialogButtons {
+    justify-content: space-between;
+}
+
+.relocateDialog button.textButtonV1 {
+    min-width: 130px;
+    height: 34px;
+    padding: 0 24px;
+    border: 1px solid #5a5a5a;
+    border-radius: 4px;
+    color: #333;
+    font-family: Arial, Helvetica, sans-serif !important;
+    font-size: 15px !important;
+    font-weight: 700;
+    line-height: 30px !important;
+    text-align: center !important;
+    cursor: pointer;
+}
+
+.relocateDialog button.textButtonV1.gold {
+    border-color: #82631d;
+    background: linear-gradient(180deg, #fdf5cb, #f8eeb0 40%, #f0dc7c 45%, #e6ce64 85%, #caac50);
+    box-shadow: inset 0 0 1px 1px rgba(82, 67, 32, 0.5), inset 0 2px 2px 1px #faf8ec, inset 0 -2px 2px 0 #a08939;
+}
+
+.relocateDialog button.textButtonV1.green {
+    border-color: #3c6b11;
+    background: linear-gradient(180deg, #a3d65c, #72b02b 45%, #5b9a1c 85%, #4c8516);
+    box-shadow: inset 0 0 1px 1px rgba(30, 60, 10, 0.5), inset 0 2px 2px 1px #c5ec8c, inset 0 -2px 2px 0 #3f7210;
+    color: #fff;
+    text-shadow: 0 1px 1px rgba(0, 0, 0, 0.45);
+}
+
+.relocateDialog button.textButtonV1.grey {
+    border-color: #6b6b6b;
+    background: linear-gradient(180deg, #fafafa, #e6e6e6 45%, #d2d2d2 85%, #bdbdbd);
+    box-shadow: inset 0 0 1px 1px rgba(60, 60, 60, 0.35), inset 0 2px 2px 1px #fff, inset 0 -2px 2px 0 #a5a5a5;
+}
+
+.relocateDialog button.textButtonV1:hover {
+    filter: brightness(1.06);
+}
+
+.relocateDialog button.textButtonV1:active {
+    filter: brightness(0.92);
+}
+
+.relocateDialog .relocateDialogClose {
+    position: absolute;
+    top: 8px;
+    right: 8px;
+    width: 34px;
+    height: 34px;
+    box-sizing: border-box;
+    border: 1px solid #4f8a17;
+    border-radius: 2px;
+    background: linear-gradient(180deg, #9fd45a, #6bb02a);
+    box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.45);
+}
+
+.relocateDialog .relocateDialogClose svg {
+    position: absolute;
+    left: 8px;
+    top: 8px;
+    width: 16px;
+    height: 16px;
+    fill: #fff;
+}
+
+.relocateDialog .relocateDialogClose:hover {
+    filter: brightness(1.08);
+}
+
+@media (max-width: 520px) {
+    .relocateDialog .relocateDialogButtons {
+        gap: 10px;
+    }
+
+    .relocateDialog button.textButtonV1 {
+        min-width: 0;
+        padding: 0 14px;
+    }
 }
 
 /* ---- fallback look: packs without the Legends rearrange styles */
