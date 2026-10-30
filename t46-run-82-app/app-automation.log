@@ -1,0 +1,351 @@
+01:21:56 37 ms  movementComplete 3ms, movementComplete 0ms, trainingComplete 2ms, postService 0ms
+01:21:57 30 ms  movementComplete 0ms, movementComplete 0ms
+01:21:58 36 ms  buildComplete:buildComplete 8ms, movementComplete 3ms, movementComplete 0ms, trainingComplete 1ms
+01:21:59 28 ms  movementComplete 0ms, movementComplete 0ms
+01:22:00 30 ms  marketComplete:researchComplete 5ms, marketComplete:marketComplete 2ms, buildComplete:buildComplete 1ms, movementComplete 0ms, movementComplete 0ms, trainingComplete 0ms
+01:22:01 17 ms  movementComplete 0ms, movementComplete 0ms
+01:22:02 31 ms  marketComplete:tradeRoute 4ms, auctionComplete:doAuction 4ms, buildComplete:buildComplete 2ms, movementComplete 0ms, movementComplete 0ms, trainingComplete 1ms
+01:22:03 34 ms  marketComplete:researchComplete 0ms, marketComplete:marketComplete 1ms, buildComplete:buildComplete 1ms, movementComplete 0ms, movementComplete 0ms, trainingComplete 1ms
+01:22:04 26 ms  movementComplete 0ms, movementComplete 0ms
+01:22:05 30 ms  buildComplete:buildComplete 2ms, movementComplete 1ms, movementComplete 0ms, trainingComplete 2ms
+01:22:06 84 ms  marketComplete:researchComplete 1ms, marketComplete:marketComplete 2ms, buildComplete:buildComplete 3ms, movementComplete 3ms, movementComplete 0ms, trainingComplete 1ms
+01:22:07 37 ms  movementComplete 0ms, movementComplete 0ms, gameProgress:boughtGoldMessage 6ms, generalProgress:checkForArtifactActivation 4ms, generalProgress:zeroPopVillages 2ms
+01:22:08 40 ms  marketComplete:tradeRoute 0ms, auctionComplete:doAuction 3ms, buildComplete:buildComplete 2ms, movementComplete 1ms, movementComplete 0ms, trainingComplete 2ms
+01:22:09 17 ms  movementComplete 0ms, movementComplete 0ms
+01:22:10 20 ms  marketComplete:researchComplete 1ms, marketComplete:marketComplete 1ms, buildComplete:buildComplete 1ms, movementComplete 0ms, movementComplete 0ms, trainingComplete 0ms
+01:22:11 25 ms  movementComplete 2ms, movementComplete 0ms
+01:22:12 28 ms  marketComplete:marketComplete 1ms, buildComplete:buildComplete 2ms, movementComplete 0ms, movementComplete 0ms, trainingComplete 0ms, AIProgress:handleNatarVillages 0ms, AIProgress:handleNatarExpansion 10ms
+01:22:13 20 ms  movementComplete 2ms, movementComplete 0ms
+01:22:14 33 ms  marketComplete:tradeRoute 1ms, marketComplete:researchComplete 1ms, auctionComplete:doAuction 3ms, buildComplete:buildComplete 3ms, movementComplete 0ms, movementComplete 1ms, trainingComplete 1ms
+01:22:15 17 ms  movementComplete 1ms, movementComplete 0ms
+01:22:16 19 ms  marketComplete:marketComplete 0ms, buildComplete:buildComplete 1ms, movementComplete 0ms, movementComplete 2ms, trainingComplete 2ms
+01:22:17 122 ms  marketComplete:researchComplete 7ms, buildComplete:buildComplete 6ms, movementComplete 14ms, movementComplete 1ms, trainingComplete 15ms, gameProgress:boughtGoldMessage 2ms, generalProgress:checkForArtifactActivation 6ms, generalProgress:zeroPopVillages 2ms, routineJobs:checkForNewAdventures 1ms
+01:22:18 13 ms  movementComplete 0ms, movementComplete 0ms
+01:22:19 13 ms  marketComplete:marketComplete 1ms, buildComplete:buildComplete 0ms, movementComplete 0ms, movementComplete 0ms, trainingComplete 0ms
+01:22:20 38 ms  marketComplete:tradeRoute 0ms, auctionComplete:doAuction 13ms, buildComplete:buildComplete 2ms, movementComplete 0ms, movementComplete 0ms, trainingComplete 1ms
+01:22:21 19 ms  movementComplete 0ms, movementComplete 0ms
+01:22:22 19 ms  marketComplete:researchComplete 0ms, marketComplete:marketComplete 1ms, buildComplete:buildComplete 2ms, movementComplete 0ms, movementComplete 0ms, trainingComplete 3ms
+01:22:23 16 ms  buildComplete:buildComplete 2ms, movementComplete 1ms, movementComplete 0ms, trainingComplete 1ms
+01:22:24 10 ms  movementComplete 0ms, movementComplete 0ms
+01:22:25 14 ms  marketComplete:marketComplete 0ms, buildComplete:buildComplete 1ms, movementComplete 0ms, movementComplete 0ms, trainingComplete 0ms
+01:22:26 19 ms  marketComplete:tradeRoute 0ms, marketComplete:researchComplete 0ms, auctionComplete:doAuction 1ms, buildComplete:buildComplete 1ms, movementComplete 0ms, movementComplete 0ms, trainingComplete 1ms
+01:22:27 13 ms  marketComplete:marketComplete 1ms, buildComplete:buildComplete 1ms, movementComplete 0ms, movementComplete 0ms, trainingComplete 1ms
+01:22:28 21 ms  movementComplete 0ms, movementComplete 0ms, gameProgress:checkAutoFinish 0ms, gameProgress:boughtGoldMessage 1ms, gameProgress:referenceCheck 2ms, gameProgress:ArtifactReleases 0ms, gameProgress:resetMedals 0ms, gameProgress:resetDailyQuest 0ms, generalProgress:checkForArtifactActivation 2ms, generalProgress:zeroPopVillages 2ms
+01:22:29 17 ms  marketComplete:researchComplete 0ms, buildComplete:buildComplete 1ms, movementComplete 0ms, movementComplete 0ms, trainingComplete 0ms, AIProgress:handleNatarVillages 0ms, AIProgress:handleNatarExpansion 4ms
+01:22:30 16 ms  movementComplete 0ms, movementComplete 0ms
+01:22:31 14 ms  marketComplete:marketComplete 1ms, buildComplete:buildComplete 1ms, movementComplete 0ms, movementComplete 0ms, trainingComplete 1ms
+01:22:32 15 ms  movementComplete 0ms, movementComplete 0ms
+01:22:33 15 ms  marketComplete:tradeRoute 0ms, marketComplete:researchComplete 0ms, auctionComplete:doAuction 0ms, buildComplete:buildComplete 1ms, movementComplete 0ms, movementComplete 0ms, trainingComplete 0ms
+01:22:34 19 ms  marketComplete:marketComplete 0ms, buildComplete:buildComplete 1ms, movementComplete 0ms, movementComplete 0ms, trainingComplete 0ms
+01:22:35 20 ms  buildComplete:buildComplete 1ms, movementComplete 0ms, movementComplete 0ms, trainingComplete 0ms
+01:22:36 13 ms  movementComplete 0ms, movementComplete 0ms
+01:22:37 24 ms  marketComplete:researchComplete 1ms, marketComplete:marketComplete 1ms, buildComplete:buildComplete 1ms, movementComplete 1ms, movementComplete 0ms, trainingComplete 1ms
+01:22:38 30 ms  movementComplete 1ms, movementComplete 0ms, gameProgress:boughtGoldMessage 1ms, generalProgress:checkForArtifactActivation 1ms, generalProgress:zeroPopVillages 3ms, routineJobs:checkForNewAdventures 1ms, checkIndexFunctions:checkGameFinish 0ms, checkIndexFunctions:clearAndDeleting 2ms
+01:22:39 16 ms  marketComplete:tradeRoute 0ms, marketComplete:marketComplete 0ms, auctionComplete:doAuction 0ms, buildComplete:buildComplete 1ms, movementComplete 0ms, movementComplete 0ms, trainingComplete 1ms
+01:22:40 15 ms  movementComplete 0ms, movementComplete 0ms
+01:22:41 21 ms  marketComplete:researchComplete 0ms, buildComplete:buildComplete 2ms, movementComplete 0ms, movementComplete 0ms, trainingComplete 0ms
+01:22:42 12 ms  movementComplete 0ms, movementComplete 0ms
+01:22:43 20 ms  marketComplete:marketComplete 1ms, buildComplete:buildComplete 1ms, movementComplete 0ms, movementComplete 0ms, trainingComplete 1ms
+01:22:44 14 ms  movementComplete 0ms, movementComplete 0ms
+01:22:45 14 ms  marketComplete:tradeRoute 0ms, marketComplete:researchComplete 0ms, auctionComplete:doAuction 0ms, buildComplete:buildComplete 1ms, movementComplete 0ms, movementComplete 0ms, trainingComplete 1ms
+01:22:46 31 ms  marketComplete:marketComplete 1ms, buildComplete:buildComplete 3ms, movementComplete 0ms, movementComplete 0ms, trainingComplete 1ms, AIProgress:handleFakeUsers 0ms, AIProgress:handleFakeUserExpands 4ms, AIProgress:handleNatarVillages 1ms, AIProgress:handleNatarExpansion 5ms
+01:22:47 11 ms  buildComplete:buildComplete 1ms, movementComplete 0ms, movementComplete 0ms, trainingComplete 1ms
+01:22:48 14 ms  movementComplete 1ms, movementComplete 1ms
+01:22:49 30 ms  marketComplete:researchComplete 0ms, marketComplete:marketComplete 0ms, buildComplete:buildComplete 1ms, movementComplete 0ms, movementComplete 0ms, trainingComplete 0ms, gameProgress:boughtGoldMessage 6ms, generalProgress:checkForArtifactActivation 1ms, generalProgress:zeroPopVillages 8ms
+01:22:50 17 ms  marketComplete:tradeRoute 0ms, auctionComplete:doAuction 0ms, buildComplete:buildComplete 1ms, movementComplete 0ms, movementComplete 0ms, trainingComplete 0ms
+01:22:51 17 ms  movementComplete 0ms, movementComplete 0ms
+01:22:52 16 ms  marketComplete:marketComplete 1ms, buildComplete:buildComplete 1ms, movementComplete 0ms, movementComplete 0ms, trainingComplete 1ms
+01:22:53 46 ms  marketComplete:researchComplete 0ms, buildComplete:buildComplete 23ms, movementComplete 0ms, movementComplete 0ms, trainingComplete 0ms
+01:22:54 16 ms  movementComplete 1ms, movementComplete 0ms
+01:22:55 16 ms  marketComplete:marketComplete 0ms, buildComplete:buildComplete 1ms, movementComplete 0ms, movementComplete 0ms, trainingComplete 1ms
+01:22:56 23 ms  marketComplete:tradeRoute 0ms, auctionComplete:doAuction 1ms, buildComplete:buildComplete 1ms, movementComplete 0ms, movementComplete 0ms, trainingComplete 0ms
+01:22:57 15 ms  movementComplete 0ms, movementComplete 0ms
+01:22:58 21 ms  marketComplete:researchComplete 0ms, marketComplete:marketComplete 0ms, buildComplete:buildComplete 1ms, movementComplete 0ms, movementComplete 0ms, trainingComplete 0ms, routineJobs:checkForNewAdventures 0ms, mayExitJobs:resetDailyGold 0ms
+01:22:59 34 ms  movementComplete 0ms, movementComplete 0ms, gameProgress:checkAutoFinish 0ms, gameProgress:setUpNewServer 0ms, gameProgress:boughtGoldMessage 2ms, gameProgress:referenceCheck 0ms, gameProgress:ArtifactReleases 0ms, gameProgress:resetMedals 0ms, gameProgress:resetDailyQuest 0ms, generalProgress:autoExtend 3ms, generalProgress:checkForArtifactActivation 1ms, loyaltyAndCulturePoint:deleteOasisComplete 2ms, gameProgress:allianceBonus 3ms, generalProgress:zeroPopVillages 1ms
+01:23:00 30 ms  marketComplete:marketComplete 1ms, buildComplete:buildComplete 1ms, movementComplete 0ms, movementComplete 1ms, trainingComplete 1ms
+01:23:01 13 ms  movementComplete 0ms, movementComplete 0ms
+01:23:02 45 ms  marketComplete:tradeRoute 0ms, marketComplete:researchComplete 0ms, auctionComplete:doAuction 0ms, buildComplete:buildComplete 1ms, movementComplete 0ms, movementComplete 0ms, trainingComplete 0ms, AIProgress:handleNatarVillages 0ms, AIProgress:handleNatarExpansion 9ms
+01:23:03 15 ms  movementComplete 0ms, movementComplete 0ms
+01:23:04 22 ms  marketComplete:marketComplete 0ms, buildComplete:buildComplete 1ms, movementComplete 0ms, movementComplete 0ms, trainingComplete 1ms
+01:23:05 9 ms  movementComplete 0ms, movementComplete 0ms
+01:23:06 15 ms  marketComplete:researchComplete 0ms, buildComplete:buildComplete 1ms, movementComplete 1ms, movementComplete 0ms, trainingComplete 1ms
+01:23:07 22 ms  marketComplete:marketComplete 1ms, buildComplete:buildComplete 2ms, movementComplete 1ms, movementComplete 0ms, trainingComplete 1ms
+01:23:08 22 ms  marketComplete:tradeRoute 0ms, auctionComplete:doAuction 0ms, buildComplete:buildComplete 1ms, movementComplete 0ms, movementComplete 0ms, trainingComplete 1ms
+01:23:09 25 ms  movementComplete 0ms, movementComplete 0ms
+01:23:10 19 ms  marketComplete:researchComplete 0ms, marketComplete:marketComplete 1ms, buildComplete:buildComplete 1ms, movementComplete 0ms, movementComplete 0ms, trainingComplete 0ms, gameProgress:boughtGoldMessage 1ms, generalProgress:checkForArtifactActivation 1ms, generalProgress:zeroPopVillages 1ms
+01:23:11 16 ms  buildComplete:buildComplete 1ms, movementComplete 0ms, movementComplete 0ms, trainingComplete 0ms
+01:23:12 23 ms  marketComplete:marketComplete 0ms, buildComplete:buildComplete 1ms, movementComplete 0ms, movementComplete 0ms, trainingComplete 0ms
+01:23:13 12 ms  movementComplete 0ms, movementComplete 0ms
+01:23:14 17 ms  marketComplete:tradeRoute 1ms, marketComplete:researchComplete 0ms, auctionComplete:doAuction 0ms, buildComplete:buildComplete 0ms, movementComplete 0ms, movementComplete 0ms, trainingComplete 2ms
+01:23:15 9 ms  movementComplete 0ms, movementComplete 0ms
+01:23:16 17 ms  marketComplete:marketComplete 0ms, buildComplete:buildComplete 1ms, movementComplete 0ms, movementComplete 0ms, trainingComplete 1ms
+01:23:17 17 ms  marketComplete:researchComplete 0ms, buildComplete:buildComplete 1ms, movementComplete 0ms, movementComplete 0ms, trainingComplete 0ms
+01:23:18 27 ms  marketComplete:marketComplete 0ms, buildComplete:buildComplete 1ms, movementComplete 0ms, movementComplete 0ms, trainingComplete 1ms
+01:23:19 26 ms  movementComplete 0ms, movementComplete 0ms, routineJobs:checkForNewAdventures 0ms, checkIndexFunctions:checkGameFinish 0ms, checkIndexFunctions:clearAndDeleting 3ms, AIProgress:handleNatarVillages 0ms, AIProgress:handleNatarExpansion 7ms
+01:23:20 45 ms  marketComplete:tradeRoute 0ms, marketComplete:researchComplete 0ms, marketComplete:marketComplete 1ms, auctionComplete:doAuction 1ms, buildComplete:buildComplete 1ms, movementComplete 1ms, movementComplete 0ms, trainingComplete 1ms, gameProgress:boughtGoldMessage 3ms, generalProgress:checkForArtifactActivation 2ms, generalProgress:zeroPopVillages 1ms
+01:23:21 27 ms  movementComplete 1ms, movementComplete 0ms
+01:23:22 16 ms  buildComplete:buildComplete 1ms, movementComplete 0ms, movementComplete 0ms, trainingComplete 0ms
+01:23:23 35 ms  marketComplete:researchComplete 0ms, marketComplete:marketComplete 0ms, buildComplete:buildComplete 1ms, movementComplete 0ms, movementComplete 0ms, trainingComplete 0ms
+01:23:24 17 ms  movementComplete 0ms, movementComplete 0ms
+01:23:25 22 ms  buildComplete:buildComplete 1ms, movementComplete 0ms, movementComplete 0ms, trainingComplete 0ms
+01:23:26 20 ms  marketComplete:tradeRoute 0ms, marketComplete:marketComplete 0ms, auctionComplete:doAuction 0ms, buildComplete:buildComplete 1ms, movementComplete 0ms, movementComplete 0ms, trainingComplete 0ms
+01:23:27 16 ms  movementComplete 0ms, movementComplete 0ms
+01:23:28 16 ms  marketComplete:researchComplete 0ms, buildComplete:buildComplete 1ms, movementComplete 0ms, movementComplete 0ms, trainingComplete 0ms
+01:23:29 19 ms  marketComplete:marketComplete 1ms, buildComplete:buildComplete 1ms, movementComplete 0ms, movementComplete 0ms, trainingComplete 0ms
+01:23:30 37 ms  buildComplete:buildComplete 1ms, movementComplete 0ms, movementComplete 0ms, trainingComplete 0ms, gameProgress:checkAutoFinish 0ms, gameProgress:boughtGoldMessage 1ms, gameProgress:referenceCheck 0ms, gameProgress:ArtifactReleases 0ms, gameProgress:resetMedals 0ms, gameProgress:resetDailyQuest 0ms, generalProgress:checkForArtifactActivation 1ms, generalProgress:zeroPopVillages 1ms
+01:23:31 17 ms  movementComplete 0ms, movementComplete 0ms
+01:23:32 19 ms  marketComplete:tradeRoute 0ms, marketComplete:researchComplete 0ms, marketComplete:marketComplete 0ms, auctionComplete:doAuction 0ms, buildComplete:buildComplete 1ms, movementComplete 0ms, movementComplete 0ms, trainingComplete 0ms
+01:23:33 12 ms  movementComplete 0ms, movementComplete 0ms
+01:23:34 17 ms  buildComplete:buildComplete 2ms, movementComplete 0ms, movementComplete 0ms, trainingComplete 1ms
+01:23:35 9 ms  movementComplete 0ms, movementComplete 0ms
+01:23:36 24 ms  marketComplete:researchComplete 0ms, marketComplete:marketComplete 0ms, buildComplete:buildComplete 1ms, movementComplete 0ms, movementComplete 0ms, trainingComplete 0ms, AIProgress:handleFakeUsers 0ms, AIProgress:handleFakeUserExpands 2ms, AIProgress:handleNatarVillages 0ms, AIProgress:handleNatarExpansion 6ms
+01:23:37 26 ms  marketComplete:tradeRoute 1ms, auctionComplete:doAuction 1ms, buildComplete:buildComplete 1ms, movementComplete 1ms, movementComplete 0ms, trainingComplete 0ms, postService 0ms
+01:23:38 18 ms  movementComplete 0ms, movementComplete 0ms
+01:23:39 11 ms  marketComplete:marketComplete 0ms, buildComplete:buildComplete 1ms, movementComplete 0ms, movementComplete 0ms, trainingComplete 0ms
+01:23:40 16 ms  marketComplete:researchComplete 0ms, buildComplete:buildComplete 1ms, movementComplete 0ms, movementComplete 0ms, trainingComplete 0ms, routineJobs:checkForNewAdventures 0ms, mayExitJobs:refreshCountryFlag 2ms
+01:23:41 25 ms  marketComplete:marketComplete 1ms, buildComplete:buildComplete 1ms, movementComplete 0ms, movementComplete 0ms, trainingComplete 0ms, gameProgress:boughtGoldMessage 1ms, generalProgress:checkForArtifactActivation 1ms, generalProgress:zeroPopVillages 1ms
+01:23:42 17 ms  movementComplete 1ms, movementComplete 0ms
+01:23:43 21 ms  marketComplete:tradeRoute 0ms, marketComplete:researchComplete 0ms, auctionComplete:doAuction 0ms, buildComplete:buildComplete 1ms, movementComplete 0ms, movementComplete 0ms, trainingComplete 0ms
+01:23:44 13 ms  movementComplete 0ms, movementComplete 0ms
+01:23:45 25 ms  marketComplete:marketComplete 1ms, buildComplete:buildComplete 1ms, movementComplete 0ms, movementComplete 0ms, trainingComplete 0ms
+01:23:46 13 ms  movementComplete 0ms, movementComplete 0ms
+01:23:47 19 ms  marketComplete:researchComplete 0ms, buildComplete:buildComplete 1ms, movementComplete 0ms, movementComplete 0ms, trainingComplete 1ms
+01:23:48 25 ms  marketComplete:tradeRoute 0ms, marketComplete:marketComplete 0ms, auctionComplete:doAuction 0ms, buildComplete:buildComplete 1ms, movementComplete 0ms, movementComplete 0ms, trainingComplete 1ms
+01:23:49 16 ms  movementComplete 0ms, movementComplete 0ms
+01:23:50 16 ms  buildComplete:buildComplete 1ms, movementComplete 1ms, movementComplete 0ms, trainingComplete 0ms
+01:23:51 11 ms  movementComplete 0ms, movementComplete 0ms
+01:23:52 21 ms  marketComplete:researchComplete 0ms, marketComplete:marketComplete 0ms, buildComplete:buildComplete 1ms, movementComplete 0ms, movementComplete 0ms, trainingComplete 1ms, gameProgress:boughtGoldMessage 1ms, generalProgress:checkForArtifactActivation 2ms, generalProgress:zeroPopVillages 1ms
+01:23:53 28 ms  buildComplete:buildComplete 1ms, movementComplete 0ms, movementComplete 0ms, trainingComplete 1ms, AIProgress:handleNatarVillages 0ms, AIProgress:handleNatarExpansion 10ms
+01:23:54 10 ms  movementComplete 0ms, movementComplete 0ms
+01:23:55 22 ms  marketComplete:tradeRoute 0ms, marketComplete:researchComplete 0ms, marketComplete:marketComplete 0ms, auctionComplete:doAuction 0ms, buildComplete:buildComplete 1ms, movementComplete 0ms, movementComplete 0ms, trainingComplete 0ms
+01:23:56 18 ms  movementComplete 0ms, movementComplete 0ms
+01:23:57 15 ms  buildComplete:buildComplete 1ms, movementComplete 0ms, movementComplete 0ms, trainingComplete 0ms
+01:23:58 9 ms  movementComplete 0ms, movementComplete 0ms
+01:23:59 20 ms  marketComplete:researchComplete 0ms, marketComplete:marketComplete 0ms, buildComplete:buildComplete 1ms, movementComplete 0ms, movementComplete 0ms, trainingComplete 0ms
+01:24:00 14 ms  movementComplete 0ms, movementComplete 0ms
+01:24:01 20 ms  marketComplete:tradeRoute 0ms, auctionComplete:doAuction 0ms, buildComplete:buildComplete 1ms, movementComplete 0ms, movementComplete 0ms, trainingComplete 0ms, routineJobs:checkForNewAdventures 1ms, checkIndexFunctions:checkGameFinish 0ms, checkIndexFunctions:clearAndDeleting 3ms, mayExitJobs:resetDailyGold 0ms
+01:24:02 77 ms  marketComplete:marketComplete 1ms, buildComplete:buildComplete 1ms, movementComplete 1ms, movementComplete 0ms, trainingComplete 1ms, gameProgress:checkAutoFinish 0ms, gameProgress:setUpNewServer 28ms, gameProgress:boughtGoldMessage 2ms, gameProgress:banProgress 17ms, gameProgress:referenceCheck 1ms, gameProgress:ArtifactReleases 0ms, gameProgress:resetMedals 0ms, gameProgress:resetDailyQuest 0ms, generalProgress:autoExtend 0ms, generalProgress:updateFoolArtifact 3ms, generalProgress:checkForArtifactActivation 0ms, loyaltyAndCulturePoint:deleteOasisComplete 1ms, gameProgress:allianceBonus 3ms, generalProgress:zeroPopVillages 1ms
+01:24:03 11 ms  movementComplete 0ms, movementComplete 0ms
+01:24:04 12 ms  marketComplete:researchComplete 0ms, buildComplete:buildComplete 1ms, movementComplete 0ms, movementComplete 0ms, trainingComplete 0ms
+01:24:05 17 ms  marketComplete:marketComplete 0ms, buildComplete:buildComplete 1ms, movementComplete 0ms, movementComplete 0ms, trainingComplete 1ms
+01:24:06 14 ms  movementComplete 1ms, movementComplete 0ms
+01:24:07 17 ms  marketComplete:tradeRoute 1ms, auctionComplete:doAuction 1ms, buildComplete:buildComplete 2ms, movementComplete 0ms, movementComplete 0ms, trainingComplete 1ms
+01:24:08 15 ms  marketComplete:researchComplete 0ms, marketComplete:marketComplete 0ms, buildComplete:buildComplete 1ms, movementComplete 0ms, movementComplete 0ms, trainingComplete 1ms
+01:24:09 12 ms  buildComplete:buildComplete 1ms, movementComplete 0ms, movementComplete 0ms, trainingComplete 0ms
+01:24:10 39 ms  marketComplete:marketComplete 1ms, buildComplete:buildComplete 1ms, movementComplete 0ms, movementComplete 0ms, trainingComplete 0ms, AIProgress:handleNatarVillages 0ms, AIProgress:handleNatarExpansion 11ms
+01:24:11 15 ms  movementComplete 0ms, movementComplete 0ms
+01:24:12 12 ms  marketComplete:tradeRoute 1ms, marketComplete:researchComplete 0ms, auctionComplete:doAuction 0ms, buildComplete:buildComplete 1ms, movementComplete 0ms, movementComplete 0ms, trainingComplete 0ms
+01:24:13 28 ms  marketComplete:marketComplete 0ms, buildComplete:buildComplete 1ms, movementComplete 0ms, movementComplete 0ms, trainingComplete 1ms, gameProgress:boughtGoldMessage 1ms, generalProgress:checkForArtifactActivation 2ms, generalProgress:zeroPopVillages 1ms
+01:24:14 12 ms  movementComplete 0ms, movementComplete 0ms
+01:24:15 12 ms  buildComplete:buildComplete 1ms, movementComplete 0ms, movementComplete 0ms, trainingComplete 0ms
+01:24:16 15 ms  marketComplete:researchComplete 0ms, marketComplete:marketComplete 0ms, buildComplete:buildComplete 1ms, movementComplete 0ms, movementComplete 0ms, trainingComplete 0ms
+01:24:17 13 ms  marketComplete:tradeRoute 0ms, auctionComplete:doAuction 0ms, buildComplete:buildComplete 0ms, movementComplete 0ms, movementComplete 0ms, trainingComplete 1ms
+01:24:18 9 ms  movementComplete 0ms, movementComplete 0ms
+01:24:19 12 ms  marketComplete:marketComplete 0ms, buildComplete:buildComplete 1ms, movementComplete 0ms, movementComplete 0ms, trainingComplete 1ms
+01:24:20 13 ms  movementComplete 0ms, movementComplete 0ms
+01:24:21 15 ms  marketComplete:researchComplete 0ms, marketComplete:marketComplete 0ms, buildComplete:buildComplete 1ms, movementComplete 0ms, movementComplete 0ms, trainingComplete 1ms
+01:24:22 16 ms  buildComplete:buildComplete 1ms, movementComplete 0ms, movementComplete 0ms, trainingComplete 0ms, routineJobs:checkForNewAdventures 1ms, AIProgress:handleFakeUsers 0ms, AIProgress:handleFakeUserExpands 1ms
+01:24:23 9 ms  movementComplete 0ms, movementComplete 0ms
+01:24:24 23 ms  marketComplete:tradeRoute 0ms, marketComplete:researchComplete 0ms, marketComplete:marketComplete 0ms, auctionComplete:doAuction 1ms, buildComplete:buildComplete 1ms, movementComplete 1ms, movementComplete 0ms, trainingComplete 1ms, gameProgress:boughtGoldMessage 1ms, generalProgress:checkForArtifactActivation 2ms, generalProgress:zeroPopVillages 1ms
+01:24:25 12 ms  movementComplete 0ms, movementComplete 0ms
+……
+01:22:52 16 ms  marketComplete:marketComplete 1ms, buildComplete:buildComplete 1ms, movementComplete 0ms, movementComplete 0ms, trainingComplete 1ms
+01:22:53 46 ms  marketComplete:researchComplete 0ms, buildComplete:buildComplete 23ms, movementComplete 0ms, movementComplete 0ms, trainingComplete 0ms
+01:22:54 16 ms  movementComplete 1ms, movementComplete 0ms
+01:22:55 16 ms  marketComplete:marketComplete 0ms, buildComplete:buildComplete 1ms, movementComplete 0ms, movementComplete 0ms, trainingComplete 1ms
+01:22:56 23 ms  marketComplete:tradeRoute 0ms, auctionComplete:doAuction 1ms, buildComplete:buildComplete 1ms, movementComplete 0ms, movementComplete 0ms, trainingComplete 0ms
+01:22:57 15 ms  movementComplete 0ms, movementComplete 0ms
+01:22:58 21 ms  marketComplete:researchComplete 0ms, marketComplete:marketComplete 0ms, buildComplete:buildComplete 1ms, movementComplete 0ms, movementComplete 0ms, trainingComplete 0ms, routineJobs:checkForNewAdventures 0ms, mayExitJobs:resetDailyGold 0ms
+01:22:59 34 ms  movementComplete 0ms, movementComplete 0ms, gameProgress:checkAutoFinish 0ms, gameProgress:setUpNewServer 0ms, gameProgress:boughtGoldMessage 2ms, gameProgress:referenceCheck 0ms, gameProgress:ArtifactReleases 0ms, gameProgress:resetMedals 0ms, gameProgress:resetDailyQuest 0ms, generalProgress:autoExtend 3ms, generalProgress:checkForArtifactActivation 1ms, loyaltyAndCulturePoint:deleteOasisComplete 2ms, gameProgress:allianceBonus 3ms, generalProgress:zeroPopVillages 1ms
+01:23:00 30 ms  marketComplete:marketComplete 1ms, buildComplete:buildComplete 1ms, movementComplete 0ms, movementComplete 1ms, trainingComplete 1ms
+01:23:01 13 ms  movementComplete 0ms, movementComplete 0ms
+01:23:02 45 ms  marketComplete:tradeRoute 0ms, marketComplete:researchComplete 0ms, auctionComplete:doAuction 0ms, buildComplete:buildComplete 1ms, movementComplete 0ms, movementComplete 0ms, trainingComplete 0ms, AIProgress:handleNatarVillages 0ms, AIProgress:handleNatarExpansion 9ms
+01:23:03 15 ms  movementComplete 0ms, movementComplete 0ms
+01:23:04 22 ms  marketComplete:marketComplete 0ms, buildComplete:buildComplete 1ms, movementComplete 0ms, movementComplete 0ms, trainingComplete 1ms
+01:23:05 9 ms  movementComplete 0ms, movementComplete 0ms
+01:23:06 15 ms  marketComplete:researchComplete 0ms, buildComplete:buildComplete 1ms, movementComplete 1ms, movementComplete 0ms, trainingComplete 1ms
+01:23:07 22 ms  marketComplete:marketComplete 1ms, buildComplete:buildComplete 2ms, movementComplete 1ms, movementComplete 0ms, trainingComplete 1ms
+01:23:08 22 ms  marketComplete:tradeRoute 0ms, auctionComplete:doAuction 0ms, buildComplete:buildComplete 1ms, movementComplete 0ms, movementComplete 0ms, trainingComplete 1ms
+01:23:09 25 ms  movementComplete 0ms, movementComplete 0ms
+01:23:10 19 ms  marketComplete:researchComplete 0ms, marketComplete:marketComplete 1ms, buildComplete:buildComplete 1ms, movementComplete 0ms, movementComplete 0ms, trainingComplete 0ms, gameProgress:boughtGoldMessage 1ms, generalProgress:checkForArtifactActivation 1ms, generalProgress:zeroPopVillages 1ms
+01:23:11 16 ms  buildComplete:buildComplete 1ms, movementComplete 0ms, movementComplete 0ms, trainingComplete 0ms
+01:23:12 23 ms  marketComplete:marketComplete 0ms, buildComplete:buildComplete 1ms, movementComplete 0ms, movementComplete 0ms, trainingComplete 0ms
+01:23:13 12 ms  movementComplete 0ms, movementComplete 0ms
+01:23:14 17 ms  marketComplete:tradeRoute 1ms, marketComplete:researchComplete 0ms, auctionComplete:doAuction 0ms, buildComplete:buildComplete 0ms, movementComplete 0ms, movementComplete 0ms, trainingComplete 2ms
+01:23:15 9 ms  movementComplete 0ms, movementComplete 0ms
+01:23:16 17 ms  marketComplete:marketComplete 0ms, buildComplete:buildComplete 1ms, movementComplete 0ms, movementComplete 0ms, trainingComplete 1ms
+01:23:17 17 ms  marketComplete:researchComplete 0ms, buildComplete:buildComplete 1ms, movementComplete 0ms, movementComplete 0ms, trainingComplete 0ms
+01:23:18 27 ms  marketComplete:marketComplete 0ms, buildComplete:buildComplete 1ms, movementComplete 0ms, movementComplete 0ms, trainingComplete 1ms
+01:23:19 26 ms  movementComplete 0ms, movementComplete 0ms, routineJobs:checkForNewAdventures 0ms, checkIndexFunctions:checkGameFinish 0ms, checkIndexFunctions:clearAndDeleting 3ms, AIProgress:handleNatarVillages 0ms, AIProgress:handleNatarExpansion 7ms
+01:23:20 45 ms  marketComplete:tradeRoute 0ms, marketComplete:researchComplete 0ms, marketComplete:marketComplete 1ms, auctionComplete:doAuction 1ms, buildComplete:buildComplete 1ms, movementComplete 1ms, movementComplete 0ms, trainingComplete 1ms, gameProgress:boughtGoldMessage 3ms, generalProgress:checkForArtifactActivation 2ms, generalProgress:zeroPopVillages 1ms
+01:23:21 27 ms  movementComplete 1ms, movementComplete 0ms
+01:23:22 16 ms  buildComplete:buildComplete 1ms, movementComplete 0ms, movementComplete 0ms, trainingComplete 0ms
+01:23:23 35 ms  marketComplete:researchComplete 0ms, marketComplete:marketComplete 0ms, buildComplete:buildComplete 1ms, movementComplete 0ms, movementComplete 0ms, trainingComplete 0ms
+01:23:24 17 ms  movementComplete 0ms, movementComplete 0ms
+01:23:25 22 ms  buildComplete:buildComplete 1ms, movementComplete 0ms, movementComplete 0ms, trainingComplete 0ms
+01:23:26 20 ms  marketComplete:tradeRoute 0ms, marketComplete:marketComplete 0ms, auctionComplete:doAuction 0ms, buildComplete:buildComplete 1ms, movementComplete 0ms, movementComplete 0ms, trainingComplete 0ms
+01:23:27 16 ms  movementComplete 0ms, movementComplete 0ms
+01:23:28 16 ms  marketComplete:researchComplete 0ms, buildComplete:buildComplete 1ms, movementComplete 0ms, movementComplete 0ms, trainingComplete 0ms
+01:23:29 19 ms  marketComplete:marketComplete 1ms, buildComplete:buildComplete 1ms, movementComplete 0ms, movementComplete 0ms, trainingComplete 0ms
+01:23:30 37 ms  buildComplete:buildComplete 1ms, movementComplete 0ms, movementComplete 0ms, trainingComplete 0ms, gameProgress:checkAutoFinish 0ms, gameProgress:boughtGoldMessage 1ms, gameProgress:referenceCheck 0ms, gameProgress:ArtifactReleases 0ms, gameProgress:resetMedals 0ms, gameProgress:resetDailyQuest 0ms, generalProgress:checkForArtifactActivation 1ms, generalProgress:zeroPopVillages 1ms
+01:23:31 17 ms  movementComplete 0ms, movementComplete 0ms
+01:23:32 19 ms  marketComplete:tradeRoute 0ms, marketComplete:researchComplete 0ms, marketComplete:marketComplete 0ms, auctionComplete:doAuction 0ms, buildComplete:buildComplete 1ms, movementComplete 0ms, movementComplete 0ms, trainingComplete 0ms
+01:23:33 12 ms  movementComplete 0ms, movementComplete 0ms
+01:23:34 17 ms  buildComplete:buildComplete 2ms, movementComplete 0ms, movementComplete 0ms, trainingComplete 1ms
+01:23:35 9 ms  movementComplete 0ms, movementComplete 0ms
+01:23:36 24 ms  marketComplete:researchComplete 0ms, marketComplete:marketComplete 0ms, buildComplete:buildComplete 1ms, movementComplete 0ms, movementComplete 0ms, trainingComplete 0ms, AIProgress:handleFakeUsers 0ms, AIProgress:handleFakeUserExpands 2ms, AIProgress:handleNatarVillages 0ms, AIProgress:handleNatarExpansion 6ms
+01:23:37 26 ms  marketComplete:tradeRoute 1ms, auctionComplete:doAuction 1ms, buildComplete:buildComplete 1ms, movementComplete 1ms, movementComplete 0ms, trainingComplete 0ms, postService 0ms
+01:23:38 18 ms  movementComplete 0ms, movementComplete 0ms
+01:23:39 11 ms  marketComplete:marketComplete 0ms, buildComplete:buildComplete 1ms, movementComplete 0ms, movementComplete 0ms, trainingComplete 0ms
+01:23:40 16 ms  marketComplete:researchComplete 0ms, buildComplete:buildComplete 1ms, movementComplete 0ms, movementComplete 0ms, trainingComplete 0ms, routineJobs:checkForNewAdventures 0ms, mayExitJobs:refreshCountryFlag 2ms
+01:23:41 25 ms  marketComplete:marketComplete 1ms, buildComplete:buildComplete 1ms, movementComplete 0ms, movementComplete 0ms, trainingComplete 0ms, gameProgress:boughtGoldMessage 1ms, generalProgress:checkForArtifactActivation 1ms, generalProgress:zeroPopVillages 1ms
+01:23:42 17 ms  movementComplete 1ms, movementComplete 0ms
+01:23:43 21 ms  marketComplete:tradeRoute 0ms, marketComplete:researchComplete 0ms, auctionComplete:doAuction 0ms, buildComplete:buildComplete 1ms, movementComplete 0ms, movementComplete 0ms, trainingComplete 0ms
+01:23:44 13 ms  movementComplete 0ms, movementComplete 0ms
+01:23:45 25 ms  marketComplete:marketComplete 1ms, buildComplete:buildComplete 1ms, movementComplete 0ms, movementComplete 0ms, trainingComplete 0ms
+01:23:46 13 ms  movementComplete 0ms, movementComplete 0ms
+01:23:47 19 ms  marketComplete:researchComplete 0ms, buildComplete:buildComplete 1ms, movementComplete 0ms, movementComplete 0ms, trainingComplete 1ms
+01:23:48 25 ms  marketComplete:tradeRoute 0ms, marketComplete:marketComplete 0ms, auctionComplete:doAuction 0ms, buildComplete:buildComplete 1ms, movementComplete 0ms, movementComplete 0ms, trainingComplete 1ms
+01:23:49 16 ms  movementComplete 0ms, movementComplete 0ms
+01:23:50 16 ms  buildComplete:buildComplete 1ms, movementComplete 1ms, movementComplete 0ms, trainingComplete 0ms
+01:23:51 11 ms  movementComplete 0ms, movementComplete 0ms
+01:23:52 21 ms  marketComplete:researchComplete 0ms, marketComplete:marketComplete 0ms, buildComplete:buildComplete 1ms, movementComplete 0ms, movementComplete 0ms, trainingComplete 1ms, gameProgress:boughtGoldMessage 1ms, generalProgress:checkForArtifactActivation 2ms, generalProgress:zeroPopVillages 1ms
+01:23:53 28 ms  buildComplete:buildComplete 1ms, movementComplete 0ms, movementComplete 0ms, trainingComplete 1ms, AIProgress:handleNatarVillages 0ms, AIProgress:handleNatarExpansion 10ms
+01:23:54 10 ms  movementComplete 0ms, movementComplete 0ms
+01:23:55 22 ms  marketComplete:tradeRoute 0ms, marketComplete:researchComplete 0ms, marketComplete:marketComplete 0ms, auctionComplete:doAuction 0ms, buildComplete:buildComplete 1ms, movementComplete 0ms, movementComplete 0ms, trainingComplete 0ms
+01:23:56 18 ms  movementComplete 0ms, movementComplete 0ms
+01:23:57 15 ms  buildComplete:buildComplete 1ms, movementComplete 0ms, movementComplete 0ms, trainingComplete 0ms
+01:23:58 9 ms  movementComplete 0ms, movementComplete 0ms
+01:23:59 20 ms  marketComplete:researchComplete 0ms, marketComplete:marketComplete 0ms, buildComplete:buildComplete 1ms, movementComplete 0ms, movementComplete 0ms, trainingComplete 0ms
+01:24:00 14 ms  movementComplete 0ms, movementComplete 0ms
+01:24:01 20 ms  marketComplete:tradeRoute 0ms, auctionComplete:doAuction 0ms, buildComplete:buildComplete 1ms, movementComplete 0ms, movementComplete 0ms, trainingComplete 0ms, routineJobs:checkForNewAdventures 1ms, checkIndexFunctions:checkGameFinish 0ms, checkIndexFunctions:clearAndDeleting 3ms, mayExitJobs:resetDailyGold 0ms
+01:24:02 77 ms  marketComplete:marketComplete 1ms, buildComplete:buildComplete 1ms, movementComplete 1ms, movementComplete 0ms, trainingComplete 1ms, gameProgress:checkAutoFinish 0ms, gameProgress:setUpNewServer 28ms, gameProgress:boughtGoldMessage 2ms, gameProgress:banProgress 17ms, gameProgress:referenceCheck 1ms, gameProgress:ArtifactReleases 0ms, gameProgress:resetMedals 0ms, gameProgress:resetDailyQuest 0ms, generalProgress:autoExtend 0ms, generalProgress:updateFoolArtifact 3ms, generalProgress:checkForArtifactActivation 0ms, loyaltyAndCulturePoint:deleteOasisComplete 1ms, gameProgress:allianceBonus 3ms, generalProgress:zeroPopVillages 1ms
+01:24:03 11 ms  movementComplete 0ms, movementComplete 0ms
+01:24:04 12 ms  marketComplete:researchComplete 0ms, buildComplete:buildComplete 1ms, movementComplete 0ms, movementComplete 0ms, trainingComplete 0ms
+01:24:05 17 ms  marketComplete:marketComplete 0ms, buildComplete:buildComplete 1ms, movementComplete 0ms, movementComplete 0ms, trainingComplete 1ms
+01:24:06 14 ms  movementComplete 1ms, movementComplete 0ms
+01:24:07 17 ms  marketComplete:tradeRoute 1ms, auctionComplete:doAuction 1ms, buildComplete:buildComplete 2ms, movementComplete 0ms, movementComplete 0ms, trainingComplete 1ms
+01:24:08 15 ms  marketComplete:researchComplete 0ms, marketComplete:marketComplete 0ms, buildComplete:buildComplete 1ms, movementComplete 0ms, movementComplete 0ms, trainingComplete 1ms
+01:24:09 12 ms  buildComplete:buildComplete 1ms, movementComplete 0ms, movementComplete 0ms, trainingComplete 0ms
+01:24:10 39 ms  marketComplete:marketComplete 1ms, buildComplete:buildComplete 1ms, movementComplete 0ms, movementComplete 0ms, trainingComplete 0ms, AIProgress:handleNatarVillages 0ms, AIProgress:handleNatarExpansion 11ms
+01:24:11 15 ms  movementComplete 0ms, movementComplete 0ms
+01:24:12 12 ms  marketComplete:tradeRoute 1ms, marketComplete:researchComplete 0ms, auctionComplete:doAuction 0ms, buildComplete:buildComplete 1ms, movementComplete 0ms, movementComplete 0ms, trainingComplete 0ms
+01:24:13 28 ms  marketComplete:marketComplete 0ms, buildComplete:buildComplete 1ms, movementComplete 0ms, movementComplete 0ms, trainingComplete 1ms, gameProgress:boughtGoldMessage 1ms, generalProgress:checkForArtifactActivation 2ms, generalProgress:zeroPopVillages 1ms
+01:24:14 12 ms  movementComplete 0ms, movementComplete 0ms
+01:24:15 12 ms  buildComplete:buildComplete 1ms, movementComplete 0ms, movementComplete 0ms, trainingComplete 0ms
+01:24:16 15 ms  marketComplete:researchComplete 0ms, marketComplete:marketComplete 0ms, buildComplete:buildComplete 1ms, movementComplete 0ms, movementComplete 0ms, trainingComplete 0ms
+01:24:17 13 ms  marketComplete:tradeRoute 0ms, auctionComplete:doAuction 0ms, buildComplete:buildComplete 0ms, movementComplete 0ms, movementComplete 0ms, trainingComplete 1ms
+01:24:18 9 ms  movementComplete 0ms, movementComplete 0ms
+01:24:19 12 ms  marketComplete:marketComplete 0ms, buildComplete:buildComplete 1ms, movementComplete 0ms, movementComplete 0ms, trainingComplete 1ms
+01:24:20 13 ms  movementComplete 0ms, movementComplete 0ms
+01:24:21 15 ms  marketComplete:researchComplete 0ms, marketComplete:marketComplete 0ms, buildComplete:buildComplete 1ms, movementComplete 0ms, movementComplete 0ms, trainingComplete 1ms
+01:24:22 16 ms  buildComplete:buildComplete 1ms, movementComplete 0ms, movementComplete 0ms, trainingComplete 0ms, routineJobs:checkForNewAdventures 1ms, AIProgress:handleFakeUsers 0ms, AIProgress:handleFakeUserExpands 1ms
+01:24:23 9 ms  movementComplete 0ms, movementComplete 0ms
+01:24:24 23 ms  marketComplete:tradeRoute 0ms, marketComplete:researchComplete 0ms, marketComplete:marketComplete 0ms, auctionComplete:doAuction 1ms, buildComplete:buildComplete 1ms, movementComplete 1ms, movementComplete 0ms, trainingComplete 1ms, gameProgress:boughtGoldMessage 1ms, generalProgress:checkForArtifactActivation 2ms, generalProgress:zeroPopVillages 1ms
+01:24:25 12 ms  movementComplete 0ms, movementComplete 0ms
+01:24:26 18 ms  buildComplete:buildComplete 1ms, movementComplete 0ms, movementComplete 0ms, trainingComplete 1ms
+01:24:27 10 ms  movementComplete 0ms, movementComplete 0ms
+01:24:28 21 ms  marketComplete:researchComplete 0ms, marketComplete:marketComplete 0ms, buildComplete:buildComplete 1ms, movementComplete 0ms, movementComplete 0ms, trainingComplete 1ms, AIProgress:handleNatarVillages 0ms, AIProgress:handleNatarExpansion 9ms
+01:24:29 33 ms  marketComplete:tradeRoute 0ms, auctionComplete:doAuction 1ms, buildComplete:buildComplete 1ms, movementComplete 0ms, movementComplete 0ms, trainingComplete 0ms
+01:24:30 11 ms  movementComplete 0ms, movementComplete 0ms
+01:24:31 21 ms  marketComplete:researchComplete 0ms, marketComplete:marketComplete 1ms, buildComplete:buildComplete 2ms, movementComplete 0ms, movementComplete 0ms, trainingComplete 1ms
+01:24:32 9 ms  movementComplete 0ms, movementComplete 0ms
+01:24:33 11 ms  marketComplete:marketComplete 0ms, buildComplete:buildComplete 1ms, movementComplete 0ms, movementComplete 0ms, trainingComplete 0ms
+01:24:34 25 ms  movementComplete 1ms, movementComplete 0ms, gameProgress:checkAutoFinish 0ms, gameProgress:boughtGoldMessage 1ms, gameProgress:referenceCheck 0ms, gameProgress:ArtifactReleases 0ms, gameProgress:resetMedals 0ms, gameProgress:resetDailyQuest 0ms, generalProgress:checkForArtifactActivation 2ms, generalProgress:zeroPopVillages 1ms
+01:24:35 22 ms  marketComplete:tradeRoute 0ms, marketComplete:researchComplete 0ms, marketComplete:marketComplete 1ms, auctionComplete:doAuction 1ms, buildComplete:buildComplete 1ms, movementComplete 1ms, movementComplete 0ms, trainingComplete 0ms
+01:24:36 13 ms  movementComplete 0ms, movementComplete 0ms
+01:24:37 15 ms  buildComplete:buildComplete 1ms, movementComplete 0ms, movementComplete 0ms, trainingComplete 0ms
+01:24:38 21 ms  marketComplete:marketComplete 1ms, buildComplete:buildComplete 1ms, movementComplete 0ms, movementComplete 0ms, trainingComplete 0ms
+01:24:39 15 ms  movementComplete 0ms, movementComplete 0ms
+01:24:40 21 ms  marketComplete:researchComplete 1ms, buildComplete:buildComplete 2ms, movementComplete 0ms, movementComplete 0ms, trainingComplete 1ms
+01:24:41 11 ms  movementComplete 0ms, movementComplete 0ms
+01:24:42 14 ms  marketComplete:tradeRoute 0ms, marketComplete:marketComplete 0ms, auctionComplete:doAuction 0ms, buildComplete:buildComplete 1ms, movementComplete 0ms, movementComplete 0ms, trainingComplete 0ms
+01:24:43 30 ms  marketComplete:researchComplete 0ms, buildComplete:buildComplete 1ms, movementComplete 0ms, movementComplete 0ms, trainingComplete 0ms, routineJobs:checkForNewAdventures 0ms, checkIndexFunctions:checkGameFinish 0ms, checkIndexFunctions:clearAndDeleting 2ms
+01:24:44 24 ms  movementComplete 0ms, movementComplete 0ms, gameProgress:boughtGoldMessage 1ms, generalProgress:checkForArtifactActivation 2ms, generalProgress:zeroPopVillages 1ms, AIProgress:handleNatarVillages 0ms, AIProgress:handleNatarExpansion 6ms
+01:24:45 13 ms  marketComplete:marketComplete 1ms, buildComplete:buildComplete 1ms, movementComplete 0ms, movementComplete 0ms, trainingComplete 0ms
+01:24:46 10 ms  movementComplete 0ms, movementComplete 0ms
+01:24:47 16 ms  marketComplete:tradeRoute 0ms, marketComplete:researchComplete 0ms, marketComplete:marketComplete 0ms, auctionComplete:doAuction 1ms, buildComplete:buildComplete 1ms, movementComplete 0ms, movementComplete 0ms, trainingComplete 0ms
+01:24:48 21 ms  buildComplete:buildComplete 1ms, movementComplete 0ms, movementComplete 0ms, trainingComplete 0ms
+01:24:49 13 ms  movementComplete 0ms, movementComplete 0ms
+01:24:50 32 ms  marketComplete:researchComplete 0ms, marketComplete:marketComplete 0ms, buildComplete:buildComplete 1ms, movementComplete 0ms, movementComplete 0ms, trainingComplete 0ms
+01:24:51 11 ms  movementComplete 0ms, movementComplete 0ms
+01:24:52 15 ms  buildComplete:buildComplete 1ms, movementComplete 1ms, movementComplete 0ms, trainingComplete 0ms
+01:24:53 12 ms  movementComplete 0ms, movementComplete 0ms
+01:24:54 32 ms  marketComplete:tradeRoute 0ms, marketComplete:researchComplete 0ms, marketComplete:marketComplete 0ms, auctionComplete:doAuction 0ms, buildComplete:buildComplete 1ms, movementComplete 0ms, movementComplete 0ms, trainingComplete 1ms, gameProgress:boughtGoldMessage 1ms, generalProgress:checkForArtifactActivation 1ms, generalProgress:zeroPopVillages 1ms
+01:24:55 9 ms  movementComplete 0ms, movementComplete 0ms
+01:24:56 16 ms  buildComplete:buildComplete 1ms, movementComplete 0ms, movementComplete 0ms, trainingComplete 0ms
+01:24:57 19 ms  marketComplete:marketComplete 0ms, buildComplete:buildComplete 1ms, movementComplete 1ms, movementComplete 0ms, trainingComplete 0ms
+01:24:58 15 ms  marketComplete:researchComplete 0ms, buildComplete:buildComplete 1ms, movementComplete 0ms, movementComplete 0ms, trainingComplete 1ms
+01:24:59 21 ms  marketComplete:marketComplete 0ms, buildComplete:buildComplete 1ms, movementComplete 0ms, movementComplete 0ms, trainingComplete 1ms
+01:25:00 28 ms  movementComplete 0ms, movementComplete 0ms, AIProgress:handleNatarVillages 0ms, AIProgress:handleNatarExpansion 8ms
+01:25:01 15 ms  marketComplete:tradeRoute 0ms, auctionComplete:doAuction 0ms, buildComplete:buildComplete 1ms, movementComplete 0ms, movementComplete 0ms, trainingComplete 0ms
+01:25:02 17 ms  marketComplete:researchComplete 0ms, marketComplete:marketComplete 1ms, buildComplete:buildComplete 1ms, movementComplete 0ms, movementComplete 0ms, trainingComplete 0ms
+01:25:03 32 ms  buildComplete:buildComplete 2ms, movementComplete 0ms, movementComplete 0ms, trainingComplete 1ms, routineJobs:checkForNewAdventures 1ms, mayExitJobs:resetDailyGold 0ms
+01:25:04 52 ms  marketComplete:marketComplete 0ms, buildComplete:buildComplete 0ms, movementComplete 0ms, movementComplete 0ms, trainingComplete 0ms, gameProgress:checkAutoFinish 0ms, gameProgress:setUpNewServer 0ms, gameProgress:boughtGoldMessage 1ms, gameProgress:referenceCheck 0ms, gameProgress:ArtifactReleases 0ms, gameProgress:resetMedals 0ms, gameProgress:resetDailyQuest 0ms, generalProgress:autoExtend 0ms, generalProgress:checkForArtifactActivation 1ms, loyaltyAndCulturePoint:deleteOasisComplete 0ms, gameProgress:allianceBonus 1ms, generalProgress:zeroPopVillages 1ms
+01:25:05 12 ms  movementComplete 1ms, movementComplete 0ms
+01:25:06 12 ms  marketComplete:tradeRoute 0ms, marketComplete:researchComplete 0ms, auctionComplete:doAuction 0ms, buildComplete:buildComplete 1ms, movementComplete 0ms, movementComplete 0ms, trainingComplete 0ms
+01:25:07 12 ms  movementComplete 1ms, movementComplete 0ms
+01:25:08 19 ms  marketComplete:marketComplete 2ms, buildComplete:buildComplete 2ms, movementComplete 1ms, movementComplete 0ms, trainingComplete 0ms
+01:25:09 9 ms  movementComplete 0ms, movementComplete 0ms
+01:25:10 24 ms  marketComplete:researchComplete 1ms, marketComplete:marketComplete 1ms, buildComplete:buildComplete 1ms, movementComplete 1ms, movementComplete 0ms, trainingComplete 0ms
+01:25:11 15 ms  movementComplete 1ms, movementComplete 0ms
+01:25:12 19 ms  marketComplete:tradeRoute 0ms, auctionComplete:doAuction 1ms, buildComplete:buildComplete 1ms, movementComplete 0ms, movementComplete 0ms, trainingComplete 1ms, AIProgress:handleFakeUsers 0ms, AIProgress:handleFakeUserExpands 1ms
+01:25:13 11 ms  movementComplete 0ms, movementComplete 0ms
+01:25:14 14 ms  marketComplete:researchComplete 0ms, marketComplete:marketComplete 0ms, buildComplete:buildComplete 1ms, movementComplete 0ms, movementComplete 0ms, trainingComplete 0ms
+01:25:15 22 ms  buildComplete:buildComplete 1ms, movementComplete 0ms, movementComplete 0ms, trainingComplete 0ms, gameProgress:boughtGoldMessage 2ms, generalProgress:checkForArtifactActivation 2ms, generalProgress:zeroPopVillages 1ms
+01:25:16 13 ms  marketComplete:marketComplete 0ms, buildComplete:buildComplete 1ms, movementComplete 0ms, movementComplete 0ms, trainingComplete 1ms
+01:25:17 25 ms  movementComplete 0ms, movementComplete 0ms, AIProgress:handleNatarVillages 1ms, AIProgress:handleNatarExpansion 8ms
+01:25:18 13 ms  marketComplete:tradeRoute 0ms, marketComplete:researchComplete 0ms, auctionComplete:doAuction 0ms, buildComplete:buildComplete 1ms, movementComplete 0ms, movementComplete 0ms, trainingComplete 0ms, postService 0ms
+01:25:19 12 ms  marketComplete:marketComplete 0ms, buildComplete:buildComplete 1ms, movementComplete 0ms, movementComplete 0ms, trainingComplete 0ms
+01:25:20 16 ms  buildComplete:buildComplete 1ms, movementComplete 0ms, movementComplete 0ms, trainingComplete 0ms
+01:25:21 13 ms  movementComplete 0ms, movementComplete 0ms
+01:25:22 14 ms  marketComplete:researchComplete 0ms, marketComplete:marketComplete 1ms, buildComplete:buildComplete 1ms, movementComplete 0ms, movementComplete 0ms, trainingComplete 0ms
+01:25:23 12 ms  movementComplete 0ms, movementComplete 0ms
+01:25:24 19 ms  marketComplete:tradeRoute 0ms, marketComplete:marketComplete 0ms, auctionComplete:doAuction 0ms, buildComplete:buildComplete 1ms, movementComplete 0ms, movementComplete 0ms, trainingComplete 0ms, routineJobs:checkForNewAdventures 0ms, checkIndexFunctions:checkGameFinish 0ms, checkIndexFunctions:clearAndDeleting 4ms, mayExitJobs:refreshCountryFlag 0ms
+01:25:25 23 ms  marketComplete:researchComplete 0ms, buildComplete:buildComplete 2ms, movementComplete 1ms, movementComplete 0ms, trainingComplete 1ms, gameProgress:boughtGoldMessage 1ms, generalProgress:checkForArtifactActivation 2ms, generalProgress:zeroPopVillages 1ms
+01:25:26 18 ms  marketComplete:marketComplete 1ms, buildComplete:buildComplete 2ms, movementComplete 0ms, movementComplete 0ms, trainingComplete 0ms
+01:25:27 13 ms  movementComplete 0ms, movementComplete 0ms
+01:25:28 16 ms  buildComplete:buildComplete 1ms, movementComplete 0ms, movementComplete 0ms, trainingComplete 1ms
+01:25:29 14 ms  marketComplete:tradeRoute 0ms, marketComplete:researchComplete 0ms, marketComplete:marketComplete 1ms, auctionComplete:doAuction 1ms, buildComplete:buildComplete 1ms, movementComplete 0ms, movementComplete 0ms, trainingComplete 1ms
+01:25:30 12 ms  movementComplete 0ms, movementComplete 0ms
+01:25:31 13 ms  buildComplete:buildComplete 2ms, movementComplete 0ms, movementComplete 0ms, trainingComplete 0ms
+01:25:32 31 ms  marketComplete:researchComplete 0ms, marketComplete:marketComplete 0ms, buildComplete:buildComplete 1ms, movementComplete 1ms, movementComplete 0ms, trainingComplete 1ms
+01:25:33 21 ms  movementComplete 0ms, movementComplete 0ms, AIProgress:handleNatarVillages 0ms, AIProgress:handleNatarExpansion 7ms
+01:25:34 14 ms  marketComplete:tradeRoute 0ms, auctionComplete:doAuction 0ms, buildComplete:buildComplete 1ms, movementComplete 0ms, movementComplete 0ms, trainingComplete 0ms
+01:25:35 12 ms  movementComplete 0ms, movementComplete 0ms
+01:25:36 36 ms  marketComplete:researchComplete 0ms, marketComplete:marketComplete 1ms, buildComplete:buildComplete 1ms, movementComplete 0ms, movementComplete 0ms, trainingComplete 0ms, gameProgress:checkAutoFinish 0ms, gameProgress:boughtGoldMessage 1ms, gameProgress:referenceCheck 0ms, gameProgress:ArtifactReleases 0ms, gameProgress:resetMedals 0ms, gameProgress:resetDailyQuest 0ms, generalProgress:checkForArtifactActivation 3ms, generalProgress:zeroPopVillages 2ms
+01:25:37 15 ms  movementComplete 0ms, movementComplete 0ms
+01:25:38 36 ms  marketComplete:marketComplete 1ms, buildComplete:buildComplete 3ms, movementComplete 1ms, movementComplete 0ms, trainingComplete 2ms
+01:25:39 38 ms  marketComplete:tradeRoute 0ms, marketComplete:researchComplete 0ms, auctionComplete:doAuction 1ms, buildComplete:buildComplete 2ms, movementComplete 1ms, movementComplete 0ms, trainingComplete 2ms
+01:25:40 20 ms  movementComplete 0ms, movementComplete 0ms
+01:25:41 21 ms  marketComplete:marketComplete 0ms, buildComplete:buildComplete 1ms, movementComplete 1ms, movementComplete 1ms, trainingComplete 2ms
+01:25:42 29 ms  buildComplete:buildComplete 2ms, movementComplete 1ms, movementComplete 0ms, trainingComplete 1ms
+01:25:43 18 ms  movementComplete 0ms, movementComplete 0ms
+01:25:44 17 ms  marketComplete:researchComplete 0ms, marketComplete:marketComplete 0ms, buildComplete:buildComplete 1ms, movementComplete 0ms, movementComplete 0ms, trainingComplete 0ms, routineJobs:checkForNewAdventures 0ms
+01:25:45 18 ms  marketComplete:tradeRoute 0ms, auctionComplete:doAuction 1ms, buildComplete:buildComplete 1ms, movementComplete 0ms, movementComplete 0ms, trainingComplete 1ms
+01:25:46 25 ms  marketComplete:marketComplete 1ms, buildComplete:buildComplete 1ms, movementComplete 1ms, movementComplete 0ms, trainingComplete 1ms
+01:25:47 14 ms  movementComplete 0ms, movementComplete 0ms, gameProgress:boughtGoldMessage 1ms, generalProgress:checkForArtifactActivation 1ms, generalProgress:zeroPopVillages 1ms
+01:25:48 15 ms  marketComplete:researchComplete 0ms, buildComplete:buildComplete 1ms, movementComplete 0ms, movementComplete 0ms, trainingComplete 1ms
+01:25:49 19 ms  movementComplete 0ms, movementComplete 0ms, AIProgress:handleNatarVillages 0ms, AIProgress:handleNatarExpansion 7ms
+01:25:50 21 ms  marketComplete:tradeRoute 0ms, marketComplete:marketComplete 0ms, auctionComplete:doAuction 0ms, buildComplete:buildComplete 1ms, movementComplete 0ms, movementComplete 0ms, trainingComplete 0ms
+01:25:51 13 ms  movementComplete 0ms, movementComplete 0ms
+01:25:52 13 ms  marketComplete:researchComplete 0ms, buildComplete:buildComplete 1ms, movementComplete 0ms, movementComplete 0ms, trainingComplete 0ms
+01:25:53 24 ms  marketComplete:marketComplete 1ms, buildComplete:buildComplete 1ms, movementComplete 1ms, movementComplete 0ms, trainingComplete 0ms
+01:25:54 19 ms  movementComplete 0ms, movementComplete 0ms
+01:25:55 34 ms  marketComplete:tradeRoute 1ms, marketComplete:researchComplete 0ms, marketComplete:marketComplete 1ms, auctionComplete:doAuction 0ms, buildComplete:buildComplete 2ms, movementComplete 0ms, movementComplete 0ms, trainingComplete 0ms
+01:25:56 30 ms  buildComplete:buildComplete 1ms, movementComplete 1ms, movementComplete 0ms, trainingComplete 1ms
+01:25:57 18 ms  movementComplete 0ms, movementComplete 0ms, gameProgress:boughtGoldMessage 2ms, generalProgress:checkForArtifactActivation 3ms, generalProgress:zeroPopVillages 1ms
+01:25:58 15 ms  marketComplete:marketComplete 0ms, buildComplete:buildComplete 1ms, movementComplete 0ms, movementComplete 0ms, trainingComplete 0ms
+01:25:59 21 ms  marketComplete:researchComplete 1ms, buildComplete:buildComplete 2ms, movementComplete 0ms, movementComplete 0ms, trainingComplete 1ms
+01:26:00 17 ms  movementComplete 0ms, movementComplete 0ms
+01:26:01 27 ms  marketComplete:tradeRoute 0ms, marketComplete:marketComplete 1ms, auctionComplete:doAuction 1ms, buildComplete:buildComplete 1ms, movementComplete 0ms, movementComplete 0ms, trainingComplete 2ms, AIProgress:handleFakeUsers 1ms, AIProgress:handleFakeUserExpands 2ms
+01:26:02 23 ms  movementComplete 1ms, movementComplete 0ms
+01:26:03 16 ms  marketComplete:researchComplete 0ms, buildComplete:buildComplete 1ms, movementComplete 0ms, movementComplete 0ms, trainingComplete 0ms
+01:26:04 29 ms  marketComplete:marketComplete 0ms, buildComplete:buildComplete 2ms, movementComplete 2ms, movementComplete 0ms, trainingComplete 2ms, routineJobs:checkForNewAdventures 0ms, checkIndexFunctions:checkGameFinish 0ms, checkIndexFunctions:clearAndDeleting 8ms, mayExitJobs:resetDailyGold 0ms
+01:26:05 26 ms  buildComplete:buildComplete 2ms, movementComplete 0ms, movementComplete 0ms, trainingComplete 0ms
+01:26:06 15 ms  movementComplete 0ms, movementComplete 0ms
+01:26:07 42 ms  marketComplete:tradeRoute 0ms, marketComplete:researchComplete 0ms, marketComplete:marketComplete 1ms, auctionComplete:doAuction 0ms, buildComplete:buildComplete 1ms, movementComplete 0ms, movementComplete 0ms, trainingComplete 0ms, gameProgress:checkAutoFinish 0ms, gameProgress:setUpNewServer 0ms, gameProgress:boughtGoldMessage 6ms, gameProgress:banProgress 5ms, gameProgress:referenceCheck 0ms, gameProgress:ArtifactReleases 0ms, gameProgress:resetMedals 0ms, gameProgress:resetDailyQuest 0ms, generalProgress:autoExtend 0ms, generalProgress:updateFoolArtifact 2ms, generalProgress:checkForArtifactActivation 0ms, loyaltyAndCulturePoint:deleteOasisComplete 0ms, gameProgress:allianceBonus 1ms, generalProgress:zeroPopVillages 1ms, AIProgress:handleNatarVillages 0ms, AIProgress:handleNatarExpansion 6ms
+01:26:08 17 ms  movementComplete 0ms, movementComplete 0ms
+01:26:09 22 ms  marketComplete:marketComplete 1ms, buildComplete:buildComplete 2ms, movementComplete 1ms, movementComplete 0ms, trainingComplete 1ms
+01:26:10 11 ms  movementComplete 0ms, movementComplete 0ms
+01:26:11 22 ms  marketComplete:researchComplete 0ms, buildComplete:buildComplete 1ms, movementComplete 0ms, movementComplete 0ms, trainingComplete 1ms
