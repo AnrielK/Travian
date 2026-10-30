@@ -1,13 +1,14 @@
 <?php
 /*
  * Behaviour of the Legends hero inventory (hero/v2/inventory.php):
- *  - hover: item tooltip (heroItemTooltipV1) under the item,
+ *  - hover: item tooltip (heroItemTooltipV1) right of the item, like in Travian Legends,
  *  - click: context menu Use / Info / Sort (equipped items: Take off / Info),
  *  - Use on a resource item (lumber/clay/iron/crop cart): "Move resources" dialog (heroResources command),
  *    on other items: equip / use through the heroInventory command,
  *  - Info: the item details on a dimmed page,
  *  - Sort: the item follows the pointer and is put down on the clicked bag place,
- *  - drag & drop between bag places and equipment slots.
+ *  - drag & drop between bag places and equipment slots: the item picture (orange frame) follows the mouse and
+ *    its place stays empty until it is put down.
  */
 use resources\View\LegendsUi as UI;
 
@@ -92,16 +93,19 @@ $resourceTypes = \Game\Hero\HeroItems::RESOURCE_TYPES;
             if (!info.name) return;
             tooltip = el('div', 'heroItemTooltipV1 heroItemTooltip ' + (info.tier || 'consumable'), tooltipHtml(info));
             content.appendChild(tooltip);
+            // Legends: next to the right edge of the item, top edges aligned; near the bottom of the window it is
+            // aligned with the bottom edge of the item, near the right edge of the window it goes left of the item
             var rect = item.getBoundingClientRect(), width = tooltip.offsetWidth, height = tooltip.offsetHeight;
-            var left = Math.max(8, Math.min(rect.left + rect.width / 2 - width / 2, document.documentElement.clientWidth - width - 8));
-            var top = rect.bottom + 6;
-            if (top + height > window.innerHeight - 8) top = Math.max(8, rect.top - 6 - height);
+            var left = rect.right + 4;
+            if (left + width > document.documentElement.clientWidth - 8) left = Math.max(8, rect.left - 4 - width);
+            var top = rect.top;
+            if (top + height > window.innerHeight - 8) top = Math.max(8, rect.bottom - height);
             tooltip.style.left = left + 'px';
             tooltip.style.top = top + 'px';
         }
         root.addEventListener('mouseover', function (event) {
             var item = event.target.closest('.heroItem');
-            if (item && !item.contains(event.relatedTarget)) showTooltip(item);
+            if (item && !item.contains(event.relatedTarget) && !dragging) showTooltip(item);
         });
         root.addEventListener('mouseout', function (event) {
             var item = event.target.closest('.heroItem');
@@ -414,37 +418,75 @@ $resourceTypes = \Game\Hero\HeroItems::RESOURCE_TYPES;
             if (event.key === 'Escape') { stopSort(); closeMenu(); }
         });
 
-        var dragged = null;
-        root.addEventListener('dragstart', function (event) {
-            hideTooltip();
-            closeMenu();
-            dragged = event.target.closest('.heroItem');
-            if (!dragged) return;
-            event.dataTransfer.effectAllowed = 'move';
-            event.dataTransfer.setData('text/plain', dragged.dataset.id || '');
-            dragged.classList.add('dragged');
-        });
-        root.addEventListener('dragend', function () {
-            if (dragged) dragged.classList.remove('dragged');
+        // Drag & drop with the mouse (Legends): after a few pixels the item is lifted, its picture follows the pointer
+        // and its place shows as empty; released over a bag place or an equipment slot it is put down there.
+        // The browser's own (translucent) drag picture is not used.
+        var dragging = null;
+        root.addEventListener('dragstart', function (event) { event.preventDefault(); });
+        function dropTargetAt(x, y) {
+            var node = document.elementFromPoint(x, y);
+            var target = node && node.closest ? node.closest('[data-drop],[data-equipped]') : null;
+            return target && root.contains(target) ? target : null;
+        }
+        function endDrag() {
+            if (!dragging) return;
+            dragging.ghost.remove();
+            dragging.item.classList.remove('dragSource');
             root.querySelectorAll('.dropTarget').forEach(function (t) { t.classList.remove('dropTarget'); });
+            document.documentElement.classList.remove('ovDragging');
+            dragging = null;
+        }
+        root.addEventListener('pointerdown', function (event) {
+            if (event.pointerType !== 'mouse' || event.button !== 0 || sorting) return;
+            var item = event.target.closest('.heroItem');
+            if (!item || item.classList.contains('empty') || !item.getAttribute('draggable')) return;
+            var startX = event.clientX, startY = event.clientY;
+            var move = function (e) {
+                if (!dragging) {
+                    if (Math.abs(e.clientX - startX) + Math.abs(e.clientY - startY) < 6) return;
+                    hideTooltip();
+                    closeMenu();
+                    var rect = item.getBoundingClientRect();
+                    var ghost = item.cloneNode(true);
+                    ghost.classList.add('ovSortGhost', 'ovDragGhost');
+                    ghost.classList.remove('menuOpen', 'dropTarget');
+                    ghost.style.width = rect.width + 'px';
+                    ghost.style.height = rect.height + 'px';
+                    document.body.appendChild(ghost);
+                    item.classList.add('dragSource');
+                    document.documentElement.classList.add('ovDragging');
+                    dragging = {item: item, ghost: ghost};
+                }
+                e.preventDefault();
+                dragging.ghost.style.left = e.clientX + 'px';
+                dragging.ghost.style.top = e.clientY + 'px';
+                var target = dropTargetAt(e.clientX, e.clientY);
+                root.querySelectorAll('.dropTarget').forEach(function (t) { if (t !== target) t.classList.remove('dropTarget'); });
+                if (target && target !== item) target.classList.add('dropTarget');
+            };
+            var up = function (e) {
+                document.removeEventListener('pointermove', move, true);
+                document.removeEventListener('pointerup', up, true);
+                if (!dragging) return;
+                var source = dragging.item, target = dropTargetAt(e.clientX, e.clientY);
+                endDrag();
+                // the click that follows the release must not open the item menu
+                var swallow = function (c) { c.stopPropagation(); c.preventDefault(); };
+                document.addEventListener('click', swallow, true);
+                setTimeout(function () { document.removeEventListener('click', swallow, true); }, 0);
+                if (!target || target === source) return;
+                var drop = target.dataset.drop || target.dataset.equipped;
+                if (drop.indexOf('inventory_') === 0) {
+                    send(source.dataset.id, drop, 1);
+                } else if (!source.dataset.equipped) {
+                    activate(source);
+                }
+            };
+            document.addEventListener('pointermove', move, true);
+            document.addEventListener('pointerup', up, true);
         });
-        root.addEventListener('dragover', function (event) {
-            var target = event.target.closest('[data-drop],[data-equipped]');
-            if (!dragged || !target || target === dragged) return;
-            event.preventDefault();
-            root.querySelectorAll('.dropTarget').forEach(function (t) { if (t !== target) t.classList.remove('dropTarget'); });
-            target.classList.add('dropTarget');
-        });
-        root.addEventListener('drop', function (event) {
-            var target = event.target.closest('[data-drop],[data-equipped]');
-            if (!dragged || !target || target === dragged) return;
-            event.preventDefault();
-            var drop = target.dataset.drop || target.dataset.equipped;
-            if (drop.indexOf('inventory_') === 0) {
-                send(dragged.dataset.id, drop, 1);
-            } else if (!dragged.dataset.equipped) {
-                activate(dragged);
-            }
+        document.addEventListener('keydown', function (event) {
+            if (event.key === 'Escape') endDrag();
         });
     })();
 </script>

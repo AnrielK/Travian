@@ -2219,3 +2219,12 @@ body.t46Layout.legendsV2 .sidebar #sidebarBoxQuestmaster.legendsMentor #questmas
     75% { filter: brightness(1.08) drop-shadow(1px 0 0 #e9f7c4) drop-shadow(-1px 0 0 #e9f7c4) drop-shadow(0 -1px 0 #e9f7c4) drop-shadow(0 1px 0 #e9f7c4) drop-shadow(0 0 8px rgba(255, 255, 230, .95)); }
 }
 body.t46Layout.legendsV2 .sidebar #sidebarBoxQuestmaster.legendsMentor #questmasterButton .newQuestSpeechBubble { left: -14px !important; top: 46px !important; }
+
+/* Hero inventory drag & drop (hero/v2/inventoryScript.php): the lifted item follows the mouse in its orange frame
+   (.ovSortGhost) and its place stays empty and dark like an empty bag place until the item is put down. */
+html.ovDragging, html.ovDragging * { cursor: grabbing !important; user-select: none; }
+.ovDragGhost { opacity: 1 !important; }
+body.t46Layout #content.heroV2Inventory .heroItem.dragSource { opacity: 1; }
+body.t46Layout #content.heroV2Inventory .heroItem.dragSource > * { visibility: hidden; }
+body.t46Layout #content.heroV2Inventory .heroItem.dragSource { background: rgb(58, 60, 49) !important; background-image: none !important; box-shadow: none; }
+body.t46Layout #content.heroV2Inventory .heroItem.dragSource::after { background-color: rgb(58, 60, 49); background-image: none; }

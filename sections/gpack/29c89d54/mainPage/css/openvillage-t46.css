@@ -1308,3 +1308,12 @@ body.t46Layout div.village1 #resourceFieldContainer svg > path.ovLit { fill: rgb
 body.t46Layout div.village1 #resourceFieldContainer svg.resourceField > path:active,
 body.t46Layout div.village1 #resourceFieldContainer svg.villageCenter > path:active,
 body.t46Layout div.village1 #resourceFieldContainer svg > path.ovLit.ovPressed { fill: rgba(255, 255, 255, .35); stroke: rgba(255, 255, 255, .5); }
+
+/* Hero inventory drag & drop (hero/v2/inventoryScript.php): the lifted item follows the mouse in its orange frame
+   (.ovSortGhost) and its place stays empty and dark like an empty bag place until the item is put down. */
+html.ovDragging, html.ovDragging * { cursor: grabbing !important; user-select: none; }
+.ovDragGhost { opacity: 1 !important; }
+body.t46Layout #content.heroV2Inventory .heroItem.dragSource { opacity: 1; }
+body.t46Layout #content.heroV2Inventory .heroItem.dragSource > * { visibility: hidden; }
+body.t46Layout #content.heroV2Inventory .heroItem.dragSource { background: rgb(58, 60, 49) !important; background-image: none !important; box-shadow: none; }
+body.t46Layout #content.heroV2Inventory .heroItem.dragSource::after { background-color: rgb(58, 60, 49); background-image: none; }
