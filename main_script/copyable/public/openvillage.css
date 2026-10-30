@@ -593,9 +593,22 @@ body.ovMapFullScreen .ovMapWindow #content > :not(.titleInHeader) {
     pointer-events: none;
 }
 
-/* the site a dragged building comes from (Legends: orange plot) */
+/* the site a dragged building comes from (Legends: orange plot), drawn with the empty-site shape like the target */
+.rearrangeMode .buildingSlot.relocateMark svg.buildingShape,
 .rearrangeMode .buildingSlot.relocateMark span {
     position: absolute;
+    left: 0;
+    top: 0;
+    opacity: 0;
+    pointer-events: none !important;
+}
+
+.rearrangeMode .buildingSlot.relocateMark svg.buildingShape path {
+    fill: #ff8c4d !important;
+    stroke: none !important;
+}
+
+.rearrangeMode .buildingSlot.relocateMark span {
     left: 50%;
     top: 72%;
     width: 84px;
@@ -603,11 +616,15 @@ body.ovMapFullScreen .ovMapWindow #content > :not(.titleInHeader) {
     margin: -21px 0 0 -42px;
     border-radius: 50%;
     background: #ff8c4d;
-    opacity: 0;
 }
 
+.rearrangeMode .buildingSlot.relocateMark.origin svg.buildingShape,
 .rearrangeMode .buildingSlot.relocateMark.origin span {
-    opacity: 0.9;
+    opacity: 1;
+}
+
+.rearrangeMode .buildingSlot.relocateHit.fixed {
+    cursor: not-allowed;
 }
 
 .rearrangeMode .buildingSlot .level {
@@ -618,23 +635,40 @@ body.ovMapFullScreen .ovMapWindow #content > :not(.titleInHeader) {
     transition: left 0.25s ease-out, top 0.25s ease-out;
 }
 
-/* our building shapes carry clickShape / hoverShape instead of the Legends highlightShape: the selected building
-   gets the Legends orange outline, a building it would swap with the drop-target colours */
-.rearrangeMode .buildingSlot.selected:not(.dragged) svg.buildingShape:not(.iso) .clickShape path,
-.rearrangeMode .dragContainer svg.buildingShape .clickShape path {
-    fill: rgba(255, 255, 255, 0.12) !important;
-    stroke: #ff8c4d !important;
-    stroke-width: 3px !important;
-    opacity: 1 !important;
-    visibility: visible !important;
+/* hover: the glow of the village view, also for the rally point; the wall lights up like outside this mode */
+.rearrangeMode .buildingSlot.relocateHover:not(.g0) img.building {
+    filter: brightness(1.18) drop-shadow(0 0 3px rgba(255, 250, 215, 0.95)) drop-shadow(0 0 8px rgba(255, 245, 190, 0.6));
 }
 
-.rearrangeMode .buildingSlot.dropTarget svg.buildingShape:not(.iso) .clickShape path {
-    fill: rgba(8, 136, 133, 0.35) !important;
-    stroke: #38f4f4 !important;
-    stroke-width: 2px !important;
+.rearrangeMode .buildingSlot.a40.relocateHover img.wall {
+    filter: brightness(1.15) drop-shadow(0 0 3px rgba(255, 250, 215, 0.95)) drop-shadow(0 0 8px rgba(255, 245, 190, 0.55));
+}
+
+.rearrangeMode .buildingSlot.a40.g0.relocateHover svg.buildingShape g.clickShape path {
+    fill: rgba(222, 236, 150, 0.42) !important;
+}
+
+.rearrangeMode .buildingSlot.a40 svg.buildingShape path {
+    cursor: not-allowed;
+}
+
+/* outlines follow the building picture (our click shapes are only rough polygons): orange for the picked building,
+   turquoise for a building it would swap with */
+.rearrangeMode .buildingSlot.selected:not(.dragged) img.building,
+.rearrangeMode .dragContainer img.building {
+    filter: drop-shadow(2px 0 0 #ff8c4d) drop-shadow(-2px 0 0 #ff8c4d) drop-shadow(0 2px 0 #ff8c4d) drop-shadow(0 -2px 0 #ff8c4d);
+}
+
+.rearrangeMode .buildingSlot.dropTarget:not(.g0) img.building {
+    filter: brightness(1.1) drop-shadow(2px 0 0 #38f4f4) drop-shadow(-2px 0 0 #38f4f4) drop-shadow(0 2px 0 #38f4f4) drop-shadow(0 -2px 0 #38f4f4);
     opacity: 1 !important;
-    visibility: visible !important;
+}
+
+.rearrangeMode .buildingSlot.selected svg.buildingShape:not(.iso) path,
+.rearrangeMode .buildingSlot.dropTarget svg.buildingShape:not(.iso) path,
+.rearrangeMode .dragContainer svg.buildingShape path {
+    fill: transparent !important;
+    stroke: transparent !important;
 }
 
 .rearrangeMode .buildingSlot.dropTarget svg.buildingShape.iso path,

@@ -73,6 +73,10 @@
         return element;
     }
 
+    // The plot a dragged building leaves behind is drawn with the shape of an empty building site, so it has the
+    // same size as the highlighted drop target.
+    var emptyShape = map.querySelector('.buildingSlot.g0 svg.buildingShape.iso');
+
     for (var slot = firstSlot; slot <= RALLY_POINT_SLOT; ++slot) {
         var building = map.querySelector('.buildingSlot[data-aid="' + slot + '"]');
         if (!building) {
@@ -83,12 +87,13 @@
         hitSlots.push(slot);
         hits[slot] = create(slot, 'relocateHit');
         if (slot > lastSlot || fixedGids.indexOf(building.getAttribute('data-gid')) >= 0) {
+            hits[slot].classList.add('fixed');
             continue;
         }
         slots.push(slot);
         building.classList.add('movable');
         marks[slot] = create(slot, 'relocateMark');
-        marks[slot].appendChild(document.createElement('span'));
+        marks[slot].appendChild(emptyShape ? emptyShape.cloneNode(true) : document.createElement('span'));
     }
     if (!slots.length) {
         return;
@@ -167,7 +172,9 @@
 
     var selected = null;   // slot whose building is picked up
     var hovered = null;    // site under the pointer while something is picked up
+    var pointed = null;    // building under the pointer while nothing is picked up ('wall' for the wall)
     var drag = null;
+    var walls = map.querySelectorAll('.buildingSlot.a40');
 
     function render() {
         var dragging = !!(drag && drag.moved);
@@ -186,6 +193,11 @@
             if (marks[slot]) {
                 marks[slot].classList.toggle('origin', dragging && slot === selected);
             }
+            // hover glow of the village view (openvillage-t46.css), which the pointer layer would swallow
+            element.classList.toggle('relocateHover', selected === null && slot === pointed);
+        });
+        Array.prototype.forEach.call(walls, function (wall) {
+            wall.classList.toggle('relocateHover', selected === null && pointed === 'wall');
         });
         if (selected === null) {
             showStep('step1');
@@ -300,7 +312,7 @@
                 tap(state.slot);
             }
         } else {
-            var target = cancelled ? null : slotAt(event.clientX, event.clientY, true);
+            var target = cancelled ? null : targetAt(event.clientX, event.clientY);
             drag = null;
             stopDrag();
             if (target !== null && target !== state.slot) {
@@ -313,10 +325,19 @@
     }
 
     map.addEventListener('pointerdown', function (event) {
-        if (event.button > 0 || !event.target.classList || !event.target.classList.contains('relocateHit')) {
+        if (event.button > 0) {
             return;
         }
-        var slot = slotAt(event.clientX, event.clientY, false);
+        var slot = buildingAt(event.clientX, event.clientY);
+        if (slot === 'wall') {
+            return;   // the click handler explains that the wall stays
+        }
+        if (slot === null) {
+            if (!event.target.classList || !event.target.classList.contains('relocateHit')) {
+                return;
+            }
+            slot = slotAt(event.clientX, event.clientY, false);
+        }
         if (slot === null) {
             return;
         }
@@ -328,10 +349,76 @@
         }
     });
 
+    // Is the point inside the outline of a building (its click / hover shapes, current season only)?
+    function inShape(svg, x, y) {
+        if (!svg) {
+            return false;
+        }
+        var paths = svg.querySelectorAll('path');
+        for (var i = 0; i < paths.length; ++i) {
+            var path = paths[i];
+            if (!path.isPointInFill || !path.getScreenCTM || path.closest('g') && window.getComputedStyle(path.closest('g')).display === 'none') {
+                continue;
+            }
+            var matrix = path.getScreenCTM();
+            if (!matrix) {
+                continue;
+            }
+            var point = new DOMPoint(x, y).matrixTransform(matrix.inverse());
+            if (path.isPointInFill(point)) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    // The building under the pointer by its outline; the wall when the pointer is on the wall.
+    function buildingAt(x, y) {
+        for (var i = hitSlots.length - 1; i >= 0; --i) {
+            var slot = hitSlots[i];
+            if (!isEmpty(slot) && inShape(shape(slot), x, y)) {
+                return slot;
+            }
+        }
+        for (var w = 0; w < walls.length; ++w) {
+            if (inShape(walls[w].querySelector('svg.buildingShape'), x, y)) {
+                return 'wall';
+            }
+        }
+        return null;
+    }
+
+    // Where a picked building would go: the building under the pointer by its outline (none over the fixed ones and
+    // the wall), otherwise the nearest building site.
+    function targetAt(x, y) {
+        var building = buildingAt(x, y);
+        if (building !== null) {
+            return building === 'wall' || isFixed(building) ? null : building;
+        }
+        return slotAt(x, y, true);
+    }
+
+    function pointAt(event) {
+        var slot = buildingAt(event.clientX, event.clientY);
+        if (slot !== pointed) {
+            pointed = slot;
+            render();
+        }
+    }
+
+    map.addEventListener('pointerleave', function () {
+        if (pointed !== null) {
+            pointed = null;
+            render();
+        }
+    });
+
     map.addEventListener('pointermove', function (event) {
         if (!drag) {
-            if (selected !== null) {
-                var over = slotAt(event.clientX, event.clientY, true);
+            if (selected === null) {
+                pointAt(event);
+            } else {
+                var over = targetAt(event.clientX, event.clientY);
                 if (over !== hovered) {
                     hovered = over;
                     render();
@@ -355,7 +442,7 @@
         }
         var factor = scale();
         dragContainer.style.transform = 'translate(' + (dx / factor) + 'px, ' + (dy / factor) + 'px)';
-        hovered = slotAt(event.clientX, event.clientY, true);
+        hovered = targetAt(event.clientX, event.clientY);
         render();
     });
 
@@ -370,7 +457,7 @@
     map.addEventListener('click', function (event) {
         event.preventDefault();
         event.stopPropagation();
-        if (event.target.closest && event.target.closest('.buildingSlot.a40')) {
+        if (!drag && buildingAt(event.clientX, event.clientY) === 'wall') {
             showTip(data('text-fixed'), event.clientX, event.clientY + 12);
         }
     }, true);

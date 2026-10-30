@@ -25,7 +25,11 @@
   changes asks whether to cancel the rearrangement — white Legends dialogs, the
   cancel question at the top of the screen and the confirmation over the
   confirm button. As in Legends the village mask starts at the top of the map
-  and the building queue is hidden while rearranging. Unlike Legends (20 gold) the
+  and the building queue is hidden while rearranging. The picked building gets an
+  orange outline along its picture, the plot it leaves is drawn with the
+  empty-site shape (as large as the turquoise drop target), and buildings, the
+  rally point and the wall light up under the pointer as in the village view
+  (hits are tested against the building outlines). Unlike Legends (20 gold) the
   relocation is free. Covered by `tests/building-relocation-regression.php`.
 - Statistics → General in the Travian Legends look ("Všeobecné"): the Legends
   page rendered on the server with real data instead of the hard-coded sample
