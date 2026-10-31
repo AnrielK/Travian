@@ -22,7 +22,9 @@
   `#villageContent.rearrangeMode` with `movable` / `selected` / `dragged` /
   `dropTarget` slots), so the Legends pack styles it with its own
   `legends_ltr.css` rules; saving asks for confirmation and leaving with unsaved
-  changes asks whether to cancel the rearrangement — white Legends dialogs, the
+  changes asks whether to cancel the rearrangement — the Legends dialogV1
+  dialogs (`rearrangeBuildingsConfirmDialog` / `rearrangeBuildingsAbortDialog`,
+  drawn by legends_ltr.css; a lookalike in other packs), the
   cancel question at the top of the screen and the confirmation over the
   confirm button. As in Legends the village mask starts at the top of the map
   and the building queue is hidden while rearranging. The picked building gets an

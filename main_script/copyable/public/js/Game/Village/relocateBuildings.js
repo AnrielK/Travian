@@ -494,9 +494,24 @@
         closeDialog();
         var overlay = document.createElement('div');
         overlay.className = 'relocateDialogOverlay';
-        overlay.innerHTML = '<div class="relocateDialog ' + cls + '">'
-            + (closable ? '<a class="relocateDialogClose" href="#" title="' + escapeHtml(data('text-cancel')) + '">' + CLOSE_ICON + '</a>' : '')
-            + '<h2>' + escapeHtml(title) + '</h2><p>' + text + '</p><div class="relocateDialogButtons">' + buttons + '</div></div>';
+        if (fallback) {
+            overlay.classList.add('plain');
+            overlay.innerHTML = '<div class="relocateDialog ' + cls + '">'
+                + (closable ? '<a class="relocateDialogClose" href="#" title="' + escapeHtml(data('text-cancel')) + '">' + CLOSE_ICON + '</a>' : '')
+                + '<h2>' + escapeHtml(title) + '</h2><p>' + text + '</p><div class="relocateDialogButtons">' + buttons + '</div></div>';
+        } else {
+            // the Legends markup of these dialogs (dialogV1), styled by legends_ltr.css
+            var legends = cls === 'proceedDialog'
+                ? {context: 'rearrangeBuildingsConfirm', dialog: 'rearrangeBuildingsConfirmDialog', buttons: 'rearrangeBuildingsButtons'}
+                : {context: 'rearrangeBuildingsAbort', dialog: 'rearrangeBuildingsAbortDialog', buttons: 'decisionButtons'};
+            overlay.innerHTML = '<div class="dialogWrapper dialogV1 relocateDialog ' + cls + '" data-context="' + legends.context + '">'
+                + '<div class="dialog ' + legends.dialog + '"><div class="dialogContainer"><div class="dialogContents">'
+                + '<form action="#" onsubmit="return false;"><div class="dialogDragBar"></div>'
+                + (closable ? '<div class="dialogCancelButton smallIconButton cancel relocateDialogClose" title="' + escapeHtml(data('text-cancel')) + '"></div>' : '')
+                + '<div class="content" id="dialogContent"><h1>' + escapeHtml(title) + '</h1><p>' + text + '</p>'
+                + '<div class="' + legends.buttons + '">' + buttons + '</div></div>'
+                + '</form></div></div></div></div>';
+        }
         document.body.appendChild(overlay);
         var box = overlay.firstChild;
         overlay.addEventListener('click', function (event) {
