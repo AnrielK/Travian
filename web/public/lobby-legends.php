@@ -65,6 +65,13 @@ ob_start(static function (string $html): string {
     <link href="/legends/lobby.css" rel="stylesheet">
     <style>
         /* OpenVillage additions: own logo, view switching, small forms in the dialogs */
+        /* "Create a new game world" tile on the "Join new gameworld" view: the same framed tile as
+           "Join new gameworld" on "Your gameworlds" (lobby.css styles that one under .yourGameworlds only) */
+        #newGameworlds .results .joinNewGameworld { cursor: pointer; font-size: 18px; font-weight: 700; height: 150px; max-width: var(--cardMaxWidth); min-width: var(--cardMinWidth); position: relative; width: 100%; box-sizing: border-box; --fontColor: #fffdf8; color: var(--fontColor); align-content: center; align-items: center; backdrop-filter: blur(3.5px); -webkit-backdrop-filter: blur(3.5px); background-image: linear-gradient(180deg, #2c3031d9, #1a1e1fd9 100%); border: 1px solid #34220d; border-radius: 7px; box-shadow: var(--dropShadow, calc(3px * var(--scaleXFactor)) 3px 5px #00000059); column-gap: 30px; display: grid; grid-auto-flow: column; justify-content: center; outline: 1px solid #34220d00; transition: transform .15s ease-out, box-shadow .15s ease-out, border .15s ease-out, outline .15s ease-out; }
+        #newGameworlds .results .joinNewGameworld > * { filter: drop-shadow(0 0 2px rgba(27, 26, 26, .8)); }
+        #newGameworlds .results .joinNewGameworld svg { height: 2em; width: 2em; fill: currentColor; }
+        #newGameworlds .results .joinNewGameworld:hover:not(:active) { --dropShadow: calc(4px * var(--scaleXFactor)) 4px 7px rgba(0, 0, 0, .4); --fontColor: var(--linkHoverColor); outline: 1px solid var(--linkHoverColor); }
+        #newGameworlds .results .joinNewGameworld:active { --dropShadow: 0 0 5px 1px rgba(0, 0, 0, .5); --fontColor: var(--linkActiveColor); outline: 1px solid var(--linkActiveColor); }
         header svg.logo { height: 60px; width: 174px; cursor: pointer; }
         header svg.logo .emblem { fill: #b5302b; stroke: #e9e1cf; stroke-width: 1.4; }
         header svg.logo .coin { fill: #c9a254; stroke: #6d4a1d; }
