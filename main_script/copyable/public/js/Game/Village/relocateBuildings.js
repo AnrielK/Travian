@@ -373,6 +373,20 @@
 
     // The building under the pointer by its outline; the wall when the pointer is on the wall.
     function buildingAt(x, y) {
+        // the hover script knows the building pictures pixel by pixel (js/Game/Village/buildingHover.js)
+        var shared = window.OpenVillageBuildingHover;
+        if (shared) {
+            var found = shared.buildingAt(x, y);
+            if (found === null || found === 'wall') {
+                return found;
+            }
+            for (var s = 0; s < hitSlots.length; ++s) {
+                if (buildings[occupant[hitSlots[s]]] === found) {
+                    return hitSlots[s];
+                }
+            }
+            return null;
+        }
         for (var i = hitSlots.length - 1; i >= 0; --i) {
             var slot = hitSlots[i];
             if (!isEmpty(slot) && inShape(shape(slot), x, y)) {

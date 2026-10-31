@@ -1,11 +1,12 @@
 /*
- * Village centre (dorf2.php): the hover glow of a building wherever the pointer is on it, not only on its level
- * circle. The browser's :hover on the building outlines is unreliable (Safari, outlines lying on top of each
- * other, the pointer layer of the rearrange mode), so the building under the pointer is found by its outline
- * (isPointInFill) and gets .ovHover; openvillage.css draws the glow.
+ * Village centre (dorf2.php): the Legends hover of a building – a white veil over the building (20 %, like the
+ * highlight shape of Legends) – wherever the pointer is on it, not only on its level circle. The browser's :hover
+ * on the outlines is unreliable (Safari, outlines lying on top of each other, the pointer layer of the rearrange
+ * mode) and our outlines miss parts of the pictures, so the building under the pointer is found by the pixels of its
+ * picture (and its outline) and gets .ovHover; openvillage.css applies the veil (SVG filter #ovHoverVeil).
  *
- * The wall picture also holds the bridges at the gates, so the wall does not glow as a whole: a copy of its pictures,
- * cut to the ellipse of the wall ring, lights up instead.
+ * The wall picture also holds the bridges at the gates, so the wall is not veiled as a whole: a copy of its
+ * pictures, cut to the ellipse of the wall ring, is veiled instead.
  */
 (function () {
     'use strict';
@@ -38,6 +39,72 @@
         return false;
     }
 
+    // white veil: every colour 20 % towards white, transparency kept (as the Legends highlight shape)
+    if (!document.getElementById('ovHoverVeil')) {
+        var holder = document.createElement('div');
+        holder.style.cssText = 'position:absolute;width:0;height:0;overflow:hidden';
+        holder.innerHTML = '<svg xmlns="http://www.w3.org/2000/svg" width="0" height="0" focusable="false" aria-hidden="true">'
+            + '<filter id="ovHoverVeil" color-interpolation-filters="sRGB"><feColorMatrix type="matrix" values="'
+            + '0.8 0 0 0 0.2  0 0.8 0 0 0.2  0 0 0.8 0 0.2  0 0 0 1 0"/></filter></svg>';
+        document.body.appendChild(holder);
+    }
+
+    // ------------------------------------------------------------------ pixels of the building pictures
+
+    var pictures = {};   // url -> {canvas context, width, height} once loaded, null while loading
+
+    function picture(url) {
+        if (url in pictures) {
+            return pictures[url];
+        }
+        pictures[url] = null;
+        var image = new Image();
+        image.onload = function () {
+            try {
+                var canvas = document.createElement('canvas');
+                canvas.width = image.naturalWidth;
+                canvas.height = image.naturalHeight;
+                var context = canvas.getContext('2d', {willReadFrequently: true});
+                context.drawImage(image, 0, 0);
+                context.getImageData(0, 0, 1, 1);   // throws for pictures from another origin
+                pictures[url] = {context: context, width: canvas.width, height: canvas.height};
+            } catch (ignored) {
+                pictures[url] = false;
+            }
+        };
+        image.onerror = function () {
+            pictures[url] = false;
+        };
+        image.src = url;
+        return null;
+    }
+
+    // Is the point on a visible pixel of the building picture (an <img> showing its picture as background)?
+    function onPicture(img, x, y) {
+        if (!img) {
+            return false;
+        }
+        var match = /url\(["']?([^"')]+)["']?\)/.exec(window.getComputedStyle(img).backgroundImage || '');
+        if (!match) {
+            return false;
+        }
+        var data = picture(match[1]);
+        if (!data) {
+            return false;
+        }
+        var rect = img.getBoundingClientRect();
+        if (x < rect.left || y < rect.top || x >= rect.right || y >= rect.bottom || !img.offsetWidth) {
+            return false;
+        }
+        var factor = rect.width / img.offsetWidth;
+        var px = Math.floor((x - rect.left) / factor);
+        var py = Math.floor((y - rect.top) / factor);
+        if (px >= data.width || py >= data.height) {
+            return false;
+        }
+        return data.context.getImageData(px, py, 1, 1).data[3] > 40;
+    }
+
     function walls() {
         return map.querySelectorAll('.buildingSlot.a40');
     }
@@ -52,7 +119,7 @@
             if (slot.getAttribute('data-gid') === '0') {
                 continue;
             }
-            if (inShape(slot.querySelector('svg.buildingShape'), x, y)) {
+            if (onPicture(slot.querySelector('img.building'), x, y) || inShape(slot.querySelector('svg.buildingShape'), x, y)) {
                 var z = parseInt(window.getComputedStyle(slot).zIndex, 10) || 0;
                 if (z >= bestZ) {
                     best = slot;
@@ -72,7 +139,12 @@
         return null;
     }
 
-    // glow copies of the wall pictures, cut to the wall ring (see openvillage.css .wallGlow)
+    // load the pictures up front, so the first hover already knows them
+    Array.prototype.forEach.call(map.querySelectorAll('.buildingSlot[data-aid]:not(.g0) img.building'), function (img) {
+        onPicture(img, -1, -1);
+    });
+
+    // veiled copies of the wall pictures, cut to the wall ring (see openvillage.css .wallGlow)
     Array.prototype.forEach.call(map.querySelectorAll('.buildingSlot.a40:not(.g0) img.wall'), function (img) {
         var glow = img.cloneNode(false);
         glow.classList.add('wallGlow');

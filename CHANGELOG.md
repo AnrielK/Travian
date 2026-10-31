@@ -4,11 +4,13 @@
 
 ### Added
 
-- Village centre hover (`js/Game/Village/buildingHover.js`): a building lights
-  up wherever the pointer is on it (found by its outline), not only on the level
-  circle, also the rally point, and a little stronger than before. The wall
-  glows without the bridges at its gates (a copy of the wall picture cut to the
-  wall ring).
+- Village centre hover (`js/Game/Village/buildingHover.js`): as in Legends a
+  white veil (20 %) lies over the building – an SVG colour filter, so it keeps
+  the building's silhouette – wherever the pointer is on it, not only on the
+  level circle. The building under the pointer is found by the pixels of its
+  picture as well as its outline, so the parts our outlines miss react too.
+  The wall is veiled without the bridges at its gates (a copy of the wall
+  picture cut to the wall ring).
 - Relocating buildings as in Travian Legends: the Main Building has a
   "Relocate buildings" section that opens the village centre in relocation mode
   (`dorf2.php?mode=rearrange`, as in Legends; `?relocate=1` still works). The page dims around the village, a building is
