@@ -412,6 +412,13 @@ class LegendsUi
             return null;
         }
         ['w' => $w, 'h' => $h, 'd' => $d] = $shapes[$key];
+        $onclick = ' onclick="window.location.href=\'' . self::e($href) . '\'"';
+        if (!empty($shapes[$key]['hover']) && !empty($shapes[$key]['highlight'])) {
+            // original Legends outlines: the pointer area and the silhouette the white hover veil fills
+            return '<svg width="' . (int)$w . '" height="' . (int)$h . '" viewBox="0 0 ' . (int)$w . ' ' . (int)$h . '" class="buildingShape legendsOutline '
+                . self::e($class) . '"><g class="hoverShape"><path d="' . self::e($shapes[$key]['hover']) . '"' . $onclick . '/></g>'
+                . '<g class="highlightShape"><path d="' . self::e($shapes[$key]['highlight']) . '"' . $onclick . '/></g></svg>';
+        }
         $path = '<path fill-rule="evenodd" d="' . $d . '" onclick="window.location.href=\'' . self::e($href) . '\'"/>';
         // $hoverOuter: the highlight fills the whole outer contour (the wall ring lights the whole village area)
         $hover = $path;

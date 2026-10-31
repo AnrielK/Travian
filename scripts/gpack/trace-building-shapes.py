@@ -78,6 +78,15 @@ def main():
 
     shapes['emptyWall'] = {'w': bottom.shape[1], 'h': bottom.shape[0],
                            'd': ellipse(rx, ry) + ellipse(rx - band, ry - band * ry / rx)}
+    # keep the original Legends outlines added by hand ('hover' = pointer area, 'highlight' = silhouette of the white
+    # hover veil), e.g. the Gaul palisade; tracing only renews the traced 'd'
+    if os.path.exists(OUT):
+        with open(OUT) as fh:
+            previous = json.load(fh)
+        for key, shape in previous.items():
+            for extra in ('hover', 'highlight'):
+                if extra in shape and key in shapes:
+                    shapes[key][extra] = shape[extra]
     with open(OUT, 'w') as fh:
         json.dump(shapes, fh, separators=(',', ':'), sort_keys=True)
     print(f'{len(shapes)} shapes -> {os.path.relpath(OUT, ROOT)} ({os.path.getsize(OUT) // 1024} KiB)')

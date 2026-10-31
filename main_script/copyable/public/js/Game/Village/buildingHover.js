@@ -145,7 +145,11 @@
     });
 
     // veiled copies of the wall pictures, cut to the wall ring (see openvillage.css .wallGlow)
+    // (walls with the original Legends outline are veiled through their highlight shape instead)
     Array.prototype.forEach.call(map.querySelectorAll('.buildingSlot.a40:not(.g0) img.wall'), function (img) {
+        if (img.parentNode.querySelector('svg.buildingShape .highlightShape')) {
+            return;
+        }
         var glow = img.cloneNode(false);
         glow.classList.add('wallGlow');
         glow.removeAttribute('title');

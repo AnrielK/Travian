@@ -578,6 +578,21 @@ body.t46Layout #contentOuterContainer #villageContent:not(.selectTarget):not(.dr
     filter: url(#ovHoverVeil) drop-shadow(0 0 3px rgb(255, 250, 215)) drop-shadow(0 0 10px rgba(255, 245, 190, 0.75)) !important;
 }
 
+/* buildings with the original Legends outlines (e.g. the Gaul palisade): the veil fills the highlight shape, as in
+   Legends, with the glow around it */
+#villageContent .buildingSlot svg.buildingShape.legendsOutline path {
+    fill: transparent !important;
+    stroke: none !important;
+}
+
+#villageContent:not(.selectTarget):not(.dragMode) > .buildingSlot.ovHover svg.buildingShape.legendsOutline .highlightShape path {
+    fill: rgba(255, 255, 255, 0.2) !important;
+}
+
+#villageContent:not(.selectTarget):not(.dragMode) > .buildingSlot.ovHover svg.buildingShape.legendsOutline .highlightShape {
+    filter: drop-shadow(0 0 2px rgba(255, 250, 215, 0.55));
+}
+
 #villageContent.ovPointer,
 #village_map.ovPointer {
     cursor: pointer;

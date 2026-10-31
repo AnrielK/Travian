@@ -11,7 +11,10 @@
   level circle. The building under the pointer is found by the pixels of its
   picture as well as its outline, so the parts our outlines miss react too.
   The wall is veiled without the bridges at its gates (a copy of the wall
-  picture cut to the wall ring).
+  picture cut to the wall ring). The Gaul palisade uses the original Legends
+  outlines (pointer area `hoverShape`, veil silhouette `highlightShape`, kept in
+  `legendsShapes.json` as `hover` / `highlight`, which
+  `scripts/gpack/trace-building-shapes.py` preserves).
 - Relocating buildings as in Travian Legends: the Main Building has a
   "Relocate buildings" section that opens the village centre in relocation mode
   (`dorf2.php?mode=rearrange`, as in Legends; `?relocate=1` still works). The page dims around the village, a building is
