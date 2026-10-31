@@ -4,6 +4,11 @@
 
 ### Added
 
+- Village centre hover (`js/Game/Village/buildingHover.js`): a building lights
+  up wherever the pointer is on it (found by its outline), not only on the level
+  circle, also the rally point, and a little stronger than before. The wall
+  glows without the bridges at its gates (a copy of the wall picture cut to the
+  wall ring).
 - Relocating buildings as in Travian Legends: the Main Building has a
   "Relocate buildings" section that opens the village centre in relocation mode
   (`dorf2.php?mode=rearrange`, as in Legends; `?relocate=1` still works). The page dims around the village, a building is
@@ -29,9 +34,9 @@
   confirm button. As in Legends the village mask starts at the top of the map
   and the building queue is hidden while rearranging. The picked building gets an
   orange outline along its picture, the plot it leaves is drawn with the
-  empty-site shape (as large as the turquoise drop target), and buildings, the
-  rally point and the wall light up under the pointer as in the village view
-  (hits are tested against the building outlines). Unlike Legends (20 gold) the
+  empty-site shape, and the place it would go — an empty site or a building it
+  swaps with — shows the turquoise dashed plot of Legends. Only a finger on a
+  movable building drags it; elsewhere the page scrolls as usual. Unlike Legends (20 gold) the
   relocation is free. Covered by `tests/building-relocation-regression.php`.
 - Statistics → General in the Travian Legends look ("Všeobecné"): the Legends
   page rendered on the server with real data instead of the hard-coded sample

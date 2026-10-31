@@ -172,7 +172,6 @@
 
     var selected = null;   // slot whose building is picked up
     var hovered = null;    // site under the pointer while something is picked up
-    var pointed = null;    // building under the pointer while nothing is picked up ('wall' for the wall)
     var drag = null;
     var walls = map.querySelectorAll('.buildingSlot.a40');
 
@@ -191,13 +190,13 @@
                 svg.classList.toggle('hover', target);
             }
             if (marks[slot]) {
+                // orange plot where the picked building stands, turquoise plot where it would go (also when
+                // another building stands there – the two swap)
                 marks[slot].classList.toggle('origin', dragging && slot === selected);
+                marks[slot].classList.toggle('target', target);
             }
-            // hover glow of the village view (openvillage-t46.css), which the pointer layer would swallow
-            element.classList.toggle('relocateHover', selected === null && slot === pointed);
-        });
-        Array.prototype.forEach.call(walls, function (wall) {
-            wall.classList.toggle('relocateHover', selected === null && pointed === 'wall');
+            // a finger on a building drags it; elsewhere (empty sites, fixed buildings) it scrolls the page
+            hits[slot].classList.toggle('draggable', !isFixed(slot) && !isEmpty(slot));
         });
         if (selected === null) {
             showStep('step1');
@@ -398,26 +397,9 @@
         return slotAt(x, y, true);
     }
 
-    function pointAt(event) {
-        var slot = buildingAt(event.clientX, event.clientY);
-        if (slot !== pointed) {
-            pointed = slot;
-            render();
-        }
-    }
-
-    map.addEventListener('pointerleave', function () {
-        if (pointed !== null) {
-            pointed = null;
-            render();
-        }
-    });
-
     map.addEventListener('pointermove', function (event) {
         if (!drag) {
-            if (selected === null) {
-                pointAt(event);
-            } else {
+            if (selected !== null) {
                 var over = targetAt(event.clientX, event.clientY);
                 if (over !== hovered) {
                     hovered = over;
@@ -699,8 +681,8 @@
     placeMask();
     window.addEventListener('scroll', hideTip, true);
 
-    // Outside the village nothing reacts while rearranging (dialogs aside).
-    ['click', 'pointerdown', 'mousedown', 'touchstart'].forEach(function (type) {
+    // Outside the village nothing reacts while rearranging (dialogs aside); scrolling the page stays possible.
+    ['click', 'mousedown'].forEach(function (type) {
         document.addEventListener(type, function (event) {
             var target = event.target;
             if (map.contains(target) || container.contains(target)

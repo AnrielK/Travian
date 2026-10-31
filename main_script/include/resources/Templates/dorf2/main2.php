@@ -817,6 +817,7 @@ $legendsShapes = is_hero_v2(); ?>
         Travian.Game.Village.initializeWallStates();
     });
 </script>
+<script type="text/javascript" src="js/Game/Village/buildingHover.js?v=<?=ov_asset_version(PUBLIC_PATH . 'js/Game/Village/buildingHover.js');?>"></script>
 <?php if ($relocate): ?>
 <script type="text/javascript" src="js/Game/Village/relocateBuildings.js?v=<?=ov_asset_version(PUBLIC_PATH . 'js/Game/Village/relocateBuildings.js');?>"></script>
 <?php endif; ?>

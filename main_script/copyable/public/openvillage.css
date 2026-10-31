@@ -564,6 +564,41 @@ body.ovMapFullScreen .ovMapWindow #content > :not(.titleInHeader) {
     display: none;
 }
 
+/* Village centre: hover glow wherever the pointer is on a building (js/Game/Village/buildingHover.js sets .ovHover),
+   a bit stronger than the :hover glow of the pack. The wall picture also holds the bridges, so the wall itself never
+   glows as a whole: its copy cut to the wall ring (.wallGlow) lights up instead. */
+#villageContent:not(.selectTarget):not(.dragMode) > .buildingSlot.ovHover:not(.g0) img.building,
+#village_map:not(.selectTarget):not(.dragMode) > .buildingSlot.ovHover:not(.g0) img.building {
+    filter: brightness(1.25) drop-shadow(0 0 3px rgb(255, 250, 215)) drop-shadow(0 0 10px rgba(255, 245, 190, 0.75)) !important;
+}
+
+#villageContent.ovPointer,
+#village_map.ovPointer {
+    cursor: pointer;
+}
+
+#villageContent.rearrangeMode.ovPointer {
+    cursor: default;
+}
+
+body.t46Layout #contentOuterContainer #villageContent .buildingSlot.a40 img.wall:not(.wallGlow) {
+    filter: none !important;
+}
+
+.buildingSlot.a40 img.wall.wallGlow {
+    position: absolute;
+    pointer-events: none;
+    opacity: 0;
+    transition: opacity 150ms ease-in;
+    clip-path: ellipse(45.09% 44.07% at 47.83% 50.47%);
+    filter: brightness(1.25) drop-shadow(0 0 3px rgb(255, 250, 215)) drop-shadow(0 0 8px rgba(255, 245, 190, 0.7)) !important;
+}
+
+#villageContent:not(.selectTarget):not(.dragMode) > .buildingSlot.a40.ovHover img.wall.wallGlow,
+#village_map:not(.selectTarget):not(.dragMode) > .buildingSlot.a40.ovHover img.wall.wallGlow {
+    opacity: 1;
+}
+
 /* Main Building → "Relocate buildings" (dorf2.php?mode=rearrange, js/Game/Village/relocateBuildings.js). The markup is
    the Travian Legends rearrange mode, which legends_ltr.css styles (village mask, title, steps, confirm button,
    faded buildings); these rules add what our village markup needs on top of it in every look, and the fallback
@@ -580,8 +615,12 @@ body.ovMapFullScreen .ovMapWindow #content > :not(.titleInHeader) {
     z-index: 500 !important;
     pointer-events: auto !important;
     cursor: pointer;
-    touch-action: none;
+    touch-action: pan-x pan-y pinch-zoom;
     -webkit-tap-highlight-color: transparent;
+}
+
+.rearrangeMode .buildingSlot.relocateHit.draggable {
+    touch-action: none;
 }
 
 .rearrangeMode.dragMode .buildingSlot.relocateHit {
@@ -623,6 +662,30 @@ body.ovMapFullScreen .ovMapWindow #content > :not(.titleInHeader) {
     opacity: 1;
 }
 
+/* where the picked building would go – an empty site or one it swaps with: turquoise plot (Legends drop target),
+   drawn over the building standing there like the site shape of the Legends slots */
+.rearrangeMode .buildingSlot.relocateMark.target {
+    z-index: 450 !important;
+}
+
+.rearrangeMode .buildingSlot.relocateMark.target svg.buildingShape,
+.rearrangeMode .buildingSlot.relocateMark.target span {
+    opacity: 1;
+}
+
+.rearrangeMode .buildingSlot.relocateMark.target svg.buildingShape path {
+    fill: #088885 !important;
+    fill-opacity: 0.85;
+    stroke: #38f4f4 !important;
+    stroke-width: 2px !important;
+    stroke-dasharray: 6 4;
+}
+
+.rearrangeMode .buildingSlot.relocateMark.target span {
+    background: #088885;
+    border: 2px dashed #38f4f4;
+}
+
 .rearrangeMode .buildingSlot.relocateHit.fixed {
     cursor: not-allowed;
 }
@@ -635,34 +698,12 @@ body.ovMapFullScreen .ovMapWindow #content > :not(.titleInHeader) {
     transition: left 0.25s ease-out, top 0.25s ease-out;
 }
 
-/* hover: the glow of the village view, also for the rally point; the wall lights up like outside this mode */
-.rearrangeMode .buildingSlot.relocateHover:not(.g0) img.building {
-    filter: brightness(1.18) drop-shadow(0 0 3px rgba(255, 250, 215, 0.95)) drop-shadow(0 0 8px rgba(255, 245, 190, 0.6));
-}
-
-.rearrangeMode .buildingSlot.a40.relocateHover img.wall {
-    filter: brightness(1.15) drop-shadow(0 0 3px rgba(255, 250, 215, 0.95)) drop-shadow(0 0 8px rgba(255, 245, 190, 0.55));
-}
-
-.rearrangeMode .buildingSlot.a40.g0.relocateHover svg.buildingShape g.clickShape path {
-    fill: rgba(222, 236, 150, 0.42) !important;
-}
-
-.rearrangeMode .buildingSlot.a40 svg.buildingShape path {
-    cursor: not-allowed;
-}
-
-/* outlines follow the building picture (our click shapes are only rough polygons): orange for the picked building,
-   turquoise for a building it would swap with */
+/* the orange outline follows the building picture (our click shapes are only rough polygons) */
 .rearrangeMode .buildingSlot.selected:not(.dragged) img.building,
 .rearrangeMode .dragContainer img.building {
     filter: drop-shadow(2px 0 0 #ff8c4d) drop-shadow(-2px 0 0 #ff8c4d) drop-shadow(0 2px 0 #ff8c4d) drop-shadow(0 -2px 0 #ff8c4d);
 }
 
-.rearrangeMode .buildingSlot.dropTarget:not(.g0) img.building {
-    filter: brightness(1.1) drop-shadow(2px 0 0 #38f4f4) drop-shadow(-2px 0 0 #38f4f4) drop-shadow(0 2px 0 #38f4f4) drop-shadow(0 -2px 0 #38f4f4);
-    opacity: 1 !important;
-}
 
 .rearrangeMode .buildingSlot.selected svg.buildingShape:not(.iso) path,
 .rearrangeMode .buildingSlot.dropTarget svg.buildingShape:not(.iso) path,
