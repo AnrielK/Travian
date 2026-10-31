@@ -1290,17 +1290,17 @@ body.t46Layout.legendsV2 .sidebar #sidebarBoxQuestmaster.legendsMentor .taskOver
 body.t46Layout.legendsV2 .sidebar #sidebarBoxQuestmaster.legendsMentor .taskOverview .boxTitle:hover { background-color: transparent; color: #3f2a14; }
 
 /* ---- "Construct new building" window in the Legends layout: text + picture, framed box with costs, benefits, buttons ---- */
-body.t46Layout.legendsV2 div#build .buildingWrapper.ovLegendsBuild { display: grid; grid-template-columns: 1fr auto; column-gap: 10px; align-items: start; padding: 0; margin: 25px 0 0; border: 0; }
-body.t46Layout.legendsV2 div#build .buildingWrapper.ovLegendsBuild:first-of-type { margin-top: 4px; }
+body.t46Layout.legendsV2 div#build .buildingWrapper.ovLegendsBuild { display: grid; grid-template-columns: 1fr auto; gap: 15px 10px; align-items: start; padding: 0; margin: 25px 0 0; border: 0; }
+body.t46Layout.legendsV2 div#build .buildingWrapper.ovLegendsBuild:first-of-type,
+body.t46Layout.legendsV2 div#build .contentNavi + .buildingWrapper.ovLegendsBuild { margin-top: 4px; }
 body.t46Layout.legendsV2 div#build h4.round.spacer + .buildingWrapper.ovLegendsBuild { margin-top: 10px; }
 body.t46Layout.legendsV2 div#build .ovLegendsBuild .build_desc { grid-column: 1; display: block; min-height: 0; padding: 0; margin: 0; font-size: 13px; line-height: 16px; color: #333; }
-body.t46Layout.legendsV2 div#build .ovLegendsBuild .build_desc h2 { margin: 0 0 1px; font-size: 16px; line-height: 20px; font-weight: 700; color: #2f2116; }
+body.t46Layout.legendsV2 div#build .ovLegendsBuild .build_desc h2 { margin: 0 0 5px; font-size: 16px; line-height: 20px; font-weight: 700; color: #2f2116; }
 body.t46Layout.legendsV2 div#build .ovLegendsBuild .build_logo_link { grid-column: 2; display: block; line-height: 0; }
-body.t46Layout.legendsV2 div#build .ovLegendsBuild img.build_logo { float: none; display: block; margin: 0; width: 150px; height: 125px; background-size: contain; background-repeat: no-repeat; background-position: center center; }
-body.t46Layout.legendsV2 div#build .ovLegendsBuild .upgradeBuilding { grid-column: 1 / -1; margin: 14px 0 0; }
+/* the building picture in its own size and the costs spread over the box, as in Legends (legends_ltr.css) */
+body.t46Layout.legendsV2 div#build .ovLegendsBuild img.build_logo { float: none; display: block; margin: 0; }
+body.t46Layout.legendsV2 div#build .ovLegendsBuild .upgradeBuilding { grid-column: 1 / -1; margin: 0; }
 body.t46Layout.legendsV2 div#build .ovLegendsBuild .contractWrapper { text-align: center; }
-body.t46Layout.legendsV2 div#build .ovLegendsBuild .contractWrapper .resourceWrapper { display: inline-grid; width: auto; margin: 0; }
-body.t46Layout.legendsV2 div#build .ovLegendsBuild .contractWrapper .resourceWrapper .inlineIcon { width: auto; }
 body.t46Layout.legendsV2 div#build .ovLegendsBuild .contractWrapper .resourceWrapper .inlineIcon.fillUp { padding: 0 6px; border-radius: 4px;
     background: #f5c6bb; box-shadow: inset 0 0 0 1px #d0503b; }
 body.t46Layout.legendsV2 div#build .ovLegendsBuild .upgradeBlocked { display: grid; grid-template-columns: 1fr auto; align-items: center; gap: 10px; text-align: left; }
@@ -1321,6 +1321,7 @@ body.t46Layout.legendsV2 div#build .ovLegendsBuild .upgradeButtonsContainer .inl
 body.t46Layout.legendsV2 div#build .ovLegendsBuild .upgradeButtonsContainer .inlineIcon.duration svg.speedUp { position: absolute; left: 7px; bottom: -3px; width: 18px; height: 12px; }
 body.t46Layout.legendsV2 div#build .ovLegendsBuild .upgradeButtonsContainer .plusAdvertising { font-size: 13px; line-height: 17px; color: #333; }
 body.t46Layout.legendsV2 div#build .ovLegendsBuild .upgradeButtonsContainer .plusAdvertising button { margin-bottom: 8px; }
+body.t46Layout.legendsV2 div#build .ovLegendsBuild .upgradeButtonsContainer .plusAdvertising br { display: none; }
 body.t46Layout.legendsV2 div#build .ovLegendsBuild.soon .upgradeButtonsContainer { display: block; text-align: center; }
 body.t46Layout.legendsV2 div#build .ovLegendsBuild.soon .upgradeButtonsContainer > .contractText { display: none; }
 body.t46Layout.legendsV2 div#build .ovLegendsBuild.soon .buildingCondition { font-size: 17px; line-height: 24px; }
