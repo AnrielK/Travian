@@ -6,7 +6,8 @@
 
 - Village centre hover (`js/Game/Village/buildingHover.js`): as in Legends a
   white veil (20 %) lies over the building – an SVG colour filter, so it keeps
-  the building's silhouette – wherever the pointer is on it, not only on the
+  the building's silhouette – with the soft glow around it, wherever the
+  pointer is on it, not only on the
   level circle. The building under the pointer is found by the pixels of its
   picture as well as its outline, so the parts our outlines miss react too.
   The wall is veiled without the bridges at its gates (a copy of the wall

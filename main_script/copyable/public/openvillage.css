@@ -564,7 +564,8 @@ body.ovMapFullScreen .ovMapWindow #content > :not(.titleInHeader) {
     display: none;
 }
 
-/* Village centre: the Legends hover – a white veil (20 %) over the building – wherever the pointer is on it
+/* Village centre: the Legends hover – a white veil (20 %) over the building, with our glow around it – wherever the
+   pointer is on it
    (js/Game/Village/buildingHover.js sets .ovHover and defines the filter #ovHoverVeil). The pack's own glow on
    :hover is switched off. The wall picture also holds the bridges, so the wall is never veiled as a whole: its copy
    cut to the wall ring (.wallGlow) is veiled instead. */
@@ -574,7 +575,7 @@ body.t46Layout #contentOuterContainer #villageContent .buildingSlot:not(.g0) img
 
 body.t46Layout #contentOuterContainer #villageContent:not(.selectTarget):not(.dragMode) > .buildingSlot.ovHover:not(.g0) img.building,
 #village_map:not(.selectTarget):not(.dragMode) > .buildingSlot.ovHover:not(.g0) img.building {
-    filter: url(#ovHoverVeil) !important;
+    filter: url(#ovHoverVeil) drop-shadow(0 0 3px rgb(255, 250, 215)) drop-shadow(0 0 10px rgba(255, 245, 190, 0.75)) !important;
 }
 
 #villageContent.ovPointer,
@@ -596,7 +597,7 @@ body.t46Layout #contentOuterContainer #villageContent .buildingSlot.a40 img.wall
     opacity: 0;
     transition: opacity 150ms ease-in;
     clip-path: ellipse(45.09% 44.07% at 47.83% 50.47%);
-    filter: url(#ovHoverVeil) !important;
+    filter: url(#ovHoverVeil) drop-shadow(0 0 3px rgb(255, 250, 215)) drop-shadow(0 0 8px rgba(255, 245, 190, 0.7)) !important;
 }
 
 #villageContent:not(.selectTarget):not(.dragMode) > .buildingSlot.a40.ovHover img.wall.wallGlow,

@@ -25,7 +25,7 @@ use Core\Helper\PreferencesHelper;
         <!-- T4.4 packs: icons and village centre slots for the T4.6 markup (scripts/gpack/make-classic-compat.py) -->
         <link href="<?=get_gpack_link_and_hash("openvillage-compat.css", false); ?>?rev2" rel="stylesheet" type="text/css"/>
     <?php endif; ?>
-    <link href="openvillage.css?rev49" rel="stylesheet" type="text/css"/>
+    <link href="openvillage.css?rev50" rel="stylesheet" type="text/css"/>
     <?php if (is_t40_layout()): ?>
         <!-- Travian 4.0: page frame of layout/LayoutT40.php (scripts/gpack/import-t40-gpack.py) -->
         <link href="<?=get_gpack_link_and_hash("openvillage-t40.css", false); ?>?rev1" rel="stylesheet" type="text/css"/>
