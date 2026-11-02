@@ -73,6 +73,15 @@ class DailyQuestsCtrl extends GameCtrl
                 'description' => T('DailyQuest', 'reward_' . ($n * 25) . '%_desc'),
             ];
         }
+        // Legends quest details (dailyquests.php?q=<id>): the first paragraph of the description, the others below it
+        $detail = null;
+        if (is_hero_v2() && isset($_GET['q'], self::QUESTS[(int)$_GET['q']])) {
+            $detail = $quests[array_search((int)$_GET['q'], array_column($quests, 'id'), true)];
+            $paragraphs = array_values(array_filter(array_map('trim', preg_split('~\R|<br\s*/?>~i',
+                T('DailyQuest', 'questData.' . $detail['id'] . '.desc'))), 'strlen'));
+            $detail['description'] = $paragraphs[0] ?? '';
+            $detail['information'] = array_slice($paragraphs, 1);
+        }
         $lastReset = (int)DB::getInstance()->fetchScalar('SELECT lastDailyQuestReset FROM config');
         $nextReset = $lastReset > 0 ? $lastReset + (int)getGame('dailyQuestInterval') : 0;
 
@@ -87,6 +96,7 @@ class DailyQuestsCtrl extends GameCtrl
             'milestones' => $milestones,
             'nextReset' => $nextReset,
             'checker' => $session->getChecker(),
+            'detail' => $detail,
         ]);
     }
 }

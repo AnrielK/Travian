@@ -10,8 +10,33 @@ $readyToCollect = false;
 foreach ($vars['milestones'] as $m) {
     $readyToCollect = $readyToCollect || ($m['reached'] && !$m['done']);
 }
+/** Steps of a quest (one pill per step) and its points, in the list and in the details. */
+$track = static function (array $q): string {
+    $html = '<div class="taskTrack withSummary">';
+    for ($i = 0; $i < $q['steps']; ++$i) {
+        $html .= '<div class="pill' . ($i < $q['done'] ? ' completed' : '') . '">' . UI::svg('laurelIcon', 'laurelIcon') . '<span>' . (int)$q['reward'] . '</span></div>';
+    }
+    return $html . '</div><div class="questAchievedPoints' . ($q['done'] >= $q['steps'] ? ' completed' : '') . '">'
+        . UI::svg('laurel', 'laurel') . '<div class="points">' . (int)$q['points'] . '/' . (int)$q['total'] . '</div></div>';
+};
+$detail = $vars['detail'];
 ?>
 <div id="dailyQuests" class="contentV2">
+    <?php if ($detail): ?>
+    <div class="screen active">
+        <div id="dailyQuestsDetailsScreen" class="DailyQuest_<?=sprintf('%02d', $detail['id']); ?>">
+            <?=UI::button('<svg viewBox="0 0 10.2 16.5"><path d="m.1 8.1-.1.2.1.2L7 15.9c.7.7 1.9.8 2.6.1.7-.7.8-1.8.1-2.5L5 8.3l4.7-5.2c.7-.7.7-1.9-.1-2.6-.7-.7-1.9-.7-2.6.1l-.1.1L.1 8.1z"/></svg><span>'
+                . $h(T('HeroV2', 'back', 'Back')) . '</span>', ['secondary' => true, 'class' => 'backButton withTextAndIcon',
+                'onclick' => "window.location.href='dailyquests.php'"]); ?>
+            <h1><?=$h($detail['name']); ?></h1>
+            <div class="description"><?=$h($detail['description']); ?></div>
+            <?php foreach ($detail['information'] as $information): ?>
+                <div class="additionalInformation"><?=$h($information); ?></div>
+            <?php endforeach; ?>
+            <div class="dailyQuest"><?=$track($detail); ?></div>
+        </div>
+    </div>
+    <?php else: ?>
     <div class="screen active">
         <div>
             <h1><?=$h(T('DailyQuest', 'legendsTitle', T('DailyQuest', 'Collect daily rewards'))); ?></h1>
@@ -45,18 +70,10 @@ foreach ($vars['milestones'] as $m) {
             </div>
             <div class="quests">
                 <?php foreach ($vars['quests'] as $q): ?>
-                    <div class="dailyQuest<?=$q['done'] >= $q['steps'] ? ' completed' : ''; ?>">
+                    <div class="dailyQuest<?=$q['done'] >= $q['steps'] ? ' completed' : ''; ?>" onclick="window.location.href='dailyquests.php?q=<?=(int)$q['id']; ?>'">
                         <div class="titleDecoration"></div>
                         <div class="title"><?=$h($q['name']); ?></div>
-                        <div class="taskTrack withSummary">
-                            <?php for ($i = 0; $i < $q['steps']; ++$i): ?>
-                                <div class="pill<?=$i < $q['done'] ? ' completed' : ''; ?>"><?=UI::svg('laurelIcon', 'laurelIcon'); ?><span><?=(int)$q['reward']; ?></span></div>
-                            <?php endfor; ?>
-                        </div>
-                        <div class="questAchievedPoints<?=$q['done'] >= $q['steps'] ? ' completed' : ''; ?>">
-                            <?=UI::svg('laurel', 'laurel'); ?>
-                            <div class="points"><?=(int)$q['points']; ?>/<?=(int)$q['total']; ?></div>
-                        </div>
+                        <?=$track($q); ?>
                     </div>
                 <?php endforeach; ?>
             </div>
@@ -66,4 +83,5 @@ foreach ($vars['milestones'] as $m) {
             </div>
         </div>
     </div>
+    <?php endif; ?>
 </div>

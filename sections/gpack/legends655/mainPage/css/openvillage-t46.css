@@ -2295,3 +2295,11 @@ body.t46Layout.legendsV2 #content.tasks #tasks .contentNavi.subNavi { margin-bot
 /* Daily quests: brown text as in the Legends dialog, 8px between the title and the reset line */
 body.t46Layout.legendsV2 #dailyQuests { color: #5e463a; }
 body.t46Layout.legendsV2 #dailyQuests h1 { margin-bottom: 8px; }
+/* Legends secondary buttons (light, green text and border): without the green gradient of the T4.4 button.green */
+body.t46Layout.legendsV2 button.textButtonV2.buttonSecondary.green:not(.disabled):not(:disabled) { border: 1px solid #427107; background-image: none;
+    box-shadow: none; padding: 0 10px; line-height: normal; }
+/* Daily quest details (dailyquests.php?q=): the 580x200 picture of the Legends dialog across the content window */
+body.t46Layout.legendsV2 #dailyQuests #dailyQuestsDetailsScreen { position: relative; }
+body.t46Layout.legendsV2 #dailyQuests #dailyQuestsDetailsScreen:before { width: 100%; height: auto; aspect-ratio: 580 / 200; margin: 0;
+    background-size: cover; }
+body.t46Layout.legendsV2 #dailyQuests #dailyQuestsDetailsScreen h1 { min-height: 54px; }
