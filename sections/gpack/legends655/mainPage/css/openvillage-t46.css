@@ -2318,3 +2318,6 @@ body.t46Layout.legendsV2 div#build .ovLegendsBuild .buildingCondition > span { d
 body.t46Layout.legendsV2 div#build .ovLegendsBuild .buildingCondition > span::first-letter { text-transform: uppercase; }
 body.t46Layout.legendsV2 div#build h4.round.spacer { margin: 20px 0; padding: 4px 15px; color: #333; }
 body.t46Layout.legendsV2 div#build .ovLegendsBuild .upgradeBlocked:not(:empty):not(:has(*)) { padding: 0; }
+/* conditions of the "soon available" buildings in the Legends text size: 13px/16px, links #5a9a0a */
+body.t46Layout.legendsV2 div#build .ovLegendsBuild.soon .buildingCondition { font-size: 13px; line-height: 16px; }
+body.t46Layout.legendsV2 div#build .ovLegendsBuild.soon .buildingCondition a { color: #5a9a0a; }
