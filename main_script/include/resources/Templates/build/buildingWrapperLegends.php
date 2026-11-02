@@ -19,7 +19,7 @@ $title = T("Buildings", $itemId . '.title');
         <?=T("Buildings", $itemId . '.desc'); ?>
     </div>
     <a href="#" onclick="return Travian.Game.iPopup(<?=$itemId; ?>,4);" class="build_logo_link">
-        <img class="build_logo building big g<?=$itemId; ?> <?=htmlspecialchars($vars['tribe']); ?>" src="img/x.gif" alt="<?=$title; ?>">
+        <img class="buildLogo building big g<?=$itemId; ?> <?=htmlspecialchars($vars['tribe']); ?>" src="img/x.gif" alt="<?=$title; ?>">
     </a>
     <div class="upgradeBuilding">
         <div class="contractWrapper">

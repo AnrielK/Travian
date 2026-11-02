@@ -547,7 +547,7 @@ $Definition['Buildings']['construct_with_master_builder'] = 'Postavit se stavbyv
 $Definition['Buildings']['constructNewBuilding'] = 'Postavit novou budovu';
 $Definition['Buildings']['preRequests'] = 'Předpoklady';
 $Definition['Buildings']['no_building_available'] = 'Momentálně nelze postavit žádnou budovu.<br />Většina budov má určité předpoklady. Více zjistíš v příručce.';
-$Definition['Buildings']['soon_available'] = 'Budovy dostupné brzy';
+$Definition['Buildings']['soon_available'] = 'Brzy dostupné budovy';
 $Definition['Buildings']['level'] = 'úroveň';
 $Definition['Buildings']['upgradeNotices']['reachedMaxLvL'] = 'dosáhla maximální úrovně.';
 $Definition['Buildings']['upgradeNotices']['buildingIsOnDemolition'] = 'Tato budova se bourá.';
@@ -634,7 +634,7 @@ $Definition['Buildings'][18]['title'] = 'Ambasáda';
 $Definition['Buildings'][18]['desc'] = 'Ambasáda je místem pro diplomaty. Čím vyšší úroveň, tím více možností král získá.';
 $Definition['Buildings'][19]['title'] = 'Kasárny';
 $Definition['Buildings'][19]['desc'] = 'V kasárnách se cvičí pěchota. Čím vyšší úroveň, tím rychleji se jednotky cvičí.';
-$Definition['Buildings'][20]['title'] = 'Stáj';
+$Definition['Buildings'][20]['title'] = 'Stáje';
 $Definition['Buildings'][20]['desc'] = 'Ve stáji se cvičí jízda. Čím vyšší úroveň, tím rychleji se jednotky cvičí. ';
 $Definition['Buildings'][21]['title'] = 'Dílna';
 $Definition['Buildings'][21]['desc'] = 'V dílně se staví obléhací stroje, jako jsou katapulty a beranidla. Čím vyšší úroveň, tím rychleji se tyto jednotky vyrábějí.';
@@ -661,7 +661,7 @@ $Definition['Buildings'][28]['next_prod'] = 'Zvýšení v procentech na úrovni'
 $Definition['Buildings'][28]['unit'] = 'Procent';
 $Definition['Buildings'][29]['title'] = 'Velké kasárny';
 $Definition['Buildings'][29]['desc'] = 'Velké kasárny umožňují cvičit více jednotek najednou, ty ale stojí trojnásobek původní ceny. ';
-$Definition['Buildings'][30]['title'] = 'Velká stáj';
+$Definition['Buildings'][30]['title'] = 'Velké stáje';
 $Definition['Buildings'][30]['desc'] = 'Velká stáj umožňuje cvičit více jednotek najednou, ty ale stojí trojnásobek původní ceny.';
 $Definition['Buildings'][31]['title'] = 'Městská zeď';
 $Definition['Buildings'][31]['desc'] = 'Stavbou městské zdi můžeš svou vesnici chránit před barbarskými hordami nepřátel. Čím vyšší úroveň, tím vyšší bonus k obraně tvých vojsk. ';
@@ -932,7 +932,7 @@ Pěšáci, kteří už jsou ve frontě výcviku, se do úkolu nepočítají.
 Jezdci, kteří už jsou ve frontě výcviku, se do úkolu nepočítají.
 <br />',
         'difficulty' => 'náročné',
-        'Requirement' => 'Stáj',
+        'Requirement' => 'Stáje',
     ],
     10 => [
         'name' => 'Uspořádej malou nebo velkou slavnost ',
@@ -5911,7 +5911,7 @@ $Definition['QuickLinks']['name']['marketplace'] = 'Tržiště';
 $Definition['QuickLinks']['name']['barracks'] = 'Kasárny';
 $Definition['QuickLinks']['name']['greatBarracks'] = 'Velké kasárny';
 $Definition['QuickLinks']['name']['stable'] = 'Stáje';
-$Definition['QuickLinks']['name']['greatStable'] = 'Velká stáj';
+$Definition['QuickLinks']['name']['greatStable'] = 'Velké stáje';
 $Definition['QuickLinks']['name']['workshop'] = 'Dílna';
 $Definition['QuickLinks']['name']['townHall'] = 'Radnice';
 $Definition['QuickLinks']['name']['heroMansion'] = 'Hrdinský dvůr';

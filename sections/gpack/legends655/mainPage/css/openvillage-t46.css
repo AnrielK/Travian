@@ -1298,7 +1298,7 @@ body.t46Layout.legendsV2 div#build .ovLegendsBuild .build_desc { grid-column: 1;
 body.t46Layout.legendsV2 div#build .ovLegendsBuild .build_desc h2 { margin: 0 0 5px; font-size: 16px; line-height: 20px; font-weight: 700; color: #2f2116; }
 body.t46Layout.legendsV2 div#build .ovLegendsBuild .build_logo_link { grid-column: 2; display: block; line-height: 0; }
 /* the building picture in its own size and the costs spread over the box, as in Legends (legends_ltr.css) */
-body.t46Layout.legendsV2 div#build .ovLegendsBuild img.build_logo { float: none; display: block; margin: 0; }
+body.t46Layout.legendsV2 div#build .ovLegendsBuild img.buildLogo { float: none; display: block; margin: 0; }
 body.t46Layout.legendsV2 div#build .ovLegendsBuild .upgradeBuilding { grid-column: 1 / -1; margin: 0; }
 body.t46Layout.legendsV2 div#build .ovLegendsBuild .contractWrapper { text-align: center; }
 body.t46Layout.legendsV2 div#build .ovLegendsBuild .contractWrapper .resourceWrapper .inlineIcon.fillUp { padding: 0 6px; border-radius: 4px;
@@ -2308,3 +2308,13 @@ body.t46Layout.legendsV2 #dailyQuests #dailyQuestsDetailsScreen h1 { min-height:
 body.legendsV2 .legendsDialogOverlay:has(.dailyQuestsDialog) { z-index: 5001; }
 body.legendsV2 .legendsDialogOverlay .dialog.basic.dailyQuestsDialog .dialogContents { padding: 9px; }
 body.legendsV2 .legendsDialogOverlay .dialog.basic.dailyQuestsDialog form > .content { overflow: visible; height: auto; max-height: none; }
+/* "Construct new building" window as in Legends 692.2: the picture in the size of each building (img.buildLogo, not
+   the 184x179 of the T4.4 div#build img.build_logo), the name 15px, the costs in one row in the middle, buttons 11px,
+   "Úroveň" with a capital letter in the conditions, the "Soon available" bar of Legends */
+body.t46Layout.legendsV2 div#build .ovLegendsBuild .build_desc h2 { font-size: 15px; line-height: 16px; color: #333; }
+body.t46Layout.legendsV2 div#build.gid0 .ovLegendsBuild .contractWrapper .resourceWrapper { display: inline-grid; margin-top: 0; }
+body.t46Layout.legendsV2 div#build .ovLegendsBuild .upgradeButtonsContainer button { font-size: 11px; }
+body.t46Layout.legendsV2 div#build .ovLegendsBuild .buildingCondition > span { display: inline-block; }
+body.t46Layout.legendsV2 div#build .ovLegendsBuild .buildingCondition > span::first-letter { text-transform: uppercase; }
+body.t46Layout.legendsV2 div#build h4.round.spacer { margin: 20px 0; padding: 4px 15px; color: #333; }
+body.t46Layout.legendsV2 div#build .ovLegendsBuild .upgradeBlocked:not(:empty):not(:has(*)) { padding: 0; }
