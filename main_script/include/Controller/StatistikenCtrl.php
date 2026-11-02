@@ -328,7 +328,7 @@ HTML;
 			<td>' . T("Statistics", "alliance") . '</td>
 			' . (Session::getInstance()->isAdmin() || getDisplay("showFlagsInStatistics") ? '<td class="flags">' . T("Statistics",
                             "General.CountryFlag") . '</td>' : '') . '
-			<td>' . T("Statistics", "population") . '</td>
+			<td>' . T("Statistics", "populationColumn", T("Statistics", "population")) . '</td>
 			<td>' . T("Statistics", "village") . '</td>
 			' . (Session::getInstance()->isAdmin() ? '<td class="buttons" style="padding: 2px 0 2px 2px;white-space: nowrap;width: 1%;">' . T("Statistics",
                             "Actions") . '</td>' : '') . '
@@ -419,7 +419,7 @@ HTML;
                 "tableColumns" => '<tr>
 			<td></td>
 			<td>' . T("Statistics", "tabs.players") . '</td>
-			<td>' . T("Statistics", "population") . '</td>
+			<td>' . T("Statistics", "populationColumn", T("Statistics", "population")) . '</td>
 			<td>' . T("Statistics", "village") . '</td>
 			<td>' . T("Statistics", "points") . '</td>
 		</tr>',
@@ -978,7 +978,7 @@ HTML;
 			<td></td>
 			<td>' . T("Statistics", "tabs.villages") . '</td>
 			<td>' . T("Statistics", "player") . '</td>
-			<td>' . T("Statistics", "population") . '</td>
+			<td>' . T("Statistics", "populationColumn", T("Statistics", "population")) . '</td>
 			<td>' . T("Statistics", "coordinates") . '</td>
 		</tr>',
                 "headerRound" => T("Statistics", "largestVillages"),

@@ -14,7 +14,9 @@ $num = static fn($n) => abs((int)$n) < 10000 ? (string)(int)$n : number_format((
 $valueBox = static fn(string $icon, $value, string $title) => '<div class="iconValueBoxWrapper" title="' . $h($title) . '"><div class="iconValueBox ' . $icon . '"><i class="' . $icon . '"></i><span>' . ($v2 ? $num($value) : number_format((int)$value, 0, ',', number_thousands_separator())) . '</span></div></div>';
 $label = static function (array $task, string $prefix = '') use ($h, $num) {
     if ($task['type'] === 'level') {
-        return $h(T('Buildings', 'level')) . ' <span>' . $task['value'] . '</span>/<span>' . $task['goal'] . '</span>';
+        // at the start of the label: "Úroveň 0/1" as in Legends (the translation is lower case for running text)
+        $level = T('Buildings', 'level');
+        return $h(mb_strtoupper(mb_substr($level, 0, 1)) . mb_substr($level, 1)) . ' <span>' . $task['value'] . '</span>/<span>' . $task['goal'] . '</span>';
     }
     if ($task['type'] === 'fields') {
         return '<span>' . $task['value'] . '</span>/<span>' . $task['goal'] . '</span> ' . $h(sprintf(T('Tasks', 'toLevel', 'to level %d'), $task['level']));
