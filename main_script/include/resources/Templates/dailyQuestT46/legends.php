@@ -14,9 +14,10 @@ foreach ($vars['milestones'] as $m) {
 <div id="dailyQuests" class="contentV2">
     <div class="screen active">
         <div>
-            <h1><?=$h(T('DailyQuest', 'Collect daily rewards')); ?></h1>
-            <div><?php if ($vars['nextReset'] > 0): ?><?=$h(sprintf(T('Tasks', 'dailyReset', 'Next reset: %s. Collect your rewards before then!'),
-                    TimezoneHelper::autoDateString($vars['nextReset'], true))); ?><?php endif; ?></div>
+            <h1><?=$h(T('DailyQuest', 'legendsTitle', T('DailyQuest', 'Collect daily rewards'))); ?></h1>
+            <div><?php if ($vars['nextReset'] > 0): ?><?=$h(($resetText = T('Tasks', 'dailyResetLegends', '')) !== ''
+                    ? sprintf($resetText,TimezoneHelper::date(TimezoneHelper::getTimeFormat(false), $vars['nextReset']))
+                    : sprintf(T('Tasks', 'dailyReset', 'Next reset: %s. Collect your rewards before then!'), TimezoneHelper::autoDateString($vars['nextReset'], true))); ?><?php endif; ?></div>
             <div class="dailyProgress">
                 <div class="content">
                     <div class="pointsSource"><div class="inner"></div></div>
@@ -33,7 +34,7 @@ foreach ($vars['milestones'] as $m) {
                         <?=UI::svg('laurel', 'laurel'); ?>
                         <?=UI::svg('rewardFrame', 'above'); ?>
                         <div class="achieved"><?=$points; ?></div>
-                        <div class="points"><?=$h(T('DailyQuest', 'points')); ?></div>
+                        <div class="points"><?=$h(T('DailyQuest', 'pointsLegends', T('DailyQuest', 'points'))); ?></div>
                     </div>
                 </div>
                 <div class="backgroundBox">

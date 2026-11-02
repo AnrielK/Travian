@@ -2282,3 +2282,16 @@ body.t46Layout.legendsV2 #content .contentNavi.subNavi > .container:not(.active)
 /* progress bars fill within 250ms ease-out (not on the daily quests, as in Legends) */
 body.t46Layout.legendsV2 .progressBar .bar .filling { transition: all 250ms ease-out; }
 body.t46Layout.legendsV2 #dailyQuests .progressBar .bar .filling { transition: none; }
+/* Tasks (#tasks.contentV2 with the LegendsUi progress bar, as Legends): the T4.6 template's rules for the older bar
+   markup (73px high grid, golden bar, decorations over the whole bar) give way to the Legends ones */
+body.t46Layout.legendsV2 #tasks.contentV2 .task .progress { padding: 0; }
+body.t46Layout.legendsV2 #tasks.contentV2 .task .progress .progressBar { height: 18px; grid-template-rows: 18px; }
+body.t46Layout.legendsV2 #tasks.contentV2 .task .progress .progressBar .bar { grid-row-start: 1; border-color: #44321d;
+    background-image: linear-gradient(var(--backgroundColorStart, #664e40), var(--backgroundColorEnd, #664e40)); }
+body.t46Layout.legendsV2 #tasks.contentV2 .task .progress .progressBar .bar svg.decoration.start { inset: 0 auto 0 3px; }
+body.t46Layout.legendsV2 #tasks.contentV2 .task .progress .progressBar .bar svg.decoration.end { inset: 0 3px 0 auto; }
+body.t46Layout.legendsV2 #tasks.contentV2 .task:not(.placeholder) .title { font-size: 15px; }
+body.t46Layout.legendsV2 #content.tasks #tasks .contentNavi.subNavi { margin-bottom: 10px; }
+/* Daily quests: brown text as in the Legends dialog, 8px between the title and the reset line */
+body.t46Layout.legendsV2 #dailyQuests { color: #5e463a; }
+body.t46Layout.legendsV2 #dailyQuests h1 { margin-bottom: 8px; }

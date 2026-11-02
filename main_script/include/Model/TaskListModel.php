@@ -130,9 +130,9 @@ class TaskListModel
     }
 
     /**
-     * One task with its description and all its steps (Legends task details), from the highest level down: the
-     * steps still ahead ("future", with their own progress), the current one and the collected ones; null for an
-     * unknown task. 'currentIndex' = position of the current step in 'history'.
+     * One task with its description and its steps (Legends task details), from the highest level down: the current
+     * one and the collected ones; Legends does not show the steps still ahead. null for an unknown task.
+     * 'currentIndex' = position of the current step in 'history'.
      */
     public function details(string $scope, string $key): ?array
     {
@@ -145,7 +145,7 @@ class TaskListModel
         $bonus = 1 + $this->getBonusPercent($this->getHeroLevel()) / 100;
         $steps = [];
         $current = 0;
-        for ($i = count($definition['steps']) - 1; $i >= 0; --$i) {
+        for ($i = min(count($definition['steps']) - 1, $task['step']); $i >= 0; --$i) {
             $step = $definition['steps'][$i];
             [$resources, $experience] = $definition['type'] === 'fields' ? [$step[2], $step[3]] : [$step[1], $step[2]];
             $entry = ['index' => $i, 'title' => $this->stepTitle($definition, $step), 'type' => $definition['type'],

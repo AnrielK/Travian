@@ -1,7 +1,12 @@
 <?php
 use Core\Helper\PreferencesHelper;
 ?>
+<?php if (function_exists('is_hero_v2') && is_hero_v2()): /* Legends pages render in full standards mode, as on Travian (the
+    XHTML transitional doctype switches the browser to almost-standards mode: other line heights around images and inline blocks) */ ?>
+<!DOCTYPE html>
+<?php else: ?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN""http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<?php endif; ?>
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
     <title><?= get_language_properties('title'); ?></title>

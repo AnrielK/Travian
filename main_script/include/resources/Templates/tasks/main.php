@@ -39,8 +39,8 @@ $progressV2 = static function (array $task, string $url, string $prefix = '') us
             ['class' => 'collect collected preventAnimation', 'disabled' => true, 'appearance' => 'grey', 'data' => ['text-collected' => $collectedText]]);
     }
     if ($task['state'] === 'open' || $task['state'] === 'future') { // future = a later step of the details: its progress only
-        return '<div class="progressBar"><div class="bar"><div class="filling" style="width:' . round(min(1, $task['ratio']) * 100) . '%"></div><div class="decoration"></div></div>'
-            . '<div class="label">' . $label($task, $prefix) . '</div></div>';
+        return LegendsUi::progressBar(['color' => 'green', 'primary' => round(min(1, $task['ratio']) * 100, 1)])
+            . '<div class="label">' . $label($task, $prefix) . '</div>';
     }
     return LegendsUi::button($h(T('Tasks', 'collect', 'Collect')) . '<i class="collectedCheckmark"></i>', ['class' => 'collect',
         'data' => ['collect' => $url, 'text-collected' => $collectedText]]);
@@ -48,7 +48,7 @@ $progressV2 = static function (array $task, string $url, string $prefix = '') us
 $rewardsV2 = static fn(array $task) => $valueBox('allResources', $task['rewardResources'], T('Tasks', 'rewardResourcesHero', T('Tasks', 'rewardResources', 'Resources of each type')))
     . $valueBox('xp', $task['rewardExperience'], T('Tasks', 'rewardExperience', 'Hero experience'));
 ?>
-<div id="tasks" data-checker="<?=$h($vars['checker']); ?>">
+<div id="tasks"<?=$v2 ? ' class="contentV2"' : ''; ?> data-checker="<?=$h($vars['checker']); ?>">
     <div class="contentNavi subNavi">
         <div class="container<?=$vars['scope'] === 'village' ? ' active' : ''; ?>">
             <div class="content">
