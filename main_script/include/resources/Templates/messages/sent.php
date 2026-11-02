@@ -12,7 +12,7 @@
     <input type="hidden" name="s" value="0" />
     <div class="footer">
         <?php if($vars['hasPermission']):?>
-            <div class="markAll">
+            <div id="markAll">
                 <input class="check" type="checkbox" id="sAll1" onclick="messagesFormSelectAll(this);"/>
                 <span><label for="sAll1"><?=T("Messages", "select all");?></label></span>
             </div>
@@ -24,7 +24,7 @@
         <thead>
         <tr>
             <th colspan="2"><?=T("Messages", "Subject");?></th>
-            <th class="send"><?=T("Messages", "Recipient");?></th>
+            <th class="send"><?= is_hero_v2() ? '' : T("Messages", "Recipient"); ?></th>
             <th class="dat">
                 <a href="messages.php?s=0&amp;t=2<?=$vars['recursive']==0 ? "&amp;o=1" : '';?>"
                    class="sorting <?=$vars['recursive'] ? "asc" : "desc";?>">

@@ -238,7 +238,7 @@ $t46Indicator = static function ($count) {
             var items = document.querySelectorAll('#content .resourceWrapper .resource, #content .resourceWrapper .resources');
             for (var i = 0; i < items.length; i++) {
                 var icon = items[i].querySelector('i'), value = items[i].querySelector('.value');
-                var match = icon && value && /(?:^|\s)r([1-4])(?:Big)?(?:\s|$)/.exec(icon.className);
+                var match = icon && value && !items[i].closest('#reportWrapper') /* loot, not a cost */ && /(?:^|\s)r([1-4])(?:Big)?(?:\s|$)/.exec(icon.className);
                 if (!match) {
                     continue;
                 }

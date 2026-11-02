@@ -423,8 +423,8 @@ HTML;
 			<td>' . T("Statistics", "village") . '</td>
 			<td>' . T("Statistics", "points") . '</td>
 		</tr>',
-                "headerRound" => T("Statistics", "largestPlayers") . ' (' . T("Statistics",
-                        "subTabs." . ($isDefender ? "defender" : "attacker")) . ')',
+                "headerRound" => T("Statistics", $isDefender ? "bestDefenders" : "bestAttackers",
+                    T("Statistics", "largestPlayers") . ' (' . T("Statistics", "subTabs." . ($isDefender ? "defender" : "attacker")) . ')'),
                 "http_query" => !sizeof($prefix) ? '' : "?" . http_build_query($prefix),
                 "tableBody" => $tableBody,
                 "Navigator" => $nav->get(),
@@ -908,8 +908,8 @@ HTML;
 			<td>Ø</td>
 			<td>' . T("Statistics", "points") . '</td>
 		</tr>',
-                "headerRound" => T("Statistics", "largestAlliances") . ' (' . T("Statistics",
-                        "subTabs." . ($isDefender ? "defender" : "attacker")) . ')',
+                "headerRound" => T("Statistics", $isDefender ? "bestDefendingAlliances" : "bestAttackingAlliances",
+                    T("Statistics", "largestAlliances") . ' (' . T("Statistics", "subTabs." . ($isDefender ? "defender" : "attacker")) . ')'),
                 "http_query" => !sizeof($prefix) ? '' : "?" . http_build_query($prefix),
                 "tableBody" => $tableBody,
                 "Navigator" => $nav->get(),
@@ -978,7 +978,7 @@ HTML;
 			<td></td>
 			<td>' . T("Statistics", "tabs.villages") . '</td>
 			<td>' . T("Statistics", "player") . '</td>
-			<td>' . T("Statistics", "populationColumn", T("Statistics", "population")) . '</td>
+			<td>' . T("Statistics", "populationShort", T("Statistics", "population")) . '</td>
 			<td>' . T("Statistics", "coordinates") . '</td>
 		</tr>',
                 "headerRound" => T("Statistics", "largestVillages"),

@@ -208,7 +208,7 @@
                                         </div>
                                     </div>
                                 </div>
-                                <div class="button-content"><?=T("Global", "General.ok");?></div>
+                                <div class="button-content"><?= is_hero_v2() ? T("Messages", "Save") : T("Global", "General.ok"); ?></div>
                             </div>
                         </button>
                         <script type="text/javascript">

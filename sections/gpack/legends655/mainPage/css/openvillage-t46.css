@@ -2310,3 +2310,6 @@ body.t46Layout.legendsV2 .sidebar #sidebarBoxQuestmaster.legendsMentor .header #
     display: inline-grid; align-items: end; justify-items: center; }
 body.t46Layout.legendsV2 .sidebar #sidebarBoxQuestmaster.legendsMentor .taskOverview { margin: 0; padding: 35px 0 0; }
 body.t46Layout.legendsV2 .sidebar #sidebarBoxQuestmaster.legendsMentor .taskOverview .boxTitle { margin: 0; padding: 5px; background: none; border-radius: 0; }
+/* reports / messages: the T4 buttons below the lists in the Legends button size (11px) */
+body.t46Layout.legendsV2 #content.reports button .button-content,
+body.t46Layout.legendsV2 #content.messages button .button-content { font-size: 11px; }

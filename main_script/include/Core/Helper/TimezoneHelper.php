@@ -42,7 +42,8 @@ class TimezoneHelper
                 }
             }
         }
-        return self::date(self::getDateFormat() . ($hasHour ? ' ' . self::getTimeFormat($hasSecond) : ''), $time);
+        // Legends: "02.11.26, 17:10:20"
+        return self::date(self::getDateFormat() . ($hasHour ? (is_hero_v2() ? ', ' : ' ') . self::getTimeFormat($hasSecond) : ''), $time);
     }
 
     public static function getDifDays($time)
