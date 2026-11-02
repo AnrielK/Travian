@@ -48,8 +48,8 @@ class OnLoadBuildingsDorfCtrl extends AnyCtrl
                     <span class="lvl">' . T("Buildings", "level") . ' ' . $level . '</span>
                 </div>
                 <div class="buildDuration">
-                    ' . appendTimer(($row['commence'] - time())) . " " . T("Global",
-                        "General.hour") . '.' . ' ' . T("Global", "General.endat") . ' ' . TimezoneHelper::date('H:i',
+                    ' . appendTimer(($row['commence'] - time())) . " " . rtrim(T("Global",
+                        "General.hour"), '.') . '.' . ' ' . T("Global", "General.doneAt", T("Global", "General.endat")) . ' ' . TimezoneHelper::date('H:i',
                         $row['commence']) . '
                 </div>
                 <div class="clear"></div>

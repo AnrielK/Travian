@@ -486,6 +486,13 @@ function getButton($button, $js, $content = NULL)
 		<i></i>
 	</div>
 HTML;
+    } else if (strpos($button['class'], "textButtonV1") !== FALSE) {
+        // Legends textButtonV1: the label alone, without the T4 button background
+        if (isset($button['coins']) && $button['coins'] > 0) {
+            $content .= '<i class="goldIcon"></i>' . $button['coins'];
+            $js['data']['coins'] = $button['coins'];
+        }
+        $output .= $content;
     } else {
         if (isset($button['coins']) && $button['coins'] > 0) {
             $content .= '<img src="img/x.gif" class="goldIcon" alt="" /><span class="goldValue">' . $button['coins'] . '</span>';

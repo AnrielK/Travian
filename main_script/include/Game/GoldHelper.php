@@ -172,38 +172,41 @@ class GoldHelper
 
     public function finishNowButton()
     {
+        // Legends: the plain textButtonV1 "okamžitě dokončit" of the building queue
+        $v1 = is_hero_v2() ? 'textButtonV1 ' : '';
+        $text = is_hero_v2() ? T("Buildings", "finishNow.legends", T("Buildings", "finishNow.finishNow")) : T("Buildings", "finishNow.finishNow");
         $village = Village::getInstance();
         $session = Session::getInstance();
         $hasPerm = $session->checkSitterPermission(Session::SITTER_CAN_BUY_OR_SPEND_GOLD);
         if (!$hasPerm) {
             return '<div class="finishNow">' . getButton([
                     "type"    => "button",
-                    "class"   => "gold disabled",
+                    "class"   => $v1 . "gold disabled",
                     "onClick" => "if(jQuery(this).hasClass('disabled')){event.stopPropagation(); return false;} else {}",
                     "onFocus" => "jQuery('button', 'input[type!=hidden]', 'select').focus(); event.stopPropagation(); return false;",
                     "title"   => htmlspecialchars('<span class="warning">' . T("inGame",
                             "sitterNoPermForGold") . '</span>'),
                 ],
                     ["data" => ["type" => "button"]],
-                    T("Buildings", "finishNow.finishNow")) . '</div>';
+                    $text) . '</div>';
         }
         if ($village->isWW()) {
             return '<div class="finishNow">' . getButton([
                     "type"    => "button",
-                    "class"   => "gold disabled",
+                    "class"   => $v1 . "gold disabled",
                     "onClick" => "if(jQuery(this).hasClass('disabled')){event.stopPropagation(); return false;} else {}",
                     "onFocus" => "jQuery('button', 'input[type!=hidden]', 'select').focus(); event.stopPropagation(); return false;",
                     "title"   => htmlspecialchars('<span class="warning">' . T("inGame",
                             "finishNowWWDisabled") . '</span>'),
                 ],
                     ["data" => ["type" => "button"]],
-                    T("Buildings", "finishNow.finishNow")) . '</div>';
+                    $text) . '</div>';
         }
 
         return '<div class="finishNow">' . getButton([
                 "type"  => "button",
-                "class" => "gold ",
-                "value" => T("Buildings", "finishNow.finishNow"),
+                "class" => $v1 . "gold ",
+                "value" => $text,
             ],
                 [
                     "data" => [
@@ -223,7 +226,7 @@ class GoldHelper
                         ],
                     ],
                 ],
-                T("Buildings", "finishNow.finishNow")) . '</div>';
+                $text) . '</div>';
     }
 
     public function getGoldClubButton()

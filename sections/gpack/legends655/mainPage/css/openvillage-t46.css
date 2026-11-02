@@ -2321,3 +2321,16 @@ body.t46Layout.legendsV2 div#build .ovLegendsBuild .upgradeBlocked:not(:empty):n
 /* conditions of the "soon available" buildings in the Legends text size: 13px/16px, links #5a9a0a */
 body.t46Layout.legendsV2 div#build .ovLegendsBuild.soon .buildingCondition { font-size: 13px; line-height: 16px; }
 body.t46Layout.legendsV2 div#build .ovLegendsBuild.soon .buildingCondition a { color: #5a9a0a; }
+/* building details in the Legends text size: "Popis" 14px #333, the description 13px/16px with 20px above and below,
+   the T4 buttons of the upgrade box (master builder, Travian PLUS) 11px like the Legends textButtonV1 */
+body.t46Layout.legendsV2 #build .buildingDescription .headline h4 { font-size: 14px; color: #333; }
+body.t46Layout.legendsV2 #build .buildingDescription .description { padding: 20px 0; font-size: 13px; line-height: 16px; color: #333; }
+body.t46Layout.legendsV2 #build .upgradeButtonsContainer button .button-content { font-size: 11px; }
+/* building queue as in Legends: "Ve výstavbě:" (h5) 13px/16px, "Úroveň 5" in #f88c1f, the time line in #6b6b6b */
+body.t46Layout.legendsV2 #content .buildingList .boxes-contents,
+body.t46Layout.legendsV2 #content .buildingList li .name { line-height: 16px; }
+body.t46Layout.legendsV2 #content .buildingList .boxes-contents > h5 { display: inline-block; margin: 0; padding: 0; border: 0; font-size: 13px; font-weight: 400;
+    line-height: 16px; }
+body.t46Layout.legendsV2 #content .buildingList li .name .lvl { display: inline-block; color: #f88c1f; }
+body.t46Layout.legendsV2 #content .buildingList li .name .lvl::first-letter { text-transform: uppercase; }
+body.t46Layout.legendsV2 #content .buildingList li .buildDuration { font-size: 11px; line-height: 16px; color: #6b6b6b; }
