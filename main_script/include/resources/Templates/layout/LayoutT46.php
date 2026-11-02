@@ -17,7 +17,7 @@ $t46Indicator = static function ($count) {
 };
 ?>
 <?php require __DIR__ . "/head.php"; ?>
-<body class="v39 webkit chrome <?=get_locale(); ?> <?=Config::getProperty("settings", "global_css_class"); ?> <?=$vars['contentCssClass']; ?> <?=$vars['colorBlind'] ? 'colorBlind' : ''; ?> <?=$vars['bodyCssClass']; ?> <?=(getDirection() == 'RTL' ? 'rtl' : 'ltr'); ?> season-<?=detect_season(); ?> buildingsV3 t46Layout t46-<?=$t46Tribe; ?><?=$t46V2 ? ' legendsV2' : ''; ?>" data-theme="default">
+<body class="v39 webkit chrome <?=get_locale(); ?> <?=Config::getProperty("settings", "global_css_class"); ?> <?=$vars['contentCssClass']; ?> <?=$vars['colorBlind'] ? 'colorBlind' : ''; ?> <?=$vars['bodyCssClass']; ?> <?=(getDirection() == 'RTL' ? 'rtl' : 'ltr'); ?> season-<?=detect_season(); ?> buildingsV3 t46Layout t46-<?=$t46Tribe; ?><?=$t46V2 ? ' legendsV2' : ''; ?>" data-theme="<?=($t46V2 && ((int)date('G') >= 20 || (int)date('G') < 6)) ? 'night' : 'default'; /* Legends: night look 20:00-6:00 server time */ ?>" data-village-perspective="<?=strpos($vars['bodyCssClass'] . ' ' . $vars['contentCssClass'], 'perspectiveBuildings') !== false ? 'perspectiveBuildings' : 'perspectiveResources'; ?>">
 <div id="reactDialogWrapper"></div>
 <div id="background" class="<?=$t46Tribe; ?>">
     <div id="bodyWrapper">

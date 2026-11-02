@@ -795,7 +795,7 @@ function ov_asset_version($path)
 function ov_gpack_adapter_links()
 {
     $out = '';
-    foreach (['openvillage-t46-tribes.css', 'openvillage-t46.css'] as $css) {
+    foreach (['openvillage-t46-tribes.css', 'openvillage-t46.css', 'openvillage-t46-night.css'] as $css) {
         $file = get_gpack_mainPage_dir() . 'css/' . $css;
         if (is_file($file)) {
             $out .= '<link href="' . get_gpack_cdn_mainPage_url() . 'css/' . $css . '?v=' . ov_asset_version($file) . '" rel="stylesheet" type="text/css"/>' . "\n";

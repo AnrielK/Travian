@@ -2313,3 +2313,10 @@ body.t46Layout.legendsV2 .sidebar #sidebarBoxQuestmaster.legendsMentor .taskOver
 /* reports / messages: the T4 buttons below the lists in the Legends button size (11px) */
 body.t46Layout.legendsV2 #content.reports button .button-content,
 body.t46Layout.legendsV2 #content.messages button .button-content { font-size: 11px; }
+/* Top right as in Legends 692.2: the out-of-game buttons 30px, 4px from the top, 4px apart, 10px from the edge; the quick
+   links of the village boxes on the box's top edge, 44px slots 1px apart, the settings button 26px with a 2px margin */
+body.legendsV2 #topBar nav#outOfGame { top: 0; right: 10px; gap: 4px; }
+body.legendsV2 #topBar nav#outOfGame > .layoutButton.round { zoom: 1; width: 30px; height: 30px; margin: 4px 0 0; }
+body.legendsV2 .sidebar #sidebarBoxActiveVillage .innerBox.header .buttonsWrapper.quickLinks,
+body.legendsV2 .sidebar #sidebarBoxVillagelist .innerBox.header .buttonsWrapper.quickLinks { top: 0; right: 10px; left: auto; height: 44px; gap: 1px; }
+body.legendsV2 .sidebar .buttonsWrapper.quickLinks > .layoutButton.buttonFramed.withIcon.round.settings { margin: 2px !important; }
