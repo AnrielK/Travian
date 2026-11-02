@@ -2260,3 +2260,25 @@ body.t46Layout.legendsV2 #build .upgradeHeader #build_value th { padding-right: 
 /* window titles: "Úroveň 10" with a capital letter, as Legends writes it (the translation is lower case for running text) */
 body.t46Layout.legendsV2 h1.titleInHeader .level { display: inline-block; }
 body.t46Layout.legendsV2 h1.titleInHeader .level::first-letter { text-transform: uppercase; }
+/* Animations of 692.2 (transitions measured on the live world). */
+/* resource fields: the white outline fades in within 150ms ease-in, a pressed field lights up more */
+body.t46Layout div.village1 #resourceFieldContainer svg.resourceField > path,
+body.t46Layout div.village1 #resourceFieldContainer svg.villageCenter > path { transition: all 150ms ease-in; }
+body.t46Layout div.village1 #resourceFieldContainer svg.resourceField > path:active,
+body.t46Layout div.village1 #resourceFieldContainer svg.villageCenter > path:active { fill: rgba(255, 255, 255, .35); stroke: rgba(255, 255, 255, .5); }
+/* round side panel buttons change colour at once */
+body.t46Layout.legendsV2 .sidebar .sidebarBox .layoutButton.buttonFramed.round:before,
+body.t46Layout.legendsV2 .sidebar .sidebarBox .layoutButton.buttonFramed.round:after { transition: none; }
+/* active village name field, village list (the game's box id is sidebarBoxVillagelist, Legends styles sidebarBoxVillageList) */
+body.t46Layout.legendsV2 .sidebar #sidebarBoxActiveVillage #villageNameField.boxTitle { transition: border-color 150ms ease-out; }
+body.t46Layout.legendsV2 .sidebar #sidebarBoxVillagelist .bar { transition: width 150ms ease-out; }
+body.t46Layout.legendsV2 .sidebar #sidebarBoxVillagelist button.secondaryIconButton,
+body.t46Layout.legendsV2 .sidebar #sidebarBoxVillagelist button.secondaryIconButton svg { transition: all 150ms ease-out; }
+/* content tabs: no fading of the tab containers, the hovered tab gets the lighter glossy line */
+body.t46Layout.legendsV2 #content .contentNavi.subNavi > .container { transition: none; }
+body.t46Layout.legendsV2 #content .contentNavi.subNavi > .container:not(.active) a.tabItem:hover::before,
+body.t46Layout.legendsV2 #content .contentNavi.subNavi > .container:not(.active) a.tabItem:focus::before {
+    background-image: linear-gradient(rgba(255, 255, 255, 0) 3px, rgba(255, 255, 255, .45) 4px, rgba(255, 255, 255, 0) 7px, rgba(255, 255, 255, 0) 27px, #d08b7f 50px); }
+/* progress bars fill within 250ms ease-out (not on the daily quests, as in Legends) */
+body.t46Layout.legendsV2 .progressBar .bar .filling { transition: all 250ms ease-out; }
+body.t46Layout.legendsV2 #dailyQuests .progressBar .bar .filling { transition: none; }
