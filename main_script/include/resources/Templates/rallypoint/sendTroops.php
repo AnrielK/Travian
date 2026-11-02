@@ -83,7 +83,7 @@
                     <?=$vars['attackTypes'][4]['checked'] ? 'checked="checked"' : '';?>
                     <?=$vars['attackTypes'][4]['disabled'] ? 'disabled="disabled"' : '';?>
                     />
-                <?=T("RallyPoint", "attack");?>: <?=T("RallyPoint", "raid");?>        </label>
+                <?=T("RallyPoint", "attack");?>: <?=T("RallyPoint", "raidType", T("RallyPoint", "raid"));?>        </label>
 
         </div>
         <?php if($vars['showHeroChangeHomeCheckBox']):?>
@@ -94,6 +94,9 @@
             </div>
         <?php endif;?>
         <div class="clear"></div>
+        <?php if (is_hero_v2()): /* Legends: the plain textButtonV1 */ ?>
+        <button type="submit" value="ok" name="s1" id="btn_ok" class="textButtonV1 green" title="<?=T("RallyPoint", "send");?>"><?=T("RallyPoint", "send");?></button>
+        <?php else: ?>
         <button type="submit" value="ok" name="s1" id="btn_ok" class="green " title="<?=T("RallyPoint", "send");?>">
             <div class="button-container addHoverClick">
                 <div class="button-background">
@@ -106,6 +109,7 @@
                 <div class="button-content"><?=T("RallyPoint", "send");?></div>
             </div>
         </button>
+        <?php endif; ?>
         <script type="text/javascript">
             jQuery(function() {
                 if (jQuery('#btn_ok')) {

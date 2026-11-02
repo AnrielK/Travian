@@ -2185,8 +2185,8 @@ body.t46Layout #contentOuterContainer #villageContent .buildingSlot.a40.legendsW
 
 /* Onboarding guide (js/Game/Legends/tutorial.js), as in Legends: nothing dimmed, a dark translucent speech bubble with a
    golden frame, an arrow at the element, a progress bar for steps that belong together, chevrons and an OK button */
-body.legendsV2 .legendsGuide { position: absolute; z-index: 5000; box-sizing: border-box; width: 280px; min-height: 56px; padding: 18px 20px 14px;
-    border-radius: 6px; background-color: rgba(51, 51, 51, .9); color: #fff; font: 13px/18px Arial, Helvetica, sans-serif; word-break: break-word;
+body.legendsV2 .legendsGuide { position: absolute; z-index: 5000; box-sizing: border-box; width: 250px; min-height: 48px; padding: 14px 16px 12px;
+    border-radius: 6px; background-color: rgba(51, 51, 51, .9); color: #fff; font: 12px/16px Arial, Helvetica, sans-serif; word-break: break-word;
     border: 2px solid #cdb48e; border-top-color: #e9d6b4; border-bottom-color: #9f8462; box-shadow: 0 0 0 1px #1b1a1a, inset 0 0 0 1px #1b1a1a, 0 3px 10px rgba(0, 0, 0, .35);
     animation: ovGuideIn .2s ease-out; text-align: left; }
 body.legendsV2 .legendsGuide .progress { position: absolute; top: 1px; left: 1px; display: flex; width: calc(100% - 2px); height: 5px; }
@@ -2195,14 +2195,14 @@ body.legendsV2 .legendsGuide .progress div:not(:last-of-type) { margin-right: 1p
 body.legendsV2 .legendsGuide .progress div:first-of-type { border-top-left-radius: 4px; }
 body.legendsV2 .legendsGuide .progress div:last-of-type { border-top-right-radius: 4px; }
 body.legendsV2 .legendsGuide .progress div.active { background-color: #ece3d4; }
-body.legendsV2 .legendsGuide nav { position: relative; height: 28px; margin-top: 12px; }
-body.legendsV2 .legendsGuide nav svg { position: absolute; top: 50%; width: 11px; height: 18px; margin-top: -9px; padding: 6px; box-sizing: content-box; margin-left: -6px; cursor: pointer; }
+body.legendsV2 .legendsGuide nav { position: relative; height: 24px; margin-top: 10px; }
+body.legendsV2 .legendsGuide nav svg { position: absolute; top: 50%; width: 10px; height: 16px; margin-top: -8px; padding: 6px; box-sizing: content-box; margin-left: -6px; cursor: pointer; }
 body.legendsV2 .legendsGuide nav svg.chevronBack { left: 0; }
 body.legendsV2 .legendsGuide nav svg.chevronForward { right: -6px; left: auto; }
 body.legendsV2 .legendsGuide nav svg path { fill: transparent; stroke: #d6d0c6; stroke-width: 2.6px; stroke-linecap: round; stroke-linejoin: round; }
 body.legendsV2 .legendsGuide nav svg:hover path { stroke: #fff; }
-body.legendsV2 .legendsGuide nav button.ok { position: absolute; right: 0; top: 50%; transform: translateY(-50%); height: 28px; min-width: 0; margin: 0;
-    padding: 0 20px; border: 0; border-radius: 5px; background: #e6d2b2; color: #2f6fd1; font: 400 14px/28px Arial, sans-serif; cursor: pointer; }
+body.legendsV2 .legendsGuide nav button.ok { position: absolute; right: 0; top: 50%; transform: translateY(-50%); height: 24px; min-width: 0; margin: 0;
+    padding: 0 16px; border: 0; border-radius: 4px; background: #e6d2b2; color: #2f6fd1; font: 400 13px/24px Arial, sans-serif; cursor: pointer; }
 body.legendsV2 .legendsGuide nav button.ok:hover { background: #f0e1cc; }
 body.legendsV2 .legendsGuide svg.pointingArrow { position: absolute; overflow: visible; pointer-events: none; }
 body.legendsV2 .legendsGuide svg.pointingArrow .fill { fill: rgba(51, 51, 51, .9); }

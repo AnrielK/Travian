@@ -138,13 +138,13 @@
             if (n && show(list[i], n)) return;
         }
     }
-    var ARROW = 20, ARROW_W = 28; // depth and width of the arrow
+    var ARROW = 16, ARROW_W = 24; // depth and width of the arrow
     function place() {
         if (!cur) return;
         if (!document.body.contains(cur.el) || !visible(cur.el)) { var t = cur.thread, n = cur.n; clear(); if (!show(t, n)) showAny(); return; }
         var b = cur.bubble, r = cur.el.getBoundingClientRect();
         var vw = document.documentElement.clientWidth, vh = window.innerHeight;
-        b.style.width = Math.min(280, vw - 16) + 'px';
+        b.style.width = Math.min(250, vw - 16) + 'px';
         var bw = b.offsetWidth, bh = b.offsetHeight, gap = ARROW + 2;
         var room = {above: r.top - bh - gap, below: vh - r.bottom - bh - gap, left: r.left - bw - gap, right: vw - r.right - bw - gap};
         var side = cur.s.side;
