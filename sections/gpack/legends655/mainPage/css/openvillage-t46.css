@@ -583,9 +583,9 @@ body.t46Layout.legendsV2 div#build .buildingWrapper .build_desc img.build_logo {
 body.t46Layout.legendsV2 div#build .buildingWrapper .build_desc a.build_logo { margin: -24px 0 -10px 14px; }
 body.t46Layout.legendsV2 div#build .buildingWrapper .contract .contractLink { white-space: normal; overflow-wrap: anywhere; }
 body.t46Layout.legendsV2 div#build .buildingWrapper .contract .contractLink .buildingCondition { font-size: 17px; line-height: 24px; }
-body.t46Layout.legendsV2 #dailyQuests { width: auto; }
-body.t46Layout.legendsV2 #dailyQuests .screen.active > div { padding: 0 0 10px; }
-body.t46Layout.legendsV2 #dailyQuests h1 { padding-top: 6px; min-height: 0; margin-bottom: 4px; }
+body.t46Layout.legendsV2 #content #dailyQuests { width: auto; }
+body.t46Layout.legendsV2 #content #dailyQuests .screen.active > div { padding: 0 0 10px; }
+body.t46Layout.legendsV2 #content #dailyQuests h1 { padding-top: 6px; min-height: 0; margin-bottom: 4px; }
 /* gold packages (Legends payment shop cards on the page) */
 body.t46Layout .ovGoldShop.dialog.paymentShopV5 { position: static; width: auto; margin: 0; padding: 0; background: none; border: 0; box-shadow: none; }
 body.t46Layout .ovGoldShop #paymentWizard.buyGold .shopWrapper.selectPackage .purchaseStepWrapper .packages { display: grid;
@@ -2298,8 +2298,13 @@ body.t46Layout.legendsV2 #dailyQuests h1 { margin-bottom: 8px; }
 /* Legends secondary buttons (light, green text and border): without the green gradient of the T4.4 button.green */
 body.t46Layout.legendsV2 button.textButtonV2.buttonSecondary.green:not(.disabled):not(:disabled) { border: 1px solid #427107; background-image: none;
     box-shadow: none; padding: 0 10px; line-height: normal; }
-/* Daily quest details (dailyquests.php?q=): the 580x200 picture of the Legends dialog across the content window */
-body.t46Layout.legendsV2 #dailyQuests #dailyQuestsDetailsScreen { position: relative; }
-body.t46Layout.legendsV2 #dailyQuests #dailyQuestsDetailsScreen:before { width: 100%; height: auto; aspect-ratio: 580 / 200; margin: 0;
+/* Daily quest details on the page (dailyquests.php?q=): the 580x200 picture of the Legends dialog across the content window */
+body.t46Layout.legendsV2 #content #dailyQuests #dailyQuestsDetailsScreen { position: relative; }
+body.t46Layout.legendsV2 #content #dailyQuests #dailyQuestsDetailsScreen:before { width: 100%; height: auto; aspect-ratio: 580 / 200; margin: 0;
     background-size: cover; }
 body.t46Layout.legendsV2 #dailyQuests #dailyQuestsDetailsScreen h1 { min-height: 54px; }
+/* Daily quests in the Legends dialog (js/Game/Legends/dailyQuests.js): the Legends sizes (580px content, 9px padding),
+   the whole dialog scrolls; above the tutorial bubbles like the Legends dialogs */
+body.legendsV2 .legendsDialogOverlay:has(.dailyQuestsDialog) { z-index: 5001; }
+body.legendsV2 .legendsDialogOverlay .dialog.basic.dailyQuestsDialog .dialogContents { padding: 9px; }
+body.legendsV2 .legendsDialogOverlay .dialog.basic.dailyQuestsDialog form > .content { overflow: visible; height: auto; max-height: none; }

@@ -37,6 +37,8 @@ class DailyQuestsCtrl extends GameCtrl
             $quest = $model->getQuest($uid);
         }
 
+        // Legends: the page content alone (dailyquests.php?dialog=1), shown in the dialog of js/Game/Legends/dailyQuests.js
+        $dialog = is_hero_v2() && isset($_GET['dialog']);
         if (isset($_GET['collect'], $_GET['c']) && $_GET['c'] === $session->getChecker()) {
             $session->changeChecker();
             $points = $model->calcTotalPoints($quest);
@@ -46,7 +48,7 @@ class DailyQuestsCtrl extends GameCtrl
                     $model->collectReward($uid, $session->getKid(), $n);
                 }
             }
-            $this->redirect('dailyquests.php');
+            $this->redirect('dailyquests.php' . ($dialog ? '?dialog=1' : ''));
             return;
         }
 
@@ -85,18 +87,25 @@ class DailyQuestsCtrl extends GameCtrl
         $lastReset = (int)DB::getInstance()->fetchScalar('SELECT lastDailyQuestReset FROM config');
         $nextReset = $lastReset > 0 ? $lastReset + (int)getGame('dailyQuestInterval') : 0;
 
-        $this->view = new GameView();
-        $this->view->vars['titleInHeader'] = '';
-        $this->view->vars['bodyCssClass'] = 'perspectiveResources';
-        $this->view->vars['contentCssClass'] = 'dailyQuestsT46';
-        $this->view->vars['showCloseButton'] = TRUE;
-        $this->view->vars['content'] = PHPBatchView::render(is_hero_v2() ? 'dailyQuestT46/legends' : 'dailyQuestT46/main', [
+        $vars = [
             'points' => $points,
             'quests' => $quests,
             'milestones' => $milestones,
             'nextReset' => $nextReset,
             'checker' => $session->getChecker(),
             'detail' => $detail,
-        ]);
+        ];
+        if ($dialog) {
+            header('Content-Type: text/html; charset=utf-8');
+            header('Cache-Control: no-store');
+            echo PHPBatchView::render('dailyQuestT46/legends', $vars);
+            exit;
+        }
+        $this->view = new GameView();
+        $this->view->vars['titleInHeader'] = '';
+        $this->view->vars['bodyCssClass'] = 'perspectiveResources';
+        $this->view->vars['contentCssClass'] = 'dailyQuestsT46';
+        $this->view->vars['showCloseButton'] = TRUE;
+        $this->view->vars['content'] = PHPBatchView::render(is_hero_v2() ? 'dailyQuestT46/legends' : 'dailyQuestT46/main', $vars);
     }
 }

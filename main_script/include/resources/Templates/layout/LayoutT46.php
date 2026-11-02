@@ -324,7 +324,8 @@ $t46Indicator = static function ($count) {
         Travian.Dialog.Dialog = Patched;
     })();
 </script>
-<?php if ($t46V2) { echo \resources\View\PHPBatchView::render('layout/legendsGoldClub'); echo \resources\View\PHPBatchView::render('layout/legendsTutorial'); } ?>
+<?php if ($t46V2) { echo \resources\View\PHPBatchView::render('layout/legendsGoldClub'); echo \resources\View\PHPBatchView::render('layout/legendsDailyQuests');
+    echo \resources\View\PHPBatchView::render('layout/legendsTutorial'); } ?>
 </body>
 </html>
 <!---- This page was generated in <?=round(1000 * (microtime(true) - $GLOBALS['start_time']), 2); ?> ms ---->

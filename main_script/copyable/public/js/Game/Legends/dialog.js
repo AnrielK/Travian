@@ -1,7 +1,7 @@
 /*
  * Dialogs of the Travian Legends 655 look (DialogV2 markup styled by legends_ltr.css), used by the quick links editor
- * and the Gold Club dialog: LegendsDialog.open({cls, title, heading, header, html, buttons, modal, closable, closeText,
- * onClose}) / close(el) / confirm(text, cancel, ok, cb) / alert(text).
+ * and the Gold Club dialog: LegendsDialog.open({cls, overlayCls, title, heading, header, html, buttons, modal, closable,
+ * closeText, onClose}) / close(el) / confirm(text, cancel, ok, cb) / alert(text).
  */
 window.LegendsDialog = window.LegendsDialog || (function () {
     var X = '<svg viewBox="0 0 20 20"><g class="outline"><path d="M0 17.01L7.01 10 .14 3.13 3.13.14 10 7.01 17.01 0 20 2.99 12.99 10l6.87 6.87-2.99 2.99L10 12.99 2.99 20 0 17.01z"></path></g>'
@@ -9,7 +9,7 @@ window.LegendsDialog = window.LegendsDialog || (function () {
 
     function open(o) {
         var overlay = document.createElement('div');
-        overlay.className = 'dialogOverlay legendsDialogOverlay' + (o.modal === false ? '' : ' enabled');
+        overlay.className = 'dialogOverlay legendsDialogOverlay' + (o.overlayCls ? ' ' + o.overlayCls : '') + (o.modal === false ? '' : ' enabled');
         overlay.innerHTML = '<div class="dialogWrapper dialogV2"><div class="dialog ' + (o.cls || '') + '"><div class="dialogContainer"><div class="dialogContents">'
             + (o.title ? '<h1 class="titleInHeader">' + o.title + '</h1>' : '')
             + '<form action="#" onsubmit="return false;">'

@@ -1,5 +1,6 @@
 <?php
-/* Daily quests in the Travian Legends 655 markup (graphic packs with 'heroV2'); same data as dailyQuestT46/main.php. */
+/* Daily quests in the Travian Legends 655 markup (graphic packs with 'heroV2'); same data as dailyQuestT46/main.php.
+   Links are data-href: js/Game/Legends/dailyQuests.js follows them in the dialog, or on this page. */
 
 use Core\Helper\TimezoneHelper;
 use resources\View\LegendsUi as UI;
@@ -27,7 +28,7 @@ $detail = $vars['detail'];
         <div id="dailyQuestsDetailsScreen" class="DailyQuest_<?=sprintf('%02d', $detail['id']); ?>">
             <?=UI::button('<svg viewBox="0 0 10.2 16.5"><path d="m.1 8.1-.1.2.1.2L7 15.9c.7.7 1.9.8 2.6.1.7-.7.8-1.8.1-2.5L5 8.3l4.7-5.2c.7-.7.7-1.9-.1-2.6-.7-.7-1.9-.7-2.6.1l-.1.1L.1 8.1z"/></svg><span>'
                 . $h(T('HeroV2', 'back', 'Back')) . '</span>', ['secondary' => true, 'class' => 'backButton withTextAndIcon',
-                'onclick' => "window.location.href='dailyquests.php'"]); ?>
+                'data' => ['href' => 'dailyquests.php']]); ?>
             <h1><?=$h($detail['name']); ?></h1>
             <div class="description"><?=$h($detail['description']); ?></div>
             <?php foreach ($detail['information'] as $information): ?>
@@ -70,7 +71,7 @@ $detail = $vars['detail'];
             </div>
             <div class="quests">
                 <?php foreach ($vars['quests'] as $q): ?>
-                    <div class="dailyQuest<?=$q['done'] >= $q['steps'] ? ' completed' : ''; ?>" onclick="window.location.href='dailyquests.php?q=<?=(int)$q['id']; ?>'">
+                    <div class="dailyQuest<?=$q['done'] >= $q['steps'] ? ' completed' : ''; ?>" data-href="dailyquests.php?q=<?=(int)$q['id']; ?>">
                         <div class="titleDecoration"></div>
                         <div class="title"><?=$h($q['name']); ?></div>
                         <?=$track($q); ?>
@@ -79,7 +80,7 @@ $detail = $vars['detail'];
             </div>
             <div class="actionWrapper">
                 <?=UI::button($h(T('Tasks', 'collectRewards', 'Collect rewards')), ['class' => 'collectRewards', 'disabled' => !$readyToCollect,
-                    'onclick' => "window.location.href='dailyquests.php?collect=1&c=" . rawurlencode($vars['checker']) . "'; this.disabled = true;"]); ?>
+                    'data' => ['href' => 'dailyquests.php?collect=1&c=' . rawurlencode($vars['checker'])]]); ?>
             </div>
         </div>
     </div>
