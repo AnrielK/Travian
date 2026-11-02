@@ -2232,3 +2232,31 @@ body.t46Layout #content.heroV2Inventory .heroItem.dragSource { opacity: 1; }
 body.t46Layout #content.heroV2Inventory .heroItem.dragSource > * { visibility: hidden; }
 body.t46Layout #content.heroV2Inventory .heroItem.dragSource { background: rgb(58, 60, 49) !important; background-image: none !important; box-shadow: none; }
 body.t46Layout #content.heroV2Inventory .heroItem.dragSource::after { background-color: rgb(58, 60, 49); background-image: none; }
+
+/* Travian Legends 692.2 (measured on a live 692.2 world at 1280px): the layout of this release, overriding the
+   OpenVillage adjustments above where they differ. */
+/* side panels 5px from the screen edge and at the top of the centre area (the content window starts 15px lower) */
+body.t46Layout.legendsV2 #center #sidebarBeforeContent { margin: 0 0 0 5px; }
+body.t46Layout.legendsV2 #center #sidebarAfterContent { margin: 0 5px 0 0; }
+/* hero window: content right under the tab bar, the tab bar 1px wider on both sides */
+body.t46Layout.legendsV2 #content.heroV2 > .contentV2 { margin-top: 0; }
+body.t46Layout.legendsV2 #center #contentOuterContainer .contentContainer #content.heroV2 .contentNavi.subNavi { margin: 0 -1px; }
+/* active tab: plain light brown, as Legends draws a.tabItem.active */
+body.t46Layout.legendsV2 #content .contentNavi.subNavi > .container.active a.tabItem { background: #85664a; color: #f2e1d0; }
+body.t46Layout.legendsV2 #content .contentNavi.subNavi a.tabItem { padding: 0 10px; }
+/* active village box: 140px high, player name 49px and the village name (22px field) 67px below its top */
+body.t46Layout.legendsV2 .sidebar #sidebarBoxActiveVillage .playerName { margin-top: 14px; }
+body.t46Layout.legendsV2 .sidebar #sidebarBoxActiveVillage #villageNameField.boxTitle { box-sizing: border-box; height: 22px; padding: 3px 20px 3px 3px;
+    line-height: 14px; letter-spacing: 1.6px; }
+body.t46Layout.legendsV2 .sidebar #sidebarBoxActiveVillage .innerBox.content { margin-top: 5px; }
+body.t46Layout.legendsV2 .sidebar #sidebarBoxActiveVillage .innerBox.footer { top: 70px; right: 26px; }
+/* village list: only the name of the active village is bold, not its coordinates */
+body.t46Layout.legendsV2 .villageList .listEntry.active .coordinatesGrid { font-weight: 400; }
+/* building header: the build time table in 13px/19px, 10px from the left edge, labels 25px from the values */
+body.t46Layout.legendsV2 #build .upgradeHeader #build_value { width: 62%; margin: 0 0 0 10px; }
+body.t46Layout.legendsV2 #build .upgradeHeader #build_value th,
+body.t46Layout.legendsV2 #build .upgradeHeader #build_value td { padding: 0; font-size: 13px; line-height: 19px; }
+body.t46Layout.legendsV2 #build .upgradeHeader #build_value th { padding-right: 25px; }
+/* window titles: "Úroveň 10" with a capital letter, as Legends writes it (the translation is lower case for running text) */
+body.t46Layout.legendsV2 h1.titleInHeader .level { display: inline-block; }
+body.t46Layout.legendsV2 h1.titleInHeader .level::first-letter { text-transform: uppercase; }

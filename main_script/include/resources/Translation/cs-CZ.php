@@ -5337,6 +5337,7 @@ $Definition['Tasks']['free'] = 'Propustit';
 
 // Travian Legends 655 hero window and auctions (graphic packs with heroV2)
 $Definition['HeroV2']['amount'] = 'Množství';
+$Definition['HeroV2']['attributes'] = 'Vlastnosti hrdiny';
 $Definition['HeroV2']['auctionsBuy'] = 'Koupit';
 $Definition['HeroV2']['auctionsOverview'] = 'Přehled aukcí';
 $Definition['HeroV2']['auctionsSell'] = 'Prodat';
