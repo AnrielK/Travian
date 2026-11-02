@@ -386,6 +386,29 @@ class LegendsUi
     }
 
     /**
+     * Green silhouette behind the task mentor (sidebar "Task overview"), as Legends draws it: the path from
+     * legendsMentorOutlines.json (scripts/gpack/mentor-outlines.py) filled with the mentor_gradient of legends_ltr.css.
+     */
+    public static function mentorOutline(int $race): string
+    {
+        static $outlines = null;
+        if ($outlines === null) {
+            $outlines = json_decode((string)file_get_contents(__DIR__ . '/legendsMentorOutlines.json'), true) ?: [];
+        }
+        $tribe = [1 => 'roman', 2 => 'teuton', 3 => 'gaul', 6 => 'egyptian', 7 => 'hun', 8 => 'spartan'][$race] ?? '';
+        if (!isset($outlines[$tribe])) {
+            return '';
+        }
+        $o = $outlines[$tribe];
+        return '<svg width="' . $o['w'] . '" height="' . $o['h'] . '" viewBox="0 0 ' . $o['w'] . ' ' . $o['h'] . '">'
+            . '<path fill="url(#mentor_gradient)" d="' . $o['d'] . '"></path>'
+            . '<defs><linearGradient id="mentor_gradient" gradientTransform="rotate(90)">'
+            . '<stop class="colorStop1" offset="0%"></stop><stop class="colorStop2" offset="30%"></stop>'
+            . '<stop class="colorStop1" offset="60%"></stop><stop class="colorStop3" offset="95%"></stop>'
+            . '<stop class="colorStop4" offset="100%"></stop></linearGradient></defs></svg>';
+    }
+
+    /**
      * Vector art of the Legends client (laurel, reward frame, laurel icon, check) from legendsSvg.json, with a class.
      */
     public static function svg(string $name, string $class = ''): string

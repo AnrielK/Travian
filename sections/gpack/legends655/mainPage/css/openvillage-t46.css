@@ -669,10 +669,6 @@ body.t46Layout #tasks .task.group .taskImage:before { background-size: cover; }
 /* Legends mentor: figure with a thin green outline, clickable, exclamation bubble next to it */
 body.t46Layout .sidebar #sidebarBoxQuestmaster.legendsMentor .header #questmasterButton { display: grid; width: max-content; margin: 0 auto 2px;
     pointer-events: auto; position: relative; overflow: visible; }
-body.t46Layout .sidebar #sidebarBoxQuestmaster.legendsMentor .header #questmasterButton .mentor { background-repeat: no-repeat; cursor: pointer;
-    filter: drop-shadow(1px 0 0 #a5d64a) drop-shadow(-1px 0 0 #a5d64a) drop-shadow(0 -1px 0 #a5d64a) drop-shadow(0 1px 0 #a5d64a); }
-body.t46Layout .sidebar #sidebarBoxQuestmaster.legendsMentor .header #questmasterButton:hover .mentor { filter: brightness(1.1) drop-shadow(1px 0 0 #c8ef7a)
-    drop-shadow(-1px 0 0 #c8ef7a) drop-shadow(0 -1px 0 #c8ef7a) drop-shadow(0 1px 0 #c8ef7a); }
 body.t46Layout .sidebar #sidebarBoxQuestmaster.legendsMentor .sidebarBoxInnerBox, body.t46Layout .sidebar #sidebarBoxQuestmaster.legendsMentor .innerBox.header { overflow: visible; }
 body.t46Layout button .button-content img.gold { display: inline-block; float: none; position: static; vertical-align: -3px; margin: 0 3px 0 6px; }
 /* Legends mentor stands on the top edge of the task frame; title sits lower below the frame ornament. */
@@ -1275,14 +1271,9 @@ body.t46Layout.legendsV2 .sidebar .sidebarBox .layoutButton.buttonFramed.round >
 
 /* ---- Task overview box as in Legends: the mentor with a green outline stands on a box holding only the title ---- */
 body.t46Layout.legendsV2 .sidebar #sidebarBoxQuestmaster.legendsMentor .buttonsWrapper,
-body.t46Layout.legendsV2 .sidebar #sidebarBoxQuestmaster.legendsMentor .newQuestSpeechBubble,
 body.t46Layout.legendsV2 .sidebar #sidebarBoxQuestmaster.legendsMentor .taskOverview ul { display: none; }
 body.t46Layout.legendsV2 .sidebar #sidebarBoxQuestmaster.legendsMentor .taskOverview { margin: 0; }
 body.t46Layout.legendsV2 .sidebar #sidebarBoxQuestmaster.legendsMentor .taskOverview .boxTitle { padding: 22px 0 14px; }
-body.t46Layout.legendsV2 .sidebar #sidebarBoxQuestmaster.legendsMentor .header #questmasterButton .mentor {
-    filter: drop-shadow(2px 0 0 #6aa83a) drop-shadow(-2px 0 0 #6aa83a) drop-shadow(0 -2px 0 #6aa83a) drop-shadow(0 2px 0 #6aa83a) drop-shadow(0 0 1px #2f5a12); }
-body.t46Layout.legendsV2 .sidebar #sidebarBoxQuestmaster.legendsMentor .header #questmasterButton:hover .mentor {
-    filter: brightness(1.08) drop-shadow(2px 0 0 #86c64f) drop-shadow(-2px 0 0 #86c64f) drop-shadow(0 -2px 0 #86c64f) drop-shadow(0 2px 0 #86c64f) drop-shadow(0 0 1px #2f5a12); }
 body.t46Layout.legendsV2 .sidebar #sidebarBoxQuestmaster.legendsMentor .taskOverview .boxTitle { margin: 4px 0 0; padding: 14px 18px 12px; border: 0; border-radius: 22px;
     background: linear-gradient(90deg, rgba(255, 251, 238, 0), rgba(255, 251, 238, .75) 18%, rgba(255, 251, 238, .75) 82%, rgba(255, 251, 238, 0)); }
 body.t46Layout.legendsV2 .sidebar #sidebarBoxQuestmaster.legendsMentor .taskOverview .boxTitle:before,
@@ -2166,16 +2157,6 @@ body.t46Layout #contentOuterContainer #villageContent .buildingSlot.a40.legendsW
 body.legendsV2 .legendsDialogOverlay.quickLinksOverlay .quickLinksDialog .dialogContents > form > .content { max-height: none !important; overflow: visible !important; }
 body.legendsV2 .legendsDialogOverlay.quickLinksOverlay .dialogWrapper { max-height: calc(100vh - 16px); overflow-y: auto; overflow-x: hidden; overscroll-behavior: contain; }
 /* Legends mentor: when a task can be collected a white speech bubble with "!" stands left of the figure */
-body.t46Layout.legendsV2 .sidebar #sidebarBoxQuestmaster.legendsMentor #questmasterButton .newQuestSpeechBubble {
-    display: block !important; position: absolute; left: -40px; top: 44px; width: 30px; height: 34px; z-index: 5;
-    background: #fff; border: 1px solid #9a8b77; border-radius: 4px; box-shadow: 0 1px 3px rgba(0, 0, 0, .35); pointer-events: none;
-    animation: ovMentorBubble 1.6s ease-in-out infinite; }
-body.t46Layout.legendsV2 .sidebar #sidebarBoxQuestmaster.legendsMentor #questmasterButton .newQuestSpeechBubble img { display: none; }
-body.t46Layout.legendsV2 .sidebar #sidebarBoxQuestmaster.legendsMentor #questmasterButton .newQuestSpeechBubble:before {
-    content: "!"; position: absolute; inset: 0; display: grid; place-items: center; font: 900 25px/1 Georgia, "Times New Roman", serif; color: #1f1f1f; }
-body.t46Layout.legendsV2 .sidebar #sidebarBoxQuestmaster.legendsMentor #questmasterButton .newQuestSpeechBubble:after {
-    content: ""; position: absolute; right: -7px; top: 11px; border: 6px solid transparent; border-left: 7px solid #fff; border-right: 0;
-    filter: drop-shadow(1px 0 0 #9a8b77); }
 @keyframes ovMentorBubble { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-3px); } }
 /* empty wall site: only the light ring around the village is the site; it lights up under the mouse / finger */
 body.t46Layout #contentOuterContainer #villageContent .buildingSlot.a40.legendsWall svg.traced g.hoverShape path { fill: transparent !important; pointer-events: none; }
@@ -2210,19 +2191,6 @@ body.legendsV2 .legendsGuide svg.pointingArrow .line { fill: none; stroke: #e2cf
 @keyframes ovGuideIn { from { opacity: 0; } to { opacity: 1; } }
 /* more room between the info box (with its collapse tab) and the link list (with its edit button) */
 body.legendsV2 .sidebar #sidebarBoxInfobox + #sidebarBoxLinklist, body.legendsV2 .sidebar #sidebarBoxLinklist { margin-top: 34px; }
-/* mentor with a task to collect (as in Legends): the "!" bubble stands still, light grey; the figure flashes a light
-   glow along its outline every few seconds */
-body.t46Layout.legendsV2 .sidebar #sidebarBoxQuestmaster.legendsMentor #questmasterButton .newQuestSpeechBubble {
-    animation: none !important; background: linear-gradient(#f4f4f4, #dcdcdc) !important; border-color: #8f8f8f !important; border-radius: 5px !important;
-    width: 32px !important; height: 34px !important; }
-body.t46Layout.legendsV2 .sidebar #sidebarBoxQuestmaster.legendsMentor #questmasterButton .newQuestSpeechBubble:before { color: #4a4a4a !important; font-family: Arial, sans-serif !important; font-size: 24px !important; }
-body.t46Layout.legendsV2 .sidebar #sidebarBoxQuestmaster.legendsMentor #questmasterButton .newQuestSpeechBubble:after { border-left-color: #e6e6e6 !important; }
-body.t46Layout.legendsV2 .sidebar #sidebarBoxQuestmaster.legendsMentor #questmasterButton.highlighted .mentor { animation: ovMentorGlow 3s ease-in-out infinite; }
-@keyframes ovMentorGlow {
-    0%, 62%, 100% { filter: drop-shadow(1px 0 0 #a5d64a) drop-shadow(-1px 0 0 #a5d64a) drop-shadow(0 -1px 0 #a5d64a) drop-shadow(0 1px 0 #a5d64a); }
-    75% { filter: brightness(1.08) drop-shadow(1px 0 0 #e9f7c4) drop-shadow(-1px 0 0 #e9f7c4) drop-shadow(0 -1px 0 #e9f7c4) drop-shadow(0 1px 0 #e9f7c4) drop-shadow(0 0 8px rgba(255, 255, 230, .95)); }
-}
-body.t46Layout.legendsV2 .sidebar #sidebarBoxQuestmaster.legendsMentor #questmasterButton .newQuestSpeechBubble { left: -14px !important; top: 46px !important; }
 
 /* Hero inventory drag & drop (hero/v2/inventoryScript.php): the lifted item follows the mouse in its orange frame
    (.ovSortGhost) and its place stays empty and dark like an empty bag place until the item is put down. */
@@ -2334,3 +2302,11 @@ body.t46Layout.legendsV2 #content .buildingList .boxes-contents > h5 { display: 
 body.t46Layout.legendsV2 #content .buildingList li .name .lvl { display: inline-block; color: #f88c1f; }
 body.t46Layout.legendsV2 #content .buildingList li .name .lvl::first-letter { text-transform: uppercase; }
 body.t46Layout.legendsV2 #content .buildingList li .buildDuration { font-size: 11px; line-height: 16px; color: #6b6b6b; }
+/* Task overview (sidebar) as in Legends 692.2: the mentor on its green silhouette (LegendsUi::mentorOutline, glowing via
+   mentorAnimation while a task can be collected = .claimable), the speech bubble with the exclamation mark of
+   legends_ltr.css; the button as high as the mentor, the header 6px over the title box */
+body.t46Layout.legendsV2 .sidebar #sidebarBoxQuestmaster.legendsMentor .innerBox.header { display: grid; justify-items: center; height: auto; margin-bottom: -6px; }
+body.t46Layout.legendsV2 .sidebar #sidebarBoxQuestmaster.legendsMentor .header #questmasterButton { top: 0; margin: 0; padding: 0; height: auto;
+    display: inline-grid; align-items: end; justify-items: center; }
+body.t46Layout.legendsV2 .sidebar #sidebarBoxQuestmaster.legendsMentor .taskOverview { margin: 0; padding: 35px 0 0; }
+body.t46Layout.legendsV2 .sidebar #sidebarBoxQuestmaster.legendsMentor .taskOverview .boxTitle { margin: 0; padding: 5px; background: none; border-radius: 0; }
