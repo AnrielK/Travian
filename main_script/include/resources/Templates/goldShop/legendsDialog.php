@@ -16,6 +16,27 @@ $arrow = '<svg class="advantageBonusArrow premiumFeature" viewBox="0 0 160 180">
 $help = '<svg viewBox="0 0 20 20"><path d="M9 15h2V9H9v6zm1-8c.3 0 .5-.1.7-.3s.3-.4.3-.7-.1-.5-.3-.7c-.2-.2-.4-.3-.7-.3s-.5.1-.7.3c-.2.2-.3.4-.3.7s.1.5.3.7.4.3.7.3zm0 13C4.5 20 0 15.5 0 10S4.5 0 10 0s10 4.5 10 10-4.5 10-10 10zm0-2c4.4 0 8-3.6 8-8s-3.6-8-8-8-8 3.6-8 8 3.6 8 8 8z"/></svg>';
 $checkbox = '<svg viewBox="0 0 18 18" class="checkbox" aria-hidden="true" focusable="false"><path class="box" d="M16 0H2a2 2 0 00-2 2v14a2 2 0 002 2h14a2 2 0 002-2V2a2 2 0 00-2-2z"/>'
     . '<path class="checkmark" d="M15.28 4.28l-8.27 8.27-4.3-4.26h0"/></svg>';
+$videoArrow = str_replace('premiumFeature', 'videoFeature', $arrow);
+$videoIcon = '<svg viewBox="0 0 190 220.5" class="videoIcon"><rect width="173.7" height="118.6" x="14.3" y="99.7" fill="#3969c4" stroke="#000" stroke-width="4" rx="11.5"/>'
+    . '<rect width="152.3" height="96.3" x="25" y="111" fill="#72a7f2" stroke="#1b1464" stroke-width="4" rx="5.8"/>'
+    . '<path fill="#fff" stroke="#000" stroke-width="7" d="M79.3 184.1v-52.5c0-6 5.2-10 9.8-7.5l48.9 26.3c5.4 2.9 5.4 12.1 0 15l-48.9 26.3c-4.6 2.5-9.8-1.5-9.8-7.6Z"/>'
+    . '<path fill="#efefef" stroke="#000" stroke-width="3" d="M5.6 74.4 149.3 2.2c3.9-1.9 8.9.3 11.1 4.7l11.2 22.2c2.2 4.4.8 9.5-3.1 11.4L24.7 112.4c-3.9 1.9-8.9-.3-11.1-4.7L2.5 85.8c-2.2-4.4-.8-9.5 3.1-11.4Z"/></svg>';
+// Content of the help tooltip of a card (shown by js/Game/Legends/goldShop.js on hover), as the Legends advantages tooltips.
+$tooltip = static function (string $cls, string $title, string $intro, array $rows) use ($h): string {
+    $html = '<template class="bonusTooltip"><div class="tooltipHelpContainer advantage ' . $cls . '"><h3>' . $h($title) . '</h3>' . $intro;
+    foreach ($rows as $row) {
+        $html .= '<div class="helpText"><span class="bonusIcon ' . ($row['icon'] ?? '') . '">' . ($row['svg'] ?? '') . '</span>'
+            . '<strong class="title">' . $row['title'] . '</strong><span class="desc">' . $row['desc'] . '</span></div>';
+    }
+    return $html . '</div></template>';
+};
+$features = static function (string $base, array $map) use ($h): array {
+    $rows = [];
+    foreach ($map as $key => $icon) {
+        $rows[] = ['icon' => $icon, 'title' => $h(T($base, 'features.' . $key . '.title')), 'desc' => $h(T($base, 'features.' . $key . '.text'))];
+    }
+    return $rows;
+};
 $tab = $vars['tab'];
 $steps = ['selectPackage' => T('Tasks', 'stepSelectPackage', 'Select package'), 'selectPaymentMethod' => T('Tasks', 'stepPaymentMethod', 'Payment method'),
     'insertBillingInformation' => T('Tasks', 'stepBilling', 'Billing information'), 'confirmed' => T('Tasks', 'stepConfirmed', 'Confirmed')];
@@ -94,7 +115,13 @@ $steps = ['selectPackage' => T('Tasks', 'stepSelectPackage', 'Select package'), 
                             <span><?=$h(T('PaymentWizard', 'Bonus duration')); ?>: <strong><?=$h($cls === 'goldClub' ? T('PaymentWizard', 'ToTheEndOfTheGame') : UI::durationText($f['duration'])); ?></strong></span>
                         <?php endif; ?>
                     </div>
-                    <div class="tooltipHelpIcon bonusExplanation" data-explain="<?=$cls; ?>"><?=$help; ?></div>
+                    <div class="tooltipHelpIcon bonusExplanation"><?=$help; ?><?=$cls === 'goldClub'
+                        ? $tooltip('goldclub', T('PaymentWizard', 'GoldClub'), '', $features('LegendsGoldClub', ['troopEscape' => 'capitalEvasion',
+                            'raidList' => 'farmLists', 'tradeThreeTimes' => 'merchantsRun3', 'tradeRoute' => 'automaticTrade', 'cropFinder' => 'cropFinder',
+                            'messageArchive' => 'messageArchive']))
+                        : $tooltip('plus', T('Tasks', 'travianPlus', 'Travian Plus'), '', $features('LegendsPlus', ['attackWarning' => 'attackWarning',
+                            'buildingQueue' => 'buildingQueue', 'linkList' => 'linkList', 'villageStatistics' => 'villageOverview', 'fullScreen' => 'largerMap',
+                            'directLinks' => 'directLinks', 'tradeMulti' => 'merchantsRunTwice'])); ?></div>
                 </div>
             <?php endforeach; ?>
             <?php foreach ($adv['boosts'] as $f): ?>
@@ -111,7 +138,20 @@ $steps = ['selectPackage' => T('Tasks', 'stepSelectPackage', 'Select package'), 
                     <?php if ($f['active']): ?>
                         <div class="bonusDuration"><span class="timerLabel"><?=$h(T('Tasks', 'stillActive', 'Still active for:')); ?></span> <?=appendTimer($f['till'] - time()); ?></div>
                     <?php endif; ?>
-                    <div class="tooltipHelpIcon bonusExplanation" title="<?=$h(strip_tags(str_replace('</p>', ' ', T('PaymentWizard', '+25' . $f['name'] . 'Desc')))); ?>"><?=$help; ?></div>
+                    <?php /* Legends also offers +15% for 8 hours for watching a video; OpenVillage shows no ads, so the button is disabled. */ ?>
+                    <?php $for = static fn(int $seconds) => sprintf($h(T('Tasks', 'forDuration', 'for %s')), '<strong>' . $h(UI::durationText($seconds, true)) . '</strong>'); ?>
+                    <div class="bonusVideo">
+                        <span class="separator"><?=$h(T('Tasks', 'or', 'or')); ?></span>
+                        <span class="bonusText"><?=$videoArrow; ?><span><strong>+15%</strong> <?=$for(8 * 3600); ?></span></span>
+                        <button class="textButtonV2 buttonFramed withTextAndIcon rectangle withText purple disabled" type="button" disabled
+                                title="<?=$h(T('Tasks', 'videoUnavailable', 'No videos are available.')); ?>"><div><span><?=$h(T('inGame', 'plus.activate')); ?></span><?=$videoIcon; ?></div></button>
+                    </div>
+                    <div class="tooltipHelpIcon bonusExplanation"><?=$help; ?><?=$tooltip('productionBoost ' . $res . 'ProductionBonus', T('Tasks', 'increaseProduction' . $f['name'], 'Increase production'),
+                        '<span>' . $h(T('Tasks', 'boostIntro', 'Applies to all your villages, on the base production and all other bonuses.')) . '</span>', [
+                            ['svg' => $arrow, 'title' => '+25% ' . $for($f['duration']), 'desc' => $h(T('Tasks', 'boostGoldDesc', 'Activate it for gold; with automatic extension the bonus lasts.'))],
+                            ['svg' => $videoArrow, 'title' => '+15% ' . $for(8 * 3600), 'desc' => $h(T('Tasks', 'boostVideoDesc', 'Or watch a short video for a smaller bonus, once a day per resource.'))
+                                . '<br><strong>' . $h(T('Tasks', 'videoUnavailable', 'No videos are available.')) . '</strong>'],
+                        ]); ?></div>
                 </div>
             <?php endforeach; ?>
         <?php endif; ?>

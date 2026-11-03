@@ -2363,3 +2363,16 @@ body:has(.legendsDialogOverlay) .legendsGuide { display: none; }
 /* no video ads in OpenVillage: the production bonus cards end with the gold button */
 .dialog.legendsGoldShop #paymentWizard.advantages .advantagesBonusBox[class*=ProductionBonus]:not(:has(.bonusVideo)) { grid-template-rows: 55px 32.5px 16px 37px; padding-bottom: 12px; }
 .dialog.legendsGoldShop #paymentWizard .paymentWrapper .choosePayment.credited { font-weight: 700; color: #4b7d0a; }
+/* Gold shop advantages: help tooltips (js/Game/Legends/goldShop.js) as the tippy tooltips of Legends 692.2, 350px wide */
+.legendsShopTip { position: absolute; z-index: 9999; width: 350px; pointer-events: none; }
+.legendsShopTip .tippy-box { max-width: 350px; border-radius: 4px; font-size: 14px; line-height: 19.6px; filter: drop-shadow(0 2px 6px rgba(0, 0, 0, .45)); }
+.legendsShopTip .tooltipHelpContainer { padding: 10px; color: #5e463a; }
+.legendsShopTip .tooltipHelpContainer h3 { font-size: 16px; line-height: 22.4px; }
+.legendsShopTip .tooltipHelpContainer.lumberProductionBonus .helpText .bonusIcon { background-image: url('../img_ltr/global/resources/lumber_huge.png'); }
+.legendsShopTip .tooltipHelpContainer.clayProductionBonus .helpText .bonusIcon { background-image: url('../img_ltr/global/resources/clay_huge.png'); }
+.legendsShopTip .tooltipHelpContainer.ironProductionBonus .helpText .bonusIcon { background-image: url('../img_ltr/global/resources/iron_huge.png'); }
+.legendsShopTip .tooltipHelpContainer.cropProductionBonus .helpText .bonusIcon { background-image: url('../img_ltr/global/resources/crop_huge.png'); }
+.dialog.legendsGoldShop #paymentWizard .bonusExplanation { cursor: help; }
+/* Advantages buttons in the size of Legends 692.2: 37px high, 1px 6px around the label (158 / 144 / 133px wide) */
+.dialog.legendsGoldShop #paymentWizard .bonusButton .textButtonV2,
+.dialog.legendsGoldShop #paymentWizard .bonusVideo .textButtonV2 { height: 37px; min-width: 0; padding: 1px 6px; }

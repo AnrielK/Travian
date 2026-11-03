@@ -62,12 +62,6 @@
             if (book) {
                 ev.preventDefault();
                 new Travian.Game.WayOfPayment(book.getAttribute('data-feature'), 'goldShop');
-                return;
-            }
-            var explain = ev.target.closest('[data-explain]');
-            if (explain) {
-                if (explain.getAttribute('data-explain') === 'goldClub' && window.LegendsGoldClub) LegendsGoldClub.open();
-                if (explain.getAttribute('data-explain') === 'travianPlus' && window.LegendsPlus) LegendsPlus.open();
             }
             return;
         }
@@ -83,6 +77,40 @@
         box.disabled = true;
         Travian.ajax({data: {cmd: 'premiumFeature', featureKey: box.getAttribute('data-feature'), toggleAutoprolong: 1, context: 'goldShop'},
             onSuccess: function () { reopenAfterReload('gold.php?t=pros'); }});
+    });
+
+    // Help icons of the advantages: the card's <template class="bonusTooltip"> in a tooltip box of 350px below the icon,
+    // its right edge at the icon's (above it when there is no room below), as the tippy tooltips of Legends.
+    var tip = null;
+    function hideTip() {
+        if (tip && tip.parentNode) tip.parentNode.removeChild(tip);
+        tip = null;
+    }
+    document.addEventListener('mouseover', function (ev) {
+        var icon = ev.target.closest && ev.target.closest('.legendsGoldShop .bonusExplanation');
+        if (!icon) {
+            hideTip();
+            return;
+        }
+        if (tip && tip._icon === icon) return;
+        hideTip();
+        var content = icon.querySelector('template.bonusTooltip');
+        if (!content) return;
+        tip = document.createElement('div');
+        tip._icon = icon;
+        tip.className = 'legendsShopTip';
+        tip.innerHTML = '<div class="tippy-box" data-theme="custom" data-placement="bottom-end" role="tooltip"><div class="tippy-content">'
+            + '<div class="text"><div class="contentV2"></div></div></div></div>';
+        tip.querySelector('.contentV2').appendChild(content.content.cloneNode(true));
+        document.body.appendChild(tip);
+        var r = icon.getBoundingClientRect(), box = tip.getBoundingClientRect(), gap = 8;
+        var top = r.bottom + gap;
+        if (top + box.height > window.innerHeight && r.top - gap - box.height > 0) {
+            top = r.top - gap - box.height;
+            tip.firstChild.setAttribute('data-placement', 'top-end');
+        }
+        tip.style.left = Math.max(4, r.right - box.width + window.scrollX) + 'px';
+        tip.style.top = (top + window.scrollY) + 'px';
     });
 
     var reopen = null;
