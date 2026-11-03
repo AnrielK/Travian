@@ -59,17 +59,14 @@ $videoBox = static function (string $key, string $svg) use ($e, $videoIcon): str
                     </div>
                 </td>
                 <td class="button">
-                    <?php if ($row['onTheWay']): ?>
-                        <span class="onTheWay"><?=$e(T('HeroAdventure', 'Hero on his way')); ?></span>
-                    <?php else: ?>
-                        <form method="post" action="start_adventure.php">
-                            <input type="hidden" name="send" value="1">
-                            <input type="hidden" name="kid" value="<?=$row['kid']; ?>">
-                            <input type="hidden" name="from" value="list">
-                            <input type="hidden" name="a" value="1">
-                            <?=UI::button($e(T('HeroV2', 'explore', 'Explore')), ['type' => 'submit', 'disabled' => !$canStart]); ?>
-                        </form>
-                    <?php endif; ?>
+                    <?php /* Legends 692.2: also the adventure the hero is heading to shows a disabled "Explore" */ ?>
+                    <form method="post" action="start_adventure.php">
+                        <input type="hidden" name="send" value="1">
+                        <input type="hidden" name="kid" value="<?=$row['kid']; ?>">
+                        <input type="hidden" name="from" value="list">
+                        <input type="hidden" name="a" value="1">
+                        <?=UI::button($e(T('HeroV2', 'explore', 'Explore')), ['type' => 'submit', 'disabled' => !$canStart || $row['onTheWay']]); ?>
+                    </form>
                 </td>
             </tr>
         <?php endforeach; ?>
