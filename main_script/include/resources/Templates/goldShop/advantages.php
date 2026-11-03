@@ -6,18 +6,7 @@ use resources\View\LegendsUi as UI;
 $h = static fn($s) => htmlspecialchars((string)$s, ENT_QUOTES);
 $adv = $vars['advantages'];
 $canSpend = $vars['canSpendGold'];
-// "2 hours" / "for 1 hour": Czech has a form for 2-4 (fewHours) and an accusative singular after "for" (oneHourFor).
-$duration = static function (int $seconds, bool $for = false): string {
-    $plural = static function (int $n, string $unit) use ($for): string {
-        $key = $n === 1 ? ($for ? 'one' . $unit . 'For' : 'one' . $unit) : ($n >= 2 && $n <= 4 ? 'few' . $unit . 's' : 'n' . $unit . 's');
-        $default = T('Tasks', $n === 1 ? 'one' . $unit : 'n' . $unit . 's', $n === 1 ? '%d ' . strtolower($unit) : '%d ' . strtolower($unit) . 's');
-        return sprintf(T('Tasks', $key, $default), $n);
-    };
-    if ($seconds >= 86400 && $seconds % 86400 === 0) {
-        return $plural(intdiv($seconds, 86400), 'Day');
-    }
-    return $plural(max(1, (int)round($seconds / 3600)), 'Hour');
-};
+$duration = [UI::class, 'durationText'];
 $book = static fn(string $key) => "new Travian.Game.WayOfPayment('" . $key . "', 'goldShop'); return false;";
 $toggle = static fn(string $key) => "Travian.ajax({data: {cmd: 'premiumFeature', featureKey: '" . $key . "', toggleAutoprolong: 1, context: 'goldShop'},"
     . " onSuccess: function () { window.location.reload(); }}); this.disabled = true;";

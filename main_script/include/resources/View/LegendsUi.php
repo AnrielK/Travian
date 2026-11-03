@@ -361,6 +361,20 @@ class LegendsUi
         return $html . '</div>';
     }
 
+    /**
+     * Duration of a premium feature: "2 hours", or after "for" ($for) "1 hour" in the accusative; Czech has its own form
+     * for 2-4 (fewHours / fewDays) and for one hour after "for" (oneHourFor).
+     */
+    public static function durationText(int $seconds, bool $for = false): string
+    {
+        $unit = $seconds >= 86400 && $seconds % 86400 === 0 ? 'Day' : 'Hour';
+        $n = $unit === 'Day' ? intdiv($seconds, 86400) : max(1, (int)round($seconds / 3600));
+        $plain = $n === 1 ? 'one' . $unit : 'n' . $unit . 's';
+        $default = T('Tasks', $plain, '%d ' . strtolower($unit) . ($n === 1 ? '' : 's'));
+        $key = $n === 1 ? ($for ? 'one' . $unit . 'For' : $plain) : ($n <= 4 ? 'few' . $unit . 's' : $plain);
+        return sprintf(T('Tasks', $key, $default), $n);
+    }
+
     public static function goldCoin(string $class = ''): string
     {
         return '<svg viewBox="0 0 50 50"' . ($class ? ' class="' . $class . '"' : '') . '><circle cx="25" cy="25" r="25" fill="#522d1c"/>'

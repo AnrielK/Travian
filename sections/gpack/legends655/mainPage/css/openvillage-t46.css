@@ -2345,3 +2345,21 @@ body.legendsV2 .legendsPlusDialog .dialogGold { font-size: 18px; color: #e3d8c4;
 body.legendsV2 .legendsPlusDialog .featureBooking .featureButton button.plusActivate { min-width: 160px; height: 37px; }
 body.legendsV2 .legendsPlusDialog .featureBooking .featureButton button.plusActivate > div,
 body.legendsV2 .legendsPlusDialog .featureBooking .featureButton button.plusActivate .goldValue { font-size: 13px; line-height: normal; color: #461900; }
+/* Gold shop dialog (goldShop/legendsDialog.php, js/Game/Legends/goldShop.js) laid out as the payment wizard of Legends
+   692.2: tabs under the dialog header, title and gold balance in the header, the content without the offsets the
+   classic payment shop styles give #paymentWizard */
+.dialog.legendsGoldShop #paymentWizard { width: auto; }
+.dialog.legendsGoldShop #paymentWizard > .header { position: static; height: auto; margin: 0; }
+.dialog.legendsGoldShop #paymentWizard .header .contentNavi { display: block; }
+.dialog.legendsGoldShop #paymentWizard #paymentWizardContent { position: static; float: none; width: auto; margin: 0; padding: 10px; }
+.dialog.legendsGoldShop #paymentWizard .shopWrapper > h1.titleInHeader { top: 30px; left: 27px; right: auto; padding: 3px 5px; }
+.dialog.legendsGoldShop #paymentWizard .accountBalance { top: 28px; left: auto; right: 150px; }
+.dialog.legendsGoldShop #dialogContent { font-size: 13px; color: #5e463a; }
+.dialog.legendsGoldShop #paymentWizard .header .contentNavi .tabItem { font-size: 13px; }
+.dialog.legendsGoldShop #paymentWizard .header .contentNavi .tabItem.active { background-image: none; }
+/* the game guide's bubble stays below an open Legends dialog, as on Travian */
+body:has(.legendsDialogOverlay) .legendsGuide { display: none; }
+.dialog.legendsGoldShop #paymentWizard.advantages #paymentWizardContent { padding: 10px 0 0; }
+/* no video ads in OpenVillage: the production bonus cards end with the gold button */
+.dialog.legendsGoldShop #paymentWizard.advantages .advantagesBonusBox[class*=ProductionBonus]:not(:has(.bonusVideo)) { grid-template-rows: 55px 32.5px 16px 37px; padding-bottom: 12px; }
+.dialog.legendsGoldShop #paymentWizard .paymentWrapper .choosePayment.credited { font-weight: 700; color: #4b7d0a; }
