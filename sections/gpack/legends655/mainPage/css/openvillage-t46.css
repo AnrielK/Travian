@@ -2148,7 +2148,9 @@ body.legendsV2 .legendsDialogOverlay .quickLinksDialog .quickLinkItem.used .quic
 body.legendsV2 .legendsDialogOverlay .quickLinksDialog .quickLinkItem,
 body.legendsV2 .sidebar .quickLinks .quickLinkSlot.editMode .layoutButton.quickLink { touch-action: manipulation !important; }
 body.legendsV2.legendsQuickLinksEditing .layoutButton.quickLink { -webkit-touch-callout: none; -webkit-user-select: none; user-select: none; -webkit-user-drag: none; }
-body.legendsV2 .layoutButton.buttonFramed.withIcon.round.quickLink.disabled { filter: saturate(.75) brightness(1.22) !important; }
+/* disabled quick links as in Legends 692.2: grey-green face, the normal shadow, no lightening */
+body.legendsV2 .layoutButton.buttonFramed.withIcon.round.quickLink.disabled { filter: drop-shadow(rgba(0, 0, 0, .3) 0 3px 3px) !important; }
+body.legendsV2 .sidebar .layoutButton.buttonFramed.withIcon.round.quickLink.disabled:before { background-color: #747a6a !important; }
 /* empty wall (palisade) site in dorf2: hidden as in Legends, a light ring only under the mouse / finger */
 body.t46Layout #contentOuterContainer #villageContent .buildingSlot.a40.legendsWall svg.traced g.clickShape path { fill: rgba(0, 0, 0, 0) !important; pointer-events: all; }
 body.t46Layout #contentOuterContainer #villageContent .buildingSlot.a40.legendsWall svg.traced:hover g.clickShape path,
@@ -2384,3 +2386,6 @@ body.legendsV2 .legendsDialogOverlay .dialog.basic.exchangeOfficeDialog .dialogC
 body.legendsV2 #sidebarBeforeContent > .sidebarBox:first-child { margin-top: 20px; }
 body.legendsV2 #sidebarBeforeContent > #sidebarBoxInfobox + #sidebarBoxLinklist { margin-top: 36px; }
 body.t46Layout.legendsV2 #sidebarBeforeContent .sidebarBox .innerBox.header .buttonsWrapper { right: 25px; gap: 5px; }
+/* Right sidebar: the frames of the village boxes start 14px below the box, under the quick link buttons (Legends 692.2) */
+body.t46Layout.legendsV2 .sidebar #sidebarBoxActiveVillage .sidebarBoxInnerBox:before,
+body.t46Layout.legendsV2 .sidebar #sidebarBoxVillagelist .sidebarBoxInnerBox:before { top: 14px; }
