@@ -6045,6 +6045,15 @@ $Definition['LegendsGoldClub']['evasionTitle'] = 'Nastavení uhýbání';
 $Definition['LegendsGoldClub']['evasionDesc'] = 'S Bonifácovým klubem můžeš dát svým jednotkám v hlavní vesnici povel, aby před útokem automaticky utekly.';
 
 
+// Exchange office of the auctions in the Legends look (js/Game/Legends/exchangeOffice.js)
+$Definition['LegendsExchange']['title'] = 'Směnárna';
+$Definition['LegendsExchange']['gold'] = 'Zlaté';
+$Definition['LegendsExchange']['silver'] = 'Stříbrné';
+$Definition['LegendsExchange']['current'] = 'Aktuální';
+$Definition['LegendsExchange']['new'] = 'Nové';
+$Definition['LegendsExchange']['exchange'] = 'Vyměnit';
+$Definition['LegendsExchange']['swap'] = 'Změnit směr výměny';
+
 // Travian PLUS dialog of the Legends 655 look (js/Game/Legends/plus.js)
 $Definition['LegendsPlus']['title'] = 'Travian PLUS';
 $Definition['LegendsPlus']['gold'] = 'Zlato';

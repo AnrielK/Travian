@@ -139,13 +139,18 @@ class HeroAuctionCtrl extends GameCtrl
             $content .= $v2->overview();
         }
         if ($canTakePlaceInAuction) {
-            $view = new PHPBatchView("hero/silverExchange");
-            $view->vars['gold'] = $session->getAvailableGold();
-            $view->vars['silver'] = $session->getAvailableSilver();
-            $view->vars['SilverToGold'] = get_button_id();
-            $view->vars['GoldToSilver'] = get_button_id();
-            $view->vars['GoldToSilver2'] = get_button_id();
-            $content .= '<div id="auctionsExchangeOffice" style="display:none">' . $view->output() . '</div>';
+            // Exchange office dialog of Legends 692.2 (js/Game/Legends/exchangeOffice.js), opened by the exchange widget.
+            $texts = [
+                'title' => T('LegendsExchange', 'title', 'Exchange office'), 'gold' => T('LegendsExchange', 'gold', 'Gold'),
+                'silver' => T('LegendsExchange', 'silver', 'Silver'), 'current' => T('LegendsExchange', 'current', 'Current'),
+                'next' => T('LegendsExchange', 'new', 'New'), 'exchange' => T('LegendsExchange', 'exchange', 'Exchange'),
+                'swap' => T('LegendsExchange', 'swap', 'Change direction'), 'close' => T('Messages', 'closeButtonText'),
+                'goldAmount' => (int)$session->getAvailableGold(), 'silverAmount' => (int)$session->getAvailableSilver(),
+                'goldCoin' => \resources\View\LegendsUi::goldCoin(), 'silverCoin' => \resources\View\LegendsUi::silverCoin(),
+                'exchangeIcon' => \resources\View\LegendsUi::exchangeIcon(),
+            ];
+            $content .= '<script type="text/javascript">window.LegendsExchangeTexts = ' . json_encode($texts, JSON_UNESCAPED_UNICODE | JSON_HEX_TAG) . ';</script>'
+                . '<script type="text/javascript" src="js/Game/Legends/exchangeOffice.js?v=' . ov_asset_version(PUBLIC_PATH . 'js/Game/Legends/exchangeOffice.js') . '"></script>';
         }
         $this->view->vars['content'] = $content . '</div>' . HeroAuctionV2::script();
     }

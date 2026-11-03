@@ -5968,6 +5968,15 @@ $Definition['LegendsGoldClub']['evasionTitle'] = 'Evasion settings';
 $Definition['LegendsGoldClub']['evasionDesc'] = 'With the Gold Club you can order the troops of your capital to evade attacks automatically.';
 
 
+// Exchange office of the auctions in the Legends look (js/Game/Legends/exchangeOffice.js)
+$Definition['LegendsExchange']['title'] = 'Exchange office';
+$Definition['LegendsExchange']['gold'] = 'Gold';
+$Definition['LegendsExchange']['silver'] = 'Silver';
+$Definition['LegendsExchange']['current'] = 'Current';
+$Definition['LegendsExchange']['new'] = 'New';
+$Definition['LegendsExchange']['exchange'] = 'Exchange';
+$Definition['LegendsExchange']['swap'] = 'Change direction';
+
 // Travian PLUS dialog of the Legends 655 look (js/Game/Legends/plus.js)
 $Definition['LegendsPlus']['title'] = 'Travian PLUS';
 $Definition['LegendsPlus']['gold'] = 'Gold';

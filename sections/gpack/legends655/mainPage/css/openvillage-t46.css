@@ -2376,3 +2376,5 @@ body:has(.legendsDialogOverlay) .legendsGuide { display: none; }
 /* Advantages buttons in the size of Legends 692.2: 37px high, 1px 6px around the label (158 / 144 / 133px wide) */
 .dialog.legendsGoldShop #paymentWizard .bonusButton .textButtonV2,
 .dialog.legendsGoldShop #paymentWizard .bonusVideo .textButtonV2 { height: 37px; min-width: 0; padding: 1px 6px; }
+/* Exchange office of the auctions (js/Game/Legends/exchangeOffice.js): the basic dialog 9px around the content, as in Legends */
+body.legendsV2 .legendsDialogOverlay .dialog.basic.exchangeOfficeDialog .dialogContents { padding: 9px; }

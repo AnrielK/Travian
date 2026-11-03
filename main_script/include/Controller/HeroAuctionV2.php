@@ -600,8 +600,7 @@ class HeroAuctionV2
         if (row && !event.target.closest('a,button,input,form')) { window.location.href = row.dataset.href; return; }
         var exchange = event.target.closest('[data-exchange]');
         if (exchange && !exchange.disabled) {
-            var office = document.getElementById('auctionsExchangeOffice');
-            if (office) office.style.display = office.style.display === 'none' ? '' : 'none';
+            if (window.LegendsExchange) LegendsExchange.open(exchange.dataset.exchange);
             return;
         }
         var form = root.querySelector('.sellItemForm');
