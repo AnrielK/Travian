@@ -2378,3 +2378,9 @@ body:has(.legendsDialogOverlay) .legendsGuide { display: none; }
 .dialog.legendsGoldShop #paymentWizard .bonusVideo .textButtonV2 { height: 37px; min-width: 0; padding: 1px 6px; }
 /* Exchange office of the auctions (js/Game/Legends/exchangeOffice.js): the basic dialog 9px around the content, as in Legends */
 body.legendsV2 .legendsDialogOverlay .dialog.basic.exchangeOfficeDialog .dialogContents { padding: 9px; }
+/* Left sidebar as in Legends 692.2 (measured at 1400px): the first box frame 20px below the sidebar top (Legends keeps the
+   header buttons inside a 10px band above each frame), the link list 36px below the info box, the header buttons 40px
+   with 5px between them and 25px from the right edge */
+body.legendsV2 #sidebarBeforeContent > .sidebarBox:first-child { margin-top: 20px; }
+body.legendsV2 #sidebarBeforeContent > #sidebarBoxInfobox + #sidebarBoxLinklist { margin-top: 36px; }
+body.t46Layout.legendsV2 #sidebarBeforeContent .sidebarBox .innerBox.header .buttonsWrapper { right: 25px; gap: 5px; }
