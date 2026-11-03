@@ -10,7 +10,8 @@
 		<?php
 	endif;
 	?>
-	<div class="detailImage">
+	<?php /* vidN: the village centre of the viewer's tribe on the field layout (Legends) */ ?>
+	<div class="detailImage vid<?=(int)\Core\Session::getInstance()->getRace(); ?>">
 		<div class="options">
 			<?=$vars['options']; ?>
 		</div>

@@ -2398,3 +2398,25 @@ body.t46Layout.legendsV2 #content.heroAdventure #heroAdventure .videoFeatureBonu
 body.t46Layout.legendsV2 #content.heroAdventure #heroAdventure .videoFeatureBonusBox + .videoFeatureBonusBox { margin-top: 10px; }
 body.t46Layout.legendsV2 #content.heroAdventure #heroAdventure .adventureList { width: 100%; margin-top: 15px; }
 body.t46Layout.legendsV2 #content.heroAdventure #heroAdventure .adventureList td.button button { height: 37px; margin: 0; padding: 1px 6px; }
+/* Map tile details: the field layouts and village centres of Legends 692.2 (legacy/views/map/detailView) instead of the
+   older background2019 pictures of the template styles, which have no layout 13 and no centres for every tribe */
+body.legendsV2 #tileDetails.village-1 .detailImage { background-image: url('../img_ltr/legacy/views/map/detailView/resourceFields/resourceField1.png'); }
+body.legendsV2 #tileDetails.village-2 .detailImage { background-image: url('../img_ltr/legacy/views/map/detailView/resourceFields/resourceField2.png'); }
+body.legendsV2 #tileDetails.village-3 .detailImage { background-image: url('../img_ltr/legacy/views/map/detailView/resourceFields/resourceField3.png'); }
+body.legendsV2 #tileDetails.village-4 .detailImage { background-image: url('../img_ltr/legacy/views/map/detailView/resourceFields/resourceField4.png'); }
+body.legendsV2 #tileDetails.village-5 .detailImage { background-image: url('../img_ltr/legacy/views/map/detailView/resourceFields/resourceField5.png'); }
+body.legendsV2 #tileDetails.village-6 .detailImage { background-image: url('../img_ltr/legacy/views/map/detailView/resourceFields/resourceField6.png'); }
+body.legendsV2 #tileDetails.village-7 .detailImage { background-image: url('../img_ltr/legacy/views/map/detailView/resourceFields/resourceField7.png'); }
+body.legendsV2 #tileDetails.village-8 .detailImage { background-image: url('../img_ltr/legacy/views/map/detailView/resourceFields/resourceField8.png'); }
+body.legendsV2 #tileDetails.village-9 .detailImage { background-image: url('../img_ltr/legacy/views/map/detailView/resourceFields/resourceField9.png'); }
+body.legendsV2 #tileDetails.village-10 .detailImage { background-image: url('../img_ltr/legacy/views/map/detailView/resourceFields/resourceField10.png'); }
+body.legendsV2 #tileDetails.village-11 .detailImage { background-image: url('../img_ltr/legacy/views/map/detailView/resourceFields/resourceField11.png'); }
+body.legendsV2 #tileDetails.village-12 .detailImage { background-image: url('../img_ltr/legacy/views/map/detailView/resourceFields/resourceField12.png'); }
+body.legendsV2 #tileDetails.village-13 .detailImage { background-image: url('../img_ltr/legacy/views/map/detailView/resourceFields/resourceField13.png'); }
+body.legendsV2 #tileDetails.village .detailImage.vid1::after { background-image: url('../img_ltr/legacy/views/map/detailView/resourceFields/tribeSpecificCenter/villageCenter_vid1.png'); }
+body.legendsV2 #tileDetails.village .detailImage.vid2::after { background-image: url('../img_ltr/legacy/views/map/detailView/resourceFields/tribeSpecificCenter/villageCenter_vid2.png'); }
+body.legendsV2 #tileDetails.village .detailImage.vid3::after { background-image: url('../img_ltr/legacy/views/map/detailView/resourceFields/tribeSpecificCenter/villageCenter_vid3.png'); }
+body.legendsV2 #tileDetails.village .detailImage.vid6::after { background-image: url('../img_ltr/legacy/views/map/detailView/resourceFields/tribeSpecificCenter/villageCenter_vid6.png'); }
+body.legendsV2 #tileDetails.village .detailImage.vid7::after { background-image: url('../img_ltr/legacy/views/map/detailView/resourceFields/tribeSpecificCenter/villageCenter_vid7.png'); }
+body.legendsV2 #tileDetails.village .detailImage.vid8::after { background-image: url('../img_ltr/legacy/views/map/detailView/resourceFields/tribeSpecificCenter/villageCenter_vid8.png'); }
+body.legendsV2 #tileDetails.village .detailImage.vid9::after { background-image: url('../img_ltr/legacy/views/map/detailView/resourceFields/tribeSpecificCenter/villageCenter_vid9.png'); }
