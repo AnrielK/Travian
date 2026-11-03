@@ -2,7 +2,7 @@
  * Exchange office of the auctions in the Travian Legends 692.2 look (dialog "basic exchangeOfficeDialog", markup of
  * #exchangeOffice styled by legends_ltr.css): gold to silver (1 : 100) or silver to gold (200 : 1), the swap button in
  * the middle changes the direction; the preview shows the current and the new gold and silver. "Exchange" posts
- * ajax.php?cmd=premiumFeature (featureKey exchangeSilver) or ajax.php?cmd=silverExchange and reloads the page.
+ * ajax.php?cmd=premiumFeature (featureKey exchangeSilver) or ajax.php?cmd=silverExchange and shows the new balance.
  * Opened by the exchange widget of the auctions (data-exchange="GoldToSilver" / "SilverToGold" / "open").
  * Texts and icons: window.LegendsExchangeTexts (HeroAuctionCtrl).
  */
@@ -74,8 +74,8 @@ var LegendsExchange = (function () {
         if (dialog && dialog.parentNode) {
             dialog.querySelector('#dialogContent').innerHTML = html;
         } else {
-            dialog = window.LegendsDialog.open({cls: 'basic exchangeOfficeDialog', html: html, closeText: T.close,
-                onClose: function () { dialog = null; }});
+            dialog = window.LegendsDialog.open({cls: 'basic exchangeOfficeDialog', overlayCls: 'doNotCoverHeader stickToHeader', html: html,
+                closeText: T.close, onClose: function () { dialog = null; }});
         }
         var root = dialog.querySelector('#exchangeOffice');
         update(T, root);
@@ -91,8 +91,27 @@ var LegendsExchange = (function () {
             var data = direction === 'GoldToSilver'
                 ? {cmd: 'premiumFeature', featureKey: 'exchangeSilver', coins: amount, context: 'auction'}
                 : {cmd: 'silverExchange', s: amount, g: Math.floor(amount / 200), exTyp: 'SilverToGold'};
-            Travian.ajax({data: data, onSuccess: function () { window.location.reload(); }, onFailure: function () { window.location.reload(); }});
+            Travian.ajax({data: data, onSuccess: function (response) { applyResult(direction, response); },
+                onFailure: function () { window.location.reload(); }});
         });
+    }
+    // After an exchange the dialog stays open (as in Legends) with the new gold and silver; the header and the
+    // exchange widget of the auctions show them too. Without new amounts in the response the page is reloaded.
+    function applyResult(direction, response) {
+        var r = response && (response.options || response);
+        if (!r || r.newGold === undefined || r.newSilver === undefined) {
+            window.location.reload();
+            return;
+        }
+        var T = window.LegendsExchangeTexts;
+        T.goldAmount = parseInt(r.newGold, 10) || 0;
+        T.silverAmount = parseInt(r.newSilver, 10) || 0;
+        document.querySelectorAll('.ajaxReplaceableGoldAmount').forEach(function (e) { e.textContent = T.goldAmount; });
+        document.querySelectorAll('.ajaxReplaceableSilverAmount').forEach(function (e) { e.textContent = T.silverAmount; });
+        var gold = document.querySelector('.exchangeWidget .exchangeGold span'), silver = document.querySelector('.exchangeWidget .exchangeSilver span');
+        if (gold) gold.textContent = fmt(T.goldAmount);
+        if (silver) silver.textContent = fmt(T.silverAmount);
+        show(direction, direction === 'GoldToSilver' ? 1 : 200);
     }
     function open(direction) {
         if (!window.LegendsExchangeTexts || !window.LegendsDialog) return;
