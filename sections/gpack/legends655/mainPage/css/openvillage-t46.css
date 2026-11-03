@@ -2320,3 +2320,12 @@ body.legendsV2 #topBar nav#outOfGame > .layoutButton.round { zoom: 1; width: 30p
 body.legendsV2 .sidebar #sidebarBoxActiveVillage .innerBox.header .buttonsWrapper.quickLinks,
 body.legendsV2 .sidebar #sidebarBoxVillagelist .innerBox.header .buttonsWrapper.quickLinks { top: 0; right: 10px; left: auto; height: 44px; gap: 1px; }
 body.legendsV2 .sidebar .buttonsWrapper.quickLinks > .layoutButton.buttonFramed.withIcon.round.settings { margin: 2px !important; }
+/* Statistics Top 10 (statistics/top10.php): the grid of legends_ltr.css has two rows; the best attacking and defending
+   hammers of OpenVillage take a third */
+body.legendsV2 div.statistics div.top10Wrapper > h4:nth-of-type(5), body.legendsV2 div.statistics div.top10Wrapper > table:nth-of-type(5) { grid-column-start: 1; grid-row-start: 3; }
+body.legendsV2 div.statistics div.top10Wrapper > h4:nth-of-type(6), body.legendsV2 div.statistics div.top10Wrapper > table:nth-of-type(6) { grid-column-start: 2; grid-row-start: 3; }
+body.legendsV2 div.statistics div.top10Wrapper > table { width: 100%; }
+body.legendsV2 div.statistics div.top10Wrapper { width: auto; }
+/* Night look: the empty building sites in the darker green of legends_ltr.css */
+html body[data-theme=night].t46Layout #contentOuterContainer #villageContent .buildingSlot.g0 svg.buildingShape.iso g.clickShape path { fill: rgba(44, 58, 11, .57); }
+html body[data-theme=night].t46Layout #contentOuterContainer #villageContent .buildingSlot.g0 svg.buildingShape.iso:hover g.clickShape path { fill: rgba(85, 96, 39, .57); }

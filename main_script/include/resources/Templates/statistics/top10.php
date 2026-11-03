@@ -90,7 +90,8 @@ if (!$vars['isAlliance']): ?>
     <br/>
     <?php endif; ?>
 <?php endif; ?>
-<div id="statLeft" class="top10Wrapper">
+<?php $top10 = []; ?>
+<?php ob_start(); ?>
     <h4
             class="round small  top top10_offs"><?=T("Statistics", "top10.attackers of the week"); ?></h4>
     <table cellpadding="1" cellspacing="1" id="top10_offs"
@@ -106,6 +107,8 @@ if (!$vars['isAlliance']): ?>
         <?=$vars['top10_offs']; ?>
         </tbody>
     </table>
+<?php $top10['offs'] = ob_get_clean(); ?>
+<?php ob_start(); ?>
     <h4
             class="round small spacer top top10_defs"><?=T("Statistics", "top10.defenders of the week"); ?></h4>
     <table cellpadding="1" cellspacing="1" id="top10_defs"
@@ -121,6 +124,8 @@ if (!$vars['isAlliance']): ?>
         <?=$vars['top10_deffs']; ?>
         </tbody>
     </table>
+<?php $top10['defs'] = ob_get_clean(); ?>
+<?php ob_start(); ?>
     <?php if (!$vars['isAlliance'] && getDisplay("topHammers")): ?>
         <h4 class="round small spacer top top10_defs"><?=T("Statistics", "top10.top off hammer"); ?></h4>
         <table cellpadding="1" cellspacing="1" id="top10_raiders"
@@ -137,8 +142,8 @@ if (!$vars['isAlliance']): ?>
             </tbody>
         </table>
     <?php endif; ?>
-</div>
-<div id="statRight" class="top10Wrapper">
+<?php $top10['offHammer'] = ob_get_clean(); ?>
+<?php ob_start(); ?>
     <h4 class="round small  top top10_climbers"><?=T("Statistics", "top10.climbers of the week"); ?></h4>
     <table cellpadding="1" cellspacing="1" id="top10_climbers"
            class="top10 row_table_data">
@@ -154,6 +159,8 @@ if (!$vars['isAlliance']): ?>
         <?=$vars['top10_climbers']; ?>
         </tbody>
     </table>
+<?php $top10['climbers'] = ob_get_clean(); ?>
+<?php ob_start(); ?>
     <h4 class="round small spacer top top10_raiders"><?=T("Statistics", "top10.robbers of the week"); ?></h4>
     <table cellpadding="1" cellspacing="1" id="top10_raiders"
            class="top10 row_table_data">
@@ -168,6 +175,8 @@ if (!$vars['isAlliance']): ?>
         <?=$vars['top10_robbers']; ?>
         </tbody>
     </table>
+<?php $top10['robbers'] = ob_get_clean(); ?>
+<?php ob_start(); ?>
     <?php if (!$vars['isAlliance'] && getDisplay("topHammers")): ?>
         <h4 class="round small spacer top top10_raiders"><?=T("Statistics", "top10.top def hammer"); ?></h4>
         <table cellpadding="1" cellspacing="1" id="top10_raiders"
@@ -184,4 +193,16 @@ if (!$vars['isAlliance']): ?>
             </tbody>
         </table>
     <?php endif; ?>
+<?php $top10['defHammer'] = ob_get_clean(); ?>
+<?php if (is_hero_v2()): /* Legends: one grid of heading + table pairs, two per row */ ?>
+<div class="top10Wrapper">
+<?= $top10['offs'] . $top10['defs'] . $top10['climbers'] . $top10['robbers'] . $top10['offHammer'] . $top10['defHammer']; ?>
 </div>
+<?php else: ?>
+<div id="statLeft" class="top10Wrapper">
+<?= $top10['offs'] . $top10['defs'] . $top10['offHammer']; ?>
+</div>
+<div id="statRight" class="top10Wrapper">
+<?= $top10['climbers'] . $top10['robbers'] . $top10['defHammer']; ?>
+</div>
+<?php endif; ?>
