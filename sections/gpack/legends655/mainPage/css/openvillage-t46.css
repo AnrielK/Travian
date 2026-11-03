@@ -2329,3 +2329,19 @@ body.legendsV2 div.statistics div.top10Wrapper { width: auto; }
 /* Night look: the empty building sites in the darker green of legends_ltr.css */
 html body[data-theme=night].t46Layout #contentOuterContainer #villageContent .buildingSlot.g0 svg.buildingShape.iso g.clickShape path { fill: rgba(44, 58, 11, .57); }
 html body[data-theme=night].t46Layout #contentOuterContainer #villageContent .buildingSlot.g0 svg.buildingShape.iso:hover g.clickShape path { fill: rgba(85, 96, 39, .57); }
+/* Gold shop: package1-6.png of Legends 692.2 already grow with the package, shown at their size as in the payment wizard */
+body.t46Layout .ovGoldShop .package .packageImage img,
+body.t46Layout .ovGoldShop .package .packageImage[class*=size] img { width: 120px; height: 120px; }
+/* Gold Club and Travian PLUS dialogs: texts in the dialog brown at 13/16px, the notice 12px, the gold of the header 18px,
+   the "Activate" button 160 x 37 with 13px text, as in Legends 692.2 (selectors as specific as the earlier rules above) */
+body.legendsV2 .legendsPlusDialog .featureCollection .packageFeatures .featureContent .featureTitle,
+body.legendsV2 .legendsPlusDialog .featureCollection .featureContent .featureTitle,
+body.legendsV2 .legendsPlusDialog .featureCollection .featureContent .featureDescription,
+body.legendsV2 .legendsPlusDialog .plusExtra,
+body.legendsV2 .legendsPlusDialog .featureBooking .featureDuration,
+body.legendsV2 .legendsPlusDialog .featureBooking .featureDuration b { font-size: 13px; line-height: 16px; color: #5e463a; }
+body.legendsV2 .legendsPlusDialog .plusNotice { font-size: 12px; line-height: 16px; color: #5e463a; }
+body.legendsV2 .legendsPlusDialog .dialogGold { font-size: 18px; color: #e3d8c4; }
+body.legendsV2 .legendsPlusDialog .featureBooking .featureButton button.plusActivate { min-width: 160px; height: 37px; }
+body.legendsV2 .legendsPlusDialog .featureBooking .featureButton button.plusActivate > div,
+body.legendsV2 .legendsPlusDialog .featureBooking .featureButton button.plusActivate .goldValue { font-size: 13px; line-height: normal; color: #461900; }

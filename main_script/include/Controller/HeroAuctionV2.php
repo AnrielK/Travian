@@ -233,8 +233,8 @@ class HeroAuctionV2
         $search = '<div class="itemTypeSearch formV2 heroV2 closed"><button type="button" class="openSearch" title="' . UI::e(T('HeroV2', 'searchItem', 'Search item')) . '">'
             . self::ICON_SEARCH . '</button><label class="input"><input type="text" name="itemSearch" autocomplete="off" placeholder="'
             . UI::e(T('HeroV2', 'searchItem', 'Search item')) . '"></label></div>';
-        // Like in Rise of Governors only the chosen slot is shown; a click on it slides the other slots out.
-        $html .= str_replace('heroItemSlotFilter filterSlotsRow', 'heroItemSlotFilter filterSlotsRow collapsible collapsed', $this->goldenWrapper($filter, $base . '&slot=', $search));
+        // All slots in a row, as in Legends 692.2.
+        $html .= $this->goldenWrapper($filter, $base . '&slot=', $search);
         if ($grouped) {
             return $html . $this->buyGroups($where, $page, $base . '&slot=' . $filter);
         }

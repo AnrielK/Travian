@@ -130,7 +130,7 @@ class HeroAuctionCtrl extends GameCtrl
         }
         $messages = $this->view->vars['content'];
         $v2 = new HeroAuctionV2($canTakePlaceInAuction, (string)$session->getChecker());
-        $content = $v2->tabs($action) . '<div id="auctions">' . $messages;
+        $content = $v2->tabs($action) . '<div id="auctions" class="contentV2">' . $messages;
         if ($action === 'buy') {
             $content .= $v2->buy();
         } elseif ($action === 'sell') {

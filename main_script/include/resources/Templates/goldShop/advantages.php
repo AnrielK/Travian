@@ -6,13 +6,17 @@ use resources\View\LegendsUi as UI;
 $h = static fn($s) => htmlspecialchars((string)$s, ENT_QUOTES);
 $adv = $vars['advantages'];
 $canSpend = $vars['canSpendGold'];
-$duration = static function (int $seconds): string {
+// "2 hours" / "for 1 hour": Czech has a form for 2-4 (fewHours) and an accusative singular after "for" (oneHourFor).
+$duration = static function (int $seconds, bool $for = false): string {
+    $plural = static function (int $n, string $unit) use ($for): string {
+        $key = $n === 1 ? ($for ? 'one' . $unit . 'For' : 'one' . $unit) : ($n >= 2 && $n <= 4 ? 'few' . $unit . 's' : 'n' . $unit . 's');
+        $default = T('Tasks', $n === 1 ? 'one' . $unit : 'n' . $unit . 's', $n === 1 ? '%d ' . strtolower($unit) : '%d ' . strtolower($unit) . 's');
+        return sprintf(T('Tasks', $key, $default), $n);
+    };
     if ($seconds >= 86400 && $seconds % 86400 === 0) {
-        $days = intdiv($seconds, 86400);
-        return sprintf($days === 1 ? T('Tasks', 'oneDay', '%d day') : T('Tasks', 'nDays', '%d days'), $days);
+        return $plural(intdiv($seconds, 86400), 'Day');
     }
-    $hours = max(1, (int)round($seconds / 3600));
-    return sprintf($hours === 1 ? T('Tasks', 'oneHour', '%d hour') : T('Tasks', 'nHours', '%d hours'), $hours);
+    return $plural(max(1, (int)round($seconds / 3600)), 'Hour');
 };
 $book = static fn(string $key) => "new Travian.Game.WayOfPayment('" . $key . "', 'goldShop'); return false;";
 $toggle = static fn(string $key) => "Travian.ajax({data: {cmd: 'premiumFeature', featureKey: '" . $key . "', toggleAutoprolong: 1, context: 'goldShop'},"
@@ -80,7 +84,7 @@ $boostDesc = ['Wood' => '+25WoodDesc', 'Clay' => '+25ClayDesc', 'Iron' => '+25Ir
                 <div class="advImage <?=$boostImages[$f['name']]; ?>"></div>
                 <h4><?=$h($boostTitles[$f['name']]); ?></h4>
                 <div class="advBonus"><svg class="advArrow" viewBox="0 0 16 18"><path d="M8 1 15 9h-4v8H5V9H1z"/></svg>
-                    <b>+25%</b> <?=$h(sprintf(T('Tasks', 'forDuration', 'for %s'), $duration($f['duration']))); ?></div>
+                    <b>+25%</b> <?=$h(sprintf(T('Tasks', 'forDuration', 'for %s'), $duration($f['duration'], true))); ?></div>
                 <?=$button(T('inGame', $f['active'] ? 'plus.extend' : 'plus.activate'), $f); ?>
                 <?php if ($f['active']): ?>
                     <div class="advStatus"><?=$h(T('Tasks', 'stillActive', 'Still active for:')); ?> <b><?=$remaining($f['till']); ?></b></div>

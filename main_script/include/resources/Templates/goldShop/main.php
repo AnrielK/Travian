@@ -32,7 +32,7 @@ $h = static fn($s) => htmlspecialchars((string)$s, ENT_QUOTES);
                                         <div class="discount">+<?=$bonus; ?>%</div>
                                         <div class="originalAmount"><?=\resources\View\LegendsUi::goldCoin('goldCoin'); ?><?=number_format($original, 0, ',', number_thousands_separator()); ?></div>
                                         <div class="productAmount"><?=\resources\View\LegendsUi::goldCoin('goldCoin'); ?><span><?=number_format($p['gold'], 0, ',', number_thousands_separator()); ?></span></div>
-                                        <div class="packageImage size<?=$p['index']; ?>"><img src="<?=get_gpack_cdn_mainPage_url(); ?>img_ltr/legacy/views/shop/package3.png" alt=""></div>
+                                        <div class="packageImage size<?=$p['index']; ?>"><img src="<?=get_gpack_cdn_mainPage_url(); ?>img_ltr/legacy/views/shop/package<?=min(6, $p['index'] + 1); ?>.png" alt=""></div>
                                         <div class="productPrice"><?=$p['price'] !== '' ? $h($p['price']) : $h(T('Tasks', 'free', 'Free')); ?></div>
                                     </label>
                                 <?php endforeach; ?>
