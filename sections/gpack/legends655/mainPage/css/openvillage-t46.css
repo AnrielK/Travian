@@ -930,23 +930,12 @@ body.t46Layout.legendsV2 #build .upgradeBuilding .buildingBenefits .unit .delta 
 
 /* Legends adventures (hero/v2/adventures.php, hero/v2/adventureStarted.php). */
 body.t46Layout.legendsV2 #content.heroAdventure { background-color: #f4efe4; color: #5e463a; }
-body.t46Layout.legendsV2 #content.heroAdventure .contentV2 { padding: 12px 14px 16px; }
-body.t46Layout.legendsV2 #content.heroAdventure .heroState { display: grid; grid-template-columns: 30px 1fr; gap: 0 10px; align-items: center; font-size: 17px; }
+body.t46Layout.legendsV2 #content.heroAdventure .heroState { display: grid; grid-template-columns: 25px 1fr; gap: 0 10px; align-items: center; font-size: 13px; line-height: 16px; }
 body.t46Layout.legendsV2 #content.heroAdventure .heroState .heroStatusMessage img { transform: scale(1.5); transform-origin: left center; top: 0; }
-body.t46Layout.legendsV2 #content.heroAdventure .heroState a { font-weight: 700; color: #4f8a13; }
-body.t46Layout.legendsV2 #content.heroAdventure .heroState .subMessage { display: block; margin-top: 5px; font-size: 14px; font-style: italic; }
-body.t46Layout.legendsV2 #content.heroAdventure .adventureList { width: 100%; margin-top: 22px; border-collapse: separate; border-spacing: 0; background: none; }
-body.t46Layout.legendsV2 #content.heroAdventure .adventureList thead th { background: none; border: 0; padding: 0 6px 8px; font-size: 15px; font-weight: 700; color: #5e463a; }
-body.t46Layout.legendsV2 #content.heroAdventure .adventureList tbody td { background: #fff; border: 0; border-top: 1px solid #c9bea5; border-bottom: 1px solid #c9bea5; padding: 4px 8px; font-size: 15px; vertical-align: middle; }
-body.t46Layout.legendsV2 #content.heroAdventure .adventureList tbody td:first-child { border-left: 1px solid #c9bea5; border-radius: 2px 0 0 2px; padding-left: 0; }
-body.t46Layout.legendsV2 #content.heroAdventure .adventureList tbody td:last-child { border-right: 1px solid #c9bea5; border-radius: 0 2px 2px 0; }
-body.t46Layout.legendsV2 #content.heroAdventure .adventureList tbody tr + tr td { border-top: 0; }
-body.t46Layout.legendsV2 #content.heroAdventure .adventureList tbody tr:not(:first-child) td { border-top: 6px solid #f4efe4; box-shadow: inset 0 1px 0 #c9bea5; }
-body.t46Layout.legendsV2 #content.heroAdventure .adventureList td.place img { margin: 0 0 0 2px; }
+body.t46Layout.legendsV2 #content.heroAdventure .heroState a { font-weight: 700; color: #5a9a0a; }
+body.t46Layout.legendsV2 #content.heroAdventure .heroState .subMessage { display: block; margin-top: 5px; font-size: 13px; font-style: italic; }
 body.t46Layout.legendsV2 #content.heroAdventure .adventureList td.duration .cellWrapper i.clock_medium { display: inline-block; }
 body.t46Layout.legendsV2 #content.heroAdventure .adventureList td.difficulty .iconWrapper i { display: inline-block; margin: 2px 0 0; }
-body.t46Layout.legendsV2 #content.heroAdventure .adventureList td.button { width: 1%; padding-right: 8px; }
-body.t46Layout.legendsV2 #content.heroAdventure .adventureList td.button button { min-width: 150px; height: 40px; margin: 0; }
 body.t46Layout.legendsV2 #content.heroAdventure .adventureList td.button .onTheWay { font-style: italic; color: #777; white-space: normal; }
 body.t46Layout.legendsV2 #content.heroAdventure .adventureList td.button form { margin: 0; }
 body.t46Layout.legendsV2 #content.heroAdventure .adventureStarted { padding-top: 330px; }
@@ -1860,7 +1849,7 @@ body.legendsV2 .sidebar #sidebarBoxVillagelist .content .villageList .listEntry.
 body.legendsV2 .sidebar #sidebarBoxVillagelist .content .villageList .groupWrapper .groupContainer { display: grid; min-height: 0; }
 body.legendsV2 .sidebar #sidebarBoxVillagelist .content .villageList .groupWrapper.collapsed .groupContainer { display: none; }
 body.legendsV2 .sidebar #sidebarBoxVillagelist .content .villageList .listEntry .dragAndDrop { touch-action: none; }
-body.legendsV2 .sidebar #sidebarBoxVillagelist .content .villageList .listEntry .coordinatesGrid .coordinates { display: inline-flex; gap: 2px; padding-inline-start: 8px; }
+body.legendsV2 .sidebar #sidebarBoxVillagelist .content .villageList .listEntry .coordinatesGrid .coordinates { display: inline-block; white-space: nowrap; }
 body.legendsV2 .sidebar #sidebarBoxVillagelist .content .villageList .listEntry.group .dragAndDrop { height: 20px; }
 body.legendsV2 .sidebar #sidebarBoxVillagelist .content .villageList .listEntry.group.editMode { grid-template-columns: 1fr auto auto; column-gap: 6px; padding-inline-start: 10px; }
 body.legendsV2 .sidebar #sidebarBoxVillagelist .content .villageList .listEntry.group.editMode input.name { width: 100%; box-sizing: border-box; margin-top: 0; padding: 0 4px; font: inherit; background: #fff9eb; }
@@ -2389,3 +2378,23 @@ body.t46Layout.legendsV2 #sidebarBeforeContent .sidebarBox .innerBox.header .but
 /* Right sidebar: the frames of the village boxes start 14px below the box, under the quick link buttons (Legends 692.2) */
 body.t46Layout.legendsV2 .sidebar #sidebarBoxActiveVillage .sidebarBoxInnerBox:before,
 body.t46Layout.legendsV2 .sidebar #sidebarBoxVillagelist .sidebarBoxInnerBox:before { top: 14px; }
+/* Village list box as in Legends 692.2: the content 14px lower with the frame, "VILLAGES 2/3" in one title (bar as the
+   former villageListBarBox), the group header and the coordinates (38px each, X right aligned) in the list colour */
+body.t46Layout.legendsV2 .sidebar #sidebarBoxVillagelist .sidebarBoxInnerBox { padding-top: 49px; }
+body.t46Layout.legendsV2 .sidebar #sidebarBoxVillagelist .expansionSlotInfo .boxTitle .slots { font: inherit; }
+body.t46Layout .sidebar #sidebarBoxVillagelist .expansionSlotInfo .barWrapper { height: 9px; margin-top: 5px; background-color: #52372a; padding: 1px; border-radius: 2px; box-sizing: border-box; }
+body.t46Layout .sidebar #sidebarBoxVillagelist .expansionSlotInfo .barWrapper .bar { height: 7px; background-color: #546e39; }
+body.legendsV2 .sidebar #sidebarBoxVillagelist .content .villageList .groupsHeader > span:first-child,
+body.legendsV2 .sidebar #sidebarBoxVillagelist .content .villageList .groupsHeader > span { color: #333; }
+body.legendsV2 .sidebar #sidebarBoxVillagelist .content .villageList .listEntry .coordinatesGrid .coordinateX,
+body.legendsV2 .sidebar #sidebarBoxVillagelist .content .villageList .listEntry .coordinatesGrid .coordinateY { display: inline-block; width: 38px; }
+body.legendsV2 .sidebar #sidebarBoxVillagelist .content .villageList .listEntry .coordinatesGrid .coordinateX { text-align: right; }
+body.legendsV2 .sidebar #sidebarBoxVillagelist .content .villageList .listEntry .coordinatesGrid .coordinateY { text-align: left; }
+body.legendsV2 .sidebar #sidebarBoxVillagelist .content .villageList .listEntry .coordinatesGrid .coordinatePipe { display: inline-block; width: 8px; text-align: center; }
+/* Adventure list (hero/v2/adventures.php) as in Legends 692.2: #heroAdventure with 10px padding and the plain borderGap table of
+   legends_ltr.css, the video boxes 15px / 10px apart, the "Explore" buttons 37px high */
+body.t46Layout.legendsV2 #content.heroAdventure #heroAdventure { padding: 10px; }
+body.t46Layout.legendsV2 #content.heroAdventure #heroAdventure .videoFeatureBonusBox { margin-top: 15px; }
+body.t46Layout.legendsV2 #content.heroAdventure #heroAdventure .videoFeatureBonusBox + .videoFeatureBonusBox { margin-top: 10px; }
+body.t46Layout.legendsV2 #content.heroAdventure #heroAdventure .adventureList { width: 100%; margin-top: 15px; }
+body.t46Layout.legendsV2 #content.heroAdventure #heroAdventure .adventureList td.button button { height: 37px; margin: 0; padding: 1px 6px; }
