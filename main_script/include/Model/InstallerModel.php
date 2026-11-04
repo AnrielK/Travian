@@ -1560,6 +1560,9 @@ class InstallerModel
         $WonderOfTheWorld->createWWVillages();
         //multihunter
         $register->createBaseVillage(2, "Multihunter", 1, Formulas::xy2kid(1, 0));
+        // the administrator is not a player: hidden in the statistics (users/vdata.hidden), like migration 010
+        $db->query("UPDATE users SET hidden=1 WHERE id=2");
+        $db->query("UPDATE vdata SET hidden=1 WHERE owner=2");
         // The look chosen for the new world (GAME_GPACK) stays with it: see apply_world_gpack().
         $gpack = $db->real_escape_string(get_gpack_main_page());
         $db->query("UPDATE config SET installed=1, installationTime=" . time() . ", gpack='$gpack'");
