@@ -29,7 +29,7 @@
             // Travian Legends packs have no "building big" pictures: the illustration of the upgrade page, in the player's tribe
             // (the pack scopes it to #build .upgradeHeader)
             $gid = $vars['building']['gid'];
-            $tribe = [1 => 'roman', 2 => 'teuton', 3 => 'gaul', 6 => 'egyptian', 7 => 'hun'][\Core\Session::getInstance()->getRace()] ?? 'roman'; ?>
+            $tribe = [1 => 'roman', 2 => 'teuton', 3 => 'gaul', 6 => 'egyptian', 7 => 'hun', 8 => 'spartan'][\Core\Session::getInstance()->getRace()] ?? 'roman'; ?>
             <div id="build" class="manualIllustration"><div class="upgradeHeader">
                 <div class="buildingIllustration g<?=$gid;?><?=$gid <= 4 ? '' : ' ' . $tribe;?>" title="<?=T("Buildings", $gid . ".title");?>"></div>
             </div></div>

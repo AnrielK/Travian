@@ -21,7 +21,7 @@ class TaskListModel
     public const TABLE = 'ov_task_progress';
 
     /** Tribe wall building per race. */
-    private const WALLS = [1 => 31, 2 => 32, 3 => 33, 6 => 42, 7 => 43];
+    private const WALLS = [1 => 31, 2 => 32, 3 => 33, 6 => 42, 7 => 43, 8 => 47];
 
     private static bool $tableReady = false;
 

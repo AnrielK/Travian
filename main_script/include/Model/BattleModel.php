@@ -37,6 +37,7 @@ class BattleModel
         5 => [1 => 20, 65, 100, 0, 155, 170, 250, 60, 80, 30],
         6 => [1 => 10, 30, 65, 0, 50, 110, 55, 65, 40, 0],
         7 => [1 => 35, 50, 0, 120, 115, 180, 65, 45, 40, 0],
+        8 => [1 => 50, 0, 40, 90, 55, 195, 65, 50, 40, 10],
     ];
     protected $def_i = [
         1 => [1 => 35, 65, 40, 20, 65, 80, 30, 60, 40, 80],
@@ -46,6 +47,7 @@ class BattleModel
         5 => [1 => 35, 30, 90, 10, 80, 140, 120, 45, 50, 40],
         6 => [1 => 30, 55, 50, 20, 110, 120, 30, 55, 50, 80],
         7 => [1 => 40, 30, 20, 30, 80, 60, 30, 55, 50, 80],
+        8 => [1 => 35, 40, 85, 55, 120, 80, 30, 60, 60, 80],
     ];
     protected $def_c = [
         1 => [1 => 50, 35, 25, 10, 50, 105, 75, 10, 30, 80],
@@ -55,9 +57,10 @@ class BattleModel
         5 => [1 => 50, 10, 75, 0, 50, 80, 150, 10, 50, 40],
         6 => [1 => 20, 40, 20, 10, 50, 150, 95, 10, 50, 80],
         7 => [1 => 30, 10, 10, 15, 70, 40, 90, 10, 50, 80],
+        8 => [1 => 30, 22, 45, 40, 90, 75, 80, 10, 40, 80],
     ];
-    protected $wall_durability = [1 => 1, 2 => 5, 3 => 2, 4 => 1, 5 => 1, 6 => 5, 7 => 1];
-    protected $wall_base = [1 => 1.03, 2 => 1.02, 3 => 1.025, 4 => 1, 5 => 1.03, 6 => 1.025, 7 => 1.015];
+    protected $wall_durability = [1 => 1, 2 => 5, 3 => 2, 4 => 1, 5 => 1, 6 => 5, 7 => 1, 8 => 2];
+    protected $wall_base = [1 => 1.03, 2 => 1.02, 3 => 1.025, 4 => 1, 5 => 1.03, 6 => 1.025, 7 => 1.015, 8 => 1.02];
     protected $wall_extra = [
         1 => 10,
         2 => 6,
@@ -66,6 +69,7 @@ class BattleModel
         5 => 10,
         6 => 8,
         7 => 6,
+        8 => 6,
     ]; //TODO: Huns wall needs update
     protected $administrator_effect = [
         1 => [20, 30],
@@ -75,6 +79,7 @@ class BattleModel
         5 => [200, 200],
         6 => [20, 25],
         7 => [20, 25],
+        8 => [20, 25],
     ];
     protected $upkeep = [
         1 => [1 => 1, 1, 1, 2, 3, 4, 3, 6, 5, 1, 6],
@@ -84,6 +89,7 @@ class BattleModel
         5 => [1 => 1, 1, 1, 1, 2, 3, 6, 5, 0, 0, 6],
         6 => [1 => 1, 1, 1, 2, 2, 3, 3, 6, 4, 1, 6],
         7 => [1 => 1, 1, 2, 2, 2, 3, 3, 6, 4, 1, 6],
+        8 => [1 => 1, 1, 1, 1, 2, 3, 3, 6, 4, 1, 6],
     ];
     protected $is_cavalary = [
         1 => [4 => 1, 5 => 1, 6 => 1],
@@ -93,6 +99,7 @@ class BattleModel
         5 => [5 => 1, 6 => 1],
         6 => [4 => 1, 5 => 1, 6 => 1],
         7 => [4 => 1, 5 => 1, 6 => 1],
+        8 => [5 => 1, 6 => 1],
     ];
     /** @var BattleSetter */
     private $model;
@@ -995,7 +1002,8 @@ class BattleModel
         }
         if ($this->attacker['uid'] > 2) {
             $m = new PlayerModel();
-            $m->setPlayerPoints($this->attacker['uid'], $def_total_upkeep, 0, +$total_bounty * $total_bounty_percent);
+            $pve = !isset($this->defender['uid']) || $this->defender['uid'] <= 2; // Natars (1) or Nature (2)
+            $m->setPlayerPoints($this->attacker['uid'], $def_total_upkeep, 0, +$total_bounty * $total_bounty_percent, $pve);
         }
     }
 
@@ -1430,6 +1438,9 @@ class BattleModel
                 }
             }
         }
+        if ($this->attacker['uid'] > 2) {
+            (new WoundedModel())->addFromBattle($this->row['kid'], $this->attacker['wave']['units']['dead']);
+        }
         $move = new MovementsModel();
         $total_trapped = array_sum($this->attacker['wave']['units']['trapped']);
         if ($total_trapped) {//auto move to traps!
@@ -1568,6 +1579,10 @@ class BattleModel
                     $modify[] = "u{$i}=u{$i}-" . $dead;
                 }
                 $value['units']['dead'][$i] = $dead;
+            }
+            // wounded go to the Hospital of the troops' home village (WoundedModel checks it has one)
+            if (!empty($value['isEnforce']) || (isset($value['uid']) && $value['uid'] > 2 && !$this->defender['isOasis'])) {
+                (new WoundedModel())->addFromBattle($value['isEnforce'] ? $value['kid'] : $this->row['to_kid'], $value['units']['dead']);
             }
 
             if ($value['units']['num'][11]) {
@@ -2344,7 +2359,7 @@ class BattleModel
         if ($gid != 99) {
             $targets = [];
             foreach ($buildings as $key => $build) {
-                if (!$build['level'] || in_array($gid, [31, 32, 33, 42, 43])) {
+                if (!$build['level'] || in_array($gid, [31, 32, 33, 42, 43, 47])) {
                     continue;
                 }
                 if ($build['item_id'] == $gid) {
@@ -2362,7 +2377,7 @@ class BattleModel
         }
         $free = [];
         foreach ($buildings as $k => $build) {
-            if ($build['item_id'] && $build['level'] && !in_array($build['item_id'], [31, 32, 33, 42, 43])) {
+            if ($build['item_id'] && $build['level'] && !in_array($build['item_id'], [31, 32, 33, 42, 43, 47])) {
                 $free[] = $k;
             }
         }

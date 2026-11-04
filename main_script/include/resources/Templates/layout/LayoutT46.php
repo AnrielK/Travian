@@ -8,7 +8,7 @@
 
 use Core\Config;
 
-$t46Tribes = [1 => 'roman', 2 => 'teuton', 3 => 'gaul', 6 => 'egyptian', 7 => 'hun'];
+$t46Tribes = [1 => 'roman', 2 => 'teuton', 3 => 'gaul', 6 => 'egyptian', 7 => 'hun', 8 => 'spartan'];
 $t46Tribe = $t46Tribes[$vars['t46Race'] ?? 1] ?? 'roman';
 $t46V2 = is_hero_v2(); // Travian Legends 655 packs: round header buttons, logo with the server time below
 $t46VillageView = in_array($vars['contentCssClass'], ['village1', 'village2'], true);

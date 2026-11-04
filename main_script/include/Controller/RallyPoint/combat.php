@@ -41,7 +41,7 @@ class combat
             "h_off_bonus"           => 0,
             "h_power"               => 0,
         ];
-        if (isset($_POST['a1_v']) && $_POST['a1_v'] > 0 && in_array($_POST['a1_v'], [1, 2, 3, 4, 6, 7])) {
+        if (isset($_POST['a1_v']) && $_POST['a1_v'] > 0 && in_array($_POST['a1_v'], [1, 2, 3, 4, 6, 7, 8])) {
             $this->output['attacker']['race'] = (int)$_POST['a1_v'];
         }
         $this->output['attacker']['hero'] = isset($_POST['hero']) && $_POST['hero'] >= 1;

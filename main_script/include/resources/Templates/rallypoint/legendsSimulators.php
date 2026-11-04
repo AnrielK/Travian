@@ -68,7 +68,7 @@ while ($result && ($row = $result->fetch_assoc())) {
         'units' => array_map(static fn($i) => (int)($units['u' . $i] ?? 0), range(1, 11)),
         'att' => $levels,
         'def' => $levels,
-        'wall' => $simLevel($fields, [31, 32, 33, 42, 43]),
+        'wall' => $simLevel($fields, [31, 32, 33, 42, 43, 47]),
         'residence' => $simLevel($fields, [25, 26]),
         'stonemason' => $simLevel($fields, [34]),
     ];

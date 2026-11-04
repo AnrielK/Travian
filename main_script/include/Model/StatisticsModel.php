@@ -170,15 +170,17 @@ HTML;
         $race3 = $summary['gaul_players_count'];
         $race6 = $summary['egyptians_players_count'];
         $race7 = $summary['huns_players_count'];
+        $race8 = (int)($summary['spartans_players_count'] ?? 0);
         $total = $summary['players_count'];
         return [
-            "Registered" => [1 => $race1, 2 => $race2, 3 => $race3, 6 => $race6, 7 => $race7],
+            "Registered" => [1 => $race1, 2 => $race2, 3 => $race3, 6 => $race6, 7 => $race7, 8 => $race8],
             "Percent"    => [
                 1 => round($race1 / $total * 100, 1),
                 2 => round($race2 / $total * 100, 1),
                 3 => round($race3 / $total * 100, 1),
                 6 => round($race6 / $total * 100, 1),
                 7 => round($race7 / $total * 100, 1),
+                8 => round($race8 / $total * 100, 1),
             ],
         ];
     }
@@ -565,6 +567,31 @@ WHERE alidata.id=users.aid)={$score}  AND id<{$allianceId})    ) + 1 `rank`")->f
             $result = $this->db->query("SELECT id, " . ($isPlayer ? "name" : "tag") . ", {$columnName} `points` FROM {$table} WHERE {$columnName}>0" . ($isPlayer ? " AND id>1 AND hidden=0" : "") . " ORDER BY {$columnName} DESC, id ASC LIMIT 10");
         }
         return $result;
+    }
+
+    /**
+     * Top 10 of Travian Legends: the ten best of $column (players with their tribe) and the rank and value of $ownId,
+     * counted over every player / alliance like the own row of Legends (also with 0 or negative points).
+     */
+    public function getTop10Legends($isPlayer, $columnName, $ownId)
+    {
+        $table = $isPlayer ? "users" : "alidata";
+        $filter = $isPlayer ? "id>1 AND hidden=0" : "1";
+        $rows = [];
+        $result = $this->db->query("SELECT id, " . ($isPlayer ? "name, race" : "tag") . ", {$columnName} `points` FROM {$table} WHERE {$filter} AND {$columnName}>0 ORDER BY {$columnName} DESC, id ASC LIMIT 10");
+        while ($row = $result->fetch_assoc()) {
+            $rows[] = $row;
+        }
+        $own = null;
+        $ownId = (int)$ownId;
+        if ($ownId > 0) {
+            $own = $this->db->query("SELECT id, " . ($isPlayer ? "name, race" : "tag") . ", {$columnName} `points` FROM {$table} WHERE id={$ownId}")->fetch_assoc();
+            if ($own) {
+                $points = (int)$own['points'];
+                $own['rank'] = 1 + (int)$this->db->fetchScalar("SELECT COUNT(id) FROM {$table} WHERE {$filter} AND ({$columnName}>{$points} OR ({$columnName}={$points} AND id<{$ownId}))");
+            }
+        }
+        return ['rows' => $rows, 'own' => $own];
     }
 
     public function getPlayerList($pageIndex, $pageSize)

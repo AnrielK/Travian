@@ -2,13 +2,15 @@
 // Graphic packs. The game's look comes from the "mainPage" pack (CSS, sprites, layout images);
 // GAME_GPACK picks it for a new world (installation wizard, iOS app: Nastavení světa → Vzhled nového světa, native
 // runtime: GAME_GPACK=…); the world keeps it in config.gpack from then on (apply_world_gpack() in functions.general.php).
-// 'tribes' = the tribes players of a world with this look can choose (1 Romans, 2 Teutons, 3 Gauls, 6 Egyptians, 7 Huns).
+// 'tribes' = the tribes players of a world with this look can choose (1 Romans, 2 Teutons, 3 Gauls, 6 Egyptians, 7 Huns,
+// 8 Spartans).
 // 'fieldShapes' = the resource fields of the pack's village pictures (img/g/fN-ltr.jpg) lie where the Legends ones do,
 // so dorf1 lights the field under the pointer with the Legends outline (resources/Templates/dorf1/main.php).
 // Packs whose folder is missing are skipped, so a trimmed distribution keeps working.
 $classicTribes = [1, 2, 3];          // Travian 4.0 and T4.4 Classic: the three original tribes
 $fiveTribes = [1, 2, 3, 6, 7];       // the other looks: with Egyptians and Huns
-$legendsTribes = [1, 2, 3, 6, 7];    // Travian Legends: six tribes once the Spartans (8) are playable
+$legendsTribes = [1, 2, 3, 6, 7];    // T4.6 look: no Spartan graphics
+$spartanTribes = [1, 2, 3, 6, 7, 8]; // Travian Legends 692.2: with the Spartans
 $styles = [
     // 29c89d54 = Travian Legends look: its own CSS with the page layout of layout/LayoutT46.php (is_t46_layout()),
     // plus a17a8f72's styles for the T4.4 widgets/pages; files it lacks are served from a17a8f72 (web server fallback).
@@ -16,7 +18,7 @@ $styles = [
     // legends655 = Travian Legends gpack 692.2 (scripts/gpack/import-legends-gpack.py), same Legends layout;
     // 'heroV2' = its stylesheet styles the new hero window (inventory / attributes / appearance) and auctions.
     'legends655' => ['hash' => 'legends655', 'name' => 'Travian Legends 692.2 (výchozí)', 'isNew' => true, 'layout' => 'legends', 'heroV2' => true,
-        'tribes' => $legendsTribes],
+        'tribes' => $spartanTribes],
     'a17a8f72' => ['hash' => 'a17a8f72', 'name' => 'OpenVillage 4.6', 'isNew' => true, 'tribes' => $fiveTribes],
     '68597666' => ['hash' => '68597666', 'name' => 'Travian T4.4 Seasonized', 'isNew' => false, 'tribes' => $fiveTribes],
     'd11cb434' => ['hash' => 'd11cb434', 'name' => 'Travian T4.4 Seasonized v2', 'isNew' => false, 'tribes' => $fiveTribes],

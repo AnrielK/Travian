@@ -82,6 +82,19 @@
                     </div>
                     <!--- ADD NEW ICON --->
                 <?php endif;?>
+                <?php if(in_array(8, $vars['tribes'])):?>
+                    <input type="radio" name="vid" value="8" id="tribe8" />
+                    <label class="selector" for="tribe8" data-text="<?=T("ActivationNew", "New");?>"></label>
+                    <div class="tribeDescription">
+                        <h2><?=T("Global", "races.8");?></h2>
+                        <ul>
+                            <?php foreach(T("ActivationNew", "race8_attributes") as $text):?>
+                                <li><?=$text;?></li>
+                            <?php endforeach;?>
+                        </ul>
+                    </div>
+                    <!--- ADD NEW ICON --->
+                <?php endif;?>
             </div>
         </div>
         <div class="buttonContainer">

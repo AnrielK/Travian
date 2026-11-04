@@ -2443,3 +2443,10 @@ body.legendsV2 .formV2 label.switch textarea:not(:disabled):focus,
 body.legendsV2 .formV2 label.textarea input:not([type=checkbox]):not([type=radio]):not(:disabled):focus,
 body.legendsV2 .formV2 label.textarea select:not(:disabled):focus,
 body.legendsV2 .formV2 label.textarea textarea:not(:disabled):focus { box-shadow: 0 0 2px 3px rgba(0, 102, 255, .7); }
+/* Top 10 of the players with the tribe column (Legends 692.2): rank, tribe and value as narrow as their content, the
+   name left aligned in the rest of the row */
+body.legendsV2 #content.statistics div.top10Wrapper > table td.pla { width: 100%; text-align: left; }
+body.legendsV2 #content.statistics div.top10Wrapper > table td.ra,
+body.legendsV2 #content.statistics div.top10Wrapper > table td.val { white-space: nowrap; }
+body.legendsV2 #content.statistics div.top10Wrapper > table thead td:nth-child(2):not(.al),
+body.legendsV2 #content.statistics div.top10Wrapper > table td.tribe { width: 22px; }

@@ -241,12 +241,12 @@ class MedalsModel
             } while (FALSE);
         }
         if (getCustom("usePopulationAsClimbersRank")) {
-            $db->query("UPDATE users SET week_attack_points=0, week_defense_points=0, week_robber_points=0, oldRank=cast(total_pop AS SIGNED)");
+            $db->query("UPDATE users SET week_attack_points=0, week_pve_points=0, week_defense_points=0, week_robber_points=0, oldRank=cast(total_pop AS SIGNED)");
         } else {
             $players = $db->query("SELECT id FROM users");
             while ($row = $players->fetch_assoc()) {
                 $oldRank = $statistics->getPlayerRankById($row['id'], TRUE);
-                $db->query("UPDATE users SET week_attack_points=0, week_defense_points=0, week_robber_points=0, oldRank=$oldRank WHERE id={$row['id']}");
+                $db->query("UPDATE users SET week_attack_points=0, week_pve_points=0, week_defense_points=0, week_robber_points=0, oldRank=$oldRank WHERE id={$row['id']}");
             }
         }
         $db->query("UPDATE users SET week_alliance_training_contributions=0, week_alliance_armor_contributions=0, week_alliance_cp_contributions=0, week_alliance_trade_contributions=0");

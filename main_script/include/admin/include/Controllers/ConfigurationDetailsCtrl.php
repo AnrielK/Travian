@@ -279,7 +279,7 @@ class ConfigurationDetailsCtrl
 
     private function getTroopsSummary()
     {
-        $maxRace = getGame("allowNewTribes") ? 7 : 5;
+        $maxRace = getGame("allowNewTribes") ? 8 : 5;
         //Note: because this uses lot's of memory and it will cause damage to servers removed!
         $cache = Caching::getInstance();
         if (($_cache = $cache->get("TroopsSummary"))) {
@@ -310,7 +310,7 @@ class ConfigurationDetailsCtrl
     function getTroopsStatisticsQuery()
     {
         $query = 'SELECT ';
-        $maxRace = getGame("allowNewTribes") ? 7 : 5;
+        $maxRace = getGame("allowNewTribes") ? 8 : 5;
         $maxNr = 11;
         for ($race = 1; $race <= $maxRace; ++$race) {
             for ($nr = 1; $nr <= $maxNr; ++$nr) {
