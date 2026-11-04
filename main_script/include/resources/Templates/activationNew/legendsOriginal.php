@@ -51,6 +51,27 @@ $logo = '<svg viewBox="0 0 172.7 60" aria-label="OpenVillage"><path class="ovEmb
         #logo svg text { fill: #f2f2f2; stroke: none; }
         #logo svg .ovTitle { font: 700 16px "Noto Serif", Georgia, serif; }
         #logo svg .ovSub { font: 600 9px Arial, sans-serif; }
+        /* Tribe pictures: one row (scrolls sideways when needed); the inputs stay siblings of the description. */
+        #content.activate .activateWithGameLobbyAccount .selection.selectTribe .tribeRow { flex-basis: 100%; min-width: 0; position: relative;
+            display: flex; flex-wrap: nowrap; gap: 0 4px; overflow-x: auto; overflow-y: hidden; padding-bottom: 32px; margin-bottom: -32px;
+            -webkit-overflow-scrolling: touch; scroll-behavior: smooth; scrollbar-width: none; }
+        #content.activate .activateWithGameLobbyAccount .selection.selectTribe .tribeRow::-webkit-scrollbar { display: none; }
+        #content.activate .activateWithGameLobbyAccount .selection.selectTribe .tribeRow label { flex-shrink: 0; }
+        #content.activate .activateWithGameLobbyAccount .selection.selectTribe .tribeRow .ornamentStart,
+        #content.activate .activateWithGameLobbyAccount .selection.selectTribe .tribeRow .ornamentEnd { flex-shrink: 0; min-width: 34px; }
+        #content.activate .activateWithGameLobbyAccount .selection.selectTribe .description { position: relative; z-index: 1; }
+        #content.activate .activateWithGameLobbyAccount .selection.selectTribe .tribeScroll { position: absolute; top: 37px; z-index: 100; width: 30px; height: 34px;
+            padding: 0; border: 1px solid #34220d; border-radius: 4px; background: linear-gradient(180deg, #8fb74f, #5b7a2a); box-shadow: 0 1px 4px rgba(0,0,0,.45);
+            cursor: pointer; opacity: 0; pointer-events: none; transition: opacity 150ms; }
+        #content.activate .activateWithGameLobbyAccount .selection.selectTribe .tribeScroll.prev { left: -6px; }
+        #content.activate .activateWithGameLobbyAccount .selection.selectTribe .tribeScroll.next { right: -6px; }
+        #content.activate .activateWithGameLobbyAccount .selection.selectTribe .tribeScroll.visible { opacity: .95; pointer-events: auto; }
+        #content.activate .activateWithGameLobbyAccount .selection.selectTribe .tribeScroll svg { width: 10px; height: 16px; display: block; margin: auto;
+            fill: none; stroke: #fff; stroke-width: 2.5; stroke-linecap: round; stroke-linejoin: round; }
+<?php foreach ($order as $id): ?>
+        #content.activate .activateWithGameLobbyAccount .selection.selectTribe:has(#tribe_<?=$id; ?>:checked) label.tribe<?=$id; ?>:after { transform: scaleY(1); }
+        #content.activate .activateWithGameLobbyAccount .selection.selectTribe:has(#tribe_<?=$id; ?>:checked) label.tribe<?=$id; ?>:hover { filter: none; cursor: default; }
+<?php endforeach; ?>
         #content.activate .ovError { margin: 0 0 10px; padding: 8px 10px; border: 1px solid #c4544a; background: #f6d9d3; color: #8a2219; border-radius: 3px; font-weight: 700; }
     </style>
 </head>
@@ -89,12 +110,20 @@ $logo = '<svg viewBox="0 0 172.7 60" aria-label="OpenVillage"><path class="ovEmb
                             <div class="steps">
                                 <div class="stepDescription selectTribe"><?=$e(T('ActivationNew', 'vidSelectDescription')); ?></div>
                                 <div class="selection selectTribe">
-                                    <div class="ornamentStart"></div>
                                     <?php foreach ($order as $i => $id): ?>
                                         <input type="radio" id="tribe_<?=$id; ?>" name="tribe" value="<?=$id; ?>" class="option<?=$i; ?>"<?=$id === $tribe ? ' checked' : ''; ?>/>
-                                        <label for="tribe_<?=$id; ?>" class="tribe<?=$id; ?>" title="<?=$e(T('Global', 'races.' . $id)); ?>"></label>
                                     <?php endforeach; ?>
-                                    <div class="ornamentEnd"></div>
+                                    <?php /* the pictures in one row that scrolls sideways when it is wider than the window (six tribes on a phone) */ ?>
+                                    <div class="tribeRow">
+                                        <div class="ornamentStart"></div>
+                                        <?php foreach ($order as $i => $id): ?>
+                                            <label for="tribe_<?=$id; ?>" class="tribe<?=$id; ?>" title="<?=$e(T('Global', 'races.' . $id)); ?>"></label>
+                                        <?php endforeach; ?>
+                                        <div class="ornamentEnd"></div>
+                                        <div id="selectionIndicator"></div>
+                                    </div>
+                                    <button type="button" class="tribeScroll prev" aria-label="&lsaquo;"><svg viewBox="0 0 10 16"><path d="M8 2 2 8l6 6"/></svg></button>
+                                    <button type="button" class="tribeScroll next" aria-label="&rsaquo;"><svg viewBox="0 0 10 16"><path d="M2 2l6 6-6 6"/></svg></button>
                                     <div class="description tribeDescription">
                                         <?php foreach ($order as $i => $id): ?>
                                             <div class="optionDescription option<?=$i; ?> tribe<?=$id; ?>">
@@ -110,7 +139,6 @@ $logo = '<svg viewBox="0 0 172.7 60" aria-label="OpenVillage"><path class="ovEmb
                                             </div>
                                         <?php endforeach; ?>
                                     </div>
-                                    <div id="selectionIndicator"></div>
                                 </div>
                                 <div class="buttonWrapper selectTribe"><?=$button('selectTribe', T('ActivationNew', 'Confirm')); ?></div>
 
@@ -191,16 +219,32 @@ $logo = '<svg viewBox="0 0 172.7 60" aria-label="OpenVillage"><path class="ovEmb
             document.title = 'OpenVillage – ' + document.querySelector('.dynamicTitles > div.' + step + ' h1').textContent;
         }
         function indicator() {
-            var label = form.querySelector('input[name=tribe]:checked + label'), box = document.getElementById('selectionIndicator');
-            if (label && box) box.style.left = (label.offsetLeft + label.offsetWidth / 2) + 'px';
+            var input = form.querySelector('input[name=tribe]:checked'), box = document.getElementById('selectionIndicator');
+            var label = input && form.querySelector('label[for="' + input.id + '"]'), row = box && box.parentNode;
+            if (!label || !box) return;
+            box.style.left = (label.offsetLeft + label.offsetWidth / 2) + 'px';
+            // keep the chosen picture visible in the sideways scrolling row
+            if (label.offsetLeft < row.scrollLeft) row.scrollLeft = label.offsetLeft - 20;
+            else if (label.offsetLeft + label.offsetWidth > row.scrollLeft + row.clientWidth) row.scrollLeft = label.offsetLeft + label.offsetWidth - row.clientWidth + 40;
         }
         document.getElementById('selectTribe').addEventListener('click', function () { show('selectSector'); });
         document.getElementById('selectSector').addEventListener('click', function () { show('confirm'); });
         document.querySelectorAll('.backToTribe').forEach(function (a) { a.addEventListener('click', function () { show('selectTribe'); }); });
         document.querySelectorAll('.backToSector').forEach(function (a) { a.addEventListener('click', function () { show('selectSector'); }); });
+        var row = document.querySelector('.tribeRow');
+        function arrows() {
+            var max = row.scrollWidth - row.clientWidth;
+            document.querySelector('.tribeScroll.prev').classList.toggle('visible', row.scrollLeft > 2);
+            document.querySelector('.tribeScroll.next').classList.toggle('visible', row.scrollLeft < max - 2);
+        }
+        document.querySelectorAll('.tribeScroll').forEach(function (b) {
+            b.addEventListener('click', function () { row.scrollLeft += (b.classList.contains('prev') ? -1 : 1) * 2 * 92; });
+        });
+        row.addEventListener('scroll', arrows, {passive: true});
         form.querySelectorAll('input[name=tribe]').forEach(function (i) { i.addEventListener('change', indicator); });
-        window.addEventListener('resize', indicator);
+        window.addEventListener('resize', function () { indicator(); arrows(); });
         indicator();
+        arrows();
         show('<?=$step; ?>');
     })();
 </script>

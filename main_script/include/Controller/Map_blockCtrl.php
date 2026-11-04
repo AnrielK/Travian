@@ -163,7 +163,12 @@ class Map_blockCtrl extends AnyCtrl
             logError("Could not detect tribe for village with id {$kid}");
             return;
         }
-        imagecopy($this->getImgResource(), imagecreatefrompng("img/map/dorf/vid{$tribeId}/{$this->getTileSize()}x{$this->getTileSize()}/dorf{$index}.png"), $dst_x * $this->getTileSize(), $dst_y * $this->getTileSize(), 0, 0, $this->getTileSize(), $this->getTileSize());
+        $file = "img/map/dorf/vid{$tribeId}/{$this->getTileSize()}x{$this->getTileSize()}/dorf{$index}.png";
+        if (!is_file($file)) {
+            // a tribe without its own village pictures must not break the whole map block
+            $file = "img/map/dorf/vid1/{$this->getTileSize()}x{$this->getTileSize()}/dorf{$index}.png";
+        }
+        imagecopy($this->getImgResource(), imagecreatefrompng($file),$dst_x * $this->getTileSize(), $dst_y * $this->getTileSize(), 0, 0, $this->getTileSize(), $this->getTileSize());
     }
 
     private function setLayouts(&$row)
