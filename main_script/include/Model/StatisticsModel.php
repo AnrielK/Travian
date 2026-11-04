@@ -567,6 +567,31 @@ WHERE alidata.id=users.aid)={$score}  AND id<{$allianceId})    ) + 1 `rank`")->f
         return $result;
     }
 
+    /**
+     * Top 10 of Travian Legends: the ten best of $column (players with their tribe) and the rank and value of $ownId,
+     * counted over every player / alliance like the own row of Legends (also with 0 or negative points).
+     */
+    public function getTop10Legends($isPlayer, $columnName, $ownId)
+    {
+        $table = $isPlayer ? "users" : "alidata";
+        $filter = $isPlayer ? "id>1 AND hidden=0" : "1";
+        $rows = [];
+        $result = $this->db->query("SELECT id, " . ($isPlayer ? "name, race" : "tag") . ", {$columnName} `points` FROM {$table} WHERE {$filter} AND {$columnName}>0 ORDER BY {$columnName} DESC, id ASC LIMIT 10");
+        while ($row = $result->fetch_assoc()) {
+            $rows[] = $row;
+        }
+        $own = null;
+        $ownId = (int)$ownId;
+        if ($ownId > 0) {
+            $own = $this->db->query("SELECT id, " . ($isPlayer ? "name, race" : "tag") . ", {$columnName} `points` FROM {$table} WHERE id={$ownId}")->fetch_assoc();
+            if ($own) {
+                $points = (int)$own['points'];
+                $own['rank'] = 1 + (int)$this->db->fetchScalar("SELECT COUNT(id) FROM {$table} WHERE {$filter} AND ({$columnName}>{$points} OR ({$columnName}={$points} AND id<{$ownId}))");
+            }
+        }
+        return ['rows' => $rows, 'own' => $own];
+    }
+
     public function getPlayerList($pageIndex, $pageSize)
     {
         $from = $pageIndex * $pageSize;

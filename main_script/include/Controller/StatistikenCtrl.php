@@ -436,6 +436,9 @@ HTML;
     /** top 10 both alliances and players */
     private function processTOP10($isAlliance)
     {
+        if (is_hero_v2()) {
+            return $this->processTOP10Legends($isAlliance);
+        }
         $session = Session::getInstance();
         $statistics = new StatisticsModel();
         $find = $isAlliance ? $session->getAllianceId() : Session::getInstance()->getPlayerId();
@@ -761,6 +764,60 @@ HTML;
                 'top10_off_top' => $top10_off_top,
                 'top10_def_top' => $top10_def_top,
             ]);
+    }
+
+    /**
+     * Top 10 of Travian Legends 692.2: players PvP / PvE / defenders / robbers of the week with their tribe, alliances
+     * attackers / builders (population won) / defenders / robbers; under each table the own rank, always shown.
+     */
+    private function processTOP10Legends($isAlliance)
+    {
+        $session = Session::getInstance();
+        $statistics = new StatisticsModel();
+        $ownId = $isAlliance ? $session->getAllianceId() : $session->getPlayerId();
+        $sections = $isAlliance ? [
+            ['offs', 'week_attack_points', 'attackers of the week', 'points', false],
+            ['climbers', 'week_pop_changes', 'builders of the week', 'popShort', false],
+            ['defs', 'week_defense_points', 'defenders of the week', 'points', true],
+            ['raiders', 'week_robber_points', 'robbers of the week', 'resources', true],
+        ] : [
+            ['offs', 'week_attack_points', 'pvp of the week', 'points', false],
+            ['offs', 'week_pve_points', 'pve of the week', 'points', false],
+            ['defs', 'week_defense_points', 'defenders of the week', 'points', true],
+            ['raiders', 'week_robber_points', 'robbers of the week', 'resources', true],
+        ];
+        $format = function ($points) {
+            return str_replace('-', '&minus;', $this->number_format($points));
+        };
+        $row = function ($rank, $entry, $own) use ($isAlliance, $format) {
+            $link = $isAlliance ? 'allianz.php?aid=' . $entry['id'] : 'spieler.php?uid=' . $entry['id'];
+            $name = htmlspecialchars($isAlliance ? $entry['tag'] : $entry['name'], ENT_QUOTES);
+            $html = '<tr class="' . ($own ? 'own hl' : 'hover') . '"><td class="ra fc">' . $rank . ($own ? '' : '.&nbsp;') . '</td>';
+            if (!$isAlliance) {
+                $html .= '<td class="tribe' . ($own ? '' : ' fc') . '"><i class="tribe' . (int)$entry['race'] . '_medium"></i></td>';
+            }
+            return $html . '<td class="' . ($isAlliance ? 'al' : 'pla') . '"><a href="' . $link . '">' . $name . '</a></td><td class="val lc">' . $format($entry['points']) . '</td></tr>';
+        };
+        $tables = [];
+        foreach ($sections as list($id, $column, $title, $valueTitle, $spacer)) {
+            $data = $statistics->getTop10Legends(!$isAlliance, $column, $ownId);
+            $body = '';
+            foreach ($data['rows'] as $index => $entry) {
+                $body .= $row($index + 1, $entry, false);
+            }
+            if ($data['own']) {
+                $body .= '<tr class="noGapTop noGapBottom"><td colspan="' . ($isAlliance ? 3 : 4) . '" class="empty"></td></tr>';
+                $body .= $row($data['own']['rank'], $data['own'], true);
+            }
+            $tables[] = [
+                'id' => $id,
+                'title' => T("Statistics", "top10." . $title),
+                'valueTitle' => T("Statistics", "top10." . $valueTitle),
+                'spacer' => $spacer,
+                'body' => $body,
+            ];
+        }
+        return PHPBatchView::render('statistics/top10', ["isAlliance" => $isAlliance, "legendsTables" => $tables]);
     }
 
     private function number_format($x, $dec = 0)

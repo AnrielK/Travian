@@ -995,7 +995,8 @@ class BattleModel
         }
         if ($this->attacker['uid'] > 2) {
             $m = new PlayerModel();
-            $m->setPlayerPoints($this->attacker['uid'], $def_total_upkeep, 0, +$total_bounty * $total_bounty_percent);
+            $pve = !isset($this->defender['uid']) || $this->defender['uid'] <= 2; // Natars (1) or Nature (2)
+            $m->setPlayerPoints($this->attacker['uid'], $def_total_upkeep, 0, +$total_bounty * $total_bounty_percent, $pve);
         }
     }
 

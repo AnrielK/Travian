@@ -90,6 +90,31 @@ if (!$vars['isAlliance']): ?>
     <br/>
     <?php endif; ?>
 <?php endif; ?>
+<?php if (isset($vars['legendsTables'])): /* Legends 692.2: four heading + table pairs, two per row */ ?>
+<div class="top10Wrapper">
+<?php foreach ($vars['legendsTables'] as $table): ?>
+<h4 class="round small <?= $table['spacer'] ? 'spacer' : ''; ?> top top10_<?= $table['id']; ?>"><?= $table['title']; ?></h4>
+<table cellpadding="1" cellspacing="1" id="top10_<?= $table['id']; ?>" class="top10 row_table_data borderGap">
+    <thead>
+    <tr>
+        <?php if ($vars['isAlliance']): ?>
+            <td class="ra"><?= T("Statistics", "top10.place"); ?></td>
+            <td class="al"><?= T("Statistics", "alliance"); ?></td>
+        <?php else: ?>
+            <td class="ra"><?= T("Statistics", "top10.No"); ?>.</td>
+            <td></td>
+            <td class="pla"><?= T("Statistics", "player"); ?></td>
+        <?php endif; ?>
+        <td class="val"><?= $table['valueTitle']; ?></td>
+    </tr>
+    </thead>
+    <tbody class="hoverable">
+    <?= $table['body']; ?>
+    </tbody>
+</table>
+<?php endforeach; ?>
+</div>
+<?php return; endif; ?>
 <?php $top10 = []; ?>
 <?php ob_start(); ?>
     <h4
