@@ -739,7 +739,7 @@ HTML;
                     $top10_climbers_own['points'] = $session->getOldRank() - $statistics->getPlayerRankById($session->getPlayerId());
                 } else {
                     $db = DB::getInstance();
-                    $totalPlayers = $db->fetchScalar("SELECT COUNT(id) FROM users WHERE users.id > 1");
+                    $totalPlayers = $db->fetchScalar("SELECT COUNT(id) FROM users WHERE users.id > 1 AND users.hidden=0");
                     $top10_climbers_own['points'] = $totalPlayers - $statistics->getPlayerRankById($session->getPlayerId());
                 }
             }

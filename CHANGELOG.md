@@ -4,6 +4,10 @@
 
 ### Added
 
+- The Multihunter (the world's administrator account) no longer appears in the
+  statistics: the installer and migration `010_hide_multihunter.sql` mark it
+  and its village hidden, and the hero ranking skips it too.
+
 - Computer-controlled players (bots) that raid: the Game worlds page, the XAMPP
   installer and the iOS world form ask how many bots a new world gets
   (`GAME_BOTS`, default 10), the administration's *Fake users* page adds bots

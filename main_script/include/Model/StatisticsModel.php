@@ -260,7 +260,7 @@ HTML;
     {
         $score = (int)$score;
         $playerId = (int)$playerId;
-        $find = $this->db->query("SELECT (((SELECT COUNT(id) FROM users WHERE id>1 AND hidden=0 AND total_pop>{$score}))+(SELECT COUNT(id) FROM users WHERE id>1 AND id<{$playerId} AND (total_pop={$score})) + 1) `rank`");
+        $find = $this->db->query("SELECT (((SELECT COUNT(id) FROM users WHERE id>1 AND hidden=0 AND total_pop>{$score}))+(SELECT COUNT(id) FROM users WHERE id>1 AND hidden=0 AND id<{$playerId} AND (total_pop={$score})) + 1) `rank`");
 
 
 
@@ -496,7 +496,7 @@ WHERE alidata.id=users.aid)={$score}  AND id<{$allianceId})    ) + 1 `rank`")->f
         if (!$this->noCache && $cache = $memcache->get($key)) {
             return $cache;
         }
-        $row = $this->db->query("SELECT uid, exp AS `score` FROM hero WHERE  uid={$playerId} AND uid>1 LIMIT 1");
+        $row = $this->db->query("SELECT uid, exp AS `score` FROM hero WHERE  uid={$playerId} AND uid>2 LIMIT 1");
         if (!$row->num_rows) {
             return FALSE;
         }
@@ -514,7 +514,7 @@ WHERE alidata.id=users.aid)={$score}  AND id<{$allianceId})    ) + 1 `rank`")->f
         if (!$this->noCache && $cache = $memcache->get($key)) {
             return $cache;
         }
-        $playerId = $this->db->query("SELECT id FROM users WHERE id>1 AND name LIKE '{$playerName}%%'");
+        $playerId = $this->db->query("SELECT id FROM users WHERE id>2 AND name LIKE '{$playerName}%%'");
         if (!$playerId->num_rows) {
             return FALSE;
         }
@@ -529,20 +529,20 @@ WHERE alidata.id=users.aid)={$score}  AND id<{$allianceId})    ) + 1 `rank`")->f
         $score = (int)$score;
         $playerId = (int)$playerId;
 
-        return $this->db->fetchScalar("SELECT ((SELECT  COUNT(uid) FROM hero WHERE exp>{$score} AND uid>1) + (SELECT COUNT(uid) FROM hero WHERE  exp={$score}  AND uid<{$playerId} AND uid>1)) + 1 `rank`");
+        return $this->db->fetchScalar("SELECT ((SELECT  COUNT(uid) FROM hero WHERE exp>{$score} AND uid>2) + (SELECT COUNT(uid) FROM hero WHERE  exp={$score}  AND uid<{$playerId} AND uid>2)) + 1 `rank`");
     }
 
     public function getTop10Climbers($isPlayer)
     {
-        $totalPlayers = $this->db->fetchScalar("SELECT COUNT(id) FROM users WHERE users.id > 1");
+        $totalPlayers = $this->db->fetchScalar("SELECT COUNT(id) FROM users WHERE users.id > 1 AND users.hidden=0");
         if ($isPlayer) {
             if (getCustom("usePopulationAsClimbersRank")) {
                 $rank = "cast(total_pop as SIGNED)-oldRank";
                 $result = $this->db->query("SELECT b.id, b.name, b.total_villages, b.total_pop, ($rank) `points` FROM users b WHERE b.id>1 AND hidden=0 AND ($rank)>0 ORDER BY ($rank) DESC, id ASC LIMIT 10");
             } else {
                 $lastMedalsGiven = Config::getProperty('dynamic', 'lastMedalsGiven');
-                $cond1 = '(SELECT COUNT(id) FROM users WHERE users.id > 1 AND users.total_pop > b.total_pop)';
-                $cond2 = '(SELECT COUNT(id) FROM users WHERE users.id > 1 AND users.id < b.id AND users.total_pop=b.total_pop)';
+                $cond1 = '(SELECT COUNT(id) FROM users WHERE users.id > 1 AND users.hidden=0 AND users.total_pop > b.total_pop)';
+                $cond2 = '(SELECT COUNT(id) FROM users WHERE users.id > 1 AND users.hidden=0 AND users.id < b.id AND users.total_pop=b.total_pop)';
                 $rank = "IF(b.signupTime > $lastMedalsGiven, $totalPlayers, oldRank)-(SELECT $cond1+$cond2)";
                 $result = $this->db->query($q = "SELECT b.id, b.name, b.total_villages, b.total_pop, ($rank) as `points` FROM users b WHERE b.id>1 AND hidden=0 AND ($rank)>0 ORDER BY points DESC, id ASC LIMIT 10");
             }
@@ -590,7 +590,7 @@ WHERE alidata.id=users.aid)={$score}  AND id<{$allianceId})    ) + 1 `rank`")->f
         $to = $pageSize;
         $result = $this->db->query("SELECT  uid,
         (SELECT name FROM users WHERE id=hero.uid) AS `player_name`,
-        exp FROM hero WHERE uid>1 ORDER BY exp DESC, uid ASC    LIMIT $from,$to");
+        exp FROM hero WHERE uid>2 ORDER BY exp DESC, uid ASC    LIMIT $from,$to");
         return $result;
     }
 
