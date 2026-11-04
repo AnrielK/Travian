@@ -20,7 +20,7 @@ use function nrToUnitId;
  *
  * Every village of a bot raids once every 2-4 hours of game time (divided by the world speed, vdata.botRaidTime).
  * It needs a rally point, at most MAX_RAIDS_OUT raids already on the way and enough offensive units (infantry and cavalry whose attack is above their defence;
- * defenders, rams, catapults, chiefs, settlers and the hero stay at home). The target is a nearby (at most
+ * defenders, rams, catapults, chiefs and settlers stay at home; a healthy hero goes along now and then). The target is a nearby (at most
  * RADIUS fields) unoccupied oasis, Natar farm, village of another bot or of a player, weaker than the raid:
  * its troops at home must not defend more than half of the raid's attack. Players and bots under beginner
  * protection or on vacation are skipped; a bot still under protection itself raids only oases and Natars, like
@@ -98,6 +98,19 @@ class BotRaidModel
         if ($attack < self::MIN_ATTACK * max(1, getGameSpeed() / 100)) {
             return 0;
         }
+        // a healthy hero at home goes along now and then (BotHeroModel sends it on adventures otherwise)
+        $withHero = false;
+        if ((int)$units['u11'] > 0 && mt_rand(1, 2) === 1) {
+            $health = $db->fetchScalar("SELECT health FROM hero WHERE uid=$owner AND kid=$kid");
+            if ($health !== false && (float)$health >= BotHeroModel::RAID_HEALTH) {
+                $withHero = true;
+                $send[11] = 1;
+                $cavalryOnly = (new SpeedCalculator())->isCavalryOnly(array_map(static function ($nr) use ($race) {
+                    return nrToUnitId($nr, $race);
+                }, array_keys(array_filter(array_slice($send, 0, 10, true)))));
+                $speeds[] = BotHeroModel::heroSpeed($owner, $race, $cavalryOnly);
+            }
+        }
         $target = $this->chooseTarget($kid, $owner, $attack, $protected);
         if (!$target) {
             return 0;
@@ -106,6 +119,10 @@ class BotRaidModel
         $calculator->setFrom($kid);
         $calculator->setTo($target);
         $calculator->setMinSpeed($speeds);
+        if ($withHero) {
+            $calculator->hasHero();
+            $calculator->troopsWithHero();
+        }
         $fields = $db->query("SELECT * FROM fdata WHERE kid=$kid")->fetch_assoc() ?: [];
         for ($i = 19; $i <= 38; ++$i) {
             if ((int)($fields['f' . $i . 't'] ?? 0) === 14) {

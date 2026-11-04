@@ -16,13 +16,7 @@ class FakeUserModel
     {
         if (!$this->canRun()) return;
         $db = DB::getInstance();
-        $interval = mt_rand(3600, 10800);
-        $stmt = $db->query("SELECT id FROM users WHERE access=3 AND lastHeroExpCheck <= " . (time() - $interval) . " LIMIT 10");
-        while ($row = $stmt->fetch_assoc()) {
-            $db->query("UPDATE users SET lastHeroExpCheck=" . time() . " WHERE id={$row['id']}");
-            $exp = mt_rand(10, 50) * ceil(getGameSpeed() / 100);
-            $db->query("UPDATE hero SET exp=exp+$exp WHERE uid={$row['id']}");
-        }
+        // the heroes of bots get their experience on adventures and in battles (BotHeroModel)
         if (getGameSpeed() <= 10) {
             $interval = mt_rand(600, 3600);
         } else if (getGameSpeed() <= 100) {
