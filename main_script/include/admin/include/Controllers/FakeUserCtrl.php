@@ -1,6 +1,7 @@
 <?php
 
 use Core\Helper\WebService;
+use Game\Helpers\BotNames;
 use Model\RegisterModel;
 
 class FakeUserCtrl
@@ -12,7 +13,11 @@ class FakeUserCtrl
             set_time_limit(0);
             ignore_user_abort(true);
             $m = new RegisterModel();
-            $result = $m->addFakeUser(filter_var($_POST['names'], FILTER_SANITIZE_STRING));
+            $names = trim(strip_tags((string)($_POST['names'] ?? '')));
+            if ($names === '') {
+                $names = BotNames::generate(max(0, min(100, (int)($_POST['count'] ?? 0))));
+            }
+            $result = $m->addFakeUser($names);
         }
         Dispatcher::getInstance()->appendContent(Template::getInstance()->load(['result' => $result], 'tpl/fakeUser.tpl')->getAsString());
     }

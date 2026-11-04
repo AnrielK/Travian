@@ -4,6 +4,17 @@
 
 ### Added
 
+- Computer-controlled players (bots) that raid: the Game worlds page, the XAMPP
+  installer and the iOS world form ask how many bots a new world gets
+  (`GAME_BOTS`, default 10), the administration's *Fake users* page adds bots
+  with generated names to a running world. Besides building, training and
+  founding villages (`FakeUserModel`), every bot village now raids every 2–4
+  hours of game time (`Model\BotRaidModel`, migration `008_bot_raids.sql`):
+  with its offensive units only, against the nearest unoccupied oases, Natar
+  farms, bots and players within 12 fields whose troops at home are weaker,
+  respecting beginner protection and vacation, and leaving a target alone for
+  a day after a raid that lost half of its troops.
+
 - Village centre hover (`js/Game/Village/buildingHover.js`): as in Legends a
   white veil (20 %) lies over the building – an SVG colour filter, so it keeps
   the building's silhouette – with the soft glow around it, wherever the

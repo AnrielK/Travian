@@ -36,6 +36,7 @@ WEB_WORKERS="${OV_WEB_WORKERS:-6}"       # parallel PHP built-in server workers
 IOS_EMU="${OV_IOS_EMULATION:-0}"
 PHP_ARGS=()
 # GAME_TRIBES=classic creates the world with only Romans, Teutons and Gauls (default: every tribe of the look)
+# GAME_BOTS=10 adds 10 computer-controlled players (bots) to the world when it is created (default: none)
 GAME_SPEED="${GAME_SPEED:-10}"
 GAME_MAP_SIZE="${GAME_MAP_SIZE:-25}"
 GAME_ROUND_LENGTH_DAYS="${GAME_ROUND_LENGTH_DAYS:-35}"

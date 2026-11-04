@@ -20,7 +20,7 @@ $tribeLabels = [1 => 'Romans', 2 => 'Teutons', 3 => 'Gauls', 6 => 'Egyptians', 7
 $message = '';
 $error = '';
 $form = ['name' => '', 'gpack' => $gpacks['default'], 'tribes' => 'all', 'speed' => 10, 'mapSize' => $firstWorld ? 25 : 50, 'roundDays' => 35,
-    'heroSpeed' => 1];
+    'heroSpeed' => 1, 'bots' => 10];
 
 if (($_SERVER['REQUEST_METHOD'] ?? 'GET') === 'POST' && !$firstWorld) {
     $action = (string)($_POST['action'] ?? '');
@@ -44,6 +44,7 @@ if (($_SERVER['REQUEST_METHOD'] ?? 'GET') === 'POST' && !$firstWorld) {
             'mapSize' => max(25, min(200, (int)($_POST['mapSize'] ?? 50))),
             'roundDays' => max(1, min(365, (int)($_POST['roundDays'] ?? 35))),
             'heroSpeed' => max(1, min(10, (int)($_POST['heroSpeed'] ?? 1))),
+            'bots' => max(0, min(100, (int)($_POST['bots'] ?? 0))),
         ];
         $password = (string)($_POST['password'] ?? '');
         if (preg_match('/^.{1,40}$/u', $form['name']) !== 1) {
@@ -62,6 +63,7 @@ if (($_SERVER['REQUEST_METHOD'] ?? 'GET') === 'POST' && !$firstWorld) {
                 $id = ov_register_world($form);
                 ov_apply_world($id);
                 putenv('GAME_TRIBES=' . $form['tribes']);   // stored in the new world's config by the installer
+                putenv('GAME_BOTS=' . $form['bots']);       // computer-controlled players added by the installer
                 ov_install_world($password);
                 while (ob_get_level() > 0) {
                     ob_end_clean();
@@ -211,6 +213,8 @@ header('Content-Type: text/html; charset=utf-8');
                         <?php endforeach; ?>
                     </select></div>
             </div>
+            <label for="bots"><?= escape(lt('Computer players (bots)')) ?> <span class="hint">(<?= escape(lt('they build, train and raid on their own, 0 = none')) ?>)</span></label>
+            <input id="bots" name="bots" type="number" min="0" max="100" value="<?= $form['bots'] ?>">
             <?php if (!$firstWorld): ?>
             <label for="password"><?= escape(lt('Administrator password')) ?> <span class="hint">(<?= escape(lt('Multihunter and Support of this world, at least 6 characters')) ?>)</span></label>
             <input id="password" name="password" type="password" minlength="6" required autocomplete="new-password">
