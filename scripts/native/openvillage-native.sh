@@ -442,9 +442,9 @@ case "\$script" in /app/*) script="$ROOT/\${script#/app/}";; esac
 exec "$ROOT/scripts/native/openvillage-native.sh" __php "\$script" "\$@"
 SHIM
                 chmod +x "$shim/docker"
-                ( cd "$ROOT" && PATH="$shim:$PATH" APP_URL="http://127.0.0.1:$PORT" sh "$ROOT/scripts/$target" )
+                ( cd "$ROOT" && PATH="$shim:$PATH" APP_URL="http://127.0.0.1:$PORT" sh "$ROOT/scripts/checks/$target" )
             else
-                ( cd "$ROOT" && sh "$ROOT/scripts/$target" )
+                ( cd "$ROOT" && sh "$ROOT/scripts/checks/$target" )
             fi ;;
     esac
 }
