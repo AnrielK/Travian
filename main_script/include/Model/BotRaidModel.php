@@ -25,8 +25,8 @@ use function nrToUnitId;
  * its troops at home must not defend more than half of the raid's attack. Players and bots under beginner
  * protection or on vacation are skipped; a bot still under protection itself raids only oases and Natars, like
  * the farm list (FarmListModel::autoRaidFarmList). A target where the bot's last raid lost half of its troops is
- * left alone for a day of game time. Members of the bot's alliance are never raided; bots accept alliance
- * invitations (handleBotInvites).
+ * left alone for a day of game time. Members of the bot's alliance are never raided (alliances of bots:
+ * BotAllianceModel).
  */
 class BotRaidModel
 {
@@ -57,30 +57,6 @@ class BotRaidModel
                 $this->raidFrom((int)$row['kid'], (int)$row['owner'], (int)$row['race'], (int)$row['protection'] > $now);
             } catch (\Throwable $e) {
                 logError('Bot raid from ' . $row['kid'] . ' failed: ' . $e->getMessage());
-            }
-        }
-    }
-
-    /**
-     * Bots accept alliance invitations: a bot without an alliance joins the first alliance that invited it (no embassy
-     * needed). From then on it does not raid the members of its alliance.
-     */
-    public function handleBotInvites()
-    {
-        if (getGameElapsedSeconds() <= 0 || isServerFinished() || !Config::getProperty("dynamic", "fakeAccountProcess")) {
-            return;
-        }
-        $db = DB::getInstance();
-        $result = $db->query("SELECT i.id, i.uid FROM ali_invite i JOIN users u ON u.id=i.uid WHERE u.access=3 AND u.aid=0 ORDER BY i.id LIMIT 20");
-        $alliance = new AllianceModel();
-        $joined = [];
-        while ($result && ($row = $result->fetch_assoc())) {
-            if (isset($joined[$row['uid']])) {
-                continue;
-            }
-            $aid = $alliance->acceptInvite((int)$row['uid'], (int)$row['id']);
-            if ($aid > 0) {
-                $joined[$row['uid']] = true;
             }
         }
     }

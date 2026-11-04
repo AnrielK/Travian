@@ -21,8 +21,10 @@ use function unitIdToNr;
 class AI_MAIN
 {
     const RESOURCES_RATE = 2 / 3;
-    const SKIP_RESEARCH = TRUE;
-    const SKIP_WORKERS = TRUE;
+    // Bots (FakeUserModel) follow the players' rules: units are trained only after the academy researched them, and
+    // the builders are limited like a player's (one task, Romans one in the fields and one in the village).
+    const SKIP_RESEARCH = FALSE;
+    const SKIP_WORKERS = FALSE;
 
     private $village             = [];
     private $buildings           = [];
@@ -241,26 +243,27 @@ class AI_MAIN
         return $effects;
     }
 
+    /** Starts the research of one unit in the academy (one research at a time, like a player). */
     public function researchUnit($kid)
     {
         if (!$this->training_buildings['academyLevel']) return false;
+        $db = DB::getInstance();
+        if ((int)$db->fetchScalar("SELECT COUNT(*) FROM research WHERE mode=1 AND kid=$kid") > 0) return false;
+        $race = (int)$this->user['race'];
         $arr = [];
         for ($i = 2; $i <= 8; ++$i) {
             if ($this->researches['u' . $i]) continue;
-            $unitId = nrToUnitId($i, $this->user['race']);
+            $unitId = nrToUnitId($i, $race);
+            if (!$this->_canDoResearch(Formulas::uResearchPreRequests($race, $i))) continue;
             $neededResources = Formulas::uResearchCost($unitId);
             if (!$this->isResourcesAvailable($neededResources)) continue;
-            if (!$this->_canDoResearch(Formulas::uResearchPreRequests(Session::getInstance()->getRace(),
-                $unitId))) continue;
             $arr[] = ['nr' => $i, 'costs' => $neededResources, 'duration' => Formulas::uResearchTime($unitId)];
         }
         if (!sizeof($arr)) {
             return false;
         }
-        shuffle($arr);
         $selected = $arr[mt_rand(0, sizeof($arr) - 1)];
         $this->takeResources($selected['costs']);
-        $db = DB::getInstance();
         $db->query("INSERT INTO research (`kid`, `mode`, `nr`, `end_time`) VALUES ($kid, 1, " . $selected['nr'] . ", " . (time() + $selected['duration']) . ")");
         return true;
     }
@@ -330,7 +333,7 @@ class AI_MAIN
         for ($i = 1; $i <= 8; ++$i) {
             if ($i > 1 && !$researches['u' . $i] && !self::SKIP_RESEARCH) continue;
             $level = $upgrades['u' . $i] + ($researchUP == $i ? 1 : 0);
-            if ($level >= 20) continue;
+            if ($level >= 20 || $level >= $this->training_buildings['smithyLevel']) continue;   // not above the smithy's level
             $unitId = nrToUnitId($i, $this->user['race']);
             $neededResources = Formulas::uUpgradeCost($unitId, $level + 1);
             if (!$this->isResourcesAvailable($neededResources)) continue;
@@ -362,18 +365,19 @@ class AI
         $ai = new AI_MAIN($kid);
         for ($i = 1; $i <= $count; ++$i) {
             if (getGameSpeed() <= 10 && $seconds_past <= 1.5 * 86400) {
-                $rnd = mt_rand(1, 5);
-                if ($rnd <= 3) {
+                // the first days: only the economy
+                if (!$ai->upgradeBuilding()) {
                     $ai->upgradeBuilding();
-                } else {
-                    if (!$ai->upgradeBuilding()) {
-                        $ai->upgradeBuilding();
-                    }
                 }
             } else {
-                if ($ai->upgradeBuilding()) {
-                    $ai->trainUnits();
+                $ai->upgradeBuilding();
+                if (mt_rand(1, 3) === 1) {
+                    $ai->researchUnit($kid);
                 }
+                if (mt_rand(1, 6) === 1) {
+                    $ai->upgradeUnit($kid);
+                }
+                $ai->trainUnits();
             }
         }
     }
