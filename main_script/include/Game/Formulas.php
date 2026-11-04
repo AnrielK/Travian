@@ -1417,6 +1417,42 @@ Crannies have 20% less capacity against teuton raids with hero + 10-20% from any
                             ),
                         'gid' => 45,
                     ),
+                45 =>
+                    array(
+                        // Travian Legends: heals the troops wounded in battle (Model\WoundedModel); not for Spartans,
+                        // who have the Asclepeion instead
+                        'name' => 'Hospital',
+                        'cost' =>
+                            array(
+                                0 => 320,
+                                1 => 280,
+                                2 => 420,
+                                3 => 360,
+                            ),
+                        'k' => 1.28,
+                        'cu' => 4,
+                        'cp' => 2,
+                        'time' =>
+                            array(
+                                'a' => 4875,
+                                'k' => 1.16,
+                                'b' => 1875,
+                            ),
+                        'maxLvl' => 20,
+                        'extra' => 7,
+                        'type' => 2,
+                        'req' =>
+                            array(
+                                'version' => '4-',
+                                'notRace' => 8,
+                            ),
+                        'breq' =>
+                            array(
+                                15 => 10,
+                                22 => 15,
+                            ),
+                        'gid' => 46,
+                    ),
             ),
             'units' => array(
                 0 =>

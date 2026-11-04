@@ -731,6 +731,8 @@ $Definition['Buildings'][45]['desc'] = 'With the Waterworks you regulate the wat
 $Definition['Buildings'][45]['current_prod'] = 'Current increase in production';
 $Definition['Buildings'][45]['next_prod'] = 'Increase at level';
 $Definition['Buildings'][45]['unit'] = 'percent';
+$Definition['Buildings'][46]['title'] = 'Hospital';
+$Definition['Buildings'][46]['desc'] = 'The Hospital heals troops wounded in battle. While your village has one, 40% of the infantry and cavalry it loses in a battle come back as wounded. Healing them costs the same as training and takes half the time. Wounded troops do not fight and eat no crop, but 10% of them are lost every day until they are healed.';
 
 //Combat
 $Definition['combat'] = [
@@ -2409,6 +2411,13 @@ $Definition['inGame']['bannedSmallPage'] = 'You are banned.';
 $Definition['inGame']['in_training'] = 'in training';
 $Definition['inGame']['next_creating'] = 'Next trap will be created in %s hours.';
 $Definition['inGame']['next_training'] = 'Next troop will be trained in %s hours.';
+$Definition['Hospital'] = [];
+$Definition['Hospital']['healTroops'] = 'Heal troops';
+$Definition['Hospital']['heal'] = 'Heal';
+$Definition['Hospital']['wounded'] = 'wounded';
+$Definition['Hospital']['noWounded'] = 'There are no wounded troops in this village.';
+$Definition['Hospital']['inHealing'] = 'healing';
+$Definition['Hospital']['nextHealing'] = 'Next troop will be healed in %s hours.';
 $Definition['inGame']['in_creating'] = 'In Creating';
 $Definition['inGame']['train'] = 'Train';
 $Definition['inGame']['palaceNoTrainText'] = 'In order to found a new village you need a level 10, 15 or 20 palace and 3 settlers. In order to conquer a new village you need a level 10, 15 or 20 palace and a senator, chief or chieftain.';

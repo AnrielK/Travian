@@ -46,7 +46,7 @@
             <?php if ($vars['favorite'] !== null && $vars['nr'] <= 8): ?>
                 <span class="level"><?= mb_convert_case(T("Buildings", "level"), MB_CASE_TITLE); ?> <?= $vars['smithyLevel']; ?></span>
             <?php endif; ?>
-            <span class="furtherInfo">(<?= T(
+            <span class="furtherInfo">(<?= $vars['availableLabel'] ?? T(
                     "inGame", "available"
                 ); ?> <?= number_format_x($vars['available']); ?>)</span>
         </div>

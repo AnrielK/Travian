@@ -20,7 +20,7 @@ $s = isset($_GET['s']) && ($_GET['s'] > 0 && $_GET['s'] <= 70) ? (int)$_GET['s']
 if($typ == 1 && $s == -1){
     $s = isset($_GET['gid']) && ($_GET['gid'] > 0 && $_GET['gid'] <= 70) ? (int)$_GET['gid'] : -1;
 }
-$gid = isset($_GET['gid']) && ($_GET['gid'] > 0 && $_GET['gid'] <= 45 && $_GET['gid'] != 12) ? (int)$_GET['gid'] : -1;
+$gid = isset($_GET['gid']) && ($_GET['gid'] > 0 && $_GET['gid'] <= 46 && $_GET['gid'] != 12) ? (int)$_GET['gid'] : -1;
 $settings = [
 	"type"     => $typ, "u" => $typ == 1 && $s == -1 ? $gid : $s, "gid" => $gid,
 	"showMenu" => $typ == -1,

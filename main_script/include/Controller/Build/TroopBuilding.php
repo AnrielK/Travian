@@ -22,6 +22,7 @@ use Model\ArtefactsModel;
 use Model\DailyQuestModel;
 use Model\Quest;
 use Model\TrainingModel;
+use Model\WoundedModel;
 use Model\UnitFavorites;
 use resources\View\PHPBatchView;
 
@@ -36,6 +37,9 @@ class TroopBuilding extends AnyCtrl
     private $favorites = null;
     private $smithy = [];
     private $alliance_bonus = 1;
+    /** Hospital / Asclepeion: heals the wounded (WoundedModel) instead of training */
+    private $healing = false;
+    private $wounded = [];
 
     public function __construct($index)
     {
@@ -44,9 +48,14 @@ class TroopBuilding extends AnyCtrl
         $this->view = new PHPBatchView("build/TroopBuildingLayout");
         $this->building_id = Village::getInstance()->getField($index)['item_id'];
         $this->building_level = Village::getInstance()->getField($index)['level'];
-        $this->art_eff = ArtefactsModel::getArtifactEffectByType(Session::getInstance()->getPlayerId(), Village::getInstance()->getKid(), ArtefactsModel::ARTIFACT_INCREASE_TRAINING_SPEED);
+        $this->healing = in_array($this->building_id, [WoundedModel::HOSPITAL, WoundedModel::ASCLEPEION]);
+        // healing is not sped up by artefacts, alliance bonuses or hero items
+        $this->art_eff = $this->healing ? 1 : ArtefactsModel::getArtifactEffectByType(Session::getInstance()->getPlayerId(), Village::getInstance()->getKid(), ArtefactsModel::ARTIFACT_INCREASE_TRAINING_SPEED);
         $m = new TrainingModel();
-        if (!in_array($this->building_id, [25, 26, 44, 36]) && $this->session->hero->getHeroHealth() > 0) {
+        if ($this->healing) {
+            $this->wounded = (new WoundedModel())->getWounded(Village::getInstance()->getKid());
+        }
+        if (!in_array($this->building_id, [25, 26, 44, 36, 46, 48]) && $this->session->hero->getHeroHealth() > 0) {
             //hero items here.
             if (
                 Config::getProperty('heroConfig', 'allowHeroTrainingHelmetsInAllVillages') ||
@@ -56,7 +65,7 @@ class TroopBuilding extends AnyCtrl
                 $this->hero_percents = $helper->calcTrainEffect($db->fetchScalar("SELECT helmet FROM inventory WHERE uid=" . Session::getInstance()->getPlayerId()));
             }
         }
-        if ($session->getAllianceId() > 0) {
+        if ($session->getAllianceId() > 0 && !$this->healing) {
             $this->alliance_bonus = AllianceBonus::getTrainingBonus($session->getAllianceId(), $session->getAllianceJoinTime());
         }
         $technology = $m->getTechnology(Village::getInstance()->getKid());
@@ -69,6 +78,9 @@ class TroopBuilding extends AnyCtrl
                 redirect('options.php?s=4');
             } else {
                 $this->procTraining($technology);
+                if ($this->healing) {
+                    $this->wounded = (new WoundedModel())->getWounded(Village::getInstance()->getKid());
+                }
             }
         }
         $helper = new TrainingHelper();
@@ -84,10 +96,10 @@ class TroopBuilding extends AnyCtrl
         $troopsCanTrain = $this->_getTroopBuildingTroops();
         foreach ($troopsCanTrain as $k => $tid) {
             $troopsCanTrain[$k] = $tid = unitIdToNr($tid);
-            if ($tid == 1 || $tid == 10 || $tid == 99) {
+            if (!$this->healing && ($tid == 1 || $tid == 10 || $tid == 99)) {
                 continue;
             }
-            if (!$technology['u' . $tid]) {
+            if ($this->healing ? empty($this->wounded[$tid]) : !$technology['u' . $tid]) {
                 unset($troopsCanTrain[$k]);
             }
         }
@@ -95,6 +107,7 @@ class TroopBuilding extends AnyCtrl
             $this->view->vars['canTrain'] = sizeof($troopsCanTrain);
         }
         $this->view->vars['item_id'] = $this->building_id;
+        $this->view->vars['healing'] = $this->healing;
         $this->view->vars['index'] = $index;
         $this->view->vars['finishTraining_button'] = null;
         $this->view->vars['checker'] = Session::getInstance()->getChecker();
@@ -147,7 +160,7 @@ class TroopBuilding extends AnyCtrl
 			<td class="fin"><span>' . $end . '</span><span> </span></td>
 		</tr>';
             }
-            $nextTrain = sprintf(T("inGame", $this->building_id == 36 ? "next_creating" : "next_training"),  appendTimer($nextTroopTime));
+            $nextTrain = sprintf($this->healing ? T("Hospital", "nextHealing") : T("inGame", $this->building_id == 36 ? "next_creating" : "next_training"),  appendTimer($nextTroopTime));
             $this->view->vars['training'] .= '<tr class="next"><td colspan="3">' . $nextTrain . '</td></tr>';
             $this->view->vars['training'] .= '<div class="clear"></div>';
         }
@@ -162,10 +175,10 @@ class TroopBuilding extends AnyCtrl
         $troopsCanTrain = $this->_getTroopBuildingTroops();
         foreach ($troopsCanTrain as $k => &$tid) {
             $troopsCanTrain[$k] = $tid = unitIdToNr($tid);
-            if ($tid == 1 || $tid == 10 || $tid == 99) {
+            if (!$this->healing && ($tid == 1 || $tid == 10 || $tid == 99)) {
                 continue;
             }
-            if (!$technology['u' . $tid]) {
+            if ($this->healing ? empty($this->wounded[$tid]) : !$technology['u' . $tid]) {
                 unset($troopsCanTrain[$k]);
             }
         }
@@ -179,6 +192,9 @@ class TroopBuilding extends AnyCtrl
             foreach ($troopsCanTrain as $u) {
                 if (isset($_REQUEST['t' . $u])) {
                     $num = min($helper->getMaxUnitByNr($u, $great), abs((int)$_REQUEST['t' . $u]));
+                    if ($this->healing) {
+                        $num = min($num, $this->wounded[$u] ?? 0);
+                    }
                     if ($num <= 0) {
                         continue;
                     }
@@ -195,6 +211,9 @@ class TroopBuilding extends AnyCtrl
                         $v *= $num;
                     }
                     if (!Village::getInstance()->isResourcesAvailable($cost)) {
+                        continue;
+                    }
+                    if ($this->healing && (new WoundedModel())->take(Village::getInstance()->getKid(), $u, $num) < $num) {
                         continue;
                     }
                     if (Village::getInstance()->modifyResources($cost)) {
@@ -218,6 +237,10 @@ class TroopBuilding extends AnyCtrl
     {
         if ($building_id == 25 || $building_id == 26) {
             return [9, 10];
+        }
+        if ($building_id == WoundedModel::HOSPITAL || $building_id == WoundedModel::ASCLEPEION) {
+            // infantry and cavalry (u1 - u6) can be wounded and healed
+            return array_map(fn($nr) => nrToUnitId($nr, $race), range(1, WoundedModel::UNITS));
         }
         switch ($race) {
             case 1:
@@ -351,6 +374,10 @@ class TroopBuilding extends AnyCtrl
 
     public function _getTroopTrainingTime($u)
     {
+        if ($this->healing) {
+            // half the training time of a barracks / stable of the Hospital's level
+            return max(1, (int)ceil(Formulas::uTrainingTime($u, $this->building_level) / 2));
+        }
         $percent = Session::getInstance()->get("fasterTraining") > time() ?
             Config::getInstance()->extraSettings->generalOptions->fasterTraining->percent : 0;
         $time = Formulas::uTrainingTime($u,
@@ -370,7 +397,8 @@ class TroopBuilding extends AnyCtrl
         $view = new PHPBatchView("build/trainingWrapper");
         $view->vars['index'] = $nr;
         $view->vars['nr'] = $nr;
-        $view->vars['available'] = $this->units['u' . $nr];
+        $view->vars['available'] = $this->healing ? ($this->wounded[$nr] ?? 0) : $this->units['u' . $nr];
+        $view->vars['availableLabel'] = $this->healing ? T("Hospital", "wounded") : T("inGame", "available");
 
         $view->vars['durationClass'] = [
             20 => 'cavalryBonusTime_medium',
@@ -381,6 +409,8 @@ class TroopBuilding extends AnyCtrl
             36 => 'maxTraps_medium',
             25 => 'clock_medium',
             26 => 'clock_medium',
+            46 => 'clock_medium',
+            48 => 'clock_medium',
         ][$this->building_id];
 
         $view->vars['unitId'] = nrToUnitId($nr, Session::getInstance()->getRace());
@@ -390,6 +420,9 @@ class TroopBuilding extends AnyCtrl
         $view->vars['cost'] = Formulas::uTrainingCost($view->vars['unitId'], $this->building_id == 30 || $this->building_id == 29);
         $view->vars['upkeep'] = Formulas::uUpkeep($view->vars['unitId'], Village::getInstance()->getHorseDrinkingPoolLvl());
         $view->vars['max'] = $training->getMaxUnitByNr($nr, $this->building_id == 30 || $this->building_id == 29);
+        if ($this->healing) {
+            $view->vars['max'] = min($view->vars['max'], $view->vars['available']);
+        }
         $view->vars['duration'] = secondsToString($this->_getTroopTrainingTime($view->vars['unitId']), true);
         $view->vars['npc'] = $helper->getExchangeResourcesButtonByNr($nr, $this->building_id == 30 || $this->building_id == 29);
         $view->vars['none_status'] = '';

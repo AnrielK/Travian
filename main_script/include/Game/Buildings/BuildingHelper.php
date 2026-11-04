@@ -35,6 +35,9 @@ class BuildingHelper
                 return -1;
             }
         }
+        if (isset($buildMetadata['req']['notRace']) && $tribe == $buildMetadata['req']['notRace']) {
+            return -1;
+        }
         // check for support multiple
         $alreadyBuilt = FALSE;
         $alreadyBuiltWithMaxLevel = FALSE;

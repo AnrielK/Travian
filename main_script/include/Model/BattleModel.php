@@ -1431,6 +1431,9 @@ class BattleModel
                 }
             }
         }
+        if ($this->attacker['uid'] > 2) {
+            (new WoundedModel())->addFromBattle($this->row['kid'], $this->attacker['wave']['units']['dead']);
+        }
         $move = new MovementsModel();
         $total_trapped = array_sum($this->attacker['wave']['units']['trapped']);
         if ($total_trapped) {//auto move to traps!
@@ -1569,6 +1572,10 @@ class BattleModel
                     $modify[] = "u{$i}=u{$i}-" . $dead;
                 }
                 $value['units']['dead'][$i] = $dead;
+            }
+            // wounded go to the Hospital of the troops' home village (WoundedModel checks it has one)
+            if (!empty($value['isEnforce']) || (isset($value['uid']) && $value['uid'] > 2 && !$this->defender['isOasis'])) {
+                (new WoundedModel())->addFromBattle($value['isEnforce'] ? $value['kid'] : $this->row['to_kid'], $value['units']['dead']);
             }
 
             if ($value['units']['num'][11]) {

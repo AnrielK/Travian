@@ -1,6 +1,7 @@
+<?php $healing = !empty($vars['healing']); ?>
 <?php if($vars['canTrain']):?>
     <?php if($vars['item_id'] != 36):?>
-        <h4 class="round"><?=T("inGame", "train_troops");?></h4>
+        <h4 class="round"><?=$healing ? T("Hospital", "healTroops") : T("inGame", "train_troops");?></h4>
     <?php else:?>
         <?=$vars['trap_desc'];?>
     <?php endif;?>
@@ -24,7 +25,7 @@
                         </div>
                     </div>
                 </div>
-                <div class="button-content"><?=T("inGame", "train");?></div>
+                <div class="button-content"><?=$healing ? T("Hospital", "heal") : T("inGame", "train");?></div>
             </div>
         </button>
         <script type="text/javascript">
@@ -85,6 +86,9 @@
             });
         });
     </script>
+<?php elseif($healing):?>
+    <h4 class="round"><?=T("Hospital", "healTroops");?></h4>
+    <span class="none"><?=T("Hospital", "noWounded");?></span>
 <?php elseif( $vars['item_id'] != 25 and $vars['item_id'] != 26):?>
     <h4 class="round"><?=T("inGame", "train_troops");?></h4>
     <span class="errorMessage"><?=T("inGame", "noTroops");?></span>
@@ -92,7 +96,7 @@
     <?=T("inGame", $vars['item_id'] == 25 ? 'residenceNoTrainText' : 'palaceNoTrainText');?>
 <?php endif;?>
 <?php if($vars['isTraining']):?>
-    <h4 class="round spacer"><?=T("inGame", $vars['item_id'] == 36 ? "in_creating" : 'in_training');?></h4>
+    <h4 class="round spacer"><?=$healing ? T("Hospital", "inHealing") : T("inGame", $vars['item_id'] == 36 ? "in_creating" : 'in_training');?></h4>
     <table cellpadding="1" cellspacing="1" class="under_progress">
         <thead>
         <tr>

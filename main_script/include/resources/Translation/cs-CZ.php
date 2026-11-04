@@ -733,6 +733,8 @@ $Definition['Buildings'][45]['desc'] = 'Vodárnou řídíš přívod vody do sv�
 $Definition['Buildings'][45]['current_prod'] = 'Současné zvýšení produkce';
 $Definition['Buildings'][45]['next_prod'] = 'Zvýšení na úrovni';
 $Definition['Buildings'][45]['unit'] = 'procent';
+$Definition['Buildings'][46]['title'] = 'Nemocnice';
+$Definition['Buildings'][46]['desc'] = 'V nemocnici se léčí jednotky zraněné v boji. Když tvá vesnice nemocnici má, vrátí se z každé bitvy 40 % padlé pěchoty a jízdy jako zranění vojáci. Jejich léčení stojí stejně jako výcvik a trvá poloviční dobu. Zranění vojáci nebojují a nespotřebovávají obilí, dokud se neléčí, ubývá jich ale 10 % denně.';
 
 //Combat
 $Definition['combat'] = [
@@ -2410,6 +2412,13 @@ $Definition['inGame']['bannedSmallPage'] = 'Jsi zablokován.';
 $Definition['inGame']['in_training'] = 've výcviku';
 $Definition['inGame']['next_creating'] = 'Další past bude hotová za %s hodin.';
 $Definition['inGame']['next_training'] = 'Další jednotka bude vycvičena za %s hodin.';
+$Definition['Hospital'] = [];
+$Definition['Hospital']['healTroops'] = 'Léčit jednotky';
+$Definition['Hospital']['heal'] = 'Léčit';
+$Definition['Hospital']['wounded'] = 'zraněných';
+$Definition['Hospital']['noWounded'] = 'Ve vesnici nejsou žádné zraněné jednotky.';
+$Definition['Hospital']['inHealing'] = 'léčí se';
+$Definition['Hospital']['nextHealing'] = 'Další jednotka bude vyléčena za %s hodin.';
 $Definition['inGame']['in_creating'] = 'Ve výrobě';
 $Definition['inGame']['train'] = 'Cvičit';
 $Definition['inGame']['palaceNoTrainText'] = 'K založení nové vesnice potřebuješ palác na úrovni 10, 15 nebo 20 a 3 osadníky. K dobytí nové vesnice potřebuješ palác na úrovni 10, 15 nebo 20 a senátora, náčelníka nebo stařešinu.';

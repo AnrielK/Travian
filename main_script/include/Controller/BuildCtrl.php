@@ -206,7 +206,7 @@ class BuildCtrl extends GameCtrl
     {
         $categories = [1 =>
             [15, 23, 10, 11, 18, 17, 25, 26, 44, 45, 34, 27, 24, 28, 35, 41, 38, 39, 40,],
-            [16, 31, 32, 33, 42, 43, 19, 37, 22, 13, 20, 29, 30, 36, 21, 14],
+            [16, 31, 32, 33, 42, 43, 19, 37, 22, 13, 20, 29, 30, 36, 21, 14, 46],
             [8, 5, 6, 7, 9],
         ];
         $newBuilds = ['available' => [], 'soon' => []];
@@ -570,6 +570,8 @@ class BuildCtrl extends GameCtrl
             case 29:
             case 30:
             case 36:
+            case 46:
+            case 48:
                 if ($village->getField($this->selectedBuildingIndex)['level'] <= 0) {
                     break;
                 }
