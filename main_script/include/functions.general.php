@@ -415,6 +415,9 @@ function unitIdToTribe($unitId)
     if ($unitId <= 70) {
         return 7;
     }
+    if ($unitId <= 80) {
+        return 8;
+    }
     return 0;
 }
 
@@ -432,7 +435,10 @@ function unitIdToNr($a)
 
 function getSpyId($tribe)
 {
-    if ($tribe == 3) {
+    if ($tribe == 8) {
+        return 2;
+    }
+    if ($tribe == 3 || $tribe == 7) {
         return 3;
     } else {
         return 4;

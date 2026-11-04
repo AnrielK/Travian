@@ -170,15 +170,17 @@ HTML;
         $race3 = $summary['gaul_players_count'];
         $race6 = $summary['egyptians_players_count'];
         $race7 = $summary['huns_players_count'];
+        $race8 = (int)($summary['spartans_players_count'] ?? 0);
         $total = $summary['players_count'];
         return [
-            "Registered" => [1 => $race1, 2 => $race2, 3 => $race3, 6 => $race6, 7 => $race7],
+            "Registered" => [1 => $race1, 2 => $race2, 3 => $race3, 6 => $race6, 7 => $race7, 8 => $race8],
             "Percent"    => [
                 1 => round($race1 / $total * 100, 1),
                 2 => round($race2 / $total * 100, 1),
                 3 => round($race3 / $total * 100, 1),
                 6 => round($race6 / $total * 100, 1),
                 7 => round($race7 / $total * 100, 1),
+                8 => round($race8 / $total * 100, 1),
             ],
         ];
     }

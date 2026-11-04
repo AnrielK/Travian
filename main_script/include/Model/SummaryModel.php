@@ -78,7 +78,7 @@ class SummaryModel
     public function addPlayerToSummary($race)
     {
         $db = DB::getInstance();
-        $edit = [1 => 'roman', 2 => 'teuton', 3 => 'gaul', 6 => 'egyptians', 7 => 'huns'][$race];
+        $edit = [1 => 'roman', 2 => 'teuton', 3 => 'gaul', 6 => 'egyptians', 7 => 'huns', 8 => 'spartans'][$race];
         $db->query("UPDATE summary SET players_count=players_count+1, {$edit}_players_count={$edit}_players_count+1");
         $memcached = Caching::getInstance();
         $memcached->delete("Statistics:General:Players");
@@ -88,7 +88,7 @@ class SummaryModel
     public function deletePlayerFromSummary($race)
     {
         $db = DB::getInstance();
-        $edit = [1 => 'roman', 2 => 'teuton', 3 => 'gaul', 6 => 'egyptians', 7 => 'huns'][$race];
+        $edit = [1 => 'roman', 2 => 'teuton', 3 => 'gaul', 6 => 'egyptians', 7 => 'huns', 8 => 'spartans'][$race];
         $db->query("UPDATE summary SET players_count=players_count-1, {$edit}_players_count={$edit}_players_count-1");
         $memcached = Caching::getInstance();
         $memcached->delete("Statistics:General:Players");

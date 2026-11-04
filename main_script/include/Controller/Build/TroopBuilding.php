@@ -369,6 +369,22 @@ class TroopBuilding extends AnyCtrl
                         break;
                 }
                 break;
+            case 8:
+                switch ($building_id) {
+                    case 19:
+                    case 29:
+                        return [71, 72, 73, 74];
+                    case 20:
+                    case 30:
+                        return [75, 76];
+                    case 21:
+                        return [77, 78];
+                    case 25:
+                    case 26:
+                    case 44:
+                        return [79, 80];
+                }
+                break;
         }
     }
 

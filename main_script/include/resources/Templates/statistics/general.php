@@ -59,6 +59,13 @@
             <td><?= $vars['tribes']['Registered'][7]; ?></td>
             <td><?= $vars['tribes']['Percent'][7]; ?></td>
         </tr>
+        <?php if (in_array(8, get_world_tribes())): ?>
+            <tr class="hover">
+                <td><?= T("Global", "races.8"); ?></td>
+                <td><?= $vars['tribes']['Registered'][8]; ?></td>
+                <td><?= $vars['tribes']['Percent'][8]; ?></td>
+            </tr>
+        <?php endif; ?>
     <?php endif; ?>
     </tbody>
 </table>

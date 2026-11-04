@@ -30,7 +30,7 @@ class QuestT40
     /** Tasks the player answers with a value (rank, coordinates, lumber, gold): data -1 = answered. */
     private const ANSWER_TASKS = [6, 10, 18, 20, 28];
     /** Tribe wall building per race. */
-    private const WALLS = [1 => 31, 2 => 32, 3 => 33, 6 => 42, 7 => 43];
+    private const WALLS = [1 => 31, 2 => 32, 3 => 33, 6 => 42, 7 => 43, 8 => 47];
     /** 4.0 picture of every task (img/q/<name>.jpg of the 4.0 pack). */
     private const IMAGES = [
         1 => 'wood', 2 => 'farm', 3 => 'village_name', 4 => 'rally', 5 => 'first_adventure', 6 => 'rank1',

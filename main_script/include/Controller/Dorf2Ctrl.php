@@ -63,7 +63,7 @@ class Dorf2Ctrl extends GameCtrl
             'isWW' => $village->isWW(),
             // Travian Legends layout (graphic pack 29c89d54): buildingsV3 markup with tribe-specific images.
             't46Tribe' => is_t46_layout()
-                ? ([1 => 'roman', 2 => 'teuton', 3 => 'gaul', 6 => 'egyptian', 7 => 'hun'][$this->session->getRace()] ?? 'roman')
+                ? ([1 => 'roman', 2 => 'teuton', 3 => 'gaul', 6 => 'egyptian', 7 => 'hun', 8 => 'spartan'][$this->session->getRace()] ?? 'roman')
                 : '',
             'levelsActive' => PreferencesHelper::getPreference("t4level") == 1,
             'relocate' => $relocate ? [

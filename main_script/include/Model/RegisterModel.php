@@ -132,7 +132,7 @@ class RegisterModel
         $uuid = $db->fetchScalar('SELECT UUID()');
         $db->query("INSERT INTO users (uuid, name, password, email, access, gift_gold, signupTime, protection, race, kid, cp, lastupdate, last_adventure_time, location, desc1, desc2, note) VALUES ('$uuid', '$name','$password', '$email', $access, $gold , $lastupdate,$protection, $race,'$kid',$cp, $lastupdate, $lastupdate, '', '', '', '')");
         $uid = $db->lastInsertId();
-        if (in_array($race, [1, 2, 3, 6, 7])) {
+        if (in_array($race, [1, 2, 3, 6, 7, 8])) {
             $m = new SummaryModel();
             $m->addPlayerToSummary($race);
         }

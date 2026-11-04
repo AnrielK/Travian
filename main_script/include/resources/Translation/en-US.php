@@ -71,6 +71,12 @@ $Definition['ActivationNew'] = [
         2 => 'Reliant on others for protection',
         3 => 'Not recommended for new players!',
     ],
+    "race8_attributes" => [
+        0 => 'High time requirement',
+        1 => 'Very strong but expensive troops',
+        2 => 'The Asclepeion heals up to 60% of losses',
+        3 => 'Not recommended for new players!',
+    ],
 ];
 
 $Definition['activation'] = [
@@ -733,6 +739,10 @@ $Definition['Buildings'][45]['next_prod'] = 'Increase at level';
 $Definition['Buildings'][45]['unit'] = 'percent';
 $Definition['Buildings'][46]['title'] = 'Hospital';
 $Definition['Buildings'][46]['desc'] = 'The Hospital heals troops wounded in battle. While your village has one, 40% of the infantry and cavalry it loses in a battle come back as wounded. Healing them costs the same as training and takes half the time. Wounded troops do not fight and eat no crop, but 10% of them are lost every day until they are healed.';
+$Definition['Buildings'][47]['title'] = 'Defensive Wall';
+$Definition['Buildings'][47]['desc'] = 'The Defensive Wall protects a Spartan village. Every level raises the defence of the troops in the village. Its bonus is smaller than that of other walls, but it withstands rams well. Only Spartans can build it.';
+$Definition['Buildings'][48]['title'] = 'Asclepeion';
+$Definition['Buildings'][48]['desc'] = 'The Asclepeion is the Spartan hospital. From every battle it brings back 60% of the lost infantry and cavalry as wounded, which can be healed here for the training price in half the time. Only Spartans can build it.';
 
 //Combat
 $Definition['combat'] = [
@@ -1181,6 +1191,7 @@ $Definition['Global']['races'][4] = 'Nature';
 $Definition['Global']['races'][5] = 'Natars';
 $Definition['Global']['races'][6] = 'Egyptians';
 $Definition['Global']['races'][7] = 'Huns';
+$Definition['Global']['races'][8] = 'Spartans';
 $Definition['Global']['UnloadHelper']['message'] = 'You have made changes. Do you really want to leave this page?';
 $Definition['Global']['Footer']['FAQ'] = 'FAQ - Answers';
 $Definition['Global']['Footer']['Credits'] = 'Credits';
@@ -4862,6 +4873,26 @@ $Definition['Troops'][70]['desc'] = 'Settlers are brave and daring citizens who 
 <br/>
 As the journey and the founding of the new village are very difficult, three settlers are bound to stick together. They need a basis of 750 units per resource.';
 
+$Definition['Troops'][71]['title'] = 'Hoplite';
+$Definition['Troops'][71]['desc'] = 'The Hoplite is an all-round infantryman. Average in attack and defence, he carries a lot of resources. Training him takes longer than ordinary infantry.';
+$Definition['Troops'][72]['title'] = 'Sentinel';
+$Definition['Troops'][72]['desc'] = 'The Sentinel is an infantry scout. He explores enemy villages and helps to defend your own village against foreign scouts.';
+$Definition['Troops'][73]['title'] = 'Shieldsman';
+$Definition['Troops'][73]['desc'] = 'The Shieldsman is defensive infantry with a sturdy shield. He holds well against infantry and copes with cavalry too.';
+$Definition['Troops'][74]['title'] = 'Twinsteel Therion';
+$Definition['Troops'][74]['desc'] = 'The Twinsteel Therion is an offensive infantryman with two blades. He attacks hard but defends poorly.';
+$Definition['Troops'][75]['title'] = 'Elpida Rider';
+$Definition['Troops'][75]['desc'] = 'The Elpida Rider is fast defensive cavalry, good for quick help to allies and for guarding your own villages.';
+$Definition['Troops'][76]['title'] = 'Corinthian Crusher';
+$Definition['Troops'][76]['desc'] = 'The Corinthian Crusher is heavy offensive cavalry, one of the strongest attackers of all, but expensive and slow.';
+$Definition['Troops'][77]['title'] = 'Ram';
+$Definition['Troops'][77]['desc'] = 'The Ram destroys the enemy wall and opens the way for your other troops.';
+$Definition['Troops'][78]['title'] = 'Ballista';
+$Definition['Troops'][78]['desc'] = 'The Ballista bombards the buildings and fields of an enemy village from afar. It is very slow.';
+$Definition['Troops'][79]['title'] = 'Ephor';
+$Definition['Troops'][79]['desc'] = 'The Ephor persuades the people of a foreign village to join you. Every successful attack lowers the loyalty of the village.';
+$Definition['Troops'][80]['title'] = 'Settler';
+$Definition['Troops'][80]['desc'] = 'Settlers found new villages. A new village needs three settlers and enough culture points.';
 $Definition['Troops'][98]['title'] = 'Hero';
 $Definition['Troops'][99]['title'] = 'Trap';
 //

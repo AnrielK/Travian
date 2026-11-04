@@ -164,7 +164,7 @@ class BuildCtrl extends GameCtrl
                 continue;
             } else if ($this->selectedBuildingIndex == 39 && $item_id <> 16) {
                 continue;
-            } else if ($this->selectedBuildingIndex == 40 && !in_array($item_id, [31, 32, 33, 42, 43])) {
+            } else if ($this->selectedBuildingIndex == 40 && !in_array($item_id, [31, 32, 33, 42, 43, 47])) {
                 continue;
             }
             $x++;
@@ -174,7 +174,7 @@ class BuildCtrl extends GameCtrl
                 continue;
             } else if ($this->selectedBuildingIndex == 39 && $item_id <> 16) {
                 continue;
-            } else if ($this->selectedBuildingIndex == 40 && !in_array($item_id, [31, 32, 33, 42, 43])) {
+            } else if ($this->selectedBuildingIndex == 40 && !in_array($item_id, [31, 32, 33, 42, 43, 47])) {
                 continue;
             }
             $content .= $this->getBuildingWrapper($item_id, $build);
@@ -206,7 +206,7 @@ class BuildCtrl extends GameCtrl
     {
         $categories = [1 =>
             [15, 23, 10, 11, 18, 17, 25, 26, 44, 45, 34, 27, 24, 28, 35, 41, 38, 39, 40,],
-            [16, 31, 32, 33, 42, 43, 19, 37, 22, 13, 20, 29, 30, 36, 21, 14, 46],
+            [16, 31, 32, 33, 42, 43, 47, 19, 37, 22, 13, 20, 29, 30, 36, 21, 14, 46, 48],
             [8, 5, 6, 7, 9],
         ];
         $newBuilds = ['available' => [], 'soon' => []];
@@ -347,7 +347,7 @@ class BuildCtrl extends GameCtrl
             $data['missing'][$r] = !$soon && floor($resources[$r]) < $data['cost'][$r];
         }
         $data['soon'] = $soon;
-        $data['tribe'] = [1 => 'roman', 2 => 'teuton', 3 => 'gaul', 6 => 'egyptian', 7 => 'hun'][$race] ?? 'roman';
+        $data['tribe'] = [1 => 'roman', 2 => 'teuton', 3 => 'gaul', 6 => 'egyptian', 7 => 'hun', 8 => 'spartan'][$race] ?? 'roman';
         $time = Formulas::buildingUpgradeTime($item_id, 1, $village->getMainBuildingLvl(), $village->isWW());
         $data['fastTimeInString'] = secondsToString(Village::fastBuildTime($time));
         $data['contractLink'] = $soon ? $data['contractLink'] : $contractLink;
@@ -366,7 +366,7 @@ class BuildCtrl extends GameCtrl
         ];
         $village = Village::getInstance();
         $fieldId = $this->selectedBuildingIndex;
-        if (in_array($item_id, [16, 31, 32, 33, 42, 43])) {
+        if (in_array($item_id, [16, 31, 32, 33, 42, 43, 47])) {
             if ($item_id == 16) {
                 $fieldId = 39;
             } else {
@@ -729,6 +729,7 @@ class BuildCtrl extends GameCtrl
             case 33:
             case 42:
             case 43:
+            case 47:
                 $this->getValuesTable($contract, [], function ($params, $lvl) {
                     return Formulas::wallPower($this->session->getRace(), $lvl);
                 });
@@ -765,7 +766,7 @@ class BuildCtrl extends GameCtrl
                 $contract['nextLevelCpPop']['constructionTime'] = Formulas::getMainBuildingValue($nextLevel)
                     - $contract['culturePointsAndPopulation']['constructionTime'];
             }
-            $contract['tribe'] = [1 => 'roman', 2 => 'teuton', 3 => 'gaul', 6 => 'egyptian', 7 => 'hun'][$this->session->getRace()] ?? 'roman';
+            $contract['tribe'] = [1 => 'roman', 2 => 'teuton', 3 => 'gaul', 6 => 'egyptian', 7 => 'hun', 8 => 'spartan'][$this->session->getRace()] ?? 'roman';
             $field = $village->getField($this->selectedBuildingIndex);
             $contract['fastTimeInString'] = secondsToString(Village::fastBuildTime(Formulas::buildingUpgradeTime($field['item_id'],
                 $field['level'] + $field['upgrade_state'] + 1, $village->getMainBuildingLvl(), $village->isWW())));

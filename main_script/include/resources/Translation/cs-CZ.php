@@ -71,6 +71,12 @@ $Definition['ActivationNew'] = [
         2 => 'Při ochraně závisí na ostatních',
         3 => 'Nedoporučeno pro nové hráče!',
     ],
+    "race8_attributes" => [
+        0 => 'Vysoká časová náročnost',
+        1 => 'Velmi silné, ale drahé jednotky',
+        2 => 'Asklépiův chrám vyléčí až 60 % ztrát',
+        3 => 'Nedoporučeno pro nové hráče!',
+    ],
 ];
 
 $Definition['activation'] = [
@@ -735,6 +741,10 @@ $Definition['Buildings'][45]['next_prod'] = 'Zvýšení na úrovni';
 $Definition['Buildings'][45]['unit'] = 'procent';
 $Definition['Buildings'][46]['title'] = 'Nemocnice';
 $Definition['Buildings'][46]['desc'] = 'V nemocnici se léčí jednotky zraněné v boji. Když tvá vesnice nemocnici má, vrátí se z každé bitvy 40 % padlé pěchoty a jízdy jako zranění vojáci. Jejich léčení stojí stejně jako výcvik a trvá poloviční dobu. Zranění vojáci nebojují a nespotřebovávají obilí, dokud se neléčí, ubývá jich ale 10 % denně.';
+$Definition['Buildings'][47]['title'] = 'Obranná zeď';
+$Definition['Buildings'][47]['desc'] = 'Obranná zeď chrání vesnici Sparťanů. Každá úroveň zvyšuje obranu jednotek ve vesnici. Bonus je menší než u ostatních hradeb, zeď ale dobře odolává beranidlům. Postavit ji mohou jen Sparťané.';
+$Definition['Buildings'][48]['title'] = 'Asklépiův chrám';
+$Definition['Buildings'][48]['desc'] = 'Asklépiův chrám je sparťanská nemocnice. Z každé bitvy vrátí 60 % padlé pěchoty a jízdy vesnice jako zraněné, které tu můžeš vyléčit za cenu výcviku a za poloviční čas. Postavit ho mohou jen Sparťané.';
 
 //Combat
 $Definition['combat'] = [
@@ -1194,6 +1204,7 @@ $Definition['Global']['races'][4] = 'Příroda';
 $Definition['Global']['races'][5] = 'Nataři';
 $Definition['Global']['races'][6] = 'Egypťané';
 $Definition['Global']['races'][7] = 'Hunové';
+$Definition['Global']['races'][8] = 'Sparťané';
 $Definition['Global']['UnloadHelper']['message'] = 'Provedl jsi změny. Opravdu chceš tuto stránku opustit?';
 $Definition['Global']['Footer']['FAQ'] = 'Časté dotazy – odpovědi';
 $Definition['Global']['Footer']['Credits'] = 'Autoři';
@@ -4866,6 +4877,26 @@ $Definition['Troops'][70]['desc'] = 'Osadníci jsou stateční a odvážní obč
 <br/>
 Protože cesta i založení nové vesnice jsou velmi náročné, drží tři osadníci vždy pohromadě. Potřebují základ 750 jednotek od každé suroviny.';
 
+$Definition['Troops'][71]['title'] = 'Hoplít';
+$Definition['Troops'][71]['desc'] = 'Hoplít je univerzální pěšák. V útoku i obraně je průměrný, zato unese hodně surovin. Jeho výcvik trvá déle než u běžné pěchoty.';
+$Definition['Troops'][72]['title'] = 'Hlídač';
+$Definition['Troops'][72]['desc'] = 'Hlídač je pěší zvěd. Prozkoumá nepřátelské vesnice a pomáhá bránit vlastní vesnici před cizími zvědy.';
+$Definition['Troops'][73]['title'] = 'Štítonoš';
+$Definition['Troops'][73]['desc'] = 'Štítonoš je obranná pěchota s pevným štítem. Výborně odolává útokům pěchoty a dobře si poradí i s jízdou.';
+$Definition['Troops'][74]['title'] = 'Ocelový Therion';
+$Definition['Troops'][74]['desc'] = 'Ocelový Therion je útočný pěšák se dvěma čepelemi. Silně útočí, obrana ale není jeho silnou stránkou.';
+$Definition['Troops'][75]['title'] = 'Elpida jezdec';
+$Definition['Troops'][75]['desc'] = 'Elpida jezdec je rychlá obranná jízda. Hodí se k rychlé pomoci spojencům i k obraně vlastních vesnic.';
+$Definition['Troops'][76]['title'] = 'Korintský drtič';
+$Definition['Troops'][76]['desc'] = 'Korintský drtič je těžká útočná jízda. Patří k nejsilnějším útočným jednotkám vůbec, je ale drahý a pomalý.';
+$Definition['Troops'][77]['title'] = 'Beranidlo';
+$Definition['Troops'][77]['desc'] = 'Beranidlo ničí hradby nepřítele a otevírá tak cestu dalším jednotkám.';
+$Definition['Troops'][78]['title'] = 'Balista';
+$Definition['Troops'][78]['desc'] = 'Balista ostřeluje budovy a pole nepřátelské vesnice ze vzdálenosti. Je velmi pomalá.';
+$Definition['Troops'][79]['title'] = 'Efor';
+$Definition['Troops'][79]['desc'] = 'Efor přesvědčuje obyvatele cizí vesnice, aby se přidali na tvou stranu. Každý úspěšný útok sníží loajalitu vesnice.';
+$Definition['Troops'][80]['title'] = 'Osadník';
+$Definition['Troops'][80]['desc'] = 'Osadníci zakládají nové vesnice. Na novou vesnici jsou potřeba tři osadníci a dostatek kulturních bodů.';
 $Definition['Troops'][98]['title'] = 'Hrdina';
 $Definition['Troops'][99]['title'] = 'Past';
 //

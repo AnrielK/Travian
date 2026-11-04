@@ -199,7 +199,7 @@ class Village
             if ($this->buildings[$i]['item_id'] == 13 && $this->buildings[$i]['level'] >= 0) {
                 $quest->setQuestBitwise('battle', 13, 1);
             }
-            if (in_array($this->buildings[$i]['item_id'], [31, 32, 33, 42, 43]) && $this->buildings[$i]['level'] == 1) {
+            if (in_array($this->buildings[$i]['item_id'], [31, 32, 33, 42, 43, 47]) && $this->buildings[$i]['level'] == 1) {
                 $quest->setQuestBitwise('battle', 6, 1);
             }
             if ($this->buildings[$i]['item_id'] == 11 && $this->buildings[$i]['level'] >= 1) {
@@ -750,7 +750,7 @@ HTML;
         if ($item_id == 16) {
             $field = 39;
         }
-        if (in_array($item_id, [31, 32, 33, 42, 43])) {
+        if (in_array($item_id, [31, 32, 33, 42, 43, 47])) {
             $field = 40;
         }
         if ($item_id == 40) {
@@ -1411,14 +1411,14 @@ HTML;
         if ($item_id == 16) {
             $field = 39;
         }
-        if (in_array($item_id, [31, 32, 33, 42, 43])) {
+        if (in_array($item_id, [31, 32, 33, 42, 43, 47])) {
             $field = 40;
         }
         if ($item_id == 40) {
             $field = 99;
         }
         //fuck u users.
-        if ($field == 40 && !in_array($item_id, [31, 32, 33, 42, 43])) {
+        if ($field == 40 && !in_array($item_id, [31, 32, 33, 42, 43, 47])) {
             return false;
         } else if ($field == 99 && $item_id <> 40) {
             return false;

@@ -1453,6 +1453,71 @@ Crannies have 20% less capacity against teuton raids with hero + 10-20% from any
                             ),
                         'gid' => 46,
                     ),
+                46 =>
+                    array(
+                        // Spartan wall: defence bonus like the Teuton earth wall, durability like the Gaul palisade
+                        'name' => 'Defensive Wall',
+                        'cost' =>
+                            array(
+                                0 => 160,
+                                1 => 100,
+                                2 => 80,
+                                3 => 60,
+                            ),
+                        'k' => 1.28,
+                        'cu' => 0,
+                        'cp' => 1,
+                        'time' =>
+                            array(
+                                'a' => 3875,
+                                'k' => 1.16,
+                                'b' => 1875,
+                            ),
+                        'maxLvl' => 20,
+                        'extra' => 9,
+                        'type' => 2,
+                        'req' =>
+                            array(
+                                'race' => '8',
+                            ),
+                        'gid' => 47,
+                        'breq' => NULL,
+                    ),
+                47 =>
+                    array(
+                        // Spartan hospital: 60 % of the losses come back wounded (Model\WoundedModel)
+                        'name' => 'Asclepeion',
+                        'cost' =>
+                            array(
+                                0 => 320,
+                                1 => 280,
+                                2 => 420,
+                                3 => 360,
+                            ),
+                        'k' => 1.28,
+                        'cu' => 4,
+                        'cp' => 3,
+                        'time' =>
+                            array(
+                                'a' => 4875,
+                                'k' => 1.16,
+                                'b' => 1875,
+                            ),
+                        'maxLvl' => 20,
+                        'extra' => 7,
+                        'type' => 2,
+                        'req' =>
+                            array(
+                                'version' => '4-',
+                                'race' => 8,
+                            ),
+                        'breq' =>
+                            array(
+                                15 => 5,
+                                22 => 10,
+                            ),
+                        'gid' => 48,
+                    ),
             ),
             'units' => array(
                 0 =>
@@ -3224,6 +3289,270 @@ Crannies have 20% less capacity against teuton raids with hero + 10-20% from any
                                 'breq' => NULL,
                             ),
                     ),
+                7 =>
+                    array(
+                    // Spartans (Travian Legends; values of the Legends 692.2 manual, speed and time at speed 1)
+                        0 =>
+                            array(
+                                'off' => 50,
+                                'def_i' => 35,
+                                'def_c' => 30,
+                                'speed' => 6,
+                                'cost' =>
+                                    array(
+                                        0 => 110,
+                                        1 => 185,
+                                        2 => 110,
+                                        3 => 35,
+                                    ),
+                                'cu' => 1,
+                                'time' => 1700,
+                                'cap' => 60,
+                                'type' => 'i',
+                                'mask' => 3,
+                                'rs_time' => 5610,
+                                'race' => 7,
+                                'breq' =>
+                                    array(
+                                        19 => 1,
+                                    ),
+                            ),
+                        1 =>
+                            array(
+                                'off' => 0,
+                                'def_i' => 40,
+                                'def_c' => 22,
+                                'speed' => 9,
+                                'cost' =>
+                                    array(
+                                        0 => 185,
+                                        1 => 150,
+                                        2 => 35,
+                                        3 => 75,
+                                    ),
+                                'cu' => 1,
+                                'time' => 1232,
+                                'cap' => 0,
+                                'type' => 'i',
+                                'mask' => 48,
+                                'rs_time' => 4070,
+                                'race' => 7,
+                                'breq' =>
+                                    array(
+                                        22 => 1,
+                                        13 => 1,
+                                    ),
+                            ),
+                        2 =>
+                            array(
+                                'off' => 40,
+                                'def_i' => 85,
+                                'def_c' => 45,
+                                'speed' => 8,
+                                'cost' =>
+                                    array(
+                                        0 => 145,
+                                        1 => 95,
+                                        2 => 245,
+                                        3 => 45,
+                                    ),
+                                'cu' => 1,
+                                'time' => 1936,
+                                'cap' => 40,
+                                'type' => 'i',
+                                'mask' => 2,
+                                'rs_time' => 6390,
+                                'race' => 7,
+                                'breq' =>
+                                    array(
+                                        22 => 5,
+                                        13 => 1,
+                                    ),
+                            ),
+                        3 =>
+                            array(
+                                'off' => 90,
+                                'def_i' => 55,
+                                'def_c' => 40,
+                                'speed' => 6,
+                                'cost' =>
+                                    array(
+                                        0 => 130,
+                                        1 => 200,
+                                        2 => 400,
+                                        3 => 65,
+                                    ),
+                                'cu' => 1,
+                                'time' => 2112,
+                                'cap' => 50,
+                                'type' => 'i',
+                                'mask' => 1,
+                                'rs_time' => 6970,
+                                'race' => 7,
+                                'breq' =>
+                                    array(
+                                        22 => 10,
+                                        13 => 5,
+                                    ),
+                            ),
+                        4 =>
+                            array(
+                                'off' => 55,
+                                'def_i' => 120,
+                                'def_c' => 90,
+                                'speed' => 16,
+                                'cost' =>
+                                    array(
+                                        0 => 555,
+                                        1 => 445,
+                                        2 => 330,
+                                        3 => 110,
+                                    ),
+                                'cu' => 2,
+                                'time' => 2816,
+                                'cap' => 110,
+                                'type' => 'c',
+                                'mask' => 6,
+                                'rs_time' => 9290,
+                                'race' => 7,
+                                'breq' =>
+                                    array(
+                                        20 => 1,
+                                        22 => 5,
+                                    ),
+                            ),
+                        5 =>
+                            array(
+                                'off' => 195,
+                                'def_i' => 80,
+                                'def_c' => 75,
+                                'speed' => 9,
+                                'cost' =>
+                                    array(
+                                        0 => 660,
+                                        1 => 495,
+                                        2 => 995,
+                                        3 => 165,
+                                    ),
+                                'cu' => 3,
+                                'time' => 3432,
+                                'cap' => 80,
+                                'type' => 'c',
+                                'mask' => 1,
+                                'rs_time' => 11330,
+                                'race' => 7,
+                                'breq' =>
+                                    array(
+                                        20 => 10,
+                                        22 => 5,
+                                    ),
+                            ),
+                        6 =>
+                            array(
+                                'off' => 65,
+                                'def_i' => 30,
+                                'def_c' => 80,
+                                'speed' => 4,
+                                'cost' =>
+                                    array(
+                                        0 => 525,
+                                        1 => 260,
+                                        2 => 790,
+                                        3 => 130,
+                                    ),
+                                'cu' => 3,
+                                'time' => 4620,
+                                'cap' => 0,
+                                'type' => 'i',
+                                'mask' => 65,
+                                'rs_time' => 15250,
+                                'race' => 7,
+                                'breq' =>
+                                    array(
+                                        22 => 10,
+                                        21 => 1,
+                                    ),
+                            ),
+                        7 =>
+                            array(
+                                'off' => 50,
+                                'def_i' => 60,
+                                'def_c' => 10,
+                                'speed' => 3,
+                                'cost' =>
+                                    array(
+                                        0 => 550,
+                                        1 => 1240,
+                                        2 => 825,
+                                        3 => 135,
+                                    ),
+                                'cu' => 6,
+                                'time' => 9000,
+                                'cap' => 0,
+                                'type' => 'i',
+                                'mask' => 65,
+                                'rs_time' => 28800,
+                                'race' => 7,
+                                'breq' =>
+                                    array(
+                                        21 => 10,
+                                        22 => 15,
+                                    ),
+                            ),
+                        8 =>
+                            array(
+                                'off' => 40,
+                                'def_i' => 60,
+                                'def_c' => 40,
+                                'speed' => 4,
+                                'cost' =>
+                                    array(
+                                        0 => 33450,
+                                        1 => 30665,
+                                        2 => 36240,
+                                        3 => 13935,
+                                    ),
+                                'cu' => 4,
+                                'time' => 77550,
+                                'cap' => 0,
+                                'type' => 'i',
+                                'mask' => 0,
+                                'rs_time' => 24475,
+                                'loyality' =>
+                                    array(
+                                        0 => 20,
+                                        1 => 25,
+                                    ),
+                                'race' => 7,
+                                'breq' =>
+                                    array(
+                                        16 => 10,
+                                        22 => 20,
+                                    ),
+                            ),
+                        9 =>
+                            array(
+                                'off' => 10,
+                                'def_i' => 80,
+                                'def_c' => 80,
+                                'speed' => 5,
+                                'cost' =>
+                                    array(
+                                        0 => 5115,
+                                        1 => 5580,
+                                        2 => 6045,
+                                        3 => 3255,
+                                    ),
+                                'cu' => 1,
+                                'time' => 34100,
+                                'cap' => 3000,
+                                'type' => 'i',
+                                'mask' => 0,
+                                'rs_time' => 0,
+                                'race' => 7,
+                                'breq' => NULL,
+                            ),
+                    ),
             ),
         ];
         self::$data['buildings'][12]['cost'] = [180, 250, 500, 160];
@@ -3304,7 +3633,7 @@ Crannies have 20% less capacity against teuton raids with hero + 10-20% from any
             $time = self::$data['units'][$race][$u]['time'];
         }
         if ($u < 6) {
-            $raceCavalryIndex = [3, 4, 2, -1, 4, 3, 3];
+            $raceCavalryIndex = [3, 4, 2, -1, 4, 3, 3, 4];
             $ci = $raceCavalryIndex[$race];
             $time /= $ub;
             if ($u < $ci) { // trained in barracks
@@ -3338,6 +3667,9 @@ Crannies have 20% less capacity against teuton raids with hero + 10-20% from any
 
     public static function getSpyId($tribe)
     {
+        if ($tribe == 8) {
+            return 2; // Spartan Sentinel
+        }
         if ($tribe == 3 || $tribe == 7) {
             return 3;
             //this.data['units'][3];
@@ -3356,14 +3688,14 @@ Crannies have 20% less capacity against teuton raids with hero + 10-20% from any
 
     public static function merchantSpeed($race)
     {
-        $speeds = [1 => 16, 12, 24, 5 => 16, 6 => 16, 7 => 20];
+        $speeds = [1 => 16, 12, 24, 5 => 16, 6 => 16, 7 => 20, 8 => 14];
         $speed = $speeds[$race];
         return $speed * getGameSpeed();
     }
 
     public static function merchantCAP($race, $bid18, $alliance_bonus = 1)
     {
-        $capacity = [1 => 500, 2 => 1000, 3 => 750, 5 => 500, 6 => 750, 7 => 500];
+        $capacity = [1 => 500, 2 => 1000, 3 => 750, 5 => 500, 6 => 750, 7 => 500, 8 => 500];
         return round($capacity[$race] * getGameSpeed() * ((100 + ($bid18 * 10)) / 100) * $alliance_bonus);
     }
 
@@ -3755,12 +4087,12 @@ Crannies have 20% less capacity against teuton raids with hero + 10-20% from any
 
     public static function getWallID($race)
     {
-        return [1 => 31, 32, 33, 0, 31, 42, 43][$race];
+        return [1 => 31, 32, 33, 0, 31, 42, 43, 47][$race];
     }
 
     public static function wallPower($race, $lvl)
     {
-        $k = [1 => 1.03, 2 => 1.02, 3 => 1.025, 4 => 1, 5 => 1.03, 6 => 1.025, 7 => 1.015][$race];
+        $k = [1 => 1.03, 2 => 1.02, 3 => 1.025, 4 => 1, 5 => 1.03, 6 => 1.025, 7 => 1.015, 8 => 1.02][$race];
         return round((100 * (pow($k, $lvl) - 1)));
     }
 
@@ -3963,6 +4295,7 @@ Crannies have 20% less capacity against teuton raids with hero + 10-20% from any
             5 => [130, 115, 180, 75],
             6 => [115, 180, 130, 75],
             7 => [125, 125, 125, 125],
+            8 => [125, 125, 125, 125],
             //natars are same as romans.
         ];
         $cost = [];

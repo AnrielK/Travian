@@ -441,7 +441,7 @@ class VillageModel
             logError("No building. removeTribeSpecificBuildings");
             return;
         }
-        $tribeSpecificArray = [31, 32, 33, 42, 43, 35, 36, 41, 44, 45];
+        $tribeSpecificArray = [31, 32, 33, 42, 43, 47, 48, 35, 36, 41, 44, 45];
         for ($i = 19; $i <= 40; ++$i) {
             if (isset($buildings[$i]['item_id']) && in_array($buildings[$i]['item_id'], $tribeSpecificArray)) {
                 BuildingAction::downgrade($kid, $i, 0, true);
@@ -509,7 +509,7 @@ class VillageModel
         if (sizeof($buildings) == 0) {
             logError("No building. while capture village");
         }
-        $tribeSpecificArray = [31, 32, 33, 42, 43, 44, 45, 35, 36, 41];
+        $tribeSpecificArray = [31, 32, 33, 42, 43, 47, 48, 44, 45, 35, 36, 41];
         for ($i = 19; $i <= 40; ++$i) {
             if (!isset($buildings[$i])) {
                 continue;
