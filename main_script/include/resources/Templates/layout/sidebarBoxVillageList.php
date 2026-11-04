@@ -104,12 +104,17 @@
             <div class="clear"></div>
             <div class="expansionSlotInfo"
                  title="<?=T("inGame", "villages"); ?>: ‎&#x202d;&#x202d;&#x202d;<?=$vars['vcount']; ?>&#x202c;&#x202c;/&#x202d;&#x202d;<?=$vars['total_vcount']; ?>&#x202c;&#x202c;&#x202c;‎</br> <?=T("inGame", "Culture points generated to take control of another village:"); ?> <?=$vars['currentCP']; ?>/<?=$vars['nextCP']; ?>">
+                <?php if (is_hero_v2()): /* Legends 692.2: the count right after the title, "VILLAGES 2/3" */ ?>
+                <div class="boxTitle"><?=T("inGame", "villages"); ?>&nbsp;<span class="slots">&#x202d;&#x202d;<?=$vars['vcount']; ?>/<?=$vars['total_vcount']; ?>&#x202c;&#x202c;</span></div>
+                <div class="barWrapper">
+                <?php else: ?>
                 <div class="boxTitleAdditional">&#x202d;&#x202d;&#x202d;<?=$vars['vcount']; ?>&#x202c;&#x202c;/&#x202d;&#x202d;<?=$vars['total_vcount']; ?>
                     &#x202c;&#x202c;&#x202c;‎
                 </div>
                 <div
                         class="boxTitle"><?=T("inGame", "villages"); ?></div>
                 <div class="villageListBarBox">
+                <?php endif; ?>
                     <div class="bar"
                          style="width:<?=$vars['percent']; ?>%">
                         &nbsp;

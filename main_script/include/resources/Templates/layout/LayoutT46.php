@@ -17,7 +17,7 @@ $t46Indicator = static function ($count) {
 };
 ?>
 <?php require __DIR__ . "/head.php"; ?>
-<body class="v39 webkit chrome <?=get_locale(); ?> <?=Config::getProperty("settings", "global_css_class"); ?> <?=$vars['contentCssClass']; ?> <?=$vars['colorBlind'] ? 'colorBlind' : ''; ?> <?=$vars['bodyCssClass']; ?> <?=(getDirection() == 'RTL' ? 'rtl' : 'ltr'); ?> season-<?=detect_season(); ?> buildingsV3 t46Layout t46-<?=$t46Tribe; ?><?=$t46V2 ? ' legendsV2' : ''; ?>" data-theme="default">
+<body class="v39 webkit chrome <?=get_locale(); ?> <?=Config::getProperty("settings", "global_css_class"); ?> <?=$vars['contentCssClass']; ?> <?=$vars['colorBlind'] ? 'colorBlind' : ''; ?> <?=$vars['bodyCssClass']; ?> <?=(getDirection() == 'RTL' ? 'rtl' : 'ltr'); ?> season-<?=detect_season(); ?> buildingsV3 t46Layout t46-<?=$t46Tribe; ?><?=$t46V2 ? ' legendsV2' : ''; ?>" data-theme="<?=($t46V2 && ((int)date('G') >= 20 || (int)date('G') < 6)) ? 'night' : 'default'; /* Legends: night look 20:00-6:00 server time */ ?>" data-village-perspective="<?=strpos($vars['bodyCssClass'] . ' ' . $vars['contentCssClass'], 'perspectiveBuildings') !== false ? 'perspectiveBuildings' : 'perspectiveResources'; ?>">
 <div id="reactDialogWrapper"></div>
 <div id="background" class="<?=$t46Tribe; ?>">
     <div id="bodyWrapper">
@@ -238,7 +238,7 @@ $t46Indicator = static function ($count) {
             var items = document.querySelectorAll('#content .resourceWrapper .resource, #content .resourceWrapper .resources');
             for (var i = 0; i < items.length; i++) {
                 var icon = items[i].querySelector('i'), value = items[i].querySelector('.value');
-                var match = icon && value && /(?:^|\s)r([1-4])(?:Big)?(?:\s|$)/.exec(icon.className);
+                var match = icon && value && !items[i].closest('#reportWrapper') /* loot, not a cost */ && /(?:^|\s)r([1-4])(?:Big)?(?:\s|$)/.exec(icon.className);
                 if (!match) {
                     continue;
                 }
@@ -324,7 +324,8 @@ $t46Indicator = static function ($count) {
         Travian.Dialog.Dialog = Patched;
     })();
 </script>
-<?php if ($t46V2) { echo \resources\View\PHPBatchView::render('layout/legendsGoldClub'); echo \resources\View\PHPBatchView::render('layout/legendsTutorial'); } ?>
+<?php if ($t46V2) { echo \resources\View\PHPBatchView::render('layout/legendsGoldClub'); echo \resources\View\PHPBatchView::render('layout/legendsDailyQuests');
+    echo \resources\View\PHPBatchView::render('layout/legendsTutorial'); } ?>
 </body>
 </html>
 <!---- This page was generated in <?=round(1000 * (microtime(true) - $GLOBALS['start_time']), 2); ?> ms ---->

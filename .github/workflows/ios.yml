@@ -2,7 +2,7 @@ name: iOS – OpenVillage offline app
 
 on:
   # Build only by hand (Actions → Run workflow), not after every pushed commit.
-  # The checkboxes pick which graphic packs (gpacks) go into the app; Legends 655.3 (default look) is always in.
+  # The checkboxes pick which graphic packs (gpacks) go into the app; Legends 692.2 (default look) is always in.
   # Each extra pack adds roughly 30–125 MB to the IPA.
   workflow_dispatch:
     inputs:

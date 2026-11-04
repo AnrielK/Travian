@@ -132,7 +132,7 @@ $health = (int)ceil($h['regenerating'] ? $h['regeneratedHealth'] : $h['health'])
 
     <div class="attributeBox">
         <div class="heroState"><i class="<?=$h['status'] == 100 ? 'statusHome_medium' : 'statusRunning_medium'; ?>"></i>
-            <div><?=$h['heroStatusMessage']; ?></div>
+            <div><?=$h['status'] == 100 && ($home = T('HeroV2', 'heroHome', '')) !== '' ? UI::e($home) : $h['heroStatusMessage']; ?></div>
         </div>
         <?=UI::toggleSwitch('attackBehaviour', (bool)$h['hide'], T('HeroInventory', 'HeroHideDesc'), 'heroHideSwitch'); ?>
     </div>

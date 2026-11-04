@@ -72,7 +72,7 @@ class viewTileDetails extends AjaxBase
         $view->vars['x'] = $tile['x'];
         $view->vars['y'] = $tile['y'];
         $view->vars['options'] = '<div class="option"><a href="karte.php?x=' . $tile['x'] . '&y=' . $tile['y'] . '" class="a arrow" title="' . T("map",
-                "centerMap") . '.">' . T("map", "centerMap") . '.</a></div>';
+                "centerMap") . '.">' . T("map", "centerMap") . (is_hero_v2() ? '' : '.') . '</a></div>';
         $view->vars['distribution'] = '';
         $distribution = [
             1 => ('3-3-3-9'),
@@ -98,7 +98,7 @@ class viewTileDetails extends AjaxBase
                 $view->vars['distribution'] .= '<tr>';
                 $view->vars['distribution'] .= '<td class="ico"><i class="r' . $k . '"></i></td>';
                 $view->vars['distribution'] .= '<td class="val">' . $v . ' </td>';
-                $view->vars['distribution'] .= '<td class="desc">' . T("Buildings", "{$k}.title") . ' </td>';
+                $view->vars['distribution'] .= '<td class="desc">' . (is_hero_v2() ? T("map", "fieldsOf.{$k}", T("Buildings", "{$k}.title")) : T("Buildings", "{$k}.title")) . ' </td>';
                 $view->vars['distribution'] .= '</tr>';
             } else {
                 $view->vars['distribution'] .= '<td><i class="r' . $k . '"></i> ' . $v . '</td>';
@@ -254,8 +254,9 @@ JSON;
             $config = Config::getInstance();
             $direction = getDirection();
             if (!$tile['occupied']) {
-                $other = '<h1 class="titleInHeader">' . T("map",
-                        "landscape") . ' ‎‭<span class="coordinates coordinatesWrapper coordinates' . $direction . '"><span class="coordinateX">(' . $tile['x'] . '</span><span class="coordinatePipe">|</span><span class="coordinateY">' . $tile['y'] . '‬)</span></span>‬‎ <span class="clear">&nbsp;</span></h1>';
+                // Legends 692.2 calls a free field "abandoned valley"
+                $other = '<h1 class="titleInHeader">' . (is_hero_v2() ? T("Global", "Abandoned valley") : T("map",
+                        "landscape")) . ' ‎‭<span class="coordinates coordinatesWrapper coordinates' . $direction . '"><span class="coordinateX">(' . $tile['x'] . '</span><span class="coordinatePipe">|</span><span class="coordinateY">' . $tile['y'] . '‬)</span></span>‬‎ <span class="clear">&nbsp;</span></h1>';
             } else {
                 $other = '<h1 class="titleInHeader">' . $view->vars['coordText'] . ' ‎‭<span class="coordinates coordinatesWrapper coordinates' . $direction . '"><span class="coordinateX">(' . $tile['x'] . '</span><span class="coordinatePipe">|</span><span class="coordinateY">' . $tile['y'] . '‬)</span></span>‬‎ <span class="mainVillage">' . $view->vars['mainVillage'] . '</span><span class="clear">&nbsp;</span></h1>';
             }
@@ -285,7 +286,7 @@ JSON;
         }
         //options
         $view->vars['options'] = '<div class="option"><a href="karte.php?x=' . $tile['x'] . '&y=' . $tile['y'] . '" class="a arrow" title="' . T("map",
-                "centerMap") . '.">' . T("map", "centerMap") . '.</a></div>';
+                "centerMap") . '.">' . T("map", "centerMap") . (is_hero_v2() ? '' : '.') . '</a></div>';
         if ($m->checkForAdventure(Session::getInstance()->getPlayerId(), $tile['id'])) {
             if (max(Village::getInstance()->getTypeLevel(16))) {
                 $view->vars['options'] .= '<div class="option"><a href="start_adventure.php?from=tile&kid=' . $tile['id'] . '" class="a arrow" title="' . T("map",
@@ -645,7 +646,7 @@ JSON;
         $view = new PHPBatchView("map/viewTileDetails_landscape");
         $view->vars['ajaxRequest'] = !$noCoordinateText;
         $view->vars['options'] = '<div class="option"><a href="karte.php?x=' . $tile['x'] . '&y=' . $tile['y'] . '" class="a arrow" title="' . T("map",
-                "centerMap") . '.">' . T("map", "centerMap") . '.</a></div>';
+                "centerMap") . '.">' . T("map", "centerMap") . (is_hero_v2() ? '' : '.') . '</a></div>';
         if ($m->checkForAdventure(Session::getInstance()->getPlayerId(), $tile['id'])) {
             $m = new AdventureModel();
             if ($m->getHeroVillageRallyPoint($this->session->hero->hero['kid'])) {

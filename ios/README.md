@@ -42,7 +42,7 @@ Logy jsou v aplikaci Soubory → Na iPhonu → OpenVillage → `logs` (`mariadb.
 
 ## Grafika (gpack)
 
-Při prvním spuštění (a po Nástroje → Nový svět) aplikace ukáže stránku Herní světy (`web/public/worlds.php`, stejný formulář jako pro další světy v lobby): název, vzhled (s národy, které nabízí), rychlost, mapu, délku kola a rychlost hrdiny. Formulář se odešle na `openvillage://create-world`, aplikace ho zachytí (`BrowserModel`) a svět založí. Vzhledy: Travian T4.6 (29c89d54, výchozí), Travian Legends 655.3 (legends655),
+Při prvním spuštění (a po Nástroje → Nový svět) aplikace ukáže stránku Herní světy (`web/public/worlds.php`, stejný formulář jako pro další světy v lobby): název, vzhled (s národy, které nabízí), rychlost, mapu, délku kola a rychlost hrdiny. Formulář se odešle na `openvillage://create-world`, aplikace ho zachytí (`BrowserModel`) a svět založí. Vzhledy: Travian T4.6 (29c89d54, výchozí), Travian Legends 692.2 (legends655),
 OpenVillage 4.6 (a17a8f72),
 Travian T4.4 Seasonized v2, T4.4 Seasonized, T4.4 Classic a Travian 4.0 (T40). Volí se balíček „mainPage“ (CSS a obrázky
 rozhraní). Vzhled se volí při vytvoření světa (Nástroje → Nový svět) a svět si ho pamatuje v databázi
@@ -60,8 +60,9 @@ kulatá navigace, sklad pod navigací, rámované boční panely, celoplošné d
 jeho CSS + styly a17a8f72 pro dialogy, tlačítka a obsah stránek. Soubory, které balíčku chybí, server
 (router i Apache) doplní z a17a8f72. Font Noto Serif (SIL OFL) je přibalený v `29c89d54/mainPage/fonts`.
 
-legends655 je grafika Travian Legends 655.3 (obrázky + CSS) se stejným rozložením jako 29c89d54 (v `gpack.php`
-`'layout' => 'legends'`). Vzniká skriptem `scripts/gpack/import-legends-gpack.py <rozbalený gpack/655.3> legends655 --no-rtl --hero-appearance <rozbalený doplněk Hero Appearance>`
+legends655 je grafika Travian Legends 692.2 (obrázky + CSS) se stejným rozložením jako 29c89d54 (v `gpack.php`
+`'layout' => 'legends'`). Gpack stáhne z CDN `scripts/gpack/fetch-legends-gpack.py <složka> --version 692.2` (obrázky, které novější
+verze nemá, se doplní ze stávajícího legends655), balíček pak vzniká skriptem `scripts/gpack/import-legends-gpack.py <složka> legends655 --no-rtl --hero-appearance <rozbalený doplněk Hero Appearance>`
 (`--no-rtl` vynechá obrázky a styly pro arabštinu/perštinu; `--hero-appearance` přidá díly hrdiny, balíček má ~142 MB):
 základní CSS 29c89d54 zůstává pod CSS Legends (pokrývá starší názvy tříd), budovy podle kmene řeší vygenerované
 `css/openvillage-t46-tribes.css` a chybějící obrázky se zkopírují z 29c89d54/a17a8f72. JavaScript Legends

@@ -7,7 +7,7 @@
  * Also opened by elements with data-plus-feature="<feature>".
  */
 var LegendsPlus = (function () {
-    var FEATURES = ['directLinks', 'attackWarning', 'buildingQueue', 'linkList', 'villageStatistics', 'fullScreen', 'tradeMulti'];
+    var FEATURES = ['attackWarning', 'directLinks', 'buildingQueue', 'linkList', 'villageStatistics', 'fullScreen', 'tradeMulti'];
     var aliases = {plus: 'directLinks', directLink: 'directLinks', quickLinks: 'directLinks', villageOverview: 'villageStatistics',
         largeMap: 'fullScreen', finishNow: 'buildingQueue'};
 

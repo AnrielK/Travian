@@ -361,6 +361,27 @@ class LegendsUi
         return $html . '</div>';
     }
 
+    /**
+     * Duration of a premium feature: "2 hours", or after "for" ($for) "1 hour" in the accusative; Czech has its own form
+     * for 2-4 (fewHours / fewDays) and for one hour after "for" (oneHourFor).
+     */
+    public static function durationText(int $seconds, bool $for = false): string
+    {
+        $unit = $seconds >= 86400 && $seconds % 86400 === 0 ? 'Day' : 'Hour';
+        $n = $unit === 'Day' ? intdiv($seconds, 86400) : max(1, (int)round($seconds / 3600));
+        $plain = $n === 1 ? 'one' . $unit : 'n' . $unit . 's';
+        $default = T('Tasks', $plain, '%d ' . strtolower($unit) . ($n === 1 ? '' : 's'));
+        $key = $n === 1 ? ($for ? 'one' . $unit . 'For' : $plain) : ($n <= 4 ? 'few' . $unit . 's' : $plain);
+        return sprintf(T('Tasks', $key, $default), $n);
+    }
+
+    /** The detailed gold / silver coin of Legends 692.2 (gradients and the ring of dots), e.g. for the exchange office. */
+    public static function coinDetailed(string $kind): string
+    {
+        static $svg = [];
+        return $svg[$kind] ??= trim((string)@file_get_contents(__DIR__ . '/legendsCoins/' . ($kind === 'silver' ? 'silver' : 'gold') . '.svg'));
+    }
+
     public static function goldCoin(string $class = ''): string
     {
         return '<svg viewBox="0 0 50 50"' . ($class ? ' class="' . $class . '"' : '') . '><circle cx="25" cy="25" r="25" fill="#522d1c"/>'
@@ -383,6 +404,29 @@ class LegendsUi
     public static function exchangeIcon(): string
     {
         return self::icon('0 0 17 13', '<path d="m4.581 12.184.17.157.17-.158 1.05-.98.197-.184-.2-.183L4.512 9.5H9.5V7.625H4.511L5.97 6.289l.2-.183-.198-.184-1.05-.98-.17-.158-.17.157-3.75 3.437-.201.184.201.185 3.75 3.437Zm7.498-4.126.17.158.17-.157 3.75-3.437.201-.184-.201-.185-3.75-3.437-.17-.157-.17.158-1.05.98-.197.184.2.183L12.488 3.5H7.5v1.875h4.989L11.03 6.711l-.2.183.199.184 1.05.98Z"/>');
+    }
+
+    /**
+     * Green silhouette behind the task mentor (sidebar "Task overview"), as Legends draws it: the path from
+     * legendsMentorOutlines.json (scripts/gpack/mentor-outlines.py) filled with the mentor_gradient of legends_ltr.css.
+     */
+    public static function mentorOutline(int $race): string
+    {
+        static $outlines = null;
+        if ($outlines === null) {
+            $outlines = json_decode((string)file_get_contents(__DIR__ . '/legendsMentorOutlines.json'), true) ?: [];
+        }
+        $tribe = [1 => 'roman', 2 => 'teuton', 3 => 'gaul', 6 => 'egyptian', 7 => 'hun', 8 => 'spartan'][$race] ?? '';
+        if (!isset($outlines[$tribe])) {
+            return '';
+        }
+        $o = $outlines[$tribe];
+        return '<svg width="' . $o['w'] . '" height="' . $o['h'] . '" viewBox="0 0 ' . $o['w'] . ' ' . $o['h'] . '">'
+            . '<path fill="url(#mentor_gradient)" d="' . $o['d'] . '"></path>'
+            . '<defs><linearGradient id="mentor_gradient" gradientTransform="rotate(90)">'
+            . '<stop class="colorStop1" offset="0%"></stop><stop class="colorStop2" offset="30%"></stop>'
+            . '<stop class="colorStop1" offset="60%"></stop><stop class="colorStop3" offset="95%"></stop>'
+            . '<stop class="colorStop4" offset="100%"></stop></linearGradient></defs></svg>';
     }
 
     /**

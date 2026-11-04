@@ -14,7 +14,9 @@ $num = static fn($n) => abs((int)$n) < 10000 ? (string)(int)$n : number_format((
 $valueBox = static fn(string $icon, $value, string $title) => '<div class="iconValueBoxWrapper" title="' . $h($title) . '"><div class="iconValueBox ' . $icon . '"><i class="' . $icon . '"></i><span>' . ($v2 ? $num($value) : number_format((int)$value, 0, ',', number_thousands_separator())) . '</span></div></div>';
 $label = static function (array $task, string $prefix = '') use ($h, $num) {
     if ($task['type'] === 'level') {
-        return $h(T('Buildings', 'level')) . ' <span>' . $task['value'] . '</span>/<span>' . $task['goal'] . '</span>';
+        // at the start of the label: "Úroveň 0/1" as in Legends (the translation is lower case for running text)
+        $level = T('Buildings', 'level');
+        return $h(mb_strtoupper(mb_substr($level, 0, 1)) . mb_substr($level, 1)) . ' <span>' . $task['value'] . '</span>/<span>' . $task['goal'] . '</span>';
     }
     if ($task['type'] === 'fields') {
         return '<span>' . $task['value'] . '</span>/<span>' . $task['goal'] . '</span> ' . $h(sprintf(T('Tasks', 'toLevel', 'to level %d'), $task['level']));
@@ -37,8 +39,8 @@ $progressV2 = static function (array $task, string $url, string $prefix = '') us
             ['class' => 'collect collected preventAnimation', 'disabled' => true, 'appearance' => 'grey', 'data' => ['text-collected' => $collectedText]]);
     }
     if ($task['state'] === 'open' || $task['state'] === 'future') { // future = a later step of the details: its progress only
-        return '<div class="progressBar"><div class="bar"><div class="filling" style="width:' . round(min(1, $task['ratio']) * 100) . '%"></div><div class="decoration"></div></div>'
-            . '<div class="label">' . $label($task, $prefix) . '</div></div>';
+        return LegendsUi::progressBar(['color' => 'green', 'primary' => round(min(1, $task['ratio']) * 100, 1)])
+            . '<div class="label">' . $label($task, $prefix) . '</div>';
     }
     return LegendsUi::button($h(T('Tasks', 'collect', 'Collect')) . '<i class="collectedCheckmark"></i>', ['class' => 'collect',
         'data' => ['collect' => $url, 'text-collected' => $collectedText]]);
@@ -46,7 +48,7 @@ $progressV2 = static function (array $task, string $url, string $prefix = '') us
 $rewardsV2 = static fn(array $task) => $valueBox('allResources', $task['rewardResources'], T('Tasks', 'rewardResourcesHero', T('Tasks', 'rewardResources', 'Resources of each type')))
     . $valueBox('xp', $task['rewardExperience'], T('Tasks', 'rewardExperience', 'Hero experience'));
 ?>
-<div id="tasks" data-checker="<?=$h($vars['checker']); ?>">
+<div id="tasks"<?=$v2 ? ' class="contentV2"' : ''; ?> data-checker="<?=$h($vars['checker']); ?>">
     <div class="contentNavi subNavi">
         <div class="container<?=$vars['scope'] === 'village' ? ' active' : ''; ?>">
             <div class="content">

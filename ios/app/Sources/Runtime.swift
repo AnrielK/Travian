@@ -93,7 +93,7 @@ struct WorldSettings: Codable, Equatable {
 
     /// Styles shipped in sections/gpack (see gpack.php); only those present in the bundle are offered.
     static let allStyles: [(hash: String, name: String)] = [
-        ("legends655", "Travian Legends 655.3 (výchozí)"),
+        ("legends655", "Travian Legends 692.2 (výchozí)"),
         ("29c89d54", "Travian T4.6"),
         ("a17a8f72", "OpenVillage 4.6"),
         ("d11cb434", "Travian T4.4 Seasonized v2"),

@@ -2968,6 +2968,8 @@ $Definition['Messages']['Delete'] = 'Delete';
 $Definition['Messages']['Subject'] = 'Subject';
 $Definition['Messages']['Sender'] = 'Sender';
 $Definition['Messages']['Sent at'] = 'Sent';
+$Definition['Messages']['Received'] = 'Received';
+$Definition['Messages']['Save'] = 'Save';
 $Definition['Messages']['Read'] = 'Read';
 $Definition['Messages']['Unread'] = 'Unread';
 $Definition['Messages']['Your note is too long!'] = 'Your note is too long!';
@@ -4540,6 +4542,11 @@ $Definition['Statistics']['name'] = 'Name';
 $Definition['Statistics']['largestPlayers'] = 'Largest players';
 $Definition['Statistics']['largestAlliances'] = 'Largest alliances';
 $Definition['Statistics']['largestVillages'] = 'Largest villages';
+$Definition['Statistics']['bestAttackers'] = 'Best attackers';
+$Definition['Statistics']['bestDefenders'] = 'Best defenders';
+$Definition['Statistics']['bestAttackingAlliances'] = 'Best alliances (attack)';
+$Definition['Statistics']['bestDefendingAlliances'] = 'Best alliances (defence)';
+$Definition['Statistics']['populationShort'] = 'Pop';
 $Definition['Statistics']['level'] = 'level';
 $Definition['Statistics']['xp'] = 'Experience';
 $Definition['Statistics']['most exp heros'] = 'The most experienced heroes';
@@ -5402,6 +5409,11 @@ $Definition['HeroV2']['consumable'] = 'Consumable items';
 $Definition['HeroV2']['continue'] = 'Continue';
 $Definition['HeroV2']['equip'] = 'Equip';
 $Definition['HeroV2']['explore'] = 'Explore';
+$Definition['HeroV2']['adventureDurationTitle'] = 'Adventure duration reduced by 25%';
+$Definition['HeroV2']['adventureDurationDesc'] = 'Watch a video to make the <strong>next</strong> adventure of your hero shorter.';
+$Definition['HeroV2']['adventureDifficultyTitle'] = 'Adventure difficulty raised to hard';
+$Definition['HeroV2']['adventureDifficultyDesc'] = 'Watch a video to turn the <strong>next normal</strong> adventure into a hard one for more experience.';
+$Definition['HeroV2']['watchVideo'] = 'Watch video';
 $Definition['HeroV2']['info'] = 'Info';
 $Definition['HeroV2']['move'] = 'Move';
 $Definition['HeroV2']['moveAmount1'] = 'Amount of lumber to move';
@@ -5960,6 +5972,15 @@ $Definition['LegendsGoldClub']['features']['messageArchive']['text'] = 'Archive 
 $Definition['LegendsGoldClub']['evasionTitle'] = 'Evasion settings';
 $Definition['LegendsGoldClub']['evasionDesc'] = 'With the Gold Club you can order the troops of your capital to evade attacks automatically.';
 
+
+// Exchange office of the auctions in the Legends look (js/Game/Legends/exchangeOffice.js)
+$Definition['LegendsExchange']['title'] = 'Exchange office';
+$Definition['LegendsExchange']['gold'] = 'Gold';
+$Definition['LegendsExchange']['silver'] = 'Silver';
+$Definition['LegendsExchange']['current'] = 'Current';
+$Definition['LegendsExchange']['new'] = 'New';
+$Definition['LegendsExchange']['exchange'] = 'Exchange';
+$Definition['LegendsExchange']['swap'] = 'Change direction';
 
 // Travian PLUS dialog of the Legends 655 look (js/Game/Legends/plus.js)
 $Definition['LegendsPlus']['title'] = 'Travian PLUS';

@@ -34,6 +34,8 @@ class GoldShopCtrl extends GameCtrl
         $tab = ($_GET['t'] ?? '') === 'pros' ? 'pros' : 'gold';
         $products = $this->onlineProducts();
         $offline = $products === [];
+        // Legends: the content alone (gold.php?dialog=1), shown in the payment wizard dialog of js/Game/Legends/goldShop.js
+        $dialog = is_hero_v2() && isset($_GET['dialog']);
 
         if ($offline && isset($_GET['package'], $_GET['c']) && $_GET['c'] === $session->getChecker()) {
             $session->changeChecker();
@@ -42,7 +44,7 @@ class GoldShopCtrl extends GameCtrl
                 DB::getInstance()->run('UPDATE users SET gift_gold = gift_gold + ? WHERE id = ?',
                     [self::OFFLINE_PACKAGES[$index], $session->getPlayerId()]);
             }
-            $this->redirect('gold.php?credited=' . $index);
+            $this->redirect('gold.php?credited=' . $index . ($dialog ? '&dialog=1' : ''));
             return;
         }
 
@@ -91,12 +93,7 @@ class GoldShopCtrl extends GameCtrl
                 'gold' => $config->gold->goldClubGold, 'active' => $session->hasGoldClub()];
         }
 
-        $this->view = new GameView();
-        $this->view->vars['titleInHeader'] = T('Tasks', 'goldShopTitle', 'Gold & Plus');
-        $this->view->vars['bodyCssClass'] = 'perspectiveResources';
-        $this->view->vars['contentCssClass'] = 'goldShopT46';
-        $this->view->vars['answerId'] = 0; // Legends shop header: gold balance and close button only.
-        $this->view->vars['content'] = PHPBatchView::render('goldShop/main', [
+        $vars = [
             'tab' => $tab,
             'offline' => $offline,
             'packages' => $packages,
@@ -106,7 +103,19 @@ class GoldShopCtrl extends GameCtrl
             'gold' => $session->getAvailableGold(),
             'credited' => isset($_GET['credited']) ? (self::OFFLINE_PACKAGES[(int)$_GET['credited']] ?? null) : null,
             'checker' => $session->getChecker(),
-        ]);
+        ];
+        if ($dialog) {
+            header('Content-Type: text/html; charset=utf-8');
+            header('Cache-Control: no-store');
+            echo PHPBatchView::render('goldShop/legendsDialog', $vars);
+            exit;
+        }
+        $this->view = new GameView();
+        $this->view->vars['titleInHeader'] = T('Tasks', 'goldShopTitle', 'Gold & Plus');
+        $this->view->vars['bodyCssClass'] = 'perspectiveResources';
+        $this->view->vars['contentCssClass'] = 'goldShopT46';
+        $this->view->vars['answerId'] = 0; // Legends shop header: gold balance and close button only.
+        $this->view->vars['content'] = PHPBatchView::render('goldShop/main', $vars);
     }
 
     /** Gold products of an active payment configuration (first location), or [] for an offline world. */

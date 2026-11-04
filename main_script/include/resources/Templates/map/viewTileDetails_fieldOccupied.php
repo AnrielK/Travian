@@ -2,7 +2,7 @@
     <?php if ($vars['ajaxRequest']): ?>
         <h1><?= $vars['coordText']; ?>&nbsp;<?=getCoordinatesHTML($vars['x'], $vars['y']);?><span class="mainVillage"><?= $vars['mainVillage']; ?></span><span class="clear">&nbsp;</span></h1>
     <?php endif ?>
-    <div class="detailImage">
+    <div class="detailImage vid<?= (int)$vars['Tribe']; ?>">
         <div class="options">
             <?= $vars['options']; ?>
         </div>

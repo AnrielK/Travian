@@ -12,9 +12,10 @@
                     class="forceDisplayElement vid_<?php use Core\Helper\PreferencesHelper;
                     use Core\Session;
 
-                    echo Session::getInstance()->getRace(); ?><?=!is_t46_layout() || $vars['hasNewReward'] ? ' highlighted' : ''; ?> on "
+                    echo Session::getInstance()->getRace(); ?><?=!is_t46_layout() || $vars['hasNewReward'] ? ' highlighted' : ''; ?><?=is_hero_v2() && $vars['hasNewReward'] ? ' claimable' : ''; ?> on "
                     type="button">
-                <?php if (is_hero_v2()): ?>
+                <?php if (is_hero_v2()): /* Legends: the green silhouette (glowing while a task can be collected) behind the mentor */ ?>
+                    <?=\resources\View\LegendsUi::mentorOutline(Session::getInstance()->getRace()); ?>
                     <div class="mentor"></div>
                 <?php else: ?>
                 <img class="border" alt="" src="img/x.gif">

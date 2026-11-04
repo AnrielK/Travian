@@ -16,6 +16,10 @@
     </tbody>
 </table>
 <div id="search_navi">
+    <?php if (is_hero_v2()): /* Legends: the search on a plain grey box */ ?>
+    <div class="searchWrapper">
+    <form method="post" action="statistiken.php<?=$vars['http_query'];?>">
+    <?php else: ?>
     <form method="post" action="statistiken.php<?=$vars['http_query'];?>">
         <div class="boxes boxesColor gray">
             <div class="boxes-tl"></div>
@@ -28,6 +32,7 @@
             <div class="boxes-br"></div>
             <div class="boxes-bc"></div>
             <div class="boxes-contents cf">
+    <?php endif; ?>
                 <table class="transparent">
                     <tr>
                         <td><span>
@@ -43,6 +48,10 @@
                                                                                                       value="<?=$vars['selectedName'];?>"/>
 						</span></td>
                         <td>
+                            <?php if (is_hero_v2()): ?>
+                            <button type="submit" value="<?=T("Global", "General.ok");?>" name="submit" id="submit"
+                                    class="textButtonV1 green "><?=T("Global", "General.ok");?></button>
+                            <?php else: ?>
                             <button type="submit" value="<?=T("Global", "General.ok");?>" name="submit" id="submit"
                                     class="green ">
                                 <div class="button-container addHoverClick">
@@ -56,6 +65,7 @@
                                     <div class="button-content"><?=T("Global", "General.ok");?></div>
                                 </div>
                             </button>
+                            <?php endif; ?>
                             <script type="text/javascript">
                                 jQuery(function() {
                                     if (jQuery('#submit')) {
@@ -77,9 +87,14 @@
                         </td>
                     </tr>
                 </table>
+    <?php if (is_hero_v2()): ?>
+    </form>
+    </div>
+    <?php else: ?>
             </div>
         </div>
     </form>
+    <?php endif; ?>
     <?=$vars['Navigator'];?>
     <div class="clear"></div>
 </div><script type="text/javascript">

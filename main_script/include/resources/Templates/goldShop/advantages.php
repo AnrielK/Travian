@@ -6,14 +6,7 @@ use resources\View\LegendsUi as UI;
 $h = static fn($s) => htmlspecialchars((string)$s, ENT_QUOTES);
 $adv = $vars['advantages'];
 $canSpend = $vars['canSpendGold'];
-$duration = static function (int $seconds): string {
-    if ($seconds >= 86400 && $seconds % 86400 === 0) {
-        $days = intdiv($seconds, 86400);
-        return sprintf($days === 1 ? T('Tasks', 'oneDay', '%d day') : T('Tasks', 'nDays', '%d days'), $days);
-    }
-    $hours = max(1, (int)round($seconds / 3600));
-    return sprintf($hours === 1 ? T('Tasks', 'oneHour', '%d hour') : T('Tasks', 'nHours', '%d hours'), $hours);
-};
+$duration = [UI::class, 'durationText'];
 $book = static fn(string $key) => "new Travian.Game.WayOfPayment('" . $key . "', 'goldShop'); return false;";
 $toggle = static fn(string $key) => "Travian.ajax({data: {cmd: 'premiumFeature', featureKey: '" . $key . "', toggleAutoprolong: 1, context: 'goldShop'},"
     . " onSuccess: function () { window.location.reload(); }}); this.disabled = true;";
@@ -80,7 +73,7 @@ $boostDesc = ['Wood' => '+25WoodDesc', 'Clay' => '+25ClayDesc', 'Iron' => '+25Ir
                 <div class="advImage <?=$boostImages[$f['name']]; ?>"></div>
                 <h4><?=$h($boostTitles[$f['name']]); ?></h4>
                 <div class="advBonus"><svg class="advArrow" viewBox="0 0 16 18"><path d="M8 1 15 9h-4v8H5V9H1z"/></svg>
-                    <b>+25%</b> <?=$h(sprintf(T('Tasks', 'forDuration', 'for %s'), $duration($f['duration']))); ?></div>
+                    <b>+25%</b> <?=$h(sprintf(T('Tasks', 'forDuration', 'for %s'), $duration($f['duration'], true))); ?></div>
                 <?=$button(T('inGame', $f['active'] ? 'plus.extend' : 'plus.activate'), $f); ?>
                 <?php if ($f['active']): ?>
                     <div class="advStatus"><?=$h(T('Tasks', 'stillActive', 'Still active for:')); ?> <b><?=$remaining($f['till']); ?></b></div>

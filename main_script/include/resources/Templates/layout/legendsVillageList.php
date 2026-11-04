@@ -23,14 +23,15 @@ $villageEntry = static function (array $v) use ($e, $t, $handle, $attackSvg, $ca
         . ($canEdit ? '<span class="dragAndDrop" title="' . $e($t('dragVillage', 'Drag the village into a group')) . '">' . $handle . '</span>' : '')
         . '<a class="iconAndNameWrapper' . ($v['active'] ? ' active' : '') . '" href="' . $e($v['href']) . '">' . $attackSvg . '<span class="name">' . $e($v['name']) . '</span></a>'
         . '<span class="coordinatesGrid"><span class="coordinates coordinatesWrapper coordinatesAligned coordinates' . strtolower(getDirection()) . '">'
-        . '<span class="coordinateX">(' . (int)$v['x'] . '</span><span class="coordinatePipe">|</span><span class="coordinateY">' . (int)$v['y'] . ')</span>'
+        . '<span class="coordinateX">(' . str_replace('-', '&minus;', (string)(int)$v['x']) . '</span><span class="coordinatePipe">|</span>'
+        . '<span class="coordinateY">' . str_replace('-', '&minus;', (string)(int)$v['y']) . ')</span>'
         . '</span></span></div>';
 };
 ?>
 <div class="villageList" data-max="<?=LegendsVillageGroups::MAX; ?>">
     <div class="groupsHeader">
-        <span><?=$e($t('groups', 'Village groups')); ?> (<span class="groupCount"><?=$groupCount; ?></span>/<?=LegendsVillageGroups::MAX; ?>)</span>
-        <span></span>
+        <span><?=$e($t('groups', 'Village groups')); ?></span>
+        <span>(<span class="groupCount"><?=$groupCount; ?></span>/<?=LegendsVillageGroups::MAX; ?>)</span>
         <?php if ($canEdit): ?>
         <button type="button" class="secondaryIconButton addGroup" title="<?=$e($t('add', 'New village group')); ?>"
                 onclick="LegendsVillageGroups.addGroup();"<?=$groupCount >= LegendsVillageGroups::MAX ? ' disabled' : ''; ?>>

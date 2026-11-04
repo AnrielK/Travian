@@ -583,9 +583,9 @@ body.t46Layout.legendsV2 div#build .buildingWrapper .build_desc img.build_logo {
 body.t46Layout.legendsV2 div#build .buildingWrapper .build_desc a.build_logo { margin: -24px 0 -10px 14px; }
 body.t46Layout.legendsV2 div#build .buildingWrapper .contract .contractLink { white-space: normal; overflow-wrap: anywhere; }
 body.t46Layout.legendsV2 div#build .buildingWrapper .contract .contractLink .buildingCondition { font-size: 17px; line-height: 24px; }
-body.t46Layout.legendsV2 #dailyQuests { width: auto; }
-body.t46Layout.legendsV2 #dailyQuests .screen.active > div { padding: 0 0 10px; }
-body.t46Layout.legendsV2 #dailyQuests h1 { padding-top: 6px; min-height: 0; margin-bottom: 4px; }
+body.t46Layout.legendsV2 #content #dailyQuests { width: auto; }
+body.t46Layout.legendsV2 #content #dailyQuests .screen.active > div { padding: 0 0 10px; }
+body.t46Layout.legendsV2 #content #dailyQuests h1 { padding-top: 6px; min-height: 0; margin-bottom: 4px; }
 /* gold packages (Legends payment shop cards on the page) */
 body.t46Layout .ovGoldShop.dialog.paymentShopV5 { position: static; width: auto; margin: 0; padding: 0; background: none; border: 0; box-shadow: none; }
 body.t46Layout .ovGoldShop #paymentWizard.buyGold .shopWrapper.selectPackage .purchaseStepWrapper .packages { display: grid;
@@ -669,10 +669,6 @@ body.t46Layout #tasks .task.group .taskImage:before { background-size: cover; }
 /* Legends mentor: figure with a thin green outline, clickable, exclamation bubble next to it */
 body.t46Layout .sidebar #sidebarBoxQuestmaster.legendsMentor .header #questmasterButton { display: grid; width: max-content; margin: 0 auto 2px;
     pointer-events: auto; position: relative; overflow: visible; }
-body.t46Layout .sidebar #sidebarBoxQuestmaster.legendsMentor .header #questmasterButton .mentor { background-repeat: no-repeat; cursor: pointer;
-    filter: drop-shadow(1px 0 0 #a5d64a) drop-shadow(-1px 0 0 #a5d64a) drop-shadow(0 -1px 0 #a5d64a) drop-shadow(0 1px 0 #a5d64a); }
-body.t46Layout .sidebar #sidebarBoxQuestmaster.legendsMentor .header #questmasterButton:hover .mentor { filter: brightness(1.1) drop-shadow(1px 0 0 #c8ef7a)
-    drop-shadow(-1px 0 0 #c8ef7a) drop-shadow(0 -1px 0 #c8ef7a) drop-shadow(0 1px 0 #c8ef7a); }
 body.t46Layout .sidebar #sidebarBoxQuestmaster.legendsMentor .sidebarBoxInnerBox, body.t46Layout .sidebar #sidebarBoxQuestmaster.legendsMentor .innerBox.header { overflow: visible; }
 body.t46Layout button .button-content img.gold { display: inline-block; float: none; position: static; vertical-align: -3px; margin: 0 3px 0 6px; }
 /* Legends mentor stands on the top edge of the task frame; title sits lower below the frame ornament. */
@@ -934,23 +930,12 @@ body.t46Layout.legendsV2 #build .upgradeBuilding .buildingBenefits .unit .delta 
 
 /* Legends adventures (hero/v2/adventures.php, hero/v2/adventureStarted.php). */
 body.t46Layout.legendsV2 #content.heroAdventure { background-color: #f4efe4; color: #5e463a; }
-body.t46Layout.legendsV2 #content.heroAdventure .contentV2 { padding: 12px 14px 16px; }
-body.t46Layout.legendsV2 #content.heroAdventure .heroState { display: grid; grid-template-columns: 30px 1fr; gap: 0 10px; align-items: center; font-size: 17px; }
+body.t46Layout.legendsV2 #content.heroAdventure .heroState { display: grid; grid-template-columns: 25px 1fr; gap: 0 10px; align-items: center; font-size: 13px; line-height: 16px; }
 body.t46Layout.legendsV2 #content.heroAdventure .heroState .heroStatusMessage img { transform: scale(1.5); transform-origin: left center; top: 0; }
-body.t46Layout.legendsV2 #content.heroAdventure .heroState a { font-weight: 700; color: #4f8a13; }
-body.t46Layout.legendsV2 #content.heroAdventure .heroState .subMessage { display: block; margin-top: 5px; font-size: 14px; font-style: italic; }
-body.t46Layout.legendsV2 #content.heroAdventure .adventureList { width: 100%; margin-top: 22px; border-collapse: separate; border-spacing: 0; background: none; }
-body.t46Layout.legendsV2 #content.heroAdventure .adventureList thead th { background: none; border: 0; padding: 0 6px 8px; font-size: 15px; font-weight: 700; color: #5e463a; }
-body.t46Layout.legendsV2 #content.heroAdventure .adventureList tbody td { background: #fff; border: 0; border-top: 1px solid #c9bea5; border-bottom: 1px solid #c9bea5; padding: 4px 8px; font-size: 15px; vertical-align: middle; }
-body.t46Layout.legendsV2 #content.heroAdventure .adventureList tbody td:first-child { border-left: 1px solid #c9bea5; border-radius: 2px 0 0 2px; padding-left: 0; }
-body.t46Layout.legendsV2 #content.heroAdventure .adventureList tbody td:last-child { border-right: 1px solid #c9bea5; border-radius: 0 2px 2px 0; }
-body.t46Layout.legendsV2 #content.heroAdventure .adventureList tbody tr + tr td { border-top: 0; }
-body.t46Layout.legendsV2 #content.heroAdventure .adventureList tbody tr:not(:first-child) td { border-top: 6px solid #f4efe4; box-shadow: inset 0 1px 0 #c9bea5; }
-body.t46Layout.legendsV2 #content.heroAdventure .adventureList td.place img { margin: 0 0 0 2px; }
+body.t46Layout.legendsV2 #content.heroAdventure .heroState a { font-weight: 700; color: #5a9a0a; }
+body.t46Layout.legendsV2 #content.heroAdventure .heroState .subMessage { display: block; margin-top: 5px; font-size: 13px; font-style: italic; }
 body.t46Layout.legendsV2 #content.heroAdventure .adventureList td.duration .cellWrapper i.clock_medium { display: inline-block; }
 body.t46Layout.legendsV2 #content.heroAdventure .adventureList td.difficulty .iconWrapper i { display: inline-block; margin: 2px 0 0; }
-body.t46Layout.legendsV2 #content.heroAdventure .adventureList td.button { width: 1%; padding-right: 8px; }
-body.t46Layout.legendsV2 #content.heroAdventure .adventureList td.button button { min-width: 150px; height: 40px; margin: 0; }
 body.t46Layout.legendsV2 #content.heroAdventure .adventureList td.button .onTheWay { font-style: italic; color: #777; white-space: normal; }
 body.t46Layout.legendsV2 #content.heroAdventure .adventureList td.button form { margin: 0; }
 body.t46Layout.legendsV2 #content.heroAdventure .adventureStarted { padding-top: 330px; }
@@ -1275,14 +1260,9 @@ body.t46Layout.legendsV2 .sidebar .sidebarBox .layoutButton.buttonFramed.round >
 
 /* ---- Task overview box as in Legends: the mentor with a green outline stands on a box holding only the title ---- */
 body.t46Layout.legendsV2 .sidebar #sidebarBoxQuestmaster.legendsMentor .buttonsWrapper,
-body.t46Layout.legendsV2 .sidebar #sidebarBoxQuestmaster.legendsMentor .newQuestSpeechBubble,
 body.t46Layout.legendsV2 .sidebar #sidebarBoxQuestmaster.legendsMentor .taskOverview ul { display: none; }
 body.t46Layout.legendsV2 .sidebar #sidebarBoxQuestmaster.legendsMentor .taskOverview { margin: 0; }
 body.t46Layout.legendsV2 .sidebar #sidebarBoxQuestmaster.legendsMentor .taskOverview .boxTitle { padding: 22px 0 14px; }
-body.t46Layout.legendsV2 .sidebar #sidebarBoxQuestmaster.legendsMentor .header #questmasterButton .mentor {
-    filter: drop-shadow(2px 0 0 #6aa83a) drop-shadow(-2px 0 0 #6aa83a) drop-shadow(0 -2px 0 #6aa83a) drop-shadow(0 2px 0 #6aa83a) drop-shadow(0 0 1px #2f5a12); }
-body.t46Layout.legendsV2 .sidebar #sidebarBoxQuestmaster.legendsMentor .header #questmasterButton:hover .mentor {
-    filter: brightness(1.08) drop-shadow(2px 0 0 #86c64f) drop-shadow(-2px 0 0 #86c64f) drop-shadow(0 -2px 0 #86c64f) drop-shadow(0 2px 0 #86c64f) drop-shadow(0 0 1px #2f5a12); }
 body.t46Layout.legendsV2 .sidebar #sidebarBoxQuestmaster.legendsMentor .taskOverview .boxTitle { margin: 4px 0 0; padding: 14px 18px 12px; border: 0; border-radius: 22px;
     background: linear-gradient(90deg, rgba(255, 251, 238, 0), rgba(255, 251, 238, .75) 18%, rgba(255, 251, 238, .75) 82%, rgba(255, 251, 238, 0)); }
 body.t46Layout.legendsV2 .sidebar #sidebarBoxQuestmaster.legendsMentor .taskOverview .boxTitle:before,
@@ -1298,7 +1278,7 @@ body.t46Layout.legendsV2 div#build .ovLegendsBuild .build_desc { grid-column: 1;
 body.t46Layout.legendsV2 div#build .ovLegendsBuild .build_desc h2 { margin: 0 0 5px; font-size: 16px; line-height: 20px; font-weight: 700; color: #2f2116; }
 body.t46Layout.legendsV2 div#build .ovLegendsBuild .build_logo_link { grid-column: 2; display: block; line-height: 0; }
 /* the building picture in its own size and the costs spread over the box, as in Legends (legends_ltr.css) */
-body.t46Layout.legendsV2 div#build .ovLegendsBuild img.build_logo { float: none; display: block; margin: 0; }
+body.t46Layout.legendsV2 div#build .ovLegendsBuild img.buildLogo { float: none; display: block; margin: 0; }
 body.t46Layout.legendsV2 div#build .ovLegendsBuild .upgradeBuilding { grid-column: 1 / -1; margin: 0; }
 body.t46Layout.legendsV2 div#build .ovLegendsBuild .contractWrapper { text-align: center; }
 body.t46Layout.legendsV2 div#build .ovLegendsBuild .contractWrapper .resourceWrapper .inlineIcon.fillUp { padding: 0 6px; border-radius: 4px;
@@ -1869,7 +1849,7 @@ body.legendsV2 .sidebar #sidebarBoxVillagelist .content .villageList .listEntry.
 body.legendsV2 .sidebar #sidebarBoxVillagelist .content .villageList .groupWrapper .groupContainer { display: grid; min-height: 0; }
 body.legendsV2 .sidebar #sidebarBoxVillagelist .content .villageList .groupWrapper.collapsed .groupContainer { display: none; }
 body.legendsV2 .sidebar #sidebarBoxVillagelist .content .villageList .listEntry .dragAndDrop { touch-action: none; }
-body.legendsV2 .sidebar #sidebarBoxVillagelist .content .villageList .listEntry .coordinatesGrid .coordinates { display: inline-flex; gap: 2px; padding-inline-start: 8px; }
+body.legendsV2 .sidebar #sidebarBoxVillagelist .content .villageList .listEntry .coordinatesGrid .coordinates { display: inline-block; white-space: nowrap; }
 body.legendsV2 .sidebar #sidebarBoxVillagelist .content .villageList .listEntry.group .dragAndDrop { height: 20px; }
 body.legendsV2 .sidebar #sidebarBoxVillagelist .content .villageList .listEntry.group.editMode { grid-template-columns: 1fr auto auto; column-gap: 6px; padding-inline-start: 10px; }
 body.legendsV2 .sidebar #sidebarBoxVillagelist .content .villageList .listEntry.group.editMode input.name { width: 100%; box-sizing: border-box; margin-top: 0; padding: 0 4px; font: inherit; background: #fff9eb; }
@@ -2157,7 +2137,9 @@ body.legendsV2 .legendsDialogOverlay .quickLinksDialog .quickLinkItem.used .quic
 body.legendsV2 .legendsDialogOverlay .quickLinksDialog .quickLinkItem,
 body.legendsV2 .sidebar .quickLinks .quickLinkSlot.editMode .layoutButton.quickLink { touch-action: manipulation !important; }
 body.legendsV2.legendsQuickLinksEditing .layoutButton.quickLink { -webkit-touch-callout: none; -webkit-user-select: none; user-select: none; -webkit-user-drag: none; }
-body.legendsV2 .layoutButton.buttonFramed.withIcon.round.quickLink.disabled { filter: saturate(.75) brightness(1.22) !important; }
+/* disabled quick links as in Legends 692.2: grey-green face, the normal shadow, no lightening */
+body.legendsV2 .layoutButton.buttonFramed.withIcon.round.quickLink.disabled { filter: drop-shadow(rgba(0, 0, 0, .3) 0 3px 3px) !important; }
+body.legendsV2 .sidebar .layoutButton.buttonFramed.withIcon.round.quickLink.disabled:before { background-color: #747a6a !important; }
 /* empty wall (palisade) site in dorf2: hidden as in Legends, a light ring only under the mouse / finger */
 body.t46Layout #contentOuterContainer #villageContent .buildingSlot.a40.legendsWall svg.traced g.clickShape path { fill: rgba(0, 0, 0, 0) !important; pointer-events: all; }
 body.t46Layout #contentOuterContainer #villageContent .buildingSlot.a40.legendsWall svg.traced:hover g.clickShape path,
@@ -2166,16 +2148,6 @@ body.t46Layout #contentOuterContainer #villageContent .buildingSlot.a40.legendsW
 body.legendsV2 .legendsDialogOverlay.quickLinksOverlay .quickLinksDialog .dialogContents > form > .content { max-height: none !important; overflow: visible !important; }
 body.legendsV2 .legendsDialogOverlay.quickLinksOverlay .dialogWrapper { max-height: calc(100vh - 16px); overflow-y: auto; overflow-x: hidden; overscroll-behavior: contain; }
 /* Legends mentor: when a task can be collected a white speech bubble with "!" stands left of the figure */
-body.t46Layout.legendsV2 .sidebar #sidebarBoxQuestmaster.legendsMentor #questmasterButton .newQuestSpeechBubble {
-    display: block !important; position: absolute; left: -40px; top: 44px; width: 30px; height: 34px; z-index: 5;
-    background: #fff; border: 1px solid #9a8b77; border-radius: 4px; box-shadow: 0 1px 3px rgba(0, 0, 0, .35); pointer-events: none;
-    animation: ovMentorBubble 1.6s ease-in-out infinite; }
-body.t46Layout.legendsV2 .sidebar #sidebarBoxQuestmaster.legendsMentor #questmasterButton .newQuestSpeechBubble img { display: none; }
-body.t46Layout.legendsV2 .sidebar #sidebarBoxQuestmaster.legendsMentor #questmasterButton .newQuestSpeechBubble:before {
-    content: "!"; position: absolute; inset: 0; display: grid; place-items: center; font: 900 25px/1 Georgia, "Times New Roman", serif; color: #1f1f1f; }
-body.t46Layout.legendsV2 .sidebar #sidebarBoxQuestmaster.legendsMentor #questmasterButton .newQuestSpeechBubble:after {
-    content: ""; position: absolute; right: -7px; top: 11px; border: 6px solid transparent; border-left: 7px solid #fff; border-right: 0;
-    filter: drop-shadow(1px 0 0 #9a8b77); }
 @keyframes ovMentorBubble { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-3px); } }
 /* empty wall site: only the light ring around the village is the site; it lights up under the mouse / finger */
 body.t46Layout #contentOuterContainer #villageContent .buildingSlot.a40.legendsWall svg.traced g.hoverShape path { fill: transparent !important; pointer-events: none; }
@@ -2185,8 +2157,8 @@ body.t46Layout #contentOuterContainer #villageContent .buildingSlot.a40.legendsW
 
 /* Onboarding guide (js/Game/Legends/tutorial.js), as in Legends: nothing dimmed, a dark translucent speech bubble with a
    golden frame, an arrow at the element, a progress bar for steps that belong together, chevrons and an OK button */
-body.legendsV2 .legendsGuide { position: absolute; z-index: 5000; box-sizing: border-box; width: 350px; min-height: 70px; padding: 26px 30px 22px;
-    border-radius: 6px; background-color: rgba(51, 51, 51, .9); color: #fff; font: 14px/20px Arial, Helvetica, sans-serif; word-break: break-word;
+body.legendsV2 .legendsGuide { position: absolute; z-index: 5000; box-sizing: border-box; width: 250px; min-height: 48px; padding: 14px 16px 12px;
+    border-radius: 6px; background-color: rgba(51, 51, 51, .9); color: #fff; font: 12px/16px Arial, Helvetica, sans-serif; word-break: break-word;
     border: 2px solid #cdb48e; border-top-color: #e9d6b4; border-bottom-color: #9f8462; box-shadow: 0 0 0 1px #1b1a1a, inset 0 0 0 1px #1b1a1a, 0 3px 10px rgba(0, 0, 0, .35);
     animation: ovGuideIn .2s ease-out; text-align: left; }
 body.legendsV2 .legendsGuide .progress { position: absolute; top: 1px; left: 1px; display: flex; width: calc(100% - 2px); height: 5px; }
@@ -2195,14 +2167,14 @@ body.legendsV2 .legendsGuide .progress div:not(:last-of-type) { margin-right: 1p
 body.legendsV2 .legendsGuide .progress div:first-of-type { border-top-left-radius: 4px; }
 body.legendsV2 .legendsGuide .progress div:last-of-type { border-top-right-radius: 4px; }
 body.legendsV2 .legendsGuide .progress div.active { background-color: #ece3d4; }
-body.legendsV2 .legendsGuide nav { position: relative; height: 36px; margin-top: 18px; }
-body.legendsV2 .legendsGuide nav svg { position: absolute; top: 50%; width: 14px; height: 22px; margin-top: -11px; padding: 6px; box-sizing: content-box; margin-left: -6px; cursor: pointer; }
+body.legendsV2 .legendsGuide nav { position: relative; height: 24px; margin-top: 10px; }
+body.legendsV2 .legendsGuide nav svg { position: absolute; top: 50%; width: 10px; height: 16px; margin-top: -8px; padding: 6px; box-sizing: content-box; margin-left: -6px; cursor: pointer; }
 body.legendsV2 .legendsGuide nav svg.chevronBack { left: 0; }
 body.legendsV2 .legendsGuide nav svg.chevronForward { right: -6px; left: auto; }
 body.legendsV2 .legendsGuide nav svg path { fill: transparent; stroke: #d6d0c6; stroke-width: 2.6px; stroke-linecap: round; stroke-linejoin: round; }
 body.legendsV2 .legendsGuide nav svg:hover path { stroke: #fff; }
-body.legendsV2 .legendsGuide nav button.ok { position: absolute; right: 0; top: 50%; transform: translateY(-50%); height: 34px; min-width: 0; margin: 0;
-    padding: 0 30px; border: 0; border-radius: 6px; background: #e6d2b2; color: #2f6fd1; font: 400 17px/34px Arial, sans-serif; cursor: pointer; }
+body.legendsV2 .legendsGuide nav button.ok { position: absolute; right: 0; top: 50%; transform: translateY(-50%); height: 24px; min-width: 0; margin: 0;
+    padding: 0 16px; border: 0; border-radius: 4px; background: #e6d2b2; color: #2f6fd1; font: 400 13px/24px Arial, sans-serif; cursor: pointer; }
 body.legendsV2 .legendsGuide nav button.ok:hover { background: #f0e1cc; }
 body.legendsV2 .legendsGuide svg.pointingArrow { position: absolute; overflow: visible; pointer-events: none; }
 body.legendsV2 .legendsGuide svg.pointingArrow .fill { fill: rgba(51, 51, 51, .9); }
@@ -2210,19 +2182,6 @@ body.legendsV2 .legendsGuide svg.pointingArrow .line { fill: none; stroke: #e2cf
 @keyframes ovGuideIn { from { opacity: 0; } to { opacity: 1; } }
 /* more room between the info box (with its collapse tab) and the link list (with its edit button) */
 body.legendsV2 .sidebar #sidebarBoxInfobox + #sidebarBoxLinklist, body.legendsV2 .sidebar #sidebarBoxLinklist { margin-top: 34px; }
-/* mentor with a task to collect (as in Legends): the "!" bubble stands still, light grey; the figure flashes a light
-   glow along its outline every few seconds */
-body.t46Layout.legendsV2 .sidebar #sidebarBoxQuestmaster.legendsMentor #questmasterButton .newQuestSpeechBubble {
-    animation: none !important; background: linear-gradient(#f4f4f4, #dcdcdc) !important; border-color: #8f8f8f !important; border-radius: 5px !important;
-    width: 32px !important; height: 34px !important; }
-body.t46Layout.legendsV2 .sidebar #sidebarBoxQuestmaster.legendsMentor #questmasterButton .newQuestSpeechBubble:before { color: #4a4a4a !important; font-family: Arial, sans-serif !important; font-size: 24px !important; }
-body.t46Layout.legendsV2 .sidebar #sidebarBoxQuestmaster.legendsMentor #questmasterButton .newQuestSpeechBubble:after { border-left-color: #e6e6e6 !important; }
-body.t46Layout.legendsV2 .sidebar #sidebarBoxQuestmaster.legendsMentor #questmasterButton.highlighted .mentor { animation: ovMentorGlow 3s ease-in-out infinite; }
-@keyframes ovMentorGlow {
-    0%, 62%, 100% { filter: drop-shadow(1px 0 0 #a5d64a) drop-shadow(-1px 0 0 #a5d64a) drop-shadow(0 -1px 0 #a5d64a) drop-shadow(0 1px 0 #a5d64a); }
-    75% { filter: brightness(1.08) drop-shadow(1px 0 0 #e9f7c4) drop-shadow(-1px 0 0 #e9f7c4) drop-shadow(0 -1px 0 #e9f7c4) drop-shadow(0 1px 0 #e9f7c4) drop-shadow(0 0 8px rgba(255, 255, 230, .95)); }
-}
-body.t46Layout.legendsV2 .sidebar #sidebarBoxQuestmaster.legendsMentor #questmasterButton .newQuestSpeechBubble { left: -14px !important; top: 46px !important; }
 
 /* Hero inventory drag & drop (hero/v2/inventoryScript.php): the lifted item follows the mouse in its orange frame
    (.ovSortGhost) and its place stays empty and dark like an empty bag place until the item is put down. */
@@ -2232,3 +2191,255 @@ body.t46Layout #content.heroV2Inventory .heroItem.dragSource { opacity: 1; }
 body.t46Layout #content.heroV2Inventory .heroItem.dragSource > * { visibility: hidden; }
 body.t46Layout #content.heroV2Inventory .heroItem.dragSource { background: rgb(58, 60, 49) !important; background-image: none !important; box-shadow: none; }
 body.t46Layout #content.heroV2Inventory .heroItem.dragSource::after { background-color: rgb(58, 60, 49); background-image: none; }
+
+/* Travian Legends 692.2 (measured on a live 692.2 world at 1280px): the layout of this release, overriding the
+   OpenVillage adjustments above where they differ. */
+/* side panels 5px from the screen edge and at the top of the centre area (the content window starts 15px lower) */
+body.t46Layout.legendsV2 #center #sidebarBeforeContent { margin: 0 0 0 5px; }
+body.t46Layout.legendsV2 #center #sidebarAfterContent { margin: 0 5px 0 0; }
+/* hero window: content right under the tab bar, the tab bar 1px wider on both sides */
+body.t46Layout.legendsV2 #content.heroV2 > .contentV2 { margin-top: 0; }
+body.t46Layout.legendsV2 #center #contentOuterContainer .contentContainer #content.heroV2 .contentNavi.subNavi { margin: 0 -1px; }
+/* active tab: plain light brown, as Legends draws a.tabItem.active */
+body.t46Layout.legendsV2 #content .contentNavi.subNavi > .container.active a.tabItem { background: #85664a; color: #f2e1d0; }
+body.t46Layout.legendsV2 #content .contentNavi.subNavi a.tabItem { padding: 0 10px; }
+/* active village box: 140px high, player name 49px and the village name (22px field) 67px below its top */
+body.t46Layout.legendsV2 .sidebar #sidebarBoxActiveVillage .playerName { margin-top: 14px; }
+body.t46Layout.legendsV2 .sidebar #sidebarBoxActiveVillage #villageNameField.boxTitle { box-sizing: border-box; height: 22px; padding: 3px 20px 3px 3px;
+    line-height: 14px; letter-spacing: 1.6px; }
+body.t46Layout.legendsV2 .sidebar #sidebarBoxActiveVillage .innerBox.content { margin-top: 5px; }
+body.t46Layout.legendsV2 .sidebar #sidebarBoxActiveVillage .innerBox.footer { top: 70px; right: 26px; }
+/* village list: only the name of the active village is bold, not its coordinates */
+body.t46Layout.legendsV2 .villageList .listEntry.active .coordinatesGrid { font-weight: 400; }
+/* building header: the build time table in 13px/19px, 10px from the left edge, labels 25px from the values */
+body.t46Layout.legendsV2 #build .upgradeHeader #build_value { width: 62%; margin: 0 0 0 10px; }
+body.t46Layout.legendsV2 #build .upgradeHeader #build_value th,
+body.t46Layout.legendsV2 #build .upgradeHeader #build_value td { padding: 0; font-size: 13px; line-height: 19px; }
+body.t46Layout.legendsV2 #build .upgradeHeader #build_value th { padding-right: 25px; }
+/* window titles: "Úroveň 10" with a capital letter, as Legends writes it (the translation is lower case for running text) */
+body.t46Layout.legendsV2 h1.titleInHeader .level { display: inline-block; }
+body.t46Layout.legendsV2 h1.titleInHeader .level::first-letter { text-transform: uppercase; }
+/* Animations of 692.2 (transitions measured on the live world). */
+/* resource fields: the white outline fades in within 150ms ease-in, a pressed field lights up more */
+body.t46Layout div.village1 #resourceFieldContainer svg.resourceField > path,
+body.t46Layout div.village1 #resourceFieldContainer svg.villageCenter > path { transition: all 150ms ease-in; }
+body.t46Layout div.village1 #resourceFieldContainer svg.resourceField > path:active,
+body.t46Layout div.village1 #resourceFieldContainer svg.villageCenter > path:active { fill: rgba(255, 255, 255, .35); stroke: rgba(255, 255, 255, .5); }
+/* round side panel buttons change colour at once */
+body.t46Layout.legendsV2 .sidebar .sidebarBox .layoutButton.buttonFramed.round:before,
+body.t46Layout.legendsV2 .sidebar .sidebarBox .layoutButton.buttonFramed.round:after { transition: none; }
+/* active village name field, village list (the game's box id is sidebarBoxVillagelist, Legends styles sidebarBoxVillageList) */
+body.t46Layout.legendsV2 .sidebar #sidebarBoxActiveVillage #villageNameField.boxTitle { transition: border-color 150ms ease-out; }
+body.t46Layout.legendsV2 .sidebar #sidebarBoxVillagelist .bar { transition: width 150ms ease-out; }
+body.t46Layout.legendsV2 .sidebar #sidebarBoxVillagelist button.secondaryIconButton,
+body.t46Layout.legendsV2 .sidebar #sidebarBoxVillagelist button.secondaryIconButton svg { transition: all 150ms ease-out; }
+/* content tabs: no fading of the tab containers, the hovered tab gets the lighter glossy line */
+body.t46Layout.legendsV2 #content .contentNavi.subNavi > .container { transition: none; }
+body.t46Layout.legendsV2 #content .contentNavi.subNavi > .container:not(.active) a.tabItem:hover::before,
+body.t46Layout.legendsV2 #content .contentNavi.subNavi > .container:not(.active) a.tabItem:focus::before {
+    background-image: linear-gradient(rgba(255, 255, 255, 0) 3px, rgba(255, 255, 255, .45) 4px, rgba(255, 255, 255, 0) 7px, rgba(255, 255, 255, 0) 27px, #d08b7f 50px); }
+/* progress bars fill within 250ms ease-out (not on the daily quests, as in Legends) */
+body.t46Layout.legendsV2 .progressBar .bar .filling { transition: all 250ms ease-out; }
+body.t46Layout.legendsV2 #dailyQuests .progressBar .bar .filling { transition: none; }
+/* Tasks (#tasks.contentV2 with the LegendsUi progress bar, as Legends): the T4.6 template's rules for the older bar
+   markup (73px high grid, golden bar, decorations over the whole bar) give way to the Legends ones */
+body.t46Layout.legendsV2 #tasks.contentV2 .task .progress { padding: 0; }
+body.t46Layout.legendsV2 #tasks.contentV2 .task .progress .progressBar { height: 18px; grid-template-rows: 18px; }
+body.t46Layout.legendsV2 #tasks.contentV2 .task .progress .progressBar .bar { grid-row-start: 1; border-color: #44321d;
+    background-image: linear-gradient(var(--backgroundColorStart, #664e40), var(--backgroundColorEnd, #664e40)); }
+body.t46Layout.legendsV2 #tasks.contentV2 .task .progress .progressBar .bar svg.decoration.start { inset: 0 auto 0 3px; }
+body.t46Layout.legendsV2 #tasks.contentV2 .task .progress .progressBar .bar svg.decoration.end { inset: 0 3px 0 auto; }
+body.t46Layout.legendsV2 #tasks.contentV2 .task:not(.placeholder) .title { font-size: 15px; }
+body.t46Layout.legendsV2 #content.tasks #tasks .contentNavi.subNavi { margin-bottom: 10px; }
+/* Daily quests: brown text as in the Legends dialog, 8px between the title and the reset line */
+body.t46Layout.legendsV2 #dailyQuests { color: #5e463a; }
+body.t46Layout.legendsV2 #dailyQuests h1 { margin-bottom: 8px; }
+/* Legends secondary buttons (light, green text and border): without the green gradient of the T4.4 button.green */
+body.t46Layout.legendsV2 button.textButtonV2.buttonSecondary.green:not(.disabled):not(:disabled) { border: 1px solid #427107; background-image: none;
+    box-shadow: none; padding: 0 10px; line-height: normal; }
+/* Daily quest details on the page (dailyquests.php?q=): the 580x200 picture of the Legends dialog across the content window */
+body.t46Layout.legendsV2 #content #dailyQuests #dailyQuestsDetailsScreen { position: relative; }
+body.t46Layout.legendsV2 #content #dailyQuests #dailyQuestsDetailsScreen:before { width: 100%; height: auto; aspect-ratio: 580 / 200; margin: 0;
+    background-size: cover; }
+body.t46Layout.legendsV2 #dailyQuests #dailyQuestsDetailsScreen h1 { min-height: 54px; }
+/* Daily quests in the Legends dialog (js/Game/Legends/dailyQuests.js): the Legends sizes (580px content, 9px padding),
+   the whole dialog scrolls; above the tutorial bubbles like the Legends dialogs */
+body.legendsV2 .legendsDialogOverlay:has(.dailyQuestsDialog) { z-index: 5001; }
+body.legendsV2 .legendsDialogOverlay .dialog.basic.dailyQuestsDialog .dialogContents { padding: 9px; }
+body.legendsV2 .legendsDialogOverlay .dialog.basic.dailyQuestsDialog form > .content { overflow: visible; height: auto; max-height: none; }
+/* "Construct new building" window as in Legends 692.2: the picture in the size of each building (img.buildLogo, not
+   the 184x179 of the T4.4 div#build img.build_logo), the name 15px, the costs in one row in the middle, buttons 11px,
+   "Úroveň" with a capital letter in the conditions, the "Soon available" bar of Legends */
+body.t46Layout.legendsV2 div#build .ovLegendsBuild .build_desc h2 { font-size: 15px; line-height: 16px; color: #333; }
+body.t46Layout.legendsV2 div#build.gid0 .ovLegendsBuild .contractWrapper .resourceWrapper { display: inline-grid; margin-top: 0; }
+body.t46Layout.legendsV2 div#build .ovLegendsBuild .upgradeButtonsContainer button { font-size: 11px; }
+body.t46Layout.legendsV2 div#build .ovLegendsBuild .buildingCondition > span { display: inline-block; }
+body.t46Layout.legendsV2 div#build .ovLegendsBuild .buildingCondition > span::first-letter { text-transform: uppercase; }
+body.t46Layout.legendsV2 div#build h4.round.spacer { margin: 20px 0; padding: 4px 15px; color: #333; }
+body.t46Layout.legendsV2 div#build .ovLegendsBuild .upgradeBlocked:not(:empty):not(:has(*)) { padding: 0; }
+/* conditions of the "soon available" buildings in the Legends text size: 13px/16px, links #5a9a0a */
+body.t46Layout.legendsV2 div#build .ovLegendsBuild.soon .buildingCondition { font-size: 13px; line-height: 16px; }
+body.t46Layout.legendsV2 div#build .ovLegendsBuild.soon .buildingCondition a { color: #5a9a0a; }
+/* building details in the Legends text size: "Popis" 14px #333, the description 13px/16px with 20px above and below,
+   the T4 buttons of the upgrade box (master builder, Travian PLUS) 11px like the Legends textButtonV1 */
+body.t46Layout.legendsV2 #build .buildingDescription .headline h4 { font-size: 14px; color: #333; }
+body.t46Layout.legendsV2 #build .buildingDescription .description { padding: 20px 0; font-size: 13px; line-height: 16px; color: #333; }
+body.t46Layout.legendsV2 #build .upgradeButtonsContainer button .button-content { font-size: 11px; }
+/* building queue as in Legends: "Ve výstavbě:" (h5) 13px/16px, "Úroveň 5" in #f88c1f, the time line in #6b6b6b */
+body.t46Layout.legendsV2 #content .buildingList .boxes-contents,
+body.t46Layout.legendsV2 #content .buildingList li .name { line-height: 16px; }
+body.t46Layout.legendsV2 #content .buildingList .boxes-contents > h5 { display: inline-block; margin: 0; padding: 0; border: 0; font-size: 13px; font-weight: 400;
+    line-height: 16px; }
+body.t46Layout.legendsV2 #content .buildingList li .name .lvl { display: inline-block; color: #f88c1f; }
+body.t46Layout.legendsV2 #content .buildingList li .name .lvl::first-letter { text-transform: uppercase; }
+body.t46Layout.legendsV2 #content .buildingList li .buildDuration { font-size: 11px; line-height: 16px; color: #6b6b6b; }
+/* Task overview (sidebar) as in Legends 692.2: the mentor on its green silhouette (LegendsUi::mentorOutline, glowing via
+   mentorAnimation while a task can be collected = .claimable), the speech bubble with the exclamation mark of
+   legends_ltr.css; the button as high as the mentor, the header 6px over the title box */
+body.t46Layout.legendsV2 .sidebar #sidebarBoxQuestmaster.legendsMentor .innerBox.header { display: grid; justify-items: center; height: auto; margin-bottom: -6px; }
+body.t46Layout.legendsV2 .sidebar #sidebarBoxQuestmaster.legendsMentor .header #questmasterButton { top: 0; margin: 0; padding: 0; height: auto;
+    display: inline-grid; align-items: end; justify-items: center; }
+body.t46Layout.legendsV2 .sidebar #sidebarBoxQuestmaster.legendsMentor .taskOverview { margin: 0; padding: 35px 0 0; }
+body.t46Layout.legendsV2 .sidebar #sidebarBoxQuestmaster.legendsMentor .taskOverview .boxTitle { margin: 0; padding: 5px; background: none; border-radius: 0; }
+/* reports / messages: the T4 buttons below the lists in the Legends button size (11px) */
+body.t46Layout.legendsV2 #content.reports button .button-content,
+body.t46Layout.legendsV2 #content.messages button .button-content { font-size: 11px; }
+/* Top right as in Legends 692.2: the out-of-game buttons 30px, 4px from the top, 4px apart, 10px from the edge; the quick
+   links of the village boxes on the box's top edge, 44px slots 1px apart, the settings button 26px with a 2px margin */
+body.legendsV2 #topBar nav#outOfGame { top: 0; right: 10px; gap: 4px; }
+body.legendsV2 #topBar nav#outOfGame > .layoutButton.round { zoom: 1; width: 30px; height: 30px; margin: 4px 0 0; }
+body.legendsV2 .sidebar #sidebarBoxActiveVillage .innerBox.header .buttonsWrapper.quickLinks,
+body.legendsV2 .sidebar #sidebarBoxVillagelist .innerBox.header .buttonsWrapper.quickLinks { top: 0; right: 10px; left: auto; height: 44px; gap: 1px; }
+body.legendsV2 .sidebar .buttonsWrapper.quickLinks > .layoutButton.buttonFramed.withIcon.round.settings { margin: 2px !important; }
+/* Statistics Top 10 (statistics/top10.php): the grid of legends_ltr.css has two rows; the best attacking and defending
+   hammers of OpenVillage take a third */
+body.legendsV2 div.statistics div.top10Wrapper > h4:nth-of-type(5), body.legendsV2 div.statistics div.top10Wrapper > table:nth-of-type(5) { grid-column-start: 1; grid-row-start: 3; }
+body.legendsV2 div.statistics div.top10Wrapper > h4:nth-of-type(6), body.legendsV2 div.statistics div.top10Wrapper > table:nth-of-type(6) { grid-column-start: 2; grid-row-start: 3; }
+body.legendsV2 div.statistics div.top10Wrapper > table { width: 100%; }
+body.legendsV2 div.statistics div.top10Wrapper { width: auto; }
+/* Night look: the empty building sites in the darker green of legends_ltr.css */
+html body[data-theme=night].t46Layout #contentOuterContainer #villageContent .buildingSlot.g0 svg.buildingShape.iso g.clickShape path { fill: rgba(44, 58, 11, .57); }
+html body[data-theme=night].t46Layout #contentOuterContainer #villageContent .buildingSlot.g0 svg.buildingShape.iso:hover g.clickShape path { fill: rgba(85, 96, 39, .57); }
+/* Gold shop: package1-6.png of Legends 692.2 already grow with the package, shown at their size as in the payment wizard */
+body.t46Layout .ovGoldShop .package .packageImage img,
+body.t46Layout .ovGoldShop .package .packageImage[class*=size] img { width: 120px; height: 120px; }
+/* Gold Club and Travian PLUS dialogs: texts in the dialog brown at 13/16px, the notice 12px, the gold of the header 18px,
+   the "Activate" button 160 x 37 with 13px text, as in Legends 692.2 (selectors as specific as the earlier rules above) */
+body.legendsV2 .legendsPlusDialog .featureCollection .packageFeatures .featureContent .featureTitle,
+body.legendsV2 .legendsPlusDialog .featureCollection .featureContent .featureTitle,
+body.legendsV2 .legendsPlusDialog .featureCollection .featureContent .featureDescription,
+body.legendsV2 .legendsPlusDialog .plusExtra,
+body.legendsV2 .legendsPlusDialog .featureBooking .featureDuration,
+body.legendsV2 .legendsPlusDialog .featureBooking .featureDuration b { font-size: 13px; line-height: 16px; color: #5e463a; }
+body.legendsV2 .legendsPlusDialog .plusNotice { font-size: 12px; line-height: 16px; color: #5e463a; }
+body.legendsV2 .legendsPlusDialog .dialogGold { font-size: 18px; color: #e3d8c4; }
+body.legendsV2 .legendsPlusDialog .featureBooking .featureButton button.plusActivate { min-width: 160px; height: 37px; }
+body.legendsV2 .legendsPlusDialog .featureBooking .featureButton button.plusActivate > div,
+body.legendsV2 .legendsPlusDialog .featureBooking .featureButton button.plusActivate .goldValue { font-size: 13px; line-height: normal; color: #461900; }
+/* Gold shop dialog (goldShop/legendsDialog.php, js/Game/Legends/goldShop.js) laid out as the payment wizard of Legends
+   692.2: tabs under the dialog header, title and gold balance in the header, the content without the offsets the
+   classic payment shop styles give #paymentWizard */
+.dialog.legendsGoldShop #paymentWizard { width: auto; }
+.dialog.legendsGoldShop #paymentWizard > .header { position: static; height: auto; margin: 0; }
+.dialog.legendsGoldShop #paymentWizard .header .contentNavi { display: block; }
+.dialog.legendsGoldShop #paymentWizard #paymentWizardContent { position: static; float: none; width: auto; margin: 0; padding: 10px; }
+.dialog.legendsGoldShop #paymentWizard .shopWrapper > h1.titleInHeader { top: 30px; left: 27px; right: auto; padding: 3px 5px; }
+.dialog.legendsGoldShop #paymentWizard .accountBalance { top: 28px; left: auto; right: 150px; }
+.dialog.legendsGoldShop #dialogContent { font-size: 13px; color: #5e463a; }
+.dialog.legendsGoldShop #paymentWizard .header .contentNavi .tabItem { font-size: 13px; }
+.dialog.legendsGoldShop #paymentWizard .header .contentNavi .tabItem.active { background-image: none; }
+/* the game guide's bubble stays below an open Legends dialog, as on Travian */
+body:has(.legendsDialogOverlay) .legendsGuide { display: none; }
+.dialog.legendsGoldShop #paymentWizard.advantages #paymentWizardContent { padding: 10px 0 0; }
+/* no video ads in OpenVillage: the production bonus cards end with the gold button */
+.dialog.legendsGoldShop #paymentWizard.advantages .advantagesBonusBox[class*=ProductionBonus]:not(:has(.bonusVideo)) { grid-template-rows: 55px 32.5px 16px 37px; padding-bottom: 12px; }
+.dialog.legendsGoldShop #paymentWizard .paymentWrapper .choosePayment.credited { font-weight: 700; color: #4b7d0a; }
+/* Gold shop advantages: help tooltips (js/Game/Legends/goldShop.js) as the tippy tooltips of Legends 692.2, 350px wide */
+.legendsShopTip { position: absolute; z-index: 9999; width: 350px; pointer-events: none; }
+.legendsShopTip .tippy-box { max-width: 350px; border-radius: 4px; font-size: 14px; line-height: 19.6px; filter: drop-shadow(0 2px 6px rgba(0, 0, 0, .45)); }
+.legendsShopTip .tooltipHelpContainer { padding: 10px; color: #5e463a; }
+.legendsShopTip .tooltipHelpContainer h3 { font-size: 16px; line-height: 22.4px; }
+.legendsShopTip .tooltipHelpContainer.lumberProductionBonus .helpText .bonusIcon { background-image: url('../img_ltr/global/resources/lumber_huge.png'); }
+.legendsShopTip .tooltipHelpContainer.clayProductionBonus .helpText .bonusIcon { background-image: url('../img_ltr/global/resources/clay_huge.png'); }
+.legendsShopTip .tooltipHelpContainer.ironProductionBonus .helpText .bonusIcon { background-image: url('../img_ltr/global/resources/iron_huge.png'); }
+.legendsShopTip .tooltipHelpContainer.cropProductionBonus .helpText .bonusIcon { background-image: url('../img_ltr/global/resources/crop_huge.png'); }
+.dialog.legendsGoldShop #paymentWizard .bonusExplanation { cursor: help; }
+/* Advantages buttons in the size of Legends 692.2: 37px high, 1px 6px around the label (158 / 144 / 133px wide) */
+.dialog.legendsGoldShop #paymentWizard .bonusButton .textButtonV2,
+.dialog.legendsGoldShop #paymentWizard .bonusVideo .textButtonV2 { height: 37px; min-width: 0; padding: 1px 6px; }
+/* Exchange office of the auctions (js/Game/Legends/exchangeOffice.js): the basic dialog 9px around the content, as in Legends */
+body.legendsV2 .legendsDialogOverlay .dialog.basic.exchangeOfficeDialog .dialogContents { padding: 9px; }
+/* Left sidebar as in Legends 692.2 (measured at 1400px): the first box frame 20px below the sidebar top (Legends keeps the
+   header buttons inside a 10px band above each frame), the link list 36px below the info box, the header buttons 40px
+   with 5px between them and 25px from the right edge */
+body.legendsV2 #sidebarBeforeContent > .sidebarBox:first-child { margin-top: 20px; }
+body.legendsV2 #sidebarBeforeContent > #sidebarBoxInfobox + #sidebarBoxLinklist { margin-top: 36px; }
+body.t46Layout.legendsV2 #sidebarBeforeContent .sidebarBox .innerBox.header .buttonsWrapper { right: 25px; gap: 5px; }
+/* Right sidebar: the frames of the village boxes start 14px below the box, under the quick link buttons (Legends 692.2) */
+body.t46Layout.legendsV2 .sidebar #sidebarBoxActiveVillage .sidebarBoxInnerBox:before,
+body.t46Layout.legendsV2 .sidebar #sidebarBoxVillagelist .sidebarBoxInnerBox:before { top: 14px; }
+/* Village list box as in Legends 692.2: the content 14px lower with the frame, "VILLAGES 2/3" in one title (bar as the
+   former villageListBarBox), the group header and the coordinates (38px each, X right aligned) in the list colour */
+body.t46Layout.legendsV2 .sidebar #sidebarBoxVillagelist .sidebarBoxInnerBox { padding-top: 49px; }
+body.t46Layout.legendsV2 .sidebar #sidebarBoxVillagelist .expansionSlotInfo .boxTitle .slots { font: inherit; }
+body.t46Layout .sidebar #sidebarBoxVillagelist .expansionSlotInfo .barWrapper { height: 9px; margin-top: 5px; background-color: #52372a; padding: 1px; border-radius: 2px; box-sizing: border-box; }
+body.t46Layout .sidebar #sidebarBoxVillagelist .expansionSlotInfo .barWrapper .bar { height: 7px; background-color: #546e39; }
+body.legendsV2 .sidebar #sidebarBoxVillagelist .content .villageList .groupsHeader > span:first-child,
+body.legendsV2 .sidebar #sidebarBoxVillagelist .content .villageList .groupsHeader > span { color: #333; }
+body.legendsV2 .sidebar #sidebarBoxVillagelist .content .villageList .listEntry .coordinatesGrid .coordinateX,
+body.legendsV2 .sidebar #sidebarBoxVillagelist .content .villageList .listEntry .coordinatesGrid .coordinateY { display: inline-block; width: 38px; }
+body.legendsV2 .sidebar #sidebarBoxVillagelist .content .villageList .listEntry .coordinatesGrid .coordinateX { text-align: right; }
+body.legendsV2 .sidebar #sidebarBoxVillagelist .content .villageList .listEntry .coordinatesGrid .coordinateY { text-align: left; }
+body.legendsV2 .sidebar #sidebarBoxVillagelist .content .villageList .listEntry .coordinatesGrid .coordinatePipe { display: inline-block; width: 8px; text-align: center; }
+/* Adventure list (hero/v2/adventures.php) as in Legends 692.2: #heroAdventure with 10px padding and the plain borderGap table of
+   legends_ltr.css, the video boxes 15px / 10px apart, the "Explore" buttons 37px high */
+body.t46Layout.legendsV2 #content.heroAdventure #heroAdventure { padding: 10px; }
+body.t46Layout.legendsV2 #content.heroAdventure #heroAdventure .videoFeatureBonusBox { margin-top: 15px; }
+body.t46Layout.legendsV2 #content.heroAdventure #heroAdventure .videoFeatureBonusBox + .videoFeatureBonusBox { margin-top: 10px; }
+body.t46Layout.legendsV2 #content.heroAdventure #heroAdventure .adventureList { width: 100%; margin-top: 15px; }
+body.t46Layout.legendsV2 #content.heroAdventure #heroAdventure .adventureList td.button button { height: 37px; margin: 0; padding: 1px 6px; }
+/* Map tile details: the field layouts and village centres of Legends 692.2 (legacy/views/map/detailView) instead of the
+   older background2019 pictures of the template styles, which have no layout 13 and no centres for every tribe */
+body.legendsV2 #tileDetails.village-1 .detailImage { background-image: url('../img_ltr/legacy/views/map/detailView/resourceFields/resourceField1.png'); }
+body.legendsV2 #tileDetails.village-2 .detailImage { background-image: url('../img_ltr/legacy/views/map/detailView/resourceFields/resourceField2.png'); }
+body.legendsV2 #tileDetails.village-3 .detailImage { background-image: url('../img_ltr/legacy/views/map/detailView/resourceFields/resourceField3.png'); }
+body.legendsV2 #tileDetails.village-4 .detailImage { background-image: url('../img_ltr/legacy/views/map/detailView/resourceFields/resourceField4.png'); }
+body.legendsV2 #tileDetails.village-5 .detailImage { background-image: url('../img_ltr/legacy/views/map/detailView/resourceFields/resourceField5.png'); }
+body.legendsV2 #tileDetails.village-6 .detailImage { background-image: url('../img_ltr/legacy/views/map/detailView/resourceFields/resourceField6.png'); }
+body.legendsV2 #tileDetails.village-7 .detailImage { background-image: url('../img_ltr/legacy/views/map/detailView/resourceFields/resourceField7.png'); }
+body.legendsV2 #tileDetails.village-8 .detailImage { background-image: url('../img_ltr/legacy/views/map/detailView/resourceFields/resourceField8.png'); }
+body.legendsV2 #tileDetails.village-9 .detailImage { background-image: url('../img_ltr/legacy/views/map/detailView/resourceFields/resourceField9.png'); }
+body.legendsV2 #tileDetails.village-10 .detailImage { background-image: url('../img_ltr/legacy/views/map/detailView/resourceFields/resourceField10.png'); }
+body.legendsV2 #tileDetails.village-11 .detailImage { background-image: url('../img_ltr/legacy/views/map/detailView/resourceFields/resourceField11.png'); }
+body.legendsV2 #tileDetails.village-12 .detailImage { background-image: url('../img_ltr/legacy/views/map/detailView/resourceFields/resourceField12.png'); }
+body.legendsV2 #tileDetails.village-13 .detailImage { background-image: url('../img_ltr/legacy/views/map/detailView/resourceFields/resourceField13.png'); }
+body.legendsV2 #tileDetails.village .detailImage.vid1::after { background-image: url('../img_ltr/legacy/views/map/detailView/resourceFields/tribeSpecificCenter/villageCenter_vid1.png'); }
+body.legendsV2 #tileDetails.village .detailImage.vid2::after { background-image: url('../img_ltr/legacy/views/map/detailView/resourceFields/tribeSpecificCenter/villageCenter_vid2.png'); }
+body.legendsV2 #tileDetails.village .detailImage.vid3::after { background-image: url('../img_ltr/legacy/views/map/detailView/resourceFields/tribeSpecificCenter/villageCenter_vid3.png'); }
+body.legendsV2 #tileDetails.village .detailImage.vid6::after { background-image: url('../img_ltr/legacy/views/map/detailView/resourceFields/tribeSpecificCenter/villageCenter_vid6.png'); }
+body.legendsV2 #tileDetails.village .detailImage.vid7::after { background-image: url('../img_ltr/legacy/views/map/detailView/resourceFields/tribeSpecificCenter/villageCenter_vid7.png'); }
+body.legendsV2 #tileDetails.village .detailImage.vid8::after { background-image: url('../img_ltr/legacy/views/map/detailView/resourceFields/tribeSpecificCenter/villageCenter_vid8.png'); }
+body.legendsV2 #tileDetails.village .detailImage.vid9::after { background-image: url('../img_ltr/legacy/views/map/detailView/resourceFields/tribeSpecificCenter/villageCenter_vid9.png'); }
+body.legendsV2 .legendsDialogOverlay .dialog.basic.exchangeOfficeDialog #dialogContent { font-size: 13px; color: #5e463a; }
+body.legendsV2 .legendsDialogOverlay .dialog.basic.exchangeOfficeDialog #exchangeOffice h3 { color: #5e463a; }
+body.legendsV2 .legendsDialogOverlay .dialog.basic.exchangeOfficeDialog #exchangeOffice button.exchange { min-width: 0; padding: 1px 6px; font-weight: 400; color: #000; }
+/* formV2 fields (e.g. the amount of the exchange office) with the blue focus glow of Legends 692.2; the older
+   default_compressed1.css turns it off with its stronger label selectors */
+body.legendsV2 .formV2 label.checkbox input:not([type=checkbox]):not([type=radio]):not(:disabled):focus,
+body.legendsV2 .formV2 label.checkbox select:not(:disabled):focus,
+body.legendsV2 .formV2 label.checkbox textarea:not(:disabled):focus,
+body.legendsV2 .formV2 label.input input:not([type=checkbox]):not([type=radio]):not(:disabled):focus,
+body.legendsV2 .formV2 label.input select:not(:disabled):focus,
+body.legendsV2 .formV2 label.input textarea:not(:disabled):focus,
+body.legendsV2 .formV2 label.radio input:not([type=checkbox]):not([type=radio]):not(:disabled):focus,
+body.legendsV2 .formV2 label.radio select:not(:disabled):focus,
+body.legendsV2 .formV2 label.radio textarea:not(:disabled):focus,
+body.legendsV2 .formV2 label.select input:not([type=checkbox]):not([type=radio]):not(:disabled):focus,
+body.legendsV2 .formV2 label.select select:not(:disabled):focus,
+body.legendsV2 .formV2 label.select textarea:not(:disabled):focus,
+body.legendsV2 .formV2 label.switch input:not([type=checkbox]):not([type=radio]):not(:disabled):focus,
+body.legendsV2 .formV2 label.switch select:not(:disabled):focus,
+body.legendsV2 .formV2 label.switch textarea:not(:disabled):focus,
+body.legendsV2 .formV2 label.textarea input:not([type=checkbox]):not([type=radio]):not(:disabled):focus,
+body.legendsV2 .formV2 label.textarea select:not(:disabled):focus,
+body.legendsV2 .formV2 label.textarea textarea:not(:disabled):focus { box-shadow: 0 0 2px 3px rgba(0, 102, 255, .7); }

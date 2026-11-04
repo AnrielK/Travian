@@ -23,10 +23,17 @@
             <tr>
                 <th><?= T("Reports", "Information"); ?></th>
                 <td class="dropItems" colspan="11">
+                    <?php if (is_hero_v2()): /* Legends: one line each, "35" and "−4%" */ ?>
+                    <div><img src="img/x.gif" class="iExperience" alt="<?= T("Reports", "exp"); ?>"
+                              title="<?= T("Reports", "exp"); ?>"> <?= $vars['exp']; ?></div>
+                    <div><img src="img/x.gif" class="injury" alt="<?= T("Reports", "injury"); ?>"
+                              title="<?= T("Reports", "injury"); ?>"> &minus;<?= $vars['injury']; ?>%</div>
+                    <?php else: ?>
                     <img src="img/x.gif" class="iExperience" alt="<?= T("Reports", "exp"); ?>:"
                          title="<?= T("Reports", "exp"); ?>:">+<?= $vars['exp']; ?>
                     <img src="img/x.gif" class="injury" alt="<?= T("Reports", "injury"); ?>:"
                          title="<?= T("Reports", "injury"); ?>:">-<?= $vars['injury']; ?>%
+                    <?php endif; ?>
                 </td>
             </tr>
             </tbody>
@@ -42,7 +49,7 @@
             </td>
         <?php elseif (!empty($vars['Bounty'])): ?>
             <tr>
-                <th><?= T("Reports", "Bounty"); ?>:</th>
+                <th><?= T("Reports", "Bounty"); ?><?= is_hero_v2() ? '' : ':'; ?></th>
                 <td colspan="11" <?= $vars['style']; ?>><?= $vars['Bounty']; ?></td>
             </tr>
         <?php else: ?>

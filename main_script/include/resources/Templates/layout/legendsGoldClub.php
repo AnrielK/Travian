@@ -13,3 +13,4 @@ window.LegendsPlusTexts = <?=json_encode($plusTexts, JSON_UNESCAPED_UNICODE | JS
 <script type="text/javascript" src="js/Game/Legends/dialog.js?v=<?=ov_asset_version(PUBLIC_PATH . 'js/Game/Legends/dialog.js'); ?>"></script>
 <script type="text/javascript" src="js/Game/Legends/goldClub.js?v=<?=ov_asset_version(PUBLIC_PATH . 'js/Game/Legends/goldClub.js'); ?>"></script>
 <script type="text/javascript" src="js/Game/Legends/plus.js?v=<?=ov_asset_version(PUBLIC_PATH . 'js/Game/Legends/plus.js'); ?>"></script>
+<script type="text/javascript" src="js/Game/Legends/goldShop.js?v=<?=ov_asset_version(PUBLIC_PATH . 'js/Game/Legends/goldShop.js'); ?>"></script>

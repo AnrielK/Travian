@@ -16,11 +16,11 @@
         <thead>
         <tr>
             <th colspan="2"><?= T("Messages", "Subject"); ?></th>
-            <th class="send"><?= T("Messages", "Sender"); ?></th>
+            <th class="send"><?= is_hero_v2() ? '' : T("Messages", "Sender"); ?></th>
             <th class="dat">
                 <a href="messages.php?s=0&amp;t=0<?= $vars['recursive'] == 0 ? "&amp;o=1" : ''; ?>"
                    class="sorting <?= $vars['recursive'] ? "asc" : "desc"; ?>">
-                    <?= T("Messages", "Sent at"); ?>&nbsp;
+                    <?= T("Messages", "Received"); ?>&nbsp;
                     <img src="img/x.gif" alt="sort"/>
                 </a>
             </th>

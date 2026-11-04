@@ -486,6 +486,13 @@ function getButton($button, $js, $content = NULL)
 		<i></i>
 	</div>
 HTML;
+    } else if (strpos($button['class'], "textButtonV1") !== FALSE) {
+        // Legends textButtonV1: the label alone, without the T4 button background
+        if (isset($button['coins']) && $button['coins'] > 0) {
+            $content .= '<i class="goldIcon"></i>' . $button['coins'];
+            $js['data']['coins'] = $button['coins'];
+        }
+        $output .= $content;
     } else {
         if (isset($button['coins']) && $button['coins'] > 0) {
             $content .= '<img src="img/x.gif" class="goldIcon" alt="" /><span class="goldValue">' . $button['coins'] . '</span>';
@@ -788,7 +795,7 @@ function ov_asset_version($path)
 function ov_gpack_adapter_links()
 {
     $out = '';
-    foreach (['openvillage-t46-tribes.css', 'openvillage-t46.css'] as $css) {
+    foreach (['openvillage-t46-tribes.css', 'openvillage-t46.css', 'openvillage-t46-night.css'] as $css) {
         $file = get_gpack_mainPage_dir() . 'css/' . $css;
         if (is_file($file)) {
             $out .= '<link href="' . get_gpack_cdn_mainPage_url() . 'css/' . $css . '?v=' . ov_asset_version($file) . '" rel="stylesheet" type="text/css"/>' . "\n";

@@ -233,8 +233,8 @@ class HeroAuctionV2
         $search = '<div class="itemTypeSearch formV2 heroV2 closed"><button type="button" class="openSearch" title="' . UI::e(T('HeroV2', 'searchItem', 'Search item')) . '">'
             . self::ICON_SEARCH . '</button><label class="input"><input type="text" name="itemSearch" autocomplete="off" placeholder="'
             . UI::e(T('HeroV2', 'searchItem', 'Search item')) . '"></label></div>';
-        // Like in Rise of Governors only the chosen slot is shown; a click on it slides the other slots out.
-        $html .= str_replace('heroItemSlotFilter filterSlotsRow', 'heroItemSlotFilter filterSlotsRow collapsible collapsed', $this->goldenWrapper($filter, $base . '&slot=', $search));
+        // All slots in a row, as in Legends 692.2.
+        $html .= $this->goldenWrapper($filter, $base . '&slot=', $search);
         if ($grouped) {
             return $html . $this->buyGroups($where, $page, $base . '&slot=' . $filter);
         }
@@ -600,8 +600,7 @@ class HeroAuctionV2
         if (row && !event.target.closest('a,button,input,form')) { window.location.href = row.dataset.href; return; }
         var exchange = event.target.closest('[data-exchange]');
         if (exchange && !exchange.disabled) {
-            var office = document.getElementById('auctionsExchangeOffice');
-            if (office) office.style.display = office.style.display === 'none' ? '' : 'none';
+            if (window.LegendsExchange) LegendsExchange.open(exchange.dataset.exchange);
             return;
         }
         var form = root.querySelector('.sellItemForm');
