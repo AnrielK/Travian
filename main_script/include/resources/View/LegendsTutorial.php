@@ -22,6 +22,9 @@ final class LegendsTutorial
         if (self::$ready) {
             return;
         }
+        if (DB::getInstance()->inTransaction()) {
+            return;   // created by migration 009; CREATE TABLE would commit the open transaction
+        }
         DB::getInstance()->query('CREATE TABLE IF NOT EXISTS `ov_legends_guide` (
             `uid` INT UNSIGNED NOT NULL PRIMARY KEY,
             `state` VARCHAR(255) NOT NULL DEFAULT \'{}\'

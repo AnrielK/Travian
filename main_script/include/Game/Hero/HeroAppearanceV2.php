@@ -169,6 +169,9 @@ class HeroAppearanceV2
         if (self::$tableReady) {
             return;
         }
+        if (DB::getInstance()->inTransaction()) {
+            return;   // created by migration 009; CREATE TABLE would commit the open transaction
+        }
         DB::getInstance()->query('CREATE TABLE IF NOT EXISTS `' . self::TABLE . '` (
             `uid` INT UNSIGNED NOT NULL PRIMARY KEY,
             `gender` VARCHAR(6) NOT NULL DEFAULT \'male\',

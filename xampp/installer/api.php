@@ -180,6 +180,7 @@ try {
             $timezone = (string)($_POST['timezone'] ?? 'UTC');
             $gpack = (string)($_POST['gpack'] ?? '');
             $tribes = ($_POST['tribes'] ?? '') === 'classic' ? 'classic' : 'all';
+            $bots = max(0, min(100, (int)($_POST['bots'] ?? 0)));
             if (strlen($adminPassword) < 6) {
                 ov_reply(['ok' => false, 'error' => 'Heslo správce musí mít aspoň 6 znaků.'], 400);
                 return;
@@ -252,6 +253,7 @@ try {
                 'GAME_TITLE' => $title,
                 'GAME_SERVER_NAME' => $serverName,
                 'GAME_TRIBES' => $tribes,
+                'GAME_BOTS' => (string)$bots,
             ];
             if ($gpack !== '') {
                 $env['GAME_GPACK'] = $gpack;

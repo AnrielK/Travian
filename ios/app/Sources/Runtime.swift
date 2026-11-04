@@ -87,6 +87,8 @@ struct WorldSettings: Codable, Equatable {
     /// Tribes of a new world: "classic" = Romans, Teutons, Gauls; "all" or nil = every tribe of the look.
     var tribes: String?
     var tribeMode: String { tribes == "classic" ? "classic" : "all" }
+    /// Computer-controlled players (bots) added when the world is created; nil in older saved settings.
+    var bots: Int?
     /// Name of the world (lobby, page title); nil in older saved settings.
     var name: String?
     var worldName: String { (name ?? "").trimmingCharacters(in: .whitespaces).isEmpty ? "iPhone World" : name! }
@@ -138,6 +140,7 @@ extension WorldSettings {
         mapSize = number("mapSize", 10...200, 25)
         roundDays = number("roundDays", 1...365, 35)
         heroSpeed = number("heroSpeed", 1...100, 1)
+        bots = number("bots", 0...100, 0)
     }
 }
 
@@ -331,7 +334,7 @@ final class GameRuntime: ObservableObject {
         for (name, value) in [("GAME_SPEED", String(world.speed)), ("GAME_MAP_SIZE", String(world.mapSize)),
                               ("GAME_GPACK", world.style), ("GAME_ROUND_LENGTH_DAYS", String(world.roundDays)),
                               ("GAME_HERO_SPEED", String(world.heroSpeedFactor)), ("GAME_SERVER_NAME", world.worldName),
-                              ("GAME_TRIBES", world.tribeMode)] {
+                              ("GAME_TRIBES", world.tribeMode), ("GAME_BOTS", String(world.bots ?? 0))] {
             setenv(name, value, 1)
         }
         state = .working("Vytvářím svět (mapa \(world.mapSize * 2 + 1)×\(world.mapSize * 2 + 1))…\nTrvá to desítky sekund.")
@@ -503,6 +506,7 @@ final class GameRuntime: ObservableObject {
             "GAME_SPEED": String(world.speed), "GAME_MAP_SIZE": String(world.mapSize),
             "GAME_GPACK": world.style,
             "GAME_TRIBES": world.tribeMode,
+            "GAME_BOTS": String(world.bots ?? 0),
             "GAME_HERO_SPEED": String(world.heroSpeedFactor),
             "GAME_ROUND_LENGTH_DAYS": String(world.roundDays),
             "GAME_WORLD_ID": "local", "GAME_TITLE": "OpenVillage 4.6", "GAME_SERVER_NAME": world.worldName,

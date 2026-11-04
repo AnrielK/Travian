@@ -111,6 +111,8 @@ function lt(string $text): string
         'a bigger map takes longer to create' => 'větší mapa = delší zakládání',
         'Round length (days)' => 'Délka kola (dny)',
         'Hero speed' => 'Rychlost hrdiny',
+        'Computer players (bots)' => 'Počítačoví hráči (boti)',
+        'they build, train and raid on their own, 0 = none' => 'sami stavějí, cvičí a útočí, 0 = žádní',
         'Administrator password' => 'Heslo správce',
         'Multihunter and Support of this world, at least 6 characters' => 'Multihunter a Support tohoto světa, aspoň 6 znaků',
         'Create world' => 'Založit svět',

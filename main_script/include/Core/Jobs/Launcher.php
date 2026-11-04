@@ -6,6 +6,7 @@ use Core\Automation;
 use Model\AdventureModel;
 use Model\AuctionModel;
 use Model\AutoExtendModel;
+use Model\BotRaidModel;
 use Model\DailyQuestModel;
 use Model\FakeUserModel;
 use Model\inactiveModel;
@@ -201,6 +202,14 @@ class Launcher
         {
             $job = [$fakeModel, 'handleFakeUserExpands'];
             $jobs[] = new Job('AIProgress:handleFakeUserExpands', 45, $job);
+        }
+        {
+            $job = [new BotRaidModel(), 'handleBotRaids'];
+            $jobs[] = new Job('AIProgress:handleBotRaids', 30, $job);
+        }
+        {
+            $job = [new BotRaidModel(), 'handleBotInvites'];
+            $jobs[] = new Job('AIProgress:handleBotInvites', 30, $job);
         }
         $natarsModel = new NatarsModel();
         {

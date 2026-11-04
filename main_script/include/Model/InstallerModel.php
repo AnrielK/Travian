@@ -1566,6 +1566,15 @@ class InstallerModel
         // The tribes chosen for the new world (GAME_TRIBES: classic = Romans, Teutons, Gauls; all = also the new tribes).
         $tribes = getenv('GAME_TRIBES') === 'classic' ? 'classic' : 'all';
         $db->query("UPDATE config SET tribes='$tribes'");
+        // Computer-controlled players of the new world (GAME_BOTS, chosen on the Game worlds page): FakeUserModel and
+        // BotRaidModel make them build, train, found villages and raid.
+        $bots = max(0, min(100, (int)getenv('GAME_BOTS')));
+        if ($bots > 0) {
+            if ($tribes === 'classic') {
+                \Core\Config::getInstance()->game->allowNewTribes = false;
+            }
+            $register->addFakeUser(\Game\Helpers\BotNames::generate($bots));
+        }
         /*
         $newsletter_subject = sprintf(T("Global", "Newsletter_NewServer_subject"), Config::getProperty("settings", "serverName"), getGameSpeed());
         $newsletter_message = T("Global", "Newsletter_NewServer_content");

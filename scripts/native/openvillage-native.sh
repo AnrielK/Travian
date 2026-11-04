@@ -36,6 +36,7 @@ WEB_WORKERS="${OV_WEB_WORKERS:-6}"       # parallel PHP built-in server workers
 IOS_EMU="${OV_IOS_EMULATION:-0}"
 PHP_ARGS=()
 # GAME_TRIBES=classic creates the world with only Romans, Teutons and Gauls (default: every tribe of the look)
+# GAME_BOTS=10 adds 10 computer-controlled players (bots) to the world when it is created (default: none)
 GAME_SPEED="${GAME_SPEED:-10}"
 GAME_MAP_SIZE="${GAME_MAP_SIZE:-25}"
 GAME_ROUND_LENGTH_DAYS="${GAME_ROUND_LENGTH_DAYS:-35}"
@@ -441,9 +442,9 @@ case "\$script" in /app/*) script="$ROOT/\${script#/app/}";; esac
 exec "$ROOT/scripts/native/openvillage-native.sh" __php "\$script" "\$@"
 SHIM
                 chmod +x "$shim/docker"
-                ( cd "$ROOT" && PATH="$shim:$PATH" APP_URL="http://127.0.0.1:$PORT" sh "$ROOT/scripts/$target" )
+                ( cd "$ROOT" && PATH="$shim:$PATH" APP_URL="http://127.0.0.1:$PORT" sh "$ROOT/scripts/checks/$target" )
             else
-                ( cd "$ROOT" && sh "$ROOT/scripts/$target" )
+                ( cd "$ROOT" && sh "$ROOT/scripts/checks/$target" )
             fi ;;
     esac
 }

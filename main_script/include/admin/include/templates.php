@@ -752,7 +752,14 @@ if ($templateName == 'tpl/layout.tpl'): ?>
             <tr>
                 <td>names</td>
                 <td>
-                    <textarea name="names" rows="20" cols="40">ali, reza, bozi, khale, DeadMaster</textarea>
+                    <textarea name="names" rows="20" cols="40"></textarea>
+                </td>
+            </tr>
+            <tr>
+                <td>or count</td>
+                <td>
+                    <input name="count" type="number" min="0" max="100" value="10"> bots with generated names
+                    (they build, train, found villages and raid nearby oases, Natars and players)
                 </td>
             </tr>
             <tr>

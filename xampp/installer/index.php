@@ -110,6 +110,8 @@ dt{color:var(--muted)}dd{margin:0;font-weight:600;word-break:break-all}
   <label for="tribes">Národy <span class="hint">(u světa už nejde změnit)</span></label>
   <select id="tribes"><option value="all" selected>Všechny národy vzhledu (i Egypťané a Hunové)</option>
     <option value="classic">Jen tři původní národy (Římané, Germáni, Galové)</option></select>
+  <label for="bots">Počítačoví hráči (boti) <span class="hint">(sami stavějí, cvičí a útočí, 0 = žádní)</span></label>
+  <input id="bots" type="number" min="0" max="100" value="10">
   <label for="admin_password">Heslo správce <span class="hint">(účty Multihunter a Support, aspoň 6 znaků)</span></label>
   <input id="admin_password" type="password" autocomplete="new-password">
   <div class="msg" id="msg3"></div>
@@ -228,7 +230,7 @@ dt{color:var(--muted)}dd{margin:0;font-weight:600;word-break:break-all}
     message('msg3', '');
     if ($('admin_password').value.length < 6) { message('msg3', 'Heslo správce musí mít aspoň 6 znaků.'); return; }
     var fields = dbFields();
-    ['title', 'server_name', 'speed', 'map_size', 'round_days', 'hero_speed', 'gpack', 'tribes', 'timezone', 'admin_password']
+    ['title', 'server_name', 'speed', 'map_size', 'round_days', 'hero_speed', 'gpack', 'tribes', 'bots', 'timezone', 'admin_password']
       .forEach(function (k) { fields[k] = $(k).value; });
     fields.overwrite = $('overwrite').checked ? '1' : '0';
     show(4);

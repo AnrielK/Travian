@@ -26,6 +26,9 @@ class LegendsVillageGroups
         if (self::$ready) {
             return;
         }
+        if (DB::getInstance()->inTransaction()) {
+            return;   // created by migration 009; CREATE TABLE would commit the open transaction
+        }
         $db = DB::getInstance();
         $db->query('CREATE TABLE IF NOT EXISTS `ov_village_groups` (
             `uid` INT UNSIGNED NOT NULL,
