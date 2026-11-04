@@ -375,6 +375,13 @@ class LegendsUi
         return sprintf(T('Tasks', $key, $default), $n);
     }
 
+    /** The detailed gold / silver coin of Legends 692.2 (gradients and the ring of dots), e.g. for the exchange office. */
+    public static function coinDetailed(string $kind): string
+    {
+        static $svg = [];
+        return $svg[$kind] ??= trim((string)@file_get_contents(__DIR__ . '/legendsCoins/' . ($kind === 'silver' ? 'silver' : 'gold') . '.svg'));
+    }
+
     public static function goldCoin(string $class = ''): string
     {
         return '<svg viewBox="0 0 50 50"' . ($class ? ' class="' . $class . '"' : '') . '><circle cx="25" cy="25" r="25" fill="#522d1c"/>'

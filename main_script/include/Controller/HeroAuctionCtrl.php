@@ -146,7 +146,8 @@ class HeroAuctionCtrl extends GameCtrl
                 'next' => T('LegendsExchange', 'new', 'New'), 'exchange' => T('LegendsExchange', 'exchange', 'Exchange'),
                 'swap' => T('LegendsExchange', 'swap', 'Change direction'), 'close' => T('Messages', 'closeButtonText'),
                 'goldAmount' => (int)$session->getAvailableGold(), 'silverAmount' => (int)$session->getAvailableSilver(),
-                'goldCoin' => \resources\View\LegendsUi::goldCoin(), 'silverCoin' => \resources\View\LegendsUi::silverCoin(),
+                'goldCoin' => \resources\View\LegendsUi::coinDetailed('gold'), 'silverCoin' => \resources\View\LegendsUi::coinDetailed('silver'),
+                'buttonCoin' => \resources\View\LegendsUi::goldCoin('goldCoin'),
                 'exchangeIcon' => \resources\View\LegendsUi::exchangeIcon(),
             ];
             $content .= '<script type="text/javascript">window.LegendsExchangeTexts = ' . json_encode($texts, JSON_UNESCAPED_UNICODE | JSON_HEX_TAG) . ';</script>'

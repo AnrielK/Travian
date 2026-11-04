@@ -38,7 +38,7 @@ var LegendsExchange = (function () {
             + '<tr><td>' + T.silverCoin + '</td><td class="current">' + fmt(T.silverAmount) + '</td><td class="arrow">' + ARROW + '</td><td>' + T.silverCoin + '</td><td class="new newSilver"></td></tr>'
             + '</tbody></table>'
             + (toSilver
-                ? '<button class="textButtonV2 buttonFramed exchange rectangle withText gold" type="submit"><div>' + T.exchange + T.goldCoin.replace('<svg', '<svg class="goldCoin"') + '&nbsp;<span class="goldValue"></span></div></button>'
+                ? '<button class="textButtonV2 buttonFramed exchange rectangle withText gold" type="submit"><div>' + T.exchange + (T.buttonCoin || T.goldCoin.replace('<svg', '<svg class="goldCoin"')) + '&nbsp;<span class="goldValue"></span></div></button>'
                 : '<button class="textButtonV2 buttonFramed exchange rectangle withText green" type="submit"><div>' + T.exchange + '</div></button>')
             + '</div>';
     }

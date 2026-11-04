@@ -2420,3 +2420,6 @@ body.legendsV2 #tileDetails.village .detailImage.vid6::after { background-image:
 body.legendsV2 #tileDetails.village .detailImage.vid7::after { background-image: url('../img_ltr/legacy/views/map/detailView/resourceFields/tribeSpecificCenter/villageCenter_vid7.png'); }
 body.legendsV2 #tileDetails.village .detailImage.vid8::after { background-image: url('../img_ltr/legacy/views/map/detailView/resourceFields/tribeSpecificCenter/villageCenter_vid8.png'); }
 body.legendsV2 #tileDetails.village .detailImage.vid9::after { background-image: url('../img_ltr/legacy/views/map/detailView/resourceFields/tribeSpecificCenter/villageCenter_vid9.png'); }
+body.legendsV2 .legendsDialogOverlay .dialog.basic.exchangeOfficeDialog #dialogContent { font-size: 13px; color: #5e463a; }
+body.legendsV2 .legendsDialogOverlay .dialog.basic.exchangeOfficeDialog #exchangeOffice h3 { color: #5e463a; }
+body.legendsV2 .legendsDialogOverlay .dialog.basic.exchangeOfficeDialog #exchangeOffice button.exchange { min-width: 0; padding: 1px 6px; font-weight: 400; color: #000; }
