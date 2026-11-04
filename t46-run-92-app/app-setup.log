@@ -1,0 +1,45 @@
+2026-11-04 19:49:05 +0000 status: ["installed": 0, "mariadb": 11.4.13-MariaDB, "ok": 1, "players": 0, "php": 8.3.35, "time": 1793821744]
+2026-11-04 19:49:08 +0000 setup: ["log": <__NSArrayI 0x600000c4e160>(
+config row created,
+Applied migration 001_ajax_token_length.sql
+Applied migration 002_adventure_uid_unsigned.sql
+Applied migration 003_scheduled_task_failures.sql
+Applied migration 004_brewery_festivals.sql
+Applied migration 005_world_gpack.sql
+Applied migration 006_world_tribes.sql
+Applied migration 007_statistics_history.sql
+Applied migration 008_bot_raids.sql
+Applied migration 008_week_pve_points.sql
+Applied migration 009_lazy_tables.sql
+Applied migration 009_wounded.sql
+Applied migration 010_hide_multihunter.sql
+Applied migration 010_spartans_summary.sql
+Applied global migration 001_notification_delivery_key.sql
+Applied global migration 002_mail_delivery_key.sql
+Applied global migration 003_world_registry.sql,
+world installed
+)
+, "installed": 1, "ms": 2898, "ok": 1]
+……
+2026-11-04 19:49:05 +0000 status: ["installed": 0, "mariadb": 11.4.13-MariaDB, "ok": 1, "players": 0, "php": 8.3.35, "time": 1793821744]
+2026-11-04 19:49:08 +0000 setup: ["log": <__NSArrayI 0x600000c4e160>(
+config row created,
+Applied migration 001_ajax_token_length.sql
+Applied migration 002_adventure_uid_unsigned.sql
+Applied migration 003_scheduled_task_failures.sql
+Applied migration 004_brewery_festivals.sql
+Applied migration 005_world_gpack.sql
+Applied migration 006_world_tribes.sql
+Applied migration 007_statistics_history.sql
+Applied migration 008_bot_raids.sql
+Applied migration 008_week_pve_points.sql
+Applied migration 009_lazy_tables.sql
+Applied migration 009_wounded.sql
+Applied migration 010_hide_multihunter.sql
+Applied migration 010_spartans_summary.sql
+Applied global migration 001_notification_delivery_key.sql
+Applied global migration 002_mail_delivery_key.sql
+Applied global migration 003_world_registry.sql,
+world installed
+)
+, "installed": 1, "ms": 2898, "ok": 1]
