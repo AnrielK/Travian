@@ -2423,3 +2423,23 @@ body.legendsV2 #tileDetails.village .detailImage.vid9::after { background-image:
 body.legendsV2 .legendsDialogOverlay .dialog.basic.exchangeOfficeDialog #dialogContent { font-size: 13px; color: #5e463a; }
 body.legendsV2 .legendsDialogOverlay .dialog.basic.exchangeOfficeDialog #exchangeOffice h3 { color: #5e463a; }
 body.legendsV2 .legendsDialogOverlay .dialog.basic.exchangeOfficeDialog #exchangeOffice button.exchange { min-width: 0; padding: 1px 6px; font-weight: 400; color: #000; }
+/* formV2 fields (e.g. the amount of the exchange office) with the blue focus glow of Legends 692.2; the older
+   default_compressed1.css turns it off with its stronger label selectors */
+body.legendsV2 .formV2 label.checkbox input:not([type=checkbox]):not([type=radio]):not(:disabled):focus,
+body.legendsV2 .formV2 label.checkbox select:not(:disabled):focus,
+body.legendsV2 .formV2 label.checkbox textarea:not(:disabled):focus,
+body.legendsV2 .formV2 label.input input:not([type=checkbox]):not([type=radio]):not(:disabled):focus,
+body.legendsV2 .formV2 label.input select:not(:disabled):focus,
+body.legendsV2 .formV2 label.input textarea:not(:disabled):focus,
+body.legendsV2 .formV2 label.radio input:not([type=checkbox]):not([type=radio]):not(:disabled):focus,
+body.legendsV2 .formV2 label.radio select:not(:disabled):focus,
+body.legendsV2 .formV2 label.radio textarea:not(:disabled):focus,
+body.legendsV2 .formV2 label.select input:not([type=checkbox]):not([type=radio]):not(:disabled):focus,
+body.legendsV2 .formV2 label.select select:not(:disabled):focus,
+body.legendsV2 .formV2 label.select textarea:not(:disabled):focus,
+body.legendsV2 .formV2 label.switch input:not([type=checkbox]):not([type=radio]):not(:disabled):focus,
+body.legendsV2 .formV2 label.switch select:not(:disabled):focus,
+body.legendsV2 .formV2 label.switch textarea:not(:disabled):focus,
+body.legendsV2 .formV2 label.textarea input:not([type=checkbox]):not([type=radio]):not(:disabled):focus,
+body.legendsV2 .formV2 label.textarea select:not(:disabled):focus,
+body.legendsV2 .formV2 label.textarea textarea:not(:disabled):focus { box-shadow: 0 0 2px 3px rgba(0, 102, 255, .7); }
