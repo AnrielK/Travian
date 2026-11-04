@@ -13,9 +13,17 @@
   with its offensive units only, against the nearest unoccupied oases, Natar
   farms, bots and players within 12 fields whose troops at home are weaker,
   respecting beginner protection and vacation, and leaving a target alone for
-  a day after a raid that lost half of its troops. A bot without an alliance
-  accepts an alliance invitation within half a minute (no embassy needed) and
-  never raids members of its own alliance.
+  a day after a raid that lost half of its troops. Bots follow the players'
+  rules: one builder (Romans one in the fields and one in the village), units
+  only after the academy researched them (one research at a time), smithy
+  upgrades not above the smithy's level. Bots with an embassy accept alliance
+  invitations; a bot with an embassy on level 3 may found an alliance
+  (`Model\BotAllianceModel`, at most one per 6 bots) and invites bots within
+  20 fields. Bots never raid members of their own alliance. Bot heroes
+  (`Model\BotHeroModel`) get adventures like players and go on them when
+  healthy, spend their attribute points, are revived for the revival costs
+  and now and then join a raid; the artificial experience bots' heroes used to
+  get is gone.
 
 - Village centre hover (`js/Game/Village/buildingHover.js`): as in Legends a
   white veil (20 %) lies over the building – an SVG colour filter, so it keeps

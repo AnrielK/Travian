@@ -61,7 +61,7 @@ class AdventureModel
             $expire = max(432000 / getGameSpeed(), 18000);
         }
         $expire_interval = max(86400 / getGameSpeed(), 1800);
-        $find = $db->query("SELECT id, total_adventures, last_adventure_time, signupTime FROM users WHERE id>1 AND access=1 AND last_adventure_time <= " . (time() - $interval) . " ORDER BY last_adventure_time ASC LIMIT 100");
+        $find = $db->query("SELECT id, total_adventures, last_adventure_time, signupTime FROM users WHERE id>1 AND access IN (1, 3) AND last_adventure_time <= " . (time() - $interval) . " ORDER BY last_adventure_time ASC LIMIT 100");
         while ($row = $find->fetch_assoc()) {
             $db->query("UPDATE users SET last_adventure_time=" . time() . " WHERE id={$row['id']}");
             $adventures_until_now = $this->calcAdventuresUntilNow($now - $row['signupTime']);
