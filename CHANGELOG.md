@@ -13,7 +13,9 @@
   with its offensive units only, against the nearest unoccupied oases, Natar
   farms, bots and players within 12 fields whose troops at home are weaker,
   respecting beginner protection and vacation, and leaving a target alone for
-  a day after a raid that lost half of its troops.
+  a day after a raid that lost half of its troops. A bot without an alliance
+  accepts an alliance invitation within half a minute (no embassy needed) and
+  never raids members of its own alliance.
 
 - Village centre hover (`js/Game/Village/buildingHover.js`): as in Legends a
   white veil (20 %) lies over the building – an SVG colour filter, so it keeps

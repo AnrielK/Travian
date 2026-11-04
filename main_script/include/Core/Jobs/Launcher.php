@@ -207,6 +207,10 @@ class Launcher
             $job = [new BotRaidModel(), 'handleBotRaids'];
             $jobs[] = new Job('AIProgress:handleBotRaids', 30, $job);
         }
+        {
+            $job = [new BotRaidModel(), 'handleBotInvites'];
+            $jobs[] = new Job('AIProgress:handleBotInvites', 30, $job);
+        }
         $natarsModel = new NatarsModel();
         {
             $job = [$natarsModel, 'handleNatarVillages'];
