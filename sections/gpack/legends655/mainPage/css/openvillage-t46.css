@@ -2450,3 +2450,9 @@ body.legendsV2 #content.statistics div.top10Wrapper > table td.ra,
 body.legendsV2 #content.statistics div.top10Wrapper > table td.val { white-space: nowrap; }
 body.legendsV2 #content.statistics div.top10Wrapper > table thead td:nth-child(2):not(.al),
 body.legendsV2 #content.statistics div.top10Wrapper > table td.tribe { width: 22px; }
+/* Right panel fixes (iPhone, 2026-11): the rename pencil centred on the 22px village name field (it was 4px low),
+   "Village groups" and "(0/20)" on one line, the add-group folder drawn a bit bolder. */
+body.t46Layout.legendsV2 .sidebar #sidebarBoxActiveVillage .innerBox.footer { top: 66px; }
+body.legendsV2 .sidebar #sidebarBoxVillagelist .content .villageList .groupsHeader { align-items: center; }
+body.legendsV2 .sidebar #sidebarBoxVillagelist .content .villageList .groupsHeader > span { align-self: center; line-height: 16px; }
+body.legendsV2 .sidebar #sidebarBoxVillagelist .content .villageList .groupsHeader .addGroup svg { stroke-width: 1.9; }
